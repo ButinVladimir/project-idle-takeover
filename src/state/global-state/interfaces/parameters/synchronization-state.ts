@@ -1,4 +1,4 @@
-export interface ISynchronizationParameter {
+export interface ISynchronizationState {
   baseValue: number;
   totalValue: number;
   requestRecalculation(): void;

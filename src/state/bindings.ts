@@ -28,8 +28,13 @@ import {
   FactionState,
   IAvailableCategoryItemsState,
   AvailableProgramsState,
+  AvailableCloneTemplatesState,
   IAvailableItemsState,
   AvailableItemsState,
+  IThreatState,
+  ThreatState,
+  ISynchronizationState,
+  SynchronizationState,
 } from '@state/global-state';
 import {
   IGrowthState,
@@ -47,7 +52,9 @@ import {
   MultipliersGrowthState,
   IConnectivityGrowthState,
   IDistrictTierPointsGrowthState,
+  DistrictTierPointsGrowthState,
   IExperienceGrowthState,
+  ExperienceGrowthState,
 } from '@state/growth-state';
 import { SettingsState, ISettingsState } from '@state/settings-state';
 import { CityState, ICityState } from '@state/city-state';
@@ -66,6 +73,14 @@ import {
   ProgramName,
   IProcessCompletionSpeedParameter,
   ProcessCompletionSpeedParameter,
+  IMainframeProgramsUpgrader,
+  MainframeProgramsUpgrader,
+  IMainframeHardwareUpgrader,
+  MainframeHardwareUpgrader,
+  IMainframeHardwareParameter,
+  MainframeHardwarePerformance,
+  MainframeHardwareRam,
+  MainframeHardwareCores,
 } from '@state/mainframe-state';
 import {
   IMainframeHardwareAutomationState,
@@ -78,10 +93,7 @@ import {
   AutomationState,
 } from '@state/automation-state';
 import { INotificationsState, NotificationsState } from '@state/notifications-state';
-import { Formatter } from '@shared/formatter';
-import { IFormatter } from '@shared/interfaces/formatter';
-import { TYPES } from './types';
-import { container } from './container';
+import { IFormatter, Formatter } from '@shared/index';
 import {
   ICloneFactory,
   CloneFactory,
@@ -92,10 +104,13 @@ import {
   CloneTemplateName,
   IExperienceShareParameter,
   ExperienceShareParameter,
+  ICompanySidejobsState,
+  CompanySidejobsState,
+  ICompanyClonesLevelUpgrader,
+  CompanyClonesLevelUpgrader,
 } from '@state/company-state';
-import { AvailableCloneTemplatesState } from './global-state/parameters/available-items/available-clone-templates-state';
-import { DistrictTierPointsGrowthState } from './growth-state/parameters/district-tier-points-growth-state';
-import { ExperienceGrowthState } from './growth-state/parameters/experience-growth-state';
+import { TYPES } from './types';
+import { container } from './container';
 
 container.bind<IStateUIConnector>(TYPES.StateUIConnector).to(StateUIConnector).inSingletonScope().whenTargetIsDefault();
 
@@ -154,6 +169,14 @@ container
 container
   .bind<IAvailableItemsState>(TYPES.AvailableItemsState)
   .to(AvailableItemsState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container.bind<IThreatState>(TYPES.ThreatState).to(ThreatState).inSingletonScope().whenTargetIsDefault();
+
+container
+  .bind<ISynchronizationState>(TYPES.SynchronizationState)
+  .to(SynchronizationState)
   .inSingletonScope()
   .whenTargetIsDefault();
 
@@ -232,6 +255,36 @@ container
 container.bind<IProgramFactory>(TYPES.ProgramFactory).to(ProgramFactory).inSingletonScope().whenTargetIsDefault();
 
 container
+  .bind<IMainframeHardwareParameter>(TYPES.MainframeHardwarePerformance)
+  .to(MainframeHardwarePerformance)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IMainframeHardwareParameter>(TYPES.MainframeHardwareRam)
+  .to(MainframeHardwareRam)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IMainframeHardwareParameter>(TYPES.MainframeHardwareCores)
+  .to(MainframeHardwareCores)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IMainframeProgramsUpgrader>(TYPES.MainframeProgramsUpgrader)
+  .to(MainframeProgramsUpgrader)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IMainframeHardwareUpgrader>(TYPES.MainframeHardwareUpgrader)
+  .to(MainframeHardwareUpgrader)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
   .bind<IMainframeHardwareState>(TYPES.MainframeHardwareState)
   .to(MainframeHardwareState)
   .inSingletonScope()
@@ -284,6 +337,18 @@ container
 container
   .bind<ICompanyClonesState>(TYPES.CompanyClonesState)
   .to(CompanyClonesState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<ICompanySidejobsState>(TYPES.CompanySidejobsState)
+  .to(CompanySidejobsState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<ICompanyClonesLevelUpgrader>(TYPES.CompanyClonesLevelUpgrader)
+  .to(CompanyClonesLevelUpgrader)
   .inSingletonScope()
   .whenTargetIsDefault();
 

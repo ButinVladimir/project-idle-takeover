@@ -17,12 +17,10 @@ import type {
   IAvailableItemsState,
   IConnectivityState,
   IThreatState,
-  ISynchronizationParameter,
+  ISynchronizationState,
   IAvailableActivities,
 } from './interfaces';
 import { GameSpeed } from './types';
-import { ConnectivityState, ThreatState } from './parameters';
-import { SynchronizationParameter } from './parameters/synchronization-parameter';
 import { AvailableActivities } from './parameters/available-activities-state';
 
 const { lazyInject } = decorators;
@@ -32,48 +30,50 @@ export class GlobalState implements IGlobalState {
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
 
-  private _scenarioState: IScenarioState;
-  private _factionState: IFactionState;
-  private _timeState: ITimeState;
-  private _developmentState: IDevelopmentState;
-  private _moneyState: IMoneyState;
-  private _connectivity: IConnectivityState;
-  private _threat: IThreatState;
-  private _synchronization: ISynchronizationParameter;
-  private _multipliersState: IMultipliersState;
+  @inject(TYPES.ScenarioState)
+  private _scenarioState!: IScenarioState;
+
+  @inject(TYPES.FactionState)
+  private _factionState!: IFactionState;
+
+  @inject(TYPES.TimeState)
+  private _timeState!: ITimeState;
+
+  @inject(TYPES.DevelopmentState)
+  private _developmentState!: IDevelopmentState;
+
+  @inject(TYPES.MoneyState)
+  private _moneyState!: IMoneyState;
+
+  @inject(TYPES.ConnectivityState)
+  private _connectivity!: IConnectivityState;
+
+  @inject(TYPES.ThreatState)
+  private _threat!: IThreatState;
+
+  @inject(TYPES.SynchronizationState)
+  private _synchronization!: ISynchronizationState;
+
+  @inject(TYPES.MultipliersState)
+  private _multipliersState!: IMultipliersState;
+
   private _availableActivities: IAvailableActivities;
-  private _availableItemsState: IAvailableItemsState;
-  private _unlockedFeaturesState: IUnlockedFeaturesState;
-  private _storyEventsState: IStoryEventsState;
+
+  @inject(TYPES.AvailableItemsState)
+  private _availableItemsState!: IAvailableItemsState;
+
+  @inject(TYPES.UnlockedFeaturesState)
+  private _unlockedFeaturesState!: IUnlockedFeaturesState;
+
+  @inject(TYPES.StoryEventsState)
+  private _storyEventsState!: IStoryEventsState;
 
   private _random: XORShift128Plus;
   private _gameSpeed: GameSpeed;
   private _runId: string;
 
-  constructor(
-    @inject(TYPES.ScenarioState) _scenarioState: IScenarioState,
-    @inject(TYPES.FactionState) _factionState: IFactionState,
-    @inject(TYPES.TimeState) _timeState: ITimeState,
-    @inject(TYPES.DevelopmentState) _developmentState: IDevelopmentState,
-    @inject(TYPES.MoneyState) _moneyState: IMoneyState,
-    @inject(TYPES.MultipliersState) _multipliersState: IMultipliersState,
-    @inject(TYPES.AvailableItemsState) _availableItemsState: IAvailableItemsState,
-    @inject(TYPES.UnlockedFeaturesState) _unlockedFeaturesState: IUnlockedFeaturesState,
-    @inject(TYPES.StoryEventsState) _storyEventsState: IStoryEventsState,
-  ) {
-    this._scenarioState = _scenarioState;
-    this._factionState = _factionState;
-    this._timeState = _timeState;
-    this._developmentState = _developmentState;
-    this._moneyState = _moneyState;
-    this._connectivity = new ConnectivityState();
-    this._threat = new ThreatState();
-    this._synchronization = new SynchronizationParameter();
-    this._multipliersState = _multipliersState;
-    this._unlockedFeaturesState = _unlockedFeaturesState;
-    this._storyEventsState = _storyEventsState;
+  constructor() {
     this._availableActivities = new AvailableActivities();
-    this._availableItemsState = _availableItemsState;
 
     this._random = new XORShift128Plus(0, 0n);
     this._gameSpeed = GameSpeed.normal;
@@ -126,7 +126,7 @@ export class GlobalState implements IGlobalState {
     return this._threat;
   }
 
-  get synchronization(): ISynchronizationParameter {
+  get synchronization(): ISynchronizationState {
     return this._synchronization;
   }
 

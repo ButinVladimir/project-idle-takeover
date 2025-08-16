@@ -133,7 +133,9 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
   };
 
   private handleBuyMax = () => {
-    this._parameter?.purchaseMax();
+    if (this._parameter) {
+      this._controller.purchaseMaxParameter(this._parameter.type);
+    }
   };
 
   private calculateIncrease(): number {

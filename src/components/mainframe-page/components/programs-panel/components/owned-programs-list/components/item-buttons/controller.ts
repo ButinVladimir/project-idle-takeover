@@ -14,6 +14,6 @@ export class OwnedProgramsListItemButtonsController extends BaseController {
   }
 
   upgradeMaxProgram(program: IProgram) {
-    this.mainframeState.programs.upgradeMaxProgram(program.name);
+    this.mainframeState.programs.upgrader.upgradeMaxProgram(program.name);
   }
 }

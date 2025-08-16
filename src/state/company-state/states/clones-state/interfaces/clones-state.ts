@@ -4,10 +4,12 @@ import { IClone } from '../../clone-factory/interfaces/clone';
 import { CloneTemplateName } from '../../clone-factory';
 import { IPurchaseCloneArgs } from './purchase-clone-args';
 import { IExperienceShareParameter } from './experience-share-parameter';
+import { ICompanyClonesLevelUpgrader } from './clones-level-upgrader';
 
 export interface ICompanyClonesState extends ISerializeable<ICompanyClonesSerializedState> {
   availableSynchronization: number;
   experienceShare: IExperienceShareParameter;
+  levelUpgrader: ICompanyClonesLevelUpgrader;
   listClones(): IClone[];
   earnCloneExperience(id: string, delta: number): void;
   getCloneById(id: string): IClone | undefined;
@@ -21,5 +23,4 @@ export interface ICompanyClonesState extends ISerializeable<ICompanyClonesSerial
   updateSynchronization(): void;
   moveClone(id: string, newPosition: number): void;
   generateCloneName(): string;
-  upgradeMaxAllLevels(): void;
 }

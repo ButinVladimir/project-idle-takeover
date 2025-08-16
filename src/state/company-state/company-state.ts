@@ -1,24 +1,22 @@
 import { injectable, inject } from 'inversify';
 import { TYPES } from '@state/types';
 import { ICompanySerializedState, ICompanyState } from './interfaces';
-import { type ICloneFactory, type ICompanyClonesState, ISidejobsState, SidejobsState } from './states';
+import { type ICloneFactory, type ICompanyClonesState, type ICompanySidejobsState } from './states';
 
 @injectable()
 export class CompanyState implements ICompanyState {
-  private _cloneFactory: ICloneFactory;
-  private _clones: ICompanyClonesState;
-  private _sidejobs: ISidejobsState;
+  @inject(TYPES.CloneFactory)
+  private _cloneFactory!: ICloneFactory;
+
+  @inject(TYPES.CompanyClonesState)
+  private _clones!: ICompanyClonesState;
+
+  @inject(TYPES.CompanySidejobsState)
+  private _sidejobs!: ICompanySidejobsState;
 
   private _assignmentRequested: boolean;
 
-  constructor(
-    @inject(TYPES.CloneFactory) _cloneFactory: ICloneFactory,
-    @inject(TYPES.CompanyClonesState) _clones: ICompanyClonesState,
-  ) {
-    this._cloneFactory = _cloneFactory;
-    this._clones = _clones;
-    this._sidejobs = new SidejobsState();
-
+  constructor() {
     this._assignmentRequested = true;
   }
 

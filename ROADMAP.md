@@ -529,3 +529,5 @@ Cyberiada title is already taken by novel _Cyberiad_ by Stanislaw Lem, so name h
 - Survival subroutine
 - Digital anomaly
 - Digital journey
+- Project Idle Takeover
+- The Idle Takeover Project

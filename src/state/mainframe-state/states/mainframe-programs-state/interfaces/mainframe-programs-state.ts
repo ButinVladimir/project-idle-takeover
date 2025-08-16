@@ -1,13 +1,12 @@
-import { ISerializeable } from '@shared/interfaces/serializable';
-import { IProgram } from '@state/mainframe-state/states/progam-factory/interfaces/program';
-import { ProgramName } from '@state/mainframe-state/states/progam-factory/types';
+import { ISerializeable } from '@shared/index';
+import { IProgram, ProgramName } from '@state/mainframe-state/states/progam-factory';
 import { IMainframeProgramsSerializedState } from './mainframe-programs-serialized-state';
+import { IMainframeProgramsUpgrader } from './mainframe-programs-upgrader';
 
 export interface IMainframeProgramsState extends ISerializeable<IMainframeProgramsSerializedState> {
+  upgrader: IMainframeProgramsUpgrader;
   getProgramCost(name: ProgramName, tier: number, level: number): number;
   purchaseProgram(name: ProgramName, tier: number, level: number): boolean;
-  upgradeMaxProgram(name: ProgramName): boolean;
-  upgradeMaxAllPrograms(): void;
   listOwnedPrograms(): IProgram[];
   getOwnedProgramByName(name: ProgramName): IProgram | undefined;
   toggleProgramsAutoUpgrade(active: boolean): void;

@@ -1,13 +1,15 @@
+import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type ICityState } from '@state/city-state/interfaces';
-import { type IGlobalState, ISynchronizationParameter } from '../interfaces';
+import { type IGlobalState, ISynchronizationState } from '../interfaces';
 import { type ICompanyState } from '@state/company-state/interfaces';
 
 const { lazyInject } = decorators;
 
-export class SynchronizationParameter implements ISynchronizationParameter {
+@injectable()
+export class SynchronizationState implements ISynchronizationState {
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
 

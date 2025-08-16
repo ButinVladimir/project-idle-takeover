@@ -7,7 +7,7 @@ export class ClonesListUpgradeButtonsController extends BaseController {
   }
 
   upgradeMaxAllLevels() {
-    this.companyState.clones.upgradeMaxAllLevels();
+    this.companyState.clones.levelUpgrader.upgradeMaxAllClones();
   }
 
   getUpgradeLevelHotkey(): string | undefined {

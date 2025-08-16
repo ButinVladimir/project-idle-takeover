@@ -39,7 +39,8 @@ export class MainframeProcessesState implements IMainframeProcessesState {
   @lazyInject(TYPES.Formatter)
   private _formatter!: IFormatter;
 
-  private _processCompletionSpeed: IProcessCompletionSpeedParameter;
+  @inject(TYPES.ProcessCompletionSpeedParameter)
+  private _processCompletionSpeed!: IProcessCompletionSpeedParameter;
 
   private _processesList: IProcess[];
   private _processesMap: Map<ProgramName, IProcess>;
@@ -50,11 +51,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
   private _processUpdateRequested: boolean;
   private _performanceUpdateRequested: boolean;
 
-  constructor(
-    @inject(TYPES.ProcessCompletionSpeedParameter) _processCompletionSpeed: IProcessCompletionSpeedParameter,
-  ) {
-    this._processCompletionSpeed = _processCompletionSpeed;
-
+  constructor() {
     this._processesMap = new Map<ProgramName, IProcess>();
     this._processesList = [];
     this._runningProcesses = [];

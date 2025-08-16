@@ -14,4 +14,8 @@ export class ClonesListItemButtonsController extends BaseController {
       this.companyState.clones.getCloneCost(clone.templateName, clone.tier, clone.level + 1)
     );
   }
+
+  upgradeCloneLevel(clone: IClone) {
+    this.companyState.clones.levelUpgrader.upgradeMaxClone(clone.id);
+  }
 }

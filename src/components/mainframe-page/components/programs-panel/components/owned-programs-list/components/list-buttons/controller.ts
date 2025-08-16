@@ -15,7 +15,7 @@ export class OwnedProgramsListButtonsController extends BaseController {
   }
 
   upgradeMaxAllPrograms() {
-    this.mainframeState.programs.upgradeMaxAllPrograms();
+    this.mainframeState.programs.upgrader.upgradeMaxAllPrograms();
   }
 
   getHotkey(): string | undefined {

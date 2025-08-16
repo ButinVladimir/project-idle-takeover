@@ -1,5 +1,5 @@
 import { ISerializedSidejob } from './serialized-sidejob';
 
-export interface ISidejobsSerializedState {
+export interface ICompanySidejobsSerializedState {
   sidejobs: ISerializedSidejob[];
 }

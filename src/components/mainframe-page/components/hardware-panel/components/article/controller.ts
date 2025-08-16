@@ -10,6 +10,10 @@ export class MainframeHardwarePanelArticleController extends BaseController {
     return this.globalState.development.level;
   }
 
+  purchaseMaxParameter(parameterType: MainframeHardwareParameterType) {
+    this.mainframeState.hardware.upgrader.upgradeMaxParameter(parameterType);
+  }
+
   getParameter(type: MainframeHardwareParameterType): IMainframeHardwareParameter {
     switch (type) {
       case 'performance':

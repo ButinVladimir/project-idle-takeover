@@ -5,22 +5,25 @@ import padStart from 'lodash/padStart';
 import cloneTemplates from '@configs/clone-templates.json';
 import names from '@configs/names.json';
 import { decorators } from '@state/container';
-import type { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
-import type { IGlobalState } from '@state/global-state/interfaces/global-state';
-import type { IMessageLogState } from '@state/message-log-state/interfaces/message-log-state';
-import type { IFormatter } from '@shared/interfaces/formatter';
+import type { IStateUIConnector } from '@state/state-ui-connector';
+import type { IGlobalState } from '@state/global-state';
+import type { IMessageLogState } from '@state/message-log-state';
 import { TYPES } from '@state/types';
-import { ClonesEvent, Feature, PurchaseType } from '@shared/types';
 import {
+  ClonesEvent,
+  Feature,
+  PurchaseType,
   calculateTierMultiplier,
   calculateTierPower,
   moveElementInArray,
   removeElementsFromArray,
-} from '@shared/helpers';
+  type IFormatter,
+} from '@shared/index';
 import { CLONE_TEMPLATE_TEXTS, CLONE_NAMES } from '@texts/index';
 import type { ICompanyState } from '../../interfaces/company-state';
 import { IClone } from '../clone-factory/interfaces/clone';
 import {
+  type ICompanyClonesLevelUpgrader,
   ICompanyClonesSerializedState,
   ICompanyClonesState,
   type IExperienceShareParameter,
@@ -47,15 +50,17 @@ export class CompanyClonesState implements ICompanyClonesState {
   @lazyInject(TYPES.Formatter)
   private _formatter!: IFormatter;
 
-  private _experienceShare: IExperienceShareParameter;
+  @inject(TYPES.ExperienceShareParameter)
+  private _experienceShare!: IExperienceShareParameter;
+
+  @inject(TYPES.CompanyClonesLevelUpgrader)
+  private _levelUpgrader!: ICompanyClonesLevelUpgrader;
 
   private _availableSynchronization: number;
   private _clonesList: IClone[];
   private _clonesMap: Map<string, IClone>;
 
-  constructor(@inject(TYPES.ExperienceShareParameter) _experienceShare: IExperienceShareParameter) {
-    this._experienceShare = _experienceShare;
-
+  constructor() {
     this._availableSynchronization = 0;
     this._clonesList = [];
     this._clonesMap = new Map<string, IClone>();
@@ -69,6 +74,10 @@ export class CompanyClonesState implements ICompanyClonesState {
 
   get experienceShare() {
     return this._experienceShare;
+  }
+
+  get levelUpgrader() {
+    return this._levelUpgrader;
   }
 
   listClones(): IClone[] {
@@ -196,14 +205,6 @@ export class CompanyClonesState implements ICompanyClonesState {
     }
 
     this._experienceShare.recalculateMultipliers();
-  }
-
-  upgradeMaxAllLevels() {
-    for (const clone of this._clonesList) {
-      if (clone.autoUpgradeEnabled) {
-        clone.upgradeMaxLevel();
-      }
-    }
   }
 
   async startNewState(): Promise<void> {

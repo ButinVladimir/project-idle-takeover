@@ -84,7 +84,7 @@ export class ClonesListItemButtons extends BaseComponent {
       return;
     }
 
-    this._clone.upgradeMaxLevel();
+    this._controller.upgradeCloneLevel(this._clone);
   };
 
   handlePartialUpdate = () => {

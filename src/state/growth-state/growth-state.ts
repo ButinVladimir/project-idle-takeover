@@ -12,28 +12,23 @@ import { IGrowthState } from './interfaces/growth-state';
 
 @injectable()
 export class GrowthState implements IGrowthState {
-  private _moneyGrowthState: IMoneyGrowthState;
-  private _developmentGrowthState: IDevelopmentGrowthState;
-  private _multipliersGrowthState: IMultipliersGrowthState;
-  private _connectivityGrowthState: IConnectivityGrowthState;
-  private _districtTierPointsGrowthState: IDistrictTierPointsGrowthState;
-  private _experienceGrowthState: IExperienceGrowthState;
+  @inject(TYPES.MoneyGrowthState)
+  private _moneyGrowthState!: IMoneyGrowthState;
 
-  constructor(
-    @inject(TYPES.MoneyGrowthState) _moneyGrowthState: IMoneyGrowthState,
-    @inject(TYPES.DevelopmentGrowthState) _developmentGrowthState: IDevelopmentGrowthState,
-    @inject(TYPES.MultipliersGrowthState) _multipliersGrowthState: IMultipliersGrowthState,
-    @inject(TYPES.ConnectivityGrowthState) _connectivityGrowthState: IConnectivityGrowthState,
-    @inject(TYPES.DistrictTierPointsGrowthState) _districtTierPointsGrowthState: IDistrictTierPointsGrowthState,
-    @inject(TYPES.ExperienceGrowthState) _experienceGrowthState: IExperienceGrowthState,
-  ) {
-    this._moneyGrowthState = _moneyGrowthState;
-    this._developmentGrowthState = _developmentGrowthState;
-    this._multipliersGrowthState = _multipliersGrowthState;
-    this._connectivityGrowthState = _connectivityGrowthState;
-    this._districtTierPointsGrowthState = _districtTierPointsGrowthState;
-    this._experienceGrowthState = _experienceGrowthState;
-  }
+  @inject(TYPES.DevelopmentGrowthState)
+  private _developmentGrowthState!: IDevelopmentGrowthState;
+
+  @inject(TYPES.MultipliersGrowthState)
+  private _multipliersGrowthState!: IMultipliersGrowthState;
+
+  @inject(TYPES.ConnectivityGrowthState)
+  private _connectivityGrowthState!: IConnectivityGrowthState;
+
+  @inject(TYPES.DistrictTierPointsGrowthState)
+  private _districtTierPointsGrowthState!: IDistrictTierPointsGrowthState;
+
+  @inject(TYPES.ExperienceGrowthState)
+  private _experienceGrowthState!: IExperienceGrowthState;
 
   get money(): IMoneyGrowthState {
     return this._moneyGrowthState;

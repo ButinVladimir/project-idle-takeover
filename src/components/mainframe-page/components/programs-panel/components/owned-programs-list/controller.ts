@@ -13,6 +13,6 @@ export class OwnedProgramsListController extends BaseController {
   }
 
   upgradeMaxAllPrograms() {
-    this.mainframeState.programs.upgradeMaxAllPrograms();
+    this.mainframeState.programs.upgrader.upgradeMaxAllPrograms();
   }
 }

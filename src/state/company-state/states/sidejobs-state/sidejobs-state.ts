@@ -12,8 +12,8 @@ import { type ICompanyState } from '../../interfaces';
 import {
   ISidejob,
   IMakeSidejobParameters,
-  ISidejobsSerializedState,
-  ISidejobsState,
+  ICompanySidejobsSerializedState,
+  ICompanySidejobsState,
   IAssignSidejobArguments,
   ISidejobTemplate,
   ISerializedSidejob,
@@ -24,7 +24,7 @@ import { DISTRICT_NAMES, SIDEJOB_TEXTS } from '@/texts';
 
 const { lazyInject } = decorators;
 
-export class SidejobsState implements ISidejobsState {
+export class CompanySidejobsState implements ICompanySidejobsState {
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
 
@@ -182,7 +182,7 @@ export class SidejobsState implements ISidejobsState {
     this.clearSidejobs();
   }
 
-  async deserialize(serializedState: ISidejobsSerializedState): Promise<void> {
+  async deserialize(serializedState: ICompanySidejobsSerializedState): Promise<void> {
     this.clearSidejobs();
 
     serializedState.sidejobs.forEach((serializedSidejob) => {
@@ -192,7 +192,7 @@ export class SidejobsState implements ISidejobsState {
     });
   }
 
-  serialize(): ISidejobsSerializedState {
+  serialize(): ICompanySidejobsSerializedState {
     return {
       sidejobs: this._sidejobsList.map(this.serializeSidejob),
     };

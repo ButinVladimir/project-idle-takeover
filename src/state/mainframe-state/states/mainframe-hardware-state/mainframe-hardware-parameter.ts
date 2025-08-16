@@ -1,14 +1,7 @@
 import type { IStateUIConnector } from '@state/state-ui-connector';
 import type { IGlobalState } from '@state/global-state';
 import type { IMessageLogState } from '@state/message-log-state';
-import {
-  type IFormatter,
-  calculateGeometricProgressionSum,
-  IExponent,
-  Feature,
-  PurchaseType,
-  binarySearchDecimal,
-} from '@shared/index';
+import { type IFormatter, calculateGeometricProgressionSum, IExponent, Feature, PurchaseType } from '@shared/index';
 import { decorators } from '@state/container';
 import { IMainframeHardwareParameter, IMainframeHardwareParameterSerializedState } from './interfaces';
 import { MainframeHardwareParameterType } from './types';
@@ -85,18 +78,6 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
     const cost = this.getIncreaseCost(increase);
 
     return this.globalState.money.purchase(cost, PurchaseType.mainframeHardware, this.handlePurchaseIncrease(increase));
-  }
-
-  purchaseMax(): boolean {
-    const maxIncrease = this.globalState.development.level - this.level;
-
-    if (maxIncrease <= 0) {
-      return false;
-    }
-
-    const increase = binarySearchDecimal(0, maxIncrease, this.checkCanPurchase);
-
-    return this.purchase(increase);
   }
 
   checkCanPurchase = (increase: number): boolean => {

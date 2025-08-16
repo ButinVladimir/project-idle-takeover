@@ -14,7 +14,7 @@ import {
   IAvailableItemsState,
   IConnectivityState,
   IThreatState,
-  ISynchronizationParameter,
+  ISynchronizationState,
   IAvailableActivities,
 } from './parameters';
 
@@ -28,7 +28,7 @@ export interface IGlobalState extends ISerializeable<IGlobalSerializedState> {
   time: ITimeState;
   development: IDevelopmentState;
   threat: IThreatState;
-  synchronization: ISynchronizationParameter;
+  synchronization: ISynchronizationState;
   connectivity: IConnectivityState;
   multipliers: IMultipliersState;
   availableItems: IAvailableItemsState;

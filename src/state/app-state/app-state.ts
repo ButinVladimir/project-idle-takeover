@@ -17,35 +17,29 @@ import { Migrator } from './migrator';
 
 @injectable()
 export class AppState implements IAppState {
-  private _notificationsState: INotificationsState;
-  private _globalState: IGlobalState;
-  private _growthState: IGrowthState;
-  private _settingsState: ISettingsState;
-  private _cityState: ICityState;
-  private _mainframeState: IMainframeState;
-  private _automationState: IAutomationState;
-  private _companyState: ICompanyState;
+  @inject(TYPES.NotificationsState)
+  private _notificationsState!: INotificationsState;
 
-  constructor(
-    @inject(TYPES.NotificationsState) _notificationsState: INotificationsState,
-    @inject(TYPES.GlobalState) _globalState: IGlobalState,
-    @inject(TYPES.GrowthState) _growthState: IGrowthState,
-    @inject(TYPES.SettingsState) _settingsState: ISettingsState,
-    @inject(TYPES.CityState) _cityState: ICityState,
-    @inject(TYPES.MainframeState) _mainframeState: IMainframeState,
-    @inject(TYPES.AutomationState)
-    _automationState: IAutomationState,
-    @inject(TYPES.CompanyState) _companyState: ICompanyState,
-  ) {
-    this._notificationsState = _notificationsState;
-    this._globalState = _globalState;
-    this._growthState = _growthState;
-    this._settingsState = _settingsState;
-    this._cityState = _cityState;
-    this._mainframeState = _mainframeState;
-    this._automationState = _automationState;
-    this._companyState = _companyState;
-  }
+  @inject(TYPES.GlobalState)
+  private _globalState!: IGlobalState;
+
+  @inject(TYPES.GrowthState)
+  private _growthState!: IGrowthState;
+
+  @inject(TYPES.SettingsState)
+  private _settingsState!: ISettingsState;
+
+  @inject(TYPES.CityState)
+  private _cityState!: ICityState;
+
+  @inject(TYPES.MainframeState)
+  private _mainframeState!: IMainframeState;
+
+  @inject(TYPES.AutomationState)
+  private _automationState!: IAutomationState;
+
+  @inject(TYPES.CompanyState)
+  private _companyState!: ICompanyState;
 
   updateState() {
     if (this._globalState.gameSpeed === GameSpeed.paused) {

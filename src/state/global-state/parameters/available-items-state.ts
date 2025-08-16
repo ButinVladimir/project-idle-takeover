@@ -8,19 +8,15 @@ import type { IAvailableCategoryItemsState } from '../interfaces/parameters/avai
 
 @injectable()
 export class AvailableItemsState implements IAvailableItemsState {
-  private _availableProgramsState: IAvailableCategoryItemsState<ProgramName>;
-  private _availableCloneTemplatesState: IAvailableCategoryItemsState<CloneTemplateName>;
+  @inject(TYPES.AvailableProgramsState)
+  private _availableProgramsState!: IAvailableCategoryItemsState<ProgramName>;
+
+  @inject(TYPES.AvailableCloneTemplatesState)
+  private _availableCloneTemplatesState!: IAvailableCategoryItemsState<CloneTemplateName>;
 
   private _recalculationRequested: boolean;
 
-  constructor(
-    @inject(TYPES.AvailableProgramsState) _availableProgramsState: IAvailableCategoryItemsState<ProgramName>,
-    @inject(TYPES.AvailableCloneTemplatesState)
-    _availableCloneTemplatesState: IAvailableCategoryItemsState<CloneTemplateName>,
-  ) {
-    this._availableProgramsState = _availableProgramsState;
-    this._availableCloneTemplatesState = _availableCloneTemplatesState;
-
+  constructor() {
     this._recalculationRequested = true;
   }
 

@@ -5,22 +5,17 @@ import type { IConnectivityState, IMultiplierState, IMultipliersState } from '..
 
 @injectable()
 export class MultipliersState implements IMultipliersState {
-  private _codeBaseState: IMultiplierState;
-  private _computationalBaseState: IMultiplierState;
-  private _connectivityState: IConnectivityState;
-  private _rewardsState: IMultiplierState;
+  @inject(TYPES.CodeBaseState)
+  private _codeBaseState!: IMultiplierState;
 
-  constructor(
-    @inject(TYPES.CodeBaseState) _codeBaseState: IMultiplierState,
-    @inject(TYPES.ComputationalBaseState) _computationalBaseState: IMultiplierState,
-    @inject(TYPES.ConnectivityState) _connectivityState: IConnectivityState,
-    @inject(TYPES.RewardsState) _rewardsState: IMultiplierState,
-  ) {
-    this._codeBaseState = _codeBaseState;
-    this._computationalBaseState = _computationalBaseState;
-    this._connectivityState = _connectivityState;
-    this._rewardsState = _rewardsState;
-  }
+  @inject(TYPES.ComputationalBaseState)
+  private _computationalBaseState!: IMultiplierState;
+
+  @inject(TYPES.ConnectivityState)
+  private _connectivityState!: IConnectivityState;
+
+  @inject(TYPES.RewardsState)
+  private _rewardsState!: IMultiplierState;
 
   get codeBase() {
     return this._codeBaseState;
