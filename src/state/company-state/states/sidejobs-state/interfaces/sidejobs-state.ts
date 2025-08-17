@@ -14,6 +14,7 @@ export interface ICompanySidejobsState extends ISerializeable<ICompanySidejobsSe
   assignSidejob(sidejobParameters: IAssignSidejobArguments): boolean;
   cancelSidejob(sidejobId: string): void;
   cancelAllSidejobs(): void;
+  updateAllSidejobsPerformance(): void;
   filterSidejobs(): void;
   perform(): void;
 }

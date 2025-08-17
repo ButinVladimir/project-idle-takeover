@@ -5,18 +5,14 @@ import { type IGlobalState } from '@state/global-state';
 import { OtherProgramName, PeerReviewerProgram, type IMainframeState } from '@state/mainframe-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { Feature } from '@shared/index';
-import { type ICompanyState } from '../../interfaces';
-import { IExperienceShareParameter } from './interfaces/';
+import { IExperienceShareState } from '../interfaces';
 
 const { lazyInject } = decorators;
 
 @injectable()
-export class ExperienceShareParameter implements IExperienceShareParameter {
+export class ExperienceShareState implements IExperienceShareState {
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
-
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
 
   @lazyInject(TYPES.MainframeState)
   private _mainframeState!: IMainframeState;
@@ -25,18 +21,17 @@ export class ExperienceShareParameter implements IExperienceShareParameter {
   private _stateUiConnector!: IStateUIConnector;
 
   private _synchronizationMultiplier: number;
-
   private _programMultiplier: number;
-
   private _totalMultiplier: number;
-
   private _sharedExperience: number;
+  private _recalculationRequested: boolean;
 
   constructor() {
     this._synchronizationMultiplier = 0;
     this._programMultiplier = 0;
     this._totalMultiplier = 0;
     this._sharedExperience = 0;
+    this._recalculationRequested = true;
 
     this._stateUiConnector.registerEventEmitter(this, [
       '_synchronizationMultiplier',
@@ -61,31 +56,29 @@ export class ExperienceShareParameter implements IExperienceShareParameter {
     return this._totalMultiplier;
   }
 
+  get sharedExperience() {
+    return this._sharedExperience;
+  }
+
   resetExperience() {
     this._sharedExperience = 0;
   }
 
   increaseExperience(delta: number): void {
-    if (this.isFeatureAvailable()) {
-      this._sharedExperience += delta;
-    }
+    this._sharedExperience += delta * this._totalMultiplier;
   }
 
-  spendExperience(): void {
-    if (!this.isFeatureAvailable()) {
+  requestRecalculation() {
+    this._recalculationRequested = true;
+  }
+
+  recalculate(): void {
+    if (!this._recalculationRequested) {
       return;
     }
 
-    const totalSharedExperience = this._sharedExperience * this._totalMultiplier;
+    this._recalculationRequested = false;
 
-    for (const clone of this._companyState.clones.listClones()) {
-      clone.increaseExperience(totalSharedExperience);
-    }
-
-    this.resetExperience();
-  }
-
-  recalculateMultipliers(): void {
     if (!this.isFeatureAvailable()) {
       this._synchronizationMultiplier = 0;
       this._programMultiplier = 0;
@@ -106,7 +99,7 @@ export class ExperienceShareParameter implements IExperienceShareParameter {
 
   private calculateSynchronizationMultiplier() {
     this._synchronizationMultiplier = Math.max(
-      this._companyState.clones.availableSynchronization / this._globalState.synchronization.totalValue,
+      this._globalState.synchronization.availableValue / this._globalState.synchronization.totalValue,
       0,
     );
   }

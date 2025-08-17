@@ -3,7 +3,7 @@ import { CloneTemplateName } from '@state/company-state/states/clone-factory/typ
 
 export class PurchaseCloneDialogDescriptionTextController extends BaseController {
   get availableSynchronization(): number {
-    return this.companyState.clones.availableSynchronization;
+    return this.globalState.synchronization.availableValue;
   }
 
   getCloneSynchronization(cloneTemplateName: CloneTemplateName, tier: number): number {

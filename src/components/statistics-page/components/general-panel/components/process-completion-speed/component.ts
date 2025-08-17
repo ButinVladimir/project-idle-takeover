@@ -1,8 +1,10 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
+import { map } from 'lit/directives/map.js';
 import { msg, localized } from '@lit/localize';
 import { customElement } from 'lit/decorators.js';
 import { BaseComponent, IncomeSource } from '@shared/index';
 import { INCOME_SOURCE_NAMES, STATISTIC_PAGE_TEXTS } from '@components/statistics-page/constants';
+import { IDistrictState } from '@state/city-state';
 import { StatisticsProcessCompletionSpeedController } from './controller';
 import { statisticsPanelContentStyle } from '../../../../styles';
 
@@ -35,10 +37,29 @@ export class StatisticsProcessCompletionSpeed extends BaseComponent {
           <div>${INCOME_SOURCE_NAMES[IncomeSource.program]()}</div>
           <div>${formatter.formatNumberFloat(multiplierByProgram)}</div>
 
+          ${this.renderDistricts()}
+
           <div>${STATISTIC_PAGE_TEXTS.total()}</div>
           <div>${formatter.formatNumberFloat(totalMultiplier)}</div>
         </div>
       </sl-details>
     `;
   }
+
+  private renderDistricts = () => {
+    if (!this._controller.areDistrictsAvailable()) {
+      return nothing;
+    }
+
+    return html`${map(this._controller.listAvailableDistricts(), this.renderDistrict)}`;
+  };
+
+  private renderDistrict = (districtState: IDistrictState) => {
+    const processCompletionSpeed = districtState.parameters.processCompletionSpeed.value;
+
+    return html`
+      <div>${STATISTIC_PAGE_TEXTS.byDistrict(districtState.name)}</div>
+      <div>${this._controller.formatter.formatNumberFloat(processCompletionSpeed)}</div>
+    `;
+  };
 }

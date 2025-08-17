@@ -22,4 +22,10 @@ export const SIDEJOB_TEXTS = {
     title: () => msg('Mediator'),
     overview: () => msg('Finding compromises between various parties with profit for yourself.'),
   },
+  [SidejobName.mainframeRelay]: {
+    title: () => msg('Mainframe relay'),
+    overview: () =>
+      msg(`Acting as mainframe relay to speed up process completion speed. 
+Stacks additively within same district and multiplicatively between different districts.`),
+  },
 };

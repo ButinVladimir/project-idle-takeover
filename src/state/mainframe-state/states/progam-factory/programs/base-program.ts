@@ -83,16 +83,20 @@ export abstract class BaseProgram implements IProgram {
     this._level = level;
 
     this.handlePerformanceUpdate();
-    this.mainframeState.processes.requestUpdateProcesses();
+    this.mainframeState.processes.requestUpdateRunningProcesses();
   }
 
   calculateCompletionDelta(threads: number, usedCores: number, passedTime: number): number {
+    if (usedCores === 0) {
+      return 0;
+    }
+
     const programData = programs[this.name];
 
     const currentSpeed =
-      usedCores *
-      this.mainframeState.processes.processCompletionSpeed.totalMultiplier *
-      calculateLinear(this.level, programData.speedBoost);
+      this.globalState.processCompletionSpeed.totalMultiplier *
+      calculateLinear(this.level, programData.levelSpeedBoost) *
+      calculateLinear(usedCores - 1, programData.coreSpeedBoost);
     const allowedSpeed =
       (threads * this.completionPoints) /
       this.globalState.scenario.currentValues.mainframeSoftware.minProcessCompletionTime;

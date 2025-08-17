@@ -14,3 +14,5 @@ export * from './threat-state';
 export * from './synchronization-state';
 export * from './available-category-activities';
 export * from './available-activities';
+export * from './experience-share-state';
+export * from './process-completion-speed-state';

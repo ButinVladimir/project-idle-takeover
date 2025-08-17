@@ -13,7 +13,7 @@
       "peerReviewer"
     ],
     "cloneTemplates": ["anthrodrone"],
-    "sidejobs": ["oddjob", "infoBroker", "freelanceProgrammer", "computerRepairer", "mediator"]
+    "sidejobs": ["oddjob", "infoBroker", "freelanceProgrammer", "computerRepairer", "mediator", "mainframeRelay"]
   },
   "wsa": {
     "programs": [],

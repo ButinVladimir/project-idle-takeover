@@ -19,5 +19,6 @@ export interface IDistrictTypeTemplate {
     codeBase: IDistrictTypeMultiplierParameters;
     computationalBase: IDistrictTypeMultiplierParameters;
     rewards: IDistrictTypeMultiplierParameters;
+    processCompletionSpeed: IExponent;
   };
 }

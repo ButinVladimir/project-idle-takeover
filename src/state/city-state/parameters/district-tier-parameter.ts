@@ -72,8 +72,7 @@ export class DistrictTierParameter implements IDistrictTierParameter {
         msg(str`District "${DISTRICT_NAMES[this._district.name]()}" tier has been increased to ${formattedTier}`),
       );
 
-      this._globalState.synchronization.requestRecalculation();
-      this._companyState.requestReassignment();
+      this.handleTierUpdate();
     }
   }
 
@@ -81,8 +80,7 @@ export class DistrictTierParameter implements IDistrictTierParameter {
     this._tier = tier;
     this._points = this.getTierRequirements(tier - 1);
 
-    this._globalState.synchronization.requestRecalculation();
-    this._companyState.requestReassignment();
+    this.handleTierUpdate();
   }
 
   async deserialize(serializedState: IDistrictTierSerializedParameter): Promise<void> {
@@ -105,5 +103,11 @@ export class DistrictTierParameter implements IDistrictTierParameter {
     const { base, multiplier } = districtTypeInfo.parameters.districtTierPoints.requirements;
 
     return reverseGeometricProgressionSum(this._points, multiplier, base);
+  }
+
+  private handleTierUpdate() {
+    this._globalState.synchronization.requestRecalculation();
+    this._companyState.requestReassignment();
+    this._companyState.sidejobs.updateAllSidejobsPerformance();
   }
 }

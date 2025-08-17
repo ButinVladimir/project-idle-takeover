@@ -36,6 +36,7 @@ export const COMMON_TEXTS = {
   experienceMultiplier: () => msg('Experience multiplier'),
   faction: () => msg('Faction'),
   parameterValue: (parameterName: string, valueElement: any) => msg(html`${parameterName}: ${valueElement}`),
+  parameterDiff: (valueElement: any, diffElement: any) => msg(html`${valueElement} (${diffElement})`),
   parameterSpeed: (value: any) => msg(html`${value} per second`),
   parameterSpeedDiff: (valueElement: any, diffElement: any) => msg(html`${valueElement} (${diffElement}) per second`),
   hotkey: (hotkey?: string) => msg(str`Hotkey: ${hotkey?.toLocaleUpperCase() ?? ''}`),

@@ -133,8 +133,12 @@ export class Clone implements IClone {
     return this._experienceMultiplier;
   }
 
-  increaseExperience(delta: number) {
+  increaseExperience(delta: number, share: boolean) {
     this._experience += delta;
+
+    if (share) {
+      this._globalState.experienceShare.increaseExperience(delta);
+    }
   }
 
   upgradeLevel(level: number) {
@@ -149,6 +153,7 @@ export class Clone implements IClone {
     );
 
     this.recalculateParameters();
+    this.handlePerformanceUpdate();
   }
 
   getLevelRequirements(level: number): number {
@@ -226,6 +231,7 @@ export class Clone implements IClone {
       );
 
       this.recalculateParameters();
+      this.handlePerformanceUpdate();
     }
   }
 
@@ -272,5 +278,13 @@ export class Clone implements IClone {
       reverseGeometricProgressionSum(this._experience, multiplier, base),
       this._globalState.development.level,
     );
+  }
+
+  private handlePerformanceUpdate(): void {
+    const sidejob = this._companyState.sidejobs.getSidejobByCloneId(this._id);
+
+    if (sidejob?.isActive) {
+      sidejob.handlePerformanceUpdate();
+    }
   }
 }

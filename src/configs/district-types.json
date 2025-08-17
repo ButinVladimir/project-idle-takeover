@@ -28,7 +28,8 @@
         "pointsMultiplier": { "multiplier": 1, "base": 1.5 },
         "pointsToSoftCap": { "multiplier": 86400, "base": 0.99 },
         "logBase": 2
-      }
+      },
+      "processCompletionSpeed": { "multiplier": 1, "base": 1.1 }
     }
   },
   "corpoDistrict": {
@@ -63,7 +64,8 @@
         "pointsMultiplier": { "multiplier": 3, "base": 1.5 },
         "pointsToSoftCap": { "multiplier": 86400, "base": 0.9 },
         "logBase": 20
-      }
+      },
+      "processCompletionSpeed": { "multiplier": 1, "base": 1.1 }
     }
   }
 }

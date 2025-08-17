@@ -53,7 +53,8 @@ export const TYPES = {
   CloneFactory: Symbol('CloneFactory'),
   CompanyClonesState: Symbol('CompanyClonesState'),
   CompanySidejobsState: Symbol('CompanySidejobsState'),
-  ExperienceShareParameter: Symbol('ExperienceShareParameter'),
+  ExperienceShareState: Symbol('ExperienceShareState'),
+  ProcessCompletionSpeedState: Symbol('ProcessCompletionSpeedState'),
   CompanyClonesLevelUpgrader: Symbol('CompanyClonesLevelUpgrader'),
   Formatter: Symbol('Formatter'),
 };

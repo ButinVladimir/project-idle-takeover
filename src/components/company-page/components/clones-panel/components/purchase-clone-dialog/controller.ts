@@ -15,7 +15,7 @@ export class PurchaseCloneDialogController extends BaseController {
   }
 
   get availableSynchronization(): number {
-    return this.companyState.clones.availableSynchronization;
+    return this.globalState.synchronization.availableValue;
   }
 
   get developmentLevel(): number {

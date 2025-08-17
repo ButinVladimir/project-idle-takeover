@@ -61,10 +61,7 @@ export class Process implements IProcess {
   }
 
   set usedCores(value: number) {
-    if (this._usedCores !== value) {
-      this._usedCores = value;
-      this._program.handlePerformanceUpdate();
-    }
+    this._usedCores = value;
   }
 
   get maxCores() {
@@ -81,7 +78,7 @@ export class Process implements IProcess {
 
   toggleActive(active: boolean) {
     this._isActive = active;
-    this._mainframeState.processes.requestUpdateProcesses();
+    this._mainframeState.processes.requestUpdateRunningProcesses();
   }
 
   increaseCompletion(delta: number): void {
@@ -101,7 +98,7 @@ export class Process implements IProcess {
   update(threads: number) {
     this._threads = threads;
     this.resetCompletion();
-    this._mainframeState.processes.requestUpdateProcesses();
+    this._mainframeState.processes.requestUpdateRunningProcesses();
     this.program.handlePerformanceUpdate();
   }
 

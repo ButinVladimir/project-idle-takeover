@@ -16,6 +16,8 @@ import {
   IThreatState,
   ISynchronizationState,
   IAvailableActivities,
+  IExperienceShareState,
+  IProcessCompletionSpeedState,
 } from './parameters';
 
 export interface IGlobalState extends ISerializeable<IGlobalSerializedState> {
@@ -35,6 +37,8 @@ export interface IGlobalState extends ISerializeable<IGlobalSerializedState> {
   availableActivities: IAvailableActivities;
   unlockedFeatures: IUnlockedFeaturesState;
   storyEvents: IStoryEventsState;
+  experienceShare: IExperienceShareState;
+  processCompletionSpeed: IProcessCompletionSpeedState;
   recalculate(): void;
   makeNextTick(): void;
 }

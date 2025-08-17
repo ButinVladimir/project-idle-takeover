@@ -11,7 +11,7 @@ export class PurchaseCloneDialogButtonsController extends BaseController {
   }
 
   get availableSynchronization(): number {
-    return this.companyState.clones.availableSynchronization;
+    return this.globalState.synchronization.availableValue;
   }
 
   getCloneCost(cloneTemplateName: CloneTemplateName, tier: number, level: number): number {

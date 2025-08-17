@@ -35,6 +35,10 @@ import {
   ThreatState,
   ISynchronizationState,
   SynchronizationState,
+  IExperienceShareState,
+  ExperienceShareState,
+  IProcessCompletionSpeedState,
+  ProcessCompletionSpeedState,
 } from '@state/global-state';
 import {
   IGrowthState,
@@ -71,8 +75,6 @@ import {
   IMainframeState,
   MainframeState,
   ProgramName,
-  IProcessCompletionSpeedParameter,
-  ProcessCompletionSpeedParameter,
   IMainframeProgramsUpgrader,
   MainframeProgramsUpgrader,
   IMainframeHardwareUpgrader,
@@ -102,8 +104,6 @@ import {
   ICompanyState,
   CompanyState,
   CloneTemplateName,
-  IExperienceShareParameter,
-  ExperienceShareParameter,
   ICompanySidejobsState,
   CompanySidejobsState,
   ICompanyClonesLevelUpgrader,
@@ -180,6 +180,18 @@ container
   .inSingletonScope()
   .whenTargetIsDefault();
 
+container
+  .bind<IExperienceShareState>(TYPES.ExperienceShareState)
+  .to(ExperienceShareState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IProcessCompletionSpeedState>(TYPES.ProcessCompletionSpeedState)
+  .to(ProcessCompletionSpeedState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
 container.bind<IGlobalState>(TYPES.GlobalState).to(GlobalState).inSingletonScope().whenTargetIsDefault();
 
 container.bind<IMoneyGrowthState>(TYPES.MoneyGrowthState).to(MoneyGrowthState).inSingletonScope().whenTargetIsDefault();
@@ -229,12 +241,6 @@ container
 container
   .bind<IExperienceGrowthState>(TYPES.ExperienceGrowthState)
   .to(ExperienceGrowthState)
-  .inSingletonScope()
-  .whenTargetIsDefault();
-
-container
-  .bind<IProcessCompletionSpeedParameter>(TYPES.ProcessCompletionSpeedParameter)
-  .to(ProcessCompletionSpeedParameter)
   .inSingletonScope()
   .whenTargetIsDefault();
 
@@ -327,12 +333,6 @@ container.bind<IAutomationState>(TYPES.AutomationState).to(AutomationState).inSi
 container.bind<IFormatter>(TYPES.Formatter).to(Formatter).inSingletonScope().whenTargetIsDefault();
 
 container.bind<ICloneFactory>(TYPES.CloneFactory).to(CloneFactory).inSingletonScope().whenTargetIsDefault();
-
-container
-  .bind<IExperienceShareParameter>(TYPES.ExperienceShareParameter)
-  .to(ExperienceShareParameter)
-  .inSingletonScope()
-  .whenTargetIsDefault();
 
 container
   .bind<ICompanyClonesState>(TYPES.CompanyClonesState)

@@ -19,6 +19,8 @@ import type {
   IThreatState,
   ISynchronizationState,
   IAvailableActivities,
+  IExperienceShareState,
+  IProcessCompletionSpeedState,
 } from './interfaces';
 import { GameSpeed } from './types';
 import { AvailableActivities } from './parameters/available-activities-state';
@@ -67,6 +69,12 @@ export class GlobalState implements IGlobalState {
 
   @inject(TYPES.StoryEventsState)
   private _storyEventsState!: IStoryEventsState;
+
+  @inject(TYPES.ExperienceShareState)
+  private _experienceShare!: IExperienceShareState;
+
+  @inject(TYPES.ProcessCompletionSpeedState)
+  private _processCompletionSpeed!: IProcessCompletionSpeedState;
 
   private _random: XORShift128Plus;
   private _gameSpeed: GameSpeed;
@@ -150,12 +158,22 @@ export class GlobalState implements IGlobalState {
     return this._storyEventsState;
   }
 
+  get experienceShare(): IExperienceShareState {
+    return this._experienceShare;
+  }
+
+  get processCompletionSpeed(): IProcessCompletionSpeedState {
+    return this._processCompletionSpeed;
+  }
+
   recalculate() {
     this._developmentState.recalculateLevel();
     this._multipliersState.recalculate();
     this._synchronization.recalculate();
     this._availableItemsState.recalculate();
     this._availableActivities.recalculate();
+    this._experienceShare.recalculate();
+    this._processCompletionSpeed.recalculate();
   }
 
   makeNextTick() {
@@ -182,6 +200,8 @@ export class GlobalState implements IGlobalState {
     this.storyEvents.startNewState();
 
     this._synchronization.requestRecalculation();
+    this._experienceShare.requestRecalculation();
+    this._processCompletionSpeed.requestRecalculation();
   }
 
   async deserialize(serializedState: IGlobalSerializedState): Promise<void> {
@@ -202,6 +222,8 @@ export class GlobalState implements IGlobalState {
     await this._unlockedFeaturesState.deserialize(serializedState.unlockedFeatures);
 
     this._synchronization.requestRecalculation();
+    this._experienceShare.requestRecalculation();
+    this._processCompletionSpeed.requestRecalculation();
   }
 
   serialize(): IGlobalSerializedState {

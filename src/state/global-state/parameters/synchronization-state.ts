@@ -23,19 +23,25 @@ export class SynchronizationState implements ISynchronizationState {
   private _stateUIConnector!: IStateUIConnector;
 
   private _baseValue: number;
+  private _availableValue: number;
   private _totalValue: number;
   private _recalculationRequested: boolean;
 
   constructor() {
     this._baseValue = 0;
+    this._availableValue = 0;
     this._totalValue = 0;
     this._recalculationRequested = true;
 
-    this._stateUIConnector.registerEventEmitter(this, ['_baseValue', '_totalValue']);
+    this._stateUIConnector.registerEventEmitter(this, ['_baseValue', '_availableValue', '_totalValue']);
   }
 
   get baseValue() {
     return this._baseValue;
+  }
+
+  get availableValue() {
+    return this._availableValue;
   }
 
   get totalValue() {
@@ -44,6 +50,8 @@ export class SynchronizationState implements ISynchronizationState {
 
   requestRecalculation() {
     this._recalculationRequested = true;
+
+    this._globalState.experienceShare.requestRecalculation();
   }
 
   recalculate() {
@@ -55,7 +63,7 @@ export class SynchronizationState implements ISynchronizationState {
 
     this.calculateBaseValue();
     this.calculateDistrictValues();
-    this._companyState.clones.updateSynchronization();
+    this.calculateAvailableValue();
   }
 
   private calculateBaseValue() {
@@ -71,5 +79,13 @@ export class SynchronizationState implements ISynchronizationState {
 
       this._totalValue += districtState.parameters.synchronization.value;
     });
+  }
+
+  private calculateAvailableValue() {
+    this._availableValue = this._totalValue;
+
+    for (const clone of this._companyState.clones.listClones()) {
+      this._availableValue -= this._companyState.clones.getCloneSynchronization(clone.templateName, clone.tier);
+    }
   }
 }

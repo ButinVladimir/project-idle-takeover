@@ -7,8 +7,14 @@ import {
   IDistrictConnectivityParameter,
   IDistrictMultipliers,
   IDistrictSynchronizationParameter,
+  IDistrictProcessCompletionSpeedParameter,
 } from './interfaces';
-import { DistrictConnectivityParameter, DistrictTierParameter, DistrictSynchronizationParameter } from './parameters';
+import {
+  DistrictConnectivityParameter,
+  DistrictTierParameter,
+  DistrictSynchronizationParameter,
+  DistrictProcessCompletionSpeedParameter,
+} from './parameters';
 
 export class DistrictParameters implements IDistrictParameters {
   private _tier: IDistrictTierParameter;
@@ -19,11 +25,14 @@ export class DistrictParameters implements IDistrictParameters {
 
   private _multipliers: IDistrictMultipliers;
 
+  private _processCompletionSpeed: IDistrictProcessCompletionSpeedParameter;
+
   constructor(districtState: IDistrictState) {
     this._tier = new DistrictTierParameter(districtState);
     this._connectivity = new DistrictConnectivityParameter(districtState);
     this._synchronization = new DistrictSynchronizationParameter(districtState);
     this._multipliers = new DistrictMultipliers(districtState);
+    this._processCompletionSpeed = new DistrictProcessCompletionSpeedParameter(districtState);
   }
 
   get tier() {
@@ -40,6 +49,10 @@ export class DistrictParameters implements IDistrictParameters {
 
   get multipliers() {
     return this._multipliers;
+  }
+
+  get processCompletionSpeed() {
+    return this._processCompletionSpeed;
   }
 
   recalculate(): void {
@@ -64,5 +77,6 @@ export class DistrictParameters implements IDistrictParameters {
   removeAllEventListeners(): void {
     this._tier.removeAllEventListeners();
     this._synchronization.removeAllEventListeners();
+    this._processCompletionSpeed.removeAllEventListeners();
   }
 }

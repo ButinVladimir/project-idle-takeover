@@ -2,18 +2,18 @@ import { BaseController } from '@shared/base-controller';
 
 export class StatisticsExperienceShareController extends BaseController {
   get baseMultiplier() {
-    return this.companyState.clones.experienceShare.baseMultiplier;
+    return this.globalState.experienceShare.baseMultiplier;
   }
 
   get multiplierBySynchronization() {
-    return this.companyState.clones.experienceShare.synchronizationMultiplier;
+    return this.globalState.experienceShare.synchronizationMultiplier;
   }
 
   get multiplierByProgram() {
-    return this.companyState.clones.experienceShare.programMultiplier;
+    return this.globalState.experienceShare.programMultiplier;
   }
 
   get totalMultiplier() {
-    return this.companyState.clones.experienceShare.totalMultiplier;
+    return this.globalState.experienceShare.totalMultiplier;
   }
 }

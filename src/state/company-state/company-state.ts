@@ -52,7 +52,13 @@ export class CompanyState implements ICompanyState {
     this.sidejobs.filterSidejobs();
 
     for (const sidejob of this._sidejobs.listSidejobs()) {
+      const prevState = sidejob.isActive;
+      const newState = true;
       sidejob.isActive = true;
+
+      if (newState !== prevState) {
+        sidejob.handlePerformanceUpdate();
+      }
     }
   }
 

@@ -12,7 +12,7 @@ export interface IClone {
   autoUpgradeEnabled: boolean;
   experienceMultiplier: number;
   upgradeLevel(level: number): void;
-  increaseExperience(delta: number): void;
+  increaseExperience(delta: number, share: boolean): void;
   getLevelRequirements(level: number): number;
   getTotalAttributeValue(attribute: Attribute): number;
   getTotalSkillValue(skill: Skill): number;

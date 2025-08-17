@@ -12,13 +12,14 @@ export interface ISidejobTemplate {
     skills: Record<Skill, IExponent>;
   };
   rewards: {
-    experience: IExponent;
-    money: IExponent;
-    developmentPoints: IExponent;
-    distictTierPoints: IExponent;
-    codeBase: IExponent;
-    computationalBase: IExponent;
-    connectivity: IExponent;
-    rewards: IExponent;
+    experience?: IExponent;
+    money?: IExponent;
+    developmentPoints?: IExponent;
+    distictTierPoints?: IExponent;
+    codeBase?: IExponent;
+    computationalBase?: IExponent;
+    connectivity?: IExponent;
+    rewards?: IExponent;
+    processCompletionSpeed?: IExponent;
   };
 }

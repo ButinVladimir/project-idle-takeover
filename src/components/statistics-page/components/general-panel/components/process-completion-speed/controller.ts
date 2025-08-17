@@ -1,15 +1,24 @@
-import { BaseController } from '@shared/base-controller';
+import { BaseController, Feature } from '@shared/index';
+import { IDistrictState } from '@state/city-state';
 
 export class StatisticsProcessCompletionSpeedController extends BaseController {
   get multiplierByHardware() {
-    return this.mainframeState.processes.processCompletionSpeed.multiplierByHardware;
+    return this.globalState.processCompletionSpeed.multiplierByHardware;
   }
 
   get multiplierByProgram() {
-    return this.mainframeState.processes.processCompletionSpeed.multiplierByProgram;
+    return this.globalState.processCompletionSpeed.multiplierByProgram;
   }
 
   get totalMultiplier() {
-    return this.mainframeState.processes.processCompletionSpeed.totalMultiplier;
+    return this.globalState.processCompletionSpeed.totalMultiplier;
+  }
+
+  areDistrictsAvailable() {
+    return this.globalState.unlockedFeatures.isFeatureUnlocked(Feature.companyManagement);
+  }
+
+  listAvailableDistricts(): IDistrictState[] {
+    return this.cityState.listAvailableDistricts();
   }
 }

@@ -135,7 +135,8 @@ export class CompanySidejobsState implements ICompanySidejobsState {
     }
 
     if (sidejob) {
-      sidejob.removeAllEventListeners();
+      this.handleSidejobCleanup(sidejob);
+
       this._sidejobMap.delete(sidejobId);
       this._sidejobCloneIdMap.delete(sidejob.assignedClone!.id);
 
@@ -154,6 +155,14 @@ export class CompanySidejobsState implements ICompanySidejobsState {
     this.clearSidejobs();
 
     this._messageLogState.postMessage(SidejobsEvent.allSidejobsCancelled, msg('All sidejobs have been cancelled'));
+  }
+
+  updateAllSidejobsPerformance(): void {
+    for (const sidejob of this._sidejobsList) {
+      if (sidejob.isActive) {
+        sidejob.handlePerformanceUpdate();
+      }
+    }
   }
 
   perform(): void {
@@ -216,7 +225,7 @@ export class CompanySidejobsState implements ICompanySidejobsState {
 
   private clearSidejobs() {
     for (const sidejob of this._sidejobsList) {
-      sidejob.removeAllEventListeners();
+      this.handleSidejobCleanup(sidejob);
     }
 
     this._sidejobsList.length = 0;
@@ -224,5 +233,11 @@ export class CompanySidejobsState implements ICompanySidejobsState {
     this._sidejobMap.clear();
 
     this._companyState.requestReassignment();
+  }
+
+  private handleSidejobCleanup(sidejob: ISidejob) {
+    sidejob.isActive = false;
+    sidejob.handlePerformanceUpdate();
+    sidejob.removeAllEventListeners();
   }
 }
