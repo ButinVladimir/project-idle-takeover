@@ -3,5 +3,4 @@ import { IDistrictMultiplierSerializedParameter } from './district-multiplier-se
 export interface IDistrictSerializedMultipliers {
   codeBase: IDistrictMultiplierSerializedParameter;
   computationalBase: IDistrictMultiplierSerializedParameter;
-  rewards: IDistrictMultiplierSerializedParameter;
 }

@@ -89,12 +89,6 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
       return false;
     }
 
-    const maxIncrease = this.globalState.development.level - this.level;
-
-    if (increase > maxIncrease) {
-      return false;
-    }
-
     const cost = this.getIncreaseCost(increase);
 
     return cost <= this.globalState.money.money;

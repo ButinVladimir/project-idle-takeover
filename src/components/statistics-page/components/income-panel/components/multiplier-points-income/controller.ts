@@ -22,8 +22,6 @@ export class StatisticsMultiplierPointsIncomeController extends BaseController {
         return this.globalState.multipliers.computationalBase;
       case 'codeBase':
         return this.globalState.multipliers.codeBase;
-      case 'rewards':
-        return this.globalState.multipliers.rewards;
     }
   }
 
@@ -36,8 +34,6 @@ export class StatisticsMultiplierPointsIncomeController extends BaseController {
         return districtMultipliers.computationalBase;
       case 'codeBase':
         return districtMultipliers.codeBase;
-      case 'rewards':
-        return districtMultipliers.rewards;
     }
   }
 }

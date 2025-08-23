@@ -70,8 +70,13 @@ export class AssignCloneSidejobDialogRequirements extends BaseComponent {
   }
 
   private renderRequirementAttribute = (attribute: Attribute) => {
-    const availableValue = this._sidejob?.assignedClone?.getTotalAttributeValue(attribute) ?? 0;
     const requiredValue = this._sidejob!.getAttributeRequirement(attribute);
+
+    if (requiredValue <= 0) {
+      return nothing;
+    }
+
+    const availableValue = this._sidejob?.assignedClone?.getTotalAttributeValue(attribute) ?? 0;
 
     const formatter = this._controller.formatter;
 
@@ -89,8 +94,13 @@ export class AssignCloneSidejobDialogRequirements extends BaseComponent {
   };
 
   private renderRequirementSkill = (skill: Skill) => {
-    const availableValue = this._sidejob?.assignedClone?.getTotalSkillValue(skill) ?? 0;
     const requiredValue = this._sidejob!.getSkillRequirement(skill);
+
+    if (requiredValue <= 0) {
+      return nothing;
+    }
+
+    const availableValue = this._sidejob?.assignedClone?.getTotalSkillValue(skill) ?? 0;
 
     const formatter = this._controller.formatter;
 

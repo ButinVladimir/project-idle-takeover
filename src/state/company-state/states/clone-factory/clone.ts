@@ -274,10 +274,7 @@ export class Clone implements IClone {
   private calculateLevelFromExperience(): number {
     const { base, multiplier } = this._template.levelRequirements;
 
-    return Math.min(
-      reverseGeometricProgressionSum(this._experience, multiplier, base),
-      this._globalState.development.level,
-    );
+    return reverseGeometricProgressionSum(this._experience, multiplier, base);
   }
 
   private handlePerformanceUpdate(): void {

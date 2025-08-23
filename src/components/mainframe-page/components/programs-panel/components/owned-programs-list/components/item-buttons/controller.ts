@@ -3,7 +3,7 @@ import { IProgram } from '@state/mainframe-state';
 
 export class OwnedProgramsListItemButtonsController extends BaseController {
   checkCanUpgradeMax(program: IProgram) {
-    if (!this.globalState.availableItems.programs.isItemAvailable(program.name, program.tier, program.level + 1)) {
+    if (!this.globalState.availableItems.programs.isItemAvailable(program.name, program.tier)) {
       return false;
     }
 

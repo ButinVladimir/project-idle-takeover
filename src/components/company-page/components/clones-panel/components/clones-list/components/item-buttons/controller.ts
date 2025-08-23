@@ -3,9 +3,7 @@ import { BaseController } from '@shared/index';
 
 export class ClonesListItemButtonsController extends BaseController {
   checkCanUpgradeCloneLevel(clone: IClone): boolean {
-    if (
-      !this.globalState.availableItems.cloneTemplates.isItemAvailable(clone.templateName, clone.tier, clone.level + 1)
-    ) {
+    if (!this.globalState.availableItems.cloneTemplates.isItemAvailable(clone.templateName, clone.tier)) {
       return false;
     }
 

@@ -32,14 +32,14 @@ export class StatisticsGeneralPanel extends BaseComponent {
       ${this._controller.isFeatureUnlocked(Feature.connectivity)
         ? html`<ca-statistics-connectivity></ca-statistics-connectivity>`
         : nothing}
+      ${this._controller.isFeatureUnlocked(Feature.rewards)
+        ? html`<ca-statistics-rewards></ca-statistics-rewards>`
+        : nothing}
       ${this._controller.isFeatureUnlocked(Feature.mainframePrograms)
         ? html`<ca-statistics-multipliers type="mainframeProgramsCostDivisors"></ca-statistics-multipliers>`
         : nothing}
       ${this._controller.isFeatureUnlocked(Feature.mainframeHardware)
         ? html`<ca-statistics-multipliers type="mainframeHardwareCostDivisors"></ca-statistics-multipliers>`
-        : nothing}
-      ${this._controller.isFeatureUnlocked(Feature.rewards)
-        ? html`<ca-statistics-multipliers type="rewards"></ca-statistics-multipliers>`
         : nothing}
     `;
   }

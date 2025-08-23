@@ -389,15 +389,15 @@
     },
     {
       "name": "ca-mainframe-hardware-panel-article",
-      "description": "Attributes:\n\n  * `type` - \n\n  * `max-increase` {`number`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `type` - \n\n  * `maxIncrease` {`number`} - \n\n  * `_costElRef` {`Ref<HTMLSpanElement>`} - \n\n  * `_buttonsRef` {`Ref<MainframeHardwarePanelArticleButtons>`} - \n\n  * `_parameter` - \n\n  * `renderContent` - \n\n  * `handleSubmit` - \n\n  * `handleBuyMax` - \n\n  * `handleToggleAutoUpgrade` - \n\n  * `handleDragStart` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`MainframeHardwarePanelArticleController`} - ",
+      "description": "Attributes:\n\n  * `type` - \n\n  * `increase` {`number`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `type` - \n\n  * `increase` {`number`} - \n\n  * `_costElRef` {`Ref<HTMLSpanElement>`} - \n\n  * `_buttonsRef` {`Ref<MainframeHardwarePanelArticleButtons>`} - \n\n  * `_parameter` - \n\n  * `renderContent` - \n\n  * `handleSubmit` - \n\n  * `handleBuyMax` - \n\n  * `handleToggleAutoUpgrade` - \n\n  * `handleDragStart` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`MainframeHardwarePanelArticleController`} - ",
       "attributes": [
         {
           "name": "type",
           "description": "`type` - \n\nProperty: type"
         },
         {
-          "name": "max-increase",
-          "description": "`max-increase` {`number`} - \n\nProperty: maxIncrease"
+          "name": "increase",
+          "description": "`increase` {`number`} - \n\nProperty: increase"
         }
       ]
     },
@@ -756,9 +756,6 @@
           "description": "`type` {`MultipliersType`} - \n\nProperty: type",
           "values": [
             {
-              "name": "rewards"
-            },
-            {
               "name": "mainframeHardwareCostDivisors"
             },
             {
@@ -771,6 +768,11 @@
     {
       "name": "ca-statistics-process-completion-speed",
       "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `_controller` {`StatisticsProcessCompletionSpeedController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-statistics-rewards",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programMultiplierRef` {`Ref<HTMLDivElement>`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`StatisticsRewardsController`} - ",
       "attributes": []
     },
     {
@@ -819,6 +821,11 @@
       ]
     },
     {
+      "name": "ca-statistics-rewards-points-growth",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programGrowthRef` {`Ref<HTMLDivElement>`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`StatisticsRewardsPointsGrowthController`} - ",
+      "attributes": []
+    },
+    {
       "name": "ca-statistics-income-panel",
       "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `_controller` {`StatisticsIncomePanelController`} - ",
       "attributes": []
@@ -857,6 +864,11 @@
           "description": "`type` - \n\nProperty: type"
         }
       ]
+    },
+    {
+      "name": "ca-statistics-rewards-points-income",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programPointsRef` {`Ref<HTMLDivElement>`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`StatisticsRewardsPointsIncomeController`} - ",
+      "attributes": []
     }
   ],
   "globalAttributes": [],

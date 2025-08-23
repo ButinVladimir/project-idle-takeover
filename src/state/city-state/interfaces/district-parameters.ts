@@ -2,6 +2,7 @@ import { IDistrictSerializedParameters } from './serialized-states/district-seri
 import {
   IDistrictConnectivityParameter,
   IDistrictProcessCompletionSpeedParameter,
+  IDistrictRewardsParameter,
   IDistrictSynchronizationParameter,
   IDistrictTierParameter,
 } from './parameters';
@@ -11,6 +12,7 @@ export interface IDistrictParameters {
   tier: IDistrictTierParameter;
   synchronization: IDistrictSynchronizationParameter;
   connectivity: IDistrictConnectivityParameter;
+  rewards: IDistrictRewardsParameter;
   multipliers: IDistrictMultipliers;
   processCompletionSpeed: IDistrictProcessCompletionSpeedParameter;
   recalculate(): void;

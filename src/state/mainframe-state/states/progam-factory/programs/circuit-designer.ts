@@ -18,7 +18,7 @@ export class CircuitDesignerProgram extends BaseProgram {
 
     return (
       this.globalState.scenario.currentValues.programMultipliers.computationalBase.pointsMultiplier *
-      this.globalState.multipliers.rewards.totalMultiplier *
+      this.globalState.rewards.multiplierByProgram *
       threads *
       calculateTierLinear(this.level, this.tier, programData.computationalBase)
     );

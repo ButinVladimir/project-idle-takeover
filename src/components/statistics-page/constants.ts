@@ -21,16 +21,21 @@ export const STATISTIC_PAGE_TEXTS = {
   baseValue: () => msg('Base value'),
   byPrograms: () => msg('By programs'),
   byDistrict: (districtName: string) => msg(str`By district "${DISTRICT_NAMES[districtName]()}"`),
+  inDistrict: (districtName: string) => msg(str`In district "${DISTRICT_NAMES[districtName]()}"`),
   total: () => msg('Total'),
 };
 
 export const POINT_MULTIPLIER_HINTS = {
   codeBase: () => msg('Code base affects cost multiplier for mainframe programs'),
   computationalBase: () => msg('Computational base affects cost multiplier for mainframe hardware upgrades'),
-  rewards: () => msg('Rewards affect all gains'),
 };
 
 export const STATISTIC_HINTS = {
-  connectivity: () => msg('Connectivity affects chances to receive new contracts and unlocks new sidejobs'),
-  synchronization: () => msg('Synchronization affects how many clones can be in company'),
+  connectivity: () =>
+    msg(`Connectivity affects chances to receive new contracts and unlocks new sidejobs. 
+Connectivity values are separate for each district.`),
+  synchronization: () => msg('Synchronization affects how many clones can be in company.'),
+  rewards: () =>
+    msg(`Rewards affect all gains. 
+Rewards multipliers are separate for each district and stack with program multiplier.`),
 };

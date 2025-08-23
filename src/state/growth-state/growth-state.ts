@@ -7,6 +7,7 @@ import type {
   IConnectivityGrowthState,
   IDistrictTierPointsGrowthState,
   IExperienceGrowthState,
+  IRewardsGrowthState,
 } from './interfaces';
 import { IGrowthState } from './interfaces/growth-state';
 
@@ -23,6 +24,9 @@ export class GrowthState implements IGrowthState {
 
   @inject(TYPES.ConnectivityGrowthState)
   private _connectivityGrowthState!: IConnectivityGrowthState;
+
+  @inject(TYPES.RewardsGrowthState)
+  private _rewardsGrowthState!: IRewardsGrowthState;
 
   @inject(TYPES.DistrictTierPointsGrowthState)
   private _districtTierPointsGrowthState!: IDistrictTierPointsGrowthState;
@@ -46,6 +50,10 @@ export class GrowthState implements IGrowthState {
     return this._connectivityGrowthState;
   }
 
+  get rewards(): IRewardsGrowthState {
+    return this._rewardsGrowthState;
+  }
+
   get districtTierPoints(): IDistrictTierPointsGrowthState {
     return this._districtTierPointsGrowthState;
   }
@@ -57,6 +65,7 @@ export class GrowthState implements IGrowthState {
   clearValues() {
     this._multipliersGrowthState.clearValues();
     this._connectivityGrowthState.clearValues();
+    this._rewardsGrowthState.clearValues();
     this._districtTierPointsGrowthState.clearValues();
     this._experienceGrowthState.clearValues();
   }
@@ -66,6 +75,7 @@ export class GrowthState implements IGrowthState {
     this._developmentGrowthState.resetValues();
     this._multipliersGrowthState.resetValues();
     this._connectivityGrowthState.resetValues();
+    this._rewardsGrowthState.resetValues();
     this._districtTierPointsGrowthState.resetValues();
     this._experienceGrowthState.resetValues();
   }

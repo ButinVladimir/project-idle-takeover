@@ -1,6 +1,5 @@
 import { injectable } from 'inversify';
-import { IConnectivityState } from '../interfaces/parameters/connectivity-state';
-import { IMultiplierSerializedState } from '../interfaces/serialized-states/multiplier-serialized-state';
+import { IConnectivityState, IConnectivitySerializedState } from '../interfaces';
 
 @injectable()
 export class ConnectivityState implements IConnectivityState {
@@ -22,11 +21,11 @@ export class ConnectivityState implements IConnectivityState {
     this._pointsByProgram = 0;
   }
 
-  async deserialize(serializedState: IMultiplierSerializedState): Promise<void> {
+  async deserialize(serializedState: IConnectivitySerializedState): Promise<void> {
     this._pointsByProgram = serializedState.pointsByProgram;
   }
 
-  serialize(): IMultiplierSerializedState {
+  serialize(): IConnectivitySerializedState {
     return {
       pointsByProgram: this._pointsByProgram,
     };

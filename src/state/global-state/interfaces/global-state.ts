@@ -18,6 +18,7 @@ import {
   IAvailableActivities,
   IExperienceShareState,
   IProcessCompletionSpeedState,
+  IRewardsState,
 } from './parameters';
 
 export interface IGlobalState extends ISerializeable<IGlobalSerializedState> {
@@ -32,6 +33,7 @@ export interface IGlobalState extends ISerializeable<IGlobalSerializedState> {
   threat: IThreatState;
   synchronization: ISynchronizationState;
   connectivity: IConnectivityState;
+  rewards: IRewardsState;
   multipliers: IMultipliersState;
   availableItems: IAvailableItemsState;
   availableActivities: IAvailableActivities;

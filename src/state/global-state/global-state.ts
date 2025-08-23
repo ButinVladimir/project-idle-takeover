@@ -21,6 +21,7 @@ import type {
   IAvailableActivities,
   IExperienceShareState,
   IProcessCompletionSpeedState,
+  IRewardsState,
 } from './interfaces';
 import { GameSpeed } from './types';
 import { AvailableActivities } from './parameters/available-activities-state';
@@ -75,6 +76,9 @@ export class GlobalState implements IGlobalState {
 
   @inject(TYPES.ProcessCompletionSpeedState)
   private _processCompletionSpeed!: IProcessCompletionSpeedState;
+
+  @inject(TYPES.RewardsState)
+  private _rewardsState!: IRewardsState;
 
   private _random: XORShift128Plus;
   private _gameSpeed: GameSpeed;
@@ -166,6 +170,10 @@ export class GlobalState implements IGlobalState {
     return this._processCompletionSpeed;
   }
 
+  get rewards(): IRewardsState {
+    return this._rewardsState;
+  }
+
   recalculate() {
     this._developmentState.recalculateLevel();
     this._multipliersState.recalculate();
@@ -174,6 +182,7 @@ export class GlobalState implements IGlobalState {
     this._availableActivities.recalculate();
     this._experienceShare.recalculate();
     this._processCompletionSpeed.recalculate();
+    this._rewardsState.recalculateMultiplier();
   }
 
   makeNextTick() {
@@ -197,6 +206,7 @@ export class GlobalState implements IGlobalState {
     await this._multipliersState.startNewState();
     await this._availableItemsState.startNewState();
     await this._unlockedFeaturesState.startNewState();
+    await this._rewardsState.startNewState();
     this.storyEvents.startNewState();
 
     this._synchronization.requestRecalculation();
@@ -220,6 +230,7 @@ export class GlobalState implements IGlobalState {
     await this._multipliersState.deserialize(serializedState.multipliers);
     await this._availableItemsState.deserialize(serializedState.availableItems);
     await this._unlockedFeaturesState.deserialize(serializedState.unlockedFeatures);
+    await this._rewardsState.deserialize(serializedState.rewards);
 
     this._synchronization.requestRecalculation();
     this._experienceShare.requestRecalculation();
@@ -241,6 +252,7 @@ export class GlobalState implements IGlobalState {
       multipliers: this._multipliersState.serialize(),
       availableItems: this._availableItemsState.serialize(),
       unlockedFeatures: this._unlockedFeaturesState.serialize(),
+      rewards: this._rewardsState.serialize(),
     };
   }
 }

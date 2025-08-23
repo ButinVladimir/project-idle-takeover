@@ -10,7 +10,7 @@ export class DealMakerProgram extends BaseProgram {
   handlePerformanceUpdate(): void {}
 
   perform(threads: number): void {
-    this.globalState.multipliers.rewards.increasePointsByProgram(this.calculateDelta(threads));
+    this.globalState.rewards.increasePointsByProgram(this.calculateDelta(threads));
   }
 
   calculateDelta(threads: number): number {
@@ -18,7 +18,7 @@ export class DealMakerProgram extends BaseProgram {
 
     return (
       this.globalState.scenario.currentValues.programMultipliers.rewards.pointsMultiplier *
-      this.globalState.multipliers.rewards.totalMultiplier *
+      this.globalState.rewards.multiplierByProgram *
       threads *
       calculateTierLinear(this.level, this.tier, programData.rewards)
     );

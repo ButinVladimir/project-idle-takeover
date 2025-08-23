@@ -59,6 +59,6 @@ export class ShareServerProgram extends BaseProgram {
       this.globalState.scenario.currentValues.mainframeSoftware.performanceBoost,
     );
 
-    return this.globalState.multipliers.rewards.totalMultiplier * passedTime * hardwareMultiplier;
+    return this.globalState.rewards.multiplierByProgram * passedTime * hardwareMultiplier;
   }
 }

@@ -61,8 +61,8 @@ export class PurchaseProgramDialogController extends BaseController {
     return this.mainframeState.programs.getProgramCost(programName, tier, level);
   }
 
-  isProgramAvailable(programName: ProgramName, tier: number, level: number): boolean {
-    return this.globalState.availableItems.programs.isItemAvailable(programName, tier, level);
+  isProgramAvailable(programName: ProgramName, tier: number): boolean {
+    return this.globalState.availableItems.programs.isItemAvailable(programName, tier);
   }
 
   private deleteSelectedProgram() {

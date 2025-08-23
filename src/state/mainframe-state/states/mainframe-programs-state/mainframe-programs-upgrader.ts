@@ -102,9 +102,7 @@ export class MainframeProgramsUpgrader implements IMainframeProgramsUpgrader {
   private makeCheckProgramFunction =
     (existingProgram: IProgram) =>
     (level: number): boolean => {
-      if (
-        !this._globalState.availableItems.programs.isItemAvailable(existingProgram.name, existingProgram.tier, level)
-      ) {
+      if (!this._globalState.availableItems.programs.isItemAvailable(existingProgram.name, existingProgram.tier)) {
         return false;
       }
 

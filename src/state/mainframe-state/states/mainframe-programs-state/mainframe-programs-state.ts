@@ -67,7 +67,7 @@ export class MainframeProgramsState implements IMainframeProgramsState {
       return false;
     }
 
-    if (!this._globalState.availableItems.programs.isItemAvailable(name, tier, level)) {
+    if (!this._globalState.availableItems.programs.isItemAvailable(name, tier)) {
       return false;
     }
 

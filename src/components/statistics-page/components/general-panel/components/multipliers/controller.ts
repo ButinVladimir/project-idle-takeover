@@ -33,8 +33,6 @@ export class StatisticsMultipliersController extends BaseController {
         return this.globalState.multipliers.computationalBase;
       case 'mainframeProgramsCostDivisors':
         return this.globalState.multipliers.codeBase;
-      case 'rewards':
-        return this.globalState.multipliers.rewards;
     }
   }
 
@@ -44,8 +42,6 @@ export class StatisticsMultipliersController extends BaseController {
         return districtMultipliers.computationalBase;
       case 'mainframeProgramsCostDivisors':
         return districtMultipliers.codeBase;
-      case 'rewards':
-        return districtMultipliers.rewards;
     }
   }
 }

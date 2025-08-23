@@ -16,17 +16,17 @@
       },
       "codeBase": {
         "pointsMultiplier": { "multiplier": 1, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.99 },
+        "pointsToSoftCap": 86400,
         "logBase": 2
       },
       "computationalBase": {
         "pointsMultiplier": { "multiplier": 1, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.99 },
+        "pointsToSoftCap": 86400,
         "logBase": 2
       },
       "rewards": {
         "pointsMultiplier": { "multiplier": 1, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.99 },
+        "pointsToSoftCap": 86400,
         "logBase": 2
       },
       "processCompletionSpeed": { "multiplier": 1, "base": 1.1 }
@@ -52,17 +52,17 @@
       },
       "codeBase": {
         "pointsMultiplier": { "multiplier": 5, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.9 },
+        "pointsToSoftCap": 86400,
         "logBase": 20
       },
       "computationalBase": {
         "pointsMultiplier": { "multiplier": 5, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.9 },
+        "pointsToSoftCap": 86400,
         "logBase": 20
       },
       "rewards": {
         "pointsMultiplier": { "multiplier": 3, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.9 },
+        "pointsToSoftCap": 86400,
         "logBase": 20
       },
       "processCompletionSpeed": { "multiplier": 1, "base": 1.1 }

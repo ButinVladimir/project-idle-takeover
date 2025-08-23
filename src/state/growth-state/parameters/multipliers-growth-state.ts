@@ -11,9 +11,6 @@ export class MultipliersGrowthState implements IMultipliersGrowthState {
   @inject(TYPES.ComputationalBaseGrowthState)
   private _computationalBaseGrowthState!: IMultiplierGrowthState;
 
-  @inject(TYPES.RewardsGrowthState)
-  private _rewardsGrowthState!: IMultiplierGrowthState;
-
   get codeBase() {
     return this._codeBaseGrowthState;
   }
@@ -22,19 +19,13 @@ export class MultipliersGrowthState implements IMultipliersGrowthState {
     return this._computationalBaseGrowthState;
   }
 
-  get rewards() {
-    return this._rewardsGrowthState;
-  }
-
   resetValues() {
     this._codeBaseGrowthState.resetValues();
     this._computationalBaseGrowthState.resetValues();
-    this._rewardsGrowthState.resetValues();
   }
 
   clearValues() {
     this._codeBaseGrowthState.clearValues();
     this._computationalBaseGrowthState.clearValues();
-    this._rewardsGrowthState.clearValues();
   }
 }

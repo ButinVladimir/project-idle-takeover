@@ -11,3 +11,4 @@ export * from './factions-serialized-state';
 export * from './multiplier-serialized-state';
 export * from './connectivity-serialized-state';
 export * from './threat-serialized-state';
+export * from './rewards-serialized-state';

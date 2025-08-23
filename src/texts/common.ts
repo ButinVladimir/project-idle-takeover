@@ -5,7 +5,6 @@ import { html } from 'lit';
 export const COMMON_TEXTS = {
   notEnoughMoney: () => msg('Not enough money'),
   willBeAvailableIn: (timeElement: any) => msg(html`Will be available in ${timeElement}`),
-  higherDevelopmentLevelRequired: () => msg('Higher development level required'),
   buyIncrease: (increase: string) => msg(str`Buy x${increase}`),
   buyMax: () => msg('Buy max'),
   buyMaxAllUpgrades: () => msg('Buy all upgrades'),

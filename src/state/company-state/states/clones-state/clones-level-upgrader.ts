@@ -101,7 +101,7 @@ export class CompanyClonesLevelUpgrader implements ICompanyClonesLevelUpgrader {
   private makeCheckCloneFunction =
     (clone: IClone) =>
     (level: number): boolean => {
-      if (!this._globalState.availableItems.cloneTemplates.isItemAvailable(clone.templateName, clone.tier, level)) {
+      if (!this._globalState.availableItems.cloneTemplates.isItemAvailable(clone.templateName, clone.tier)) {
         return false;
       }
 
