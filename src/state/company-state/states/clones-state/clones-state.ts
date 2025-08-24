@@ -17,6 +17,7 @@ import {
   calculateTierPower,
   moveElementInArray,
   removeElementsFromArray,
+  reverseTierPower,
   type IFormatter,
 } from '@shared/index';
 import { CLONE_TEMPLATE_TEXTS, CLONE_NAMES } from '@texts/index';
@@ -74,11 +75,15 @@ export class CompanyClonesState implements ICompanyClonesState {
     return this._clonesMap.get(id);
   }
 
-  getCloneCost(templateName: CloneTemplateName, tier: number, level: number): number {
+  calculateCloneCost(templateName: CloneTemplateName, tier: number, level: number): number {
     return calculateTierPower(level, tier, cloneTemplates[templateName].cost);
   }
 
-  getCloneSynchronization(templateName: CloneTemplateName, tier: number): number {
+  calculateCloneLevelFromMoney(templateName: CloneTemplateName, tier: number, money: number): number {
+    return reverseTierPower(money, tier, cloneTemplates[templateName].cost);
+  }
+
+  calculateCloneSynchronization(templateName: CloneTemplateName, tier: number): number {
     const template = cloneTemplates[templateName];
 
     return Math.ceil(
@@ -95,13 +100,13 @@ export class CompanyClonesState implements ICompanyClonesState {
       return false;
     }
 
-    const synchronization = this.getCloneSynchronization(args.templateName, args.tier);
+    const synchronization = this.calculateCloneSynchronization(args.templateName, args.tier);
 
     if (synchronization > this._globalState.synchronization.availableValue) {
       return false;
     }
 
-    const cost = this.getCloneCost(args.templateName, args.tier, args.level);
+    const cost = this.calculateCloneCost(args.templateName, args.tier, args.level);
 
     const bought = this._globalState.money.purchase(cost, PurchaseType.clones, this.handlePurhaseClone(args));
 

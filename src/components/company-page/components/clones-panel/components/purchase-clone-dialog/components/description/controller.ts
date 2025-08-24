@@ -7,7 +7,7 @@ export class PurchaseCloneDialogDescriptionTextController extends BaseController
   }
 
   getCloneSynchronization(cloneTemplateName: CloneTemplateName, tier: number): number {
-    return this.companyState.clones.getCloneSynchronization(cloneTemplateName, tier);
+    return this.companyState.clones.calculateCloneSynchronization(cloneTemplateName, tier);
   }
 
   get money(): number {
@@ -15,6 +15,6 @@ export class PurchaseCloneDialogDescriptionTextController extends BaseController
   }
 
   getCloneCost(cloneTemplateName: CloneTemplateName, tier: number, level: number): number {
-    return this.companyState.clones.getCloneCost(cloneTemplateName, tier, level);
+    return this.companyState.clones.calculateCloneCost(cloneTemplateName, tier, level);
   }
 }

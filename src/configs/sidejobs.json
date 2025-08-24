@@ -165,5 +165,24 @@
     "rewards": {
       "processCompletionSpeed": 0.001
     }
+  },
+  "feedAnalyzer": {
+    "requirements": {
+      "connectivity": { "multiplier": 1, "base": 1 },
+      "attributes": {
+        "intellect": { "multiplier": 50, "base": 1 }
+      },
+      "skills": {},
+      "requiredFeatures": ["experienceShare"]
+    },
+    "rewardModifiers": {
+      "attributes": {
+        "intellect": { "multiplier": 1, "base": 1 }
+      },
+      "skills": {}
+    },
+    "rewards": {
+      "experienceShareMultiplier": 0.001
+    }
   }
 }

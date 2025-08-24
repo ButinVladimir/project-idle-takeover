@@ -1,6 +1,6 @@
 import { html, nothing } from 'lit';
 import { consume } from '@lit/context';
-import { localized, msg } from '@lit/localize';
+import { localized } from '@lit/localize';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
@@ -31,6 +31,7 @@ export class ClonesListItemButtons extends BaseComponent {
   private _clone?: IClone;
 
   private _upgradeLevelMaxButton = createRef<SlButton>();
+  private _upgradeLevelRef = createRef<HTMLSpanElement>();
 
   constructor() {
     super();
@@ -50,6 +51,7 @@ export class ClonesListItemButtons extends BaseComponent {
     const toggleDetailsVariant = this.detailsVisible
       ? TOGGLE_DETAILS_VALUES.buttonVariant.enabled
       : TOGGLE_DETAILS_VALUES.buttonVariant.disabled;
+    const levelEl = html`<span ${ref(this._upgradeLevelRef)}></span>`;
 
     return html`
       <sl-button variant=${toggleDetailsVariant} size="medium" @click=${this.handleToggleDetails}>
@@ -63,13 +65,12 @@ export class ClonesListItemButtons extends BaseComponent {
           ${ref(this._upgradeLevelMaxButton)}
           disabled
           variant=${UPGRADE_MAX_VALUES.buttonVariant}
-          outline
           size="medium"
           @click=${this.handleUpgradeLevelMax}
         >
           <sl-icon slot="prefix" name=${UPGRADE_MAX_VALUES.icon}></sl-icon>
 
-          ${msg('Upgrade level')}
+          ${COMMON_TEXTS.upgradeToLevel(levelEl)}
         </sl-button>
       </sl-button-group>
     `;
@@ -87,15 +88,32 @@ export class ClonesListItemButtons extends BaseComponent {
     this._controller.upgradeCloneLevel(this._clone);
   };
 
+  private updateUpgradeLevelMaxButton() {
+    if (!this._upgradeLevelMaxButton.value) {
+      return;
+    }
+
+    const upgradeLevelMaxButtonDisabled = !this._controller.checkCanUpgradeCloneLevel(this._clone!);
+    this._upgradeLevelMaxButton.value.disabled = upgradeLevelMaxButtonDisabled;
+  }
+
+  private updateUpgradeLevel(): void {
+    if (!this._upgradeLevelRef.value) {
+      return;
+    }
+
+    const level = Math.max(this._controller.calculateUpgradeLevel(this._clone!), this._clone!.level + 1);
+    const formattedLevel = this._controller.formatter.formatLevel(level);
+
+    this._upgradeLevelRef.value.textContent = formattedLevel;
+  }
+
   handlePartialUpdate = () => {
     if (!this._clone) {
       return;
     }
 
-    const upgradeLevelMaxButtonDisabled = !this._controller.checkCanUpgradeCloneLevel(this._clone);
-
-    if (this._upgradeLevelMaxButton.value) {
-      this._upgradeLevelMaxButton.value.disabled = upgradeLevelMaxButtonDisabled;
-    }
+    this.updateUpgradeLevelMaxButton();
+    this.updateUpgradeLevel();
   };
 }

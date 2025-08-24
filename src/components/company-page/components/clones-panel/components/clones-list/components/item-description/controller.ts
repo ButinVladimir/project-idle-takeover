@@ -3,6 +3,6 @@ import { BaseController } from '@shared/base-controller';
 
 export class ClonesListItemDescriptionController extends BaseController {
   getCloneSynchronization(clone: IClone): number {
-    return this.companyState.clones.getCloneSynchronization(clone.templateName, clone.tier);
+    return this.companyState.clones.calculateCloneSynchronization(clone.templateName, clone.tier);
   }
 }

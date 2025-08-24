@@ -27,6 +27,7 @@ export interface ISidejob {
   calculateComputationalBaseDelta(passedTime: number): number;
   calculateRewardsDelta(passedTime: number): number;
   calculateProcessCompletionSpeedDelta(): number;
+  calculateExperienceShareMultiplierDelta(): number;
   handlePerformanceUpdate(): void;
   serialize(): IMakeSidejobParameters;
   removeAllEventListeners(): void;

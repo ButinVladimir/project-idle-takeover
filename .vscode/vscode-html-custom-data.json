@@ -146,7 +146,7 @@
     },
     {
       "name": "ca-clones-list-item-buttons",
-      "description": "Attributes:\n\n  * `details-visible` {`boolean`} - \n\nProperties:\n\n  * `styles` {`CSSResult`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `detailsVisible` {`boolean`} - \n\n  * `_clone` - \n\n  * `_upgradeLevelMaxButton` {`Ref<SlButton>`} - \n\n  * `handleToggleDetails` - \n\n  * `handleUpgradeLevelMax` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`ClonesListItemButtonsController`} - ",
+      "description": "Attributes:\n\n  * `details-visible` {`boolean`} - \n\nProperties:\n\n  * `styles` {`CSSResult`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `detailsVisible` {`boolean`} - \n\n  * `_clone` - \n\n  * `_upgradeLevelMaxButton` {`Ref<SlButton>`} - \n\n  * `_upgradeLevelRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handleToggleDetails` - \n\n  * `handleUpgradeLevelMax` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`ClonesListItemButtonsController`} - ",
       "attributes": [
         {
           "name": "details-visible",
@@ -403,7 +403,7 @@
     },
     {
       "name": "ca-mainframe-hardware-panel-article-buttons",
-      "description": "Attributes:\n\n  * `increase` {`number`} - \n\n  * `disabled` {`boolean`} - \n\n  * `disabled-buy-all` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `increase` {`number`} - \n\n  * `disabled` {`boolean`} - \n\n  * `disabledBuyAll` {`boolean`} - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_buyButtonRef` {`Ref<SlButton>`} - \n\n  * `_buyMaxButtonRef` {`Ref<SlButton>`} - \n\n  * `_availableTimeRef` {`Ref<HTMLSpanElement>`} - \n\n  * `_parameter` - \n\n  * `renderContent` - \n\n  * `renderWarnings` - \n\n  * `handlePurchase` - \n\n  * `handleBuyMax` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`MainframeHardwarePanelArticleButtonsController`} - ",
+      "description": "Attributes:\n\n  * `increase` {`number`} - \n\n  * `disabled` {`boolean`} - \n\n  * `disabled-buy-all` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `increase` {`number`} - \n\n  * `disabled` {`boolean`} - \n\n  * `disabledBuyAll` {`boolean`} - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_buyButtonRef` {`Ref<SlButton>`} - \n\n  * `_buyMaxButtonRef` {`Ref<SlButton>`} - \n\n  * `_availableTimeRef` {`Ref<HTMLSpanElement>`} - \n\n  * `_upgradeLevelRef` {`Ref<HTMLSpanElement>`} - \n\n  * `_parameter` - \n\n  * `renderContent` - \n\n  * `renderWarnings` - \n\n  * `handlePurchase` - \n\n  * `handleBuyMax` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`MainframeHardwarePanelArticleButtonsController`} - ",
       "attributes": [
         {
           "name": "increase",
@@ -508,7 +508,7 @@
     },
     {
       "name": "ca-owned-programs-list-item-buttons",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_program` - \n\n  * `_upgradeMaxButton` {`Ref<SlButton>`} - \n\n  * `handleToggleAutoUpgrade` - \n\n  * `handleUpgradeMax` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`OwnedProgramsListItemButtonsController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_program` - \n\n  * `_upgradeMaxButton` {`Ref<SlButton>`} - \n\n  * `_upgradeLevelRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handleToggleAutoUpgrade` - \n\n  * `handleUpgradeMax` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`OwnedProgramsListItemButtonsController`} - ",
       "attributes": []
     },
     {
@@ -739,7 +739,7 @@
     },
     {
       "name": "ca-statistics-experience-share",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_controller` {`StatisticsExperienceShareController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `_controller` {`StatisticsExperienceShareController`} - ",
       "attributes": []
     },
     {

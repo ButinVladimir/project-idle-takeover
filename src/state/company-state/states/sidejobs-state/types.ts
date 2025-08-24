@@ -5,4 +5,5 @@ export enum SidejobName {
   computerRepairer = 'computerRepairer',
   mediator = 'mediator',
   mainframeRelay = 'mainframeRelay',
+  feedAnalyzer = 'feedAnalyzer',
 }

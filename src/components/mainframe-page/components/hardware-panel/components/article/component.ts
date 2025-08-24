@@ -154,7 +154,7 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
       return;
     }
 
-    const cost = this._parameter.getIncreaseCost(this.increase);
+    const cost = this._parameter.calculateIncreaseCost(this.increase);
     const money = this._controller.money;
 
     const formattedCost = this._controller.formatter.formatNumberFloat(cost);

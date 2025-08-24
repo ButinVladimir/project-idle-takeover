@@ -1,6 +1,7 @@
 {
   "residential": {
     "captureDifficulty": { "multiplier": 1, "base": 1 },
+    "activityDifficultyModifier": 1,
     "parameters": {
       "experience": { "multiplier": 1, "base": 1.5 },
       "money": { "multiplier": 1, "base": 1.5 },
@@ -29,11 +30,13 @@
         "pointsToSoftCap": 86400,
         "logBase": 2
       },
-      "processCompletionSpeed": { "multiplier": 1, "base": 1.1 }
+      "processCompletionSpeed": { "multiplier": 1, "base": 1.1 },
+      "experienceShareMultiplier": { "multiplier": 1, "base": 1.1 }
     }
   },
   "corpoDistrict": {
     "captureDifficulty": { "multiplier": 2, "base": 1.01 },
+    "activityDifficultyModifier": 1,
     "parameters": {
       "experience": { "multiplier": 1, "base": 1.1 },
       "money": { "multiplier": 10, "base": 1.1 },
@@ -65,7 +68,8 @@
         "pointsToSoftCap": 86400,
         "logBase": 20
       },
-      "processCompletionSpeed": { "multiplier": 1, "base": 1.1 }
+      "processCompletionSpeed": { "multiplier": 1, "base": 1.1 },
+      "experienceShareMultiplier": { "multiplier": 1, "base": 1.1 }
     }
   }
 }

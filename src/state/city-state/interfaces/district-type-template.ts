@@ -3,6 +3,7 @@ import { IDistrictTypeMultiplierParameters } from './district-type-multiplier-pa
 
 export interface IDistrictTypeTemplate {
   captureDifficulty: IExponent;
+  activityDifficultyModifier: number;
   parameters: {
     experience: IExponent;
     money: IExponent;
@@ -20,5 +21,6 @@ export interface IDistrictTypeTemplate {
     computationalBase: IDistrictTypeMultiplierParameters;
     rewards: IDistrictTypeMultiplierParameters;
     processCompletionSpeed: IExponent;
+    experienceShareMultiplier: IExponent;
   };
 }

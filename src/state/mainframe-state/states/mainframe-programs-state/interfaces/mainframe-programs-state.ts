@@ -5,7 +5,8 @@ import { IMainframeProgramsUpgrader } from './mainframe-programs-upgrader';
 
 export interface IMainframeProgramsState extends ISerializeable<IMainframeProgramsSerializedState> {
   upgrader: IMainframeProgramsUpgrader;
-  getProgramCost(name: ProgramName, tier: number, level: number): number;
+  calculateProgramCost(name: ProgramName, tier: number, level: number): number;
+  calculateLevelFromMoney(name: ProgramName, tier: number, money: number): number;
   purchaseProgram(name: ProgramName, tier: number, level: number): boolean;
   listOwnedPrograms(): IProgram[];
   getOwnedProgramByName(name: ProgramName): IProgram | undefined;

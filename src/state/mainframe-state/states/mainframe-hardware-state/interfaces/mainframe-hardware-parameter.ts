@@ -7,7 +7,8 @@ export interface IMainframeHardwareParameter extends ISerializeable<IMainframeHa
   autoUpgradeEnabled: boolean;
   level: number;
   totalLevel: number;
-  getIncreaseCost(increase: number): number;
+  calculateIncreaseCost(increase: number): number;
+  calculateIncreaseFromMoney(money: number): number;
   purchase(increase: number): boolean;
   checkCanPurchase(increase: number): boolean;
 }

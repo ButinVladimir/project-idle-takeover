@@ -9,8 +9,9 @@ export interface ICompanyClonesState extends ISerializeable<ICompanyClonesSerial
   levelUpgrader: ICompanyClonesLevelUpgrader;
   listClones(): IClone[];
   getCloneById(id: string): IClone | undefined;
-  getCloneCost(template: CloneTemplateName, tier: number, level: number): number;
-  getCloneSynchronization(template: CloneTemplateName, tier: number): number;
+  calculateCloneCost(template: CloneTemplateName, tier: number, level: number): number;
+  calculateCloneLevelFromMoney(template: CloneTemplateName, tier: number, money: number): number;
+  calculateCloneSynchronization(template: CloneTemplateName, tier: number): number;
   purchaseClone(args: IPurchaseCloneArgs): boolean;
   toggleAllClonesAutoupgrade(active: boolean): void;
   deleteClone(id: string): void;

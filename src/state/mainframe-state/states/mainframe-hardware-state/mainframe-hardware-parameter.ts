@@ -1,7 +1,14 @@
 import type { IStateUIConnector } from '@state/state-ui-connector';
 import type { IGlobalState } from '@state/global-state';
 import type { IMessageLogState } from '@state/message-log-state';
-import { type IFormatter, calculateGeometricProgressionSum, IExponent, Feature, PurchaseType } from '@shared/index';
+import {
+  type IFormatter,
+  calculateGeometricProgressionSum,
+  IExponent,
+  Feature,
+  PurchaseType,
+  reverseGeometricProgressionSum,
+} from '@shared/index';
 import { decorators } from '@state/container';
 import { IMainframeHardwareParameter, IMainframeHardwareParameterSerializedState } from './interfaces';
 import { MainframeHardwareParameterType } from './types';
@@ -60,7 +67,7 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
 
   protected abstract postPurchaseMessge(): void;
 
-  getIncreaseCost(increase: number): number {
+  calculateIncreaseCost(increase: number): number {
     const exp = this.priceExp;
 
     return (
@@ -70,12 +77,24 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
     );
   }
 
+  calculateIncreaseFromMoney(money: number): number {
+    const exp = this.priceExp;
+
+    const availableMoney =
+      money * this.globalState.multipliers.computationalBase.totalMultiplier +
+      calculateGeometricProgressionSum(this.level - 1, exp.multiplier, exp.base);
+
+    const increase = reverseGeometricProgressionSum(availableMoney, exp.multiplier, exp.base) - this.level;
+
+    return increase;
+  }
+
   purchase(increase: number): boolean {
     if (!this.checkCanPurchase(increase)) {
       return false;
     }
 
-    const cost = this.getIncreaseCost(increase);
+    const cost = this.calculateIncreaseCost(increase);
 
     return this.globalState.money.purchase(cost, PurchaseType.mainframeHardware, this.handlePurchaseIncrease(increase));
   }
@@ -89,7 +108,7 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
       return false;
     }
 
-    const cost = this.getIncreaseCost(increase);
+    const cost = this.calculateIncreaseCost(increase);
 
     return cost <= this.globalState.money.money;
   };

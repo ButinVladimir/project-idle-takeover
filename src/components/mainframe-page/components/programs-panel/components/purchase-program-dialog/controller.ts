@@ -58,7 +58,7 @@ export class PurchaseProgramDialogController extends BaseController {
   }
 
   getProgramCost(programName: ProgramName, tier: number, level: number): number {
-    return this.mainframeState.programs.getProgramCost(programName, tier, level);
+    return this.mainframeState.programs.calculateProgramCost(programName, tier, level);
   }
 
   isProgramAvailable(programName: ProgramName, tier: number): boolean {

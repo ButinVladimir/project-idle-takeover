@@ -9,16 +9,12 @@ import { type IStateUIConnector } from '@state/state-ui-connector';
 import { IClone } from '../clone-factory';
 import { ISerializedSidejob, ISidejob, ISidejobArguments, ISidejobTemplate } from './interfaces';
 import { SidejobName } from './types';
-import { type ICompanyState } from '../../interfaces';
 
 const { lazyInject } = decorators;
 
 export class Sidejob implements ISidejob {
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
-
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
 
   @lazyInject(TYPES.SettingsState)
   private _settingsState!: ISettingsState;
@@ -100,7 +96,8 @@ export class Sidejob implements ISidejob {
     }
 
     return Math.floor(
-      calculatePower(this._globalState.threat.level, this._sidejobTemplate.requirements.attributes[attribute]),
+      this._district.template.activityDifficultyModifier *
+        calculatePower(this._globalState.threat.level, this._sidejobTemplate.requirements.attributes[attribute]),
     );
   }
 
@@ -109,7 +106,10 @@ export class Sidejob implements ISidejob {
       return 0;
     }
 
-    return Math.floor(calculatePower(this._globalState.threat.level, this._sidejobTemplate.requirements.skills[skill]));
+    return Math.floor(
+      this._district.template.activityDifficultyModifier *
+        calculatePower(this._globalState.threat.level, this._sidejobTemplate.requirements.skills[skill]),
+    );
   }
 
   getAttributeModifier(attribute: Attribute): number {
@@ -207,9 +207,17 @@ export class Sidejob implements ISidejob {
     return this.getCloneParametersModifier() * this.calculateProcessCompletionSpeedModifier();
   }
 
+  calculateExperienceShareMultiplierDelta(): number {
+    return this.getCloneParametersModifier() * this.calculateExperienceShareMultiplierModifier();
+  }
+
   handlePerformanceUpdate() {
     if (this._sidejobTemplate.rewards.processCompletionSpeed) {
       this._globalState.processCompletionSpeed.requestRecalculation();
+    }
+
+    if (this._sidejobTemplate.rewards.experienceShareMultiplier) {
+      this._globalState.experienceShare.requestRecalculation();
     }
   }
 
@@ -351,6 +359,17 @@ export class Sidejob implements ISidejob {
     return (
       this._sidejobTemplate.rewards.processCompletionSpeed *
       calculatePower(this._district.parameters.tier.tier, this._district.template.parameters.processCompletionSpeed)
+    );
+  }
+
+  private calculateExperienceShareMultiplierModifier() {
+    if (!this._sidejobTemplate.rewards.experienceShareMultiplier) {
+      return 0;
+    }
+
+    return (
+      this._sidejobTemplate.rewards.experienceShareMultiplier *
+      calculatePower(this._district.parameters.tier.tier, this._district.template.parameters.experienceShareMultiplier)
     );
   }
 }

@@ -1,6 +1,7 @@
 import { IDistrictSerializedParameters } from './serialized-states/district-serialized-parameters';
 import {
   IDistrictConnectivityParameter,
+  IDistrictExperienceShareMultiplierParameter,
   IDistrictProcessCompletionSpeedParameter,
   IDistrictRewardsParameter,
   IDistrictSynchronizationParameter,
@@ -15,6 +16,7 @@ export interface IDistrictParameters {
   rewards: IDistrictRewardsParameter;
   multipliers: IDistrictMultipliers;
   processCompletionSpeed: IDistrictProcessCompletionSpeedParameter;
+  experienceShareMultiplier: IDistrictExperienceShareMultiplierParameter;
   recalculate(): void;
   serialize(): IDistrictSerializedParameters;
   deserialize(serializedParameters: IDistrictSerializedParameters): void;

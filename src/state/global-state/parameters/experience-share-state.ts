@@ -2,6 +2,7 @@ import { injectable } from 'inversify';
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
 import { type IGlobalState } from '@state/global-state';
+import { type ICityState } from '@state/city-state';
 import { OtherProgramName, PeerReviewerProgram, type IMainframeState } from '@state/mainframe-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { Feature } from '@shared/index';
@@ -19,6 +20,9 @@ export class ExperienceShareState implements IExperienceShareState {
 
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
+
+  @lazyInject(TYPES.CityState)
+  private _cityState!: ICityState;
 
   private _synchronizationMultiplier: number;
   private _programMultiplier: number;
@@ -87,24 +91,27 @@ export class ExperienceShareState implements IExperienceShareState {
       return;
     }
 
-    this.calculateSynchronizationMultiplier();
-    this.calculateProgramMultiplier();
+    this._totalMultiplier = this.baseMultiplier;
 
-    this._totalMultiplier = this.baseMultiplier * this._synchronizationMultiplier * this._programMultiplier;
+    this.updateSynchronizationMultiplier();
+    this.updateProgramMultiplier();
+    this.updateDistrictMultipliers();
   }
 
   private isFeatureAvailable(): boolean {
     return this._globalState.unlockedFeatures.isFeatureUnlocked(Feature.experienceShare);
   }
 
-  private calculateSynchronizationMultiplier() {
+  private updateSynchronizationMultiplier() {
     this._synchronizationMultiplier = Math.max(
       this._globalState.synchronization.availableValue / this._globalState.synchronization.totalValue,
       0,
     );
+
+    this._totalMultiplier *= this._synchronizationMultiplier;
   }
 
-  private calculateProgramMultiplier() {
+  private updateProgramMultiplier() {
     let programMultiplier = 1;
 
     const peerReviewerProcess = this._mainframeState.processes.getProcessByName(OtherProgramName.peerReviewer);
@@ -117,5 +124,14 @@ export class ExperienceShareState implements IExperienceShareState {
     }
 
     this._programMultiplier = programMultiplier;
+    this._totalMultiplier *= this._programMultiplier;
+  }
+
+  private updateDistrictMultipliers() {
+    for (const district of this._cityState.listAvailableDistricts()) {
+      district.parameters.experienceShareMultiplier.recalculate();
+
+      this._totalMultiplier *= district.parameters.experienceShareMultiplier.value;
+    }
   }
 }

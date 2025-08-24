@@ -1,6 +1,6 @@
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
-import { binarySearchDecimal, Feature } from '@shared/index';
+import { Feature } from '@shared/index';
 import { type IGlobalState } from '@state/global-state';
 import { type IAutomationState } from '@state/automation-state';
 import { IMainframeHardwareParameter, IMainframeHardwareUpgrader } from './interfaces';
@@ -29,7 +29,7 @@ export class MainframeHardwareUpgrader implements IMainframeHardwareUpgrader {
     }
 
     this._availableMoney = this._globalState.money.money;
-    this._availableActions = this._globalState.development.level * 3;
+    this._availableActions = Number.MAX_SAFE_INTEGER;
 
     this.performUpgradeAll();
   }
@@ -40,7 +40,7 @@ export class MainframeHardwareUpgrader implements IMainframeHardwareUpgrader {
     }
 
     this._availableMoney = this._globalState.money.money;
-    this._availableActions = this._globalState.development.level;
+    this._availableActions = Number.MAX_SAFE_INTEGER;
 
     const parameter = this.getParameterByType(parameterType);
 
@@ -88,14 +88,10 @@ export class MainframeHardwareUpgrader implements IMainframeHardwareUpgrader {
   }
 
   private performUpgradeParameter(parameter: IMainframeHardwareParameter) {
-    const checkParameter = this.makeCheckParameterFunction(parameter);
-
-    const maxIncrease = Math.min(this._globalState.development.level - parameter.level, this._availableActions);
-
-    const increase = binarySearchDecimal(0, maxIncrease, checkParameter);
+    const increase = Math.min(parameter.calculateIncreaseFromMoney(this._availableMoney), this._availableActions);
 
     if (increase > 0) {
-      const cost = parameter.getIncreaseCost(increase);
+      const cost = parameter.calculateIncreaseCost(increase);
 
       if (parameter.purchase(increase)) {
         this._availableMoney -= cost;
@@ -103,12 +99,4 @@ export class MainframeHardwareUpgrader implements IMainframeHardwareUpgrader {
       }
     }
   }
-
-  private makeCheckParameterFunction =
-    (parameter: IMainframeHardwareParameter) =>
-    (increase: number): boolean => {
-      const cost = parameter.getIncreaseCost(increase);
-
-      return cost <= this._availableMoney;
-    };
 }

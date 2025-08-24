@@ -1,6 +1,6 @@
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
-import { binarySearchDecimal, Feature } from '@shared/index';
+import { Feature } from '@shared/index';
 import { type IGlobalState } from '@state/global-state';
 import { type IAutomationState } from '@state/automation-state';
 import { IProgram, ProgramName } from '../progam-factory';
@@ -29,8 +29,7 @@ export class MainframeProgramsUpgrader implements IMainframeProgramsUpgrader {
     }
 
     this._availableMoney = this._globalState.money.money;
-    this._availableActions =
-      this._globalState.development.level * this._mainframeState.programs.listOwnedPrograms().length;
+    this._availableActions = Number.MAX_SAFE_INTEGER;
 
     this.performUpgradeAll();
   }
@@ -47,7 +46,7 @@ export class MainframeProgramsUpgrader implements IMainframeProgramsUpgrader {
     }
 
     this._availableMoney = this._globalState.money.money;
-    this._availableActions = this._globalState.development.level;
+    this._availableActions = Number.MAX_SAFE_INTEGER;
 
     this.performUpgradeProgram(existingProgram);
   }
@@ -82,15 +81,22 @@ export class MainframeProgramsUpgrader implements IMainframeProgramsUpgrader {
   }
 
   private performUpgradeProgram(existingProgram: IProgram) {
-    const checkProgram = this.makeCheckProgramFunction(existingProgram);
-
-    const maxLevel = Math.min(this._globalState.development.level, existingProgram.level + this._availableActions);
-
     const oldLevel = existingProgram.level;
-    const newLevel = binarySearchDecimal(oldLevel, maxLevel, checkProgram);
+    const newLevel = Math.min(
+      this._mainframeState.programs.calculateLevelFromMoney(
+        existingProgram.name,
+        existingProgram.tier,
+        this._availableMoney,
+      ),
+      existingProgram.level + this._availableActions,
+    );
 
     if (newLevel > existingProgram.level) {
-      const cost = this._mainframeState.programs.getProgramCost(existingProgram.name, existingProgram.tier, newLevel);
+      const cost = this._mainframeState.programs.calculateProgramCost(
+        existingProgram.name,
+        existingProgram.tier,
+        newLevel,
+      );
 
       if (this._mainframeState.programs.purchaseProgram(existingProgram.name, existingProgram.tier, newLevel)) {
         this._availableMoney -= cost;
@@ -98,16 +104,4 @@ export class MainframeProgramsUpgrader implements IMainframeProgramsUpgrader {
       }
     }
   }
-
-  private makeCheckProgramFunction =
-    (existingProgram: IProgram) =>
-    (level: number): boolean => {
-      if (!this._globalState.availableItems.programs.isItemAvailable(existingProgram.name, existingProgram.tier)) {
-        return false;
-      }
-
-      const cost = this._mainframeState.programs.getProgramCost(existingProgram.name, existingProgram.tier, level);
-
-      return cost <= this._availableMoney;
-    };
 }

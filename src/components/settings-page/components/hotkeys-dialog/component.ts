@@ -68,7 +68,7 @@ export class HotkeysDialog extends BaseComponent {
               <sl-button variant="danger" size="medium" @click=${this.handleOpenUnassignConfirmationModal}>
                 ${msg('Clear hotkeys')}
               </sl-button>
-              <sl-button variant="default" size="medium" outline @click=${this.handleOpenRestoreConfirmationModal}>
+              <sl-button variant="default" size="medium" @click=${this.handleOpenRestoreConfirmationModal}>
                 ${msg('Restore default hotkeys')}
               </sl-button>
             </div>
@@ -104,7 +104,6 @@ export class HotkeysDialog extends BaseComponent {
         <sl-button
           size="small"
           variant=${buttonVariant}
-          ?outline=${buttonVariant === 'default'}
           value=${hotkey}
           @click=${this.handleStartAssigningHotkey}
           @sl-blur=${this.handleStopAssigningHotkey}

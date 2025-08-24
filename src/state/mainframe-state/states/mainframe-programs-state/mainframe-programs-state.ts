@@ -9,7 +9,7 @@ import type { IFormatter } from '@shared/interfaces/formatter';
 import type { IMainframeState } from '@state/mainframe-state/interfaces/mainframe-state';
 import { TYPES } from '@state/types';
 import { Feature, ProgramsEvent, PurchaseType } from '@shared/types';
-import { calculateTierPower } from '@shared/helpers';
+import { calculateTierPower, reverseTierPower } from '@shared/helpers';
 import { moveElementInArray } from '@shared/helpers';
 import { PROGRAM_TEXTS } from '@texts/programs';
 import {
@@ -56,10 +56,18 @@ export class MainframeProgramsState implements IMainframeProgramsState {
     return this._upgrader;
   }
 
-  getProgramCost(name: ProgramName, tier: number, level: number): number {
+  calculateProgramCost(name: ProgramName, tier: number, level: number): number {
     const programData = programs[name];
 
     return calculateTierPower(level, tier, programData.cost) / this._globalState.multipliers.codeBase.totalMultiplier;
+  }
+
+  calculateLevelFromMoney(name: ProgramName, tier: number, money: number): number {
+    const programData = programs[name];
+
+    const availableMoney = money * this._globalState.multipliers.codeBase.totalMultiplier;
+
+    return reverseTierPower(availableMoney, tier, programData.cost);
   }
 
   purchaseProgram(name: ProgramName, tier: number, level: number): boolean {
@@ -71,7 +79,7 @@ export class MainframeProgramsState implements IMainframeProgramsState {
       return false;
     }
 
-    const cost = this.getProgramCost(name, tier, level);
+    const cost = this.calculateProgramCost(name, tier, level);
 
     const bought = this._globalState.money.purchase(
       cost,

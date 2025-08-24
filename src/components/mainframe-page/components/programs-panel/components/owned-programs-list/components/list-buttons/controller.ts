@@ -33,7 +33,7 @@ export class OwnedProgramsListButtonsController extends BaseController {
 
     return (
       this.globalState.money.money >=
-      this.mainframeState.programs.getProgramCost(program.name, program.tier, program.level + 1)
+      this.mainframeState.programs.calculateProgramCost(program.name, program.tier, program.level + 1)
     );
   };
 }

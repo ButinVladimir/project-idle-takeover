@@ -1,6 +1,6 @@
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
-import { binarySearchDecimal, Feature, PurchaseType } from '@shared/index';
+import { Feature, PurchaseType } from '@shared/index';
 import { type IGlobalState } from '@state/global-state';
 import { type IAutomationState } from '@state/automation-state';
 import { ICompanyClonesLevelUpgrader } from './interfaces';
@@ -29,7 +29,7 @@ export class CompanyClonesLevelUpgrader implements ICompanyClonesLevelUpgrader {
     }
 
     this._availableMoney = this._globalState.money.money;
-    this._availableActions = this._globalState.development.level * this._companyState.clones.listClones().length;
+    this._availableActions = Number.MAX_SAFE_INTEGER;
 
     this.performUpgradeAll();
   }
@@ -46,7 +46,7 @@ export class CompanyClonesLevelUpgrader implements ICompanyClonesLevelUpgrader {
     }
 
     this._availableMoney = this._globalState.money.money;
-    this._availableActions = this._globalState.development.level;
+    this._availableActions = Number.MAX_SAFE_INTEGER;
 
     this.performUpgradeClone(clone);
   }
@@ -81,15 +81,14 @@ export class CompanyClonesLevelUpgrader implements ICompanyClonesLevelUpgrader {
   }
 
   private performUpgradeClone(clone: IClone) {
-    const checkClone = this.makeCheckCloneFunction(clone);
-
-    const maxLevel = Math.min(this._globalState.development.level, clone.level + this._availableActions);
-
     const oldLevel = clone.level;
-    const newLevel = binarySearchDecimal(oldLevel, maxLevel, checkClone);
+    const newLevel = Math.min(
+      this._companyState.clones.calculateCloneLevelFromMoney(clone.templateName, clone.tier, this._availableMoney),
+      clone.level + this._availableActions,
+    );
 
     if (newLevel > oldLevel) {
-      const cost = this._companyState.clones.getCloneCost(clone.templateName, clone.tier, newLevel);
+      const cost = this._companyState.clones.calculateCloneCost(clone.templateName, clone.tier, newLevel);
 
       if (this.purchaseCloneUpgrade(clone, newLevel)) {
         this._availableMoney -= cost;
@@ -98,20 +97,8 @@ export class CompanyClonesLevelUpgrader implements ICompanyClonesLevelUpgrader {
     }
   }
 
-  private makeCheckCloneFunction =
-    (clone: IClone) =>
-    (level: number): boolean => {
-      if (!this._globalState.availableItems.cloneTemplates.isItemAvailable(clone.templateName, clone.tier)) {
-        return false;
-      }
-
-      const cost = this._companyState.clones.getCloneCost(clone.templateName, clone.tier, level);
-
-      return cost <= this._availableMoney;
-    };
-
   private purchaseCloneUpgrade(clone: IClone, newLevel: number) {
-    const cost = this._companyState.clones.getCloneCost(clone.templateName, clone.tier, newLevel);
+    const cost = this._companyState.clones.calculateCloneCost(clone.templateName, clone.tier, newLevel);
 
     return this._globalState.money.purchase(cost, PurchaseType.clones, () => {
       clone.upgradeLevel(newLevel);

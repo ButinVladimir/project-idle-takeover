@@ -28,4 +28,10 @@ export const SIDEJOB_TEXTS = {
       msg(`Acting as mainframe relay to speed up process completion speed. 
 Stacks additively within same district and multiplicatively between different districts.`),
   },
+  [SidejobName.feedAnalyzer]: {
+    title: () => msg('Feed analyzer'),
+    overview: () =>
+      msg(`Analyzing feed from other clones to improve shared experience. 
+Stacks additively within same district and multiplicatively between different districts.`),
+  },
 };

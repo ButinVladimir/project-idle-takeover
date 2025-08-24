@@ -34,12 +34,11 @@ export class MainframeHardwarePanelButtons extends BaseComponent {
         <sl-button
           ${ref(this._buyMaxButtonRef)}
           variant="default"
-          outline
           type="button"
           size="medium"
           @click=${this.handleBuyMax}
         >
-          ${COMMON_TEXTS.buyMaxAllUpgrades()}
+          ${COMMON_TEXTS.upgradeAll()}
         </sl-button>
       </sl-tooltip>
     `;
