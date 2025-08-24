@@ -9,22 +9,14 @@ import type {
 
 @injectable()
 export class AutomationState implements IAutomationState {
-  private _mainframeHardwareAutomationState: IMainframeHardwareAutomationState;
-  private _mainframeProgramsAutomationState: IMainframeProgramsAutomationState;
-  private _cloneLevelAutomationState: ICloneLevelAutomationState;
+  @inject(TYPES.MainframeHardwareAutomationState)
+  private _mainframeHardwareAutomationState!: IMainframeHardwareAutomationState;
 
-  constructor(
-    @inject(TYPES.MainframeHardwareAutomationState)
-    _mainframeHardwareAutomationState: IMainframeHardwareAutomationState,
-    @inject(TYPES.MainframeProgramsAutomationState)
-    _mainframeProgramsAutomationState: IMainframeProgramsAutomationState,
-    @inject(TYPES.CloneLevelAutomationState)
-    _cloneLevelAutomationState: ICloneLevelAutomationState,
-  ) {
-    this._mainframeHardwareAutomationState = _mainframeHardwareAutomationState;
-    this._mainframeProgramsAutomationState = _mainframeProgramsAutomationState;
-    this._cloneLevelAutomationState = _cloneLevelAutomationState;
-  }
+  @inject(TYPES.MainframeProgramsAutomationState)
+  private _mainframeProgramsAutomationState!: IMainframeProgramsAutomationState;
+
+  @inject(TYPES.CloneLevelAutomationState)
+  private _cloneLevelAutomationState!: ICloneLevelAutomationState;
 
   get mainframeHardware() {
     return this._mainframeHardwareAutomationState;

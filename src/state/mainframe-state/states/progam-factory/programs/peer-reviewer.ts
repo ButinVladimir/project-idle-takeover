@@ -1,22 +1,14 @@
 import programs from '@configs/programs.json';
-import { calculateTierLinear } from '@shared/helpers';
-import { decorators } from '@state/container';
-import { TYPES } from '@state/types';
-import { type ICompanyState } from '@state/company-state';
+import { calculateLinear, calculateTierLinear } from '@shared/index';
 import { OtherProgramName } from '../types';
 import { BaseProgram } from './base-program';
-
-const { lazyInject } = decorators;
 
 export class PeerReviewerProgram extends BaseProgram {
   public readonly name = OtherProgramName.peerReviewer;
   public readonly isAutoscalable = true;
 
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
-
   handlePerformanceUpdate(): void {
-    this._companyState.clones.experienceShare.recalculateMultipliers();
+    this.globalState.experienceShare.requestRecalculation();
   }
 
   perform(): void {}
@@ -26,12 +18,13 @@ export class PeerReviewerProgram extends BaseProgram {
 
     return (
       1 +
-      Math.pow(threads * usedRam, programData.autoscalableResourcesPower) *
-        calculateTierLinear(this.level, this.tier, programData.experienceModifier) *
-        Math.pow(
-          this.globalState.scenario.currentValues.mainframeSoftware.performanceBoost,
+      calculateTierLinear(this.level, this.tier, programData.cloneExperience.main) *
+        calculateLinear(
           this.mainframeState.hardware.performance.totalLevel,
-        )
+          this.globalState.scenario.currentValues.mainframeSoftware.performanceBoost,
+        ) *
+        calculateLinear(usedRam, programData.cloneExperience.ram) *
+        calculateLinear(threads, programData.cloneExperience.cores)
     );
   }
 }

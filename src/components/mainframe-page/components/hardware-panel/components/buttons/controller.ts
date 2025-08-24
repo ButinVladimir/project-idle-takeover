@@ -8,7 +8,7 @@ export class MainframeHardwarePanelButtonsController extends BaseController {
   }
 
   purchaseMax() {
-    this.mainframeState.hardware.purchaseMax();
+    this.mainframeState.hardware.upgrader.upgradeMaxAllParameters();
   }
 
   getHotkey(): string | undefined {

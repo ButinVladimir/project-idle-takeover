@@ -11,14 +11,14 @@ export class PurchaseCloneDialogButtonsController extends BaseController {
   }
 
   get availableSynchronization(): number {
-    return this.companyState.clones.availableSynchronization;
+    return this.globalState.synchronization.availableValue;
   }
 
   getCloneCost(cloneTemplateName: CloneTemplateName, tier: number, level: number): number {
-    return this.companyState.clones.getCloneCost(cloneTemplateName, tier, level);
+    return this.companyState.clones.calculateCloneCost(cloneTemplateName, tier, level);
   }
 
   getCloneSynchronization(cloneTemplateName: CloneTemplateName, tier: number): number {
-    return this.companyState.clones.getCloneSynchronization(cloneTemplateName, tier);
+    return this.companyState.clones.calculateCloneSynchronization(cloneTemplateName, tier);
   }
 }

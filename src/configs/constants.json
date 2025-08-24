@@ -29,8 +29,8 @@
       "districts": []
     },
     "startingMoney": 0,
-    "startingDevelopmentLevel": 0,
-    "startingAccumulatedTime": 0,
+    "startingDevelopmentLevel": 100,
+    "startingAccumulatedTime": 1000000000,
     "startingSynchronization": 0,
     "baseSharedExperienceMultiplier": 1,
     "mainframeHardware": {
@@ -42,7 +42,7 @@
       "coresPrice": { "multiplier": 10000, "base": 5 }
     },
     "mainframeSoftware": {
-      "performanceBoost": 1.01,
+      "performanceBoost": { "base": 1, "multiplier": 0.01 },
       "startingPrograms": ["shareServer"],
       "minProcessCompletionTime": 1000
     },
@@ -77,14 +77,14 @@
   },
   "defaultAutomationSettings": {
     "mainframeHardwareAutobuyer": {
-      "moneyShare": 10,
+      "moneyShare": 100,
       "priority": ["performance", "ram", "cores"]
     },
     "mainframeProgramsAutobuyer": {
-      "moneyShare": 10
+      "moneyShare": 100
     },
     "cloneLevelAutoupgrader": {
-      "moneyShare": 10
+      "moneyShare": 100
     }
   },
   "menuUnlockRequirements": {

@@ -28,10 +28,10 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
   type!: MainframeHardwareParameterType;
 
   @property({
-    attribute: 'max-increase',
+    attribute: 'increase',
     type: Number,
   })
-  maxIncrease!: number;
+  increase!: number;
 
   private _controller: MainframeHardwarePanelArticleController;
 
@@ -78,8 +78,6 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
       ? COMMON_TEXTS.disableAutoupgrade()
       : COMMON_TEXTS.enableAutoupgrade();
 
-    const increase = this.calculateIncrease();
-
     return html`
       <form id="hardware-panel-article-${this.type}" @submit=${this.handleSubmit}>
         <div class="title-row">
@@ -111,7 +109,7 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
         <div class="button-container">
           <ca-mainframe-hardware-panel-article-buttons
             ${ref(this._buttonsRef)}
-            increase=${increase}
+            increase=${this.increase}
             @buy-hardware=${this.handleSubmit}
             @buy-max-hardware=${this.handleBuyMax}
           >
@@ -128,21 +126,14 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
   private handleSubmit = (event: Event) => {
     event.preventDefault();
 
-    const increase = this.calculateIncrease();
-    this._parameter?.purchase(increase);
+    this._parameter?.purchase(this.increase);
   };
 
   private handleBuyMax = () => {
-    this._parameter?.purchaseMax();
-  };
-
-  private calculateIncrease(): number {
-    if (!this._parameter) {
-      return 1;
+    if (this._parameter) {
+      this._controller.purchaseMaxParameter(this._parameter.type);
     }
-
-    return Math.max(Math.min(this.maxIncrease, this._controller.developmentLevel - this._parameter.level), 1);
-  }
+  };
 
   private handleToggleAutoUpgrade = () => {
     if (!this._parameter) {
@@ -163,7 +154,7 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
       return;
     }
 
-    const cost = this._parameter.getIncreaseCost(this.calculateIncrease());
+    const cost = this._parameter.calculateIncreaseCost(this.increase);
     const money = this._controller.money;
 
     const formattedCost = this._controller.formatter.formatNumberFloat(cost);
@@ -174,9 +165,8 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
 
     if (this._buttonsRef.value) {
       const value = this._buttonsRef.value;
-      const increase = this.calculateIncrease();
 
-      value.disabled = !this._parameter.checkCanPurchase(increase);
+      value.disabled = !this._parameter.checkCanPurchase(this.increase);
       value.disabledBuyAll = !this._parameter.checkCanPurchase(1);
     }
   };

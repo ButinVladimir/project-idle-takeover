@@ -29,26 +29,29 @@ export abstract class BaseAutobuyerProgramDescriptionEffectRenderer implements I
   }
 
   public renderEffect = () => {
-    const minTime = this.program.calculateCompletionMinTime(this.threads);
-    const maxTime = this.program.calculateCompletionMaxTime(this.threads);
-    const minAvgValue = (this.threads / maxTime) * MS_IN_SECOND;
-    const maxAvgValue = (this.threads / minTime) * MS_IN_SECOND;
+    const actionCount = this.getActionCount();
+    const minTime = this.program.calculateCompletionMinTime(actionCount);
+    const maxTime = this.program.calculateCompletionMaxTime(actionCount);
+    const minAvgValue = (actionCount / maxTime) * MS_IN_SECOND;
+    const maxAvgValue = (actionCount / minTime) * MS_IN_SECOND;
 
-    const valueDiff = this.threads - this.currentThreads;
+    let valueDiff = actionCount;
     let minAvgValueDiff = minAvgValue;
     let maxAvgValueDiff = maxAvgValue;
 
     if (this.currentThreads) {
-      const currentMinTime = this.program.calculateCompletionMinTime(this.currentThreads);
-      const currentMaxTime = this.program.calculateCompletionMaxTime(this.currentThreads);
-      const currentMinAvgValue = (this.currentThreads / currentMaxTime) * MS_IN_SECOND;
-      const currentMaxAvgValue = (this.currentThreads / currentMinTime) * MS_IN_SECOND;
+      const currentActionCount = this.getCurrentActionCount();
+      const currentMinTime = this.program.calculateCompletionMinTime(currentActionCount);
+      const currentMaxTime = this.program.calculateCompletionMaxTime(currentActionCount);
+      const currentMinAvgValue = (currentActionCount / currentMaxTime) * MS_IN_SECOND;
+      const currentMaxAvgValue = (currentActionCount / currentMinTime) * MS_IN_SECOND;
 
       minAvgValueDiff = minAvgValue - currentMinAvgValue;
       maxAvgValueDiff = maxAvgValue - currentMaxAvgValue;
+      valueDiff = actionCount - currentActionCount;
     }
 
-    const formattedValue = this.formatter.formatNumberFloat(this.threads);
+    const formattedValue = this.formatter.formatNumberFloat(actionCount);
     const formattedMinAvgValue = this.formatter.formatNumberFloat(minAvgValue);
     const formattedMaxAvgValue = this.formatter.formatNumberFloat(maxAvgValue);
 
@@ -85,4 +88,8 @@ export abstract class BaseAutobuyerProgramDescriptionEffectRenderer implements I
   };
 
   public recalculateValues(): void {}
+
+  protected abstract getActionCount(): number;
+
+  protected abstract getCurrentActionCount(): number;
 }

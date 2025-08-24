@@ -14,8 +14,11 @@ import {
   IAvailableItemsState,
   IConnectivityState,
   IThreatState,
-  ISynchronizationParameter,
+  ISynchronizationState,
   IAvailableActivities,
+  IExperienceShareState,
+  IProcessCompletionSpeedState,
+  IRewardsState,
 } from './parameters';
 
 export interface IGlobalState extends ISerializeable<IGlobalSerializedState> {
@@ -28,13 +31,16 @@ export interface IGlobalState extends ISerializeable<IGlobalSerializedState> {
   time: ITimeState;
   development: IDevelopmentState;
   threat: IThreatState;
-  synchronization: ISynchronizationParameter;
+  synchronization: ISynchronizationState;
   connectivity: IConnectivityState;
+  rewards: IRewardsState;
   multipliers: IMultipliersState;
   availableItems: IAvailableItemsState;
   availableActivities: IAvailableActivities;
   unlockedFeatures: IUnlockedFeaturesState;
   storyEvents: IStoryEventsState;
+  experienceShare: IExperienceShareState;
+  processCompletionSpeed: IProcessCompletionSpeedState;
   recalculate(): void;
   makeNextTick(): void;
 }

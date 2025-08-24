@@ -3,7 +3,7 @@ import { BaseController } from '@shared/base-controller';
 
 export class ClonesPanelController extends BaseController {
   get availableSynchronization(): number {
-    return this.companyState.clones.availableSynchronization;
+    return this.globalState.synchronization.availableValue;
   }
 
   get totalSynchronization(): number {
@@ -11,7 +11,7 @@ export class ClonesPanelController extends BaseController {
   }
 
   get experienceShareMultiplier(): number {
-    return this.companyState.clones.experienceShare.totalMultiplier;
+    return this.globalState.experienceShare.totalMultiplier;
   }
 
   isExperienceShareUnlocked(): boolean {

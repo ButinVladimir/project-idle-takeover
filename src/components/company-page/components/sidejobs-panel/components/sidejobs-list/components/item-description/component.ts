@@ -2,12 +2,14 @@ import { html, nothing } from 'lit';
 import { localized } from '@lit/localize';
 import { consume } from '@lit/context';
 import { customElement, queryAll } from 'lit/decorators.js';
-import { BaseComponent, Feature, MS_IN_SECOND, RewardParameter } from '@shared/index';
+import { BaseComponent, RewardParameter } from '@shared/index';
 import { type ISidejob } from '@state/company-state';
 import { COMMON_TEXTS, REWARD_PARAMETER_NAMES, SIDEJOB_TEXTS } from '@texts/index';
 import { SidejobsListItemDescriptionController } from './controller';
 import { sidejobContext } from '../item/contexts';
 import styles from './styles';
+import { SIDEJOB_PARAMETER_VALUES, SIDEJOB_PARAMETERS } from '../../../../constants';
+import { calculateSidejobParameterValue, checkSidejobParameterVisibility } from '../../../../helpers';
 
 @localized()
 @customElement('ca-sidejobs-list-item-description')
@@ -24,19 +26,9 @@ export class SidejobsListItemDescription extends BaseComponent {
   @consume({ context: sidejobContext, subscribe: true })
   private _sidejob?: ISidejob;
 
-  private _rewardValues: Record<RewardParameter, number> = {
-    [RewardParameter.money]: 0,
-    [RewardParameter.developmentPoints]: 0,
-    [RewardParameter.experience]: 0,
-    [RewardParameter.districtTierPoints]: 0,
-    [RewardParameter.connectivity]: 0,
-    [RewardParameter.codeBase]: 0,
-    [RewardParameter.computationalBase]: 0,
-    [RewardParameter.rewards]: 0,
-    [RewardParameter.processCompletionSpeedMultiplier]: 0,
-    [RewardParameter.actions]: 0,
-    [RewardParameter.sharedExperienceMultiplier]: 0,
-  };
+  private _rewardValues: Record<RewardParameter, number> = Object.fromEntries(
+    SIDEJOB_PARAMETERS.map((parameter) => [parameter, 0]),
+  ) as Record<RewardParameter, number>;
 
   constructor() {
     super();
@@ -52,96 +44,38 @@ export class SidejobsListItemDescription extends BaseComponent {
     return html`
       <p class="overview">${SIDEJOB_TEXTS[this._sidejob.sidejobName].overview()}</p>
 
-      ${this.renderParameter(RewardParameter.money, true)}
-      ${this.renderParameter(RewardParameter.developmentPoints, true)}
-      ${this.renderParameter(RewardParameter.experience, true)}
-      ${this.renderParameter(
-        RewardParameter.districtTierPoints,
-        this._controller.isFeatureUnlocked(Feature.districtTiers),
-      )}
-      ${this.renderParameter(RewardParameter.connectivity, this._controller.isFeatureUnlocked(Feature.connectivity))}
-      ${this.renderParameter(RewardParameter.codeBase, this._controller.isFeatureUnlocked(Feature.codeBase))}
-      ${this.renderParameter(
-        RewardParameter.computationalBase,
-        this._controller.isFeatureUnlocked(Feature.computationalBase),
-      )}
-      ${this.renderParameter(RewardParameter.rewards, this._controller.isFeatureUnlocked(Feature.rewards))}
+      ${SIDEJOB_PARAMETERS.map((parameter) => this.renderParameter(parameter))}
     `;
   }
 
-  private renderParameter = (parameter: RewardParameter, isUnlocked: boolean) => {
-    if (!isUnlocked) {
+  private renderParameter = (parameter: RewardParameter) => {
+    const parameterValues = SIDEJOB_PARAMETER_VALUES[parameter];
+
+    if (!checkSidejobParameterVisibility(this._sidejob!, parameter)) {
+      return nothing;
+    }
+
+    if (!parameterValues.requirements.every((requirement) => this._controller.isFeatureUnlocked(requirement))) {
       return nothing;
     }
 
     const parameterName = REWARD_PARAMETER_NAMES[parameter]();
     const valueElement = html`<span data-value=${parameter}></span>`;
 
-    return html`<p class="text">
-      ${COMMON_TEXTS.parameterValue(parameterName, COMMON_TEXTS.parameterSpeed(valueElement))}
-    </p>`;
+    const parameterText = parameterValues.isSpeed ? COMMON_TEXTS.parameterSpeed(valueElement) : valueElement;
+
+    return html`<p class="text">${COMMON_TEXTS.parameterValue(parameterName, parameterText)}</p>`;
   };
 
   handlePartialUpdate = () => {
-    this.updateMoney();
-    this.updateDevelopmentPoints();
-    this.updateExperience();
-    this.updateDistrictTierPoints();
-    this.updateConnectivity();
-    this.updateCodeBase();
-    this.updateComputationalBase();
-    this.updateRewards();
+    SIDEJOB_PARAMETERS.forEach(this.updateParameter);
 
     this._rewardValueElements.forEach(this.updateValueElement);
   };
 
-  private updateMoney() {
-    const value = this._sidejob!.calculateMoneyDelta(MS_IN_SECOND);
-
-    this._rewardValues[RewardParameter.money] = value;
-  }
-
-  private updateDevelopmentPoints() {
-    const value = this._sidejob!.calculateDevelopmentPointsDelta(MS_IN_SECOND);
-
-    this._rewardValues[RewardParameter.developmentPoints] = value;
-  }
-
-  private updateExperience() {
-    const value = this._sidejob!.calculateExperienceDelta(MS_IN_SECOND);
-
-    this._rewardValues[RewardParameter.experience] = value;
-  }
-
-  private updateDistrictTierPoints() {
-    const value = this._sidejob!.calculateDistrictTierPointsDelta(MS_IN_SECOND);
-
-    this._rewardValues[RewardParameter.districtTierPoints] = value;
-  }
-
-  private updateConnectivity() {
-    const value = this._sidejob!.calculateConnectivityDelta(MS_IN_SECOND);
-
-    this._rewardValues[RewardParameter.connectivity] = value;
-  }
-
-  private updateCodeBase() {
-    const value = this._sidejob!.calculateCodeBaseDelta(MS_IN_SECOND);
-
-    this._rewardValues[RewardParameter.codeBase] = value;
-  }
-
-  private updateComputationalBase() {
-    const value = this._sidejob!.calculateComputationalBaseDelta(MS_IN_SECOND);
-
-    this._rewardValues[RewardParameter.computationalBase] = value;
-  }
-
-  private updateRewards() {
-    const value = this._sidejob!.calculateRewardsDelta(MS_IN_SECOND);
-
-    this._rewardValues[RewardParameter.rewards] = value;
-  }
+  private updateParameter = (parameter: RewardParameter) => {
+    this._rewardValues[parameter] = calculateSidejobParameterValue(this._sidejob!, parameter);
+  };
 
   private updateValueElement = (element: HTMLSpanElement) => {
     const parameter = element.dataset.value as RewardParameter;

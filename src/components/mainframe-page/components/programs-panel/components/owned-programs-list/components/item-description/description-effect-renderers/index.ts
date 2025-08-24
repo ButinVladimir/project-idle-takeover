@@ -10,3 +10,4 @@ export * from './mainframe-hardware-autobuyer-description-effect-renderer';
 export * from './mainframe-programs-autobuyer-description-effect-renderer';
 export * from './clone-level-autoupgrader-description-effect-renderer';
 export * from './peer-reviewer-description-effect-renderer';
+export * from './renderer-map';

@@ -1,7 +1,6 @@
 import programs from '@configs/programs.json';
 import { type ISettingsState } from '@state/settings-state';
-import { IncomeSource } from '@shared/types';
-import { calculateTierLinear } from '@shared/helpers';
+import { calculateLinear, calculateTierLinear, IncomeSource } from '@shared/index';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { OtherProgramName } from '../types';
@@ -35,8 +34,10 @@ export class ShareServerProgram extends BaseProgram {
 
     return (
       this.globalState.scenario.currentValues.programMultipliers.money.pointsMultiplier *
-      this.calculateModifier(threads, usedRam, passedTime) *
-      calculateTierLinear(this.level, this.tier, programData.money)
+      this.calculateModifier(passedTime) *
+      calculateTierLinear(this.level, this.tier, programData.money.main) *
+      calculateLinear(usedRam, programData.money.ram) *
+      calculateLinear(threads, programData.money.cores)
     );
   }
 
@@ -45,22 +46,19 @@ export class ShareServerProgram extends BaseProgram {
 
     return (
       this.globalState.scenario.currentValues.programMultipliers.developmentPoints.pointsMultiplier *
-      this.calculateModifier(threads, usedRam, passedTime) *
-      calculateTierLinear(this.level, this.tier, programData.developmentPoints)
+      this.calculateModifier(passedTime) *
+      calculateTierLinear(this.level, this.tier, programData.developmentPoints.main) *
+      calculateLinear(usedRam, programData.developmentPoints.ram) *
+      calculateLinear(threads, programData.developmentPoints.cores)
     );
   }
 
-  private calculateModifier(threads: number, usedRam: number, passedTime: number): number {
-    const programData = programs[this.name];
-
-    return (
-      this.globalState.multipliers.rewards.totalMultiplier *
-      passedTime *
-      Math.pow(threads * usedRam, programData.autoscalableResourcesPower) *
-      Math.pow(
-        this.globalState.scenario.currentValues.mainframeSoftware.performanceBoost,
-        this.mainframeState.hardware.performance.totalLevel,
-      )
+  private calculateModifier(passedTime: number): number {
+    const hardwareMultiplier = calculateLinear(
+      this.mainframeState.hardware.performance.totalLevel,
+      this.globalState.scenario.currentValues.mainframeSoftware.performanceBoost,
     );
+
+    return this.globalState.rewards.multiplierByProgram * passedTime * hardwareMultiplier;
   }
 }

@@ -1,13 +1,15 @@
+import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type ICityState } from '@state/city-state/interfaces';
-import { type IGlobalState, ISynchronizationParameter } from '../interfaces';
+import { type IGlobalState, ISynchronizationState } from '../interfaces';
 import { type ICompanyState } from '@state/company-state/interfaces';
 
 const { lazyInject } = decorators;
 
-export class SynchronizationParameter implements ISynchronizationParameter {
+@injectable()
+export class SynchronizationState implements ISynchronizationState {
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
 
@@ -21,19 +23,25 @@ export class SynchronizationParameter implements ISynchronizationParameter {
   private _stateUIConnector!: IStateUIConnector;
 
   private _baseValue: number;
+  private _availableValue: number;
   private _totalValue: number;
   private _recalculationRequested: boolean;
 
   constructor() {
     this._baseValue = 0;
+    this._availableValue = 0;
     this._totalValue = 0;
     this._recalculationRequested = true;
 
-    this._stateUIConnector.registerEventEmitter(this, ['_baseValue', '_totalValue']);
+    this._stateUIConnector.registerEventEmitter(this, ['_baseValue', '_availableValue', '_totalValue']);
   }
 
   get baseValue() {
     return this._baseValue;
+  }
+
+  get availableValue() {
+    return this._availableValue;
   }
 
   get totalValue() {
@@ -42,6 +50,8 @@ export class SynchronizationParameter implements ISynchronizationParameter {
 
   requestRecalculation() {
     this._recalculationRequested = true;
+
+    this._globalState.experienceShare.requestRecalculation();
   }
 
   recalculate() {
@@ -53,7 +63,7 @@ export class SynchronizationParameter implements ISynchronizationParameter {
 
     this.calculateBaseValue();
     this.calculateDistrictValues();
-    this._companyState.clones.updateSynchronization();
+    this.calculateAvailableValue();
   }
 
   private calculateBaseValue() {
@@ -69,5 +79,13 @@ export class SynchronizationParameter implements ISynchronizationParameter {
 
       this._totalValue += districtState.parameters.synchronization.value;
     });
+  }
+
+  private calculateAvailableValue() {
+    this._availableValue = this._totalValue;
+
+    for (const clone of this._companyState.clones.listClones()) {
+      this._availableValue -= this._companyState.clones.calculateCloneSynchronization(clone.templateName, clone.tier);
+    }
   }
 }

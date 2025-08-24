@@ -12,9 +12,6 @@ import {
   calculateTierMultiplier,
   reverseGeometricProgressionSum,
   type IFormatter,
-  binarySearchDecimal,
-  PurchaseType,
-  Feature,
 } from '@shared/index';
 import { type ICompanyState } from '@state/company-state/interfaces/company-state';
 import { type IGlobalState } from '@state/global-state';
@@ -136,38 +133,27 @@ export class Clone implements IClone {
     return this._experienceMultiplier;
   }
 
-  increaseExperience(delta: number) {
+  increaseExperience(delta: number, share: boolean) {
     this._experience += delta;
+
+    if (share) {
+      this._globalState.experienceShare.increaseExperience(delta);
+    }
   }
 
-  purchaseLevelUpgrade(level: number): boolean {
-    if (!this._globalState.unlockedFeatures.isFeatureUnlocked(Feature.companyManagement)) {
-      return false;
-    }
+  upgradeLevel(level: number) {
+    this._level = level;
+    this._experience = this.getLevelRequirements(level - 1);
+    this._companyState.requestReassignment();
 
-    if (!this._globalState.availableItems.cloneTemplates.isItemAvailable(this._templateName, this._tier, level)) {
-      return false;
-    }
+    const formattedLevel = this._formatter.formatLevel(level);
+    this._messageLogState.postMessage(
+      ClonesEvent.cloneLevelUpgraded,
+      msg(str`Clone "${this._name}" level has been upgraded to ${formattedLevel}`),
+    );
 
-    const cost = this._companyState.clones.getCloneCost(this._templateName, this._tier, level);
-
-    return this._globalState.money.purchase(cost, PurchaseType.clones, () => {
-      this.upgradeLevel(level);
-    });
-  }
-
-  upgradeMaxLevel() {
-    if (!this._globalState.unlockedFeatures.isFeatureUnlocked(Feature.companyManagement)) {
-      return false;
-    }
-
-    const level = binarySearchDecimal(this._level, this._globalState.development.level, this.handleCheckLevelUpgrade);
-
-    if (level <= this._level) {
-      return false;
-    }
-
-    return this.purchaseLevelUpgrade(level);
+    this.recalculateParameters();
+    this.handlePerformanceUpdate();
   }
 
   getLevelRequirements(level: number): number {
@@ -245,6 +231,7 @@ export class Clone implements IClone {
       );
 
       this.recalculateParameters();
+      this.handlePerformanceUpdate();
     }
   }
 
@@ -284,36 +271,17 @@ export class Clone implements IClone {
     );
   }
 
-  private handleCheckLevelUpgrade = (level: number): boolean => {
-    if (!this._globalState.availableItems.cloneTemplates.isItemAvailable(this._templateName, this._tier, level)) {
-      return false;
-    }
-
-    const cost = this._companyState.clones.getCloneCost(this._templateName, this._tier, level);
-
-    return cost <= this._globalState.money.money;
-  };
-
-  private upgradeLevel(level: number) {
-    this._level = level;
-    this._experience = this.getLevelRequirements(level - 1);
-    this._companyState.requestReassignment();
-
-    const formattedLevel = this._formatter.formatLevel(level);
-    this._messageLogState.postMessage(
-      ClonesEvent.cloneLevelUpgraded,
-      msg(str`Clone "${this._name}" level has been upgraded to ${formattedLevel}`),
-    );
-
-    this.recalculateParameters();
-  }
-
   private calculateLevelFromExperience(): number {
     const { base, multiplier } = this._template.levelRequirements;
 
-    return Math.min(
-      reverseGeometricProgressionSum(this._experience, multiplier, base),
-      this._globalState.development.level,
-    );
+    return reverseGeometricProgressionSum(this._experience, multiplier, base);
+  }
+
+  private handlePerformanceUpdate(): void {
+    const sidejob = this._companyState.sidejobs.getSidejobByCloneId(this._id);
+
+    if (sidejob?.isActive) {
+      sidejob.handlePerformanceUpdate();
+    }
   }
 }

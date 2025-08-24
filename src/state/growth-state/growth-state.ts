@@ -7,33 +7,32 @@ import type {
   IConnectivityGrowthState,
   IDistrictTierPointsGrowthState,
   IExperienceGrowthState,
+  IRewardsGrowthState,
 } from './interfaces';
 import { IGrowthState } from './interfaces/growth-state';
 
 @injectable()
 export class GrowthState implements IGrowthState {
-  private _moneyGrowthState: IMoneyGrowthState;
-  private _developmentGrowthState: IDevelopmentGrowthState;
-  private _multipliersGrowthState: IMultipliersGrowthState;
-  private _connectivityGrowthState: IConnectivityGrowthState;
-  private _districtTierPointsGrowthState: IDistrictTierPointsGrowthState;
-  private _experienceGrowthState: IExperienceGrowthState;
+  @inject(TYPES.MoneyGrowthState)
+  private _moneyGrowthState!: IMoneyGrowthState;
 
-  constructor(
-    @inject(TYPES.MoneyGrowthState) _moneyGrowthState: IMoneyGrowthState,
-    @inject(TYPES.DevelopmentGrowthState) _developmentGrowthState: IDevelopmentGrowthState,
-    @inject(TYPES.MultipliersGrowthState) _multipliersGrowthState: IMultipliersGrowthState,
-    @inject(TYPES.ConnectivityGrowthState) _connectivityGrowthState: IConnectivityGrowthState,
-    @inject(TYPES.DistrictTierPointsGrowthState) _districtTierPointsGrowthState: IDistrictTierPointsGrowthState,
-    @inject(TYPES.ExperienceGrowthState) _experienceGrowthState: IExperienceGrowthState,
-  ) {
-    this._moneyGrowthState = _moneyGrowthState;
-    this._developmentGrowthState = _developmentGrowthState;
-    this._multipliersGrowthState = _multipliersGrowthState;
-    this._connectivityGrowthState = _connectivityGrowthState;
-    this._districtTierPointsGrowthState = _districtTierPointsGrowthState;
-    this._experienceGrowthState = _experienceGrowthState;
-  }
+  @inject(TYPES.DevelopmentGrowthState)
+  private _developmentGrowthState!: IDevelopmentGrowthState;
+
+  @inject(TYPES.MultipliersGrowthState)
+  private _multipliersGrowthState!: IMultipliersGrowthState;
+
+  @inject(TYPES.ConnectivityGrowthState)
+  private _connectivityGrowthState!: IConnectivityGrowthState;
+
+  @inject(TYPES.RewardsGrowthState)
+  private _rewardsGrowthState!: IRewardsGrowthState;
+
+  @inject(TYPES.DistrictTierPointsGrowthState)
+  private _districtTierPointsGrowthState!: IDistrictTierPointsGrowthState;
+
+  @inject(TYPES.ExperienceGrowthState)
+  private _experienceGrowthState!: IExperienceGrowthState;
 
   get money(): IMoneyGrowthState {
     return this._moneyGrowthState;
@@ -51,6 +50,10 @@ export class GrowthState implements IGrowthState {
     return this._connectivityGrowthState;
   }
 
+  get rewards(): IRewardsGrowthState {
+    return this._rewardsGrowthState;
+  }
+
   get districtTierPoints(): IDistrictTierPointsGrowthState {
     return this._districtTierPointsGrowthState;
   }
@@ -62,6 +65,7 @@ export class GrowthState implements IGrowthState {
   clearValues() {
     this._multipliersGrowthState.clearValues();
     this._connectivityGrowthState.clearValues();
+    this._rewardsGrowthState.clearValues();
     this._districtTierPointsGrowthState.clearValues();
     this._experienceGrowthState.clearValues();
   }
@@ -71,6 +75,7 @@ export class GrowthState implements IGrowthState {
     this._developmentGrowthState.resetValues();
     this._multipliersGrowthState.resetValues();
     this._connectivityGrowthState.resetValues();
+    this._rewardsGrowthState.resetValues();
     this._districtTierPointsGrowthState.resetValues();
     this._experienceGrowthState.resetValues();
   }

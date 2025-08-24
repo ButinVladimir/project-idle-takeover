@@ -99,8 +99,6 @@ export class PurchaseCloneDialog extends BaseComponent {
   }
 
   private renderContent(desktop: boolean) {
-    const { developmentLevel } = this._controller;
-
     const inputsContainerClasses = classMap({
       'inputs-container': true,
       mobile: !desktop,
@@ -115,7 +113,6 @@ export class PurchaseCloneDialog extends BaseComponent {
           <div class="body">
             <p class="hint">
               ${msg(`Select clone name, template, tier and level to purchase it.
-Level cannot be above current development level.
 Tier is limited depending on gained favors.
 Synchronization is earned by capturing districts and gaining certain favors.`)}
             </p>
@@ -170,7 +167,6 @@ Synchronization is earned by capturing districts and gaining certain favors.`)}
                 type="number"
                 inputmode="decimal"
                 min="1"
-                max=${developmentLevel + 1}
                 step="1"
                 @sl-change=${this.handleLevelChange}
               >
@@ -257,7 +253,7 @@ Synchronization is earned by capturing districts and gaining certain favors.`)}
       return;
     }
 
-    const level = clamp(this._levelInputRef.value.valueAsNumber - 1, 0, this._controller.developmentLevel);
+    const level = clamp(this._levelInputRef.value.valueAsNumber - 1, 0, Number.MAX_SAFE_INTEGER);
     this._level = level;
     this._levelInputRef.value.valueAsNumber = level + 1;
   };
@@ -294,11 +290,7 @@ Synchronization is earned by capturing districts and gaining certain favors.`)}
 
     const cost = this._controller.getCloneCost(this._clone.templateName, this._clone.tier, this._clone.level);
     const synchronization = this._controller.getCloneSynchronization(this._clone.templateName, this._clone.tier);
-    const cloneAvailable = this._controller.isCloneAvailable(
-      this._clone.templateName,
-      this._clone.tier,
-      this._clone.level,
-    );
+    const cloneAvailable = this._controller.isCloneAvailable(this._clone.templateName, this._clone.tier);
 
     return !!(
       this._clone &&

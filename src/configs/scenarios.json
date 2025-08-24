@@ -50,7 +50,7 @@
       "startingDistrict": 0
     },
     "mainframeSoftware": {
-      "performanceBoost": 1.1
+      "performanceBoost": { "base": 1, "multiplier": 0.1 }
     },
     "programMultipliers": {
       "money": {

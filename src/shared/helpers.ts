@@ -9,6 +9,12 @@ export const calculateTierPower = (exponent: number, tier: number, params: ITier
   return calculatePower(exponent, params) * calculateTierMultiplier(tier, params.baseTier);
 };
 
+export const reverseTierPower = (points: number, tier: number, params: ITierExponent): number => {
+  return Math.floor(
+    Math.log(points / calculateTierMultiplier(tier, params.baseTier) / params.multiplier) / Math.log(params.base),
+  );
+};
+
 export const calculateLinear = (level: number, params: ILinear): number => {
   return params.base + level * params.multiplier;
 };

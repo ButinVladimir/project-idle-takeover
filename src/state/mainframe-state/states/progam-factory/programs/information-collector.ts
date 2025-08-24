@@ -1,5 +1,5 @@
 import programs from '@configs/programs.json';
-import { calculateTierPower } from '@shared/helpers';
+import { calculateTierLinear } from '@shared/helpers';
 import { MultiplierProgramName } from '../types';
 import { BaseProgram } from './base-program';
 
@@ -18,9 +18,9 @@ export class InformationCollectorProgram extends BaseProgram {
 
     return (
       this.globalState.scenario.currentValues.programMultipliers.connectivity.pointsMultiplier *
-      this.globalState.multipliers.rewards.totalMultiplier *
+      this.globalState.rewards.multiplierByProgram *
       threads *
-      calculateTierPower(this.level, this.tier, programData.connectivity)
+      calculateTierLinear(this.level, this.tier, programData.connectivity)
     );
   }
 }

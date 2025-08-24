@@ -1,10 +1,15 @@
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import constants from '@configs/constants.json';
 import { decorators } from '@state/container';
 import type { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
 import { TYPES } from '@state/types';
 import { moveElementInArray } from '@shared/helpers';
-import { IMainframeHardwareState, IMainframeHardwareSerializedState, IMainframeHardwareParameter } from './interfaces';
+import {
+  IMainframeHardwareState,
+  IMainframeHardwareSerializedState,
+  IMainframeHardwareParameter,
+  type IMainframeHardwareUpgrader,
+} from './interfaces';
 import { MainframeHardwarePerformance } from './mainframe-hardware-performance';
 import { MainframeHardwareCores } from './mainframe-hardware-cores';
 import { MainframeHardwareRam } from './mainframe-hardware-ram';
@@ -17,15 +22,21 @@ export class MainframeHardwareState implements IMainframeHardwareState {
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
 
+  @inject(TYPES.MainframeHardwareUpgrader)
+  private _upgrader!: IMainframeHardwareUpgrader;
+
+  @inject(TYPES.MainframeHardwarePerformance)
+  private _performance!: MainframeHardwarePerformance;
+
+  @inject(TYPES.MainframeHardwareRam)
+  private _ram!: MainframeHardwareRam;
+
+  @inject(TYPES.MainframeHardwareCores)
+  private _cores!: MainframeHardwareCores;
+
   private _parametersList!: IMainframeHardwareParameter[];
-  private _performance: MainframeHardwarePerformance;
-  private _cores: MainframeHardwareCores;
-  private _ram: MainframeHardwareRam;
 
   constructor() {
-    this._performance = new MainframeHardwarePerformance();
-    this._cores = new MainframeHardwareCores();
-    this._ram = new MainframeHardwareRam();
     this._parametersList = [];
 
     this.buildParametersList(
@@ -47,6 +58,10 @@ export class MainframeHardwareState implements IMainframeHardwareState {
     return this._ram;
   }
 
+  get upgrader() {
+    return this._upgrader;
+  }
+
   listParameters(): IMainframeHardwareParameter[] {
     return this._parametersList;
   }
@@ -59,14 +74,6 @@ export class MainframeHardwareState implements IMainframeHardwareState {
     }
 
     moveElementInArray(this._parametersList, oldPosition, newPosition);
-  }
-
-  purchaseMax() {
-    for (const parameter of this._parametersList) {
-      if (parameter.autoUpgradeEnabled) {
-        parameter.purchaseMax();
-      }
-    }
   }
 
   async startNewState(): Promise<void> {

@@ -5,25 +5,28 @@ import padStart from 'lodash/padStart';
 import cloneTemplates from '@configs/clone-templates.json';
 import names from '@configs/names.json';
 import { decorators } from '@state/container';
-import type { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
-import type { IGlobalState } from '@state/global-state/interfaces/global-state';
-import type { IMessageLogState } from '@state/message-log-state/interfaces/message-log-state';
-import type { IFormatter } from '@shared/interfaces/formatter';
+import type { IStateUIConnector } from '@state/state-ui-connector';
+import type { IGlobalState } from '@state/global-state';
+import type { IMessageLogState } from '@state/message-log-state';
 import { TYPES } from '@state/types';
-import { ClonesEvent, Feature, PurchaseType } from '@shared/types';
 import {
+  ClonesEvent,
+  Feature,
+  PurchaseType,
   calculateTierMultiplier,
   calculateTierPower,
   moveElementInArray,
   removeElementsFromArray,
-} from '@shared/helpers';
+  reverseTierPower,
+  type IFormatter,
+} from '@shared/index';
 import { CLONE_TEMPLATE_TEXTS, CLONE_NAMES } from '@texts/index';
 import type { ICompanyState } from '../../interfaces/company-state';
 import { IClone } from '../clone-factory/interfaces/clone';
 import {
+  type ICompanyClonesLevelUpgrader,
   ICompanyClonesSerializedState,
   ICompanyClonesState,
-  type IExperienceShareParameter,
   IPurchaseCloneArgs,
 } from './interfaces';
 import { CloneTemplateName, IMakeCloneParameters } from '../clone-factory';
@@ -47,54 +50,40 @@ export class CompanyClonesState implements ICompanyClonesState {
   @lazyInject(TYPES.Formatter)
   private _formatter!: IFormatter;
 
-  private _experienceShare: IExperienceShareParameter;
+  @inject(TYPES.CompanyClonesLevelUpgrader)
+  private _levelUpgrader!: ICompanyClonesLevelUpgrader;
 
-  private _availableSynchronization: number;
   private _clonesList: IClone[];
   private _clonesMap: Map<string, IClone>;
 
-  constructor(@inject(TYPES.ExperienceShareParameter) _experienceShare: IExperienceShareParameter) {
-    this._experienceShare = _experienceShare;
-
-    this._availableSynchronization = 0;
+  constructor() {
     this._clonesList = [];
     this._clonesMap = new Map<string, IClone>();
 
-    this._stateUiConnector.registerEventEmitter(this, ['_availableSynchronization', '_clonesList']);
+    this._stateUiConnector.registerEventEmitter(this, ['_clonesList']);
   }
 
-  get availableSynchronization() {
-    return this._availableSynchronization;
-  }
-
-  get experienceShare() {
-    return this._experienceShare;
+  get levelUpgrader() {
+    return this._levelUpgrader;
   }
 
   listClones(): IClone[] {
     return this._clonesList;
   }
 
-  earnCloneExperience(id: string, delta: number): void {
-    const clone = this.getCloneById(id);
-
-    if (!clone) {
-      return;
-    }
-
-    clone.increaseExperience(delta);
-    this._experienceShare.increaseExperience(delta);
-  }
-
   getCloneById(id: string): IClone | undefined {
     return this._clonesMap.get(id);
   }
 
-  getCloneCost(templateName: CloneTemplateName, tier: number, level: number): number {
+  calculateCloneCost(templateName: CloneTemplateName, tier: number, level: number): number {
     return calculateTierPower(level, tier, cloneTemplates[templateName].cost);
   }
 
-  getCloneSynchronization(templateName: CloneTemplateName, tier: number): number {
+  calculateCloneLevelFromMoney(templateName: CloneTemplateName, tier: number, money: number): number {
+    return reverseTierPower(money, tier, cloneTemplates[templateName].cost);
+  }
+
+  calculateCloneSynchronization(templateName: CloneTemplateName, tier: number): number {
     const template = cloneTemplates[templateName];
 
     return Math.ceil(
@@ -111,13 +100,13 @@ export class CompanyClonesState implements ICompanyClonesState {
       return false;
     }
 
-    const synchronization = this.getCloneSynchronization(args.templateName, args.tier);
+    const synchronization = this.calculateCloneSynchronization(args.templateName, args.tier);
 
-    if (synchronization > this._availableSynchronization) {
+    if (synchronization > this._globalState.synchronization.availableValue) {
       return false;
     }
 
-    const cost = this.getCloneCost(args.templateName, args.tier, args.level);
+    const cost = this.calculateCloneCost(args.templateName, args.tier, args.level);
 
     const bought = this._globalState.money.purchase(cost, PurchaseType.clones, this.handlePurhaseClone(args));
 
@@ -147,7 +136,7 @@ export class CompanyClonesState implements ICompanyClonesState {
       this._messageLogState.postMessage(ClonesEvent.cloneDeleted, msg(str`Clone "${clone.name}" has been deleted`));
     }
 
-    this.updateSynchronization();
+    this._globalState.synchronization.requestRecalculation();
 
     this._companyState.requestReassignment();
   }
@@ -158,17 +147,20 @@ export class CompanyClonesState implements ICompanyClonesState {
 
     this._messageLogState.postMessage(ClonesEvent.allClonesDeleted, msg('All clones have been deleted'));
 
-    this.updateSynchronization();
+    this._globalState.synchronization.requestRecalculation();
 
     this._companyState.requestReassignment();
   }
 
   recalculateClones(): void {
-    this._experienceShare.spendExperience();
+    const sharedExperience = this._globalState.experienceShare.sharedExperience;
 
     for (const clone of this._clonesList) {
+      clone.increaseExperience(sharedExperience, false);
       clone.recalculate();
     }
+
+    this._globalState.experienceShare.resetExperience();
   }
 
   moveClone(id: string, newPosition: number): void {
@@ -188,27 +180,9 @@ export class CompanyClonesState implements ICompanyClonesState {
     return `${namePart}#${serialNumberPart}`;
   }
 
-  updateSynchronization() {
-    this._availableSynchronization = this._globalState.synchronization.totalValue;
-
-    for (const clone of this._clonesList) {
-      this._availableSynchronization -= this.getCloneSynchronization(clone.templateName, clone.tier);
-    }
-
-    this._experienceShare.recalculateMultipliers();
-  }
-
-  upgradeMaxAllLevels() {
-    for (const clone of this._clonesList) {
-      if (clone.autoUpgradeEnabled) {
-        clone.upgradeMaxLevel();
-      }
-    }
-  }
-
   async startNewState(): Promise<void> {
     this.clearState();
-    this.handleStateReset();
+    this.recalculateClones();
   }
 
   async deserialize(serializedState: ICompanyClonesSerializedState): Promise<void> {
@@ -220,7 +194,7 @@ export class CompanyClonesState implements ICompanyClonesState {
       this._clonesMap.set(clone.id, clone);
     });
 
-    this.handleStateReset();
+    this.recalculateClones();
   }
 
   serialize(): ICompanyClonesSerializedState {
@@ -249,7 +223,7 @@ export class CompanyClonesState implements ICompanyClonesState {
 
     this._clonesMap.set(clone.id, clone);
 
-    this.updateSynchronization();
+    this._globalState.synchronization.requestRecalculation();
   }
 
   private handlePurhaseClone = (args: IPurchaseCloneArgs) => () => {
@@ -282,11 +256,5 @@ export class CompanyClonesState implements ICompanyClonesState {
     if (sidejob) {
       this._companyState.sidejobs.cancelSidejob(sidejob.id);
     }
-  }
-
-  private handleStateReset() {
-    this._experienceShare.resetExperience();
-    this.recalculateClones();
-    this.updateSynchronization();
   }
 }

@@ -3,7 +3,7 @@ import { localized } from '@lit/localize';
 import { customElement, queryAll } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { consume } from '@lit/context';
-import { type IProgram, OtherProgramName, MultiplierProgramName, AutobuyerProgramName } from '@state/mainframe-state';
+import { type IProgram } from '@state/mainframe-state';
 import {
   BaseComponent,
   getHighlightValueClass,
@@ -11,18 +11,7 @@ import {
   getHighlightDifferenceClassMap,
 } from '@shared/index';
 import { COMMON_TEXTS, PROGRAM_DESCRIPTION_TEXTS, PROGRAM_TEXTS } from '@texts/index';
-import {
-  CodeGeneratorDescriptionEffectRenderer,
-  CircuitDesignerDescriptionEffectRenderer,
-  DealMakerDescriptionEffectRenderer,
-  InformationCollectorDescriptionEffectRenderer,
-  MainframeHardwareAutobuyerDescriptionEffectRenderer,
-  PredictiveComputatorDescriptionEffectRenderer,
-  ShareServerDescriptionEffectRenderer,
-  MainframeProgramsAutobuyerDescriptionEffectRenderer,
-  CloneLevelAutoupgraderDescriptionEffectRenderer,
-  PeerReviewerDescriptionEffectRenderer,
-} from './description-effect-renderers';
+import { rendererMap } from './description-effect-renderers';
 import { IDescriptionEffectRenderer, IDescriptionParameters } from './interfaces';
 import { ProgramDiffTextController } from './controller';
 import { existingProgramContext, temporaryProgramContext } from '../../contexts';
@@ -229,49 +218,6 @@ export class PurchaseProgramDialogDescription extends BaseComponent {
       ram: this._controller.ram,
     };
 
-    switch (this._program!.name) {
-      case MultiplierProgramName.codeGenerator:
-        this._renderer = new CodeGeneratorDescriptionEffectRenderer(parameters);
-        break;
-
-      case MultiplierProgramName.circuitDesigner:
-        this._renderer = new CircuitDesignerDescriptionEffectRenderer(parameters);
-        break;
-
-      case MultiplierProgramName.dealMaker:
-        this._renderer = new DealMakerDescriptionEffectRenderer(parameters);
-        break;
-
-      case MultiplierProgramName.informationCollector:
-        this._renderer = new InformationCollectorDescriptionEffectRenderer(parameters);
-        break;
-
-      case AutobuyerProgramName.mainframeHardwareAutobuyer:
-        this._renderer = new MainframeHardwareAutobuyerDescriptionEffectRenderer(parameters);
-        break;
-
-      case AutobuyerProgramName.mainframeProgramsAutobuyer:
-        this._renderer = new MainframeProgramsAutobuyerDescriptionEffectRenderer(parameters);
-        break;
-
-      case AutobuyerProgramName.cloneLevelAutoupgrader:
-        this._renderer = new CloneLevelAutoupgraderDescriptionEffectRenderer(parameters);
-        break;
-
-      case OtherProgramName.shareServer:
-        this._renderer = new ShareServerDescriptionEffectRenderer(parameters);
-        break;
-
-      case OtherProgramName.predictiveComputator:
-        this._renderer = new PredictiveComputatorDescriptionEffectRenderer(parameters);
-        break;
-
-      case OtherProgramName.peerReviewer:
-        this._renderer = new PeerReviewerDescriptionEffectRenderer(parameters);
-        break;
-
-      default:
-        this._renderer = undefined;
-    }
+    this._renderer = new rendererMap[this._program!.name](parameters);
   }
 }

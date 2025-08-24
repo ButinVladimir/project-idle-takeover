@@ -27,27 +27,27 @@ export class GameScreenController extends BaseController {
   }
 
   private upgradeMainframeHardware() {
-    this.mainframeState.hardware.purchaseMax();
+    this.mainframeState.hardware.upgrader.upgradeMaxAllParameters();
   }
 
   private upgradeMainframePerformance() {
-    this.mainframeState.hardware.performance.purchaseMax();
+    this.mainframeState.hardware.upgrader.upgradeMaxParameter('performance');
   }
 
   private upgradeMainframeRam() {
-    this.mainframeState.hardware.ram.purchaseMax();
+    this.mainframeState.hardware.upgrader.upgradeMaxParameter('ram');
   }
 
   private upgradeMainframeCores() {
-    this.mainframeState.hardware.cores.purchaseMax();
+    this.mainframeState.hardware.upgrader.upgradeMaxParameter('cores');
   }
 
   private upgradeMainframePrograms() {
-    this.mainframeState.programs.upgradeMaxAllPrograms();
+    this.mainframeState.programs.upgrader.upgradeMaxAllPrograms();
   }
 
   private upgradeClonesLevel() {
-    this.companyState.clones.upgradeMaxAllLevels();
+    this.companyState.clones.levelUpgrader.upgradeMaxAllClones();
   }
 
   private getHotkeyByKey(key: string): Hotkey | undefined {

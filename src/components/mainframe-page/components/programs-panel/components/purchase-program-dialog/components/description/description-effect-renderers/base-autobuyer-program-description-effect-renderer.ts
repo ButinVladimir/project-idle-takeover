@@ -27,24 +27,29 @@ export abstract class BaseAutobuyerProgramDescriptionEffectRenderer implements I
   }
 
   public renderEffect = () => {
-    const minTime = this.program.calculateCompletionMinTime(1);
-    const maxTime = this.program.calculateCompletionMaxTime(1);
-    const minAvgValue = (1 / maxTime) * MS_IN_SECOND;
-    const maxAvgValue = (1 / minTime) * MS_IN_SECOND;
+    const actionCount = this.getActionCount();
+
+    const minTime = this.program.calculateCompletionMinTime(actionCount);
+    const maxTime = this.program.calculateCompletionMaxTime(actionCount);
+    const minAvgValue = (actionCount / maxTime) * MS_IN_SECOND;
+    const maxAvgValue = (actionCount / minTime) * MS_IN_SECOND;
 
     let minAvgValueDiff = minAvgValue;
     let maxAvgValueDiff = maxAvgValue;
 
     if (this.ownedProgram) {
-      const ownedMinTime = this.ownedProgram.calculateCompletionMinTime(1);
-      const ownedMaxTime = this.ownedProgram.calculateCompletionMaxTime(1);
-      const ownedMinAvgValue = (1 / ownedMaxTime) * MS_IN_SECOND;
-      const ownedMaxAvgValue = (1 / ownedMinTime) * MS_IN_SECOND;
+      const ownedActionCount = this.getOwnedActionCount();
+
+      const ownedMinTime = this.ownedProgram.calculateCompletionMinTime(ownedActionCount);
+      const ownedMaxTime = this.ownedProgram.calculateCompletionMaxTime(ownedActionCount);
+      const ownedMinAvgValue = (ownedActionCount / ownedMaxTime) * MS_IN_SECOND;
+      const ownedMaxAvgValue = (ownedActionCount / ownedMinTime) * MS_IN_SECOND;
 
       minAvgValueDiff = minAvgValue - ownedMinAvgValue;
       maxAvgValueDiff = maxAvgValue - ownedMaxAvgValue;
     }
 
+    const formattedActionCount = this.formatter.formatNumberDecimal(actionCount);
     const formattedMinAvgValue = this.formatter.formatNumberFloat(minAvgValue);
     const formattedMaxAvgValue = this.formatter.formatNumberFloat(maxAvgValue);
 
@@ -63,7 +68,7 @@ export abstract class BaseAutobuyerProgramDescriptionEffectRenderer implements I
         ${COMMON_TEXTS.parameterValue(
           REWARD_PARAMETER_NAMES[RewardParameter.actions](),
           PROGRAM_DESCRIPTION_TEXTS.actionCompletionDiffs(
-            '1',
+            formattedActionCount,
             formattedMinAvgValue,
             minAvgDiffEl,
             formattedMaxAvgValue,
@@ -75,4 +80,8 @@ export abstract class BaseAutobuyerProgramDescriptionEffectRenderer implements I
   };
 
   public recalculateValues() {}
+
+  protected abstract getActionCount(): number;
+
+  protected abstract getOwnedActionCount(): number;
 }

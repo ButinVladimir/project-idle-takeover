@@ -1,5 +1,5 @@
-import { IExponent } from '@shared/interfaces/formulas/exponent';
-import { ProgramName } from '@state/mainframe-state/states/progam-factory/types';
+import { IExponent, ILinear } from '@shared/index';
+import { ProgramName } from '@state/mainframe-state';
 import { IStoryEvent } from './story-event';
 import { IMultiplierScenarioParameters } from './multiplier-scenario-parameters';
 
@@ -23,7 +23,7 @@ export interface IScenarioValues {
     ramPrice: IExponent;
   };
   mainframeSoftware: {
-    performanceBoost: number;
+    performanceBoost: ILinear;
     startingPrograms: ProgramName[];
     minProcessCompletionTime: number;
   };

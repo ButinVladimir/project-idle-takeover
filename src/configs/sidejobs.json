@@ -22,231 +22,167 @@
     },
     "rewardModifiers": {
       "attributes": {
-        "strength": { "multiplier": 0.1, "base": 1 },
-        "endurance": { "multiplier": 0.1, "base": 1 },
-        "agility": { "multiplier": 0.1, "base": 1 },
-        "perception": { "multiplier": 0.1, "base": 1 },
-        "intellect": { "multiplier": 0.1, "base": 1 },
         "charisma": { "multiplier": 0.1, "base": 1 }
       },
       "skills": {
-        "closeCombat": { "multiplier": 0.1, "base": 1 },
-        "rangedCombat": { "multiplier": 0.1, "base": 1 },
-        "engineering": { "multiplier": 0.1, "base": 1 },
-        "hacking": { "multiplier": 0.1, "base": 1 },
-        "stealth": { "multiplier": 0.1, "base": 1 },
         "diplomacy": { "multiplier": 0.1, "base": 1 }
       }
     },
     "rewards": {
       "experience": { "multiplier": 0.001, "base": 1 },
-      "money": { "multiplier": 0.01, "base": 1 },
+      "money": 0.001,
       "developmentPoints": { "multiplier": 0.01, "base": 1 },
-      "distictTierPoints": { "multiplier": 0.001, "base": 1 },
-      "codeBase": { "multiplier": 0, "base": 1 },
-      "computationalBase": { "multiplier": 0, "base": 1 },
-      "connectivity": { "multiplier": 0, "base": 1 },
-      "rewards": { "multiplier": 0, "base": 1 }
+      "distictTierPoints": { "multiplier": 0.001, "base": 1 }
     }
   },
   "infoBroker": {
     "requirements": {
       "connectivity": { "multiplier": 10, "base": 1 },
       "attributes": {
-        "strength": { "multiplier": 0, "base": 1 },
-        "endurance": { "multiplier": 0, "base": 1 },
-        "agility": { "multiplier": 0, "base": 1 },
-        "perception": { "multiplier": 0, "base": 1 },
         "intellect": { "multiplier": 10, "base": 1 },
         "charisma": { "multiplier": 10, "base": 1 }
       },
       "skills": {
-        "closeCombat": { "multiplier": 0, "base": 1 },
-        "rangedCombat": { "multiplier": 0, "base": 1 },
-        "engineering": { "multiplier": 0, "base": 1 },
-        "hacking": { "multiplier": 0, "base": 1 },
-        "stealth": { "multiplier": 0, "base": 1 },
         "diplomacy": { "multiplier": 20, "base": 1 }
       },
       "requiredFeatures": ["connectivity"]
     },
     "rewardModifiers": {
       "attributes": {
-        "strength": { "multiplier": 0, "base": 1 },
-        "endurance": { "multiplier": 0, "base": 1 },
-        "agility": { "multiplier": 0, "base": 1 },
-        "perception": { "multiplier": 0, "base": 1 },
         "intellect": { "multiplier": 0.5, "base": 1 },
         "charisma": { "multiplier": 2, "base": 1 }
       },
       "skills": {
-        "closeCombat": { "multiplier": 0, "base": 1 },
-        "rangedCombat": { "multiplier": 0, "base": 1 },
-        "engineering": { "multiplier": 0, "base": 1 },
-        "hacking": { "multiplier": 0, "base": 1 },
-        "stealth": { "multiplier": 0, "base": 1 },
         "diplomacy": { "multiplier": 3, "base": 1 }
       }
     },
     "rewards": {
       "experience": { "multiplier": 0.01, "base": 1 },
-      "money": { "multiplier": 0.02, "base": 1 },
+      "money": 0.02,
       "developmentPoints": { "multiplier": 0.02, "base": 1 },
       "distictTierPoints": { "multiplier": 0.003, "base": 1 },
-      "codeBase": { "multiplier": 0, "base": 1 },
-      "computationalBase": { "multiplier": 0, "base": 1 },
-      "connectivity": { "multiplier": 0.0001, "base": 1 },
-      "rewards": { "multiplier": 0, "base": 1 }
+      "connectivity": 0.0001
     }
   },
   "freelanceProgrammer": {
     "requirements": {
       "connectivity": { "multiplier": 30000, "base": 1 },
       "attributes": {
-        "strength": { "multiplier": 0, "base": 1 },
-        "endurance": { "multiplier": 0, "base": 1 },
-        "agility": { "multiplier": 0, "base": 1 },
-        "perception": { "multiplier": 0, "base": 1 },
-        "intellect": { "multiplier": 15, "base": 1 },
-        "charisma": { "multiplier": 0, "base": 1 }
+        "intellect": { "multiplier": 15, "base": 1 }
       },
       "skills": {
-        "closeCombat": { "multiplier": 0, "base": 1 },
-        "rangedCombat": { "multiplier": 0, "base": 1 },
-        "engineering": { "multiplier": 0, "base": 1 },
-        "hacking": { "multiplier": 30, "base": 1 },
-        "stealth": { "multiplier": 0, "base": 1 },
-        "diplomacy": { "multiplier": 0, "base": 1 }
+        "hacking": { "multiplier": 30, "base": 1 }
       },
       "requiredFeatures": ["codeBase"]
     },
     "rewardModifiers": {
       "attributes": {
-        "strength": { "multiplier": 0, "base": 1 },
-        "endurance": { "multiplier": 0, "base": 1 },
-        "agility": { "multiplier": 0, "base": 1 },
-        "perception": { "multiplier": 0, "base": 1 },
-        "intellect": { "multiplier": 3, "base": 1 },
-        "charisma": { "multiplier": 0, "base": 1 }
+        "intellect": { "multiplier": 3, "base": 1 }
       },
       "skills": {
-        "closeCombat": { "multiplier": 0, "base": 1 },
-        "rangedCombat": { "multiplier": 0, "base": 1 },
-        "engineering": { "multiplier": 0, "base": 1 },
-        "hacking": { "multiplier": 3, "base": 1 },
-        "stealth": { "multiplier": 0, "base": 1 },
-        "diplomacy": { "multiplier": 0, "base": 1 }
+        "hacking": { "multiplier": 3, "base": 1 }
       }
     },
     "rewards": {
       "experience": { "multiplier": 0.02, "base": 1 },
-      "money": { "multiplier": 0.04, "base": 1 },
+      "money": 0.04,
       "developmentPoints": { "multiplier": 0.04, "base": 1 },
       "distictTierPoints": { "multiplier": 0.004, "base": 1 },
-      "codeBase": { "multiplier": 0.0001, "base": 1 },
-      "computationalBase": { "multiplier": 0, "base": 1 },
-      "connectivity": { "multiplier": 0, "base": 1 },
-      "rewards": { "multiplier": 0, "base": 1 }
+      "codeBase": 0.0001
     }
   },
   "computerRepairer": {
     "requirements": {
       "connectivity": { "multiplier": 30000, "base": 1 },
       "attributes": {
-        "strength": { "multiplier": 0, "base": 1 },
-        "endurance": { "multiplier": 0, "base": 1 },
-        "agility": { "multiplier": 0, "base": 1 },
-        "perception": { "multiplier": 0, "base": 1 },
-        "intellect": { "multiplier": 15, "base": 1 },
-        "charisma": { "multiplier": 0, "base": 1 }
+        "intellect": { "multiplier": 15, "base": 1 }
       },
       "skills": {
-        "closeCombat": { "multiplier": 0, "base": 1 },
-        "rangedCombat": { "multiplier": 0, "base": 1 },
-        "engineering": { "multiplier": 0, "base": 1 },
-        "hacking": { "multiplier": 30, "base": 1.5 },
-        "stealth": { "multiplier": 0, "base": 1 },
-        "diplomacy": { "multiplier": 0, "base": 1 }
+        "hacking": { "multiplier": 30, "base": 1.5 }
       },
       "requiredFeatures": ["computationalBase"]
     },
     "rewardModifiers": {
       "attributes": {
-        "strength": { "multiplier": 0, "base": 1 },
-        "endurance": { "multiplier": 0, "base": 1 },
-        "agility": { "multiplier": 0, "base": 1 },
-        "perception": { "multiplier": 0, "base": 1 },
-        "intellect": { "multiplier": 3, "base": 1 },
-        "charisma": { "multiplier": 0, "base": 1 }
+        "intellect": { "multiplier": 3, "base": 1 }
       },
       "skills": {
-        "closeCombat": { "multiplier": 0, "base": 1 },
-        "rangedCombat": { "multiplier": 0, "base": 1 },
-        "engineering": { "multiplier": 0, "base": 1 },
-        "hacking": { "multiplier": 3, "base": 1 },
-        "stealth": { "multiplier": 0, "base": 1 },
-        "diplomacy": { "multiplier": 0, "base": 1 }
+        "hacking": { "multiplier": 3, "base": 1 }
       }
     },
     "rewards": {
       "experience": { "multiplier": 0.02, "base": 1 },
-      "money": { "multiplier": 0.04, "base": 1 },
+      "money": 0.04,
       "developmentPoints": { "multiplier": 0.04, "base": 1 },
       "distictTierPoints": { "multiplier": 0.004, "base": 1 },
-      "codeBase": { "multiplier": 0, "base": 1 },
-      "computationalBase": { "multiplier": 0.0001, "base": 1 },
-      "connectivity": { "multiplier": 0, "base": 1 },
-      "rewards": { "multiplier": 0, "base": 1 }
+      "computationalBase": 0.0001
     }
   },
   "mediator": {
     "requirements": {
       "connectivity": { "multiplier": 30000, "base": 1 },
       "attributes": {
-        "strength": { "multiplier": 0, "base": 1 },
-        "endurance": { "multiplier": 0, "base": 1 },
-        "agility": { "multiplier": 0, "base": 1 },
-        "perception": { "multiplier": 0, "base": 1 },
         "intellect": { "multiplier": 30, "base": 1 },
         "charisma": { "multiplier": 30, "base": 1 }
       },
       "skills": {
-        "closeCombat": { "multiplier": 0, "base": 1 },
-        "rangedCombat": { "multiplier": 0, "base": 1 },
-        "engineering": { "multiplier": 0, "base": 1 },
-        "hacking": { "multiplier": 0, "base": 1 },
-        "stealth": { "multiplier": 0, "base": 1 },
         "diplomacy": { "multiplier": 30, "base": 1 }
       },
       "requiredFeatures": ["rewards"]
     },
     "rewardModifiers": {
       "attributes": {
-        "strength": { "multiplier": 0, "base": 1 },
-        "endurance": { "multiplier": 0, "base": 1 },
-        "agility": { "multiplier": 0, "base": 1 },
-        "perception": { "multiplier": 0, "base": 1 },
         "intellect": { "multiplier": 2, "base": 1 },
         "charisma": { "multiplier": 2, "base": 1 }
       },
       "skills": {
-        "closeCombat": { "multiplier": 0, "base": 1 },
-        "rangedCombat": { "multiplier": 0, "base": 1 },
-        "engineering": { "multiplier": 0, "base": 1 },
-        "hacking": { "multiplier": 0, "base": 1 },
-        "stealth": { "multiplier": 0, "base": 1 },
         "diplomacy": { "multiplier": 4, "base": 1 }
       }
     },
     "rewards": {
       "experience": { "multiplier": 0.03, "base": 1 },
-      "money": { "multiplier": 0.05, "base": 1 },
+      "money": 0.05,
       "developmentPoints": { "multiplier": 0.05, "base": 1 },
       "distictTierPoints": { "multiplier": 0.005, "base": 1 },
-      "codeBase": { "multiplier": 0, "base": 1 },
-      "computationalBase": { "multiplier": 0, "base": 1 },
-      "connectivity": { "multiplier": 0, "base": 1 },
-      "rewards": { "multiplier": 0.0001, "base": 1 }
+      "rewards": 0.0001
+    }
+  },
+  "mainframeRelay": {
+    "requirements": {
+      "connectivity": { "multiplier": 1, "base": 1 },
+      "attributes": {
+        "intellect": { "multiplier": 50, "base": 1 }
+      },
+      "skills": {},
+      "requiredFeatures": []
+    },
+    "rewardModifiers": {
+      "attributes": {
+        "intellect": { "multiplier": 1, "base": 1 }
+      },
+      "skills": {}
+    },
+    "rewards": {
+      "processCompletionSpeed": 0.001
+    }
+  },
+  "feedAnalyzer": {
+    "requirements": {
+      "connectivity": { "multiplier": 1, "base": 1 },
+      "attributes": {
+        "intellect": { "multiplier": 50, "base": 1 }
+      },
+      "skills": {},
+      "requiredFeatures": ["experienceShare"]
+    },
+    "rewardModifiers": {
+      "attributes": {
+        "intellect": { "multiplier": 1, "base": 1 }
+      },
+      "skills": {}
+    },
+    "rewards": {
+      "experienceShareMultiplier": 0.001
     }
   }
 }

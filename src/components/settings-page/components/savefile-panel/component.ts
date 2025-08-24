@@ -35,11 +35,11 @@ export class SavefilePanel extends BaseComponent {
         </sl-button>
       </sl-tooltip>
 
-      <sl-button variant="default" type="button" size="medium" outline @click=${this.handleOpenImportSavefileDialog}>
+      <sl-button variant="default" type="button" size="medium" @click=${this.handleOpenImportSavefileDialog}>
         ${msg('Import savefile')}
       </sl-button>
 
-      <sl-button variant="default" type="button" size="medium" outline @click=${this.handleExportSavefile}>
+      <sl-button variant="default" type="button" size="medium" @click=${this.handleExportSavefile}>
         ${msg('Export savefile')}
       </sl-button>
 

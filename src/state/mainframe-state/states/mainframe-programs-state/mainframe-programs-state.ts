@@ -1,4 +1,4 @@
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
 import programs from '@configs/programs.json';
@@ -9,10 +9,14 @@ import type { IFormatter } from '@shared/interfaces/formatter';
 import type { IMainframeState } from '@state/mainframe-state/interfaces/mainframe-state';
 import { TYPES } from '@state/types';
 import { Feature, ProgramsEvent, PurchaseType } from '@shared/types';
-import { calculateTierPower } from '@shared/helpers';
-import { binarySearchDecimal, moveElementInArray } from '@shared/helpers';
+import { calculateTierPower, reverseTierPower } from '@shared/helpers';
+import { moveElementInArray } from '@shared/helpers';
 import { PROGRAM_TEXTS } from '@texts/programs';
-import { IMainframeProgramsState, IMainframeProgramsSerializedState } from './interfaces';
+import {
+  IMainframeProgramsState,
+  IMainframeProgramsSerializedState,
+  type IMainframeProgramsUpgrader,
+} from './interfaces';
 import { ProgramName } from '../progam-factory/types';
 import { IMakeProgramParameters, IProgram } from '../progam-factory/interfaces';
 
@@ -35,6 +39,9 @@ export class MainframeProgramsState implements IMainframeProgramsState {
   @lazyInject(TYPES.Formatter)
   private _formatter!: IFormatter;
 
+  @inject(TYPES.MainframeProgramsUpgrader)
+  private _upgrader!: IMainframeProgramsUpgrader;
+
   private _programsList: IProgram[];
   private _ownedPrograms: Map<ProgramName, IProgram>;
 
@@ -45,10 +52,22 @@ export class MainframeProgramsState implements IMainframeProgramsState {
     this._stateUiConnector.registerEventEmitter(this, ['_programsList']);
   }
 
-  getProgramCost(name: ProgramName, tier: number, level: number): number {
+  get upgrader() {
+    return this._upgrader;
+  }
+
+  calculateProgramCost(name: ProgramName, tier: number, level: number): number {
     const programData = programs[name];
 
     return calculateTierPower(level, tier, programData.cost) / this._globalState.multipliers.codeBase.totalMultiplier;
+  }
+
+  calculateLevelFromMoney(name: ProgramName, tier: number, money: number): number {
+    const programData = programs[name];
+
+    const availableMoney = money * this._globalState.multipliers.codeBase.totalMultiplier;
+
+    return reverseTierPower(availableMoney, tier, programData.cost);
   }
 
   purchaseProgram(name: ProgramName, tier: number, level: number): boolean {
@@ -56,11 +75,11 @@ export class MainframeProgramsState implements IMainframeProgramsState {
       return false;
     }
 
-    if (!this._globalState.availableItems.programs.isItemAvailable(name, tier, level)) {
+    if (!this._globalState.availableItems.programs.isItemAvailable(name, tier)) {
       return false;
     }
 
-    const cost = this.getProgramCost(name, tier, level);
+    const cost = this.calculateProgramCost(name, tier, level);
 
     const bought = this._globalState.money.purchase(
       cost,
@@ -69,35 +88,6 @@ export class MainframeProgramsState implements IMainframeProgramsState {
     );
 
     return bought;
-  }
-
-  upgradeMaxProgram(name: ProgramName): boolean {
-    if (!this._globalState.unlockedFeatures.isFeatureUnlocked(Feature.mainframePrograms)) {
-      return false;
-    }
-
-    const existingProgram = this.getOwnedProgramByName(name);
-
-    if (!existingProgram) {
-      return false;
-    }
-
-    const checkProgramUpgrade = this.handleCheckProgramUpgrade(existingProgram);
-    const level = binarySearchDecimal(existingProgram.level, this._globalState.development.level, checkProgramUpgrade);
-
-    if (level <= existingProgram.level) {
-      return false;
-    }
-
-    return this.purchaseProgram(name, existingProgram.tier, level);
-  }
-
-  upgradeMaxAllPrograms(): void {
-    for (const program of this._programsList) {
-      if (program.autoUpgradeEnabled) {
-        this.upgradeMaxProgram(program.name);
-      }
-    }
   }
 
   listOwnedPrograms(): IProgram[] {
@@ -194,14 +184,4 @@ export class MainframeProgramsState implements IMainframeProgramsState {
     this._ownedPrograms.clear();
     this._programsList.length = 0;
   }
-
-  private handleCheckProgramUpgrade = (existingProgram: IProgram) => (level: number) => {
-    if (!this._globalState.availableItems.programs.isItemAvailable(existingProgram.name, existingProgram.tier, level)) {
-      return false;
-    }
-
-    const cost = this.getProgramCost(existingProgram.name, existingProgram.tier, level);
-
-    return cost <= this._globalState.money.money;
-  };
 }

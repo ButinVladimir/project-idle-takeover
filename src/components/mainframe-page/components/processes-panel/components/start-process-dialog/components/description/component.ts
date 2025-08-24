@@ -2,13 +2,7 @@ import { html, nothing } from 'lit';
 import { msg, localized } from '@lit/localize';
 import { customElement, property, queryAll } from 'lit/decorators.js';
 import { consume } from '@lit/context';
-import {
-  type IProcess,
-  type IProgram,
-  OtherProgramName,
-  MultiplierProgramName,
-  AutobuyerProgramName,
-} from '@state/mainframe-state';
+import { type IProcess, type IProgram } from '@state/mainframe-state';
 import {
   BaseComponent,
   diffFormatterParameters,
@@ -16,7 +10,7 @@ import {
   getHighlightValueClassMap,
 } from '@shared/index';
 import { COMMON_TEXTS, PROGRAM_DESCRIPTION_TEXTS, PROGRAM_TEXTS } from '@texts/index';
-import * as renderers from './description-effect-renderers';
+import { rendererMap } from './description-effect-renderers';
 import { IDescriptionEffectRenderer, IDescriptionParameters } from './interfaces';
 import { ProcessDiffTextController } from './controller';
 import { existingProcessContext, programContext } from '../../contexts';
@@ -236,49 +230,6 @@ export class StartProcessDialogDescription extends BaseComponent {
       currentThreads,
     };
 
-    switch (this._program!.name) {
-      case MultiplierProgramName.codeGenerator:
-        this._renderer = new renderers.CodeGeneratorDescriptionEffectRenderer(parameters);
-        break;
-
-      case MultiplierProgramName.circuitDesigner:
-        this._renderer = new renderers.CircuitDesignerDescriptionEffectRenderer(parameters);
-        break;
-
-      case MultiplierProgramName.dealMaker:
-        this._renderer = new renderers.DealMakerDescriptionEffectRenderer(parameters);
-        break;
-
-      case MultiplierProgramName.informationCollector:
-        this._renderer = new renderers.InformationCollectorDescriptionEffectRenderer(parameters);
-        break;
-
-      case AutobuyerProgramName.mainframeHardwareAutobuyer:
-        this._renderer = new renderers.MainframeHardwareAutobuyerDescriptionEffectRenderer(parameters);
-        break;
-
-      case AutobuyerProgramName.mainframeProgramsAutobuyer:
-        this._renderer = new renderers.MainframeProgramsAutobuyerDescriptionEffectRenderer(parameters);
-        break;
-
-      case AutobuyerProgramName.cloneLevelAutoupgrader:
-        this._renderer = new renderers.CloneLevelAutoupgraderDescriptionEffectRenderer(parameters);
-        break;
-
-      case OtherProgramName.shareServer:
-        this._renderer = new renderers.ShareServerDescriptionEffectRenderer(parameters);
-        break;
-
-      case OtherProgramName.predictiveComputator:
-        this._renderer = new renderers.PredictiveComputatorDescriptionEffectRenderer(parameters);
-        break;
-
-      case OtherProgramName.peerReviewer:
-        this._renderer = new renderers.PeerReviewerDescriptionEffectRenderer(parameters);
-        break;
-
-      default:
-        this._renderer = undefined;
-    }
+    this._renderer = new rendererMap[this._program!.name](parameters);
   }
 }

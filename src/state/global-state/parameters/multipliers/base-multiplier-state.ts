@@ -1,13 +1,14 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
-import type { IGrowthState } from '@state/growth-state/interfaces/growth-state';
+import { type IGrowthState } from '@state/growth-state';
 import { TYPES } from '@state/types';
-import { type ICityState, IDistrictMultipliers } from '@state/city-state';
-import { IDistrictMultiplierParameter } from '@state/city-state/interfaces/parameters/district-multiplier-parameter';
-import type { IGlobalState } from '../../interfaces/global-state';
-import { IMultiplierState } from '../../interfaces/parameters/multiplier-state';
-import { IMultiplierSerializedState } from '../../interfaces/serialized-states/multiplier-serialized-state';
-import { IMultiplierScenarioParameters } from '../../interfaces/multiplier-scenario-parameters';
+import { type ICityState, IDistrictMultipliers, IDistrictMultiplierParameter } from '@state/city-state';
+import {
+  type IGlobalState,
+  IMultiplierState,
+  IMultiplierSerializedState,
+  IMultiplierScenarioParameters,
+} from '../../interfaces';
 
 const { lazyInject } = decorators;
 

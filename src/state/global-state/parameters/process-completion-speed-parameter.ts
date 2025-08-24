@@ -1,17 +1,17 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
-import type { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
-import type { IMainframeState } from '@state/mainframe-state/interfaces/mainframe-state';
-import { OtherProgramName } from '@state/mainframe-state/states/progam-factory/types';
-import { PredictiveComputatorProgram } from '@state/mainframe-state/states/progam-factory/programs/predictive-computator';
 import { TYPES } from '@state/types';
-import type { IGlobalState } from '@state/global-state/interfaces/global-state';
-import { IProcessCompletionSpeedParameter } from './interfaces';
+import { type IStateUIConnector } from '@state/state-ui-connector';
+import { type IMainframeState, OtherProgramName, PredictiveComputatorProgram } from '@state/mainframe-state';
+import { type IGlobalState } from '@state/global-state';
+import { type ICityState } from '@state/city-state';
+import { calculateLinear } from '@shared/index';
+import { IProcessCompletionSpeedState } from '../interfaces';
 
 const { lazyInject } = decorators;
 
 @injectable()
-export class ProcessCompletionSpeedParameter implements IProcessCompletionSpeedParameter {
+export class ProcessCompletionSpeedState implements IProcessCompletionSpeedState {
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
 
@@ -20,6 +20,9 @@ export class ProcessCompletionSpeedParameter implements IProcessCompletionSpeedP
 
   @lazyInject(TYPES.MainframeState)
   private _mainframeState!: IMainframeState;
+
+  @lazyInject(TYPES.CityState)
+  private _cityState!: ICityState;
 
   private _multiplierByProgram: number;
   private _multiplierByHardware: number;
@@ -51,20 +54,21 @@ export class ProcessCompletionSpeedParameter implements IProcessCompletionSpeedP
     return this._totalMultiplier;
   }
 
-  requestMultipliersRecalculation() {
+  requestRecalculation() {
     this._multiplierUpdateRequested = true;
   }
 
-  recalculateMultipliers() {
+  recalculate() {
     if (!this._multiplierUpdateRequested) {
       return;
     }
 
     this._multiplierUpdateRequested = false;
+    this._totalMultiplier = 1;
 
     this.updateMultiplierByProgram();
     this.updateMultiplierByHardware();
-    this.updateTotalMultiplier();
+    this.updateDistrictMultipliers();
   }
 
   private updateMultiplierByProgram() {
@@ -84,22 +88,26 @@ export class ProcessCompletionSpeedParameter implements IProcessCompletionSpeedP
     }
 
     this._multiplierByProgram = multiplierByProgram;
+    this._totalMultiplier *= multiplierByProgram;
   }
 
   private updateMultiplierByHardware() {
     const mainframeHardwareState = this._mainframeState.hardware;
 
-    const multiplierByHardware = Math.pow(
-      this._globalState.scenario.currentValues.mainframeSoftware.performanceBoost,
+    const multiplierByHardware = calculateLinear(
       mainframeHardwareState.performance.totalLevel,
+      this._globalState.scenario.currentValues.mainframeSoftware.performanceBoost,
     );
 
     this._multiplierByHardware = multiplierByHardware;
+    this._totalMultiplier *= multiplierByHardware;
   }
 
-  private updateTotalMultiplier() {
-    const totalMultiplier = this._multiplierByProgram * this._multiplierByHardware;
+  private updateDistrictMultipliers() {
+    for (const district of this._cityState.listAvailableDistricts()) {
+      district.parameters.processCompletionSpeed.recalculate();
 
-    this._totalMultiplier = totalMultiplier;
+      this._totalMultiplier *= district.parameters.processCompletionSpeed.value;
+    }
   }
 }

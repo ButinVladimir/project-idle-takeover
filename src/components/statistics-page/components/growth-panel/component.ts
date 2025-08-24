@@ -33,7 +33,7 @@ export class StatisticsGrowthPanel extends BaseComponent {
         ? html`<ca-statistics-connectivity-points-growth></ca-statistics-connectivity-points-growth>`
         : nothing}
       ${this._controller.isFeatureUnlocked(Feature.rewards)
-        ? html`<ca-statistics-multiplier-points-growth type="rewards"></ca-statistics-multiplier-points-growth>`
+        ? html`<ca-statistics-rewards-points-growth></ca-statistics-rewards-points-growth>`
         : nothing}
       ${this._controller.isFeatureUnlocked(Feature.codeBase)
         ? html`<ca-statistics-multiplier-points-growth type="codeBase"></ca-statistics-multiplier-points-growth>`

@@ -7,7 +7,7 @@ export class ClonesListUpgradeButtonsController extends BaseController {
   }
 
   upgradeMaxAllLevels() {
-    this.companyState.clones.upgradeMaxAllLevels();
+    this.companyState.clones.levelUpgrader.upgradeMaxAllClones();
   }
 
   getUpgradeLevelHotkey(): string | undefined {
@@ -19,15 +19,13 @@ export class ClonesListUpgradeButtonsController extends BaseController {
       return false;
     }
 
-    if (
-      !this.globalState.availableItems.cloneTemplates.isItemAvailable(clone.templateName, clone.tier, clone.level + 1)
-    ) {
+    if (!this.globalState.availableItems.cloneTemplates.isItemAvailable(clone.templateName, clone.tier)) {
       return false;
     }
 
     return (
       this.globalState.money.money >=
-      this.companyState.clones.getCloneCost(clone.templateName, clone.tier, clone.level + 1)
+      this.companyState.clones.calculateCloneCost(clone.templateName, clone.tier, clone.level + 1)
     );
   };
 }

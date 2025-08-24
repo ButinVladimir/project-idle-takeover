@@ -1,6 +1,7 @@
 {
   "residential": {
     "captureDifficulty": { "multiplier": 1, "base": 1 },
+    "activityDifficultyModifier": 1,
     "parameters": {
       "experience": { "multiplier": 1, "base": 1.5 },
       "money": { "multiplier": 1, "base": 1.5 },
@@ -16,23 +17,26 @@
       },
       "codeBase": {
         "pointsMultiplier": { "multiplier": 1, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.99 },
+        "pointsToSoftCap": 86400,
         "logBase": 2
       },
       "computationalBase": {
         "pointsMultiplier": { "multiplier": 1, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.99 },
+        "pointsToSoftCap": 86400,
         "logBase": 2
       },
       "rewards": {
         "pointsMultiplier": { "multiplier": 1, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.99 },
+        "pointsToSoftCap": 86400,
         "logBase": 2
-      }
+      },
+      "processCompletionSpeed": { "multiplier": 1, "base": 1.1 },
+      "experienceShareMultiplier": { "multiplier": 1, "base": 1.1 }
     }
   },
   "corpoDistrict": {
     "captureDifficulty": { "multiplier": 2, "base": 1.01 },
+    "activityDifficultyModifier": 1,
     "parameters": {
       "experience": { "multiplier": 1, "base": 1.1 },
       "money": { "multiplier": 10, "base": 1.1 },
@@ -51,19 +55,21 @@
       },
       "codeBase": {
         "pointsMultiplier": { "multiplier": 5, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.9 },
+        "pointsToSoftCap": 86400,
         "logBase": 20
       },
       "computationalBase": {
         "pointsMultiplier": { "multiplier": 5, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.9 },
+        "pointsToSoftCap": 86400,
         "logBase": 20
       },
       "rewards": {
         "pointsMultiplier": { "multiplier": 3, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.9 },
+        "pointsToSoftCap": 86400,
         "logBase": 20
-      }
+      },
+      "processCompletionSpeed": { "multiplier": 1, "base": 1.1 },
+      "experienceShareMultiplier": { "multiplier": 1, "base": 1.1 }
     }
   }
 }

@@ -15,7 +15,7 @@ export class PurchaseCloneDialogController extends BaseController {
   }
 
   get availableSynchronization(): number {
-    return this.companyState.clones.availableSynchronization;
+    return this.globalState.synchronization.availableValue;
   }
 
   get developmentLevel(): number {
@@ -39,15 +39,15 @@ export class PurchaseCloneDialogController extends BaseController {
   }
 
   getCloneCost(cloneTemplateName: CloneTemplateName, tier: number, level: number): number {
-    return this.companyState.clones.getCloneCost(cloneTemplateName, tier, level);
+    return this.companyState.clones.calculateCloneCost(cloneTemplateName, tier, level);
   }
 
   getCloneSynchronization(cloneTemplateName: CloneTemplateName, tier: number): number {
-    return this.companyState.clones.getCloneSynchronization(cloneTemplateName, tier);
+    return this.companyState.clones.calculateCloneSynchronization(cloneTemplateName, tier);
   }
 
-  isCloneAvailable(cloneTemplate: CloneTemplateName, tier: number, level: number): boolean {
-    return this.globalState.availableItems.cloneTemplates.isItemAvailable(cloneTemplate, tier, level);
+  isCloneAvailable(cloneTemplate: CloneTemplateName, tier: number): boolean {
+    return this.globalState.availableItems.cloneTemplates.isItemAvailable(cloneTemplate, tier);
   }
 
   getClone(name: string, cloneTemplateName: CloneTemplateName, tier: number, level: number): IClone {

@@ -12,8 +12,8 @@ import { type ICompanyState } from '../../interfaces';
 import {
   ISidejob,
   IMakeSidejobParameters,
-  ISidejobsSerializedState,
-  ISidejobsState,
+  ICompanySidejobsSerializedState,
+  ICompanySidejobsState,
   IAssignSidejobArguments,
   ISidejobTemplate,
   ISerializedSidejob,
@@ -24,7 +24,7 @@ import { DISTRICT_NAMES, SIDEJOB_TEXTS } from '@/texts';
 
 const { lazyInject } = decorators;
 
-export class SidejobsState implements ISidejobsState {
+export class CompanySidejobsState implements ICompanySidejobsState {
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
 
@@ -135,7 +135,8 @@ export class SidejobsState implements ISidejobsState {
     }
 
     if (sidejob) {
-      sidejob.removeAllEventListeners();
+      this.handleSidejobCleanup(sidejob);
+
       this._sidejobMap.delete(sidejobId);
       this._sidejobCloneIdMap.delete(sidejob.assignedClone!.id);
 
@@ -154,6 +155,14 @@ export class SidejobsState implements ISidejobsState {
     this.clearSidejobs();
 
     this._messageLogState.postMessage(SidejobsEvent.allSidejobsCancelled, msg('All sidejobs have been cancelled'));
+  }
+
+  updateAllSidejobsPerformance(): void {
+    for (const sidejob of this._sidejobsList) {
+      if (sidejob.isActive) {
+        sidejob.handlePerformanceUpdate();
+      }
+    }
   }
 
   perform(): void {
@@ -182,7 +191,7 @@ export class SidejobsState implements ISidejobsState {
     this.clearSidejobs();
   }
 
-  async deserialize(serializedState: ISidejobsSerializedState): Promise<void> {
+  async deserialize(serializedState: ICompanySidejobsSerializedState): Promise<void> {
     this.clearSidejobs();
 
     serializedState.sidejobs.forEach((serializedSidejob) => {
@@ -192,7 +201,7 @@ export class SidejobsState implements ISidejobsState {
     });
   }
 
-  serialize(): ISidejobsSerializedState {
+  serialize(): ICompanySidejobsSerializedState {
     return {
       sidejobs: this._sidejobsList.map(this.serializeSidejob),
     };
@@ -216,7 +225,7 @@ export class SidejobsState implements ISidejobsState {
 
   private clearSidejobs() {
     for (const sidejob of this._sidejobsList) {
-      sidejob.removeAllEventListeners();
+      this.handleSidejobCleanup(sidejob);
     }
 
     this._sidejobsList.length = 0;
@@ -224,5 +233,11 @@ export class SidejobsState implements ISidejobsState {
     this._sidejobMap.clear();
 
     this._companyState.requestReassignment();
+  }
+
+  private handleSidejobCleanup(sidejob: ISidejob) {
+    sidejob.isActive = false;
+    sidejob.handlePerformanceUpdate();
+    sidejob.removeAllEventListeners();
   }
 }

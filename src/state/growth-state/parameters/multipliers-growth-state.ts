@@ -5,19 +5,11 @@ import type { IMultiplierGrowthState } from '../interfaces/parameters/multiplier
 
 @injectable()
 export class MultipliersGrowthState implements IMultipliersGrowthState {
-  private _codeBaseGrowthState: IMultiplierGrowthState;
-  private _computationalBaseGrowthState: IMultiplierGrowthState;
-  private _rewardsGrowthState: IMultiplierGrowthState;
+  @inject(TYPES.CodeBaseGrowthState)
+  private _codeBaseGrowthState!: IMultiplierGrowthState;
 
-  constructor(
-    @inject(TYPES.CodeBaseGrowthState) _codeBaseGrowthState: IMultiplierGrowthState,
-    @inject(TYPES.ComputationalBaseGrowthState) _computationalBaseGrowthState: IMultiplierGrowthState,
-    @inject(TYPES.RewardsGrowthState) _rewardsGrowthState: IMultiplierGrowthState,
-  ) {
-    this._codeBaseGrowthState = _codeBaseGrowthState;
-    this._computationalBaseGrowthState = _computationalBaseGrowthState;
-    this._rewardsGrowthState = _rewardsGrowthState;
-  }
+  @inject(TYPES.ComputationalBaseGrowthState)
+  private _computationalBaseGrowthState!: IMultiplierGrowthState;
 
   get codeBase() {
     return this._codeBaseGrowthState;
@@ -27,19 +19,13 @@ export class MultipliersGrowthState implements IMultipliersGrowthState {
     return this._computationalBaseGrowthState;
   }
 
-  get rewards() {
-    return this._rewardsGrowthState;
-  }
-
   resetValues() {
     this._codeBaseGrowthState.resetValues();
     this._computationalBaseGrowthState.resetValues();
-    this._rewardsGrowthState.resetValues();
   }
 
   clearValues() {
     this._codeBaseGrowthState.clearValues();
     this._computationalBaseGrowthState.clearValues();
-    this._rewardsGrowthState.clearValues();
   }
 }

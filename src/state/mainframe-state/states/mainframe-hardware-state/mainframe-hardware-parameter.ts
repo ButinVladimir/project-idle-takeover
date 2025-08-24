@@ -7,7 +7,7 @@ import {
   IExponent,
   Feature,
   PurchaseType,
-  binarySearchDecimal,
+  reverseGeometricProgressionSum,
 } from '@shared/index';
 import { decorators } from '@state/container';
 import { IMainframeHardwareParameter, IMainframeHardwareParameterSerializedState } from './interfaces';
@@ -67,7 +67,7 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
 
   protected abstract postPurchaseMessge(): void;
 
-  getIncreaseCost(increase: number): number {
+  calculateIncreaseCost(increase: number): number {
     const exp = this.priceExp;
 
     return (
@@ -77,26 +77,26 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
     );
   }
 
+  calculateIncreaseFromMoney(money: number): number {
+    const exp = this.priceExp;
+
+    const availableMoney =
+      money * this.globalState.multipliers.computationalBase.totalMultiplier +
+      calculateGeometricProgressionSum(this.level - 1, exp.multiplier, exp.base);
+
+    const increase = reverseGeometricProgressionSum(availableMoney, exp.multiplier, exp.base) - this.level;
+
+    return increase;
+  }
+
   purchase(increase: number): boolean {
     if (!this.checkCanPurchase(increase)) {
       return false;
     }
 
-    const cost = this.getIncreaseCost(increase);
+    const cost = this.calculateIncreaseCost(increase);
 
     return this.globalState.money.purchase(cost, PurchaseType.mainframeHardware, this.handlePurchaseIncrease(increase));
-  }
-
-  purchaseMax(): boolean {
-    const maxIncrease = this.globalState.development.level - this.level;
-
-    if (maxIncrease <= 0) {
-      return false;
-    }
-
-    const increase = binarySearchDecimal(0, maxIncrease, this.checkCanPurchase);
-
-    return this.purchase(increase);
   }
 
   checkCanPurchase = (increase: number): boolean => {
@@ -108,13 +108,7 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
       return false;
     }
 
-    const maxIncrease = this.globalState.development.level - this.level;
-
-    if (increase > maxIncrease) {
-      return false;
-    }
-
-    const cost = this.getIncreaseCost(increase);
+    const cost = this.calculateIncreaseCost(increase);
 
     return cost <= this.globalState.money.money;
   };
@@ -140,7 +134,8 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
     this._level += increase;
     this.postPurchaseMessge();
 
-    this.mainframeState.processes.requestUpdateProcesses();
-    this.mainframeState.processes.requestUpdatePerformance();
+    this.globalState.processCompletionSpeed.requestRecalculation();
+    this.mainframeState.processes.requestUpdateRunningProcesses();
+    this.mainframeState.processes.updateAllProcessesPerformance();
   };
 }

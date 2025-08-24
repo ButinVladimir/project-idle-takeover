@@ -17,11 +17,13 @@ export abstract class BaseAutobuyerProgramDescriptionEffectRenderer implements I
   }
 
   public renderEffect = () => {
-    const minTime = this.program.calculateCompletionMinTime(1);
-    const maxTime = this.program.calculateCompletionMaxTime(1);
-    const minAvgValue = (1 / maxTime) * MS_IN_SECOND;
-    const maxAvgValue = (1 / minTime) * MS_IN_SECOND;
+    const actionCount = this.getActionCount();
+    const minTime = this.program.calculateCompletionMinTime(actionCount);
+    const maxTime = this.program.calculateCompletionMaxTime(actionCount);
+    const minAvgValue = (actionCount / maxTime) * MS_IN_SECOND;
+    const maxAvgValue = (actionCount / minTime) * MS_IN_SECOND;
 
+    const formattedActionCount = this.formatter.formatNumberDecimal(actionCount);
     const formattedMinAvgValue = this.formatter.formatNumberFloat(minAvgValue);
     const formattedMaxAvgValue = this.formatter.formatNumberFloat(maxAvgValue);
 
@@ -29,11 +31,17 @@ export abstract class BaseAutobuyerProgramDescriptionEffectRenderer implements I
       <p>
         ${COMMON_TEXTS.parameterValue(
           REWARD_PARAMETER_NAMES[RewardParameter.actions](),
-          PROGRAM_DESCRIPTION_TEXTS.parameterCompletionValues('1', formattedMinAvgValue, formattedMaxAvgValue),
+          PROGRAM_DESCRIPTION_TEXTS.parameterCompletionValues(
+            formattedActionCount,
+            formattedMinAvgValue,
+            formattedMaxAvgValue,
+          ),
         )}
       </p>
     `;
   };
 
   public recalculateValues() {}
+
+  protected abstract getActionCount(): number;
 }

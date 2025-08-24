@@ -41,7 +41,7 @@ export abstract class BaseAvailableCategoryItemsState<Key = string> implements I
     return this._itemsList;
   }
 
-  isItemAvailable(itemName: Key, tier: number, level: number): boolean {
+  isItemAvailable(itemName: Key, tier: number): boolean {
     if (!(this._neutralItems.has(itemName) || this._loanedItems.has(itemName))) {
       return false;
     }
@@ -51,7 +51,7 @@ export abstract class BaseAvailableCategoryItemsState<Key = string> implements I
       return false;
     }
 
-    return level <= this._globalState.development.level;
+    return true;
   }
 
   getItemHighestAvailableTier(itemName: Key): number {

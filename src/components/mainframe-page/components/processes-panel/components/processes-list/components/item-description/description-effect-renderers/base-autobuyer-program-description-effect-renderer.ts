@@ -17,13 +17,14 @@ export abstract class BaseAutobuyerProgramDescriptionEffectRenderer implements I
   }
 
   public renderEffect = () => {
-    const { usedCores, threads } = this.process;
+    const { usedCores } = this.process;
     const program = this.process.program as MainframeHardwareAutobuyerProgram;
 
-    const time = program.calculateCompletionTime(threads, usedCores);
-    const avgValue = (threads / time) * MS_IN_SECOND;
+    const actionCount = this.getActionCount();
+    const time = program.calculateCompletionTime(actionCount, usedCores);
+    const avgValue = (actionCount / time) * MS_IN_SECOND;
 
-    const formattedValue = this.formatter.formatNumberDecimal(threads);
+    const formattedValue = this.formatter.formatNumberDecimal(actionCount);
     const formattedAvgValue = this.formatter.formatNumberFloat(avgValue);
 
     return html`<p>
@@ -35,4 +36,6 @@ export abstract class BaseAutobuyerProgramDescriptionEffectRenderer implements I
   };
 
   public recalculateValues() {}
+
+  protected abstract getActionCount(): number;
 }

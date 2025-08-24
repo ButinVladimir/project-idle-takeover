@@ -17,12 +17,13 @@ import type {
   IAvailableItemsState,
   IConnectivityState,
   IThreatState,
-  ISynchronizationParameter,
+  ISynchronizationState,
   IAvailableActivities,
+  IExperienceShareState,
+  IProcessCompletionSpeedState,
+  IRewardsState,
 } from './interfaces';
 import { GameSpeed } from './types';
-import { ConnectivityState, ThreatState } from './parameters';
-import { SynchronizationParameter } from './parameters/synchronization-parameter';
 import { AvailableActivities } from './parameters/available-activities-state';
 
 const { lazyInject } = decorators;
@@ -32,48 +33,59 @@ export class GlobalState implements IGlobalState {
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
 
-  private _scenarioState: IScenarioState;
-  private _factionState: IFactionState;
-  private _timeState: ITimeState;
-  private _developmentState: IDevelopmentState;
-  private _moneyState: IMoneyState;
-  private _connectivity: IConnectivityState;
-  private _threat: IThreatState;
-  private _synchronization: ISynchronizationParameter;
-  private _multipliersState: IMultipliersState;
+  @inject(TYPES.ScenarioState)
+  private _scenarioState!: IScenarioState;
+
+  @inject(TYPES.FactionState)
+  private _factionState!: IFactionState;
+
+  @inject(TYPES.TimeState)
+  private _timeState!: ITimeState;
+
+  @inject(TYPES.DevelopmentState)
+  private _developmentState!: IDevelopmentState;
+
+  @inject(TYPES.MoneyState)
+  private _moneyState!: IMoneyState;
+
+  @inject(TYPES.ConnectivityState)
+  private _connectivity!: IConnectivityState;
+
+  @inject(TYPES.ThreatState)
+  private _threat!: IThreatState;
+
+  @inject(TYPES.SynchronizationState)
+  private _synchronization!: ISynchronizationState;
+
+  @inject(TYPES.MultipliersState)
+  private _multipliersState!: IMultipliersState;
+
   private _availableActivities: IAvailableActivities;
-  private _availableItemsState: IAvailableItemsState;
-  private _unlockedFeaturesState: IUnlockedFeaturesState;
-  private _storyEventsState: IStoryEventsState;
+
+  @inject(TYPES.AvailableItemsState)
+  private _availableItemsState!: IAvailableItemsState;
+
+  @inject(TYPES.UnlockedFeaturesState)
+  private _unlockedFeaturesState!: IUnlockedFeaturesState;
+
+  @inject(TYPES.StoryEventsState)
+  private _storyEventsState!: IStoryEventsState;
+
+  @inject(TYPES.ExperienceShareState)
+  private _experienceShare!: IExperienceShareState;
+
+  @inject(TYPES.ProcessCompletionSpeedState)
+  private _processCompletionSpeed!: IProcessCompletionSpeedState;
+
+  @inject(TYPES.RewardsState)
+  private _rewardsState!: IRewardsState;
 
   private _random: XORShift128Plus;
   private _gameSpeed: GameSpeed;
   private _runId: string;
 
-  constructor(
-    @inject(TYPES.ScenarioState) _scenarioState: IScenarioState,
-    @inject(TYPES.FactionState) _factionState: IFactionState,
-    @inject(TYPES.TimeState) _timeState: ITimeState,
-    @inject(TYPES.DevelopmentState) _developmentState: IDevelopmentState,
-    @inject(TYPES.MoneyState) _moneyState: IMoneyState,
-    @inject(TYPES.MultipliersState) _multipliersState: IMultipliersState,
-    @inject(TYPES.AvailableItemsState) _availableItemsState: IAvailableItemsState,
-    @inject(TYPES.UnlockedFeaturesState) _unlockedFeaturesState: IUnlockedFeaturesState,
-    @inject(TYPES.StoryEventsState) _storyEventsState: IStoryEventsState,
-  ) {
-    this._scenarioState = _scenarioState;
-    this._factionState = _factionState;
-    this._timeState = _timeState;
-    this._developmentState = _developmentState;
-    this._moneyState = _moneyState;
-    this._connectivity = new ConnectivityState();
-    this._threat = new ThreatState();
-    this._synchronization = new SynchronizationParameter();
-    this._multipliersState = _multipliersState;
-    this._unlockedFeaturesState = _unlockedFeaturesState;
-    this._storyEventsState = _storyEventsState;
+  constructor() {
     this._availableActivities = new AvailableActivities();
-    this._availableItemsState = _availableItemsState;
 
     this._random = new XORShift128Plus(0, 0n);
     this._gameSpeed = GameSpeed.normal;
@@ -126,7 +138,7 @@ export class GlobalState implements IGlobalState {
     return this._threat;
   }
 
-  get synchronization(): ISynchronizationParameter {
+  get synchronization(): ISynchronizationState {
     return this._synchronization;
   }
 
@@ -150,12 +162,27 @@ export class GlobalState implements IGlobalState {
     return this._storyEventsState;
   }
 
+  get experienceShare(): IExperienceShareState {
+    return this._experienceShare;
+  }
+
+  get processCompletionSpeed(): IProcessCompletionSpeedState {
+    return this._processCompletionSpeed;
+  }
+
+  get rewards(): IRewardsState {
+    return this._rewardsState;
+  }
+
   recalculate() {
     this._developmentState.recalculateLevel();
     this._multipliersState.recalculate();
     this._synchronization.recalculate();
     this._availableItemsState.recalculate();
     this._availableActivities.recalculate();
+    this._experienceShare.recalculate();
+    this._processCompletionSpeed.recalculate();
+    this._rewardsState.recalculateMultiplier();
   }
 
   makeNextTick() {
@@ -179,9 +206,12 @@ export class GlobalState implements IGlobalState {
     await this._multipliersState.startNewState();
     await this._availableItemsState.startNewState();
     await this._unlockedFeaturesState.startNewState();
+    await this._rewardsState.startNewState();
     this.storyEvents.startNewState();
 
     this._synchronization.requestRecalculation();
+    this._experienceShare.requestRecalculation();
+    this._processCompletionSpeed.requestRecalculation();
   }
 
   async deserialize(serializedState: IGlobalSerializedState): Promise<void> {
@@ -200,8 +230,11 @@ export class GlobalState implements IGlobalState {
     await this._multipliersState.deserialize(serializedState.multipliers);
     await this._availableItemsState.deserialize(serializedState.availableItems);
     await this._unlockedFeaturesState.deserialize(serializedState.unlockedFeatures);
+    await this._rewardsState.deserialize(serializedState.rewards);
 
     this._synchronization.requestRecalculation();
+    this._experienceShare.requestRecalculation();
+    this._processCompletionSpeed.requestRecalculation();
   }
 
   serialize(): IGlobalSerializedState {
@@ -219,6 +252,7 @@ export class GlobalState implements IGlobalState {
       multipliers: this._multipliersState.serialize(),
       availableItems: this._availableItemsState.serialize(),
       unlockedFeatures: this._unlockedFeaturesState.serialize(),
+      rewards: this._rewardsState.serialize(),
     };
   }
 }

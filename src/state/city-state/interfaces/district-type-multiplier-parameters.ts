@@ -1,7 +1,7 @@
-import { IExponent } from '@shared/interfaces/formulas/exponent';
+import { IExponent } from '@shared/interfaces';
 
 export interface IDistrictTypeMultiplierParameters {
   pointsMultiplier: IExponent;
-  pointsToSoftCap: IExponent;
+  pointsToSoftCap: number;
   logBase: number;
 }

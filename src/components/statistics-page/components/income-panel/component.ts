@@ -33,7 +33,7 @@ export class StatisticsIncomePanel extends BaseComponent {
         ? html`<ca-statistics-connectivity-points-income></ca-statistics-connectivity-points-income>`
         : nothing}
       ${this._controller.isFeatureUnlocked(Feature.rewards)
-        ? html`<ca-statistics-multiplier-points-income type="rewards"></ca-statistics-multiplier-points-income>`
+        ? html`<ca-statistics-rewards-points-income></ca-statistics-rewards-points-income>`
         : nothing}
       ${this._controller.isFeatureUnlocked(Feature.codeBase)
         ? html`<ca-statistics-multiplier-points-income type="codeBase"></ca-statistics-multiplier-points-income>`

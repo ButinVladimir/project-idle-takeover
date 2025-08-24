@@ -9,16 +9,12 @@ import { type IStateUIConnector } from '@state/state-ui-connector';
 import { IClone } from '../clone-factory';
 import { ISerializedSidejob, ISidejob, ISidejobArguments, ISidejobTemplate } from './interfaces';
 import { SidejobName } from './types';
-import { type ICompanyState } from '../../interfaces';
 
 const { lazyInject } = decorators;
 
 export class Sidejob implements ISidejob {
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
-
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
 
   @lazyInject(TYPES.SettingsState)
   private _settingsState!: ISettingsState;
@@ -70,6 +66,10 @@ export class Sidejob implements ISidejob {
     return this._assignedClone;
   }
 
+  get sidejobTemplate() {
+    return this._sidejobTemplate;
+  }
+
   checkRequirements(): boolean {
     if (!this._assignedClone) {
       return false;
@@ -91,18 +91,34 @@ export class Sidejob implements ISidejob {
   }
 
   getAttributeRequirement(attribute: Attribute): number {
+    if (!this._sidejobTemplate.requirements.attributes[attribute]) {
+      return 0;
+    }
+
     return Math.floor(
-      calculatePower(this._globalState.threat.level, this._sidejobTemplate.requirements.attributes[attribute]),
+      this._district.template.activityDifficultyModifier *
+        calculatePower(this._globalState.threat.level, this._sidejobTemplate.requirements.attributes[attribute]),
     );
   }
 
   getSkillRequirement(skill: Skill): number {
-    return Math.floor(calculatePower(this._globalState.threat.level, this._sidejobTemplate.requirements.skills[skill]));
+    if (!this._sidejobTemplate.requirements.skills[skill]) {
+      return 0;
+    }
+
+    return Math.floor(
+      this._district.template.activityDifficultyModifier *
+        calculatePower(this._globalState.threat.level, this._sidejobTemplate.requirements.skills[skill]),
+    );
   }
 
   getAttributeModifier(attribute: Attribute): number {
     if (!this._assignedClone) {
       return 0;
+    }
+
+    if (!this._sidejobTemplate.rewardModifiers.attributes[attribute]) {
+      return 1;
     }
 
     return (
@@ -114,6 +130,10 @@ export class Sidejob implements ISidejob {
   getSkillModifier(skill: Skill): number {
     if (!this._assignedClone) {
       return 0;
+    }
+
+    if (!this._sidejobTemplate.rewardModifiers.skills[skill]) {
+      return 1;
     }
 
     return (
@@ -128,32 +148,27 @@ export class Sidejob implements ISidejob {
     }
 
     const passedTime = this._settingsState.updateInterval;
-    const cloneModifier = this.getCommonModifier();
+    const commonModifier = this.getCommonModifier();
 
-    this._companyState.clones.earnCloneExperience(
-      this._assignedClone.id,
-      passedTime * this.calculateExperienceModifier(),
-    );
-    this._globalState.money.increase(passedTime * cloneModifier * this.calculateMoneyModifier(), IncomeSource.sidejob);
+    this._assignedClone.increaseExperience(passedTime * this.calculateExperienceModifier(), true);
+    this._globalState.money.increase(passedTime * commonModifier * this.calculateMoneyModifier(), IncomeSource.sidejob);
     this._globalState.development.increase(
-      passedTime * cloneModifier * this.calculateDevelopmentPointsModifier(),
+      passedTime * commonModifier * this.calculateDevelopmentPointsModifier(),
       IncomeSource.sidejob,
     );
     this._district.parameters.tier.increasePoints(
-      passedTime * cloneModifier * this.calculateDistrictTierPointsModifier(),
+      passedTime * commonModifier * this.calculateDistrictTierPointsModifier(),
     );
     this._district.parameters.connectivity.increasePoints(
-      passedTime * cloneModifier * this.calculateConnectivityModifier(),
+      passedTime * commonModifier * this.calculateConnectivityModifier(),
     );
     this._district.parameters.multipliers.codeBase.increasePoints(
-      passedTime * cloneModifier * this.calculateCodeBaseModifier(),
+      passedTime * commonModifier * this.calculateCodeBaseModifier(),
     );
     this._district.parameters.multipliers.computationalBase.increasePoints(
-      passedTime * cloneModifier * this.calculateComputationalBaseModifier(),
+      passedTime * commonModifier * this.calculateComputationalBaseModifier(),
     );
-    this._district.parameters.multipliers.rewards.increasePoints(
-      passedTime * cloneModifier * this.calculateRewardsModifier(),
-    );
+    this._district.parameters.rewards.increasePoints(passedTime * commonModifier * this.calculateRewardsModifier());
   }
 
   calculateExperienceDelta(passedTime: number): number {
@@ -188,6 +203,24 @@ export class Sidejob implements ISidejob {
     return passedTime * this.getCommonModifier() * this.calculateRewardsModifier();
   }
 
+  calculateProcessCompletionSpeedDelta(): number {
+    return this.getCloneParametersModifier() * this.calculateProcessCompletionSpeedModifier();
+  }
+
+  calculateExperienceShareMultiplierDelta(): number {
+    return this.getCloneParametersModifier() * this.calculateExperienceShareMultiplierModifier();
+  }
+
+  handlePerformanceUpdate() {
+    if (this._sidejobTemplate.rewards.processCompletionSpeed) {
+      this._globalState.processCompletionSpeed.requestRecalculation();
+    }
+
+    if (this._sidejobTemplate.rewards.experienceShareMultiplier) {
+      this._globalState.experienceShare.requestRecalculation();
+    }
+  }
+
   serialize(): ISerializedSidejob {
     return {
       id: this._id,
@@ -201,7 +234,7 @@ export class Sidejob implements ISidejob {
     this._stateUIConnector.unregisterEventEmitter(this);
   }
 
-  private getCommonModifier(): number {
+  private getCloneParametersModifier(): number {
     let modifier = 0;
 
     for (const attribute of ATTRIBUTES) {
@@ -212,28 +245,42 @@ export class Sidejob implements ISidejob {
       modifier += this.getSkillModifier(skill);
     }
 
-    modifier *= this._globalState.multipliers.rewards.totalMultiplier;
-
     return modifier;
   }
 
+  private getCommonModifier(): number {
+    return this.getCloneParametersModifier() * this._district.parameters.rewards.totalMultiplier;
+  }
+
   private calculateExperienceModifier() {
+    if (!this._sidejobTemplate.rewards.experience) {
+      return 0;
+    }
+
     return (
       this._assignedClone!.experienceMultiplier *
-      this._globalState.multipliers.rewards.totalMultiplier *
+      this._district.parameters.rewards.totalMultiplier *
       calculatePower(this._globalState.threat.level, this._sidejobTemplate.rewards.experience) *
       calculatePower(this._district.parameters.tier.tier, this._district.template.parameters.experience)
     );
   }
 
   private calculateMoneyModifier() {
+    if (!this._sidejobTemplate.rewards.money) {
+      return 0;
+    }
+
     return (
-      calculatePower(this._globalState.threat.level, this._sidejobTemplate.rewards.money) *
+      this._sidejobTemplate.rewards.money *
       calculatePower(this._district.parameters.tier.tier, this._district.template.parameters.money)
     );
   }
 
   private calculateDevelopmentPointsModifier() {
+    if (!this._sidejobTemplate.rewards.developmentPoints) {
+      return 0;
+    }
+
     return (
       calculatePower(this._globalState.threat.level, this._sidejobTemplate.rewards.developmentPoints) *
       calculatePower(this._district.parameters.tier.tier, this._district.template.parameters.developmentPoints)
@@ -241,6 +288,10 @@ export class Sidejob implements ISidejob {
   }
 
   private calculateDistrictTierPointsModifier() {
+    if (!this._sidejobTemplate.rewards.distictTierPoints) {
+      return 0;
+    }
+
     return (
       calculatePower(this._globalState.threat.level, this._sidejobTemplate.rewards.distictTierPoints) *
       calculatePower(
@@ -251,8 +302,12 @@ export class Sidejob implements ISidejob {
   }
 
   private calculateConnectivityModifier() {
+    if (!this._sidejobTemplate.rewards.connectivity) {
+      return 0;
+    }
+
     return (
-      calculatePower(this._globalState.threat.level, this._sidejobTemplate.rewards.connectivity) *
+      this._sidejobTemplate.rewards.connectivity *
       calculatePower(
         this._district.parameters.tier.tier,
         this._district.template.parameters.connectivity.pointsMultiplier,
@@ -261,15 +316,23 @@ export class Sidejob implements ISidejob {
   }
 
   private calculateCodeBaseModifier() {
+    if (!this._sidejobTemplate.rewards.codeBase) {
+      return 0;
+    }
+
     return (
-      calculatePower(this._globalState.threat.level, this._sidejobTemplate.rewards.codeBase) *
+      this._sidejobTemplate.rewards.codeBase *
       calculatePower(this._district.parameters.tier.tier, this._district.template.parameters.codeBase.pointsMultiplier)
     );
   }
 
   private calculateComputationalBaseModifier() {
+    if (!this._sidejobTemplate.rewards.computationalBase) {
+      return 0;
+    }
+
     return (
-      calculatePower(this._globalState.threat.level, this._sidejobTemplate.rewards.computationalBase) *
+      this._sidejobTemplate.rewards.computationalBase *
       calculatePower(
         this._district.parameters.tier.tier,
         this._district.template.parameters.computationalBase.pointsMultiplier,
@@ -278,9 +341,35 @@ export class Sidejob implements ISidejob {
   }
 
   private calculateRewardsModifier() {
+    if (!this._sidejobTemplate.rewards.rewards) {
+      return 0;
+    }
+
     return (
-      calculatePower(this._globalState.threat.level, this._sidejobTemplate.rewards.rewards) *
+      this._sidejobTemplate.rewards.rewards *
       calculatePower(this._district.parameters.tier.tier, this._district.template.parameters.rewards.pointsMultiplier)
+    );
+  }
+
+  private calculateProcessCompletionSpeedModifier() {
+    if (!this._sidejobTemplate.rewards.processCompletionSpeed) {
+      return 0;
+    }
+
+    return (
+      this._sidejobTemplate.rewards.processCompletionSpeed *
+      calculatePower(this._district.parameters.tier.tier, this._district.template.parameters.processCompletionSpeed)
+    );
+  }
+
+  private calculateExperienceShareMultiplierModifier() {
+    if (!this._sidejobTemplate.rewards.experienceShareMultiplier) {
+      return 0;
+    }
+
+    return (
+      this._sidejobTemplate.rewards.experienceShareMultiplier *
+      calculatePower(this._district.parameters.tier.tier, this._district.template.parameters.experienceShareMultiplier)
     );
   }
 }

@@ -25,6 +25,7 @@ export class OwnedProgramsListItemButtons extends BaseComponent {
   private _program?: IProgram;
 
   private _upgradeMaxButton = createRef<SlButton>();
+  private _upgradeLevelRef = createRef<HTMLSpanElement>();
 
   constructor() {
     super();
@@ -43,11 +44,12 @@ export class OwnedProgramsListItemButtons extends BaseComponent {
     const autoupgradeLabel = this._program.autoUpgradeEnabled
       ? COMMON_TEXTS.disableAutoupgrade()
       : COMMON_TEXTS.enableAutoupgrade();
+    const levelEl = html`<span ${ref(this._upgradeLevelRef)}></span>`;
 
     return html`
       <div class="buttons desktop">
         <sl-tooltip>
-          <span slot="content"> ${COMMON_TEXTS.upgrade()} </span>
+          <span slot="content"> ${COMMON_TEXTS.upgradeToLevel(levelEl)} </span>
 
           <sl-icon-button
             ${ref(this._upgradeMaxButton)}
@@ -83,6 +85,7 @@ export class OwnedProgramsListItemButtons extends BaseComponent {
     const autoupgradeVariant = this._program.autoUpgradeEnabled
       ? AUTOUPGRADE_VALUES.buttonVariant.enabled
       : AUTOUPGRADE_VALUES.buttonVariant.disabled;
+    const levelEl = html`<span ${ref(this._upgradeLevelRef)}></span>`;
 
     return html`
       <div class="buttons mobile">
@@ -90,13 +93,12 @@ export class OwnedProgramsListItemButtons extends BaseComponent {
           ${ref(this._upgradeMaxButton)}
           disabled
           variant=${UPGRADE_MAX_VALUES.buttonVariant}
-          outline
           size="medium"
           @click=${this.handleUpgradeMax}
         >
           <sl-icon slot="prefix" name=${UPGRADE_MAX_VALUES.icon}> </sl-icon>
 
-          ${COMMON_TEXTS.upgrade()}
+          ${COMMON_TEXTS.upgradeToLevel(levelEl)}
         </sl-button>
 
         <sl-button variant=${autoupgradeVariant} size="medium" @click=${this.handleToggleAutoUpgrade}>
@@ -120,15 +122,32 @@ export class OwnedProgramsListItemButtons extends BaseComponent {
     }
   };
 
+  private updateUpgradeMaxButton() {
+    if (!this._upgradeMaxButton.value) {
+      return;
+    }
+
+    const upgradeMaxButtonDisabled = !this._controller.checkCanUpgradeMax(this._program!);
+    this._upgradeMaxButton.value.disabled = upgradeMaxButtonDisabled;
+  }
+
+  private updateUpgradeLevel(): void {
+    if (!this._upgradeLevelRef.value) {
+      return;
+    }
+
+    const level = Math.max(this._controller.calculateUpgradeLevel(this._program!), this._program!.level + 1);
+    const formattedLevel = this._controller.formatter.formatLevel(level);
+
+    this._upgradeLevelRef.value.textContent = formattedLevel;
+  }
+
   handlePartialUpdate = () => {
     if (!this._program) {
       return;
     }
 
-    const upgradeMaxButtonDisabled = !this._controller.checkCanUpgradeMax(this._program);
-
-    if (this._upgradeMaxButton.value) {
-      this._upgradeMaxButton.value.disabled = upgradeMaxButtonDisabled;
-    }
+    this.updateUpgradeLevel();
+    this.updateUpgradeMaxButton();
   };
 }

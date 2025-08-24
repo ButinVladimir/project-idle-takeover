@@ -165,7 +165,7 @@ export enum Feature {
   districtTiers = 'districtTiers',
 }
 
-export type PointsMultiplierType = 'codeBase' | 'computationalBase' | 'rewards';
+export type PointsMultiplierType = 'codeBase' | 'computationalBase';
 
 export type ItemCategory = 'programs' | 'cloneTemplates';
 

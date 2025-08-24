@@ -2,6 +2,7 @@ import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type ICompanyState } from '@state/company-state';
+import { type IGlobalState } from '@state/global-state';
 import { IExperienceGrowthState } from '../interfaces';
 
 const { lazyInject } = decorators;
@@ -10,6 +11,9 @@ const { lazyInject } = decorators;
 export class ExperienceGrowthState implements IExperienceGrowthState {
   @lazyInject(TYPES.CompanyState)
   private _companyState!: ICompanyState;
+
+  @lazyInject(TYPES.GlobalState)
+  private _globalState!: IGlobalState;
 
   private _recalculated: boolean;
   private _growthByCloneId: Map<string, number>;
@@ -67,7 +71,7 @@ export class ExperienceGrowthState implements IExperienceGrowthState {
       sharedExperience += this._growthByCloneId.get(clone.id) ?? 0;
     }
 
-    sharedExperience *= this._companyState.clones.experienceShare.totalMultiplier;
+    sharedExperience *= this._globalState.experienceShare.totalMultiplier;
 
     for (const clone of this._companyState.clones.listClones()) {
       const currentExperience = this._growthByCloneId.get(clone.id) ?? 0;

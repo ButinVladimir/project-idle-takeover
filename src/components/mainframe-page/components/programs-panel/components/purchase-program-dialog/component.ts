@@ -87,7 +87,6 @@ export class PurchaseProgramDialog extends BaseComponent {
   }
 
   private renderContent(desktop: boolean) {
-    const { developmentLevel } = this._controller;
     const inputsContainerClasses = classMap({
       'inputs-container': true,
       desktop: desktop,
@@ -102,7 +101,6 @@ export class PurchaseProgramDialog extends BaseComponent {
           <div class="body">
             <p class="hint">
               ${msg(`Select program type, tier and level to purchase it.
-Level cannot be above current development level.
 Tier is limited depending on gained favors.
 If you already have program with same name, old one will be replaced with new one.`)}
             </p>
@@ -139,7 +137,6 @@ If you already have program with same name, old one will be replaced with new on
                 type="number"
                 inputmode="decimal"
                 min="1"
-                max=${developmentLevel + 1}
                 step="1"
                 @sl-change=${this.handleLevelChange}
               >
@@ -217,7 +214,7 @@ If you already have program with same name, old one will be replaced with new on
       return;
     }
 
-    const level = clamp(this._levelInputRef.value.valueAsNumber - 1, 0, this._controller.developmentLevel);
+    const level = clamp(this._levelInputRef.value.valueAsNumber - 1, 0, Number.MAX_SAFE_INTEGER);
     this._level = level;
     this._levelInputRef.value.valueAsNumber = level + 1;
   };
@@ -273,9 +270,7 @@ If you already have program with same name, old one will be replaced with new on
 
     const cost = this._controller.getProgramCost(this._program.name, this._program.tier, this._program.level);
 
-    return (
-      cost <= money && this._controller.isProgramAvailable(this._program.name, this._program.tier, this._program.level)
-    );
+    return cost <= money && this._controller.isProgramAvailable(this._program.name, this._program.tier);
   };
 
   handlePartialUpdate = () => {
