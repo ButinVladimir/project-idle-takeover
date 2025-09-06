@@ -1,31 +1,24 @@
 {
   "neutral": {
-    "programs": [
-      "shareServer",
-      "predictiveComputator",
-      "codeGenerator",
-      "circuitDesigner",
-      "informationCollector",
-      "dealMaker",
-      "mainframeHardwareAutobuyer",
-      "mainframeProgramsAutobuyer",
-      "cloneLevelAutoupgrader",
-      "peerReviewer"
-    ],
-    "cloneTemplates": ["anthrodrone"],
-    "sidejobs": [
-      "oddjob",
-      "infoBroker",
-      "freelanceProgrammer",
-      "computerRepairer",
-      "mediator",
-      "mainframeRelay",
-      "feedAnalyzer"
-    ]
+    "loans": {
+      "programs": [
+        "peerReviewer"
+      ],
+      "cloneTemplates": []
+    },
+    "special": {
+      "programs": [],
+      "cloneTemplates": []
+    }
   },
   "wsa": {
-    "programs": [],
-    "cloneTemplates": [],
-    "sidejobs": []
+    "loans": {
+      "programs": [],
+      "cloneTemplates": []
+    },
+    "special": {
+      "programs": [],
+      "cloneTemplates": []
+    }
   }
 }

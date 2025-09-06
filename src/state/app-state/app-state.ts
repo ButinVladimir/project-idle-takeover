@@ -1,13 +1,16 @@
 import { inject, injectable } from 'inversify';
 import { msg } from '@lit/localize';
-import type { INotificationsState } from '@state/notifications-state/interfaces/notifications-state';
-import type { ISettingsState } from '@state/settings-state/interfaces/settings-state';
-import type { ICityState } from '@state/city-state/interfaces/city-state';
-import type { IMainframeState } from '@state/mainframe-state/interfaces/mainframe-state';
-import type { IGlobalState } from '@state/global-state/interfaces/global-state';
-import type { IAutomationState } from '@state/automation-state/interfaces/automation-state';
-import type { IGrowthState } from '@state/growth-state/interfaces/growth-state';
-import type { ICompanyState } from '@state/company-state/interfaces/company-state';
+import { type INotificationsState } from '@state/notifications-state';
+import { type ISettingsState } from '@state/settings-state';
+import { type ICityState } from '@state/city-state';
+import { type IMainframeState } from '@state/mainframe-state';
+import { type IGlobalState } from '@state/global-state';
+import { type IAutomationState } from '@state/automation-state';
+import { type IGrowthState } from '@state/growth-state';
+import { type ICompanyState } from '@state/company-state';
+import { type IFactionState } from '@state/faction-state';
+import { type IScenarioState } from '@state/scenario-state';
+import { type IUnlockState } from '@state/unlock-state';
 import { GameSpeed } from '@state/global-state/types';
 import { TYPES } from '@state/types';
 import { NotificationType } from '@shared/types';
@@ -19,6 +22,15 @@ import { Migrator } from './migrator';
 export class AppState implements IAppState {
   @inject(TYPES.NotificationsState)
   private _notificationsState!: INotificationsState;
+
+  @inject(TYPES.ScenarioState)
+  private _scenarioState!: IScenarioState;
+
+  @inject(TYPES.FactionState)
+  private _factionState!: IFactionState;
+
+  @inject(TYPES.UnlockState)
+  private _unlockState!: IUnlockState;
 
   @inject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
@@ -78,6 +90,9 @@ export class AppState implements IAppState {
 
   async startNewState(): Promise<void> {
     await this._settingsState.startNewState();
+    await this._scenarioState.startNewState();
+    await this._factionState.startNewState();
+    await this._unlockState.startNewState();
     await this._globalState.startNewState();
     await this._cityState.startNewState();
     await this._mainframeState.startNewState();
@@ -86,11 +101,16 @@ export class AppState implements IAppState {
 
     this._globalState.recalculate();
     this._growthState.clearValues();
+
+    this._scenarioState.storyEvents.visitStartingEvents();
   }
 
   serialize(): ISerializedState {
     const saveState: ISerializedState = {
       gameVersion: CURRENT_VERSION,
+      scenario: this._scenarioState.serialize(),
+      faction: this._factionState.serialize(),
+      unlock: this._unlockState.serialize(),
       global: this._globalState.serialize(),
       settings: this._settingsState.serialize(),
       city: this._cityState.serialize(),
@@ -119,6 +139,9 @@ export class AppState implements IAppState {
     }
 
     await this._settingsState.deserialize(migratedSaveData.settings);
+    await this._scenarioState.deserialize(migratedSaveData.scenario);
+    await this._factionState.deserialize(migratedSaveData.faction);
+    await this._unlockState.deserialize(migratedSaveData.unlock);
     await this._globalState.deserialize(migratedSaveData.global);
     await this._cityState.deserialize(migratedSaveData.city);
     await this._mainframeState.deserialize(migratedSaveData.mainframe);

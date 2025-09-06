@@ -130,6 +130,8 @@ export enum NotificationType {
   featureUnlocked = 'featureUnlocked',
   timeAccumulated = 'timeAccumulated',
   gameVersionUpdated = 'gameVersionUpdated',
+  sidejobUnlocked = 'sidejobUnlocked',
+  designUnlocked = 'designUnlocked',
 }
 
 export enum LongNumberFormat {

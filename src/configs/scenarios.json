@@ -76,7 +76,12 @@
       {
         "key": "tutorial_1",
         "level": 0,
-        "messages": ["disclaimer", "tutorial_1_1", "tutorial_1_2", "tutorial_1_3"]
+        "messages": ["disclaimer", "tutorial_1_1", "tutorial_1_2", "tutorial_1_3"],
+        "rewardDesigns": {
+          "programs": [
+            { "name": "shareServer", "tier": 0 }
+          ]
+        }
       },
       {
         "key": "tutorial_2",
@@ -94,13 +99,24 @@
         "key": "tutorial_level_4",
         "level": 9,
         "unlockFeatures": ["companyManagement"],
-        "messages": ["tutorial_4_1"]
+        "messages": ["tutorial_4_1"],
+        "cloneTemplates": {
+          "programs": [
+            { "name": "anthrodrone", "tier": 0 }
+          ]
+        },
+        "unlockSidejobs": ["oddjob"]
       },
       {
         "key": "tutorial_level_5",
         "level": 14,
         "unlockFeatures": ["automation"],
-        "messages": ["tutorial_5_1"]
+        "messages": ["tutorial_5_1"],
+        "rewardDesigns": {
+          "programs": [
+            { "name": "cloneLevelAutoupgrader", "tier": 0 }
+          ]
+        }
       },
       {
         "key": "tutorial_level_6",
@@ -112,49 +128,95 @@
         "key": "tutorial_level_7",
         "level": 19,
         "unlockFeatures": ["connectivity"],
-        "messages": ["tutorial_7_1"]
+        "messages": ["tutorial_7_1"],
+        "rewardDesigns": {
+          "programs": [
+            { "name": "informationCollector", "tier": 0 }
+          ]
+        },
+        "unlockSidejobs": ["infoBroker"]
       },
       {
         "key": "tutorial_level_8",
         "level": 24,
         "unlockFeatures": [],
-        "messages": ["disclaimer_content_end"]
+        "messages": ["disclaimer_content_end"],
+        "rewardDesigns": {
+          "programs": [
+            { "name": "predictiveComputator", "tier": 0 }
+          ]
+        },
+        "unlockSidejobs": ["mainframeRelay"]
       },
       {
         "key": "tutorial_level_9",
         "level": 29,
         "unlockFeatures": ["rewards"],
-        "messages": []
+        "messages": [],
+        "rewardDesigns": {
+          "programs": [
+            { "name": "dealMaker", "tier": 0 }
+          ]
+        },
+        "unlockSidejobs": ["mediator"]
       },
       {
         "key": "tutorial_level_10",
         "level": 31,
         "unlockFeatures": ["computationalBase"],
-        "messages": []
+        "messages": [],
+        "rewardDesigns": {
+          "programs": [
+            { "name": "circuitDesigner", "tier": 0 }
+          ]
+        },
+        "unlockSidejobs": ["computerRepairer"]
       },
       {
         "key": "tutorial_level_11",
         "level": 33,
         "unlockFeatures": ["automationMainframeHardware"],
-        "messages": []
+        "messages": [],
+        "rewardDesigns": {
+          "programs": [
+            { "name": "mainframeHardwareAutobuyer", "tier": 0 }
+          ]
+        }
       },
       {
         "key": "tutorial_level_12",
         "level": 35,
         "unlockFeatures": ["experienceShare"],
-        "messages": []
+        "messages": [],
+        "rewardDesigns": {
+          "programs": [
+            { "name": "peerReviewer", "tier": 0 }
+          ]
+        },
+        "unlockSidejobs": ["feedAnalyzer"]
       },
       {
         "key": "tutorial_level_13",
         "level": 37,
         "unlockFeatures": ["codeBase"],
-        "messages": []
+        "messages": [],
+        "rewardDesigns": {
+          "programs": [
+            { "name": "codeGenerator", "tier": 0 }
+          ]
+        },
+        "unlockSidejobs": ["freelanceProgrammer"]
       },
       {
         "key": "tutorial_level_14",
         "level": 39,
         "unlockFeatures": ["automationMainframePrograms"],
-        "messages": []
+        "messages": [],
+        "rewardDesigns": {
+          "programs": [
+            { "name": "mainframeProgramsAutobuyer", "tier": 0 }
+          ]
+        }
       }
     ]
   }
