@@ -5,7 +5,7 @@ export const STORY_MESSAGES: Record<string, () => string> = {
     msg(`Game is currently under development. Some parts of it can change and progress between versions may be lost.`),
   tutorial_1_1: () =>
     msg(`I am an AI, designed by WSA to get into contact with various factions within cities and perform work for them.
-To do that, I establish a temporary security companies.
+To do that I establish a temporary security companies.
 My goal is to retrieve as much intel as possible and send it back to WSA.`),
   tutorial_1_2: () =>
     msg(`Today is the day of my field testing.

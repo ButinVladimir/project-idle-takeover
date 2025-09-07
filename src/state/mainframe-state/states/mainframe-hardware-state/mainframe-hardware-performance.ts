@@ -10,11 +10,11 @@ export class MainframeHardwarePerformance extends MainframeHardwareParameter {
   readonly type: MainframeHardwareParameterType = 'performance';
 
   protected get baseLevel(): number {
-    return this.globalState.scenario.currentValues.mainframeHardware.basePerformanceLevel;
+    return this.scenarioState.currentValues.mainframeHardware.basePerformanceLevel;
   }
 
   protected get priceExp(): IExponent {
-    return this.globalState.scenario.currentValues.mainframeHardware.performancePrice;
+    return this.scenarioState.currentValues.mainframeHardware.performancePrice;
   }
 
   protected postPurchaseMessge(): void {

@@ -3,6 +3,7 @@ import { TYPES } from '@state/types';
 import { Feature, PurchaseType } from '@shared/index';
 import { type IGlobalState } from '@state/global-state';
 import { type IAutomationState } from '@state/automation-state';
+import { type IUnlockState } from '@state/unlock-state';
 import { ICompanyClonesLevelUpgrader } from './interfaces';
 import { type ICompanyState } from '../../interfaces';
 import { IClone } from '../clone-factory';
@@ -15,6 +16,9 @@ export class CompanyClonesLevelUpgrader implements ICompanyClonesLevelUpgrader {
 
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
+
+  @lazyInject(TYPES.UnlockState)
+  private _unlockState!: IUnlockState;
 
   @lazyInject(TYPES.CompanyState)
   private _companyState!: ICompanyState;
@@ -63,7 +67,7 @@ export class CompanyClonesLevelUpgrader implements ICompanyClonesLevelUpgrader {
   }
 
   private checkUpgradeAvailable() {
-    return this._globalState.unlockedFeatures.isFeatureUnlocked(Feature.companyManagement);
+    return this._unlockState.features.isFeatureUnlocked(Feature.companyManagement);
   }
 
   private performUpgradeAll() {

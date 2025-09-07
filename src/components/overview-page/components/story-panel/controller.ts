@@ -1,8 +1,8 @@
 import { BaseController } from '@shared/base-controller';
-import { IStoryGoal } from '@state/global-state/interfaces/story-goal';
+import { IStoryGoal } from '@state/scenario-state';
 
 export class OverviewStoryPanelController extends BaseController {
   listGoals(): IStoryGoal[] {
-    return this.globalState.storyEvents.listGoals();
+    return this.scenarioState.storyEvents.listGoals();
   }
 }

@@ -15,6 +15,6 @@ export class ClonesPanelController extends BaseController {
   }
 
   isExperienceShareUnlocked(): boolean {
-    return this.globalState.unlockedFeatures.isFeatureUnlocked(Feature.experienceShare);
+    return this.unlockState.features.isFeatureUnlocked(Feature.experienceShare);
   }
 }

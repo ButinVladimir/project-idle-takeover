@@ -4,7 +4,9 @@ import { decorators } from '@state/container';
 import { type IGlobalState } from '@state/global-state';
 import { type ICityState } from '@state/city-state';
 import { OtherProgramName, PeerReviewerProgram, type IMainframeState } from '@state/mainframe-state';
+import { type IScenarioState } from '@/state/scenario-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
+import { type IUnlockState } from '@state/unlock-state';
 import { Feature } from '@shared/index';
 import { IExperienceShareState } from '../interfaces';
 
@@ -14,6 +16,12 @@ const { lazyInject } = decorators;
 export class ExperienceShareState implements IExperienceShareState {
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
+
+  @lazyInject(TYPES.ScenarioState)
+  private _scenarioState!: IScenarioState;
+
+  @lazyInject(TYPES.UnlockState)
+  private _unlockState!: IUnlockState;
 
   @lazyInject(TYPES.MainframeState)
   private _mainframeState!: IMainframeState;
@@ -45,7 +53,7 @@ export class ExperienceShareState implements IExperienceShareState {
   }
 
   get baseMultiplier() {
-    return this._globalState.scenario.currentValues.baseSharedExperienceMultiplier;
+    return this._scenarioState.currentValues.baseSharedExperienceMultiplier;
   }
 
   get synchronizationMultiplier() {
@@ -99,7 +107,7 @@ export class ExperienceShareState implements IExperienceShareState {
   }
 
   private isFeatureAvailable(): boolean {
-    return this._globalState.unlockedFeatures.isFeatureUnlocked(Feature.experienceShare);
+    return this._unlockState.features.isFeatureUnlocked(Feature.experienceShare);
   }
 
   private updateSynchronizationMultiplier() {

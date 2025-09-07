@@ -3,8 +3,8 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type IMainframeState, OtherProgramName, PredictiveComputatorProgram } from '@state/mainframe-state';
-import { type IGlobalState } from '@state/global-state';
 import { type ICityState } from '@state/city-state';
+import { type IScenarioState } from '@state/scenario-state';
 import { calculateLinear } from '@shared/index';
 import { IProcessCompletionSpeedState } from '../interfaces';
 
@@ -15,8 +15,8 @@ export class ProcessCompletionSpeedState implements IProcessCompletionSpeedState
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
 
-  @lazyInject(TYPES.GlobalState)
-  private _globalState!: IGlobalState;
+  @lazyInject(TYPES.ScenarioState)
+  private _scenarioState!: IScenarioState;
 
   @lazyInject(TYPES.MainframeState)
   private _mainframeState!: IMainframeState;
@@ -96,7 +96,7 @@ export class ProcessCompletionSpeedState implements IProcessCompletionSpeedState
 
     const multiplierByHardware = calculateLinear(
       mainframeHardwareState.performance.totalLevel,
-      this._globalState.scenario.currentValues.mainframeSoftware.performanceBoost,
+      this._scenarioState.currentValues.mainframeSoftware.performanceBoost,
     );
 
     this._multiplierByHardware = multiplierByHardware;

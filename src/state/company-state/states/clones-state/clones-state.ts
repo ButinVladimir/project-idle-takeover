@@ -5,9 +5,10 @@ import padStart from 'lodash/padStart';
 import cloneTemplates from '@configs/clone-templates.json';
 import names from '@configs/names.json';
 import { decorators } from '@state/container';
-import type { IStateUIConnector } from '@state/state-ui-connector';
-import type { IGlobalState } from '@state/global-state';
-import type { IMessageLogState } from '@state/message-log-state';
+import { type IStateUIConnector } from '@state/state-ui-connector';
+import { type IGlobalState } from '@state/global-state';
+import { type IMessageLogState } from '@state/message-log-state';
+import { type IUnlockState } from '@state/unlock-state';
 import { TYPES } from '@state/types';
 import {
   ClonesEvent,
@@ -43,6 +44,9 @@ export class CompanyClonesState implements ICompanyClonesState {
 
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
+
+  @lazyInject(TYPES.UnlockState)
+  private _unlockState!: IUnlockState;
 
   @lazyInject(TYPES.MessageLogState)
   private _messageLogState!: IMessageLogState;
@@ -92,7 +96,11 @@ export class CompanyClonesState implements ICompanyClonesState {
   }
 
   purchaseClone(args: IPurchaseCloneArgs): boolean {
-    if (!this._globalState.unlockedFeatures.isFeatureUnlocked(Feature.companyManagement)) {
+    if (!this._unlockState.features.isFeatureUnlocked(Feature.companyManagement)) {
+      return false;
+    }
+
+    if (!this._unlockState.items.cloneTemplates.isItemAvailable(args.templateName, args.tier)) {
       return false;
     }
 

@@ -46,11 +46,11 @@ export class PurchaseProgramDialogController extends BaseController {
   }
 
   getHighestAvailableTier(programName: ProgramName): number {
-    return this.globalState.availableItems.programs.getItemHighestAvailableTier(programName);
+    return this.unlockState.items.programs.getItemHighestAvailableTier(programName);
   }
 
   listAvailablePrograms(): ProgramName[] {
-    return this.globalState.availableItems.programs.listAvailableItems();
+    return this.unlockState.items.programs.listAvailableItems();
   }
 
   purchaseProgram(name: ProgramName, tier: number, level: number): boolean {
@@ -62,7 +62,7 @@ export class PurchaseProgramDialogController extends BaseController {
   }
 
   isProgramAvailable(programName: ProgramName, tier: number): boolean {
-    return this.globalState.availableItems.programs.isItemAvailable(programName, tier);
+    return this.unlockState.items.programs.isItemAvailable(programName, tier);
   }
 
   private deleteSelectedProgram() {

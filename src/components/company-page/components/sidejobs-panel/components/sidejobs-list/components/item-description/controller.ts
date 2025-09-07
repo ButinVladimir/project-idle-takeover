@@ -3,6 +3,6 @@ import { Feature } from '@shared/index';
 
 export class SidejobsListItemDescriptionController extends BaseController {
   isFeatureUnlocked(feature: Feature) {
-    return this.globalState.unlockedFeatures.isFeatureUnlocked(feature);
+    return this.unlockState.features.isFeatureUnlocked(feature);
   }
 }

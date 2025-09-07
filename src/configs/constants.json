@@ -28,8 +28,9 @@
       "height": 100,
       "districts": []
     },
+    "startingFaction": "neutral",
     "startingMoney": 0,
-    "startingDevelopmentLevel": 100,
+    "startingDevelopmentLevel": 0,
     "startingAccumulatedTime": 1000000000,
     "startingSynchronization": 0,
     "baseSharedExperienceMultiplier": 1,

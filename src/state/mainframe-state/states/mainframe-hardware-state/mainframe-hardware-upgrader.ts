@@ -3,6 +3,7 @@ import { TYPES } from '@state/types';
 import { Feature } from '@shared/index';
 import { type IGlobalState } from '@state/global-state';
 import { type IAutomationState } from '@state/automation-state';
+import { type IUnlockState } from '@state/unlock-state';
 import { IMainframeHardwareParameter, IMainframeHardwareUpgrader } from './interfaces';
 import { type IMainframeState } from '../../interfaces';
 import { MainframeHardwareParameterType } from './types';
@@ -15,6 +16,9 @@ export class MainframeHardwareUpgrader implements IMainframeHardwareUpgrader {
 
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
+
+  @lazyInject(TYPES.UnlockState)
+  private _unlockState!: IUnlockState;
 
   @lazyInject(TYPES.MainframeState)
   private _mainframeState!: IMainframeState;
@@ -59,7 +63,7 @@ export class MainframeHardwareUpgrader implements IMainframeHardwareUpgrader {
   }
 
   private checkUpgradeAvailable() {
-    return this._globalState.unlockedFeatures.isFeatureUnlocked(Feature.mainframeHardware);
+    return this._unlockState.features.isFeatureUnlocked(Feature.mainframeHardware);
   }
 
   private getParameterByType(parameterType: MainframeHardwareParameterType): IMainframeHardwareParameter {

@@ -3,6 +3,6 @@ import { BaseController } from '@shared/base-controller';
 
 export class CityDistrictSidejobsPanelController extends BaseController {
   getAvailableSidejobs(): SidejobName[] {
-    return this.globalState.availableActivities.sidejobs.listAvailableActivities();
+    return this.unlockState.activities.sidejobs.listUnlockedSidejobs();
   }
 }

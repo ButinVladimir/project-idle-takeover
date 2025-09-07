@@ -7,24 +7,17 @@ import { type IStateUIConnector } from '@state/state-ui-connector';
 import { IGlobalSerializedState, IGlobalState } from './interfaces';
 import type {
   ITimeState,
-  IScenarioState,
-  IStoryEventsState,
   IDevelopmentState,
   IMoneyState,
-  IUnlockedFeaturesState,
   IMultipliersState,
-  IFactionState,
-  IAvailableItemsState,
   IConnectivityState,
   IThreatState,
   ISynchronizationState,
-  IAvailableActivities,
   IExperienceShareState,
   IProcessCompletionSpeedState,
   IRewardsState,
 } from './interfaces';
 import { GameSpeed } from './types';
-import { AvailableActivities } from './parameters/available-activities-state';
 
 const { lazyInject } = decorators;
 
@@ -32,12 +25,6 @@ const { lazyInject } = decorators;
 export class GlobalState implements IGlobalState {
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
-
-  @inject(TYPES.ScenarioState)
-  private _scenarioState!: IScenarioState;
-
-  @inject(TYPES.FactionState)
-  private _factionState!: IFactionState;
 
   @inject(TYPES.TimeState)
   private _timeState!: ITimeState;
@@ -60,17 +47,6 @@ export class GlobalState implements IGlobalState {
   @inject(TYPES.MultipliersState)
   private _multipliersState!: IMultipliersState;
 
-  private _availableActivities: IAvailableActivities;
-
-  @inject(TYPES.AvailableItemsState)
-  private _availableItemsState!: IAvailableItemsState;
-
-  @inject(TYPES.UnlockedFeaturesState)
-  private _unlockedFeaturesState!: IUnlockedFeaturesState;
-
-  @inject(TYPES.StoryEventsState)
-  private _storyEventsState!: IStoryEventsState;
-
   @inject(TYPES.ExperienceShareState)
   private _experienceShare!: IExperienceShareState;
 
@@ -85,8 +61,6 @@ export class GlobalState implements IGlobalState {
   private _runId: string;
 
   constructor() {
-    this._availableActivities = new AvailableActivities();
-
     this._random = new XORShift128Plus(0, 0n);
     this._gameSpeed = GameSpeed.normal;
     this._runId = uuid();
@@ -100,14 +74,6 @@ export class GlobalState implements IGlobalState {
 
   get runId() {
     return this._runId;
-  }
-
-  get scenario() {
-    return this._scenarioState;
-  }
-
-  get faction() {
-    return this._factionState;
   }
 
   get gameSpeed() {
@@ -146,22 +112,6 @@ export class GlobalState implements IGlobalState {
     return this._multipliersState;
   }
 
-  get availableItems(): IAvailableItemsState {
-    return this._availableItemsState;
-  }
-
-  get availableActivities(): IAvailableActivities {
-    return this._availableActivities;
-  }
-
-  get unlockedFeatures(): IUnlockedFeaturesState {
-    return this._unlockedFeaturesState;
-  }
-
-  get storyEvents(): IStoryEventsState {
-    return this._storyEventsState;
-  }
-
   get experienceShare(): IExperienceShareState {
     return this._experienceShare;
   }
@@ -178,8 +128,6 @@ export class GlobalState implements IGlobalState {
     this._developmentState.recalculateLevel();
     this._multipliersState.recalculate();
     this._synchronization.recalculate();
-    this._availableItemsState.recalculate();
-    this._availableActivities.recalculate();
     this._experienceShare.recalculate();
     this._processCompletionSpeed.recalculate();
     this._rewardsState.recalculateMultiplier();
@@ -197,17 +145,12 @@ export class GlobalState implements IGlobalState {
     this._runId = uuid();
     this._gameSpeed = GameSpeed.normal;
 
-    await this._scenarioState.startNewState();
-    await this._factionState.startNewState();
     await this._moneyState.startNewState();
     await this._timeState.startNewState();
     await this._developmentState.startNewState();
     await this._connectivity.startNewState();
     await this._multipliersState.startNewState();
-    await this._availableItemsState.startNewState();
-    await this._unlockedFeaturesState.startNewState();
     await this._rewardsState.startNewState();
-    this.storyEvents.startNewState();
 
     this._synchronization.requestRecalculation();
     this._experienceShare.requestRecalculation();
@@ -221,15 +164,11 @@ export class GlobalState implements IGlobalState {
     this._runId = serializedState.runId;
     this._gameSpeed = serializedState.gameSpeed;
 
-    await this._scenarioState.deserialize(serializedState.scenario);
-    await this._factionState.deserialize(serializedState.faction);
     await this._moneyState.deserialize(serializedState.money);
     await this._timeState.deserialize(serializedState.time);
     await this._developmentState.deserialize(serializedState.development);
     await this._connectivity.deserialize(serializedState.connectivity);
     await this._multipliersState.deserialize(serializedState.multipliers);
-    await this._availableItemsState.deserialize(serializedState.availableItems);
-    await this._unlockedFeaturesState.deserialize(serializedState.unlockedFeatures);
     await this._rewardsState.deserialize(serializedState.rewards);
 
     this._synchronization.requestRecalculation();
@@ -243,15 +182,11 @@ export class GlobalState implements IGlobalState {
       randomShift: this._random.y.toString(),
       runId: this._runId,
       gameSpeed: this.gameSpeed,
-      scenario: this._scenarioState.serialize(),
-      faction: this._factionState.serialize(),
       money: this._moneyState.serialize(),
       time: this._timeState.serialize(),
       development: this._developmentState.serialize(),
       connectivity: this._connectivity.serialize(),
       multipliers: this._multipliersState.serialize(),
-      availableItems: this._availableItemsState.serialize(),
-      unlockedFeatures: this._unlockedFeaturesState.serialize(),
       rewards: this._rewardsState.serialize(),
     };
   }

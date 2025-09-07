@@ -6,6 +6,6 @@ export class StatisticsDevelopmentIncomeController extends BaseController {
   };
 
   isFeatureUnlocked(feature: Feature): boolean {
-    return this.globalState.unlockedFeatures.isFeatureUnlocked(feature);
+    return this.unlockState.features.isFeatureUnlocked(feature);
   }
 }

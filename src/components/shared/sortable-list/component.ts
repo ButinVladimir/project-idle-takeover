@@ -82,8 +82,6 @@ export class SortableList extends BaseComponent {
         this._elementBoundingRect = this._draggedElement.getBoundingClientRect();
       }
 
-      console.log(this._elementBoundingRect);
-
       const increase = this.calculatePositionIncrease(eventY) - this.calculatePositionDecrease(eventY);
 
       if (increase !== 0) {

@@ -17,7 +17,7 @@ export class InformationCollectorProgram extends BaseProgram {
     const programData = programs[this.name];
 
     return (
-      this.globalState.scenario.currentValues.programMultipliers.connectivity.pointsMultiplier *
+      this.scenarioState.currentValues.programMultipliers.connectivity.pointsMultiplier *
       this.globalState.rewards.multiplierByProgram *
       threads *
       calculateTierLinear(this.level, this.tier, programData.connectivity)

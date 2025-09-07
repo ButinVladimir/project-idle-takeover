@@ -19,7 +19,7 @@ export class StatisticsExperienceShareController extends BaseController {
   }
 
   areDistrictsAvailable() {
-    return this.globalState.unlockedFeatures.isFeatureUnlocked(Feature.companyManagement);
+    return this.unlockState.features.isFeatureUnlocked(Feature.companyManagement);
   }
 
   listAvailableDistricts(): IDistrictState[] {

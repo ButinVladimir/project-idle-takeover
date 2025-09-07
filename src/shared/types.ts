@@ -101,7 +101,6 @@ export enum ProgramAlert {
   purchaseProgramOverwrite = 'purchaseProgramOverwrite',
   processDelete = 'processDelete',
   processReplace = 'processReplace',
-  scalableProcessReplace = 'scalableProcessReplace',
   deleteAllProcesses = 'deleteAllProcesses',
 }
 
@@ -130,6 +129,8 @@ export enum NotificationType {
   featureUnlocked = 'featureUnlocked',
   timeAccumulated = 'timeAccumulated',
   gameVersionUpdated = 'gameVersionUpdated',
+  sidejobUnlocked = 'sidejobUnlocked',
+  designUnlocked = 'designUnlocked',
 }
 
 export enum LongNumberFormat {

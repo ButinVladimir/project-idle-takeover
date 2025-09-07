@@ -33,7 +33,7 @@ export class ShareServerProgram extends BaseProgram {
     const programData = programs[this.name];
 
     return (
-      this.globalState.scenario.currentValues.programMultipliers.money.pointsMultiplier *
+      this.scenarioState.currentValues.programMultipliers.money.pointsMultiplier *
       this.calculateModifier(passedTime) *
       calculateTierLinear(this.level, this.tier, programData.money.main) *
       calculateLinear(usedRam, programData.money.ram) *
@@ -45,7 +45,7 @@ export class ShareServerProgram extends BaseProgram {
     const programData = programs[this.name];
 
     return (
-      this.globalState.scenario.currentValues.programMultipliers.developmentPoints.pointsMultiplier *
+      this.scenarioState.currentValues.programMultipliers.developmentPoints.pointsMultiplier *
       this.calculateModifier(passedTime) *
       calculateTierLinear(this.level, this.tier, programData.developmentPoints.main) *
       calculateLinear(usedRam, programData.developmentPoints.ram) *
@@ -56,7 +56,7 @@ export class ShareServerProgram extends BaseProgram {
   private calculateModifier(passedTime: number): number {
     const hardwareMultiplier = calculateLinear(
       this.mainframeState.hardware.performance.totalLevel,
-      this.globalState.scenario.currentValues.mainframeSoftware.performanceBoost,
+      this.scenarioState.currentValues.mainframeSoftware.performanceBoost,
     );
 
     return this.globalState.rewards.multiplierByProgram * passedTime * hardwareMultiplier;

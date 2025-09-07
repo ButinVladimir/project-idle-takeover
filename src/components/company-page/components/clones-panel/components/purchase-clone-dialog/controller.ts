@@ -23,11 +23,11 @@ export class PurchaseCloneDialogController extends BaseController {
   }
 
   getHighestAvailableTier(cloneTemplateName: CloneTemplateName): number {
-    return this.globalState.availableItems.cloneTemplates.getItemHighestAvailableTier(cloneTemplateName);
+    return this.unlockState.items.cloneTemplates.getItemHighestAvailableTier(cloneTemplateName);
   }
 
   listAvailableCloneTemplates(): CloneTemplateName[] {
-    return this.globalState.availableItems.cloneTemplates.listAvailableItems();
+    return this.unlockState.items.cloneTemplates.listAvailableItems();
   }
 
   purchaseClone(args: IPurchaseCloneArgs): boolean {
@@ -47,7 +47,7 @@ export class PurchaseCloneDialogController extends BaseController {
   }
 
   isCloneAvailable(cloneTemplate: CloneTemplateName, tier: number): boolean {
-    return this.globalState.availableItems.cloneTemplates.isItemAvailable(cloneTemplate, tier);
+    return this.unlockState.items.cloneTemplates.isItemAvailable(cloneTemplate, tier);
   }
 
   getClone(name: string, cloneTemplateName: CloneTemplateName, tier: number, level: number): IClone {

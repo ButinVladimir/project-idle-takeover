@@ -3,7 +3,7 @@ import { BaseController } from '@shared/index';
 
 export class ClonesListItemButtonsController extends BaseController {
   calculateUpgradeLevel(clone: IClone) {
-    if (!this.globalState.availableItems.cloneTemplates.isItemAvailable(clone.templateName, clone.tier)) {
+    if (!this.unlockState.items.cloneTemplates.isItemAvailable(clone.templateName, clone.tier)) {
       return 0;
     }
 
@@ -15,7 +15,7 @@ export class ClonesListItemButtonsController extends BaseController {
   }
 
   checkCanUpgradeCloneLevel(clone: IClone): boolean {
-    if (!this.globalState.availableItems.cloneTemplates.isItemAvailable(clone.templateName, clone.tier)) {
+    if (!this.unlockState.items.cloneTemplates.isItemAvailable(clone.templateName, clone.tier)) {
       return false;
     }
 

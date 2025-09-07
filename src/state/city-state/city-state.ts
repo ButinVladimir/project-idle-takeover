@@ -1,7 +1,8 @@
 import { injectable } from 'inversify';
 import scenarios from '@configs/scenarios.json';
-import type { IGlobalState } from '@state/global-state/interfaces/global-state';
-import type { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
+import { type IGlobalState } from '@state/global-state';
+import { type IStateUIConnector } from '@state/state-ui-connector';
+import { type IScenarioState } from '@state/scenario-state';
 import { IMapGeneratorResult } from '@workers/map-generator/interfaces';
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
@@ -15,6 +16,9 @@ const { lazyInject } = decorators;
 export class CityState implements ICityState {
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
+
+  @lazyInject(TYPES.ScenarioState)
+  private _scenarioState!: IScenarioState;
 
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
@@ -32,7 +36,7 @@ export class CityState implements ICityState {
   }
 
   get districtsCount() {
-    return this._globalState.scenario.currentValues.map.districts.length;
+    return this._scenarioState.currentValues.map.districts.length;
   }
 
   getLayout(): number[][] {
@@ -66,10 +70,10 @@ export class CityState implements ICityState {
     this.clearDistricts();
 
     this._layout = [];
-    for (let x = 0; x < this._globalState.scenario.currentValues.map.width; x++) {
+    for (let x = 0; x < this._scenarioState.currentValues.map.width; x++) {
       const row: number[] = [];
 
-      for (let y = 0; y < this._globalState.scenario.currentValues.map.height; y++) {
+      for (let y = 0; y < this._scenarioState.currentValues.map.height; y++) {
         row.push(serializedState.layout[x][y]);
       }
 
@@ -116,7 +120,7 @@ export class CityState implements ICityState {
           const districtState = DistrictState.createByMapGenerator(parsedDistrictIndex, district);
 
           districtState.state =
-            parsedDistrictIndex === scenarios[this._globalState.scenario.scenario].map.startingDistrict
+            parsedDistrictIndex === scenarios[this._scenarioState.currentScenario].map.startingDistrict
               ? DistrictUnlockState.contested
               : DistrictUnlockState.locked;
 
@@ -139,7 +143,7 @@ export class CityState implements ICityState {
       });
 
       worker.postMessage({
-        scenario: this._globalState.scenario.scenario,
+        scenario: this._scenarioState.currentScenario,
         randomSeed: this._globalState.random.seed,
         randomShift: this._globalState.random.y,
       });

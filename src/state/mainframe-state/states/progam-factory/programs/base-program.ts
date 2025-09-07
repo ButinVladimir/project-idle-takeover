@@ -3,6 +3,7 @@ import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type IFormatter, calculateLinear } from '@shared/index';
 import { type IGlobalState } from '@state/global-state';
 import { type IMainframeState } from '@state/mainframe-state';
+import { type IScenarioState } from '@state/scenario-state';
 import { Feature } from '@shared/types';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
@@ -18,6 +19,9 @@ export abstract class BaseProgram implements IProgram {
 
   @lazyInject(TYPES.GlobalState)
   protected globalState!: IGlobalState;
+
+  @lazyInject(TYPES.ScenarioState)
+  protected scenarioState!: IScenarioState;
 
   @lazyInject(TYPES.MainframeState)
   protected mainframeState!: IMainframeState;
@@ -98,8 +102,7 @@ export abstract class BaseProgram implements IProgram {
       calculateLinear(this.level, programData.levelSpeedBoost) *
       calculateLinear(usedCores - 1, programData.coreSpeedBoost);
     const allowedSpeed =
-      (threads * this.completionPoints) /
-      this.globalState.scenario.currentValues.mainframeSoftware.minProcessCompletionTime;
+      (threads * this.completionPoints) / this.scenarioState.currentValues.mainframeSoftware.minProcessCompletionTime;
 
     return passedTime * Math.min(currentSpeed, allowedSpeed);
   }

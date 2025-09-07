@@ -1,11 +1,26 @@
 import { IStateUIConnector, StateUIConnector } from '@state/state-ui-connector';
 import { App, IApp } from '@state/app';
 import { AppState, IAppState } from '@state/app-state';
+import { ScenarioState, IScenarioState, IStoryEventsState, StoryEventsState } from '@state/scenario-state';
+import { IFactionState, FactionState } from '@state/faction-state';
+import {
+  IUnlockedFeaturesState,
+  UnlockedFeaturesState,
+  IAvailableCategoryItemsState,
+  AvailableProgramsState,
+  AvailableCloneTemplatesState,
+  IAvailableItemsState,
+  AvailableItemsState,
+  AvailableActivitiesState,
+  IAvailableActivitiesState,
+  AvailableSidejobsState,
+  IAvailableSidejobsState,
+  IUnlockState,
+  UnlockState,
+} from '@state/unlock-state';
 import {
   IGlobalState,
   GlobalState,
-  ScenarioState,
-  IScenarioState,
   ITimeState,
   TimeState,
   IDevelopmentState,
@@ -15,22 +30,11 @@ import {
   IMultiplierState,
   IConnectivityState,
   CodeBaseState,
-  IStoryEventsState,
-  StoryEventsState,
-  IUnlockedFeaturesState,
-  UnlockedFeaturesState,
   ComputationalBaseState,
   ConnectivityState,
   RewardsState,
   IMultipliersState,
   MultipliersState,
-  IFactionState,
-  FactionState,
-  IAvailableCategoryItemsState,
-  AvailableProgramsState,
-  AvailableCloneTemplatesState,
-  IAvailableItemsState,
-  AvailableItemsState,
   IThreatState,
   ThreatState,
   ISynchronizationState,
@@ -39,6 +43,7 @@ import {
   ExperienceShareState,
   IProcessCompletionSpeedState,
   ProcessCompletionSpeedState,
+  IRewardsState,
 } from '@state/global-state';
 import {
   IGrowthState,
@@ -118,6 +123,12 @@ container.bind<IApp>(TYPES.App).to(App).inSingletonScope().whenTargetIsDefault()
 
 container.bind<IAppState>(TYPES.AppState).to(AppState).inSingletonScope().whenTargetIsDefault();
 
+container.bind<IScenarioState>(TYPES.ScenarioState).to(ScenarioState).inSingletonScope().whenTargetIsDefault();
+
+container.bind<IFactionState>(TYPES.FactionState).to(FactionState).inSingletonScope().whenTargetIsDefault();
+
+container.bind<IStoryEventsState>(TYPES.StoryEventsState).to(StoryEventsState).inSingletonScope().whenTargetIsDefault();
+
 container.bind<ITimeState>(TYPES.TimeState).to(TimeState).inSingletonScope().whenTargetIsDefault();
 
 container.bind<IDevelopmentState>(TYPES.DevelopmentState).to(DevelopmentState).inSingletonScope().whenTargetIsDefault();
@@ -138,39 +149,9 @@ container
   .inSingletonScope()
   .whenTargetIsDefault();
 
-container.bind<IMultiplierState>(TYPES.RewardsState).to(RewardsState).inSingletonScope().whenTargetIsDefault();
-
-container.bind<IScenarioState>(TYPES.ScenarioState).to(ScenarioState).inSingletonScope().whenTargetIsDefault();
-
-container.bind<IFactionState>(TYPES.FactionState).to(FactionState).inSingletonScope().whenTargetIsDefault();
-
-container.bind<IStoryEventsState>(TYPES.StoryEventsState).to(StoryEventsState).inSingletonScope().whenTargetIsDefault();
-
-container
-  .bind<IUnlockedFeaturesState>(TYPES.UnlockedFeaturesState)
-  .to(UnlockedFeaturesState)
-  .inSingletonScope()
-  .whenTargetIsDefault();
+container.bind<IRewardsState>(TYPES.RewardsState).to(RewardsState).inSingletonScope().whenTargetIsDefault();
 
 container.bind<IMultipliersState>(TYPES.MultipliersState).to(MultipliersState).inSingletonScope().whenTargetIsDefault();
-
-container
-  .bind<IAvailableCategoryItemsState<ProgramName>>(TYPES.AvailableProgramsState)
-  .to(AvailableProgramsState)
-  .inSingletonScope()
-  .whenTargetIsDefault();
-
-container
-  .bind<IAvailableCategoryItemsState<CloneTemplateName>>(TYPES.AvailableCloneTemplatesState)
-  .to(AvailableCloneTemplatesState)
-  .inSingletonScope()
-  .whenTargetIsDefault();
-
-container
-  .bind<IAvailableItemsState>(TYPES.AvailableItemsState)
-  .to(AvailableItemsState)
-  .inSingletonScope()
-  .whenTargetIsDefault();
 
 container.bind<IThreatState>(TYPES.ThreatState).to(ThreatState).inSingletonScope().whenTargetIsDefault();
 
@@ -193,6 +174,44 @@ container
   .whenTargetIsDefault();
 
 container.bind<IGlobalState>(TYPES.GlobalState).to(GlobalState).inSingletonScope().whenTargetIsDefault();
+
+container
+  .bind<IUnlockedFeaturesState>(TYPES.UnlockedFeaturesState)
+  .to(UnlockedFeaturesState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IAvailableCategoryItemsState<ProgramName>>(TYPES.AvailableProgramsState)
+  .to(AvailableProgramsState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IAvailableCategoryItemsState<CloneTemplateName>>(TYPES.AvailableCloneTemplatesState)
+  .to(AvailableCloneTemplatesState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IAvailableItemsState>(TYPES.AvailableItemsState)
+  .to(AvailableItemsState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IAvailableSidejobsState>(TYPES.AvailableSidejobsState)
+  .to(AvailableSidejobsState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IAvailableActivitiesState>(TYPES.AvailableActivitiesState)
+  .to(AvailableActivitiesState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container.bind<IUnlockState>(TYPES.UnlockState).to(UnlockState).inSingletonScope().whenTargetIsDefault();
 
 container.bind<IMoneyGrowthState>(TYPES.MoneyGrowthState).to(MoneyGrowthState).inSingletonScope().whenTargetIsDefault();
 

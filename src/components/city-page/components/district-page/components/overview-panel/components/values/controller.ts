@@ -6,6 +6,6 @@ export class CityDistrictOverviewPanelValuesController extends BaseController {
   }
 
   isDistrictTiersUnlocked(): boolean {
-    return this.globalState.unlockedFeatures.isFeatureUnlocked(Feature.districtTiers);
+    return this.unlockState.features.isFeatureUnlocked(Feature.districtTiers);
   }
 }

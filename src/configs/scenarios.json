@@ -81,80 +81,110 @@
       {
         "key": "tutorial_2",
         "level": 1,
+        "messages": ["tutorial_2_1"],
         "unlockFeatures": ["mainframePrograms"],
-        "messages": ["tutorial_2_1"]
+        "rewardDesigns": {
+          "programs": ["shareServer"]
+        }
       },
       {
         "key": "tutorial_level_3",
         "level": 4,
-        "unlockFeatures": ["mainframeHardware"],
-        "messages": ["tutorial_3_1"]
+        "messages": ["tutorial_3_1"],
+        "unlockFeatures": ["mainframeHardware"]
       },
       {
         "key": "tutorial_level_4",
         "level": 9,
+        "messages": ["tutorial_4_1"],
         "unlockFeatures": ["companyManagement"],
-        "messages": ["tutorial_4_1"]
+        "rewardDesigns": {
+          "cloneTemplates": ["anthrodrone"]
+        },
+        "unlockSidejobs": ["oddjob"]
       },
       {
         "key": "tutorial_level_5",
         "level": 14,
+        "messages": ["tutorial_5_1"],
         "unlockFeatures": ["automation"],
-        "messages": ["tutorial_5_1"]
+        "rewardDesigns": {
+          "programs": ["cloneLevelAutoupgrader"]
+        }
       },
       {
         "key": "tutorial_level_6",
         "level": 17,
-        "unlockFeatures": ["districtTiers"],
-        "messages": ["tutorial_6_1"]
+        "messages": ["tutorial_6_1"],
+        "unlockFeatures": ["districtTiers"]
       },
       {
         "key": "tutorial_level_7",
         "level": 19,
+        "messages": ["tutorial_7_1"],
         "unlockFeatures": ["connectivity"],
-        "messages": ["tutorial_7_1"]
+        "rewardDesigns": {
+          "programs": ["informationCollector"]
+        },
+        "unlockSidejobs": ["infoBroker"]
       },
       {
         "key": "tutorial_level_8",
         "level": 24,
-        "unlockFeatures": [],
-        "messages": ["disclaimer_content_end"]
+        "messages": ["disclaimer_content_end"],
+        "unlockSidejobs": ["mainframeRelay"]
       },
       {
         "key": "tutorial_level_9",
         "level": 29,
         "unlockFeatures": ["rewards"],
-        "messages": []
+        "rewardDesigns": {
+          "programs": ["dealMaker"]
+        },
+        "unlockSidejobs": ["mediator"]
       },
       {
         "key": "tutorial_level_10",
         "level": 31,
         "unlockFeatures": ["computationalBase"],
-        "messages": []
+        "rewardDesigns": {
+          "programs": ["circuitDesigner"]
+        },
+        "unlockSidejobs": ["computerRepairer"]
       },
       {
         "key": "tutorial_level_11",
         "level": 33,
         "unlockFeatures": ["automationMainframeHardware"],
-        "messages": []
+        "rewardDesigns": {
+          "programs": ["mainframeHardwareAutobuyer"]
+        }
       },
       {
         "key": "tutorial_level_12",
         "level": 35,
         "unlockFeatures": ["experienceShare"],
-        "messages": []
+        "rewardDesigns": {
+          "programs": ["peerReviewer"]
+        },
+        "unlockSidejobs": ["feedAnalyzer"]
       },
       {
         "key": "tutorial_level_13",
         "level": 37,
         "unlockFeatures": ["codeBase"],
-        "messages": []
+        "rewardDesigns": {
+          "programs": ["codeGenerator"]
+        },
+        "unlockSidejobs": ["freelanceProgrammer"]
       },
       {
         "key": "tutorial_level_14",
         "level": 39,
         "unlockFeatures": ["automationMainframePrograms"],
-        "messages": []
+        "rewardDesigns": {
+          "programs": ["mainframeProgramsAutobuyer"]
+        }
       }
     ]
   }
