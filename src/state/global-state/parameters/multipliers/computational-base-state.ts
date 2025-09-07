@@ -5,7 +5,7 @@ import { BaseMultiplierState } from './base-multiplier-state';
 @injectable()
 export class ComputationalBaseState extends BaseMultiplierState {
   getMultiplierParameters() {
-    return this.globalState.scenario.currentValues.programMultipliers.computationalBase;
+    return this.scenarioState.currentValues.programMultipliers.computationalBase;
   }
 
   getDistrictMultiplierParameter(districtMultipliers: IDistrictMultipliers): IDistrictMultiplierParameter {

@@ -10,10 +10,12 @@ import {
   reverseGeometricProgressionSum,
 } from '@shared/index';
 import { decorators } from '@state/container';
+import { type IScenarioState } from '@state/scenario-state';
+import { type IUnlockState } from '@state/unlock-state';
+import { TYPES } from '@state/types';
 import { IMainframeHardwareParameter, IMainframeHardwareParameterSerializedState } from './interfaces';
 import { MainframeHardwareParameterType } from './types';
 import { type IMainframeState } from '../../interfaces';
-import { TYPES } from '@/state/types';
 
 const { lazyInject } = decorators;
 
@@ -26,6 +28,12 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
 
   @lazyInject(TYPES.GlobalState)
   protected globalState!: IGlobalState;
+
+  @lazyInject(TYPES.ScenarioState)
+  protected scenarioState!: IScenarioState;
+
+  @lazyInject(TYPES.UnlockState)
+  protected unlockState!: IUnlockState;
 
   @lazyInject(TYPES.MessageLogState)
   protected messageLogState!: IMessageLogState;
@@ -104,7 +112,7 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
       return false;
     }
 
-    if (!this.globalState.unlockedFeatures.isFeatureUnlocked(Feature.mainframeHardware)) {
+    if (!this.unlockState.features.isFeatureUnlocked(Feature.mainframeHardware)) {
       return false;
     }
 

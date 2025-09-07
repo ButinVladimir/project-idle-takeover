@@ -1,14 +1,15 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
-import { IRewardsSerializedState, IRewardsState, type IGlobalState } from '../interfaces';
+import { IRewardsSerializedState, IRewardsState } from '../interfaces';
+import { type IScenarioState } from '@state/scenario-state';
 
 const { lazyInject } = decorators;
 
 @injectable()
 export class RewardsState implements IRewardsState {
-  @lazyInject(TYPES.GlobalState)
-  protected globalState!: IGlobalState;
+  @lazyInject(TYPES.ScenarioState)
+  private _scenarioState!: IScenarioState;
 
   private _pointsByProgram: number;
   private _multiplierByProgram: number;
@@ -31,7 +32,7 @@ export class RewardsState implements IRewardsState {
   }
 
   recalculateMultiplier() {
-    const parameters = this.globalState.scenario.currentValues.programMultipliers.rewards;
+    const parameters = this._scenarioState.currentValues.programMultipliers.rewards;
 
     this._multiplierByProgram =
       1 + Math.log(1 + this._pointsByProgram / parameters.pointsToSoftCap) / Math.log(parameters.logBase);

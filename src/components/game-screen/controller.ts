@@ -68,8 +68,6 @@ export class GameScreenController extends BaseController {
     const key = event.key;
     const hotkey = this.getHotkeyByKey(key);
 
-    console.log(event);
-
     if (!hotkey) {
       return;
     }

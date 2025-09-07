@@ -21,7 +21,7 @@ export class PredictiveComputatorProgram extends BaseProgram {
       calculateTierLinear(this.level, this.tier, programData.programCompletionSpeed.main) *
         calculateLinear(
           this.mainframeState.hardware.performance.totalLevel,
-          this.globalState.scenario.currentValues.mainframeSoftware.performanceBoost,
+          this.scenarioState.currentValues.mainframeSoftware.performanceBoost,
         ) *
         calculateLinear(usedRam, programData.programCompletionSpeed.ram) *
         calculateLinear(threads, programData.programCompletionSpeed.cores)

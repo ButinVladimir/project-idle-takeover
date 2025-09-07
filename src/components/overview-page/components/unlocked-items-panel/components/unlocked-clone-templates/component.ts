@@ -1,17 +1,22 @@
 import { html } from 'lit';
 import { localized } from '@lit/localize';
-import { customElement } from 'lit/decorators.js';
-import { BaseComponent } from '@shared/base-component';
+import { customElement, property } from 'lit/decorators.js';
+import { BaseComponent, HINT_ICON } from '@shared/index';
 import { CATEGORY_TEXTS, CLONE_TEMPLATE_TEXTS } from '@texts/index';
-import { CloneTemplateName } from '@state/company-state/states/clone-factory/types';
-import { HINT_ICON } from '@shared/styles';
+import { CloneTemplateName } from '@state/company-state';
 import { OverviewUnlockedCloneTemplatesController } from './controller';
 import { unlockedItemsCategoryStyles } from '../../styles';
+import { ItemTypeFilter } from '../../types';
 
 @localized()
 @customElement('ca-overview-unlocked-clone-templates')
 export class OverviewUnlockedCloneTemplates extends BaseComponent {
   static styles = unlockedItemsCategoryStyles;
+
+  @property({
+    attribute: 'item-type-filer',
+  })
+  itemTypeFilter!: ItemTypeFilter;
 
   private _controller: OverviewUnlockedCloneTemplatesController;
 
@@ -34,7 +39,7 @@ export class OverviewUnlockedCloneTemplates extends BaseComponent {
   }
 
   private renderList = () => {
-    const itemNames = this._controller.listItems();
+    const itemNames = this.getItemsList();
 
     return itemNames.map(this.renderListItem);
   };
@@ -42,7 +47,7 @@ export class OverviewUnlockedCloneTemplates extends BaseComponent {
   private renderListItem = (itemName: CloneTemplateName) => {
     const cloneTemplateTitle = CLONE_TEMPLATE_TEXTS[itemName].title();
     const cloneTemplateOverview = CLONE_TEMPLATE_TEXTS[itemName].overview();
-    const tier = this._controller.getItemHighestAvailableTier(itemName);
+    const tier = this.getItemTier(itemName);
 
     return html`
       <span>
@@ -57,4 +62,26 @@ export class OverviewUnlockedCloneTemplates extends BaseComponent {
       <span> ${this._controller.formatter.formatTier(tier)} </span>
     `;
   };
+
+  private getItemsList() {
+    switch (this.itemTypeFilter) {
+      case ItemTypeFilter.all:
+        return this._controller.listAllItems();
+      case ItemTypeFilter.design:
+        return this._controller.listDesigns();
+      case ItemTypeFilter.loaned:
+        return this._controller.listLoanedItems();
+    }
+  }
+
+  private getItemTier(itemName: CloneTemplateName) {
+    switch (this.itemTypeFilter) {
+      case ItemTypeFilter.all:
+        return this._controller.getItemHighestAvailableTier(itemName);
+      case ItemTypeFilter.design:
+        return this._controller.getDesignTier(itemName);
+      case ItemTypeFilter.loaned:
+        return this._controller.getLoanedTier();
+    }
+  }
 }

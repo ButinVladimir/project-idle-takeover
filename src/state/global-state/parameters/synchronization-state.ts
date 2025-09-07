@@ -2,9 +2,10 @@ import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IStateUIConnector } from '@state/state-ui-connector';
-import { type ICityState } from '@state/city-state/interfaces';
+import { type ICityState } from '@state/city-state';
 import { type IGlobalState, ISynchronizationState } from '../interfaces';
-import { type ICompanyState } from '@state/company-state/interfaces';
+import { type ICompanyState } from '@state/company-state';
+import { type IScenarioState } from '@state/scenario-state';
 
 const { lazyInject } = decorators;
 
@@ -12,6 +13,9 @@ const { lazyInject } = decorators;
 export class SynchronizationState implements ISynchronizationState {
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
+
+  @lazyInject(TYPES.ScenarioState)
+  private _scenarioState!: IScenarioState;
 
   @lazyInject(TYPES.CityState)
   private _cityState!: ICityState;
@@ -67,7 +71,7 @@ export class SynchronizationState implements ISynchronizationState {
   }
 
   private calculateBaseValue() {
-    this._baseValue = Math.ceil(this._globalState.scenario.currentValues.startingSynchronization);
+    this._baseValue = Math.ceil(this._scenarioState.currentValues.startingSynchronization);
     this._totalValue = this._baseValue;
   }
 

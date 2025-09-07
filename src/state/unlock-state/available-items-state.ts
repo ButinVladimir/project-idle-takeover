@@ -12,12 +12,6 @@ export class AvailableItemsState implements IAvailableItemsState {
   @inject(TYPES.AvailableCloneTemplatesState)
   private _availableCloneTemplatesState!: IAvailableCategoryItemsState<CloneTemplateName>;
 
-  private _recalculationRequested: boolean;
-
-  constructor() {
-    this._recalculationRequested = true;
-  }
-
   get programs(): IAvailableCategoryItemsState<ProgramName> {
     return this._availableProgramsState;
   }
@@ -26,17 +20,7 @@ export class AvailableItemsState implements IAvailableItemsState {
     return this._availableCloneTemplatesState;
   }
 
-  requestRecalculation() {
-    this._recalculationRequested = true;
-  }
-
   recalculate() {
-    if (!this._recalculationRequested) {
-      return;
-    }
-
-    this._recalculationRequested = false;
-
     this._availableProgramsState.recalculate();
     this._availableCloneTemplatesState.recalculate();
   }
@@ -44,13 +28,11 @@ export class AvailableItemsState implements IAvailableItemsState {
   async startNewState(): Promise<void> {
     await this._availableProgramsState.startNewState();
     await this._availableCloneTemplatesState.startNewState();
-    this.requestRecalculation();
   }
 
   async deserialize(serializedState: IAvailableItemsSerializedState): Promise<void> {
     await this._availableProgramsState.deserialize(serializedState.programs);
     await this._availableCloneTemplatesState.deserialize(serializedState.cloneTemplates);
-    this.requestRecalculation();
   }
 
   serialize(): IAvailableItemsSerializedState {

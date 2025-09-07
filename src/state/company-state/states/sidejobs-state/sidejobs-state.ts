@@ -7,6 +7,7 @@ import { type IGlobalState } from '@state/global-state';
 import { DistrictUnlockState, type ICityState } from '@state/city-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type IMessageLogState } from '@state/message-log-state';
+import { type IUnlockState } from '@/state/unlock-state';
 import { TYPES } from '@state/types';
 import { type ICompanyState } from '../../interfaces';
 import {
@@ -27,6 +28,9 @@ const { lazyInject } = decorators;
 export class CompanySidejobsState implements ICompanySidejobsState {
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
+
+  @lazyInject(TYPES.UnlockState)
+  private _unlockState!: IUnlockState;
 
   @lazyInject(TYPES.CityState)
   private _cityState!: ICityState;
@@ -86,7 +90,7 @@ export class CompanySidejobsState implements ICompanySidejobsState {
       return false;
     }
 
-    if (!this._globalState.availableActivities.sidejobs.isActivityAvailable(sidejobParameters.sidejobName)) {
+    if (!this._unlockState.activities.sidejobs.isSidejobUnlocked(sidejobParameters.sidejobName)) {
       return false;
     }
 

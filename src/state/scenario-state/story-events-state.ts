@@ -85,6 +85,24 @@ export class StoryEventsState implements IStoryEventsState {
           this._unlockState.features.unlockFeature(feature);
         });
       }
+
+      if (storyEvent.rewardDesigns?.programs) {
+        storyEvent.rewardDesigns.programs.forEach((program) => {
+          this._unlockState.items.programs.unlockDesign(program, 0, true);
+        });
+      }
+
+      if (storyEvent.rewardDesigns?.cloneTemplates) {
+        storyEvent.rewardDesigns.cloneTemplates.forEach((cloneTemplate) => {
+          this._unlockState.items.cloneTemplates.unlockDesign(cloneTemplate, 0, true);
+        });
+      }
+
+      if (storyEvent.unlockSidejobs) {
+        storyEvent.unlockSidejobs.forEach((sidejob) => {
+          this._unlockState.activities.sidejobs.unlockSidejob(sidejob);
+        });
+      }
     }
   }
 }

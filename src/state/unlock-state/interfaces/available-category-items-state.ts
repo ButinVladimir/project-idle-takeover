@@ -8,6 +8,8 @@ export interface IAvailableCategoryItemsState<Key extends string = string>
   listLoanedItems(): Key[];
   isItemAvailable(itemName: Key, tier: number): boolean;
   getItemHighestAvailableTier(itemName: Key): number;
-  unlockDesign(itemName: Key, tier: number): void;
+  getDesignTier(itemName: Key): number;
+  unlockDesign(itemName: Key, tier: number, notify: boolean): void;
+  makeUnlockNotificationMessage(itemName: Key, formattedTier: string): string;
   recalculate(): void;
 }

@@ -2,23 +2,29 @@ import { inject, injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
 import programs from '@configs/programs.json';
-import type { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
-import type { IGlobalState } from '@state/global-state/interfaces/global-state';
-import type { IMessageLogState } from '@state/message-log-state/interfaces/message-log-state';
-import type { IFormatter } from '@shared/interfaces/formatter';
-import type { IMainframeState } from '@state/mainframe-state/interfaces/mainframe-state';
+import { type IStateUIConnector } from '@state/state-ui-connector';
+import { type IGlobalState } from '@state/global-state';
+import { type IMessageLogState } from '@state/message-log-state';
+import { type IMainframeState } from '@state/mainframe-state/interfaces/mainframe-state';
+import { type IScenarioState } from '@state/scenario-state';
+import { type IUnlockState } from '@state/unlock-state';
 import { TYPES } from '@state/types';
-import { Feature, ProgramsEvent, PurchaseType } from '@shared/types';
-import { calculateTierPower, reverseTierPower } from '@shared/helpers';
-import { moveElementInArray } from '@shared/helpers';
-import { PROGRAM_TEXTS } from '@texts/programs';
+import {
+  type IFormatter,
+  Feature,
+  ProgramsEvent,
+  PurchaseType,
+  calculateTierPower,
+  reverseTierPower,
+  moveElementInArray,
+} from '@shared/index';
+import { PROGRAM_TEXTS } from '@texts/index';
 import {
   IMainframeProgramsState,
   IMainframeProgramsSerializedState,
   type IMainframeProgramsUpgrader,
 } from './interfaces';
-import { ProgramName } from '../progam-factory/types';
-import { IMakeProgramParameters, IProgram } from '../progam-factory/interfaces';
+import { ProgramName, IMakeProgramParameters, IProgram } from '../progam-factory';
 
 const { lazyInject } = decorators;
 
@@ -32,6 +38,12 @@ export class MainframeProgramsState implements IMainframeProgramsState {
 
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
+
+  @lazyInject(TYPES.ScenarioState)
+  private _scenarioState!: IScenarioState;
+
+  @lazyInject(TYPES.UnlockState)
+  private _unlockState!: IUnlockState;
 
   @lazyInject(TYPES.MessageLogState)
   private _messageLogState!: IMessageLogState;
@@ -71,11 +83,11 @@ export class MainframeProgramsState implements IMainframeProgramsState {
   }
 
   purchaseProgram(name: ProgramName, tier: number, level: number): boolean {
-    if (!this._globalState.unlockedFeatures.isFeatureUnlocked(Feature.mainframePrograms)) {
+    if (!this._unlockState.features.isFeatureUnlocked(Feature.mainframePrograms)) {
       return false;
     }
 
-    if (!this._globalState.availableItems.programs.isItemAvailable(name, tier)) {
+    if (!this._unlockState.items.programs.isItemAvailable(name, tier)) {
       return false;
     }
 
@@ -117,7 +129,7 @@ export class MainframeProgramsState implements IMainframeProgramsState {
   async startNewState(): Promise<void> {
     this.clearState();
 
-    for (const programName of this._globalState.scenario.currentValues.mainframeSoftware.startingPrograms) {
+    for (const programName of this._scenarioState.currentValues.mainframeSoftware.startingPrograms) {
       this.addProgram(programName, 0, 0);
     }
   }
@@ -159,7 +171,7 @@ export class MainframeProgramsState implements IMainframeProgramsState {
       this._programsList.push(newProgram);
 
       for (const feature of newProgram.unlockFeatures) {
-        this._globalState.unlockedFeatures.unlockFeature(feature);
+        this._unlockState.features.unlockFeature(feature);
       }
     }
   }

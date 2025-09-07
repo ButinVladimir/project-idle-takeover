@@ -46,7 +46,7 @@ export class FactionState implements IFactionState {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getFactionLoanTier(faction: Faction) {
-    return 0;
+    return 7;
   }
 
   async startNewState(): Promise<void> {

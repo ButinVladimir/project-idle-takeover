@@ -595,7 +595,7 @@
     },
     {
       "name": "ca-overview-story-goal",
-      "description": "Attributes:\n\n  * `level` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `unlock-features` {`string | undefined`} - \n\n  * `state` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `level` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `unlockFeatures` {`string | undefined`} - \n\n  * `state` - \n\n  * `renderSummary` - \n\n  * `renderDetails` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `level` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `unlock-features` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `clone-templates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `state` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `level` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `unlockFeatures` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `cloneTemplates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `state` - \n\n  * `renderSummary` - \n\n  * `renderDetails` - \n\n  * `renderMessages` - \n\n  * `renderUnlockFeatures` - \n\n  * `renderPrograms` - \n\n  * `renderCloneTemplates` - \n\n  * `renderSidejobs` - \n\n  * `_controller` {`OverviewStoryGoalController`} - ",
       "attributes": [
         {
           "name": "level",
@@ -613,6 +613,21 @@
           "values": []
         },
         {
+          "name": "programs",
+          "description": "`programs` {`string | undefined`} - \n\nProperty: programs",
+          "values": []
+        },
+        {
+          "name": "clone-templates",
+          "description": "`clone-templates` {`string | undefined`} - \n\nProperty: cloneTemplates",
+          "values": []
+        },
+        {
+          "name": "sidejobs",
+          "description": "`sidejobs` {`string | undefined`} - \n\nProperty: sidejobs",
+          "values": []
+        },
+        {
           "name": "state",
           "description": "`state` - \n\nProperty: state"
         }
@@ -625,18 +640,50 @@
     },
     {
       "name": "ca-overview-unlocked-items-panel",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_controller` {`OverviewUnlockedItemsPanelController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_itemTypeFilterInputRef` {`Ref<SlSelect>`} - \n\n  * `_itemTypeFilter` {`ItemTypeFilter`} - \n\n  * `handleItemTypeFilterChange` - \n\n  * `_controller` {`OverviewUnlockedItemsPanelController`} - ",
       "attributes": []
     },
     {
       "name": "ca-overview-unlocked-clone-templates",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderList` - \n\n  * `renderListItem` - \n\n  * `_controller` {`OverviewUnlockedCloneTemplatesController`} - ",
-      "attributes": []
+      "description": "Attributes:\n\n  * `item-type-filer` {`ItemTypeFilter`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `itemTypeFilter` {`ItemTypeFilter`} - \n\n  * `renderList` - \n\n  * `renderListItem` - \n\n  * `_controller` {`OverviewUnlockedCloneTemplatesController`} - ",
+      "attributes": [
+        {
+          "name": "item-type-filer",
+          "description": "`item-type-filer` {`ItemTypeFilter`} - \n\nProperty: itemTypeFilter",
+          "values": [
+            {
+              "name": "all"
+            },
+            {
+              "name": "design"
+            },
+            {
+              "name": "loaned"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "ca-overview-unlocked-programs",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderList` - \n\n  * `renderListItem` - \n\n  * `_controller` {`OverviewUnlockedProgramsController`} - ",
-      "attributes": []
+      "description": "Attributes:\n\n  * `item-type-filer` {`ItemTypeFilter`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `itemTypeFilter` {`ItemTypeFilter`} - \n\n  * `renderList` - \n\n  * `renderListItem` - \n\n  * `_controller` {`OverviewUnlockedProgramsController`} - ",
+      "attributes": [
+        {
+          "name": "item-type-filer",
+          "description": "`item-type-filer` {`ItemTypeFilter`} - \n\nProperty: itemTypeFilter",
+          "values": [
+            {
+              "name": "all"
+            },
+            {
+              "name": "design"
+            },
+            {
+              "name": "loaned"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "ca-settings-page",

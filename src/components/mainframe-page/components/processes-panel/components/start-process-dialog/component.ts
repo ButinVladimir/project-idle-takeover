@@ -221,7 +221,7 @@ Threads allow to run multiple instances of same program at same time, but additi
     } else if (runningScalableProgram && programIsAutoscalable) {
       this.dispatchEvent(
         new ConfirmationAlertOpenEvent(
-          ProgramAlert.scalableProcessReplace,
+          ProgramAlert.processReplace,
           msg(
             str`Are you sure want to replace autoscalable process? This will delete your current process for program "${programTitle}".`,
           ),

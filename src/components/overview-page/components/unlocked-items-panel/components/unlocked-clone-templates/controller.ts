@@ -1,12 +1,28 @@
-import { BaseController } from '@shared/base-controller';
-import { CloneTemplateName } from '@state/company-state/states/clone-factory/types';
+import { BaseController } from '@shared/index';
+import { CloneTemplateName } from '@state/company-state';
 
 export class OverviewUnlockedCloneTemplatesController extends BaseController {
-  listItems() {
-    return this.globalState.availableItems.cloneTemplates.listAvailableItems();
+  listAllItems() {
+    return this.unlockState.items.cloneTemplates.listAvailableItems();
+  }
+
+  listDesigns() {
+    return this.unlockState.items.cloneTemplates.listDesigns();
+  }
+
+  listLoanedItems() {
+    return this.unlockState.items.cloneTemplates.listLoanedItems();
   }
 
   getItemHighestAvailableTier(itemName: CloneTemplateName) {
-    return this.globalState.availableItems.cloneTemplates.getItemHighestAvailableTier(itemName);
+    return this.unlockState.items.cloneTemplates.getItemHighestAvailableTier(itemName);
+  }
+
+  getDesignTier(itemName: CloneTemplateName) {
+    return this.unlockState.items.cloneTemplates.getDesignTier(itemName);
+  }
+
+  getLoanedTier() {
+    return this.factionState.getFactionLoanTier(this.factionState.currentFaction);
   }
 }

@@ -3,19 +3,15 @@ import { decorators } from '@state/container';
 import { type IGrowthState } from '@state/growth-state';
 import { TYPES } from '@state/types';
 import { type ICityState, IDistrictMultipliers, IDistrictMultiplierParameter } from '@state/city-state';
-import {
-  type IGlobalState,
-  IMultiplierState,
-  IMultiplierSerializedState,
-  IMultiplierScenarioParameters,
-} from '../../interfaces';
+import { IMultiplierScenarioParameters, type IScenarioState } from '@state/scenario-state';
+import { IMultiplierState, IMultiplierSerializedState } from '../../interfaces';
 
 const { lazyInject } = decorators;
 
 @injectable()
 export abstract class BaseMultiplierState implements IMultiplierState {
-  @lazyInject(TYPES.GlobalState)
-  protected globalState!: IGlobalState;
+  @lazyInject(TYPES.ScenarioState)
+  protected scenarioState!: IScenarioState;
 
   @lazyInject(TYPES.GrowthState)
   protected growthState!: IGrowthState;

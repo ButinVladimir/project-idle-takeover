@@ -162,7 +162,7 @@
   },
   "feedAnalyzer": {
     "requirements": {
-      "connectivity": { "multiplier": 1, "base":  1 },
+      "connectivity": { "multiplier": 1, "base": 1 },
       "attributes": {
         "intellect": { "multiplier": 50, "base": 1 }
       },

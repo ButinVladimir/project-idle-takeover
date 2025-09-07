@@ -3,6 +3,6 @@ import { BaseController } from '@shared/base-controller';
 
 export class CompanyPageController extends BaseController {
   isCompanyManagementUnlocked(): boolean {
-    return this.globalState.unlockedFeatures.isFeatureUnlocked(Feature.companyManagement);
+    return this.unlockState.features.isFeatureUnlocked(Feature.companyManagement);
   }
 }

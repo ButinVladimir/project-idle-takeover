@@ -101,6 +101,7 @@ export class AppState implements IAppState {
 
     this._globalState.recalculate();
     this._growthState.clearValues();
+    this._unlockState.recalculate();
 
     this._scenarioState.storyEvents.visitStartingEvents();
   }
@@ -129,7 +130,7 @@ export class AppState implements IAppState {
     if (migrator.hasMigrated) {
       this._notificationsState.pushNotification(
         NotificationType.gameVersionUpdated,
-        msg('Game version has been updated'),
+        msg('Game version has been updated.'),
       );
     }
 
@@ -150,6 +151,7 @@ export class AppState implements IAppState {
 
     this._globalState.recalculate();
     this._growthState.clearValues();
+    this._unlockState.recalculate();
   }
 
   private processTicks(maxUpdates: number): number {
@@ -170,5 +172,6 @@ export class AppState implements IAppState {
     this._globalState.makeNextTick();
     this._cityState.recalculate();
     this._globalState.recalculate();
+    this._unlockState.recalculate();
   };
 }

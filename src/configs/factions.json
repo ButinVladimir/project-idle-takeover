@@ -1,9 +1,7 @@
 {
   "neutral": {
     "loans": {
-      "programs": [
-        "peerReviewer"
-      ],
+      "programs": ["predictiveComputator"],
       "cloneTemplates": []
     },
     "special": {

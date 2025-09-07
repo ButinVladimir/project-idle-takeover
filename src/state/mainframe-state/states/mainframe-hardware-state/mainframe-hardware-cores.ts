@@ -10,11 +10,11 @@ export class MainframeHardwareCores extends MainframeHardwareParameter {
   readonly type: MainframeHardwareParameterType = 'cores';
 
   protected get baseLevel(): number {
-    return this.globalState.scenario.currentValues.mainframeHardware.baseCoresLevel;
+    return this.scenarioState.currentValues.mainframeHardware.baseCoresLevel;
   }
 
   protected get priceExp(): IExponent {
-    return this.globalState.scenario.currentValues.mainframeHardware.coresPrice;
+    return this.scenarioState.currentValues.mainframeHardware.coresPrice;
   }
 
   protected postPurchaseMessge(): void {

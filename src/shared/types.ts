@@ -101,7 +101,6 @@ export enum ProgramAlert {
   purchaseProgramOverwrite = 'purchaseProgramOverwrite',
   processDelete = 'processDelete',
   processReplace = 'processReplace',
-  scalableProcessReplace = 'scalableProcessReplace',
   deleteAllProcesses = 'deleteAllProcesses',
 }
 

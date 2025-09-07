@@ -1,15 +1,13 @@
 import { injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
-import type { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
-import type { ISettingsState } from '@state/settings-state/interfaces/settings-state';
-import type { INotificationsState } from '@state/notifications-state/interfaces/notifications-state';
-import type { IFormatter } from '@shared/interfaces/formatter';
+import { type IStateUIConnector } from '@state/state-ui-connector';
+import { type ISettingsState } from '@state/settings-state';
+import { type INotificationsState } from '@state/notifications-state';
+import { type IScenarioState } from '@state/scenario-state';
 import { TYPES } from '@state/types';
-import { NotificationType } from '@shared/types';
-import { ITimeState } from '../interfaces/parameters/time-state';
-import { ITimeSerializedState } from '../interfaces/serialized-states/time-serialized-state';
-import type { IGlobalState } from '../interfaces/global-state';
+import { NotificationType, type IFormatter } from '@shared/index';
+import { ITimeState, ITimeSerializedState } from '../interfaces';
 
 const { lazyInject } = decorators;
 
@@ -21,11 +19,11 @@ export class TimeState implements ITimeState {
   @lazyInject(TYPES.SettingsState)
   private _settingsState!: ISettingsState;
 
-  @lazyInject(TYPES.GlobalState)
-  private _globalState!: IGlobalState;
-
   @lazyInject(TYPES.NotificationsState)
   private _notificationsState!: INotificationsState;
+
+  @lazyInject(TYPES.ScenarioState)
+  private _scenarioState!: IScenarioState;
 
   @lazyInject(TYPES.Formatter)
   private _formatter!: IFormatter;
@@ -76,7 +74,7 @@ export class TimeState implements ITimeState {
       const formattedTime = this._formatter.formatTimeLong(earnedTime);
       this._notificationsState.pushNotification(
         NotificationType.timeAccumulated,
-        msg(str`While you were away, you've earned ${formattedTime} accumulated time`),
+        msg(str`While you were away, you've earned ${formattedTime} of accumulated time.`),
       );
     }
   }
@@ -112,7 +110,7 @@ export class TimeState implements ITimeState {
 
   async startNewState(): Promise<void> {
     this._lastUpdateTime = Date.now();
-    this._accumulatedTime = this._globalState.scenario.currentValues.startingAccumulatedTime;
+    this._accumulatedTime = this._scenarioState.currentValues.startingAccumulatedTime;
     this._activeTime = 0;
     this._gameTime = 0;
     this._gameTimeTotal = 0;

@@ -1,11 +1,12 @@
 import { injectable } from 'inversify';
+import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { NotificationType } from '@shared/index';
 import { SidejobName } from '@state/company-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type INotificationsState } from '@state/notifications-state';
-import { COMMON_TEXTS, SIDEJOB_TEXTS } from '@texts/index';
+import { SIDEJOB_TEXTS } from '@texts/index';
 import { IAvailableSidejobsState, IAvailableSidejobsSerializedState } from '../interfaces';
 
 const { lazyInject } = decorators;
@@ -44,13 +45,13 @@ export class AvailableSidejobsState implements IAvailableSidejobsState {
     this._unlockedSidejobs.add(sidejob);
     this._unlockedSidejobsList.push(sidejob);
 
-    const sidejobName = SIDEJOB_TEXTS[sidejob].title();
-    this._notificationsState.pushNotification(
-      NotificationType.sidejobUnlocked,
-      COMMON_TEXTS.sidejobUnlocked(sidejobName),
-    );
+    this._notificationsState.pushNotification(NotificationType.sidejobUnlocked, this.makeUnlockSidejobMessage(sidejob));
   }
-  
+
+  makeUnlockSidejobMessage(sidejob: SidejobName) {
+    return msg(str`Sidejob "${SIDEJOB_TEXTS[sidejob].title()}" has been unlocked.`);
+  }
+
   async startNewState(): Promise<void> {
     this.clearState();
   }

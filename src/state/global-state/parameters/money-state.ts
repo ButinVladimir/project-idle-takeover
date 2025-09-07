@@ -1,11 +1,10 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
-import { IncomeSource, PurchaseType } from '@shared/types';
-import type { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
+import { IncomeSource, PurchaseType } from '@shared/index';
+import { type IStateUIConnector } from '@state/state-ui-connector';
+import { type IScenarioState } from '@state/scenario-state';
 import { TYPES } from '@state/types';
-import { IMoneyState } from '../interfaces/parameters/money-state';
-import { IMoneySerializedState } from '../interfaces/serialized-states/money-serialized-state';
-import type { IGlobalState } from '../interfaces/global-state';
+import { IMoneyState, IMoneySerializedState } from '../interfaces';
 
 const { lazyInject } = decorators;
 
@@ -14,8 +13,8 @@ export class MoneyState implements IMoneyState {
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
 
-  @lazyInject(TYPES.GlobalState)
-  private _globalState!: IGlobalState;
+  @lazyInject(TYPES.ScenarioState)
+  private _scenarioState!: IScenarioState;
 
   private _money: number;
   private _income: Map<IncomeSource, number>;
@@ -62,7 +61,7 @@ export class MoneyState implements IMoneyState {
   }
 
   async startNewState(): Promise<void> {
-    this._money = this._globalState.scenario.currentValues.startingMoney;
+    this._money = this._scenarioState.currentValues.startingMoney;
     this._income.clear();
     this._expenses.clear();
   }

@@ -1,19 +1,19 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
+import { type IFormatter, NotificationType } from '@shared/index';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type IScenarioState } from '@state/scenario-state';
 import { type IFactionState } from '@state/faction-state';
+import { type INotificationsState } from '@state/notifications-state';
 import { TYPES } from '@state/types';
-import {
-  IAvailableCategoryItemsState,
-  IAvailableCategoryItemsSerializedState,
-  type IUnlockState,
-} from '../interfaces';
+import { IAvailableCategoryItemsState, IAvailableCategoryItemsSerializedState, type IUnlockState } from '../interfaces';
 
 const { lazyInject } = decorators;
 
 @injectable()
-export abstract class BaseAvailableCategoryItemsState<Key extends string = string> implements IAvailableCategoryItemsState<Key> {
+export abstract class BaseAvailableCategoryItemsState<Key extends string = string>
+  implements IAvailableCategoryItemsState<Key>
+{
   @lazyInject(TYPES.StateUIConnector)
   protected _stateUiConnector!: IStateUIConnector;
 
@@ -26,13 +26,19 @@ export abstract class BaseAvailableCategoryItemsState<Key extends string = strin
   @lazyInject(TYPES.UnlockState)
   protected _unlockState!: IUnlockState;
 
-  protected _loanedItems: Set<Key>;
+  @lazyInject(TYPES.NotificationsState)
+  protected _notificationsState!: INotificationsState;
+
+  @lazyInject(TYPES.Formatter)
+  protected _formatter!: IFormatter;
+
   protected _designsTierMap: Map<Key, number>;
+  protected _loanedItems: Set<Key>;
   protected _itemsList: Key[];
 
   constructor() {
-    this._loanedItems = new Set();
     this._designsTierMap = new Map();
+    this._loanedItems = new Set();
     this._itemsList = [];
 
     this._stateUiConnector.registerEventEmitter(this, ['_loanedItems', '_designsTierMap', '_itemsList']);
@@ -72,7 +78,7 @@ export abstract class BaseAvailableCategoryItemsState<Key extends string = strin
     }
 
     if (this._designsTierMap.has(itemName)) {
-      result = Math.max(result, this._designsTierMap.get(itemName)!);
+      result = Math.max(result, this.getDesignTier(itemName));
     }
 
     if (result === -1) {
@@ -82,7 +88,15 @@ export abstract class BaseAvailableCategoryItemsState<Key extends string = strin
     return result;
   }
 
-  unlockDesign(itemName: Key, tier: number) {
+  getDesignTier(itemName: Key): number {
+    if (this._designsTierMap.has(itemName)) {
+      return this._designsTierMap.get(itemName)!;
+    }
+
+    throw new Error(`Item ${itemName} is not available`);
+  }
+
+  unlockDesign(itemName: Key, tier: number, notify: boolean) {
     const existingTier = this._designsTierMap.get(itemName);
     const loaned = this._loanedItems.has(itemName);
 
@@ -95,23 +109,31 @@ export abstract class BaseAvailableCategoryItemsState<Key extends string = strin
     if (existingTier === undefined && !loaned && this.checkRequiredFeatures(itemName)) {
       this._itemsList.push(itemName);
     }
+
+    if (notify) {
+      const formattedTier = this._formatter.formatTier(tier);
+      this._notificationsState.pushNotification(
+        NotificationType.designUnlocked,
+        this.makeUnlockNotificationMessage(itemName, formattedTier),
+      );
+    }
   }
 
+  abstract makeUnlockNotificationMessage(itemName: Key, formattedTier: string): string;
+
   recalculate() {
-    this.clearState();
+    this.clearState(false);
 
     this.recalculateLoanedItems();
     this.recalculateItemsList();
   }
 
   async startNewState(): Promise<void> {
-    this.clearState();
-    this._designsTierMap.clear();
+    this.clearState(true);
   }
 
   async deserialize(serializedState: IAvailableCategoryItemsSerializedState<Key>): Promise<void> {
-    this.clearState();
-    this._designsTierMap.clear();
+    this.clearState(true);
 
     Object.entries(serializedState.designs).forEach(([design, tier]) => {
       this._designsTierMap.set(design as Key, tier as number);
@@ -135,21 +157,25 @@ export abstract class BaseAvailableCategoryItemsState<Key extends string = strin
   }
 
   private recalculateItemsList() {
-    this._loanedItems.forEach((loanedItem) => {
-      if (this.checkRequiredFeatures(loanedItem)) {
-        this._itemsList.push(loanedItem);
+    this._designsTierMap.forEach((tier, design) => {
+      if (this.checkRequiredFeatures(design)) {
+        this._itemsList.push(design);
       }
     });
 
-    this._designsTierMap.forEach((tier, design) => {
-      if (!this._loanedItems.has(design) && this.checkRequiredFeatures(design)) {
-        this._itemsList.push(design);
+    this._loanedItems.forEach((loanedItem) => {
+      if (!this._designsTierMap.has(loanedItem) && this.checkRequiredFeatures(loanedItem)) {
+        this._itemsList.push(loanedItem);
       }
     });
   }
 
-  private clearState() {
+  private clearState(withDesigns: boolean) {
     this._loanedItems.clear();
     this._itemsList.length = 0;
+
+    if (withDesigns) {
+      this._designsTierMap.clear();
+    }
   }
 }

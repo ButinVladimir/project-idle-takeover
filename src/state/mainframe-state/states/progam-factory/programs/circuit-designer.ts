@@ -17,7 +17,7 @@ export class CircuitDesignerProgram extends BaseProgram {
     const programData = programs[this.name];
 
     return (
-      this.globalState.scenario.currentValues.programMultipliers.computationalBase.pointsMultiplier *
+      this.scenarioState.currentValues.programMultipliers.computationalBase.pointsMultiplier *
       this.globalState.rewards.multiplierByProgram *
       threads *
       calculateTierLinear(this.level, this.tier, programData.computationalBase)

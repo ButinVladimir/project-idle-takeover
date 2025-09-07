@@ -1,34 +1,21 @@
 import { inject, injectable } from 'inversify';
-import { IAvailableActivitiesSerializedState, IAvailableActivitiesState, type IAvailableSidejobsState } from './interfaces';
+import {
+  IAvailableActivitiesSerializedState,
+  IAvailableActivitiesState,
+  type IAvailableSidejobsState,
+} from './interfaces';
 import { TYPES } from '@/state/types';
 
 @injectable()
 export class AvailableActivitiesState implements IAvailableActivitiesState {
-  private _availableSidejobs: IAvailableSidejobsState;
-
-  private _recalculationRequested: boolean;
-
-  constructor(@inject(TYPES.AvailableSidejobsState) _availableSidejobs: IAvailableSidejobsState) {
-    this._availableSidejobs = _availableSidejobs;
-
-    this._recalculationRequested = true;
-  }
+  @inject(TYPES.AvailableSidejobsState)
+  private _availableSidejobs!: IAvailableSidejobsState;
 
   get sidejobs(): IAvailableSidejobsState {
     return this._availableSidejobs;
   }
 
-  requestRecalculation() {
-    this._recalculationRequested = true;
-  }
-
-  recalculate() {
-    if (!this._recalculationRequested) {
-      return;
-    }
-
-    this._recalculationRequested = false;
-  }
+  recalculate() {}
 
   async startNewState(): Promise<void> {
     await this._availableSidejobs.startNewState();

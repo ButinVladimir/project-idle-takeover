@@ -35,7 +35,7 @@ export class CityDistrictSidejobsPanel extends BaseComponent {
 
     return html`
       <p class="hint">
-        ${msg(`Increase district connectivity and unlock more feature make more sidejobs available.
+        ${msg(`Increase district connectivity to make sidejobs available.
 Clones could be assigned to sidejobs on company page under sidejobs tab.`)}
       </p>
 

@@ -20,7 +20,6 @@ export const GAME_ALERT_NAMES = {
   [ProgramAlert.processReplace]: () => msg('Replace a process'),
   [ProgramAlert.processDelete]: () => msg('Delete a process'),
   [ProgramAlert.deleteAllProcesses]: () => msg('Delete all process'),
-  [ProgramAlert.scalableProcessReplace]: () => msg('Replace a autoscalable process'),
   [CloneAlert.cloneDelete]: () => msg('Delete a clone'),
   [CloneAlert.deleteAllClones]: () => msg('Delete all clones'),
   [SidejobAlert.sidejobCancel]: () => msg('Cancel an assigned sidejob'),
