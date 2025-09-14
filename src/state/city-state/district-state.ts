@@ -1,8 +1,6 @@
 import districtTypes from '@configs/district-types.json';
-import { IMapGeneratorDistrictResult } from '@workers/map-generator/interfaces';
-import type { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
-import { IPoint } from '@shared/interfaces';
-import { DistrictType, Faction } from '@shared/types';
+import { type IStateUIConnector } from '@state/state-ui-connector';
+import { IPoint, DistrictType, Faction } from '@shared/index';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import {
@@ -11,6 +9,7 @@ import {
   IDistrictParameters,
   IDistrictTypeTemplate,
   IDistrictArguments,
+  IMapGeneratorDistrict,
 } from './interfaces';
 import { DistrictUnlockState } from './types';
 import { DistrictParameters } from './district-parameters';
@@ -31,7 +30,7 @@ export class DistrictState implements IDistrictState {
 
   private _template: IDistrictTypeTemplate;
 
-  private constructor(args: IDistrictArguments) {
+  constructor(args: IDistrictArguments) {
     this._index = args.index;
     this._name = args.name;
     this._startingPoint = args.startingPoint;
@@ -45,14 +44,17 @@ export class DistrictState implements IDistrictState {
     this._stateUiConnector.registerEventEmitter(this, []);
   }
 
-  static createByMapGenerator(index: number, mapGeneratorDistrictResult: IMapGeneratorDistrictResult): IDistrictState {
+  static createByMapGenerator(districtInfo: IMapGeneratorDistrict): IDistrictState {
     const districtState = new DistrictState({
-      ...mapGeneratorDistrictResult,
-      index,
-      state: DistrictUnlockState.locked,
+      districtType: districtInfo.districtType,
+      faction: districtInfo.faction,
+      index: districtInfo.index,
+      name: districtInfo.name,
+      startingPoint: districtInfo.startingPoint,
+      state: districtInfo.isStartingDistrict ? DistrictUnlockState.contested : DistrictUnlockState.locked,
     });
 
-    districtState._parameters.tier.setTier(mapGeneratorDistrictResult.tier);
+    districtState._parameters.tier.setTier(districtInfo.tier);
 
     return districtState;
   }

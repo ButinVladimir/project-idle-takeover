@@ -1,15 +1,31 @@
-import { Faction, IExponent, ILinear } from '@shared/index';
+import { DistrictType, Faction, IExponent, ILinear, RANDOM_TYPE } from '@shared/index';
 import { ProgramName } from '@state/mainframe-state';
 import { IStoryEvent } from './story-events';
 import { IMultiplierScenarioParameters } from './multiplier-scenario-parameters';
+
+interface IDistrictValues {
+  type: DistrictType | typeof RANDOM_TYPE;
+  tier: {
+    min: number;
+    max: number;
+  };
+}
+
+interface IFactionValues {
+  name: Faction;
+  startingDistrict: number;
+  controlledArea: number;
+  canBeJoined: boolean;
+}
 
 export interface IScenarioValues {
   map: {
     width: number;
     height: number;
-    districts: [];
+    districts: IDistrictValues[];
+    factions: IFactionValues[];
+    startingFactionIndex: number;
   };
-  startingFaction: Faction;
   startingMoney: number;
   startingDevelopmentLevel: number;
   startingAccumulatedTime: number;

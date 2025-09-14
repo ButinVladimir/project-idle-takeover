@@ -595,7 +595,7 @@
     },
     {
       "name": "ca-overview-story-goal",
-      "description": "Attributes:\n\n  * `level` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `unlock-features` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `clone-templates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `state` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `level` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `unlockFeatures` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `cloneTemplates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `state` - \n\n  * `renderSummary` - \n\n  * `renderDetails` - \n\n  * `renderMessages` - \n\n  * `renderUnlockFeatures` - \n\n  * `renderPrograms` - \n\n  * `renderCloneTemplates` - \n\n  * `renderSidejobs` - \n\n  * `_controller` {`OverviewStoryGoalController`} - ",
+      "description": "Attributes:\n\n  * `level` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `special-events` {`string | undefined`} - \n\n  * `unlock-features` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `clone-templates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `state` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `level` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `specialEvents` {`string | undefined`} - \n\n  * `unlockFeatures` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `cloneTemplates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `state` - \n\n  * `renderSummary` - \n\n  * `renderDetails` - \n\n  * `renderMessages` - \n\n  * `renderUnlockFeatures` - \n\n  * `renderSpecialEvents` - \n\n  * `renderPrograms` - \n\n  * `renderCloneTemplates` - \n\n  * `renderSidejobs` - \n\n  * `_controller` {`OverviewStoryGoalController`} - ",
       "attributes": [
         {
           "name": "level",
@@ -605,6 +605,11 @@
         {
           "name": "messages",
           "description": "`messages` {`string | undefined`} - \n\nProperty: messages",
+          "values": []
+        },
+        {
+          "name": "special-events",
+          "description": "`special-events` {`string | undefined`} - \n\nProperty: specialEvents",
           "values": []
         },
         {

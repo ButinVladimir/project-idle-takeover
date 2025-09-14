@@ -66,7 +66,18 @@ import {
   ExperienceGrowthState,
 } from '@state/growth-state';
 import { SettingsState, ISettingsState } from '@state/settings-state';
-import { CityState, ICityState } from '@state/city-state';
+import {
+  CityState,
+  DistrictConnectionGraphGenerator,
+  DistrictFactionsGenerator,
+  DistrictInfoGenerator,
+  ICityState,
+  IDistrictConnectionGraphGenerator,
+  IDistrictFactionsGenerator,
+  IDistrictInfoGenerator,
+  IMapLayoutGenerator,
+  MapLayoutGenerator,
+} from '@state/city-state';
 import { IMessageLogState, MessageLogState } from '@state/message-log-state';
 import {
   IProgramFactory,
@@ -266,6 +277,30 @@ container
 container.bind<IGrowthState>(TYPES.GrowthState).to(GrowthState).inSingletonScope().whenTargetIsDefault();
 
 container.bind<ISettingsState>(TYPES.SettingsState).to(SettingsState).inSingletonScope().whenTargetIsDefault();
+
+container
+  .bind<IMapLayoutGenerator>(TYPES.MapLayoutGenerator)
+  .to(MapLayoutGenerator)
+  .inRequestScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IDistrictInfoGenerator>(TYPES.DistrictInfoGenerator)
+  .to(DistrictInfoGenerator)
+  .inRequestScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IDistrictConnectionGraphGenerator>(TYPES.DistrictConnectionGraphGenerator)
+  .to(DistrictConnectionGraphGenerator)
+  .inRequestScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IDistrictFactionsGenerator>(TYPES.DistrictFactionsGenerator)
+  .to(DistrictFactionsGenerator)
+  .inSingletonScope()
+  .whenTargetIsDefault();
 
 container.bind<ICityState>(TYPES.CityState).to(CityState).inSingletonScope().whenTargetIsDefault();
 

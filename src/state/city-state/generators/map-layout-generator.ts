@@ -1,38 +1,59 @@
-import { XORShift128Plus } from 'random-seedable';
-import scenarios from '@configs/scenarios.json';
-import { IPoint } from '@shared/interfaces';
-import { Scenario } from '@shared/types';
-import { RandomQueue } from '@shared/random-queue';
-import {
-  ILayoutGenerator,
-  ILayoutGeneratorResult,
-  ILayoutGeneratorDistrict,
-  ILayoutGeneratorDistrictResult,
-} from './interfaces';
+import { injectable } from 'inversify';
+import { decorators } from '@state/container';
+import { type IScenarioState } from '@state/scenario-state';
+import { type IGlobalState } from '@state/global-state';
+import { TYPES } from '@state/types';
+import { IPoint, RandomQueue } from '@shared/index';
+import { IMapLayoutGenerator, IMapLayoutGeneratorResult, IMapLayoutGeneratorDistrict } from '../interfaces';
 
-export class LayoutGenerator implements ILayoutGenerator {
+const { lazyInject } = decorators;
+
+@injectable()
+export class MapLayoutGenerator implements IMapLayoutGenerator {
+  @lazyInject(TYPES.ScenarioState)
+  private _scenarioState!: IScenarioState;
+
+  @lazyInject(TYPES.GlobalState)
+  private _globalState!: IGlobalState;
+
   private static DX: number[] = [-1, 1, 0, 0];
   private static DY: number[] = [0, 0, -1, 1];
-  private _scenario: Scenario;
-  private _map: (number | undefined)[][];
-  private _districts: Map<number, ILayoutGeneratorDistrict> = new Map<number, ILayoutGeneratorDistrict>();
-  private _random: XORShift128Plus;
+  private _map!: (number | undefined)[][];
+  private _districts!: Map<number, IMapLayoutGeneratorDistrict>;
 
   private get _mapWidth() {
-    return scenarios[this._scenario].map.width;
+    return this._scenarioState.currentValues.map.width;
   }
 
   private get _mapHeight() {
-    return scenarios[this._scenario].map.height;
+    return this._scenarioState.currentValues.map.height;
   }
 
   private get _districtsNum() {
-    return scenarios[this._scenario].map.districts.length;
+    return this._scenarioState.currentValues.map.districts.length;
   }
 
-  constructor(scenario: Scenario, random: XORShift128Plus) {
-    this._scenario = scenario;
+  private get _random() {
+    return this._globalState.random;
+  }
 
+  public async generate(): Promise<IMapLayoutGeneratorResult> {
+    return new Promise((resolve) => {
+      resolve(this.generateImplementation());
+    });
+  }
+
+  private generateImplementation(): IMapLayoutGeneratorResult {
+    this.initMap();
+    this.initDistricts();
+
+    this.setStartingPoints();
+    this.expandDistricts();
+
+    return this.buildResult();
+  }
+
+  private initMap() {
     this._map = [];
     for (let x = 0; x < this._mapWidth; x++) {
       const row = [];
@@ -43,15 +64,10 @@ export class LayoutGenerator implements ILayoutGenerator {
 
       this._map[x] = row;
     }
-
-    this._random = random;
   }
 
-  public generate(): ILayoutGeneratorResult {
-    this.setStartingPoints();
-    this.expandDistricts();
-
-    return this.buildResult();
+  private initDistricts() {
+    this._districts = new Map<number, IMapLayoutGeneratorDistrict>();
   }
 
   private setStartingPoints(): void {
@@ -107,27 +123,20 @@ export class LayoutGenerator implements ILayoutGenerator {
     }
   }
 
-  private buildResult(): ILayoutGeneratorResult {
-    const districts: Record<number, ILayoutGeneratorDistrictResult> = {};
-    for (const [districtNum, district] of this._districts.entries()) {
-      districts[districtNum] = {
-        startingPoint: district.startingPoint,
-      };
-    }
-
+  private buildResult(): IMapLayoutGeneratorResult {
     return {
       layout: this._map as number[][],
-      districts,
+      districts: this._districts,
     };
   }
 
   private buildNextPoints(point: IPoint): IPoint[] {
     const result: IPoint[] = [];
 
-    for (let direction = 0; direction < LayoutGenerator.DX.length; direction++) {
+    for (let direction = 0; direction < MapLayoutGenerator.DX.length; direction++) {
       const nextPoint = {
-        x: point.x + LayoutGenerator.DX[direction],
-        y: point.y + LayoutGenerator.DY[direction],
+        x: point.x + MapLayoutGenerator.DX[direction],
+        y: point.y + MapLayoutGenerator.DY[direction],
       };
 
       if (nextPoint.x >= 0 && nextPoint.y >= 0 && nextPoint.x < this._mapWidth && nextPoint.y < this._mapHeight) {

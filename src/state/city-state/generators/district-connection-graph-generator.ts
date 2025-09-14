@@ -1,33 +1,46 @@
-import scenarios from '@configs/scenarios.json';
-import { Scenario } from '@shared/types';
+import { injectable } from 'inversify';
+import { decorators } from '@state/container';
+import { TYPES } from '@state/types';
+import { type IScenarioState } from '@state/scenario-state';
 import {
-  IDistrictConnectionGraphBuilder,
-  IDistrictConnectionGraphBuilderArgs,
-  IDistrictConnectionGraphBuilderResult,
-} from './interfaces';
+  type ICityState,
+  IDistrictConnectionGraphGenerator,
+  IDistrictConnectionGraphGeneratorResult,
+} from '../interfaces';
 
-export class DistrictConnectionGraphBuilder implements IDistrictConnectionGraphBuilder {
-  private _layout: number[][];
-  private _scenario: Scenario;
-  private _connections: Map<number, Set<number>>;
-  private _districtSizes: Map<number, number>;
+const { lazyInject } = decorators;
 
-  constructor(args: IDistrictConnectionGraphBuilderArgs) {
-    this._layout = args.layout;
-    this._scenario = args.scenario;
-    this._connections = new Map<number, Set<number>>();
-    this._districtSizes = new Map<number, number>();
-  }
+@injectable()
+export class DistrictConnectionGraphGenerator implements IDistrictConnectionGraphGenerator {
+  @lazyInject(TYPES.CityState)
+  private _cityState!: ICityState;
+
+  @lazyInject(TYPES.ScenarioState)
+  private _scenarioState!: IScenarioState;
+
+  private _connections!: Map<number, Set<number>>;
+  private _districtSizes!: Map<number, number>;
 
   private get _width() {
-    return scenarios[this._scenario].map.width;
+    return this._scenarioState.currentValues.map.width;
   }
 
   private get _height() {
-    return scenarios[this._scenario].map.height;
+    return this._scenarioState.currentValues.map.height;
   }
 
-  build(): IDistrictConnectionGraphBuilderResult {
+  private get _layout() {
+    return this._cityState.getLayout();
+  }
+
+  async generate(): Promise<IDistrictConnectionGraphGeneratorResult> {
+    return new Promise((resolve) => {
+      resolve(this.generateImplementation());
+    });
+  }
+
+  private generateImplementation(): IDistrictConnectionGraphGeneratorResult {
+    this.init();
     this.buildConnections();
     this.calculateDistrictSizes();
 
@@ -37,8 +50,13 @@ export class DistrictConnectionGraphBuilder implements IDistrictConnectionGraphB
     };
   }
 
+  private init() {
+    this._connections = new Map<number, Set<number>>();
+    this._districtSizes = new Map<number, number>();
+  }
+
   private buildConnections() {
-    const districtsNum = scenarios[this._scenario].map.districts.length;
+    const districtsNum = this._scenarioState.currentValues.map.districts.length;
 
     for (let i = 0; i < districtsNum; i++) {
       this._connections.set(i, new Set<number>());
@@ -75,7 +93,7 @@ export class DistrictConnectionGraphBuilder implements IDistrictConnectionGraphB
   }
 
   private calculateDistrictSizes() {
-    const districtsNum = scenarios[this._scenario].map.districts.length;
+    const districtsNum = this._scenarioState.currentValues.map.districts.length;
 
     for (let i = 0; i < districtsNum; i++) {
       this._districtSizes.set(i, 0);

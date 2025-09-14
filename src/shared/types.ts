@@ -131,6 +131,7 @@ export enum NotificationType {
   gameVersionUpdated = 'gameVersionUpdated',
   sidejobUnlocked = 'sidejobUnlocked',
   designUnlocked = 'designUnlocked',
+  factionsAvailable = 'factionsAvailable',
 }
 
 export enum LongNumberFormat {
@@ -164,6 +165,7 @@ export enum Feature {
   rewards = 'rewards',
   experienceShare = 'experienceShare',
   districtTiers = 'districtTiers',
+  factions = 'factions',
 }
 
 export type PointsMultiplierType = 'codeBase' | 'computationalBase';
@@ -220,4 +222,8 @@ export enum Hotkey {
   upgradeMainframeCores = 'upgradeMainframeCores',
   upgradeMainframePrograms = 'upgradeMainframePrograms',
   upgradeClonesLevel = 'upgradeClonesLevel',
+}
+
+export enum MapSpecialEvent {
+  factionsAvailable = 'factionsAvailable',
 }

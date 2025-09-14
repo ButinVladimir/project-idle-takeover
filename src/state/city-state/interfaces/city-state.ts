@@ -6,6 +6,8 @@ export interface ICityState extends ISerializeable<ICitySerializedState> {
   districtsCount: number;
   getLayout(): number[][];
   getDistrictState(districtIndex: number): IDistrictState;
+  getDistrictConnections(districtIndex: number): Set<number>;
+  getDistrictSize(districtIndex: number): number;
   listAvailableDistricts(): IDistrictState[];
   recalculate(): void;
 }

@@ -1,12 +1,20 @@
-import { injectable } from 'inversify';
-import scenarios from '@configs/scenarios.json';
-import { type IGlobalState } from '@state/global-state';
+import { inject, injectable } from 'inversify';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type IScenarioState } from '@state/scenario-state';
-import { IMapGeneratorResult } from '@workers/map-generator/interfaces';
+import { type IFactionState } from '@state/faction-state';
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
-import { ICityState, ICitySerializedState, IDistrictState, IDistrictSerializedState } from './interfaces';
+import {
+  ICityState,
+  ICitySerializedState,
+  IDistrictState,
+  IDistrictSerializedState,
+  type IMapLayoutGenerator,
+  type IDistrictInfoGenerator,
+  IDistrictConnectionGraphGeneratorResult,
+  type IDistrictConnectionGraphGenerator,
+  type IDistrictFactionsGenerator,
+} from './interfaces';
 import { DistrictState } from './district-state';
 import { DistrictUnlockState } from './types';
 
@@ -14,11 +22,23 @@ const { lazyInject } = decorators;
 
 @injectable()
 export class CityState implements ICityState {
-  @lazyInject(TYPES.GlobalState)
-  private _globalState!: IGlobalState;
+  @inject(TYPES.MapLayoutGenerator)
+  private _mapLayoutGenerator!: IMapLayoutGenerator;
+
+  @inject(TYPES.DistrictInfoGenerator)
+  private _districtInfoGenerator!: IDistrictInfoGenerator;
+
+  @inject(TYPES.DistrictConnectionGraphGenerator)
+  private _districtConnectionGraphGenerator!: IDistrictConnectionGraphGenerator;
+
+  @inject(TYPES.DistrictFactionsGenerator)
+  private _districtFactionsGenerator!: IDistrictFactionsGenerator;
 
   @lazyInject(TYPES.ScenarioState)
   private _scenarioState!: IScenarioState;
+
+  @lazyInject(TYPES.FactionState)
+  private _factionState!: IFactionState;
 
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
@@ -26,6 +46,7 @@ export class CityState implements ICityState {
   private _layout: number[][];
   private _districts: Map<number, IDistrictState>;
   private _availableDistricts: IDistrictState[];
+  private _districtConnections!: IDistrictConnectionGraphGeneratorResult;
 
   constructor() {
     this._layout = [];
@@ -44,11 +65,27 @@ export class CityState implements ICityState {
   }
 
   getDistrictState(districtIndex: number): IDistrictState {
-    if (!this._districts.has(districtIndex)) {
-      throw new Error(`Missing district ${districtIndex}`);
+    if (!this.checkDistrictIndex(districtIndex)) {
+      throw new Error(`Invalid district index ${districtIndex}`);
     }
 
     return this._districts.get(districtIndex)!;
+  }
+
+  getDistrictSize(districtIndex: number): number {
+    if (!this.checkDistrictIndex(districtIndex)) {
+      throw new Error(`Invalid district index ${districtIndex}`);
+    }
+
+    return this._districtConnections.districtSizes.get(districtIndex)!;
+  }
+
+  getDistrictConnections(districtIndex: number): Set<number> {
+    if (!this.checkDistrictIndex(districtIndex)) {
+      throw new Error(`Invalid district index ${districtIndex}`);
+    }
+
+    return this._districtConnections.connections.get(districtIndex)!;
   }
 
   listAvailableDistricts(): IDistrictState[] {
@@ -87,6 +124,8 @@ export class CityState implements ICityState {
       this._districts.set(parsedDistrictIndex, districtState);
     });
 
+    this._districtConnections = await this._districtConnectionGraphGenerator.generate();
+
     this.updateAvailableDistricts();
   }
 
@@ -104,50 +143,48 @@ export class CityState implements ICityState {
     };
   }
 
-  private generateMap(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const worker = new Worker(new URL('@workers/map-generator/index.js', import.meta.url), { type: 'module' });
+  private checkDistrictIndex(districtIndex: number): boolean {
+    return districtIndex >= 0 && districtIndex < this._scenarioState.currentValues.map.districts.length;
+  }
 
-      worker.addEventListener('message', (event: MessageEvent<IMapGeneratorResult>) => {
-        this._globalState.random.y = event.data.randomShift;
+  private async generateMap(): Promise<void> {
+    const mapLayoutGeneratorResult = await this._mapLayoutGenerator.generate();
+    this._layout = mapLayoutGeneratorResult.layout;
 
-        this._layout = event.data.layout;
+    const districtInfoGeneratorResult = await this._districtInfoGenerator.generate();
 
-        this.clearDistricts();
+    this._districtConnections = await this._districtConnectionGraphGenerator.generate();
 
-        for (const [districtIndex, district] of Object.entries(event.data.districts)) {
-          const parsedDistrictIndex = parseInt(districtIndex);
-          const districtState = DistrictState.createByMapGenerator(parsedDistrictIndex, district);
+    const districtFactionGeneratorResult = await this._districtFactionsGenerator.generate(districtInfoGeneratorResult);
 
-          districtState.state =
-            parsedDistrictIndex === scenarios[this._scenarioState.currentScenario].map.startingDistrict
-              ? DistrictUnlockState.contested
-              : DistrictUnlockState.locked;
+    this.clearDistricts();
 
-          this._districts.set(parsedDistrictIndex, districtState);
-        }
+    const mapValues = this._scenarioState.currentValues.map;
+    const startingDistrict = mapValues.factions[mapValues.startingFactionIndex].startingDistrict;
 
-        this.updateAvailableDistricts();
+    for (
+      let districtIndex = 0;
+      districtIndex < this._scenarioState.currentValues.map.districts.length;
+      districtIndex++
+    ) {
+      const startingPoint = mapLayoutGeneratorResult.districts.get(districtIndex)!.startingPoint;
+      const districtInfo = districtInfoGeneratorResult.districts.get(districtIndex)!;
+      const faction = this._factionState.getFactionByIndex(
+        districtFactionGeneratorResult.districts.get(districtIndex)!,
+      );
 
-        worker.terminate();
-
-        resolve();
+      const district = DistrictState.createByMapGenerator({
+        index: districtIndex,
+        startingPoint,
+        faction,
+        isStartingDistrict: startingDistrict === districtIndex,
+        ...districtInfo,
       });
 
-      worker.addEventListener('error', (event: ErrorEvent) => {
-        reject(event.error);
-      });
+      this._districts.set(districtIndex, district);
+    }
 
-      worker.addEventListener('messageerror', () => {
-        reject('Unable to parse map generator message');
-      });
-
-      worker.postMessage({
-        scenario: this._scenarioState.currentScenario,
-        randomSeed: this._globalState.random.seed,
-        randomShift: this._globalState.random.y,
-      });
-    });
+    this.updateAvailableDistricts();
   }
 
   private updateAvailableDistricts() {

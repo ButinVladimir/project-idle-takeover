@@ -26,7 +26,7 @@ export class AvailableSidejobsState implements IAvailableSidejobsState {
     this._unlockedSidejobs = new Set<SidejobName>();
     this._unlockedSidejobsList = [];
 
-    this._stateUiConnector.registerEventEmitter(this, ['_unlockedSidejobs']);
+    this._stateUiConnector.registerEventEmitter(this, ['_unlockedSidejobs', '_unlockedSidejobsList']);
   }
 
   listUnlockedSidejobs(): SidejobName[] {

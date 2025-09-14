@@ -90,10 +90,10 @@ export class AppState implements IAppState {
 
   async startNewState(): Promise<void> {
     await this._settingsState.startNewState();
+    await this._globalState.startNewState();
     await this._scenarioState.startNewState();
     await this._factionState.startNewState();
     await this._unlockState.startNewState();
-    await this._globalState.startNewState();
     await this._cityState.startNewState();
     await this._mainframeState.startNewState();
     await this._automationState.startNewState();
@@ -140,10 +140,10 @@ export class AppState implements IAppState {
     }
 
     await this._settingsState.deserialize(migratedSaveData.settings);
+    await this._globalState.deserialize(migratedSaveData.global);
     await this._scenarioState.deserialize(migratedSaveData.scenario);
     await this._factionState.deserialize(migratedSaveData.faction);
     await this._unlockState.deserialize(migratedSaveData.unlock);
-    await this._globalState.deserialize(migratedSaveData.global);
     await this._cityState.deserialize(migratedSaveData.city);
     await this._mainframeState.deserialize(migratedSaveData.mainframe);
     await this._automationState.deserialize(migratedSaveData.automation);

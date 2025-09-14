@@ -1,3 +1,4 @@
+import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { Feature, PurchaseType } from '@shared/index';
@@ -10,6 +11,7 @@ import { IClone } from '../clone-factory';
 
 const { lazyInject } = decorators;
 
+@injectable()
 export class CompanyClonesLevelUpgrader implements ICompanyClonesLevelUpgrader {
   @lazyInject(TYPES.AutomationState)
   private _automationState!: IAutomationState;

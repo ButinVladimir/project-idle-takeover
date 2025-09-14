@@ -1,5 +1,5 @@
-import { DistrictUnlockState } from '@state/city-state';
-import { Theme } from '@shared/index';
+import { DistrictUnlockState } from '@state/city-state/types';
+import { Theme } from '@shared/types';
 
 export interface IDistrictRendererArgs {
   canvas: OffscreenCanvas;

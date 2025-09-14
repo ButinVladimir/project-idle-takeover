@@ -1,3 +1,4 @@
+import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { Feature } from '@shared/index';
@@ -10,6 +11,7 @@ import { type IMainframeState } from '../../interfaces';
 
 const { lazyInject } = decorators;
 
+@injectable()
 export class MainframeProgramsUpgrader implements IMainframeProgramsUpgrader {
   @lazyInject(TYPES.AutomationState)
   private _automationState!: IAutomationState;

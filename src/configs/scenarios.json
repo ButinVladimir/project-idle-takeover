@@ -42,12 +42,19 @@
       ],
       "factions": [
         {
+          "name": "neutral",
+          "startingDistrict": 0,
+          "controlledArea": 5000,
+          "canBeJoined": false
+        },
+        {
           "name": "wsa",
           "startingDistrict": 4,
-          "controlledArea": 5000
+          "controlledArea": 5000,
+          "canBeJoined": true
         }
       ],
-      "startingDistrict": 0
+      "startingFactionIndex": 0
     },
     "mainframeSoftware": {
       "performanceBoost": { "base": 1, "multiplier": 0.1 }
@@ -185,6 +192,12 @@
         "rewardDesigns": {
           "programs": ["mainframeProgramsAutobuyer"]
         }
+      },
+      {
+        "key": "tutorial_level_15",
+        "level": 50,
+        "unlockFeatures": ["factions"],
+        "specialEvents": ["factionsAvailable"]
       }
     ]
   }
