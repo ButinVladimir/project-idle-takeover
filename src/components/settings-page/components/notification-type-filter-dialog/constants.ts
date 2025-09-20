@@ -9,4 +9,5 @@ export const NOTIFICATION_TYPE_NAMES = {
   [NotificationType.sidejobUnlocked]: () => msg('Sidejob unlocked'),
   [NotificationType.designUnlocked]: () => msg('Design unlocked'),
   [NotificationType.factionsAvailable]: () => msg('Factions available'),
+  [NotificationType.factionJoined]: () => msg('Faction joined'),
 };

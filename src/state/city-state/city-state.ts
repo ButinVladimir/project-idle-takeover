@@ -2,8 +2,10 @@ import { inject, injectable } from 'inversify';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type IScenarioState } from '@state/scenario-state';
 import { type IFactionState } from '@state/faction-state';
+import { type IGlobalState } from '@state/global-state';
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
+import { Faction } from '@shared/index';
 import {
   ICityState,
   ICitySerializedState,
@@ -36,6 +38,9 @@ export class CityState implements ICityState {
 
   @lazyInject(TYPES.ScenarioState)
   private _scenarioState!: IScenarioState;
+
+  @lazyInject(TYPES.GlobalState)
+  private _globalState!: IGlobalState;
 
   @lazyInject(TYPES.FactionState)
   private _factionState!: IFactionState;
@@ -96,6 +101,16 @@ export class CityState implements ICityState {
     for (const district of this._districts.values()) {
       district.recalculate();
     }
+  }
+
+  updateDistrictsAfterJoiningFaction(faction: Faction) {
+    for (const district of this._districts.values()) {
+      if (district.faction === faction && district.state === DistrictUnlockState.locked) {
+        district.state = DistrictUnlockState.contested;
+      }
+    }
+
+    this.updateAvailableDistricts();
   }
 
   async startNewState(): Promise<void> {
@@ -161,6 +176,7 @@ export class CityState implements ICityState {
 
     const mapValues = this._scenarioState.currentValues.map;
     const startingDistrict = mapValues.factions[mapValues.startingFactionIndex].startingDistrict;
+    const startingFaction = this._factionState.getFactionByIndex(mapValues.startingFactionIndex);
 
     for (
       let districtIndex = 0;
@@ -173,18 +189,24 @@ export class CityState implements ICityState {
         districtFactionGeneratorResult.districts.get(districtIndex)!,
       );
 
+      const isUnlocked = startingDistrict === districtIndex;
+
       const district = DistrictState.createByMapGenerator({
         index: districtIndex,
         startingPoint,
         faction,
-        isStartingDistrict: startingDistrict === districtIndex,
+        isUnlocked,
         ...districtInfo,
       });
 
       this._districts.set(districtIndex, district);
     }
 
-    this.updateAvailableDistricts();
+    if (startingFaction !== Faction.neutral) {
+      this.updateDistrictsAfterJoiningFaction(startingFaction);
+    } else {
+      this.updateAvailableDistricts();
+    }
   }
 
   private updateAvailableDistricts() {
@@ -195,6 +217,8 @@ export class CityState implements ICityState {
         this._availableDistricts.push(district);
       }
     });
+
+    this._globalState.synchronization.requestRecalculation();
   }
 
   private clearDistricts() {

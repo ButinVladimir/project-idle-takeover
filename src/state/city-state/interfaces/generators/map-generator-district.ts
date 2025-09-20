@@ -6,6 +6,6 @@ export interface IMapGeneratorDistrict {
   startingPoint: IPoint;
   districtType: DistrictType;
   faction: Faction;
-  isStartingDistrict: boolean;
+  isUnlocked: boolean;
   tier: number;
 }

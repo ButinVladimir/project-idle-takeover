@@ -1,13 +1,16 @@
 import { injectable } from 'inversify';
 import merge from 'lodash/merge';
+import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
 import factions from '@configs/factions.json';
 import { Faction, NotificationType } from '@shared/types';
 import { type IScenarioState } from '@state/scenario-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type INotificationsState } from '@state/notifications-state';
+import { type IUnlockState } from '@state/unlock-state';
+import { type ICityState } from '../city-state';
 import { TYPES } from '@state/types';
-import { SPECIAL_EVENTS_MESSAGES } from '@texts/index';
+import { FACTION_TEXTS, SPECIAL_EVENTS_MESSAGES } from '@texts/index';
 import { IFactionValues, IFactionState, IFactionSerializedState } from './interfaces';
 
 const { lazyInject } = decorators;
@@ -22,6 +25,12 @@ export class FactionState implements IFactionState {
 
   @lazyInject(TYPES.NotificationsState)
   private _notificationsState!: INotificationsState;
+
+  @lazyInject(TYPES.UnlockState)
+  private _unlockState!: IUnlockState;
+
+  @lazyInject(TYPES.CityState)
+  private _cityState!: ICityState;
 
   private _joiningFactionAvailable: boolean;
   private _allFactionsList: Faction[];
@@ -47,7 +56,7 @@ export class FactionState implements IFactionState {
     return this._currentFaction;
   }
 
-  set currentFaction(value: Faction) {
+  private set currentFaction(value: Faction) {
     this._currentFaction = value;
     this._currentFactionValues = this.getFactionValues(value);
   }
@@ -91,6 +100,29 @@ export class FactionState implements IFactionState {
       NotificationType.factionsAvailable,
       SPECIAL_EVENTS_MESSAGES.factionsAvailable(),
     );
+  }
+
+  joinFaction(faction: Faction): boolean {
+    if (this._currentFaction !== Faction.neutral) {
+      return false;
+    }
+
+    if (!this._availableFactionsList.includes(faction)) {
+      return false;
+    }
+
+    this.currentFaction = faction;
+    this._unlockState.requestRecalculation();
+    this._cityState.updateDistrictsAfterJoiningFaction(faction);
+
+    this._notificationsState.pushNotification(
+      NotificationType.factionJoined,
+      msg(
+        str`You have joined faction ${FACTION_TEXTS[faction].title()}. Loaned items, available districts and activities have been updated.`,
+      ),
+    );
+
+    return true;
   }
 
   async startNewState(): Promise<void> {

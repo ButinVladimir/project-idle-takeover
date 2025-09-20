@@ -291,6 +291,36 @@
       "attributes": []
     },
     {
+      "name": "ca-factions-page",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderTab` - \n\n  * `renderTabPanel` - \n\n  * `renderTabPanelContent` - \n\n  * `_controller` {`FactionsPageController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-factions-available-factions-panel",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-factions-available-factions-list",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderList` - \n\n  * `renderFaction` - \n\n  * `_controller` {`FactionsAvailableFactionsListController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-factions-available-factions-list-item",
+      "description": "Attributes:\n\n  * `faction` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `faction` - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `handleOpenConfirmationDialog` - \n\n  * `handleJoinFaction` - \n\n  * `_controller` {`FactionsAvailableFactionsListItemController`} - ",
+      "attributes": [
+        {
+          "name": "faction",
+          "description": "`faction` - \n\nProperty: faction"
+        }
+      ]
+    },
+    {
+      "name": "ca-factions-current-faction-panel",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_controller` {`FactionsCurrentFactionPanelController`} - ",
+      "attributes": []
+    },
+    {
       "name": "ca-fast-forwarding-screen",
       "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_maxTime` {`number`} - \n\n  * `_progressBarRef` {`Ref<SlProgressBar>`} - \n\n  * `_timerElRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handleStopFastForwarding` - \n\n  * `handlePartialUpdate` - \n\n  * `hanldeKeyDown` - \n\n  * `_controller` {`FastForwardingScreenController`} - ",
       "attributes": []

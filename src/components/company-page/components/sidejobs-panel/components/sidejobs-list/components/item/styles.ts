@@ -33,7 +33,7 @@ const styles = [
       }
 
       &.desktop {
-        grid-template-columns: 2fr 1fr 1fr auto;
+        grid-template-columns: 1fr 1fr 2fr auto;
         grid-template-rows: auto;
         align-items: center;
 

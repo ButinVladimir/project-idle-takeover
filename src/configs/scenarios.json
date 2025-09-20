@@ -195,8 +195,12 @@
       },
       {
         "key": "tutorial_level_15",
+        "level": 40,
+        "unlockFeatures": ["factions"]
+      },
+      {
+        "key": "tutorial_level_16",
         "level": 50,
-        "unlockFeatures": ["factions"],
         "specialEvents": ["factionsAvailable"]
       }
     ]

@@ -23,6 +23,7 @@ export enum OverviewMenuItem {
   company = 'company',
   mainframe = 'mainframe',
   automation = 'automation',
+  factions = 'factions',
   statistics = 'statistics',
   messageLog = 'messageLog',
 }
@@ -95,6 +96,7 @@ export enum GameStateAlert {
   unassignHotkeys = 'unassignHotkeys',
   restoreDefaultHotkeys = 'restoreDefaultHotkeys',
   restoreDefaultSettings = 'restoreDefaultSettings',
+  joinFaction = 'joinFaction',
 }
 
 export enum ProgramAlert {
@@ -132,6 +134,7 @@ export enum NotificationType {
   sidejobUnlocked = 'sidejobUnlocked',
   designUnlocked = 'designUnlocked',
   factionsAvailable = 'factionsAvailable',
+  factionJoined = 'factionJoined',
 }
 
 export enum LongNumberFormat {

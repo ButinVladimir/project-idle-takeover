@@ -12,4 +12,5 @@ export interface IFactionState extends ISerializeable<IFactionSerializedState> {
   listAvailableFactions(): Faction[];
   getFactionByIndex(index: number): Faction;
   makeJoiningFactionAvailable(): void;
+  joinFaction(faction: Faction): boolean;
 }

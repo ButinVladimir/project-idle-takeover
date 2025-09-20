@@ -30,7 +30,7 @@
       "startingFactionIndex": 0
     },
     "startingMoney": 100000000000,
-    "startingDevelopmentLevel": 40,
+    "startingDevelopmentLevel": 50,
     "startingAccumulatedTime": 1000000000,
     "startingSynchronization": 0,
     "baseSharedExperienceMultiplier": 1,
@@ -91,6 +91,7 @@
   "menuUnlockRequirements": {
     "city": "companyManagement",
     "company": "companyManagement",
-    "automation": "automation"
+    "automation": "automation",
+    "factions": "factions"
   }
 }

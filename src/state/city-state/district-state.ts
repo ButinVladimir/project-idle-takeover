@@ -51,7 +51,7 @@ export class DistrictState implements IDistrictState {
       index: districtInfo.index,
       name: districtInfo.name,
       startingPoint: districtInfo.startingPoint,
-      state: districtInfo.isStartingDistrict ? DistrictUnlockState.contested : DistrictUnlockState.locked,
+      state: districtInfo.isUnlocked ? DistrictUnlockState.contested : DistrictUnlockState.locked,
     });
 
     districtState._parameters.tier.setTier(districtInfo.tier);

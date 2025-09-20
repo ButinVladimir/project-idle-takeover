@@ -15,7 +15,6 @@ const styles = css`
     gap: var(--sl-spacing-small);
     align-items: center;
     border-bottom: var(--ca-border);
-    padding: var(--sl-spacing-medium) 0;
 
     .header-column {
       font-weight: var(--sl-font-weight-bold);

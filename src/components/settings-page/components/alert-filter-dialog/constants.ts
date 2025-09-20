@@ -16,6 +16,7 @@ export const GAME_ALERT_NAMES = {
   [GameStateAlert.unassignHotkeys]: () => msg('Unassign hotkeys'),
   [GameStateAlert.restoreDefaultHotkeys]: () => msg('Restore default hotkeys'),
   [GameStateAlert.restoreDefaultSettings]: () => msg('Restore default settings'),
+  [GameStateAlert.joinFaction]: () => msg('Join a faction'),
   [ProgramAlert.purchaseProgramOverwrite]: () => msg('Purchase an already owned program'),
   [ProgramAlert.processReplace]: () => msg('Replace a process'),
   [ProgramAlert.processDelete]: () => msg('Delete a process'),
