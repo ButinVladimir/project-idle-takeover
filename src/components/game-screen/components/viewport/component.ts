@@ -52,6 +52,9 @@ export class Viewport extends BaseComponent {
       case OverviewMenuItem.automation:
         return html`<ca-automation-page></ca-automation-page>`;
 
+      case OverviewMenuItem.factions:
+        return html`<ca-factions-page></ca-factions-page>`;
+
       case OverviewMenuItem.statistics:
         return html`<ca-statistics-page></ca-statistics-page>`;
 

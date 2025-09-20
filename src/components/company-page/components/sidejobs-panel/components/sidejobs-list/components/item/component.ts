@@ -67,6 +67,10 @@ export class SidejobsListItem extends BaseComponent {
 
     return html`
       <div class="host-content desktop">
+        <div>${cloneName}</div>
+
+        <div>${districtName}</div>
+
         <div class="sidejob">
           <div class="sidejob-title">
             ${sidejobTitle}
@@ -87,10 +91,6 @@ export class SidejobsListItem extends BaseComponent {
             <ca-sidejobs-list-item-description></ca-sidejobs-list-item-description>
           </div>
         </div>
-
-        <div>${districtName}</div>
-
-        <div>${cloneName}</div>
 
         <div class="buttons">
           <sl-tooltip>
@@ -135,6 +135,10 @@ export class SidejobsListItem extends BaseComponent {
 
     return html`
       <div class="host-content mobile">
+        <div>${cloneNameFull}</div>
+
+        <div>${districtNameFull}</div>
+
         <div class="sidejob">
           <div class="sidejob-title">
             ${sidejobTitle}
@@ -155,10 +159,6 @@ export class SidejobsListItem extends BaseComponent {
             <ca-sidejobs-list-item-description></ca-sidejobs-list-item-description>
           </div>
         </div>
-
-        <div>${districtNameFull}</div>
-
-        <div>${cloneNameFull}</div>
 
         <div class="buttons">
           <sl-button variant=${DELETE_VALUES.buttonVariant} size="medium" @click=${this.handleOpenCancelSidejobDialog}>

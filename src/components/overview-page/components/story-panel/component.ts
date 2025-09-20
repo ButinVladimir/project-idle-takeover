@@ -80,6 +80,7 @@ export class OverviewStoryPanel extends BaseComponent {
 
   private renderGoal = (goal: IStoryGoal) => {
     const messages = this.joinMessages(goal.messages);
+    const specialEvents = this.joinMessages(goal.specialEvents);
     const unlockFeatures = this.joinMessages(goal.unlockFeatures);
     const programs = this.joinMessages(goal.rewardDesigns?.programs);
     const cloneTemplates = this.joinMessages(goal.rewardDesigns?.cloneTemplates);
@@ -89,6 +90,7 @@ export class OverviewStoryPanel extends BaseComponent {
       <ca-overview-story-goal
         level=${ifDefined(goal.level)}
         messages=${ifDefined(messages)}
+        special-events=${ifDefined(specialEvents)}
         unlock-features=${ifDefined(unlockFeatures)}
         programs=${ifDefined(programs)}
         clone-templates=${ifDefined(cloneTemplates)}

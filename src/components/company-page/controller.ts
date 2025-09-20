@@ -1,8 +1,3 @@
-import { Feature } from '@shared/types';
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 
-export class CompanyPageController extends BaseController {
-  isCompanyManagementUnlocked(): boolean {
-    return this.unlockState.features.isFeatureUnlocked(Feature.companyManagement);
-  }
-}
+export class CompanyPageController extends BaseController {}

@@ -3,7 +3,7 @@ import { consume } from '@lit/context';
 import { customElement } from 'lit/decorators.js';
 import { localized, msg } from '@lit/localize';
 import { BaseComponent, HINT_ICON } from '@shared/index';
-import { COMMON_TEXTS, DISTRICT_TYPE_TEXTS } from '@texts/index';
+import { COMMON_TEXTS, DISTRICT_TYPE_TEXTS, FACTION_TEXTS } from '@texts/index';
 import { DISTRICT_STATE_TEXTS } from '../../../../../../constants';
 import { CityDistrictOverviewPanelValuesController } from './controller';
 import { districtIndexContext } from '../../../../contexts';
@@ -55,6 +55,19 @@ export class CityDistrictOverviewPanelValues extends BaseComponent {
 
               <sl-tooltip>
                 <span slot="content">${DISTRICT_TIER_HINT()}</span>
+
+                <sl-icon name=${HINT_ICON}></sl-icon>
+              </sl-tooltip>
+            </p>
+          `
+        : nothing}
+      ${this._controller.areFactionsUnlocked()
+        ? html`
+            <p class="text">
+              ${COMMON_TEXTS.parameterValue(COMMON_TEXTS.faction(), FACTION_TEXTS[districtState.faction].title())}
+
+              <sl-tooltip>
+                <span slot="content">${FACTION_TEXTS[districtState.faction].overview()}</span>
 
                 <sl-icon name=${HINT_ICON}></sl-icon>
               </sl-tooltip>

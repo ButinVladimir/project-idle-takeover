@@ -8,4 +8,8 @@ export class CityMapDistrictDescriptionController extends BaseController {
   isDistrictTiersUnlocked(): boolean {
     return this.unlockState.features.isFeatureUnlocked(Feature.districtTiers);
   }
+
+  areFactionsUnlocked(): boolean {
+    return this.unlockState.features.isFeatureUnlocked(Feature.factions);
+  }
 }

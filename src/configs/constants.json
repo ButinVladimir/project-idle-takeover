@@ -26,11 +26,11 @@
     "map": {
       "width": 100,
       "height": 100,
-      "districts": []
+      "districts": [],
+      "startingFactionIndex": 0
     },
-    "startingFaction": "neutral",
-    "startingMoney": 0,
-    "startingDevelopmentLevel": 0,
+    "startingMoney": 100000000000,
+    "startingDevelopmentLevel": 50,
     "startingAccumulatedTime": 1000000000,
     "startingSynchronization": 0,
     "baseSharedExperienceMultiplier": 1,
@@ -91,6 +91,7 @@
   "menuUnlockRequirements": {
     "city": "companyManagement",
     "company": "companyManagement",
-    "automation": "automation"
+    "automation": "automation",
+    "factions": "factions"
   }
 }

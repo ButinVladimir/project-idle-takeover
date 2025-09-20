@@ -1,4 +1,5 @@
 import { msg } from '@lit/localize';
+import { MapSpecialEvent } from '@shared/index';
 
 export const STORY_MESSAGES: Record<string, () => string> = {
   disclaimer: () =>
@@ -27,4 +28,8 @@ It will be useful later.`),
 Current city data doesn't provide me enough information, I need to dig deeper.`),
   disclaimer_content_end: () =>
     msg('This is the end of currently planned content. Later features are supposed to unlocked much later.'),
+};
+
+export const SPECIAL_EVENTS_MESSAGES = {
+  [MapSpecialEvent.factionsAvailable]: () => msg('Factions are now available to join.'),
 };

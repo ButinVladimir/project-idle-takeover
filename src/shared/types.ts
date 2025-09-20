@@ -23,6 +23,7 @@ export enum OverviewMenuItem {
   company = 'company',
   mainframe = 'mainframe',
   automation = 'automation',
+  factions = 'factions',
   statistics = 'statistics',
   messageLog = 'messageLog',
 }
@@ -95,6 +96,7 @@ export enum GameStateAlert {
   unassignHotkeys = 'unassignHotkeys',
   restoreDefaultHotkeys = 'restoreDefaultHotkeys',
   restoreDefaultSettings = 'restoreDefaultSettings',
+  joinFaction = 'joinFaction',
 }
 
 export enum ProgramAlert {
@@ -131,6 +133,8 @@ export enum NotificationType {
   gameVersionUpdated = 'gameVersionUpdated',
   sidejobUnlocked = 'sidejobUnlocked',
   designUnlocked = 'designUnlocked',
+  factionsAvailable = 'factionsAvailable',
+  factionJoined = 'factionJoined',
 }
 
 export enum LongNumberFormat {
@@ -164,6 +168,7 @@ export enum Feature {
   rewards = 'rewards',
   experienceShare = 'experienceShare',
   districtTiers = 'districtTiers',
+  factions = 'factions',
 }
 
 export type PointsMultiplierType = 'codeBase' | 'computationalBase';
@@ -220,4 +225,8 @@ export enum Hotkey {
   upgradeMainframeCores = 'upgradeMainframeCores',
   upgradeMainframePrograms = 'upgradeMainframePrograms',
   upgradeClonesLevel = 'upgradeClonesLevel',
+}
+
+export enum MapSpecialEvent {
+  factionsAvailable = 'factionsAvailable',
 }

@@ -47,8 +47,7 @@ It's now possible to make clones from templates and send them to perform sidejob
     message: () =>
       msg(`Code base points are now available.
 Increase them to make mainframe programs cheaper.
-Multipliers for programs and districts stack.
-New contracts, sidejobs and programs are available.`),
+Multipliers for programs and districts stack.`),
   },
   [Feature.computationalBase]: {
     title: () => msg('Computational base points'),
@@ -56,8 +55,7 @@ New contracts, sidejobs and programs are available.`),
     message: () =>
       msg(`Computational base points are now available.
 Increase them to make mainframe hardware cheaper.
-Multipliers for programs and districts stack.
-New contracts, sidejobs and programs are available.`),
+Multipliers for programs and districts stack.`),
   },
   [Feature.connectivity]: {
     title: () => msg('Connectivity points'),
@@ -65,8 +63,7 @@ New contracts, sidejobs and programs are available.`),
     message: () =>
       msg(`Connectivity points are now available.
 Increase them to unlock more sidejobs and to increase chances of receiving new contracts from selected faction.
-Multipliers for programs and districts stack.
-New contracts, sidejobs and programs are available.`),
+Multipliers for programs and districts stack.`),
   },
   [Feature.rewards]: {
     title: () => msg('Rewards points'),
@@ -74,8 +71,7 @@ New contracts, sidejobs and programs are available.`),
     message: () =>
       msg(`Rewards points are now available.
 Increase them to get more rewards from everything.
-Multipliers for programs and districts stack.
-New contracts, sidejobs and programs are available.`),
+Multipliers for programs and districts stack.`),
   },
   [Feature.experienceShare]: {
     title: () => msg('Experience share'),
@@ -92,5 +88,13 @@ How big is this part depends on running processes and available synchronization.
       msg(`District tiers and progress to next tier are now visible.
 The higher district tier is, the better rewards are from performing actions within it.
 Some districts may increase requirements with their tiers.`),
+  },
+  [Feature.factions]: {
+    title: () => msg('Factions'),
+    hint: () => msg('Factions, faction power and contracts are now available'),
+    message: () =>
+      msg(`Factions, faction power and contracts are now available.
+Joining a faction gives access to loaned designs and allows capturing districts by performing contracts.
+Contracts can increase faction power and provide substantial earnings.`),
   },
 };

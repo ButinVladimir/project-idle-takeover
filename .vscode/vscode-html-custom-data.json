@@ -291,6 +291,36 @@
       "attributes": []
     },
     {
+      "name": "ca-factions-page",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderTab` - \n\n  * `renderTabPanel` - \n\n  * `renderTabPanelContent` - \n\n  * `_controller` {`FactionsPageController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-factions-available-factions-panel",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-factions-available-factions-list",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderList` - \n\n  * `renderFaction` - \n\n  * `_controller` {`FactionsAvailableFactionsListController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-factions-available-factions-list-item",
+      "description": "Attributes:\n\n  * `faction` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `faction` - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `handleOpenConfirmationDialog` - \n\n  * `handleJoinFaction` - \n\n  * `_controller` {`FactionsAvailableFactionsListItemController`} - ",
+      "attributes": [
+        {
+          "name": "faction",
+          "description": "`faction` - \n\nProperty: faction"
+        }
+      ]
+    },
+    {
+      "name": "ca-factions-current-faction-panel",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_controller` {`FactionsCurrentFactionPanelController`} - ",
+      "attributes": []
+    },
+    {
       "name": "ca-fast-forwarding-screen",
       "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_maxTime` {`number`} - \n\n  * `_progressBarRef` {`Ref<SlProgressBar>`} - \n\n  * `_timerElRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handleStopFastForwarding` - \n\n  * `handlePartialUpdate` - \n\n  * `hanldeKeyDown` - \n\n  * `_controller` {`FastForwardingScreenController`} - ",
       "attributes": []
@@ -595,7 +625,7 @@
     },
     {
       "name": "ca-overview-story-goal",
-      "description": "Attributes:\n\n  * `level` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `unlock-features` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `clone-templates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `state` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `level` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `unlockFeatures` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `cloneTemplates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `state` - \n\n  * `renderSummary` - \n\n  * `renderDetails` - \n\n  * `renderMessages` - \n\n  * `renderUnlockFeatures` - \n\n  * `renderPrograms` - \n\n  * `renderCloneTemplates` - \n\n  * `renderSidejobs` - \n\n  * `_controller` {`OverviewStoryGoalController`} - ",
+      "description": "Attributes:\n\n  * `level` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `special-events` {`string | undefined`} - \n\n  * `unlock-features` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `clone-templates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `state` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `level` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `specialEvents` {`string | undefined`} - \n\n  * `unlockFeatures` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `cloneTemplates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `state` - \n\n  * `renderSummary` - \n\n  * `renderDetails` - \n\n  * `renderMessages` - \n\n  * `renderUnlockFeatures` - \n\n  * `renderSpecialEvents` - \n\n  * `renderPrograms` - \n\n  * `renderCloneTemplates` - \n\n  * `renderSidejobs` - \n\n  * `_controller` {`OverviewStoryGoalController`} - ",
       "attributes": [
         {
           "name": "level",
@@ -605,6 +635,11 @@
         {
           "name": "messages",
           "description": "`messages` {`string | undefined`} - \n\nProperty: messages",
+          "values": []
+        },
+        {
+          "name": "special-events",
+          "description": "`special-events` {`string | undefined`} - \n\nProperty: specialEvents",
           "values": []
         },
         {

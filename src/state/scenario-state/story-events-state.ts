@@ -1,12 +1,13 @@
 import { injectable } from 'inversify';
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
-import { NotificationType } from '@shared/index';
+import { MapSpecialEvent, NotificationType } from '@shared/index';
 import { STORY_MESSAGES } from '@texts/story';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type INotificationsState } from '@state/notifications-state';
 import { type IGlobalState } from '@state/global-state';
 import { type IUnlockState } from '@state/unlock-state';
+import { type IFactionState } from '@state/faction-state';
 import { type IScenarioState, IStoryEventsState, IStoryGoal } from './interfaces';
 import { StoryGoalState } from './types';
 
@@ -28,6 +29,9 @@ export class StoryEventsState implements IStoryEventsState {
 
   @lazyInject(TYPES.ScenarioState)
   private _scenarioState!: IScenarioState;
+
+  @lazyInject(TYPES.FactionState)
+  private _factionState!: IFactionState;
 
   constructor() {
     this._stateUiConnector.registerEventEmitter(this, []);
@@ -86,6 +90,10 @@ export class StoryEventsState implements IStoryEventsState {
         });
       }
 
+      if (storyEvent.specialEvents) {
+        storyEvent.specialEvents.forEach(this.unlockSpecialEvent);
+      }
+
       if (storyEvent.rewardDesigns?.programs) {
         storyEvent.rewardDesigns.programs.forEach((program) => {
           this._unlockState.items.programs.unlockDesign(program, 0, true);
@@ -105,4 +113,12 @@ export class StoryEventsState implements IStoryEventsState {
       }
     }
   }
+
+  private unlockSpecialEvent = (event: MapSpecialEvent) => {
+    switch (event) {
+      case MapSpecialEvent.factionsAvailable:
+        this._factionState.makeJoiningFactionAvailable();
+        break;
+    }
+  };
 }

@@ -1,11 +1,11 @@
 import { html, nothing } from 'lit';
 import { localized, msg, str } from '@lit/localize';
 import { customElement, property } from 'lit/decorators.js';
-import { BaseComponent, capitalizeFirstLetter, Feature } from '@shared/index';
+import { BaseComponent, capitalizeFirstLetter, Feature, MapSpecialEvent } from '@shared/index';
 import { StoryGoalState } from '@state/global-state';
 import { ProgramName } from '@state/mainframe-state';
 import { CloneTemplateName, SidejobName } from '@state/company-state';
-import { UNLOCKED_FEATURE_TEXTS, STORY_MESSAGES } from '@texts/index';
+import { UNLOCKED_FEATURE_TEXTS, STORY_MESSAGES, SPECIAL_EVENTS_MESSAGES } from '@texts/index';
 import { KEYS_SEPARATOR } from '../../../../constants';
 import styles from './styles';
 import { OverviewStoryGoalController } from './controller';
@@ -26,6 +26,12 @@ export class OverviewStoryGoal extends BaseComponent {
     type: String,
   })
   messages?: string;
+
+  @property({
+    attribute: 'special-events',
+    type: String,
+  })
+  specialEvents?: string;
 
   @property({
     attribute: 'unlock-features',
@@ -97,6 +103,7 @@ export class OverviewStoryGoal extends BaseComponent {
     const result = [
       ...this.renderMessages(),
       ...this.renderUnlockFeatures(),
+      ...this.renderSpecialEvents(),
       ...this.renderPrograms(),
       ...this.renderCloneTemplates(),
       ...this.renderSidejobs(),
@@ -121,6 +128,16 @@ export class OverviewStoryGoal extends BaseComponent {
     return this.unlockFeatures
       .split(KEYS_SEPARATOR)
       .map((feature) => html`<p>${UNLOCKED_FEATURE_TEXTS[feature as Feature].message()}</p>`);
+  };
+
+  private renderSpecialEvents = () => {
+    if (!this.specialEvents) {
+      return [];
+    }
+
+    return this.specialEvents
+      .split(KEYS_SEPARATOR)
+      .map((specialEvent) => html`<p>${SPECIAL_EVENTS_MESSAGES[specialEvent as MapSpecialEvent]()}</p>`);
   };
 
   private renderPrograms = () => {

@@ -2,7 +2,7 @@ import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { localized, msg } from '@lit/localize';
 import { BaseComponent } from '@shared/base-component';
-import { COMMON_TEXTS, DISTRICT_NAMES, DISTRICT_TYPE_TEXTS } from '@texts/index';
+import { COMMON_TEXTS, DISTRICT_NAMES, DISTRICT_TYPE_TEXTS, FACTION_TEXTS } from '@texts/index';
 import { DISTRICT_STATE_TEXTS } from '../../../../constants';
 import { CityMapDistrictDescriptionController } from './controller';
 import cityPageDistrictDescriptionStyles from './styles';
@@ -46,6 +46,9 @@ export class CityMapDistrictDescription extends BaseComponent {
 
       ${this._controller.isDistrictTiersUnlocked()
         ? html`<p>${COMMON_TEXTS.parameterValue(COMMON_TEXTS.tier(), formattedTier)}</p>`
+        : nothing}
+      ${this._controller.areFactionsUnlocked()
+        ? html`<p>${COMMON_TEXTS.parameterValue(msg('Faction'), FACTION_TEXTS[districtState.faction].title())}</p>`
         : nothing}
 
       <p>${COMMON_TEXTS.parameterValue(msg('State'), DISTRICT_STATE_TEXTS[districtState.state].title())}</p>
