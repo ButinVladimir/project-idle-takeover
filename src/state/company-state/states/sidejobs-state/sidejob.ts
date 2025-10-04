@@ -156,9 +156,7 @@ export class Sidejob implements ISidejob {
       passedTime * commonModifier * this.calculateDevelopmentPointsModifier(),
       IncomeSource.sidejob,
     );
-    this._district.parameters.tier.increasePoints(
-      passedTime * commonModifier * this.calculateDistrictTierPointsModifier(),
-    );
+    this._district.parameters.influence.increasePoints(passedTime * commonModifier * this.calculateInfluenceModifier());
     this._district.parameters.connectivity.increasePoints(
       passedTime * commonModifier * this.calculateConnectivityModifier(),
     );
@@ -183,8 +181,8 @@ export class Sidejob implements ISidejob {
     return passedTime * this.getCommonModifier() * this.calculateDevelopmentPointsModifier();
   }
 
-  calculateDistrictTierPointsDelta(passedTime: number): number {
-    return passedTime * this.getCommonModifier() * this.calculateDistrictTierPointsModifier();
+  calculateInfluenceDelta(passedTime: number): number {
+    return passedTime * this.getCommonModifier() * this.calculateInfluenceModifier();
   }
 
   calculateConnectivityDelta(passedTime: number): number {
@@ -261,7 +259,7 @@ export class Sidejob implements ISidejob {
       this._assignedClone!.experienceMultiplier *
       this._district.parameters.rewards.totalMultiplier *
       calculatePower(this._globalState.threat.level, this._sidejobTemplate.rewards.experience) *
-      calculatePower(this._district.parameters.tier.tier, this._district.template.parameters.experience)
+      calculatePower(this._district.parameters.influence.tier, this._district.template.parameters.experience)
     );
   }
 
@@ -272,7 +270,7 @@ export class Sidejob implements ISidejob {
 
     return (
       this._sidejobTemplate.rewards.money *
-      calculatePower(this._district.parameters.tier.tier, this._district.template.parameters.money)
+      calculatePower(this._district.parameters.influence.tier, this._district.template.parameters.money)
     );
   }
 
@@ -283,20 +281,20 @@ export class Sidejob implements ISidejob {
 
     return (
       calculatePower(this._globalState.threat.level, this._sidejobTemplate.rewards.developmentPoints) *
-      calculatePower(this._district.parameters.tier.tier, this._district.template.parameters.developmentPoints)
+      calculatePower(this._district.parameters.influence.tier, this._district.template.parameters.developmentPoints)
     );
   }
 
-  private calculateDistrictTierPointsModifier() {
-    if (!this._sidejobTemplate.rewards.distictTierPoints) {
+  private calculateInfluenceModifier() {
+    if (!this._sidejobTemplate.rewards.influence) {
       return 0;
     }
 
     return (
-      calculatePower(this._globalState.threat.level, this._sidejobTemplate.rewards.distictTierPoints) *
+      calculatePower(this._globalState.threat.level, this._sidejobTemplate.rewards.influence) *
       calculatePower(
-        this._district.parameters.tier.tier,
-        this._district.template.parameters.districtTierPoints.pointsMultiplier,
+        this._district.parameters.influence.tier,
+        this._district.template.parameters.influence.pointsMultiplier,
       )
     );
   }
@@ -309,7 +307,7 @@ export class Sidejob implements ISidejob {
     return (
       this._sidejobTemplate.rewards.connectivity *
       calculatePower(
-        this._district.parameters.tier.tier,
+        this._district.parameters.influence.tier,
         this._district.template.parameters.connectivity.pointsMultiplier,
       )
     );
@@ -322,7 +320,10 @@ export class Sidejob implements ISidejob {
 
     return (
       this._sidejobTemplate.rewards.codeBase *
-      calculatePower(this._district.parameters.tier.tier, this._district.template.parameters.codeBase.pointsMultiplier)
+      calculatePower(
+        this._district.parameters.influence.tier,
+        this._district.template.parameters.codeBase.pointsMultiplier,
+      )
     );
   }
 
@@ -334,7 +335,7 @@ export class Sidejob implements ISidejob {
     return (
       this._sidejobTemplate.rewards.computationalBase *
       calculatePower(
-        this._district.parameters.tier.tier,
+        this._district.parameters.influence.tier,
         this._district.template.parameters.computationalBase.pointsMultiplier,
       )
     );
@@ -347,7 +348,10 @@ export class Sidejob implements ISidejob {
 
     return (
       this._sidejobTemplate.rewards.rewards *
-      calculatePower(this._district.parameters.tier.tier, this._district.template.parameters.rewards.pointsMultiplier)
+      calculatePower(
+        this._district.parameters.influence.tier,
+        this._district.template.parameters.rewards.pointsMultiplier,
+      )
     );
   }
 
@@ -358,7 +362,10 @@ export class Sidejob implements ISidejob {
 
     return (
       this._sidejobTemplate.rewards.processCompletionSpeed *
-      calculatePower(this._district.parameters.tier.tier, this._district.template.parameters.processCompletionSpeed)
+      calculatePower(
+        this._district.parameters.influence.tier,
+        this._district.template.parameters.processCompletionSpeed,
+      )
     );
   }
 
@@ -369,7 +376,10 @@ export class Sidejob implements ISidejob {
 
     return (
       this._sidejobTemplate.rewards.experienceShareMultiplier *
-      calculatePower(this._district.parameters.tier.tier, this._district.template.parameters.experienceShareMultiplier)
+      calculatePower(
+        this._district.parameters.influence.tier,
+        this._district.template.parameters.experienceShareMultiplier,
+      )
     );
   }
 }

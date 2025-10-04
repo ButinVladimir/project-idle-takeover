@@ -26,8 +26,8 @@ export class StatisticsGrowthPanel extends BaseComponent {
       ${this._controller.isFeatureUnlocked(Feature.companyManagement)
         ? html`<ca-statistics-experience-growth></ca-statistics-experience-growth>`
         : nothing}
-      ${this._controller.isFeatureUnlocked(Feature.districtTiers)
-        ? html`<ca-statistics-district-tier-points-growth></ca-statistics-district-tier-points-growth>`
+      ${this._controller.isFeatureUnlocked(Feature.influence)
+        ? html`<ca-statistics-influence-points-growth></ca-statistics-influence-points-growth>`
         : nothing}
       ${this._controller.isFeatureUnlocked(Feature.connectivity)
         ? html`<ca-statistics-connectivity-points-growth></ca-statistics-connectivity-points-growth>`

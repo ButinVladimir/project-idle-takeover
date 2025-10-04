@@ -109,7 +109,7 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
         <div class="button-container">
           <ca-mainframe-hardware-panel-article-buttons
             ${ref(this._buttonsRef)}
-            increase=${this.increase}
+            increase=${this.calculateAdjustedIncrease()}
             @buy-hardware=${this.handleSubmit}
             @buy-max-hardware=${this.handleBuyMax}
           >
@@ -126,7 +126,7 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
   private handleSubmit = (event: Event) => {
     event.preventDefault();
 
-    this._parameter?.purchase(this.increase);
+    this._parameter?.purchase(this.calculateAdjustedIncrease());
   };
 
   private handleBuyMax = () => {
@@ -149,12 +149,17 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
     }
   };
 
+  private calculateAdjustedIncrease(): number {
+    return Math.max(1, Math.min(this._controller.developmentLevel - this._parameter!.level, this.increase));
+  }
+
   handlePartialUpdate = () => {
     if (!this._costElRef.value || !this._parameter) {
       return;
     }
 
-    const cost = this._parameter.calculateIncreaseCost(this.increase);
+    const adjustedIncrease = this.calculateAdjustedIncrease();
+    const cost = this._parameter.calculateIncreaseCost(adjustedIncrease);
     const money = this._controller.money;
 
     const formattedCost = this._controller.formatter.formatNumberFloat(cost);
@@ -166,7 +171,7 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
     if (this._buttonsRef.value) {
       const value = this._buttonsRef.value;
 
-      value.disabled = !this._parameter.checkCanPurchase(this.increase);
+      value.disabled = !this._parameter.checkCanPurchase(adjustedIncrease);
       value.disabledBuyAll = !this._parameter.checkCanPurchase(1);
     }
   };

@@ -5,17 +5,17 @@ import { customElement, queryAll } from 'lit/decorators.js';
 import { BaseComponent } from '@shared/base-component';
 import { STATISTIC_PAGE_TEXTS } from '@components/statistics-page/constants';
 import { IDistrictState } from '@state/city-state';
-import { StatisticsDistrictTierPointsGrowthController } from './controller';
+import { StatisticsInfluencePointsGrowthController } from './controller';
 import { statisticsPanelContentStyle } from '../../../../styles';
 
 @localized()
-@customElement('ca-statistics-district-tier-points-growth')
-export class StatisticsDistrictTierPointsGrowth extends BaseComponent {
+@customElement('ca-statistics-influence-points-growth')
+export class StatisticsInfluenceGrowth extends BaseComponent {
   static styles = statisticsPanelContentStyle;
 
   hasPartialUpdate = true;
 
-  private _controller: StatisticsDistrictTierPointsGrowthController;
+  private _controller: StatisticsInfluencePointsGrowthController;
 
   @queryAll('div[data-district]')
   private _districtValueNodes!: NodeListOf<HTMLDivElement>;
@@ -23,13 +23,13 @@ export class StatisticsDistrictTierPointsGrowth extends BaseComponent {
   constructor() {
     super();
 
-    this._controller = new StatisticsDistrictTierPointsGrowthController(this);
+    this._controller = new StatisticsInfluencePointsGrowthController(this);
   }
 
   protected renderDesktop() {
     return html`
       <sl-details>
-        <h4 class="title" slot="summary">${msg('District tier points per second')}</h4>
+        <h4 class="title" slot="summary">${msg('Faction influence points per second')}</h4>
 
         <div class="parameters-table">${map(this._controller.listAvailableDistricts(), this.renderDistrict)}</div>
       </sl-details>

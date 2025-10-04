@@ -40,7 +40,7 @@ export class DistrictConnectivityParameter implements IDistrictConnectivityParam
     const districtTypeData = this._district.template;
 
     const programPointsMultiplier = calculatePower(
-      this._district.parameters.tier.tier,
+      this._district.parameters.influence.tier,
       districtTypeData.parameters.connectivity.programPointsMultiplier,
     );
     this._totalValue = 1 + this._points + this._globalState.connectivity.pointsByProgram * programPointsMultiplier;

@@ -108,6 +108,9 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
 
   private renderWarnings = () => {
     return html`
+      <p class="warning" data-warning=${MainframeHardwarePanelArticleWarning.higherDevelopmentLevelRequired}>
+        ${COMMON_TEXTS.higherDevelopmentLevelRequired()}
+      </p>
       <p class="warning" data-warning=${MainframeHardwarePanelArticleWarning.notEnoughMoney}>
         ${COMMON_TEXTS.notEnoughMoney()}
       </p>
@@ -118,6 +121,10 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
   };
 
   private selectWarning(): MainframeHardwarePanelArticleWarning | undefined {
+    if (this._parameter!.level + this.increase > this._controller.developmentLevel) {
+      return MainframeHardwarePanelArticleWarning.higherDevelopmentLevelRequired;
+    }
+
     const cost = this._parameter!.calculateIncreaseCost(this.increase);
     const moneyGrowth = this._controller.moneyGrowth;
     const moneyDiff = cost - this._controller.money;

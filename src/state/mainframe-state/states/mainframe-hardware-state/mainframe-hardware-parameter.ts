@@ -92,7 +92,9 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
       money * this.globalState.multipliers.computationalBase.totalMultiplier +
       calculateGeometricProgressionSum(this.level - 1, exp.multiplier, exp.base);
 
-    const increase = reverseGeometricProgressionSum(availableMoney, exp.multiplier, exp.base) - this.level;
+    const maxLevel = reverseGeometricProgressionSum(availableMoney, exp.multiplier, exp.base);
+
+    const increase = Math.min(maxLevel, this.globalState.development.level) - this._level;
 
     return increase;
   }
@@ -113,6 +115,10 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
     }
 
     if (!this.unlockState.features.isFeatureUnlocked(Feature.mainframeHardware)) {
+      return false;
+    }
+
+    if (this._level + increase > this.globalState.development.level) {
       return false;
     }
 

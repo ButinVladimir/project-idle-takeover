@@ -35,7 +35,7 @@ export class CityDistrictOverviewPanelValues extends BaseComponent {
 
     const districtState = this._controller.getDistrictState(this._districtIndex);
 
-    const formattedTier = formatter.formatTier(districtState.parameters.tier.tier);
+    const formattedTier = formatter.formatTier(districtState.parameters.influence.tier);
 
     return html`
       <p class="text">
@@ -48,7 +48,7 @@ export class CityDistrictOverviewPanelValues extends BaseComponent {
         </sl-tooltip>
       </p>
 
-      ${this._controller.isDistrictTiersUnlocked()
+      ${this._controller.isInfluenceUnlocked()
         ? html`
             <p class="text">
               ${COMMON_TEXTS.parameterValue(COMMON_TEXTS.tier(), formattedTier)}

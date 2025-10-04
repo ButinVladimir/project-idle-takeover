@@ -162,7 +162,7 @@
     },
     {
       "name": "ca-clones-list-item-experience",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_clone` - \n\n  * `_progressBarRef` {`Ref<SlProgressBar>`} - \n\n  * `_hintRef` {`Ref<HTMLParagraphElement>`} - \n\n  * `_timerRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`ClonesListItemExperienceController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_clone` - \n\n  * `_progressBarRef` {`Ref<SlProgressBar>`} - \n\n  * `_timerHintRef` {`Ref<HTMLParagraphElement>`} - \n\n  * `_higherDevelopmentLevelHintRef` {`Ref<HTMLParagraphElement>`} - \n\n  * `_timerRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`ClonesListItemExperienceController`} - ",
       "attributes": []
     },
     {
@@ -878,13 +878,13 @@
       "attributes": []
     },
     {
-      "name": "ca-statistics-district-tier-points-growth",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`StatisticsDistrictTierPointsGrowthController`} - ",
+      "name": "ca-statistics-experience-growth",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`StatisticsExperienceGrowthController`} - ",
       "attributes": []
     },
     {
-      "name": "ca-statistics-experience-growth",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`StatisticsExperienceGrowthController`} - ",
+      "name": "ca-statistics-influence-points-growth",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`StatisticsInfluencePointsGrowthController`} - ",
       "attributes": []
     },
     {
@@ -923,13 +923,13 @@
       "attributes": []
     },
     {
-      "name": "ca-statistics-district-tier-points-income",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`StatisticsDistrictTierPointsIncomeController`} - ",
+      "name": "ca-statistics-experience-income",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`StatisticsExperienceIncomeController`} - ",
       "attributes": []
     },
     {
-      "name": "ca-statistics-experience-income",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`StatisticsExperienceIncomeController`} - ",
+      "name": "ca-statistics-influence-points-income",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`StatisticsInfluencePointsIncomeController`} - ",
       "attributes": []
     },
     {

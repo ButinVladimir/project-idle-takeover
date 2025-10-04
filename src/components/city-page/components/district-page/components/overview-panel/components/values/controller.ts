@@ -5,8 +5,8 @@ export class CityDistrictOverviewPanelValuesController extends BaseController {
     return this.cityState.getDistrictState(districtIndex);
   }
 
-  isDistrictTiersUnlocked(): boolean {
-    return this.unlockState.features.isFeatureUnlocked(Feature.districtTiers);
+  isInfluenceUnlocked(): boolean {
+    return this.unlockState.features.isFeatureUnlocked(Feature.influence);
   }
 
   areFactionsUnlocked(): boolean {

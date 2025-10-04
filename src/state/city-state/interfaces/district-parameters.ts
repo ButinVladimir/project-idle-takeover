@@ -5,12 +5,12 @@ import {
   IDistrictProcessCompletionSpeedParameter,
   IDistrictRewardsParameter,
   IDistrictSynchronizationParameter,
-  IDistrictTierParameter,
+  IDistrictInfluenceParameter,
 } from './parameters';
 import { IDistrictMultipliers } from './district-multipliers';
 
 export interface IDistrictParameters {
-  tier: IDistrictTierParameter;
+  influence: IDistrictInfluenceParameter;
   synchronization: IDistrictSynchronizationParameter;
   connectivity: IDistrictConnectivityParameter;
   rewards: IDistrictRewardsParameter;

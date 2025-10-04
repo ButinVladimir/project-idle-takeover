@@ -1,8 +1,8 @@
 import { injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
-import type { IStateUIConnector } from '@state/state-ui-connector';
-import type { IMessageLogState } from '@state/message-log-state';
+import { type IStateUIConnector } from '@state/state-ui-connector';
+import { type IMessageLogState } from '@state/message-log-state';
 import { type IScenarioState } from '@state/scenario-state';
 import { TYPES } from '@state/types';
 import {

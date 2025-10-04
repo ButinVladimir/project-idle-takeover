@@ -53,7 +53,7 @@ export class CityDistrictOverviewPanelNextTierProgress extends BaseComponent {
     }
 
     const formatter = this._controller.formatter;
-    const currentPoints = this._controller.getDistrictTierPoints(this._districtIndex);
+    const currentPoints = this._controller.getDistrictInfluencePoints(this._districtIndex);
     const nexTierRequirements = this._controller.getNextTierRequirements(this._districtIndex);
 
     if (this._progressBarRef.value) {
@@ -66,7 +66,7 @@ export class CityDistrictOverviewPanelNextTierProgress extends BaseComponent {
       this._progressBarRef.value.value = nextDevelopmentLevelProgressBarValue;
     }
 
-    const developmentGrowth = this._controller.getDistrictTierGrowth(this._districtIndex);
+    const developmentGrowth = this._controller.getDistrictInfluenceGrowth(this._districtIndex);
 
     if (this._hintRef.value) {
       if (developmentGrowth > 0) {

@@ -22,7 +22,7 @@ export class CityDistrictOverviewPanel extends BaseComponent {
     return html`
       <ca-city-district-overview-panel-values></ca-city-district-overview-panel-values>
 
-      ${this._controller.isDistrictTiersUnlocked()
+      ${this._controller.isInfluenceUnlocked()
         ? html`<ca-city-district-overview-panel-next-tier-progress></ca-city-district-overview-panel-next-tier-progress>`
         : nothing}
     `;

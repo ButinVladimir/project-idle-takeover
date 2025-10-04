@@ -123,7 +123,7 @@
         "key": "tutorial_level_6",
         "level": 17,
         "messages": ["tutorial_6_1"],
-        "unlockFeatures": ["districtTiers"]
+        "unlockFeatures": ["influence"]
       },
       {
         "key": "tutorial_level_7",
@@ -195,13 +195,34 @@
       },
       {
         "key": "tutorial_level_15",
-        "level": 40,
-        "unlockFeatures": ["factions"]
+        "level": 4,
+        "unlockFeatures": ["factions"],
+        "specialEvents": ["factionsAvailable"]
       },
       {
         "key": "tutorial_level_16",
-        "level": 50,
-        "specialEvents": ["factionsAvailable"]
+        "level": 9,
+        "specialEvents": ["districtUnlocked"]
+      },
+      {
+        "key": "tutorial_level_17",
+        "level": 14,
+        "specialEvents": ["districtUnlocked"]
+      },
+      {
+        "key": "tutorial_level_18",
+        "level": 19,
+        "specialEvents": ["districtUnlocked"]
+      },
+      {
+        "key": "tutorial_level_19",
+        "level": 24,
+        "specialEvents": ["districtUnlocked"]
+      },
+      {
+        "key": "tutorial_level_20",
+        "level": 29,
+        "specialEvents": ["districtUnlocked"]
       }
     ]
   }

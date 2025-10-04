@@ -1,6 +1,6 @@
 import { DistrictMultipliers } from './district-multipliers';
 import {
-  IDistrictTierParameter,
+  IDistrictInfluenceParameter,
   IDistrictSerializedParameters,
   IDistrictState,
   IDistrictParameters,
@@ -13,7 +13,7 @@ import {
 } from './interfaces';
 import {
   DistrictConnectivityParameter,
-  DistrictTierParameter,
+  DistrictInfluenceParameter,
   DistrictSynchronizationParameter,
   DistrictProcessCompletionSpeedParameter,
   DistrictRewardsParameter,
@@ -21,7 +21,7 @@ import {
 import { DistrictExperienceShareMultiplierParameter } from './parameters/district-experience-share-multiplier-parameter';
 
 export class DistrictParameters implements IDistrictParameters {
-  private _tier: IDistrictTierParameter;
+  private _tier: IDistrictInfluenceParameter;
 
   private _connectivity: IDistrictConnectivityParameter;
 
@@ -36,7 +36,7 @@ export class DistrictParameters implements IDistrictParameters {
   private _experienceShareMultiplier: IDistrictExperienceShareMultiplierParameter;
 
   constructor(districtState: IDistrictState) {
-    this._tier = new DistrictTierParameter(districtState);
+    this._tier = new DistrictInfluenceParameter(districtState);
     this._connectivity = new DistrictConnectivityParameter(districtState);
     this._rewards = new DistrictRewardsParameter(districtState);
     this._synchronization = new DistrictSynchronizationParameter(districtState);
@@ -45,7 +45,7 @@ export class DistrictParameters implements IDistrictParameters {
     this._experienceShareMultiplier = new DistrictExperienceShareMultiplierParameter(districtState);
   }
 
-  get tier() {
+  get influence() {
     return this._tier;
   }
 

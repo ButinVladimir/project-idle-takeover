@@ -8,6 +8,7 @@ import { type INotificationsState } from '@state/notifications-state';
 import { type IGlobalState } from '@state/global-state';
 import { type IUnlockState } from '@state/unlock-state';
 import { type IFactionState } from '@state/faction-state';
+import { type ICityState } from '@state/city-state';
 import { type IScenarioState, IStoryEventsState, IStoryGoal } from './interfaces';
 import { StoryGoalState } from './types';
 
@@ -33,7 +34,14 @@ export class StoryEventsState implements IStoryEventsState {
   @lazyInject(TYPES.FactionState)
   private _factionState!: IFactionState;
 
+  @lazyInject(TYPES.CityState)
+  private _cityState!: ICityState;
+
+  private _districtsStateRecalculationRequested: boolean;
+
   constructor() {
+    this._districtsStateRecalculationRequested = false;
+
     this._stateUiConnector.registerEventEmitter(this, []);
   }
 
@@ -68,6 +76,7 @@ export class StoryEventsState implements IStoryEventsState {
 
   private visitEvents(prevLevel: number) {
     const storyEvents = this._scenarioState.currentValues.storyEvents;
+    this._districtsStateRecalculationRequested = false;
 
     for (const storyEvent of storyEvents) {
       if (storyEvent.level <= prevLevel) {
@@ -112,6 +121,8 @@ export class StoryEventsState implements IStoryEventsState {
         });
       }
     }
+
+    this.unlockDistricts();
   }
 
   private unlockSpecialEvent = (event: MapSpecialEvent) => {
@@ -119,6 +130,18 @@ export class StoryEventsState implements IStoryEventsState {
       case MapSpecialEvent.factionsAvailable:
         this._factionState.makeJoiningFactionAvailable();
         break;
+      case MapSpecialEvent.districtUnlocked:
+        this._districtsStateRecalculationRequested = true;
+        break;
     }
   };
+
+  private unlockDistricts() {
+    if (!this._districtsStateRecalculationRequested) {
+      return;
+    }
+
+    this._districtsStateRecalculationRequested = false;
+    this._cityState.recalculateDistrictsState();
+  }
 }

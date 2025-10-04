@@ -113,7 +113,7 @@ export class FactionState implements IFactionState {
 
     this.currentFaction = faction;
     this._unlockState.requestRecalculation();
-    this._cityState.updateDistrictsAfterJoiningFaction(faction);
+    this._cityState.updateDistrictsStateAfterJoiningFaction(faction);
 
     this._notificationsState.pushNotification(
       NotificationType.factionJoined,

@@ -84,7 +84,10 @@ export class CompanyClonesState implements ICompanyClonesState {
   }
 
   calculateCloneLevelFromMoney(templateName: CloneTemplateName, tier: number, money: number): number {
-    return reverseTierPower(money, tier, cloneTemplates[templateName].cost);
+    return Math.min(
+      reverseTierPower(money, tier, cloneTemplates[templateName].cost),
+      this._globalState.development.level,
+    );
   }
 
   calculateCloneSynchronization(templateName: CloneTemplateName, tier: number): number {
@@ -100,7 +103,7 @@ export class CompanyClonesState implements ICompanyClonesState {
       return false;
     }
 
-    if (!this._unlockState.items.cloneTemplates.isItemAvailable(args.templateName, args.tier)) {
+    if (!this._unlockState.items.cloneTemplates.isItemAvailable(args.templateName, args.tier, args.level)) {
       return false;
     }
 

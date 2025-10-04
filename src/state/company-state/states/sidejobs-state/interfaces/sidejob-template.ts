@@ -15,7 +15,7 @@ export interface ISidejobTemplate {
     experience?: IExponent;
     money?: number;
     developmentPoints?: IExponent;
-    distictTierPoints?: IExponent;
+    influence?: IExponent;
     codeBase?: number;
     computationalBase?: number;
     connectivity?: number;
