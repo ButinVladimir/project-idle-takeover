@@ -32,4 +32,5 @@ Current city data doesn't provide me enough information, I need to dig deeper.`)
 
 export const SPECIAL_EVENTS_MESSAGES = {
   [MapSpecialEvent.factionsAvailable]: () => msg('Factions are now available to join.'),
+  [MapSpecialEvent.districtUnlocked]: () => msg('District has been unlocked.'),
 };

@@ -113,7 +113,7 @@ export class FactionState implements IFactionState {
 
     this.currentFaction = faction;
     this._unlockState.requestRecalculation();
-    this._cityState.updateDistrictsAfterJoiningFaction(faction);
+    this._cityState.updateDistrictsStateAfterJoiningFaction(faction);
 
     this._notificationsState.pushNotification(
       NotificationType.factionJoined,
@@ -121,6 +121,8 @@ export class FactionState implements IFactionState {
         str`You have joined faction ${FACTION_TEXTS[faction].title()}. Loaned items, available districts and activities have been updated.`,
       ),
     );
+
+    this._scenarioState.storyEvents.visitEvents({ faction: Faction.neutral });
 
     return true;
   }

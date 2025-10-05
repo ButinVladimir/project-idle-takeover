@@ -30,7 +30,7 @@
       "startingFactionIndex": 0
     },
     "startingMoney": 100000000000,
-    "startingDevelopmentLevel": 50,
+    "startingDevelopmentLevel": 0,
     "startingAccumulatedTime": 1000000000,
     "startingSynchronization": 0,
     "baseSharedExperienceMultiplier": 1,

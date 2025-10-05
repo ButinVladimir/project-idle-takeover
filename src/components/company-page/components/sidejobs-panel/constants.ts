@@ -4,7 +4,7 @@ export const SIDEJOB_PARAMETERS = [
   RewardParameter.money,
   RewardParameter.developmentPoints,
   RewardParameter.experience,
-  RewardParameter.districtTierPoints,
+  RewardParameter.influence,
   RewardParameter.connectivity,
   RewardParameter.codeBase,
   RewardParameter.computationalBase,
@@ -31,8 +31,8 @@ export const SIDEJOB_PARAMETER_VALUES: Record<RewardParameter, ISidejobParameter
     requirements: [],
     isSpeed: true,
   },
-  [RewardParameter.districtTierPoints]: {
-    requirements: [Feature.districtTiers],
+  [RewardParameter.influence]: {
+    requirements: [Feature.influence],
     isSpeed: true,
   },
   [RewardParameter.connectivity]: {

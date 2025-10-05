@@ -221,7 +221,7 @@ Turf war allows factions capture districts depending on current faction power le
 
 Capturing districts allows company to perform activities here.
 
-Requirements to capture will increase with each owned distict. Player can assist their selected faction by increase it's power level.
+Requirements to capture will increase with each owned district. Player can assist their selected faction by increase it's power level.
 
 When map is generated, district are split between neutral forces and factions. After joining faction, player will start increasing it's power level by completing contracts and operations.
 

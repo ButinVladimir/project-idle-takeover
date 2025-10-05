@@ -9,8 +9,8 @@ export const calculateSidejobParameterValue = (sidejob: ISidejob, parameter: Rew
       return sidejob.calculateDevelopmentPointsDelta(MS_IN_SECOND);
     case RewardParameter.experience:
       return sidejob.calculateExperienceDelta(MS_IN_SECOND);
-    case RewardParameter.districtTierPoints:
-      return sidejob.calculateDistrictTierPointsDelta(MS_IN_SECOND);
+    case RewardParameter.influence:
+      return sidejob.calculateInfluenceDelta(MS_IN_SECOND);
     case RewardParameter.connectivity:
       return sidejob.calculateConnectivityDelta(MS_IN_SECOND);
     case RewardParameter.codeBase:
@@ -41,8 +41,8 @@ export const checkSidejobParameterVisibility = (sidejob: ISidejob, parameter: Re
     case RewardParameter.experience:
       value = sidejob.sidejobTemplate.rewards.experience;
       break;
-    case RewardParameter.districtTierPoints:
-      value = sidejob.sidejobTemplate.rewards.distictTierPoints;
+    case RewardParameter.influence:
+      value = sidejob.sidejobTemplate.rewards.influence;
       break;
     case RewardParameter.connectivity:
       value = sidejob.sidejobTemplate.rewards.connectivity;

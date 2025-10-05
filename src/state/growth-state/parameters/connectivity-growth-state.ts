@@ -108,7 +108,7 @@ export class ConnectivityGrowthState implements IConnectivityGrowthState {
       const totalGrowthByProgram =
         this._baseGrowthByProgram *
         calculatePower(
-          district.parameters.tier.tier,
+          district.parameters.influence.tier,
           district.template.parameters.connectivity.programPointsMultiplier,
         );
       const baseGrowthByDistrict = this._baseGrowthByDistrict.get(districtIndex) ?? 0;

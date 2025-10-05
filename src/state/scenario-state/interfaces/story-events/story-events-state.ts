@@ -1,7 +1,8 @@
 import { IStoryGoal } from './story-goal';
+import { IStoryStateValues } from './story-state-values';
 
 export interface IStoryEventsState {
-  visitEventsByLevel(prevLevel: number): void;
+  visitEvents(prevStoryStateValues: Partial<IStoryStateValues>): void;
   listGoals(): IStoryGoal[];
   visitStartingEvents(): void;
 }

@@ -6,7 +6,7 @@ export interface IAvailableCategoryItemsState<Key extends string = string>
   listAvailableItems(): Key[];
   listDesigns(): Key[];
   listLoanedItems(): Key[];
-  isItemAvailable(itemName: Key, tier: number): boolean;
+  isItemAvailable(itemName: Key, tier: number, level: number): boolean;
   getItemHighestAvailableTier(itemName: Key): number;
   getDesignTier(itemName: Key): number;
   unlockDesign(itemName: Key, tier: number, notify: boolean): void;

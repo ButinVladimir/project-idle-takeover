@@ -19,7 +19,7 @@ export class ClonesListUpgradeButtonsController extends BaseController {
       return false;
     }
 
-    if (!this.unlockState.items.cloneTemplates.isItemAvailable(clone.templateName, clone.tier)) {
+    if (!this.unlockState.items.cloneTemplates.isItemAvailable(clone.templateName, clone.tier, clone.level + 1)) {
       return false;
     }
 

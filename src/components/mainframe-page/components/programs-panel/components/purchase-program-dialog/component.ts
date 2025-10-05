@@ -101,7 +101,8 @@ export class PurchaseProgramDialog extends BaseComponent {
           <div class="body">
             <p class="hint">
               ${msg(`Select program type, tier and level to purchase it.
-Tier is limited depending on gained favors.
+Tier is limited depending on design and loaned items tier.
+Program level cannot be above development level.
 If you already have program with same name, old one will be replaced with new one.`)}
             </p>
 
@@ -214,7 +215,7 @@ If you already have program with same name, old one will be replaced with new on
       return;
     }
 
-    const level = clamp(this._levelInputRef.value.valueAsNumber - 1, 0, Number.MAX_SAFE_INTEGER);
+    const level = clamp(this._levelInputRef.value.valueAsNumber - 1, 0, this._controller.developmentLevel);
     this._level = level;
     this._levelInputRef.value.valueAsNumber = level + 1;
   };
@@ -270,7 +271,9 @@ If you already have program with same name, old one will be replaced with new on
 
     const cost = this._controller.getProgramCost(this._program.name, this._program.tier, this._program.level);
 
-    return cost <= money && this._controller.isProgramAvailable(this._program.name, this._program.tier);
+    return (
+      cost <= money && this._controller.isProgramAvailable(this._program.name, this._program.tier, this._program.level)
+    );
   };
 
   handlePartialUpdate = () => {

@@ -31,7 +31,7 @@
       "experience": { "multiplier": 0.001, "base": 1 },
       "money": 0.001,
       "developmentPoints": { "multiplier": 0.01, "base": 1 },
-      "distictTierPoints": { "multiplier": 0.001, "base": 1 }
+      "influence": { "multiplier": 0.001, "base": 1 }
     }
   },
   "infoBroker": {
@@ -58,7 +58,7 @@
       "experience": { "multiplier": 0.01, "base": 1 },
       "money": 0.02,
       "developmentPoints": { "multiplier": 0.02, "base": 1 },
-      "distictTierPoints": { "multiplier": 0.003, "base": 1 },
+      "influence": { "multiplier": 0.003, "base": 1 },
       "connectivity": 0.0001
     }
   },
@@ -84,7 +84,7 @@
       "experience": { "multiplier": 0.02, "base": 1 },
       "money": 0.04,
       "developmentPoints": { "multiplier": 0.04, "base": 1 },
-      "distictTierPoints": { "multiplier": 0.004, "base": 1 },
+      "influence": { "multiplier": 0.004, "base": 1 },
       "codeBase": 0.0001
     }
   },
@@ -110,7 +110,7 @@
       "experience": { "multiplier": 0.02, "base": 1 },
       "money": 0.04,
       "developmentPoints": { "multiplier": 0.04, "base": 1 },
-      "distictTierPoints": { "multiplier": 0.004, "base": 1 },
+      "influence": { "multiplier": 0.004, "base": 1 },
       "computationalBase": 0.0001
     }
   },
@@ -138,7 +138,7 @@
       "experience": { "multiplier": 0.03, "base": 1 },
       "money": 0.05,
       "developmentPoints": { "multiplier": 0.05, "base": 1 },
-      "distictTierPoints": { "multiplier": 0.005, "base": 1 },
+      "influence": { "multiplier": 0.005, "base": 1 },
       "rewards": 0.0001
     }
   },

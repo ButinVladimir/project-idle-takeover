@@ -1,11 +1,11 @@
 import { html, nothing } from 'lit';
 import { localized, msg, str } from '@lit/localize';
 import { customElement, property } from 'lit/decorators.js';
-import { BaseComponent, capitalizeFirstLetter, Feature, MapSpecialEvent } from '@shared/index';
+import { BaseComponent, capitalizeFirstLetter, Faction, Feature, MapSpecialEvent } from '@shared/index';
 import { StoryGoalState } from '@state/global-state';
 import { ProgramName } from '@state/mainframe-state';
 import { CloneTemplateName, SidejobName } from '@state/company-state';
-import { UNLOCKED_FEATURE_TEXTS, STORY_MESSAGES, SPECIAL_EVENTS_MESSAGES } from '@texts/index';
+import { UNLOCKED_FEATURE_TEXTS, STORY_MESSAGES, SPECIAL_EVENTS_MESSAGES, FACTION_TEXTS } from '@texts/index';
 import { KEYS_SEPARATOR } from '../../../../constants';
 import styles from './styles';
 import { OverviewStoryGoalController } from './controller';
@@ -20,6 +20,18 @@ export class OverviewStoryGoal extends BaseComponent {
     type: Number,
   })
   level?: number;
+
+  @property({
+    attribute: 'faction',
+    type: String,
+  })
+  faction?: Faction;
+
+  @property({
+    attribute: 'captured-districts-count',
+    type: Number,
+  })
+  capturedDistrictsCount?: number;
 
   @property({
     attribute: 'messages',
@@ -87,7 +99,17 @@ export class OverviewStoryGoal extends BaseComponent {
     if (this.level !== undefined) {
       const formattedLevel = this._controller.formatter.formatLevel(this.level);
 
-      requirements.push(msg(str`development level ${formattedLevel}`));
+      requirements.push(msg(str`reached development level ${formattedLevel}`));
+    }
+
+    if (this.faction !== undefined) {
+      requirements.push(msg(str`joined ${FACTION_TEXTS[this.faction].title()}`));
+    }
+
+    if (this.capturedDistrictsCount !== undefined) {
+      const formattedCount = this._controller.formatter.formatNumberDecimal(this.capturedDistrictsCount);
+
+      requirements.push(msg(str`${formattedCount} captured districts`));
     }
 
     const result = capitalizeFirstLetter(requirements.join(', '));

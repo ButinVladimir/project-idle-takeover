@@ -26,8 +26,8 @@ export class StatisticsIncomePanel extends BaseComponent {
       ${this._controller.isFeatureUnlocked(Feature.companyManagement)
         ? html`<ca-statistics-experience-income></ca-statistics-experience-income>`
         : nothing}
-      ${this._controller.isFeatureUnlocked(Feature.districtTiers)
-        ? html`<ca-statistics-district-tier-points-income></ca-statistics-district-tier-points-income>`
+      ${this._controller.isFeatureUnlocked(Feature.influence)
+        ? html`<ca-statistics-influence-points-income></ca-statistics-influence-points-income>`
         : nothing}
       ${this._controller.isFeatureUnlocked(Feature.connectivity)
         ? html`<ca-statistics-connectivity-points-income></ca-statistics-connectivity-points-income>`

@@ -113,7 +113,8 @@ export class PurchaseCloneDialog extends BaseComponent {
           <div class="body">
             <p class="hint">
               ${msg(`Select clone name, template, tier and level to purchase it.
-Tier is limited depending on gained favors.
+Tier is limited depending on design and loaned items tier.
+Clone level cannot be above development level.
 Synchronization is earned by capturing districts and gaining certain favors.`)}
             </p>
 
@@ -253,7 +254,7 @@ Synchronization is earned by capturing districts and gaining certain favors.`)}
       return;
     }
 
-    const level = clamp(this._levelInputRef.value.valueAsNumber - 1, 0, Number.MAX_SAFE_INTEGER);
+    const level = clamp(this._levelInputRef.value.valueAsNumber - 1, 0, this._controller.developmentLevel);
     this._level = level;
     this._levelInputRef.value.valueAsNumber = level + 1;
   };
@@ -290,7 +291,11 @@ Synchronization is earned by capturing districts and gaining certain favors.`)}
 
     const cost = this._controller.getCloneCost(this._clone.templateName, this._clone.tier, this._clone.level);
     const synchronization = this._controller.getCloneSynchronization(this._clone.templateName, this._clone.tier);
-    const cloneAvailable = this._controller.isCloneAvailable(this._clone.templateName, this._clone.tier);
+    const cloneAvailable = this._controller.isCloneAvailable(
+      this._clone.templateName,
+      this._clone.tier,
+      this._clone.level,
+    );
 
     return !!(
       this._clone &&

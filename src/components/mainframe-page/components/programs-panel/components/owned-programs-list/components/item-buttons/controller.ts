@@ -3,7 +3,7 @@ import { IProgram } from '@state/mainframe-state';
 
 export class OwnedProgramsListItemButtonsController extends BaseController {
   calculateUpgradeLevel(program: IProgram) {
-    if (!this.unlockState.items.programs.isItemAvailable(program.name, program.tier)) {
+    if (!this.checkProgramUpgradeAvailable(program)) {
       return 0;
     }
 
@@ -15,7 +15,7 @@ export class OwnedProgramsListItemButtonsController extends BaseController {
   }
 
   checkCanUpgradeMax(program: IProgram) {
-    if (!this.unlockState.items.programs.isItemAvailable(program.name, program.tier)) {
+    if (!this.checkProgramUpgradeAvailable(program)) {
       return false;
     }
 
@@ -27,5 +27,9 @@ export class OwnedProgramsListItemButtonsController extends BaseController {
 
   upgradeMaxProgram(program: IProgram) {
     this.mainframeState.programs.upgrader.upgradeMaxProgram(program.name);
+  }
+
+  private checkProgramUpgradeAvailable(program: IProgram): boolean {
+    return this.unlockState.items.programs.isItemAvailable(program.name, program.tier, program.level + 1);
   }
 }

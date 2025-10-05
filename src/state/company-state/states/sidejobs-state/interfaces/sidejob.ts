@@ -21,7 +21,7 @@ export interface ISidejob {
   calculateExperienceDelta(passedTime: number): number;
   calculateMoneyDelta(passedTime: number): number;
   calculateDevelopmentPointsDelta(passedTime: number): number;
-  calculateDistrictTierPointsDelta(passedTime: number): number;
+  calculateInfluenceDelta(passedTime: number): number;
   calculateConnectivityDelta(passedTime: number): number;
   calculateCodeBaseDelta(passedTime: number): number;
   calculateComputationalBaseDelta(passedTime: number): number;

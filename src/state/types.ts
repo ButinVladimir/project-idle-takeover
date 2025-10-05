@@ -31,7 +31,7 @@ export const TYPES = {
   ComputationalBaseGrowthState: Symbol('ComputationalBaseGrowthState'),
   ConnectivityGrowthState: Symbol('ConnectivityGrowthState'),
   RewardsGrowthState: Symbol('RewardsGrowthState'),
-  DistrictTierPointsGrowthState: Symbol('DistrictTierPointsGrowthState'),
+  InfluenceGrowthState: Symbol('InfluenceGrowthState'),
   ExperienceGrowthState: Symbol('ExperienceGrowthState'),
   MapLayoutGenerator: Symbol('MapLayoutGenerator'),
   DistrictInfoGenerator: Symbol('DistrictInfoGenerator'),

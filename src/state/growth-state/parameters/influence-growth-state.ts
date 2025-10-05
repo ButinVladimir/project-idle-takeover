@@ -3,12 +3,12 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type ICityState } from '@state/city-state';
 import { type ICompanyState } from '@state/company-state';
-import { IDistrictTierPointsGrowthState } from '../interfaces';
+import { IInfluenceGrowthState } from '../interfaces';
 
 const { lazyInject } = decorators;
 
 @injectable()
-export class DistrictTierPointsGrowthState implements IDistrictTierPointsGrowthState {
+export class InfluenceGrowthState implements IInfluenceGrowthState {
   @lazyInject(TYPES.CityState)
   private _cityState!: ICityState;
 
@@ -58,7 +58,7 @@ export class DistrictTierPointsGrowthState implements IDistrictTierPointsGrowthS
       }
 
       let currentGrowth = this._growthByDistrict.get(sidejob.district.index) ?? 0;
-      currentGrowth += sidejob.calculateDistrictTierPointsDelta(1);
+      currentGrowth += sidejob.calculateInfluenceDelta(1);
       this._growthByDistrict.set(sidejob.district.index, currentGrowth);
     }
   }

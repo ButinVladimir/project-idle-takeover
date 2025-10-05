@@ -60,8 +60,8 @@ import {
   IMultipliersGrowthState,
   MultipliersGrowthState,
   IConnectivityGrowthState,
-  IDistrictTierPointsGrowthState,
-  DistrictTierPointsGrowthState,
+  IInfluenceGrowthState,
+  InfluenceGrowthState,
   IExperienceGrowthState,
   ExperienceGrowthState,
 } from '@state/growth-state';
@@ -263,8 +263,8 @@ container
   .whenTargetIsDefault();
 
 container
-  .bind<IDistrictTierPointsGrowthState>(TYPES.DistrictTierPointsGrowthState)
-  .to(DistrictTierPointsGrowthState)
+  .bind<IInfluenceGrowthState>(TYPES.InfluenceGrowthState)
+  .to(InfluenceGrowthState)
   .inSingletonScope()
   .whenTargetIsDefault();
 

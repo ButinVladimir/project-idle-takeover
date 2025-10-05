@@ -1,11 +1,14 @@
+import { msg, str } from '@lit/localize';
 import { inject, injectable } from 'inversify';
 import { type IStateUIConnector } from '@state/state-ui-connector';
-import { type IScenarioState } from '@state/scenario-state';
+import { StoryGoalState, type IScenarioState } from '@state/scenario-state';
 import { type IFactionState } from '@state/faction-state';
 import { type IGlobalState } from '@state/global-state';
+import { type INotificationsState } from '@state/notifications-state';
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
-import { Faction } from '@shared/index';
+import { Faction, MapSpecialEvent, NotificationType } from '@shared/index';
+import { DISTRICT_NAMES } from '@texts/index';
 import {
   ICityState,
   ICitySerializedState,
@@ -24,6 +27,9 @@ const { lazyInject } = decorators;
 
 @injectable()
 export class CityState implements ICityState {
+  @inject(TYPES.NotificationsState)
+  private _notificationsState!: INotificationsState;
+
   @inject(TYPES.MapLayoutGenerator)
   private _mapLayoutGenerator!: IMapLayoutGenerator;
 
@@ -85,6 +91,18 @@ export class CityState implements ICityState {
     return this._districtConnections.districtSizes.get(districtIndex)!;
   }
 
+  getCapturedDistrictsCount(): number {
+    let count = 0;
+
+    for (const district of this._districts.values()) {
+      if (district.state === DistrictUnlockState.captured) {
+        count++;
+      }
+    }
+
+    return count;
+  }
+
   getDistrictConnections(districtIndex: number): Set<number> {
     if (!this.checkDistrictIndex(districtIndex)) {
       throw new Error(`Invalid district index ${districtIndex}`);
@@ -103,14 +121,25 @@ export class CityState implements ICityState {
     }
   }
 
-  updateDistrictsAfterJoiningFaction(faction: Faction) {
+  updateDistrictsStateAfterJoiningFaction(faction: Faction) {
     for (const district of this._districts.values()) {
       if (district.faction === faction && district.state === DistrictUnlockState.locked) {
         district.state = DistrictUnlockState.contested;
       }
     }
 
-    this.updateAvailableDistricts();
+    this.recalculateDistrictsState();
+  }
+
+  recalculateDistrictsState() {
+    const unlockedDistrictsCount = this.calculateUnlockedDistrictsCount();
+    const maxUnlockedDistrictsCount = this.calculateMaxUnlockedDistrictsCount();
+
+    for (let districtsCount = unlockedDistrictsCount; districtsCount < maxUnlockedDistrictsCount; districtsCount++) {
+      this.unlockNextDistrict();
+    }
+
+    this.updateAvailableDistrictsList();
   }
 
   async startNewState(): Promise<void> {
@@ -141,7 +170,7 @@ export class CityState implements ICityState {
 
     this._districtConnections = await this._districtConnectionGraphGenerator.generate();
 
-    this.updateAvailableDistricts();
+    this.recalculateDistrictsState();
   }
 
   serialize(): ICitySerializedState {
@@ -203,13 +232,13 @@ export class CityState implements ICityState {
     }
 
     if (startingFaction !== Faction.neutral) {
-      this.updateDistrictsAfterJoiningFaction(startingFaction);
+      this.updateDistrictsStateAfterJoiningFaction(startingFaction);
     } else {
-      this.updateAvailableDistricts();
+      this.recalculateDistrictsState();
     }
   }
 
-  private updateAvailableDistricts() {
+  private updateAvailableDistrictsList() {
     this._availableDistricts.length = 0;
 
     this._districts.forEach((district) => {
@@ -228,5 +257,72 @@ export class CityState implements ICityState {
 
     this._availableDistricts.length = 0;
     this._districts.clear();
+  }
+
+  private calculateUnlockedDistrictsCount(): number {
+    let count = 0;
+
+    for (const district of this._districts.values()) {
+      if (district.state !== DistrictUnlockState.locked) {
+        count++;
+      }
+    }
+
+    return count;
+  }
+
+  private calculateMaxUnlockedDistrictsCount(): number {
+    const goals = this._scenarioState.storyEvents.listGoals();
+    let count = 0;
+
+    for (const goal of goals) {
+      if (goal.state !== StoryGoalState.passed) {
+        continue;
+      }
+
+      if (goal.specialEvents?.includes(MapSpecialEvent.districtUnlocked)) {
+        count++;
+      }
+    }
+
+    return count;
+  }
+
+  private unlockNextDistrict() {
+    let nextDistrictIndex = -1;
+    let nextDistrictDifficulty = 0;
+
+    for (const districtSource of this._districts.values()) {
+      if (districtSource.state === DistrictUnlockState.locked) {
+        continue;
+      }
+
+      for (const districtDestIndex of this._districtConnections.connections.get(districtSource.index)!.values()) {
+        const districtDest = this._districts.get(districtDestIndex)!;
+
+        if (districtDest.state !== DistrictUnlockState.locked) {
+          continue;
+        }
+
+        const influence = districtDest.parameters.influence;
+        const difficulty = influence.getTierRequirements(influence.tier);
+
+        if (nextDistrictIndex === -1 || difficulty < nextDistrictDifficulty) {
+          nextDistrictIndex = districtDestIndex;
+          nextDistrictDifficulty = difficulty;
+        }
+      }
+    }
+
+    if (nextDistrictIndex !== -1) {
+      const nextDistrict = this._districts.get(nextDistrictIndex)!;
+      nextDistrict.state = DistrictUnlockState.contested;
+      this._notificationsState.pushNotification(
+        NotificationType.districtContested,
+        msg(
+          str`District "${DISTRICT_NAMES[nextDistrict.name]()}" is now contested. Clones can operate in this district`,
+        ),
+      );
+    }
   }
 }

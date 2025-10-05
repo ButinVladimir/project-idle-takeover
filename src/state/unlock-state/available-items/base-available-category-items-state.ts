@@ -5,6 +5,7 @@ import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type IScenarioState } from '@state/scenario-state';
 import { type IFactionState } from '@state/faction-state';
 import { type INotificationsState } from '@state/notifications-state';
+import { type IGlobalState } from '@state/global-state';
 import { TYPES } from '@state/types';
 import { IAvailableCategoryItemsState, IAvailableCategoryItemsSerializedState, type IUnlockState } from '../interfaces';
 
@@ -22,6 +23,9 @@ export abstract class BaseAvailableCategoryItemsState<Key extends string = strin
 
   @lazyInject(TYPES.FactionState)
   protected _factionState!: IFactionState;
+
+  @lazyInject(TYPES.GlobalState)
+  protected _globalState!: IGlobalState;
 
   @lazyInject(TYPES.UnlockState)
   protected _unlockState!: IUnlockState;
@@ -56,8 +60,12 @@ export abstract class BaseAvailableCategoryItemsState<Key extends string = strin
     return Array.from(this._loanedItems.values());
   }
 
-  isItemAvailable(itemName: Key, tier: number): boolean {
+  isItemAvailable(itemName: Key, tier: number, level: number): boolean {
     if (!(this._loanedItems.has(itemName) || this._designsTierMap.has(itemName))) {
+      return false;
+    }
+
+    if (this._globalState.development.level < level) {
       return false;
     }
 

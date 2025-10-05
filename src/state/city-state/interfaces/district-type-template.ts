@@ -8,7 +8,7 @@ export interface IDistrictTypeTemplate {
     experience: IExponent;
     money: IExponent;
     developmentPoints: IExponent;
-    districtTierPoints: {
+    influence: {
       requirements: IExponent;
       pointsMultiplier: IExponent;
     };

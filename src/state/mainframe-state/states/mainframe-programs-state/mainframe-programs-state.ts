@@ -79,7 +79,7 @@ export class MainframeProgramsState implements IMainframeProgramsState {
 
     const availableMoney = money * this._globalState.multipliers.codeBase.totalMultiplier;
 
-    return reverseTierPower(availableMoney, tier, programData.cost);
+    return Math.min(reverseTierPower(availableMoney, tier, programData.cost), this._globalState.development.level);
   }
 
   purchaseProgram(name: ProgramName, tier: number, level: number): boolean {
@@ -87,7 +87,7 @@ export class MainframeProgramsState implements IMainframeProgramsState {
       return false;
     }
 
-    if (!this._unlockState.items.programs.isItemAvailable(name, tier)) {
+    if (!this._unlockState.items.programs.isItemAvailable(name, tier, level)) {
       return false;
     }
 

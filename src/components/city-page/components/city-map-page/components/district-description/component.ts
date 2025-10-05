@@ -35,7 +35,10 @@ export class CityMapDistrictDescription extends BaseComponent {
 
     const districtState = this._controller.getDistrictState(this.district);
 
-    const formattedTier = formatter.formatTier(districtState.parameters.tier.tier);
+    const formattedTier = formatter.formatTier(districtState.parameters.influence.tier);
+    const formattedDifficulty = formatter.formatNumberFloat(
+      districtState.parameters.influence.getTierRequirements(districtState.parameters.influence.tier),
+    );
 
     return html`
       <p>${DISTRICT_NAMES[districtState.name]()}</p>
@@ -44,7 +47,9 @@ export class CityMapDistrictDescription extends BaseComponent {
         ${COMMON_TEXTS.parameterValue(msg('District type'), DISTRICT_TYPE_TEXTS[districtState.districtType].title())}
       </p>
 
-      ${this._controller.isDistrictTiersUnlocked()
+      <p>${COMMON_TEXTS.parameterValue(msg('Difficulty'), formattedDifficulty)}</p>
+
+      ${this._controller.isInfluenceUnlocked()
         ? html`<p>${COMMON_TEXTS.parameterValue(COMMON_TEXTS.tier(), formattedTier)}</p>`
         : nothing}
       ${this._controller.areFactionsUnlocked()

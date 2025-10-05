@@ -88,7 +88,9 @@ export class OverviewStoryPanel extends BaseComponent {
 
     return html`
       <ca-overview-story-goal
-        level=${ifDefined(goal.level)}
+        level=${ifDefined(goal.requirements.level)}
+        faction=${ifDefined(goal.requirements.faction)}
+        captured-districts-count=${ifDefined(goal.requirements.capturedDistrictsCount)}
         messages=${ifDefined(messages)}
         special-events=${ifDefined(specialEvents)}
         unlock-features=${ifDefined(unlockFeatures)}

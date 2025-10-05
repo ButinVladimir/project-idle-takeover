@@ -9,6 +9,16 @@
       "cloneTemplates": []
     }
   },
+  "scavs": {
+    "loans": {
+      "programs": [],
+      "cloneTemplates": []
+    },
+    "special": {
+      "programs": [],
+      "cloneTemplates": []
+    }
+  },
   "wsa": {
     "loans": {
       "programs": ["predictiveComputator"],

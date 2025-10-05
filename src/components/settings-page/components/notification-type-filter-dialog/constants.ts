@@ -10,4 +10,6 @@ export const NOTIFICATION_TYPE_NAMES = {
   [NotificationType.designUnlocked]: () => msg('Design unlocked'),
   [NotificationType.factionsAvailable]: () => msg('Factions available'),
   [NotificationType.factionJoined]: () => msg('Faction joined'),
+  [NotificationType.districtContested]: () => msg('District contested'),
+  [NotificationType.districtCaptured]: () => msg('District captured'),
 };

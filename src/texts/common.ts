@@ -5,6 +5,7 @@ import { html } from 'lit';
 export const COMMON_TEXTS = {
   notEnoughMoney: () => msg('Not enough money'),
   willBeAvailableIn: (timeElement: any) => msg(html`Will be available in ${timeElement}`),
+  higherDevelopmentLevelRequired: () => msg('Higher development level required'),
   buyMax: () => msg('Buy max'),
   enableAutoupgrade: () => msg('Enable autoupgrade'),
   disableAutoupgrade: () => msg('Disable autoupgrade'),
@@ -68,7 +69,7 @@ export const REWARD_PARAMETER_NAMES = {
   [RewardParameter.money]: () => msg('Money'),
   [RewardParameter.developmentPoints]: () => msg('Development points'),
   [RewardParameter.experience]: () => msg('Experience'),
-  [RewardParameter.districtTierPoints]: () => msg('District tier points'),
+  [RewardParameter.influence]: () => msg('Faction influence'),
   [RewardParameter.connectivity]: () => msg('Connectivity points'),
   [RewardParameter.codeBase]: () => msg('Code base points'),
   [RewardParameter.computationalBase]: () => msg('Computational base points'),

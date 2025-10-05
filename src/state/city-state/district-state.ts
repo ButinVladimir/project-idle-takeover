@@ -54,7 +54,7 @@ export class DistrictState implements IDistrictState {
       state: districtInfo.isUnlocked ? DistrictUnlockState.contested : DistrictUnlockState.locked,
     });
 
-    districtState._parameters.tier.setTier(districtInfo.tier);
+    districtState._parameters.influence.setTier(districtInfo.tier);
 
     return districtState;
   }

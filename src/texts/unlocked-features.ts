@@ -81,13 +81,12 @@ Multipliers for programs and districts stack.`),
 Whenever clone receives experience, all available clones in company will receive part of it.
 How big is this part depends on running processes and available synchronization.`),
   },
-  [Feature.districtTiers]: {
-    title: () => msg('District tiers'),
-    hint: () => msg('District tiers and progress to next tier are now visible'),
+  [Feature.influence]: {
+    title: () => msg('Faction influence'),
+    hint: () => msg('Faction influence and progress to next tier are now visible'),
     message: () =>
-      msg(`District tiers and progress to next tier are now visible.
-The higher district tier is, the better rewards are from performing actions within it.
-Some districts may increase requirements with their tiers.`),
+      msg(`Faction influence and progress to next tier are now visible.
+The higher district tier is, the better rewards are from performing actions within it.`),
   },
   [Feature.factions]: {
     title: () => msg('Factions'),

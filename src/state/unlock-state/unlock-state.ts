@@ -1,4 +1,5 @@
 import { inject, injectable } from 'inversify';
+import { decorators } from '@state/container';
 import {
   type IAvailableActivitiesState,
   type IAvailableItemsState,
@@ -7,6 +8,9 @@ import {
   IUnlockState,
 } from './interfaces';
 import { TYPES } from '@state/types';
+import { type IGlobalState } from '@state/global-state';
+
+const { lazyInject } = decorators;
 
 @injectable()
 export class UnlockState implements IUnlockState {
@@ -18,6 +22,9 @@ export class UnlockState implements IUnlockState {
 
   @inject(TYPES.AvailableActivitiesState)
   private _availableActivitiesState!: IAvailableActivitiesState;
+
+  @lazyInject(TYPES.GlobalState)
+  private _globalState!: IGlobalState;
 
   private _recalculationRequested: boolean;
 
@@ -39,6 +46,8 @@ export class UnlockState implements IUnlockState {
 
   requestRecalculation() {
     this._recalculationRequested = true;
+
+    this._globalState.experienceShare.requestRecalculation();
   }
 
   recalculate() {

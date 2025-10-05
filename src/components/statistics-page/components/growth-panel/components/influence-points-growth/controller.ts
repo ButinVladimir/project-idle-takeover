@@ -1,12 +1,12 @@
 import { BaseController } from '@shared/base-controller';
 import { IDistrictState } from '@state/city-state';
 
-export class StatisticsDistrictTierPointsGrowthController extends BaseController {
+export class StatisticsInfluencePointsGrowthController extends BaseController {
   listAvailableDistricts(): IDistrictState[] {
     return this.cityState.listAvailableDistricts();
   }
 
   getGrowthByDistrict(districtIndex: number): number {
-    return this.growthState.districtTierPoints.getGrowthByDistrict(districtIndex);
+    return this.growthState.influence.getGrowthByDistrict(districtIndex);
   }
 }

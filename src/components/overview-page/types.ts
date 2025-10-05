@@ -1,6 +1,5 @@
 export enum OverviewPageTabs {
   progress = 'progress',
-  unlockedItems = 'unlockedItems',
-  unlockedFeatures = 'unlockedFeatures',
+  unlockedContent = 'unlockedContent',
   story = 'story',
 }

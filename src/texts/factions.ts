@@ -11,6 +11,13 @@ export const FACTION_TEXTS: Record<Faction, IFactionTexts> = {
     title: () => msg('Neutral'),
     overview: () => msg(`Neutrals who don't belong to any major factions.`),
   },
+  [Faction.scavs]: {
+    title: () => msg('Scavs'),
+    overview: () =>
+      msg(`Scavenegers are the bottom of the food chain.
+They cannot provide anything outstanding and very prone to infighting.
+Scavs can be impressed only by performing increasing horrific crimes.`),
+  },
   [Faction.wsa]: {
     title: () => msg('WSA'),
     overview: () =>

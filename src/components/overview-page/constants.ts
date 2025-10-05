@@ -8,6 +8,5 @@ export const KEYS_SEPARATOR = ';';
 export const OVERVIEW_PAGE_TAB_TITLES = {
   [OverviewPageTabs.progress]: () => msg('Progress'),
   [OverviewPageTabs.story]: () => msg('Story'),
-  [OverviewPageTabs.unlockedFeatures]: () => msg('Unlocked features'),
-  [OverviewPageTabs.unlockedItems]: () => msg('Unlocked items'),
+  [OverviewPageTabs.unlockedContent]: () => msg('Unlocked content'),
 };

@@ -27,7 +27,7 @@ export class OwnedProgramsListButtonsController extends BaseController {
       return false;
     }
 
-    if (!this.unlockState.items.programs.isItemAvailable(program.name, program.tier)) {
+    if (!this.unlockState.items.programs.isItemAvailable(program.name, program.tier, program.level + 1)) {
       return false;
     }
 

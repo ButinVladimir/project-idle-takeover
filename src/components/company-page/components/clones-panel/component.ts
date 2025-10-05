@@ -58,7 +58,8 @@ export class CompanyClonesPanel extends BaseComponent {
     return html`
       <p class="hint">
         ${msg(`Clone autoupgrade priority can be changed by dragging it by the name.
-Clones on top have higher priority.`)}
+Clones on top have higher priority.
+Clone level cannot be above development level.`)}
       </p>
 
       <div class="top-container">

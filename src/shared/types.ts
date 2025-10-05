@@ -39,6 +39,7 @@ export enum Scenario {
 
 export enum Faction {
   neutral = 'neutral',
+  scavs = 'scavs',
   wsa = 'wsa',
 }
 
@@ -135,6 +136,8 @@ export enum NotificationType {
   designUnlocked = 'designUnlocked',
   factionsAvailable = 'factionsAvailable',
   factionJoined = 'factionJoined',
+  districtContested = 'districtContested',
+  districtCaptured = 'districtCaptured',
 }
 
 export enum LongNumberFormat {
@@ -167,7 +170,7 @@ export enum Feature {
   connectivity = 'connectivity',
   rewards = 'rewards',
   experienceShare = 'experienceShare',
-  districtTiers = 'districtTiers',
+  influence = 'influence',
   factions = 'factions',
 }
 
@@ -202,7 +205,7 @@ export enum RewardParameter {
   money = 'money',
   developmentPoints = 'development-points',
   experience = 'experience',
-  districtTierPoints = 'district-tier-points',
+  influence = 'influence',
   connectivity = 'connectivity',
   codeBase = 'code-base',
   computationalBase = 'computational-base',
@@ -228,5 +231,6 @@ export enum Hotkey {
 }
 
 export enum MapSpecialEvent {
+  districtUnlocked = 'districtUnlocked',
   factionsAvailable = 'factionsAvailable',
 }

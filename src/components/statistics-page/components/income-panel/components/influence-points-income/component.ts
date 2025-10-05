@@ -5,17 +5,17 @@ import { customElement, queryAll } from 'lit/decorators.js';
 import { BaseComponent } from '@shared/index';
 import { STATISTIC_PAGE_TEXTS } from '@components/statistics-page/constants';
 import { IDistrictState } from '@state/city-state';
-import { StatisticsDistrictTierPointsIncomeController } from './controller';
+import { StatisticsInfluencePointsIncomeController } from './controller';
 import { statisticsPanelContentStyle } from '../../../../styles';
 
 @localized()
-@customElement('ca-statistics-district-tier-points-income')
-export class StatisticsDistrictTierPointsIncome extends BaseComponent {
+@customElement('ca-statistics-influence-points-income')
+export class StatisticsInfluencePointsIncome extends BaseComponent {
   static styles = statisticsPanelContentStyle;
 
   hasPartialUpdate = true;
 
-  private _controller: StatisticsDistrictTierPointsIncomeController;
+  private _controller: StatisticsInfluencePointsIncomeController;
 
   @queryAll('div[data-district]')
   private _districtValueNodes!: NodeListOf<HTMLDivElement>;
@@ -23,13 +23,13 @@ export class StatisticsDistrictTierPointsIncome extends BaseComponent {
   constructor() {
     super();
 
-    this._controller = new StatisticsDistrictTierPointsIncomeController(this);
+    this._controller = new StatisticsInfluencePointsIncomeController(this);
   }
 
   protected renderDesktop() {
     return html`
       <sl-details>
-        <h4 class="title" slot="summary">${msg('District tier points')}</h4>
+        <h4 class="title" slot="summary">${msg('Faction influence points')}</h4>
 
         <div class="parameters-table">${map(this._controller.listAvailableDistricts(), this.renderDistrict)}</div>
       </sl-details>
