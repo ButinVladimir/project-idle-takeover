@@ -101,7 +101,8 @@ export class PurchaseProgramDialog extends BaseComponent {
           <div class="body">
             <p class="hint">
               ${msg(`Select program type, tier and level to purchase it.
-Tier is limited depending on gained favors.
+Tier is limited depending on design and loaned items tier.
+Program level cannot be above development level.
 If you already have program with same name, old one will be replaced with new one.`)}
             </p>
 

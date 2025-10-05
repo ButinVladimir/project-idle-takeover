@@ -122,6 +122,8 @@ export class FactionState implements IFactionState {
       ),
     );
 
+    this._scenarioState.storyEvents.visitEvents({ faction: Faction.neutral });
+
     return true;
   }
 

@@ -36,6 +36,9 @@ export class CityDistrictOverviewPanelValues extends BaseComponent {
     const districtState = this._controller.getDistrictState(this._districtIndex);
 
     const formattedTier = formatter.formatTier(districtState.parameters.influence.tier);
+    const formattedDifficulty = formatter.formatNumberFloat(
+      districtState.parameters.influence.getTierRequirements(districtState.parameters.influence.tier),
+    );
 
     return html`
       <p class="text">
@@ -43,6 +46,18 @@ export class CityDistrictOverviewPanelValues extends BaseComponent {
 
         <sl-tooltip>
           <span slot="content">${DISTRICT_TYPE_TEXTS[districtState.districtType].overview()}</span>
+
+          <sl-icon name=${HINT_ICON}></sl-icon>
+        </sl-tooltip>
+      </p>
+
+      <p class="text">
+        ${COMMON_TEXTS.parameterValue(msg('Difficulty'), formattedDifficulty)}
+
+        <sl-tooltip>
+          <span slot="content"
+            >${msg(`Difficulty indicates how long it takes to capture district or uograde it to the next tier.`)}</span
+          >
 
           <sl-icon name=${HINT_ICON}></sl-icon>
         </sl-tooltip>

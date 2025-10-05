@@ -7,10 +7,7 @@ export const unlockedItemsCategoryStyles = [
   hintIconStyle,
   css`
     :host {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: var(--sl-spacing-large);
+      display: block;
     }
 
     h4.title {
@@ -28,6 +25,28 @@ export const unlockedItemsCategoryStyles = [
         text-align: end;
         white-space: nowrap;
       }
+    }
+  `,
+];
+
+export const unlockedContentStyles = [
+  sectionTitleStyle,
+  detailsStyle,
+  hintIconStyle,
+  css`
+    :host {
+      display: block;
+    }
+
+    h4.title {
+      margin-bottom: 0;
+    }
+
+    .content-table {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--sl-spacing-3x-small);
     }
   `,
 ];

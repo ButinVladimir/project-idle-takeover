@@ -8,6 +8,7 @@ export interface ICityState extends ISerializeable<ICitySerializedState> {
   getDistrictState(districtIndex: number): IDistrictState;
   getDistrictConnections(districtIndex: number): Set<number>;
   getDistrictSize(districtIndex: number): number;
+  getCapturedDistrictsCount(): number;
   listAvailableDistricts(): IDistrictState[];
   updateDistrictsStateAfterJoiningFaction(faction: Faction): void;
   recalculateDistrictsState(): void;

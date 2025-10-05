@@ -1,10 +1,14 @@
 import { CloneTemplateName, SidejobName } from '@state/company-state';
-import { Feature, MapSpecialEvent } from '@shared/index';
+import { Faction, Feature, MapSpecialEvent } from '@shared/index';
 import { ProgramName } from '@state/mainframe-state';
 
 export interface IStoryEvent {
   key: string;
-  level: number;
+  requirements: {
+    level?: number;
+    faction?: Faction;
+    capturedDistrictsCount?: number;
+  };
   messages?: string[];
   unlockFeatures?: Feature[];
   rewardDesigns?: {

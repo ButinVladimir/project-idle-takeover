@@ -47,7 +47,9 @@ export class MainframeHardwarePanel extends BaseComponent {
       <p class="hint">
         ${msg(`Press either Ctrl or Shift to buy 10 levels. Press both Ctrl and Shift to buy 100 levels.
 Hardware autoupgrade priority can be changed by dragging it by the title.
-Upgrades on top have higher priority.`)}
+Upgrades on top have higher priority.
+Hardware upgrade level cannot be above development level.
+`)}
       </p>
 
       <div class="buttons-block">

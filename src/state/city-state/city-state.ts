@@ -91,6 +91,18 @@ export class CityState implements ICityState {
     return this._districtConnections.districtSizes.get(districtIndex)!;
   }
 
+  getCapturedDistrictsCount(): number {
+    let count = 0;
+
+    for (const district of this._districts.values()) {
+      if (district.state === DistrictUnlockState.captured) {
+        count++;
+      }
+    }
+
+    return count;
+  }
+
   getDistrictConnections(districtIndex: number): Set<number> {
     if (!this.checkDistrictIndex(districtIndex)) {
       throw new Error(`Invalid district index ${districtIndex}`);

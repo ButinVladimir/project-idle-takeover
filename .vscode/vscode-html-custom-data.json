@@ -625,11 +625,20 @@
     },
     {
       "name": "ca-overview-story-goal",
-      "description": "Attributes:\n\n  * `level` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `special-events` {`string | undefined`} - \n\n  * `unlock-features` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `clone-templates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `state` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `level` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `specialEvents` {`string | undefined`} - \n\n  * `unlockFeatures` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `cloneTemplates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `state` - \n\n  * `renderSummary` - \n\n  * `renderDetails` - \n\n  * `renderMessages` - \n\n  * `renderUnlockFeatures` - \n\n  * `renderSpecialEvents` - \n\n  * `renderPrograms` - \n\n  * `renderCloneTemplates` - \n\n  * `renderSidejobs` - \n\n  * `_controller` {`OverviewStoryGoalController`} - ",
+      "description": "Attributes:\n\n  * `level` {`number | undefined`} - \n\n  * `faction` - \n\n  * `captured-districts-count` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `special-events` {`string | undefined`} - \n\n  * `unlock-features` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `clone-templates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `state` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `level` {`number | undefined`} - \n\n  * `faction` - \n\n  * `capturedDistrictsCount` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `specialEvents` {`string | undefined`} - \n\n  * `unlockFeatures` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `cloneTemplates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `state` - \n\n  * `renderSummary` - \n\n  * `renderDetails` - \n\n  * `renderMessages` - \n\n  * `renderUnlockFeatures` - \n\n  * `renderSpecialEvents` - \n\n  * `renderPrograms` - \n\n  * `renderCloneTemplates` - \n\n  * `renderSidejobs` - \n\n  * `_controller` {`OverviewStoryGoalController`} - ",
       "attributes": [
         {
           "name": "level",
           "description": "`level` {`number | undefined`} - \n\nProperty: level",
+          "values": []
+        },
+        {
+          "name": "faction",
+          "description": "`faction` - \n\nProperty: faction"
+        },
+        {
+          "name": "captured-districts-count",
+          "description": "`captured-districts-count` {`number | undefined`} - \n\nProperty: capturedDistrictsCount",
           "values": []
         },
         {
@@ -669,13 +678,8 @@
       ]
     },
     {
-      "name": "ca-overview-unlocked-features-panel",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderFeature` - \n\n  * `_controller` {`OverviewUnlockedFeaturesPanelController`} - ",
-      "attributes": []
-    },
-    {
-      "name": "ca-overview-unlocked-items-panel",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_itemTypeFilterInputRef` {`Ref<SlSelect>`} - \n\n  * `_itemTypeFilter` {`ItemTypeFilter`} - \n\n  * `handleItemTypeFilterChange` - \n\n  * `_controller` {`OverviewUnlockedItemsPanelController`} - ",
+      "name": "ca-overview-unlocked-content-panel",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_itemTypeFilterInputRef` {`Ref<SlSelect>`} - \n\n  * `_itemTypeFilter` {`ItemTypeFilter`} - \n\n  * `handleItemTypeFilterChange` - \n\n  * `_controller` {`OverviewUnlockedContentPanelController`} - ",
       "attributes": []
     },
     {
@@ -700,6 +704,11 @@
       ]
     },
     {
+      "name": "ca-overview-unlocked-features",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderList` - \n\n  * `renderListItem` - \n\n  * `_controller` {`OverviewUnlockedFeaturesController`} - ",
+      "attributes": []
+    },
+    {
       "name": "ca-overview-unlocked-programs",
       "description": "Attributes:\n\n  * `item-type-filer` {`ItemTypeFilter`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `itemTypeFilter` {`ItemTypeFilter`} - \n\n  * `renderList` - \n\n  * `renderListItem` - \n\n  * `_controller` {`OverviewUnlockedProgramsController`} - ",
       "attributes": [
@@ -719,6 +728,11 @@
           ]
         }
       ]
+    },
+    {
+      "name": "ca-overview-unlocked-sidejobs",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderList` - \n\n  * `renderListItem` - \n\n  * `_controller` {`OverviewUnlockedSidejobsController`} - ",
+      "attributes": []
     },
     {
       "name": "ca-settings-page",

@@ -5,14 +5,14 @@ import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.component.js';
 import { BaseComponent } from '@shared/index';
-import { OverviewUnlockedItemsPanelController } from './controller';
+import { OverviewUnlockedContentPanelController } from './controller';
 import styles from './styles';
 import { ItemTypeFilter } from './types';
 import { ITEM_TYPE_FILTER_TITLES, ITEM_TYPE_FILTER_VALUES } from './constants';
 
 @localized()
-@customElement('ca-overview-unlocked-items-panel')
-export class OverviewUnlockedItemsPanel extends BaseComponent {
+@customElement('ca-overview-unlocked-content-panel')
+export class OverviewUnlockedContentPanel extends BaseComponent {
   static styles = styles;
 
   protected hasMobileRender = true;
@@ -22,12 +22,12 @@ export class OverviewUnlockedItemsPanel extends BaseComponent {
   @state()
   private _itemTypeFilter: ItemTypeFilter = ItemTypeFilter.all;
 
-  private _controller: OverviewUnlockedItemsPanelController;
+  private _controller: OverviewUnlockedContentPanelController;
 
   constructor() {
     super();
 
-    this._controller = new OverviewUnlockedItemsPanelController(this);
+    this._controller = new OverviewUnlockedContentPanelController(this);
   }
 
   protected renderDesktop() {
@@ -40,7 +40,7 @@ export class OverviewUnlockedItemsPanel extends BaseComponent {
 
   private renderContent(desktop: boolean) {
     const programsUnlocked = this._controller.areProgramsUnlocked();
-    const cloneTemplatesUnlocked = this._controller.areCloneTemplatesUnlocked();
+    const companyUnlocked = this._controller.isCompanyUnlocked();
 
     const itemTypeFilterContainerClasses = classMap({
       'item-type-filter-container': true,
@@ -69,12 +69,15 @@ Number next to item name is it's maximum tier available.`)}
       </div>
 
       <div class="categories">
+        <ca-overview-unlocked-features></ca-overview-unlocked-features>
+
+        ${companyUnlocked ? html`<ca-overview-unlocked-sidejobs></ca-overview-unlocked-sidejobs>` : nothing}
         ${programsUnlocked
           ? html`<ca-overview-unlocked-programs
               item-type-filer=${this._itemTypeFilter}
             ></ca-overview-unlocked-programs>`
           : nothing}
-        ${cloneTemplatesUnlocked
+        ${companyUnlocked
           ? html`<ca-overview-unlocked-clone-templates
               item-type-filer=${this._itemTypeFilter}
             ></ca-overview-unlocked-clone-templates>`

@@ -8,6 +8,7 @@ import { BaseComponent, calculateLevelProgressPercentage } from '@shared/index';
 import { CityDistrictOverviewPanelNextTierProgressController } from './controller';
 import { districtIndexContext } from '../../../../contexts';
 import styles from './styles';
+import { DistrictUnlockState } from '@/state/city-state';
 
 @localized()
 @customElement('ca-city-district-overview-panel-next-tier-progress')
@@ -36,13 +37,23 @@ export class CityDistrictOverviewPanelNextTierProgress extends BaseComponent {
       return nothing;
     }
 
+    const state = this._controller.getDistrictState(this._districtIndex);
+
+    if (state === DistrictUnlockState.locked) {
+      return nothing;
+    }
+
     return html`
-      <div class="title">${msg('Next district tier progress')}</div>
+      <div class="title">
+        ${state === DistrictUnlockState.captured ? msg('Next district tier progress') : msg('Capture progress')}
+      </div>
 
       <sl-progress-bar ${ref(this._progressBarRef)}> </sl-progress-bar>
 
       <p ${ref(this._hintRef)} class="progress-bar-hint">
-        ${msg(html`Next district tier will be reached in ${html`<span ${ref(this._timerRef)}></span>`}`)}
+        ${state === DistrictUnlockState.captured
+          ? msg(html`Next district tier will be reached in ${html`<span ${ref(this._timerRef)}></span>`}`)
+          : msg(html`District will be captured in ${html`<span ${ref(this._timerRef)}></span>`}`)}
       </p>
     `;
   }

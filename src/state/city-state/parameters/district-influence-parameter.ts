@@ -6,6 +6,7 @@ import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type ICompanyState } from '@/state/company-state';
 import { type IMessageLogState } from '@state/message-log-state';
 import { type INotificationsState } from '@state/notifications-state';
+import { type IScenarioState } from '@state/scenario-state';
 import {
   type IFormatter,
   CityEvent,
@@ -39,6 +40,9 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
 
   @lazyInject(TYPES.NotificationsState)
   private _notificationsState!: INotificationsState;
+
+  @lazyInject(TYPES.ScenarioState)
+  private _scenarioState!: IScenarioState;
 
   @lazyInject(TYPES.Formatter)
   private _formatter!: IFormatter;
@@ -128,12 +132,17 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
 
   private handleDistrictCapture() {
     if (this._district.state !== DistrictUnlockState.captured) {
+      const capturedDistrictsCount = this._cityState.getCapturedDistrictsCount();
       this._district.state = DistrictUnlockState.captured;
 
       this._notificationsState.pushNotification(
         NotificationType.districtCaptured,
         msg(str`District "${DISTRICT_NAMES[this._district.name]()}" has been captured. It's tier now can be increased`),
       );
+
+      this._scenarioState.storyEvents.visitEvents({
+        capturedDistrictsCount,
+      });
     }
   }
 

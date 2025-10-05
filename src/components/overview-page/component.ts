@@ -35,11 +35,8 @@ export class OverviewPage extends BaseComponent {
       case OverviewPageTabs.progress:
         return html`<ca-overview-progress-panel></ca-overview-progress-panel>`;
 
-      case OverviewPageTabs.unlockedFeatures:
-        return html`<ca-overview-unlocked-features-panel></ca-overview-unlocked-features-panel>`;
-
-      case OverviewPageTabs.unlockedItems:
-        return html`<ca-overview-unlocked-items-panel></ca-overview-unlocked-items-panel>`;
+      case OverviewPageTabs.unlockedContent:
+        return html`<ca-overview-unlocked-content-panel></ca-overview-unlocked-content-panel>`;
 
       case OverviewPageTabs.story:
         return html`<ca-overview-story-panel></ca-overview-story-panel>`;

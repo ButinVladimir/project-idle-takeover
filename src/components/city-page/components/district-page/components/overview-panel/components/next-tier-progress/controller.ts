@@ -1,6 +1,11 @@
-import { BaseController } from '@shared/base-controller';
+import { DistrictUnlockState } from '@state/city-state';
+import { BaseController } from '@shared/index';
 
 export class CityDistrictOverviewPanelNextTierProgressController extends BaseController {
+  getDistrictState(districtIndex: number): DistrictUnlockState {
+    return this.cityState.getDistrictState(districtIndex).state;
+  }
+
   getDistrictInfluencePoints(districtIndex: number): number {
     return this.getDistrictInfluenceParameter(districtIndex).points;
   }
