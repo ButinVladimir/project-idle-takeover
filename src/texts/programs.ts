@@ -1,12 +1,13 @@
+import { html } from 'lit';
 import { msg, str } from '@lit/localize';
 import {
   MultiplierProgramName,
   AutobuyerProgramName,
   OtherProgramName,
+  ProgramName,
 } from '@state/mainframe-state/states/progam-factory/types';
-import { html } from 'lit';
 
-export const PROGRAM_TEXTS = {
+export const PROGRAM_TEXTS: Record<ProgramName, { title: () => string; overview: () => string }> = {
   [OtherProgramName.shareServer]: {
     title: () => msg('Mainframe share server'),
     overview: () =>

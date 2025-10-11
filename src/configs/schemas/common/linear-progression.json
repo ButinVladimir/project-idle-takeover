@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "base": {
+      "type": "number",
+      "description": "Base of linear progression"
+    },
+    "multiplier": {
+      "type": "number",
+      "description": "Multiplier of linear progression"
+    }
+  },
+  "required": ["base", "multiplier"]
+}

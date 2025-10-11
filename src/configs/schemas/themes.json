@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "light": {
+      "$ref": "#/$defs/theme",
+      "description": "Light theme"
+    },
+    "dark": {
+      "$ref": "#/$defs/theme",
+      "description": "Dark theme"
+    }
+  },
+  "required": ["light", "dark"],
+  "$defs": {
+    "theme": {
+      "type": "object",
+      "properties": {
+        "classes": {
+          "type": "string",
+          "description": "Theme classes"
+        }
+      },
+      "required": ["classes"]
+    }
+  }
+}

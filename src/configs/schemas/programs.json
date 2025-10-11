@@ -1,0 +1,212 @@
+{
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "shareServer": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "type": "object",
+          "description": "Share server program",
+          "properties": {
+            "money": {
+              "$ref": "#/$defs/autoscalableParameters",
+              "description": "Money values"
+            },
+            "developmentPoints": {
+              "$ref": "#/$defs/autoscalableParameters",
+              "description": "Development points values"
+            }
+          },
+          "required": ["money", "developmentPoints"]
+        }
+      ]
+    },
+    "predictiveComputator": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "type": "object",
+          "description": "Predictive computator program",
+          "properties": {
+            "programCompletionSpeed": {
+              "$ref": "#/$defs/autoscalableParameters",
+              "description": "Process completion speed values"
+            }
+          },
+          "required": ["programCompletionSpeed"]
+        }
+      ]
+    },
+    "peerReviewer": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "type": "object",
+          "description": "Peer reviewer program",
+          "properties": {
+            "cloneExperience": {
+              "$ref": "#/$defs/autoscalableParameters",
+              "description": "Clone experience multiplier values"
+            }
+          },
+          "required": ["cloneExperience"]
+        }
+      ]
+    },
+    "codeGenerator": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "type": "object",
+          "description": "Code generator program",
+          "properties": {
+            "codeBase": {
+              "$ref": "./common/tiered-linear-progression.json",
+              "description": "Code base values"
+            }
+          },
+          "required": ["codeBase"]
+        }
+      ]
+    },
+    "circuitDesigner": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "type": "object",
+          "description": "Circuit designer program",
+          "properties": {
+            "computationalBase": {
+              "$ref": "./common/tiered-linear-progression.json",
+              "description": "Computational base values"
+            }
+          },
+          "required": ["computationalBase"]
+        }
+      ]
+    },
+    "informationCollector": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "type": "object",
+          "description": "Information collector program",
+          "properties": {
+            "connectivity": {
+              "$ref": "./common/tiered-linear-progression.json",
+              "description": "Connectivity values"
+            }
+          },
+          "required": ["connectivity"]
+        }
+      ]
+    },
+    "dealMaker": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "type": "object",
+          "description": "Deal maker program",
+          "properties": {
+            "rewards": {
+              "$ref": "./common/tiered-linear-progression.json",
+              "description": "Rewards values"
+            }
+          },
+          "required": ["rewards"]
+        }
+      ]
+    },
+    "mainframeHardwareAutobuyer": {
+      "$ref": "#/$defs/common",
+      "description": "Mainframe hardware autobuyer program"
+    },
+    "mainframeProgramsAutobuyer": {
+      "$ref": "#/$defs/common",
+      "description": "Mainframe programs autobuyer program"
+    },
+    "cloneLevelAutoupgrader": {
+      "$ref": "#/$defs/common",
+      "description": "Clone level autoupgrader program"
+    }
+  },
+  "required": [
+    "shareServer",
+    "predictiveComputator",
+    "peerReviewer",
+    "codeGenerator",
+    "circuitDesigner",
+    "informationCollector",
+    "dealMaker",
+    "mainframeHardwareAutobuyer",
+    "mainframeProgramsAutobuyer",
+    "cloneLevelAutoupgrader"
+  ],
+  "propertyNames": {
+    "oneOf": [{ "$ref": "./common/program-name.json" }, { "enum": ["$schema"] }]
+  },
+  "$defs": {
+    "common": {
+      "type": "object",
+      "properties": {
+        "ram": {
+          "type": "integer",
+          "description": "RAM consumption"
+        },
+        "completionPoints": {
+          "type": "integer",
+          "description": "Amount of points to complete running process for program"
+        },
+        "levelSpeedBoost": {
+          "$ref": "./common/linear-progression.json",
+          "description": "Boost to process completion speed by program level"
+        },
+        "coreSpeedBoost": {
+          "$ref": "./common/linear-progression.json",
+          "description": "Boost to process completion speed by number of assigned cores"
+        },
+        "cost": {
+          "$ref": "./common/linear-progression.json",
+          "description": "Program cost"
+        },
+        "requiredFeatures": {
+          "type": "array",
+          "description": "Required features",
+          "items": {
+            "$ref": "./common/feature.json"
+          }
+        }
+      },
+      "required": ["ram", "completionPoints", "levelSpeedBoost", "coreSpeedBoost", "cost", "requiredFeatures"]
+    },
+    "autoscalableParameters": {
+      "type": "object",
+      "properties": {
+        "main": {
+          "$ref": "./common/tiered-linear-progression.json",
+          "description": "Multipliers by program level and tier"
+        },
+        "ram": { "$ref": "./common/linear-progression.json", "description": "Multipliers by assigned RAM" },
+        "cores": { "$ref": "./common/linear-progression.json", "description": "Multipliers by assigned cores" }
+      },
+      "required": ["main", "ram", "cores"]
+    }
+  }
+}

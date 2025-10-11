@@ -8,9 +8,9 @@ import { CloneLevelAutoupgraderDescriptionEffectRenderer } from './clone-level-a
 import { ShareServerDescriptionEffectRenderer } from './share-server-description-effect-renderer';
 import { PredictiveComputatorDescriptionEffectRenderer } from './predictive-computator-description-effect-renderer';
 import { PeerReviewerDescriptionEffectRenderer } from './peer-reviewer-description-effect-renderer';
-import { MultiplierProgramName, AutobuyerProgramName, OtherProgramName } from '@state/mainframe-state';
+import { MultiplierProgramName, AutobuyerProgramName, OtherProgramName, ProgramName } from '@state/mainframe-state';
 
-export const rendererMap = {
+export const rendererMap: Record<ProgramName, any> = {
   [MultiplierProgramName.codeGenerator]: CodeGeneratorDescriptionEffectRenderer,
   [MultiplierProgramName.circuitDesigner]: CircuitDesignerDescriptionEffectRenderer,
   [MultiplierProgramName.dealMaker]: DealMakerDescriptionEffectRenderer,

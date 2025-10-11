@@ -1,0 +1,18 @@
+{
+  "description": "Feature",
+  "enum": [
+    "automation",
+    "automationMainframeHardware",
+    "automationMainframePrograms",
+    "mainframePrograms",
+    "mainframeHardware",
+    "companyManagement",
+    "codeBase",
+    "computationalBase",
+    "connectivity",
+    "rewards",
+    "experienceShare",
+    "influence",
+    "factions"
+  ]
+}

@@ -1,4 +1,5 @@
 {
+  "$schema": "./schemas/programs.json",
   "shareServer": {
     "ram": 1,
     "completionPoints": 0,

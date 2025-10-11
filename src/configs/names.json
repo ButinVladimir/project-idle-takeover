@@ -1,4 +1,5 @@
 {
+  "$schema": "./schemas/names.json",
   "clones": ["John", "Jack", "Ivan", "Vasily", "Petar", "Miloš"],
   "districts": ["Banjica", "Autokomanda", "Zvezdara", "Mirievo", "Voždovac"]
 }
