@@ -2,7 +2,6 @@ import { html } from 'lit';
 import { localized, msg } from '@lit/localize';
 import { customElement } from 'lit/decorators.js';
 import { BaseComponent, HINT_ICON } from '@shared/index';
-import { SidejobName } from '@state/company-state';
 import { SIDEJOB_TEXTS } from '@texts/index';
 import { OverviewUnlockedSidejobsController } from './controller';
 import { unlockedContentStyles } from '../../styles';
@@ -36,7 +35,7 @@ export class OverviewUnlockedSidejobs extends BaseComponent {
     return itemNames.map(this.renderListItem);
   };
 
-  private renderListItem = (sidejobName: SidejobName) => {
+  private renderListItem = (sidejobName: string) => {
     const title = SIDEJOB_TEXTS[sidejobName].title();
     const overview = SIDEJOB_TEXTS[sidejobName].overview();
 

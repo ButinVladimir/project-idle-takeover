@@ -1,4 +1,3 @@
-import { CloneTemplateName, SidejobName } from '@state/company-state';
 import { Faction, Feature, MapSpecialEvent } from '@shared/index';
 import { ProgramName } from '@state/mainframe-state';
 
@@ -13,8 +12,8 @@ export interface IStoryEvent {
   unlockFeatures?: Feature[];
   rewardDesigns?: {
     programs?: ProgramName[];
-    cloneTemplates?: CloneTemplateName[];
+    cloneTemplates?: string[];
   };
-  unlockSidejobs?: SidejobName[];
+  unlockSidejobs?: string[];
   specialEvents?: MapSpecialEvent[];
 }

@@ -13,14 +13,14 @@ export interface ISidejobTemplate {
   };
   rewards: {
     experience?: IExponent;
-    money?: number;
+    money?: IExponent;
     developmentPoints?: IExponent;
     influence?: IExponent;
-    codeBase?: number;
-    computationalBase?: number;
-    connectivity?: number;
-    rewards?: number;
-    processCompletionSpeed?: number;
-    experienceShareMultiplier?: number;
+    codeBase?: IExponent;
+    computationalBase?: IExponent;
+    connectivity?: IExponent;
+    rewards?: IExponent;
+    processCompletionSpeed?: IExponent;
+    experienceShareMultiplier?: IExponent;
   };
 }

@@ -19,7 +19,6 @@ import { type IMessageLogState } from '@state/message-log-state';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { IClone, IMakeCloneParameters } from './interfaces';
-import { CloneTemplateName } from './types';
 import { ICloneTemplate } from './interfaces/clone-template';
 
 const { lazyInject } = decorators;
@@ -42,7 +41,7 @@ export class Clone implements IClone {
 
   private _id: string;
   private _name: string;
-  private _templateName: CloneTemplateName;
+  private _templateName: string;
   private _template: ICloneTemplate;
   private _experience: number;
   private _level: number;
@@ -58,7 +57,7 @@ export class Clone implements IClone {
     this._id = parameters.id;
     this._name = parameters.name;
     this._templateName = parameters.templateName;
-    this._template = cloneTemplates[parameters.templateName] as ICloneTemplate;
+    this._template = (cloneTemplates as any as Record<string, ICloneTemplate>)[parameters.templateName];
     this._experience = parameters.experience;
     this._level = parameters.level;
     this._tier = parameters.tier;

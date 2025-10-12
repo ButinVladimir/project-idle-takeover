@@ -3,7 +3,6 @@ import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { NotificationType } from '@shared/index';
-import { SidejobName } from '@state/company-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type INotificationsState } from '@state/notifications-state';
 import { SIDEJOB_TEXTS } from '@texts/index';
@@ -19,25 +18,25 @@ export class AvailableSidejobsState implements IAvailableSidejobsState {
   @lazyInject(TYPES.NotificationsState)
   private _notificationsState!: INotificationsState;
 
-  private _unlockedSidejobs: Set<SidejobName>;
-  private _unlockedSidejobsList: SidejobName[];
+  private _unlockedSidejobs: Set<string>;
+  private _unlockedSidejobsList: string[];
 
   constructor() {
-    this._unlockedSidejobs = new Set<SidejobName>();
+    this._unlockedSidejobs = new Set<string>();
     this._unlockedSidejobsList = [];
 
     this._stateUiConnector.registerEventEmitter(this, ['_unlockedSidejobs', '_unlockedSidejobsList']);
   }
 
-  listUnlockedSidejobs(): SidejobName[] {
+  listUnlockedSidejobs(): string[] {
     return this._unlockedSidejobsList;
   }
 
-  isSidejobUnlocked(sidejob: SidejobName): boolean {
+  isSidejobUnlocked(sidejob: string): boolean {
     return this._unlockedSidejobs.has(sidejob);
   }
 
-  unlockSidejob(sidejob: SidejobName): void {
+  unlockSidejob(sidejob: string): void {
     if (this.isSidejobUnlocked(sidejob)) {
       return;
     }
@@ -48,7 +47,7 @@ export class AvailableSidejobsState implements IAvailableSidejobsState {
     this._notificationsState.pushNotification(NotificationType.sidejobUnlocked, this.makeUnlockSidejobMessage(sidejob));
   }
 
-  makeUnlockSidejobMessage(sidejob: SidejobName) {
+  makeUnlockSidejobMessage(sidejob: string) {
     return msg(str`Sidejob "${SIDEJOB_TEXTS[sidejob].title()}" has been unlocked.`);
   }
 

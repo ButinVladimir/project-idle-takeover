@@ -19,7 +19,6 @@ import {
   ISidejobTemplate,
   ISerializedSidejob,
 } from './interfaces';
-import { SidejobName } from './types';
 import { Sidejob } from './sidejob';
 import { DISTRICT_NAMES, SIDEJOB_TEXTS } from '@/texts';
 
@@ -56,8 +55,8 @@ export class CompanySidejobsState implements ICompanySidejobsState {
     this._stateUIConnector.registerEventEmitter(this, ['_sidejobsList']);
   }
 
-  getConnectivityRequirement(sidejobName: SidejobName): number {
-    const template = sidejobs[sidejobName] as ISidejobTemplate;
+  getConnectivityRequirement(sidejobName: string): number {
+    const template = (sidejobs as any as Record<string, ISidejobTemplate>)[sidejobName];
 
     return calculatePower(this._globalState.threat.level, template.requirements.connectivity);
   }

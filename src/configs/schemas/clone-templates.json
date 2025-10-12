@@ -1,0 +1,103 @@
+{
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "cost": {
+        "$ref": "./common/tiered-geometric-progression.json",
+        "description": "Clone cost"
+      },
+      "levelRequirements": {
+        "$ref": "./common/geometric-progression.json",
+        "description": "Clone level requirements"
+      },
+      "synchronization": {
+        "type": "object",
+        "description": "Clone required synchronization",
+        "properties": {
+          "multiplier": {
+            "type": "number",
+            "description": "Multiplier"
+          },
+          "baseTier": {
+            "type": "number",
+            "description": "Base of tier multiplier"
+          }
+        },
+        "required": ["multiplier", "baseTier"]
+      },
+      "experienceMultiplier": {
+        "$ref": "./common/tiered-geometric-progression.json",
+        "description": "Clone experience multiplier"
+      },
+      "attributes": {
+        "type": "object",
+        "description": "Clone attributes",
+        "properties": {
+          "strength": {
+            "$ref": "./common/tiered-geometric-progression.json",
+            "description": "Clone strength"
+          },
+          "endurance": {
+            "$ref": "./common/tiered-geometric-progression.json",
+            "description": "Clone endurance"
+          },
+          "agility": {
+            "$ref": "./common/tiered-geometric-progression.json",
+            "description": "Clone agility"
+          },
+          "perception": {
+            "$ref": "./common/tiered-geometric-progression.json",
+            "description": "Clone perception"
+          },
+          "intellect": {
+            "$ref": "./common/tiered-geometric-progression.json",
+            "description": "Clone intellect"
+          },
+          "charisma": {
+            "$ref": "./common/tiered-geometric-progression.json",
+            "description": "Clone charisma"
+          }
+        },
+        "required": ["strength", "endurance", "agility", "perception", "intellect", "charisma"]
+      },
+      "skills": {
+        "type": "object",
+        "description": "Clone skills",
+        "properties": {
+          "closeCombat": {
+            "$ref": "./common/tiered-geometric-progression.json",
+            "description": "Clone close combat"
+          },
+          "rangedCombat": {
+            "$ref": "./common/tiered-geometric-progression.json",
+            "description": "Clone ranged combat"
+          },
+          "engineering": {
+            "$ref": "./common/tiered-geometric-progression.json",
+            "description": "Clone engineering"
+          },
+          "hacking": {
+            "$ref": "./common/tiered-geometric-progression.json",
+            "description": "Clone hacking"
+          },
+          "stealth": {
+            "$ref": "./common/tiered-geometric-progression.json",
+            "description": "Clone stealth"
+          },
+          "diplomacy": {
+            "$ref": "./common/tiered-geometric-progression.json",
+            "description": "Clone diplomacy"
+          }
+        },
+        "required": ["closeCombat", "rangedCombat", "engineering", "hacking", "stealth", "diplomacy"]
+      }
+    },
+    "required": ["cost", "levelRequirements", "synchronization", "experienceMultiplier", "attributes", "skills"]
+  }
+}

@@ -196,11 +196,6 @@ export enum Skill {
   diplomacy = 'diplomacy',
 }
 
-export enum DistrictType {
-  residential = 'residential',
-  corpoDistrict = 'corpoDistrict',
-}
-
 export enum RewardParameter {
   money = 'money',
   developmentPoints = 'development-points',

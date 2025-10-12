@@ -9,7 +9,7 @@ export class NameValidatorFacade implements IValidatorFacade {
   @inject(VALIDATOR_TYPES.NameValidator)
   private _nameValidator!: INameValidator;
 
-  validate(): void {
+  async validate(): Promise<void> {
     console.log('Name validation has started');
 
     names.clones.forEach((name) => {

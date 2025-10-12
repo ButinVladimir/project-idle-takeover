@@ -5,7 +5,6 @@ import { localized, msg } from '@lit/localize';
 import { consume } from '@lit/context';
 import SlProgressBar from '@shoelace-style/shoelace/dist/components/progress-bar/progress-bar.component.js';
 import { BaseComponent, calculateLevelProgressPercentage } from '@shared/index';
-import { type SidejobName } from '@state/company-state';
 import { CityDistrictSidejobsListItemUnlockProgressController } from './controller';
 import { sidejobNameContext } from '../sidejobs-list-item/contexts';
 import { districtIndexContext } from '../../../../contexts';
@@ -22,7 +21,7 @@ export class CityDistrictSidejobsListItemUnlockProgress extends BaseComponent {
   _districtIndex!: number;
 
   @consume({ context: sidejobNameContext, subscribe: true })
-  private _sidejobName!: SidejobName;
+  private _sidejobName!: string;
 
   private _controller: CityDistrictSidejobsListItemUnlockProgressController;
 

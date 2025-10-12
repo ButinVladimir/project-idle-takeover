@@ -119,7 +119,6 @@ import {
   CompanyClonesState,
   ICompanyState,
   CompanyState,
-  CloneTemplateName,
   ICompanySidejobsState,
   CompanySidejobsState,
   ICompanyClonesLevelUpgrader,
@@ -199,7 +198,7 @@ container
   .whenTargetIsDefault();
 
 container
-  .bind<IAvailableCategoryItemsState<CloneTemplateName>>(TYPES.AvailableCloneTemplatesState)
+  .bind<IAvailableCategoryItemsState<string>>(TYPES.AvailableCloneTemplatesState)
   .to(AvailableCloneTemplatesState)
   .inSingletonScope()
   .whenTargetIsDefault();

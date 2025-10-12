@@ -183,7 +183,7 @@
           "description": "Boost to process completion speed by number of assigned cores"
         },
         "cost": {
-          "$ref": "./common/linear-progression.json",
+          "$ref": "./common/tiered-geometric-progression.json",
           "description": "Program cost"
         },
         "requiredFeatures": {

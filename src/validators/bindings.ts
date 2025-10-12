@@ -1,7 +1,29 @@
 import { ValidatorFacade } from './validator-facade';
-import { ProgramValidator, NameValidator, ThemeValidator } from './implementations';
-import { ProgramValidatorFacade, NameValidatorFacade, ThemeValidatorFacade } from './facades';
-import { INameValidator, IProgramValidator, IValidatorFacade, IThemeValidator } from './interfaces';
+import {
+  ProgramValidator,
+  NameValidator,
+  ThemeValidator,
+  CloneTemplateValidator,
+  SidejobValidator,
+  DistrictTypeValidator,
+} from './implementations';
+import {
+  ProgramValidatorFacade,
+  NameValidatorFacade,
+  ThemeValidatorFacade,
+  CloneTemplateValidatorFacade,
+  SidejobValidatorFacade,
+  DistrictTypeValidatorFacade,
+} from './facades';
+import {
+  INameValidator,
+  IProgramValidator,
+  IValidatorFacade,
+  IThemeValidator,
+  ICloneTemplateValidator,
+  ISidejobValidator,
+  IDistrictTypeValidator,
+} from './interfaces';
 import { validatorContainer } from './container';
 import { VALIDATOR_TYPES } from './types';
 
@@ -44,5 +66,41 @@ validatorContainer
 validatorContainer
   .bind<IThemeValidator>(VALIDATOR_TYPES.ThemeValidator)
   .to(ThemeValidator)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+validatorContainer
+  .bind<IValidatorFacade>(VALIDATOR_TYPES.CloneTemplateValidatorFacade)
+  .to(CloneTemplateValidatorFacade)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+validatorContainer
+  .bind<ICloneTemplateValidator>(VALIDATOR_TYPES.CloneTemplateValidator)
+  .to(CloneTemplateValidator)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+validatorContainer
+  .bind<IValidatorFacade>(VALIDATOR_TYPES.SidejobValidatorFacade)
+  .to(SidejobValidatorFacade)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+validatorContainer
+  .bind<ISidejobValidator>(VALIDATOR_TYPES.SidejobValidator)
+  .to(SidejobValidator)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+  validatorContainer
+  .bind<IValidatorFacade>(VALIDATOR_TYPES.DistrictTypeValidatorFacade)
+  .to(DistrictTypeValidatorFacade)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+validatorContainer
+  .bind<IDistrictTypeValidator>(VALIDATOR_TYPES.DistrictTypeValidator)
+  .to(DistrictTypeValidator)
   .inSingletonScope()
   .whenTargetIsDefault();

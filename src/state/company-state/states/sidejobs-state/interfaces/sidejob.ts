@@ -1,13 +1,12 @@
 import { Attribute, Skill } from '@shared/index';
 import { IDistrictState } from '@state/city-state';
 import { IClone } from '../../clone-factory';
-import { SidejobName } from '../types';
 import { IMakeSidejobParameters } from './make-sidejob-parameters';
 import { ISidejobTemplate } from './sidejob-template';
 
 export interface ISidejob {
   id: string;
-  sidejobName: SidejobName;
+  sidejobName: string;
   district: IDistrictState;
   isActive: boolean;
   assignedClone?: IClone;

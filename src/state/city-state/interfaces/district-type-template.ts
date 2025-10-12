@@ -2,8 +2,7 @@ import { IExponent } from '@shared/index';
 import { IDistrictTypeMultiplierParameters } from './district-type-multiplier-parameters';
 
 export interface IDistrictTypeTemplate {
-  captureDifficulty: IExponent;
-  activityDifficultyModifier: number;
+  activityRequirementModifier: number;
   parameters: {
     experience: IExponent;
     money: IExponent;

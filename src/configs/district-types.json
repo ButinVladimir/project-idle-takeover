@@ -1,7 +1,7 @@
 {
+  "$schema": "./schemas/district-types.json",
   "residential": {
-    "captureDifficulty": { "multiplier": 1, "base": 1 },
-    "activityDifficultyModifier": 1,
+    "activityRequirementModifier": 1,
     "parameters": {
       "experience": { "multiplier": 1, "base": 1.5 },
       "money": { "multiplier": 1, "base": 1.5 },
@@ -35,8 +35,7 @@
     }
   },
   "corpoDistrict": {
-    "captureDifficulty": { "multiplier": 2, "base": 1.01 },
-    "activityDifficultyModifier": 1,
+    "activityRequirementModifier": 1,
     "parameters": {
       "experience": { "multiplier": 1, "base": 1.1 },
       "money": { "multiplier": 10, "base": 1.1 },

@@ -1,5 +1,4 @@
 import { BaseController } from '@shared/index';
-import { CloneTemplateName } from '@state/company-state';
 
 export class PurchaseCloneDialogButtonsController extends BaseController {
   get money(): number {
@@ -14,11 +13,11 @@ export class PurchaseCloneDialogButtonsController extends BaseController {
     return this.globalState.synchronization.availableValue;
   }
 
-  getCloneCost(cloneTemplateName: CloneTemplateName, tier: number, level: number): number {
+  getCloneCost(cloneTemplateName: string, tier: number, level: number): number {
     return this.companyState.clones.calculateCloneCost(cloneTemplateName, tier, level);
   }
 
-  getCloneSynchronization(cloneTemplateName: CloneTemplateName, tier: number): number {
+  getCloneSynchronization(cloneTemplateName: string, tier: number): number {
     return this.companyState.clones.calculateCloneSynchronization(cloneTemplateName, tier);
   }
 }

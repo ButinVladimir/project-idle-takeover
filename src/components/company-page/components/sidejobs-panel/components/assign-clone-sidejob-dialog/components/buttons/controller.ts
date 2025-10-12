@@ -1,4 +1,3 @@
-import { SidejobName } from '@state/company-state';
 import { BaseController } from '@shared/base-controller';
 
 export class AssignCloneSidejobDialogButtonsController extends BaseController {
@@ -6,7 +5,7 @@ export class AssignCloneSidejobDialogButtonsController extends BaseController {
     return this.cityState.getDistrictState(districtIndex).parameters.connectivity.totalValue;
   }
 
-  getRequiredConnectivity(sidejobName: SidejobName): number {
+  getRequiredConnectivity(sidejobName: string): number {
     return this.companyState.sidejobs.getConnectivityRequirement(sidejobName);
   }
 

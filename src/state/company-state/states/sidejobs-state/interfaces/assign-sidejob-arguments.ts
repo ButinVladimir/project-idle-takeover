@@ -1,7 +1,5 @@
-import { SidejobName } from '../types';
-
 export interface IAssignSidejobArguments {
-  sidejobName: SidejobName;
+  sidejobName: string;
   districtIndex: number;
   assignedCloneId?: string;
 }

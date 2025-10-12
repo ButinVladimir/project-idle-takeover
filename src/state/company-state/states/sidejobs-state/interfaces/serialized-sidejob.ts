@@ -1,8 +1,6 @@
-import { SidejobName } from '../types';
-
 export interface ISerializedSidejob {
   id: string;
-  sidejobName: SidejobName;
+  sidejobName: string;
   districtIndex: number;
   assignedCloneId?: string;
 }

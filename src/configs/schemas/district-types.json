@@ -1,0 +1,110 @@
+{
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "activityRequirementModifier": {
+        "type": "number",
+        "description": "District type activity requirement modifier"
+      },
+      "parameters": {
+        "type": "object",
+        "description": "District type parameters",
+        "properties": {
+          "experience": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "District type experience modifier"
+          },
+          "money": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "District type money modifier"
+          },
+          "developmentPoints": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "District type development points modifier"
+          },
+          "influence": {
+            "type": "object",
+            "description": "District type faction influence values",
+            "properties": {
+              "requirements": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "District type faction influence requirements for the next tier"
+              },
+              "pointsMultiplier": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "District type faction influence modifier"
+              }
+            },
+            "required": ["requirements", "pointsMultiplier"]
+          },
+          "synchronization": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "District type synchronization modifier"
+          },
+          "connectivity": {
+            "type": "object",
+            "description": "District type connectivity values",
+            "properties": {
+              "pointsMultiplier": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "District type connectivity modifier for district points"
+              },
+              "programPointsMultiplier": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "District type connectivity modifier for program points"
+              }
+            },
+            "required": ["pointsMultiplier", "programPointsMultiplier"]
+          },
+          "codeBase": {
+            "$ref": "#/$defs/multiplierBaseParameters",
+            "description": "District type code base values"
+          },
+          "computationalBase": {
+            "$ref": "#/$defs/multiplierBaseParameters",
+            "description": "District type computational base values"
+          },
+          "rewards": {
+            "$ref": "#/$defs/multiplierBaseParameters",
+            "description": "District type rewards values"
+          },
+          "processCompletionSpeed": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "District type process completion speed modifier"
+          },
+          "experienceShareMultiplier": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "District type experience share multiplier modifier"
+          }
+        },
+        "required": ["experience", "money", "developmentPoints", "influence", "synchronization", "connectivity", "codeBase", "computationalBase", "rewards", "processCompletionSpeed", "experienceShareMultiplier"]
+      }
+    },
+    "required": ["activityRequirementModifier", "parameters"]
+  },
+  "$defs": {
+    "multiplierBaseParameters": {
+      "type": "object",
+      "properties": {
+        "pointsMultiplier": {
+          "$ref": "./common/geometric-progression.json",
+          "description": "Points modifier"
+        },
+        "pointsToSoftCap": {
+          "type": "number",
+          "description": "Points divisor"
+        },
+        "logBase": {
+          "type": "number",
+          "description": "Logarithmic base"
+        }
+      }
+    }
+  }
+}

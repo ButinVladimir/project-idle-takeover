@@ -1,8 +1,6 @@
-import { CloneTemplateName } from '../../clone-factory';
-
 export interface IPurchaseCloneArgs {
   name: string;
-  templateName: CloneTemplateName;
+  templateName: string;
   tier: number;
   level: number;
 }

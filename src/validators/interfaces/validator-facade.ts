@@ -1,3 +1,3 @@
 export interface IValidatorFacade {
-  validate(): void;
+  validate(): Promise<void>;
 }

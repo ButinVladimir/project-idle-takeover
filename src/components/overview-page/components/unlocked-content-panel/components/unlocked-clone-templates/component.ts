@@ -3,7 +3,6 @@ import { localized } from '@lit/localize';
 import { customElement, property } from 'lit/decorators.js';
 import { BaseComponent, HINT_ICON } from '@shared/index';
 import { CATEGORY_TEXTS, CLONE_TEMPLATE_TEXTS } from '@texts/index';
-import { CloneTemplateName } from '@state/company-state';
 import { OverviewUnlockedCloneTemplatesController } from './controller';
 import { unlockedItemsCategoryStyles } from '../../styles';
 import { ItemTypeFilter } from '../../types';
@@ -44,7 +43,7 @@ export class OverviewUnlockedCloneTemplates extends BaseComponent {
     return itemNames.map(this.renderListItem);
   };
 
-  private renderListItem = (itemName: CloneTemplateName) => {
+  private renderListItem = (itemName: string) => {
     const cloneTemplateTitle = CLONE_TEMPLATE_TEXTS[itemName].title();
     const cloneTemplateOverview = CLONE_TEMPLATE_TEXTS[itemName].overview();
     const tier = this.getItemTier(itemName);
@@ -74,7 +73,7 @@ export class OverviewUnlockedCloneTemplates extends BaseComponent {
     }
   }
 
-  private getItemTier(itemName: CloneTemplateName) {
+  private getItemTier(itemName: string) {
     switch (this.itemTypeFilter) {
       case ItemTypeFilter.all:
         return this._controller.getItemHighestAvailableTier(itemName);

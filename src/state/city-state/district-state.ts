@@ -1,6 +1,6 @@
 import districtTypes from '@configs/district-types.json';
 import { type IStateUIConnector } from '@state/state-ui-connector';
-import { IPoint, DistrictType, Faction } from '@shared/index';
+import { IPoint, Faction } from '@shared/index';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import {
@@ -23,7 +23,7 @@ export class DistrictState implements IDistrictState {
   private _index: number;
   private _name: string;
   private _startingPoint: IPoint;
-  private _districtType: DistrictType;
+  private _districtType: string;
   private _faction;
   private _state: DistrictUnlockState;
   private _parameters: IDistrictParameters;
@@ -39,7 +39,7 @@ export class DistrictState implements IDistrictState {
     this._state = args.state;
     this._parameters = new DistrictParameters(this);
 
-    this._template = districtTypes[this._districtType] as IDistrictTypeTemplate;
+    this._template = (districtTypes as any as Record<string, IDistrictTypeTemplate>)[this._districtType];
 
     this._stateUiConnector.registerEventEmitter(this, []);
   }
@@ -86,7 +86,7 @@ export class DistrictState implements IDistrictState {
     return this._startingPoint;
   }
 
-  get districtType(): DistrictType {
+  get districtType(): string {
     return this._districtType;
   }
 

@@ -1,13 +1,12 @@
 import { ProgramName } from '@state/mainframe-state';
-import { CloneTemplateName } from '@state/company-state';
 
 export interface IFactionValues {
   loans: {
     programs: ProgramName[];
-    cloneTemplates: CloneTemplateName[];
+    cloneTemplates: string[];
   };
   special: {
     programs: ProgramName[];
-    cloneTemplates: CloneTemplateName[];
+    cloneTemplates: string[];
   };
 }

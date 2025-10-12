@@ -1,5 +1,5 @@
 import { IPoint } from '@shared/interfaces/point';
-import { DistrictType, Faction } from '@shared/types';
+import { Faction } from '@shared/types';
 import { IDistrictSerializedState } from './serialized-states/district-serialized-state';
 import { DistrictUnlockState } from '../types';
 import { IDistrictParameters } from './district-parameters';
@@ -10,7 +10,7 @@ export interface IDistrictState {
   template: IDistrictTypeTemplate;
   name: string;
   startingPoint: IPoint;
-  districtType: DistrictType;
+  districtType: string;
   state: DistrictUnlockState;
   faction: Faction;
   parameters: IDistrictParameters;

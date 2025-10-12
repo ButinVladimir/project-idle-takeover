@@ -18,7 +18,6 @@ import {
   Skill,
   ClonesEvent,
   CloneAlert,
-  DistrictType,
   CityEvent,
   SidejobsEvent,
   SidejobAlert,
@@ -82,8 +81,8 @@ export const ATTRIBUTES: Attribute[] = Object.values(Attribute);
 
 export const SKILLS: Skill[] = Object.values(Skill);
 
-export const DISTRICT_TYPES = Object.values(DistrictType);
-
 export const RANDOM_TYPE = 'random';
 
 export const HOTKEYS = Object.values(Hotkey);
+
+export const SCHEMA_PROPERTY = '$schema';

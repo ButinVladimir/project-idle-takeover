@@ -1,10 +1,11 @@
 import { injectable } from 'inversify';
 import names from '@configs/names.json';
+import districtTypes from '@configs/district-types.json';
 import { decorators } from '@state/container';
 import { type IScenarioState } from '@state/scenario-state';
 import { type IGlobalState } from '@state/global-state';
 import { TYPES } from '@state/types';
-import { DistrictType, RandomQueue, DISTRICT_TYPES, RANDOM_TYPE } from '@shared/index';
+import { RandomQueue, RANDOM_TYPE, SCHEMA_PROPERTY } from '@shared/index';
 import {
   IDistrictInfoGenerator,
   IDistrictInfoGeneratorDistrictResult,
@@ -22,6 +23,8 @@ export class DistrictInfoGenerator implements IDistrictInfoGenerator {
   private _globalState!: IGlobalState;
 
   private _names!: RandomQueue<string>;
+
+  private _districtTypesList = Object.keys(districtTypes).filter((districtType) => districtType !== SCHEMA_PROPERTY);
 
   async generate(): Promise<IDistrictInfoGeneratorResult> {
     return new Promise((resolve) => {
@@ -56,12 +59,12 @@ export class DistrictInfoGenerator implements IDistrictInfoGenerator {
     const districtData = this._scenarioState.currentValues.map.districts[districtIndex];
 
     const name = this._names.pop();
-    let districtType: DistrictType;
+    let districtType: string;
 
     if (districtData.type === RANDOM_TYPE) {
-      districtType = this._globalState.random.choice(DISTRICT_TYPES);
+      districtType = this._globalState.random.choice(this._districtTypesList);
     } else {
-      districtType = districtData.type as DistrictType;
+      districtType = districtData.type;
     }
 
     const tier = this._globalState.random.randRange(districtData.tier.min, districtData.tier.max + 1);

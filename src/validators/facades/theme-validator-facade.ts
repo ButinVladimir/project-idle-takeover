@@ -9,7 +9,7 @@ export class ThemeValidatorFacade implements IValidatorFacade {
   @inject(VALIDATOR_TYPES.ThemeValidator)
   private _themeValidator!: IThemeValidator;
 
-  validate(): void {
+  async validate(): Promise<void> {
     console.log('Theme validation has started');
 
     Object.values(Theme).forEach((theme) => {

@@ -30,7 +30,7 @@ import {
   ICompanyClonesState,
   IPurchaseCloneArgs,
 } from './interfaces';
-import { CloneTemplateName, IMakeCloneParameters } from '../clone-factory';
+import { ICloneTemplate, IMakeCloneParameters } from '../clone-factory';
 
 const { lazyInject } = decorators;
 
@@ -79,19 +79,19 @@ export class CompanyClonesState implements ICompanyClonesState {
     return this._clonesMap.get(id);
   }
 
-  calculateCloneCost(templateName: CloneTemplateName, tier: number, level: number): number {
-    return calculateTierPower(level, tier, cloneTemplates[templateName].cost);
+  calculateCloneCost(templateName: string, tier: number, level: number): number {
+    return calculateTierPower(level, tier, this.getTemplate(templateName).cost);
   }
 
-  calculateCloneLevelFromMoney(templateName: CloneTemplateName, tier: number, money: number): number {
+  calculateCloneLevelFromMoney(templateName: string, tier: number, money: number): number {
     return Math.min(
-      reverseTierPower(money, tier, cloneTemplates[templateName].cost),
+      reverseTierPower(money, tier, this.getTemplate(templateName).cost),
       this._globalState.development.level,
     );
   }
 
-  calculateCloneSynchronization(templateName: CloneTemplateName, tier: number): number {
-    const template = cloneTemplates[templateName];
+  calculateCloneSynchronization(templateName: string, tier: number): number {
+    const template = this.getTemplate(templateName);
 
     return Math.ceil(
       template.synchronization.multiplier * calculateTierMultiplier(tier, template.synchronization.baseTier),
@@ -212,6 +212,10 @@ export class CompanyClonesState implements ICompanyClonesState {
     return {
       clones: this._clonesList.map(this.serializeClone),
     };
+  }
+
+  private getTemplate(templateName: string): ICloneTemplate {
+    return (cloneTemplates as any as Record<string, ICloneTemplate>)[templateName];
   }
 
   private serializeClone = (clone: IClone): IMakeCloneParameters => {

@@ -1,4 +1,4 @@
-import { IPurchaseCloneArgs, CloneTemplateName, IClone } from '@state/company-state';
+import { IPurchaseCloneArgs, IClone } from '@state/company-state';
 import { BaseController } from '@shared/base-controller';
 
 export class PurchaseCloneDialogController extends BaseController {
@@ -22,11 +22,11 @@ export class PurchaseCloneDialogController extends BaseController {
     return this.globalState.development.level;
   }
 
-  getHighestAvailableTier(cloneTemplateName: CloneTemplateName): number {
+  getHighestAvailableTier(cloneTemplateName: string): number {
     return this.unlockState.items.cloneTemplates.getItemHighestAvailableTier(cloneTemplateName);
   }
 
-  listAvailableCloneTemplates(): CloneTemplateName[] {
+  listAvailableCloneTemplates(): string[] {
     return this.unlockState.items.cloneTemplates.listAvailableItems();
   }
 
@@ -38,19 +38,19 @@ export class PurchaseCloneDialogController extends BaseController {
     return this.companyState.clones.generateCloneName();
   }
 
-  getCloneCost(cloneTemplateName: CloneTemplateName, tier: number, level: number): number {
+  getCloneCost(cloneTemplateName: string, tier: number, level: number): number {
     return this.companyState.clones.calculateCloneCost(cloneTemplateName, tier, level);
   }
 
-  getCloneSynchronization(cloneTemplateName: CloneTemplateName, tier: number): number {
+  getCloneSynchronization(cloneTemplateName: string, tier: number): number {
     return this.companyState.clones.calculateCloneSynchronization(cloneTemplateName, tier);
   }
 
-  isCloneAvailable(cloneTemplate: CloneTemplateName, tier: number, level: number): boolean {
+  isCloneAvailable(cloneTemplate: string, tier: number, level: number): boolean {
     return this.unlockState.items.cloneTemplates.isItemAvailable(cloneTemplate, tier, level);
   }
 
-  getClone(name: string, cloneTemplateName: CloneTemplateName, tier: number, level: number): IClone {
+  getClone(name: string, cloneTemplateName: string, tier: number, level: number): IClone {
     if (
       this._clone?.name !== name ||
       this._clone.templateName !== cloneTemplateName ||

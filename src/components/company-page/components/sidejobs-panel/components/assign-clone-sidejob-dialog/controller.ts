@@ -1,4 +1,4 @@
-import { IAssignSidejobArguments, IClone, ISidejob, SidejobName } from '@state/company-state';
+import { IAssignSidejobArguments, IClone, ISidejob } from '@state/company-state';
 import { BaseController } from '@shared/base-controller';
 import { IDistrictState } from '@/state/city-state';
 
@@ -15,7 +15,7 @@ export class AssignCloneSidejobDialogController extends BaseController {
     return this.companyState.clones.listClones();
   }
 
-  listAvailableSidejobs(): SidejobName[] {
+  listAvailableSidejobs(): string[] {
     return this.unlockState.activities.sidejobs.listUnlockedSidejobs();
   }
 
@@ -27,7 +27,7 @@ export class AssignCloneSidejobDialogController extends BaseController {
     return this.cityState.getDistrictState(districtIndex).parameters.connectivity.totalValue;
   }
 
-  getRequiredConnectivity(sidejobName: SidejobName): number {
+  getRequiredConnectivity(sidejobName: string): number {
     return this.companyState.sidejobs.getConnectivityRequirement(sidejobName);
   }
 

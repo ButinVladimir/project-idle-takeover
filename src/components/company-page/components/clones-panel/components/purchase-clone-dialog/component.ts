@@ -8,7 +8,6 @@ import SlInput from '@shoelace-style/shoelace/dist/components/input/input.compon
 import clamp from 'lodash/clamp';
 import { provide } from '@lit/context';
 import { BaseComponent } from '@shared/index';
-import { CloneTemplateName } from '@state/company-state/states/clone-factory/types';
 import { COMMON_TEXTS, CLONE_TEMPLATE_TEXTS } from '@texts/index';
 import { type IClone } from '@state/company-state';
 import { PurchaseCloneDialogCloseEvent } from './events';
@@ -46,7 +45,7 @@ export class PurchaseCloneDialog extends BaseComponent {
   private _name = '';
 
   @state()
-  private _cloneTemplateName?: CloneTemplateName = undefined;
+  private _cloneTemplateName?: string = undefined;
 
   @state()
   private _tier = 0;
@@ -200,7 +199,7 @@ Synchronization is earned by capturing districts and gaining certain favors.`)}
     }
   };
 
-  private renderCloneTemplateOption = (cloneTemplate: CloneTemplateName) => {
+  private renderCloneTemplateOption = (cloneTemplate: string) => {
     return html`<sl-option value=${cloneTemplate}> ${CLONE_TEMPLATE_TEXTS[cloneTemplate].title()} </sl-option>`;
   };
 
@@ -236,7 +235,7 @@ Synchronization is earned by capturing districts and gaining certain favors.`)}
       return;
     }
 
-    const cloneTemplateName = this._cloneTemplateInputRef.value.value as CloneTemplateName;
+    const cloneTemplateName = this._cloneTemplateInputRef.value.value as string;
     this._cloneTemplateName = cloneTemplateName;
   };
 

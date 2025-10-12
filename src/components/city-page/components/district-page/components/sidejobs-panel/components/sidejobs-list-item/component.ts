@@ -4,7 +4,6 @@ import { consume, provide } from '@lit/context';
 import { customElement, property } from 'lit/decorators.js';
 import { BaseComponent, HINT_ICON } from '@shared/index';
 import { SIDEJOB_TEXTS } from '@texts/index';
-import { SidejobName } from '@state/company-state';
 import { sidejobNameContext } from './contexts';
 import { districtIndexContext } from '../../../../contexts';
 import styles from './styles';
@@ -19,7 +18,7 @@ export class CityDistrictSidejobsListItem extends BaseComponent {
     attribute: 'sidejob-name',
     type: String,
   })
-  sidejobName!: SidejobName;
+  sidejobName!: string;
 
   protected hasMobileRender = true;
 

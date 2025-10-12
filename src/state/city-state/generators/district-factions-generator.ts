@@ -65,11 +65,11 @@ export class DistrictFactionsGenerator implements IDistrictFactionsGenerator {
 
       const districtInfo = this._districtInfos.districts.get(startingDistrict)!;
       const startingDistrictType = districtInfo.districtType;
-      const districtTypeData = districtTypes[startingDistrictType] as IDistrictTypeTemplate;
+      const districtTypeData = this.getDistrictTypeData(startingDistrictType);
 
       const startingDistrictDifficulty =
         this._cityState.getDistrictSize(startingDistrict) *
-        calculatePower(districtInfo.tier, districtTypeData.captureDifficulty);
+        calculatePower(districtInfo.tier, districtTypeData.parameters.influence.requirements);
 
       const districtQueue = new RandomQueue<number>(this._globalState.random);
 
@@ -103,12 +103,12 @@ export class DistrictFactionsGenerator implements IDistrictFactionsGenerator {
 
           const districtInfo = this._districtInfos.districts.get(nextDistrict)!;
           const districtType = districtInfo.districtType;
-          const districtTypeData = districtTypes[districtType] as IDistrictTypeTemplate;
+          const districtTypeData = this.getDistrictTypeData(districtType);
 
           const factionControlledArea = this._controlledAreaMap.get(index)!;
           const districtDifficulty =
             this._cityState.getDistrictSize(nextDistrict) *
-            calculatePower(districtInfo.tier, districtTypeData.captureDifficulty);
+            calculatePower(districtInfo.tier, districtTypeData.parameters.influence.requirements);
 
           if (!this._districtFactionIndexes.has(nextDistrict) && factionControlledArea >= districtDifficulty) {
             this._controlledAreaMap.set(index, factionControlledArea - districtDifficulty);
@@ -131,5 +131,9 @@ export class DistrictFactionsGenerator implements IDistrictFactionsGenerator {
         this._districtFactionIndexes.set(i, this._scenarioState.currentValues.map.startingFactionIndex);
       }
     }
+  }
+
+  private getDistrictTypeData(districtType: string): IDistrictTypeTemplate {
+    return (districtTypes as any as Record<string, IDistrictTypeTemplate>)[districtType];
   }
 }

@@ -7,4 +7,10 @@ export const VALIDATOR_TYPES = {
   NameValidatorFacade: Symbol('NameValidatorFacade'),
   ThemeValidator: Symbol('ThemeValidator'),
   ThemeValidatorFacade: Symbol('ThemeValidatorFacade'),
+  CloneTemplateValidator: Symbol('CloneTemplateValidator'),
+  CloneTemplateValidatorFacade: Symbol('CloneTemplateValidatorFacade'),
+  SidejobValidator: Symbol('SidejobValidator'),
+  SidejobValidatorFacade: Symbol('SidejobValidatorFacade'),
+  DistrictTypeValidator: Symbol('DistrictTypeValidator'),
+  DistrictTypeValidatorFacade: Symbol('DistrictTypeValidatorFacade'),
 }

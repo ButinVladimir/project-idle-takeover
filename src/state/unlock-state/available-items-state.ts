@@ -1,7 +1,6 @@
 import { injectable, inject } from 'inversify';
 import { TYPES } from '@state/types';
 import { ProgramName } from '@state/mainframe-state';
-import { CloneTemplateName } from '@state/company-state';
 import { IAvailableItemsSerializedState, IAvailableItemsState, type IAvailableCategoryItemsState } from './interfaces';
 
 @injectable()
@@ -10,13 +9,13 @@ export class AvailableItemsState implements IAvailableItemsState {
   private _availableProgramsState!: IAvailableCategoryItemsState<ProgramName>;
 
   @inject(TYPES.AvailableCloneTemplatesState)
-  private _availableCloneTemplatesState!: IAvailableCategoryItemsState<CloneTemplateName>;
+  private _availableCloneTemplatesState!: IAvailableCategoryItemsState<string>;
 
   get programs(): IAvailableCategoryItemsState<ProgramName> {
     return this._availableProgramsState;
   }
 
-  get cloneTemplates(): IAvailableCategoryItemsState<CloneTemplateName> {
+  get cloneTemplates(): IAvailableCategoryItemsState<string> {
     return this._availableCloneTemplatesState;
   }
 

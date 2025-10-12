@@ -9,8 +9,16 @@ export class ProgramValidatorFacade implements IValidatorFacade {
   @inject(VALIDATOR_TYPES.ProgramValidator)
   private _programValidator!: IProgramValidator;
 
-  validate(): void {
+  private _parameters!: {fn: (programName: ProgramName) => boolean, name: string}[];
+
+  async validate(): Promise<void> {
     console.log('Program validation has started');
+
+    this._parameters = [
+      { fn: this._programValidator.validateConfig, name: 'configuration' },
+      { fn: this._programValidator.validateTitle, name: 'title' },
+      { fn: this._programValidator.validateOverview, name: 'overview' },
+    ];
 
     Object.values(MultiplierProgramName).forEach((programName) => {
       this.validateProgram(programName);
@@ -26,13 +34,7 @@ export class ProgramValidatorFacade implements IValidatorFacade {
   }
 
   private validateProgram(programName: ProgramName) {
-    const parameters = [
-      { fn: this._programValidator.validateConfig, name: 'configuration' },
-      { fn: this._programValidator.validateTitle, name: 'title' },
-      { fn: this._programValidator.validateOverview, name: 'overview' },
-    ];
-
-    parameters.forEach((parameter) => {
+    this._parameters.forEach((parameter) => {
       const result = parameter.fn.call(this._programValidator, programName);
 
       if (!result) {

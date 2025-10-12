@@ -4,7 +4,6 @@ import { customElement, property } from 'lit/decorators.js';
 import { BaseComponent, capitalizeFirstLetter, Faction, Feature, MapSpecialEvent } from '@shared/index';
 import { StoryGoalState } from '@state/global-state';
 import { ProgramName } from '@state/mainframe-state';
-import { CloneTemplateName, SidejobName } from '@state/company-state';
 import { UNLOCKED_FEATURE_TEXTS, STORY_MESSAGES, SPECIAL_EVENTS_MESSAGES, FACTION_TEXTS } from '@texts/index';
 import { KEYS_SEPARATOR } from '../../../../constants';
 import styles from './styles';
@@ -181,7 +180,7 @@ export class OverviewStoryGoal extends BaseComponent {
       .split(KEYS_SEPARATOR)
       .map(
         (cloneTemplateName) =>
-          html`<p>${this._controller.makeCloneTemplateUnlockMessage(cloneTemplateName as CloneTemplateName)}</p>`,
+          html`<p>${this._controller.makeCloneTemplateUnlockMessage(cloneTemplateName)}</p>`,
       );
   };
 
@@ -192,6 +191,6 @@ export class OverviewStoryGoal extends BaseComponent {
 
     return this.sidejobs
       .split(KEYS_SEPARATOR)
-      .map((sidejobName) => html`<p>${this._controller.makeSidejobUnlockMessage(sidejobName as SidejobName)}</p>`);
+      .map((sidejobName) => html`<p>${this._controller.makeSidejobUnlockMessage(sidejobName)}</p>`);
   };
 }
