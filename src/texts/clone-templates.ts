@@ -1,9 +1,12 @@
 import { msg } from '@lit/localize';
 
-export const CLONE_TEMPLATE_TEXTS: Record<string, {
-  title: () => string;
-  overview: () => string;
-}> = {
+export const CLONE_TEMPLATE_TEXTS: Record<
+  string,
+  {
+    title: () => string;
+    overview: () => string;
+  }
+> = {
   anthrodrone: {
     title: () => msg('Anthrodrone'),
     overview: () =>

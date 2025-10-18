@@ -9,7 +9,7 @@ export class ProgramValidatorFacade implements IValidatorFacade {
   @inject(VALIDATOR_TYPES.ProgramValidator)
   private _programValidator!: IProgramValidator;
 
-  private _parameters!: {fn: (programName: ProgramName) => boolean, name: string}[];
+  private _parameters!: { fn: (programName: ProgramName) => boolean; name: string }[];
 
   async validate(): Promise<void> {
     console.log('Program validation has started');

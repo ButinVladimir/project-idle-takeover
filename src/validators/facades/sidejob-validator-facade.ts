@@ -10,7 +10,7 @@ export class SidejobValidatorFacade implements IValidatorFacade {
   @inject(VALIDATOR_TYPES.SidejobValidator)
   private _sidejobValidator!: ISidejobValidator;
 
-  private _parameters!: {fn: (sidejobName: string) => boolean, name: string}[];
+  private _parameters!: { fn: (sidejobName: string) => boolean; name: string }[];
 
   async validate(): Promise<void> {
     console.log('Sidejobs validation has started');
@@ -46,5 +46,4 @@ export class SidejobValidatorFacade implements IValidatorFacade {
 
     console.log(text);
   }
-
 }

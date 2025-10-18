@@ -1,4 +1,4 @@
-import { ProgramName } from "@state/mainframe-state";
+import { ProgramName } from '@state/mainframe-state';
 
 export interface IProgramValidator {
   validateConfig(programName: ProgramName): boolean;

@@ -1,7 +1,7 @@
 import { html, nothing } from 'lit';
 import { localized, msg, str } from '@lit/localize';
 import { customElement, property } from 'lit/decorators.js';
-import { BaseComponent, capitalizeFirstLetter, Faction, Feature, MapSpecialEvent } from '@shared/index';
+import { BaseComponent, capitalizeFirstLetter, type Faction, Feature, MapSpecialEvent } from '@shared/index';
 import { StoryGoalState } from '@state/global-state';
 import { ProgramName } from '@state/mainframe-state';
 import { UNLOCKED_FEATURE_TEXTS, STORY_MESSAGES, SPECIAL_EVENTS_MESSAGES, FACTION_TEXTS } from '@texts/index';
@@ -178,10 +178,7 @@ export class OverviewStoryGoal extends BaseComponent {
 
     return this.cloneTemplates
       .split(KEYS_SEPARATOR)
-      .map(
-        (cloneTemplateName) =>
-          html`<p>${this._controller.makeCloneTemplateUnlockMessage(cloneTemplateName)}</p>`,
-      );
+      .map((cloneTemplateName) => html`<p>${this._controller.makeCloneTemplateUnlockMessage(cloneTemplateName)}</p>`);
   };
 
   private renderSidejobs = () => {

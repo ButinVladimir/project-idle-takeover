@@ -4,3 +4,4 @@ export * from './theme-validator';
 export * from './clone-template-validator';
 export * from './sidejob-validator';
 export * from './district-type-validator';
+export * from './faction-validator';

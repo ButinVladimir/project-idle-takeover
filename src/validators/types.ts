@@ -1,4 +1,3 @@
-
 export const VALIDATOR_TYPES = {
   ValidatorFacade: Symbol('ValidatorFacade'),
   ProgramValidator: Symbol('ProgramValidator'),
@@ -13,4 +12,8 @@ export const VALIDATOR_TYPES = {
   SidejobValidatorFacade: Symbol('SidejobValidatorFacade'),
   DistrictTypeValidator: Symbol('DistrictTypeValidator'),
   DistrictTypeValidatorFacade: Symbol('DistrictTypeValidatorFacade'),
-}
+  FactionValidator: Symbol('FactionValidator'),
+  FactionValidatorFacade: Symbol('FactionValidatorFacade'),
+  ConstantsValidator: Symbol('ConstantsValidator'),
+  ConstantsValidatorFacade: Symbol('ConstantsValidatorFacade'),
+};

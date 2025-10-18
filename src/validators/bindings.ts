@@ -14,6 +14,8 @@ import {
   CloneTemplateValidatorFacade,
   SidejobValidatorFacade,
   DistrictTypeValidatorFacade,
+  FactionValidatorFacade,
+  ConstantsValidatorFacade,
 } from './facades';
 import {
   INameValidator,
@@ -23,9 +25,13 @@ import {
   ICloneTemplateValidator,
   ISidejobValidator,
   IDistrictTypeValidator,
+  IFactionValidator,
+  IConstantsValidator,
 } from './interfaces';
 import { validatorContainer } from './container';
 import { VALIDATOR_TYPES } from './types';
+import { FactionValidator } from './implementations/faction-validator';
+import { ConstantsValidator } from './implementations/constants-validator';
 
 validatorContainer
   .bind<IValidatorFacade>(VALIDATOR_TYPES.ValidatorFacade)
@@ -93,7 +99,7 @@ validatorContainer
   .inSingletonScope()
   .whenTargetIsDefault();
 
-  validatorContainer
+validatorContainer
   .bind<IValidatorFacade>(VALIDATOR_TYPES.DistrictTypeValidatorFacade)
   .to(DistrictTypeValidatorFacade)
   .inSingletonScope()
@@ -102,5 +108,29 @@ validatorContainer
 validatorContainer
   .bind<IDistrictTypeValidator>(VALIDATOR_TYPES.DistrictTypeValidator)
   .to(DistrictTypeValidator)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+validatorContainer
+  .bind<IValidatorFacade>(VALIDATOR_TYPES.FactionValidatorFacade)
+  .to(FactionValidatorFacade)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+validatorContainer
+  .bind<IFactionValidator>(VALIDATOR_TYPES.FactionValidator)
+  .to(FactionValidator)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+validatorContainer
+  .bind<IValidatorFacade>(VALIDATOR_TYPES.ConstantsValidatorFacade)
+  .to(ConstantsValidatorFacade)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+validatorContainer
+  .bind<IConstantsValidator>(VALIDATOR_TYPES.ConstantsValidator)
+  .to(ConstantsValidator)
   .inSingletonScope()
   .whenTargetIsDefault();

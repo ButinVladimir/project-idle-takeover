@@ -37,11 +37,7 @@ export enum Scenario {
   tutorial = 'tutorial',
 }
 
-export enum Faction {
-  neutral = 'neutral',
-  scavs = 'scavs',
-  wsa = 'wsa',
-}
+export type Faction = string | 'neutral' | 'scavs';
 
 export enum GameStateEvent {
   gameStarted = 'gameStarted',

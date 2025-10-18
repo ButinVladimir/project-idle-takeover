@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { DISTRICT_TYPE_TEXTS } from '@texts/index';
-import { IDistrictTypeValidator } from "../interfaces";
+import { IDistrictTypeValidator } from '../interfaces';
 
 @injectable()
 export class DistrictTypeValidator implements IDistrictTypeValidator {

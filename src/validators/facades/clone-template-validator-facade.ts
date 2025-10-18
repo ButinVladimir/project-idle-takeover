@@ -10,7 +10,7 @@ export class CloneTemplateValidatorFacade implements IValidatorFacade {
   @inject(VALIDATOR_TYPES.CloneTemplateValidator)
   private _cloneTemplateValidator!: ICloneTemplateValidator;
 
-  private _parameters!: {fn: (cloneTemplateName: string) => boolean, name: string}[];
+  private _parameters!: { fn: (cloneTemplateName: string) => boolean; name: string }[];
 
   async validate(): Promise<void> {
     console.log('Clone templates validation has started');
@@ -46,5 +46,4 @@ export class CloneTemplateValidatorFacade implements IValidatorFacade {
 
     console.log(text);
   }
-
 }

@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
-import { Faction, MapSpecialEvent, NotificationType } from '@shared/index';
+import { MapSpecialEvent, NotificationType } from '@shared/index';
 import { STORY_MESSAGES } from '@texts/story';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type INotificationsState } from '@state/notifications-state';
@@ -79,7 +79,7 @@ export class StoryEventsState implements IStoryEventsState {
   }
 
   visitStartingEvents(): void {
-    this.visitEvents({ level: -1, capturedDistrictsCount: -1, faction: Faction.neutral });
+    this.visitEvents({ level: -1, capturedDistrictsCount: -1, faction: 'neutral' });
   }
 
   private visitEventsImplementation(prevState: IStoryStateValues) {
@@ -176,7 +176,7 @@ export class StoryEventsState implements IStoryEventsState {
       return StoryGoalState.passed;
     }
 
-    if (currentStateValues.faction === Faction.neutral) {
+    if (currentStateValues.faction === 'neutral') {
       return StoryGoalState.available;
     }
 

@@ -1,9 +1,12 @@
 import { msg } from '@lit/localize';
 
-export const SIDEJOB_TEXTS: Record<string, {
-  title: () => string;
-  overview: () => string;
-}> = {
+export const SIDEJOB_TEXTS: Record<
+  string,
+  {
+    title: () => string;
+    overview: () => string;
+  }
+> = {
   oddjob: {
     title: () => msg('Oddjob'),
     overview: () => msg(`Performing random jobs not requiring high qualification.`),

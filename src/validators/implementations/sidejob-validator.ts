@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { SIDEJOB_TEXTS } from '@texts/index';
-import { ISidejobValidator } from "../interfaces";
+import { ISidejobValidator } from '../interfaces';
 
 @injectable()
 export class SidejobValidator implements ISidejobValidator {

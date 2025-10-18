@@ -10,7 +10,7 @@ export class DistrictTypeValidatorFacade implements IValidatorFacade {
   @inject(VALIDATOR_TYPES.DistrictTypeValidator)
   private _districtTypeValidator!: IDistrictTypeValidator;
 
-  private _parameters!: {fn: (districtTypeName: string) => boolean, name: string}[];
+  private _parameters!: { fn: (districtTypeName: string) => boolean; name: string }[];
 
   async validate(): Promise<void> {
     console.log('District types validation has started');
@@ -46,5 +46,4 @@ export class DistrictTypeValidatorFacade implements IValidatorFacade {
 
     console.log(text);
   }
-
 }

@@ -18,15 +18,15 @@
         "properties": {
           "experience": {
             "$ref": "./common/geometric-progression.json",
-            "description": "District type experience modifier"
+            "description": "District type experience modifier (geometric)"
           },
           "money": {
             "$ref": "./common/geometric-progression.json",
-            "description": "District type money modifier"
+            "description": "District type money modifier (geometric)"
           },
           "developmentPoints": {
             "$ref": "./common/geometric-progression.json",
-            "description": "District type development points modifier"
+            "description": "District type development points modifier (geometric)"
           },
           "influence": {
             "type": "object",
@@ -34,18 +34,18 @@
             "properties": {
               "requirements": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "District type faction influence requirements for the next tier"
+                "description": "District type faction influence requirements for the next tier (geometric)"
               },
               "pointsMultiplier": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "District type faction influence modifier"
+                "description": "District type faction influence modifier (geometric)"
               }
             },
             "required": ["requirements", "pointsMultiplier"]
           },
           "synchronization": {
             "$ref": "./common/geometric-progression.json",
-            "description": "District type synchronization modifier"
+            "description": "District type synchronization modifier (geometric)"
           },
           "connectivity": {
             "type": "object",
@@ -53,11 +53,11 @@
             "properties": {
               "pointsMultiplier": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "District type connectivity modifier for district points"
+                "description": "District type connectivity modifier for district points (geometric)"
               },
               "programPointsMultiplier": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "District type connectivity modifier for program points"
+                "description": "District type connectivity modifier for program points (geometric)"
               }
             },
             "required": ["pointsMultiplier", "programPointsMultiplier"]
@@ -76,14 +76,26 @@
           },
           "processCompletionSpeed": {
             "$ref": "./common/geometric-progression.json",
-            "description": "District type process completion speed modifier"
+            "description": "District type process completion speed modifier (geometric)"
           },
           "experienceShareMultiplier": {
             "$ref": "./common/geometric-progression.json",
-            "description": "District type experience share multiplier modifier"
+            "description": "District type experience share multiplier modifier (geometric)"
           }
         },
-        "required": ["experience", "money", "developmentPoints", "influence", "synchronization", "connectivity", "codeBase", "computationalBase", "rewards", "processCompletionSpeed", "experienceShareMultiplier"]
+        "required": [
+          "experience",
+          "money",
+          "developmentPoints",
+          "influence",
+          "synchronization",
+          "connectivity",
+          "codeBase",
+          "computationalBase",
+          "rewards",
+          "processCompletionSpeed",
+          "experienceShareMultiplier"
+        ]
       }
     },
     "required": ["activityRequirementModifier", "parameters"]
@@ -94,7 +106,7 @@
       "properties": {
         "pointsMultiplier": {
           "$ref": "./common/geometric-progression.json",
-          "description": "Points modifier"
+          "description": "Points modifier (geometric)"
         },
         "pointsToSoftCap": {
           "type": "number",

@@ -10,15 +10,15 @@
     "properties": {
       "cost": {
         "$ref": "./common/tiered-geometric-progression.json",
-        "description": "Clone cost"
+        "description": "Clone cost (tiered geometric)"
       },
       "levelRequirements": {
         "$ref": "./common/geometric-progression.json",
-        "description": "Clone level requirements"
+        "description": "Clone level requirements (geometric)"
       },
       "synchronization": {
         "type": "object",
-        "description": "Clone required synchronization",
+        "description": "Clone required synchronization (tiered)",
         "properties": {
           "multiplier": {
             "type": "number",
@@ -32,7 +32,7 @@
         "required": ["multiplier", "baseTier"]
       },
       "experienceMultiplier": {
-        "$ref": "./common/tiered-geometric-progression.json",
+        "$ref": "./common/tiered-linear-progression.json",
         "description": "Clone experience multiplier"
       },
       "attributes": {
@@ -40,28 +40,28 @@
         "description": "Clone attributes",
         "properties": {
           "strength": {
-            "$ref": "./common/tiered-geometric-progression.json",
-            "description": "Clone strength"
+            "$ref": "./common/tiered-linear-progression.json",
+            "description": "Clone strength (tiered linear)"
           },
           "endurance": {
-            "$ref": "./common/tiered-geometric-progression.json",
-            "description": "Clone endurance"
+            "$ref": "./common/tiered-linear-progression.json",
+            "description": "Clone endurance (tiered linear)"
           },
           "agility": {
-            "$ref": "./common/tiered-geometric-progression.json",
-            "description": "Clone agility"
+            "$ref": "./common/tiered-linear-progression.json",
+            "description": "Clone agility (tiered linear)"
           },
           "perception": {
-            "$ref": "./common/tiered-geometric-progression.json",
-            "description": "Clone perception"
+            "$ref": "./common/tiered-linear-progression.json",
+            "description": "Clone perception (tiered linear)"
           },
           "intellect": {
-            "$ref": "./common/tiered-geometric-progression.json",
-            "description": "Clone intellect"
+            "$ref": "./common/tiered-linear-progression.json",
+            "description": "Clone intellect (tiered linear)"
           },
           "charisma": {
-            "$ref": "./common/tiered-geometric-progression.json",
-            "description": "Clone charisma"
+            "$ref": "./common/tiered-linear-progression.json",
+            "description": "Clone charisma (tiered linear)"
           }
         },
         "required": ["strength", "endurance", "agility", "perception", "intellect", "charisma"]
@@ -71,28 +71,28 @@
         "description": "Clone skills",
         "properties": {
           "closeCombat": {
-            "$ref": "./common/tiered-geometric-progression.json",
-            "description": "Clone close combat"
+            "$ref": "./common/tiered-linear-progression.json",
+            "description": "Clone close combat (tiered linear)"
           },
           "rangedCombat": {
-            "$ref": "./common/tiered-geometric-progression.json",
-            "description": "Clone ranged combat"
+            "$ref": "./common/tiered-linear-progression.json",
+            "description": "Clone ranged combat (tiered linear)"
           },
           "engineering": {
-            "$ref": "./common/tiered-geometric-progression.json",
-            "description": "Clone engineering"
+            "$ref": "./common/tiered-linear-progression.json",
+            "description": "Clone engineering (tiered linear)"
           },
           "hacking": {
-            "$ref": "./common/tiered-geometric-progression.json",
-            "description": "Clone hacking"
+            "$ref": "./common/tiered-linear-progression.json",
+            "description": "Clone hacking (tiered linear)"
           },
           "stealth": {
-            "$ref": "./common/tiered-geometric-progression.json",
-            "description": "Clone stealth"
+            "$ref": "./common/tiered-linear-progression.json",
+            "description": "Clone stealth (tiered linear)"
           },
           "diplomacy": {
-            "$ref": "./common/tiered-geometric-progression.json",
-            "description": "Clone diplomacy"
+            "$ref": "./common/tiered-linear-progression.json",
+            "description": "Clone diplomacy (tiered linear)"
           }
         },
         "required": ["closeCombat", "rangedCombat", "engineering", "hacking", "stealth", "diplomacy"]

@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "neutral": {
+      "$ref": "#/$defs/faction",
+      "description": "Starting neutral faction"
+    },
+    "scavs": {
+      "$ref": "#/$defs/faction",
+      "description": "Map neutral faction"
+    }
+  },
+  "additionalProperties": {
+    "$ref": "#/$defs/faction"
+  },
+  "required": ["neutral", "scavs"],
+  "$defs": {
+    "items": {
+      "type": "object",
+      "properties": {
+        "programs": {
+          "type": "array",
+          "description": "Programs",
+          "items": {
+            "$ref": "./common/program-name.json",
+            "description": "Program name"
+          }
+        },
+        "cloneTemplates": {
+          "type": "array",
+          "description": "Clone templates",
+          "items": {
+            "type": "string",
+            "description": "Clone template name",
+            "minLength": 1
+          }
+        }
+      },
+      "required": ["programs", "cloneTemplates"]
+    },
+    "faction": {
+      "type": "object",
+      "description": "Faction items",
+      "properties": {
+        "loans": {
+          "$ref": "#/$defs/items",
+          "description": "Loaned items"
+        },
+        "special": {
+          "$ref": "#/$defs/items",
+          "description": "Special items, available only as designs"
+        }
+      },
+      "required": ["loans", "special"]
+    }
+  }
+}

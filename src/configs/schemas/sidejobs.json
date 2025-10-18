@@ -14,7 +14,7 @@
         "properties": {
           "connectivity": {
             "$ref": "./common/geometric-progression.json",
-            "description": "Sidejob connectivity requirement"
+            "description": "Sidejob connectivity requirement (geometric)"
           },
           "attributes": {
             "type": "object",
@@ -22,27 +22,27 @@
             "properties": {
               "strength": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob strength requirement"
+                "description": "Sidejob strength requirement (geometric)"
               },
               "endurance": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob endurance requirement"
+                "description": "Sidejob endurance requirement (geometric)"
               },
               "agility": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob agility requirement"
+                "description": "Sidejob agility requirement (geometric)"
               },
               "perception": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob perception requirement"
+                "description": "Sidejob perception requirement (geometric)"
               },
               "intellect": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob intellect requirement"
+                "description": "Sidejob intellect requirement (geometric)"
               },
               "charisma": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob charisma requirement"
+                "description": "Sidejob charisma requirement (geometric)"
               }
             }
           },
@@ -52,27 +52,27 @@
             "properties": {
               "closeCombat": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob close combat requirement"
+                "description": "Sidejob close combat requirement (geometric)"
               },
               "rangedCombat": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob ranged combat requirement"
+                "description": "Sidejob ranged combat requirement (geometric)"
               },
               "engineering": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob engineering requirement"
+                "description": "Sidejob engineering requirement (geometric)"
               },
               "hacking": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob hacking requirement"
+                "description": "Sidejob hacking requirement (geometric)"
               },
               "stealth": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob stealth requirement"
+                "description": "Sidejob stealth requirement (geometric)"
               },
               "diplomacy": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob diplomacy requirement"
+                "description": "Sidejob diplomacy requirement (geometric)"
               }
             }
           }
@@ -89,27 +89,27 @@
             "properties": {
               "strength": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob strength reward modifier"
+                "description": "Sidejob strength reward modifier (geometric)"
               },
               "endurance": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob endurance reward modifier"
+                "description": "Sidejob endurance reward modifier (geometric)"
               },
               "agility": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob agility reward modifier"
+                "description": "Sidejob agility reward modifier (geometric)"
               },
               "perception": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob perception reward modifier"
+                "description": "Sidejob perception reward modifier (geometric)"
               },
               "intellect": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob intellect reward modifier"
+                "description": "Sidejob intellect reward modifier (geometric)"
               },
               "charisma": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob charisma reward modifier"
+                "description": "Sidejob charisma reward modifier (geometric)"
               }
             }
           },
@@ -119,27 +119,27 @@
             "properties": {
               "closeCombat": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob close combat reward modifier"
+                "description": "Sidejob close combat reward modifier (geometric)"
               },
               "rangedCombat": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob ranged combat reward modifier"
+                "description": "Sidejob ranged combat reward modifier (geometric)"
               },
               "engineering": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob engineering reward modifier"
+                "description": "Sidejob engineering reward modifier (geometric)"
               },
               "hacking": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob hacking reward modifier"
+                "description": "Sidejob hacking reward modifier (geometric)"
               },
               "stealth": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob stealth reward modifier"
+                "description": "Sidejob stealth reward modifier (geometric)"
               },
               "diplomacy": {
                 "$ref": "./common/geometric-progression.json",
-                "description": "Sidejob diplomacy reward modifier"
+                "description": "Sidejob diplomacy reward modifier (geometric)"
               }
             }
           }
@@ -152,43 +152,43 @@
         "properties": {
           "experience": {
             "$ref": "./common/geometric-progression.json",
-            "description": "Sidejob experience reward"
+            "description": "Sidejob experience reward (geometric)"
           },
           "money": {
             "$ref": "./common/geometric-progression.json",
-            "description": "Sidejob money reward"
+            "description": "Sidejob money reward (geometric)"
           },
           "developmentPoints": {
             "$ref": "./common/geometric-progression.json",
-            "description": "Sidejob development points reward"
+            "description": "Sidejob development points reward (geometric)"
           },
           "influence": {
             "$ref": "./common/geometric-progression.json",
-            "description": "Sidejob faction influence points reward"
+            "description": "Sidejob faction influence points reward (geometric)"
           },
           "connectivity": {
             "$ref": "./common/geometric-progression.json",
-            "description": "Sidejob connectivity points reward"
+            "description": "Sidejob connectivity points reward (geometric)"
           },
           "codeBase": {
             "$ref": "./common/geometric-progression.json",
-            "description": "Sidejob code base points reward"
+            "description": "Sidejob code base points reward (geometric)"
           },
           "computationalBase": {
             "$ref": "./common/geometric-progression.json",
-            "description": "Sidejob computational base points reward"
+            "description": "Sidejob computational base points reward (geometric)"
           },
           "rewards": {
             "$ref": "./common/geometric-progression.json",
-            "description": "Sidejob rewards points reward"
+            "description": "Sidejob rewards points reward (geometric)"
           },
           "processCompletionSpeed": {
             "$ref": "./common/geometric-progression.json",
-            "description": "Sidejob process completion speed modifier"
+            "description": "Sidejob process completion speed modifier (geometric)"
           },
           "experienceShareMultiplier": {
             "$ref": "./common/geometric-progression.json",
-            "description": "Sidejob experience share multiplier modifier"
+            "description": "Sidejob experience share multiplier modifier (geometric)"
           }
         }
       }

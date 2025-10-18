@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { CLONE_NAMES, DISTRICT_NAMES } from '@texts/index';
-import { INameValidator } from "../interfaces";
+import { INameValidator } from '../interfaces';
 
 @injectable()
 export class NameValidator implements INameValidator {

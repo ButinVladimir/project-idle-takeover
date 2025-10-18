@@ -1,0 +1,200 @@
+{
+  "type": "object",
+  "properties": {
+    "startingScenario": {
+      "type": "string",
+      "description": "Starting scenario",
+      "minLength": 1
+    },
+    "defaultSettings": {
+      "type": "object",
+      "description": "Default settings",
+      "properties": {
+        "messageLogSize": {
+          "type": "integer",
+          "description": "Message log size",
+          "minimum": 1
+        },
+        "toastDuration": {
+          "type": "number",
+          "description": "Duration of toast messages",
+          "minimum": 0
+        },
+        "updateInterval": {
+          "type": "number",
+          "description": "Interval between ticks (ms)",
+          "minimum": 1
+        },
+        "autosaveEnabledOnHide": {
+          "type": "boolean",
+          "description": "Autosave on hide/close tab"
+        },
+        "autosaveInterval": {
+          "type": "number",
+          "description": "Autosave interval (ms)",
+          "minimum": 1
+        },
+        "fastSpeedMultiplier": {
+          "type": "integer",
+          "description": "Multiplier to amount of updates per tick when game speed is fast",
+          "minimum": 2
+        },
+        "maxUpdatesPerTick": {
+          "type": "integer",
+          "description": "Max amount of updates per tick",
+          "minimum": 2
+        },
+        "longNumberFormat": {
+          "type": "string",
+          "description": "Long number format",
+          "enum": ["short", "long", "scientific", "engineering"]
+        },
+        "hotkeys": {
+          "type": "object",
+          "description": "Hotkeys",
+          "properties": {
+            "pause": {
+              "type": "string",
+              "description": "Pause"
+            },
+            "playNormalSpeed": {
+              "type": "string",
+              "description": "Play on normal speed"
+            },
+            "playFastSpeed": {
+              "type": "string",
+              "description": "Play on fast speed"
+            },
+            "saveGame": {
+              "type": "string",
+              "description": "Save the game"
+            },
+            "upgradeMainframeHardware": {
+              "type": "string",
+              "description": "Upgrade mainframe hardware"
+            },
+            "upgradeMainframePerformance": {
+              "type": "string",
+              "description": "Upgrade mainframe performance"
+            },
+            "upgradeMainframeRam": {
+              "type": "string",
+              "description": "Upgrade mainframe ram"
+            },
+            "upgradeMainframeCores": {
+              "type": "string",
+              "description": "Upgrade mainframe cores"
+            },
+            "upgradeMainframePrograms": {
+              "type": "string",
+              "description": "Upgrade mainframe programs"
+            },
+            "upgradeClonesLevel": {
+              "type": "string",
+              "description": "Upgrade clones level"
+            }
+          },
+          "required": [
+            "pause",
+            "playNormalSpeed",
+            "playFastSpeed",
+            "saveGame",
+            "upgradeMainframeHardware",
+            "upgradeMainframePerformance",
+            "upgradeMainframeRam",
+            "upgradeMainframeCores",
+            "upgradeMainframePrograms",
+            "upgradeClonesLevel"
+          ]
+        }
+      },
+      "required": [
+        "messageLogSize",
+        "toastDuration",
+        "updateInterval",
+        "autosaveEnabledOnHide",
+        "autosaveInterval",
+        "fastSpeedMultiplier",
+        "maxUpdatesPerTick",
+        "longNumberFormat",
+        "hotkeys"
+      ]
+    },
+    "defaultAutomationSettings": {
+      "type": "object",
+      "description": "Default automation settings",
+      "properties": {
+        "mainframeHardwareAutobuyer": {
+          "type": "object",
+          "description": "Default hardware autobuyer settings",
+          "properties": {
+            "moneyShare": {
+              "type": "number",
+              "description": "Money share"
+            },
+            "priority": {
+              "type": "array",
+              "description": "Upgrades priority",
+              "items": {
+                "type": "string",
+                "description": "Upgrade",
+                "enum": ["performance", "ram", "cores"]
+              },
+              "uniqueItems": true,
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "required": ["moneyShare", "priority"]
+        },
+        "mainframeProgramsAutobuyer": {
+          "type": "object",
+          "description": "Default program autobuyer settings",
+          "properties": {
+            "moneyShare": {
+              "type": "number",
+              "description": "Money share"
+            }
+          },
+          "required": ["moneyShare"]
+        },
+        "cloneLevelAutoupgrader": {
+          "type": "object",
+          "description": "Default clone level autoupgrader settings",
+          "properties": {
+            "moneyShare": {
+              "type": "number",
+              "description": "Money share"
+            }
+          },
+          "required": ["moneyShare"]
+        }
+      },
+      "required": ["mainframeHardwareAutobuyer", "mainframeProgramsAutobuyer", "cloneLevelAutoupgrader"]
+    },
+    "menuUnlockRequirements": {
+      "type": "object",
+      "description": "Required features for menu",
+      "properties": {
+        "city": {
+          "$ref": "./common/feature.json",
+          "description": "City"
+        },
+        "company": {
+          "$ref": "./common/feature.json",
+          "description": "Company"
+        },
+        "automation": {
+          "$ref": "./common/feature.json",
+          "description": "Automation"
+        },
+        "factions": {
+          "$ref": "./common/feature.json",
+          "description": "Factions"
+        }
+      },
+      "required": ["city", "company", "automation", "factions"]
+    }
+  },
+  "required": ["startingScenario", "defaultSettings", "defaultAutomationSettings", "menuUnlockRequirements"]
+}

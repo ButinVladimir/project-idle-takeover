@@ -40,7 +40,7 @@ export class FactionState implements IFactionState {
 
   constructor() {
     this._joiningFactionAvailable = false;
-    this.currentFaction = Faction.neutral;
+    this.currentFaction = 'neutral';
     this._allFactionsList = [];
     this._availableFactionsList = [];
 
@@ -70,7 +70,7 @@ export class FactionState implements IFactionState {
   }
 
   getFactionValues(faction: Faction): IFactionValues {
-    return merge({}, factions[faction]) as IFactionValues;
+    return merge({}, (factions as any as Record<Faction, IFactionValues>)[faction]) as IFactionValues;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -103,7 +103,7 @@ export class FactionState implements IFactionState {
   }
 
   joinFaction(faction: Faction): boolean {
-    if (this._currentFaction !== Faction.neutral) {
+    if (this._currentFaction !== 'neutral') {
       return false;
     }
 
@@ -122,7 +122,7 @@ export class FactionState implements IFactionState {
       ),
     );
 
-    this._scenarioState.storyEvents.visitEvents({ faction: Faction.neutral });
+    this._scenarioState.storyEvents.visitEvents({ faction: 'neutral' });
 
     return true;
   }
@@ -132,7 +132,7 @@ export class FactionState implements IFactionState {
 
     this.makeAllFactionsList();
 
-    this.currentFaction = this.getFactionByIndex(this._scenarioState.currentValues.map.startingFactionIndex);
+    this.currentFaction = 'neutral';
 
     this.updateAvailableFactions();
   }
@@ -169,7 +169,7 @@ export class FactionState implements IFactionState {
   private updateAvailableFactions() {
     this._availableFactionsList.length = 0;
 
-    if (this._currentFaction !== Faction.neutral) {
+    if (this._currentFaction !== 'neutral') {
       return;
     }
 

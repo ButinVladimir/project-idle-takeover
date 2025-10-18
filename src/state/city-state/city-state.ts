@@ -205,7 +205,6 @@ export class CityState implements ICityState {
 
     const mapValues = this._scenarioState.currentValues.map;
     const startingDistrict = mapValues.factions[mapValues.startingFactionIndex].startingDistrict;
-    const startingFaction = this._factionState.getFactionByIndex(mapValues.startingFactionIndex);
 
     for (
       let districtIndex = 0;
@@ -231,11 +230,7 @@ export class CityState implements ICityState {
       this._districts.set(districtIndex, district);
     }
 
-    if (startingFaction !== Faction.neutral) {
-      this.updateDistrictsStateAfterJoiningFaction(startingFaction);
-    } else {
-      this.recalculateDistrictsState();
-    }
+    this.recalculateDistrictsState();
   }
 
   private updateAvailableDistrictsList() {

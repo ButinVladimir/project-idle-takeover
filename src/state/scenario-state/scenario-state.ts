@@ -1,5 +1,4 @@
 import { inject, injectable } from 'inversify';
-import merge from 'lodash/merge';
 import { Scenario } from '@shared/types';
 import constants from '@configs/constants.json';
 import scenarios from '@configs/scenarios.json';
@@ -36,7 +35,7 @@ export class ScenarioState implements IScenarioState {
   }
 
   getScenarioValues(scenario: Scenario): IScenarioValues {
-    return merge({}, constants.defaultScenarioSettings, scenarios[scenario]) as IScenarioValues;
+    return scenarios[scenario] as IScenarioValues;
   }
 
   async startNewState(): Promise<void> {

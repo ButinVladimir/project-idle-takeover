@@ -1,8 +1,8 @@
 import { injectable } from 'inversify';
 import programs from '@configs/programs.json';
-import { ProgramName } from "@state/mainframe-state";
+import { ProgramName } from '@state/mainframe-state';
 import { PROGRAM_TEXTS } from '@texts/index';
-import { IProgramValidator } from "../interfaces";
+import { IProgramValidator } from '../interfaces';
 
 @injectable()
 export class ProgramValidator implements IProgramValidator {

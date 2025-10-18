@@ -73,7 +73,7 @@
           "properties": {
             "codeBase": {
               "$ref": "./common/tiered-linear-progression.json",
-              "description": "Code base values"
+              "description": "Code base values (tiered linear)"
             }
           },
           "required": ["codeBase"]
@@ -91,7 +91,7 @@
           "properties": {
             "computationalBase": {
               "$ref": "./common/tiered-linear-progression.json",
-              "description": "Computational base values"
+              "description": "Computational base values (tiered linear)"
             }
           },
           "required": ["computationalBase"]
@@ -109,7 +109,7 @@
           "properties": {
             "connectivity": {
               "$ref": "./common/tiered-linear-progression.json",
-              "description": "Connectivity values"
+              "description": "Connectivity values (tiered linear)"
             }
           },
           "required": ["connectivity"]
@@ -127,7 +127,7 @@
           "properties": {
             "rewards": {
               "$ref": "./common/tiered-linear-progression.json",
-              "description": "Rewards values"
+              "description": "Rewards values (tiered linear)"
             }
           },
           "required": ["rewards"]
@@ -176,15 +176,15 @@
         },
         "levelSpeedBoost": {
           "$ref": "./common/linear-progression.json",
-          "description": "Boost to process completion speed by program level"
+          "description": "Boost to process completion speed by program level (linear)"
         },
         "coreSpeedBoost": {
           "$ref": "./common/linear-progression.json",
-          "description": "Boost to process completion speed by number of assigned cores"
+          "description": "Boost to process completion speed by number of assigned cores (linear)"
         },
         "cost": {
           "$ref": "./common/tiered-geometric-progression.json",
-          "description": "Program cost"
+          "description": "Program cost (geometric)"
         },
         "requiredFeatures": {
           "type": "array",
@@ -201,7 +201,7 @@
       "properties": {
         "main": {
           "$ref": "./common/tiered-linear-progression.json",
-          "description": "Multipliers by program level and tier"
+          "description": "Multipliers by program level and tier (tiered linear)"
         },
         "ram": { "$ref": "./common/linear-progression.json", "description": "Multipliers by assigned RAM" },
         "cores": { "$ref": "./common/linear-progression.json", "description": "Multipliers by assigned cores" }
