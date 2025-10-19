@@ -1,0 +1,370 @@
+{
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "map": {
+        "type": "object",
+        "description": "Scenario map settings",
+        "properties": {
+          "width": {
+            "type": "integer",
+            "description": "Map width",
+            "minimum": 1
+          },
+          "height": {
+            "type": "integer",
+            "description": "Map height",
+            "minimum": 1
+          },
+          "districts": {
+            "type": "array",
+            "description": "Map districts",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "description": "District",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "District type"
+                },
+                "tier": {
+                  "type": "object",
+                  "description": "District tier range",
+                  "properties": {
+                    "min": {
+                      "type": "integer",
+                      "description": "District tier minimum",
+                      "minimum": 0
+                    },
+                    "max": {
+                      "type": "integer",
+                      "description": "District tier maximum",
+                      "minimum": 0
+                    }
+                  },
+                  "required": ["min", "max"]
+                }
+              },
+              "required": ["type", "tier"]
+            }
+          },
+          "factions": {
+            "type": "array",
+            "description": "Map factions",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "description": "Faction",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Faction name",
+                  "minLength": 1
+                },
+                "startingDistrict": {
+                  "type": "integer",
+                  "description": "Faction starting district",
+                  "minimum": 0
+                },
+                "controlledArea": {
+                  "type": "number",
+                  "description": "Faction controlled area",
+                  "minimum": 0
+                },
+                "canBeJoined": {
+                  "type": "boolean",
+                  "description": "Can faction be joined"
+                }
+              },
+              "required": ["name", "startingDistrict", "controlledArea", "canBeJoined"]
+            }
+          },
+          "neutralFactionIndex": {
+            "type": "number",
+            "description": "Neutral faction index",
+            "minimum": 0
+          },
+          "startingDistrict": {
+            "type": "number",
+            "description": "Starting district",
+            "minimum": 0
+          }
+        },
+        "required": ["width", "height", "districts", "factions", "neutralFactionIndex", "startingDistrict"]
+      },
+      "startingMoney": {
+        "type": "number",
+        "description": "Starting money",
+        "minimum": 0
+      },
+      "startingDevelopmentLevel": {
+        "type": "number",
+        "description": "Starting development level",
+        "minimum": 0
+      },
+      "startingAccumulatedTime": {
+        "type": "number",
+        "description": "Starting accumulated time",
+        "minimum": 0
+      },
+      "startingSynchronization": {
+        "type": "number",
+        "description": "Starting synchronization",
+        "minimum": 0
+      },
+      "baseSharedExperienceMultiplier": {
+        "type": "number",
+        "description": "Base shared experience multiplier",
+        "minimum": 1
+      },
+      "mainframeHardware": {
+        "type": "object",
+        "description": "Mainframe hardware settings",
+        "properties": {
+          "basePerformanceLevel": {
+            "type": "integer",
+            "description": "Base performance level",
+            "minimum": 0
+          },
+          "baseCoresLevel": {
+            "type": "integer",
+            "description": "Base cores level",
+            "minimum": 0
+          },
+          "baseRamLevel": {
+            "type": "integer",
+            "description": "Base RAM level",
+            "minimum": 0
+          },
+          "performancePrice": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "Performance price (geometric)"
+          },
+          "ramPrice": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "RAM price (geometric)"
+          },
+          "coresPrice": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "Cores price (geometric)"
+          }
+        },
+        "required": ["basePerformanceLevel", "baseCoresLevel", "baseRamLevel", "performancePrice", "ramPrice", "coresPrice"]
+      },
+      "mainframeSoftware": {
+        "type": "object",
+        "description": "Mainframe programs settings",
+        "properties": {
+          "performanceBoost": {
+            "$ref": "./common/linear-progression.json",
+            "description": "Performance boost (linear)"
+          },
+          "startingPrograms": {
+            "type": "array",
+            "description": "Starting programs",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "./common/program-name.json",
+              "description": "Program"
+            }
+          },
+          "minProcessCompletionTime": {
+            "type": "number",
+            "description": "Process completion minimum time",
+            "exclusiveMinimum": 0
+          }
+        },
+        "required": ["performanceBoost", "startingPrograms", "minProcessCompletionTime"]
+      },
+      "programMultipliers": {
+        "type": "object",
+        "description": "Program multipliers",
+        "properties": {
+          "money": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "Money multipliers"
+          },
+          "developmentPoints": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "Development points multipliers"
+          },
+          "codeBase": {
+            "$ref": "#/$defs/multiplierBaseParameters",
+            "description": "Code base multipliers"
+          },
+          "computationalBase": {
+            "$ref": "#/$defs/multiplierBaseParameters",
+            "description": "Computational base multipliers"
+          },
+          "connectivity": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "Connectivity points multipliers"
+          },
+          "rewards": {
+            "$ref": "#/$defs/multiplierBaseParameters",
+            "description": "Rewards multipliers"
+          }
+        },
+        "required": ["money", "developmentPoints", "codeBase", "computationalBase", "connectivity", "rewards"]
+      },
+      "storyEvents": {
+        "type": "array",
+        "description": "Story events",
+        "items": {
+          "type": "object",
+          "description": "Story event",
+          "properties": {
+            "key": {
+              "type": "string",
+              "description": "Story event key (unique)",
+              "minLength": 1
+            },
+            "requirements": {
+              "type": "object",
+              "description": "Requirements for story event",
+              "properties": {
+                "level": {
+                  "type": "number",
+                  "description": "Required development level",
+                  "minimum": 0
+                },
+                "faction": {
+                  "type": "string",
+                  "description": "Required faction",
+                  "minLength": 0
+                },
+                "capturedDistrictsCount": {
+                  "type": "number",
+                  "description": "Required amount of captured districts",
+                  "minimum": 0
+                }
+              }
+            },
+            "messages": {
+              "type": "array",
+              "description": "Story event messages",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "description": "Message key",
+                "minLength": 1
+              }
+            },
+            "unlockFeatures": {
+              "type": "array",
+              "description": "Story event unlocked features",
+              "minItems": 1,
+              "items": {
+                "$ref": "./common/feature.json",
+                "description": "Unlocked feature",
+                "minLength": 1
+              }
+            },
+            "rewardDesigns": {
+              "type": "object",
+              "description": "Story event rewarded designs",
+              "properties": {
+                "programs": {
+                  "type": "array",
+                  "description": "Rewarded programs",
+                  "minItems": 1,
+                  "unique": true,
+                  "items" :{
+                    "$ref": "./common/program-name.json",
+                    "description": "Program"
+                  }
+                },
+                "cloneTemplates": {
+                  "type": "array",
+                  "description": "Rewarded clone templates",
+                  "minItems": 1,
+                  "unique": true,
+                  "items" :{
+                    "type": "string",
+                    "description": "Clone template",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "unlockSidejobs": {
+              "type": "array",
+              "description": "Story event unlocked sidejobs",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "description": "Unlocked sidejob",
+                "minLength": 1
+              }
+            },
+            "specialEvents": {
+              "type": "array",
+              "description": "Story event special events",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "description": "Special event",
+                "enum": [
+                  "factionsAvailable",
+                  "districtUnlocked"
+                ]
+              }
+            }
+          },
+          "required": ["key", "requirements"]
+        }
+      }
+    },
+    "required": [
+      "map",
+      "startingMoney",
+      "startingDevelopmentLevel",
+      "startingAccumulatedTime",
+      "startingSynchronization",
+      "baseSharedExperienceMultiplier",
+      "mainframeHardware",
+      "mainframeSoftware",
+      "programMultipliers",
+      "storyEvents"
+    ]
+  },
+  "$defs": {
+    "multiplierParameter": {
+      "type": "object",
+      "properties": {
+        "pointsMultiplier": {
+          "type": "number",
+          "description": "Points multiplier",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": ["pointsMultiplier"]
+    },
+    "multiplierBaseParameters": {
+      "type": "object",
+      "properties": {
+        "pointsMultiplier": {
+          "type": "number",
+          "description": "Points modifier (geometric)"
+        },
+        "pointsToSoftCap": {
+          "type": "number",
+          "description": "Points divisor"
+        },
+        "logBase": {
+          "type": "number",
+          "description": "Logarithmic base"
+        }
+      },
+      "required": ["pointsMultiplier", "pointsToSoftCap", "logBase"]
+    }
+  }
+}

@@ -128,7 +128,7 @@ export class DistrictFactionsGenerator implements IDistrictFactionsGenerator {
 
     for (let i = 0; i < districtsNum; i++) {
       if (!this._districtFactionIndexes.has(i)) {
-        this._districtFactionIndexes.set(i, this._scenarioState.currentValues.map.startingFactionIndex);
+        this._districtFactionIndexes.set(i, this._scenarioState.currentValues.map.neutralFactionIndex);
       }
     }
   }

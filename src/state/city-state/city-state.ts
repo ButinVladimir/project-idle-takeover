@@ -204,7 +204,7 @@ export class CityState implements ICityState {
     this.clearDistricts();
 
     const mapValues = this._scenarioState.currentValues.map;
-    const startingDistrict = mapValues.factions[mapValues.startingFactionIndex].startingDistrict;
+    const startingDistrict = mapValues.startingDistrict;
 
     for (
       let districtIndex = 0;
