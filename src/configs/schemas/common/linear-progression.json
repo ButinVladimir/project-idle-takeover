@@ -1,4 +1,5 @@
 {
+  "$id": "common/linear-progression.json",
   "type": "object",
   "properties": {
     "base": {

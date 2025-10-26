@@ -2,7 +2,6 @@ import { Faction, Feature, MapSpecialEvent } from '@shared/index';
 import { ProgramName } from '@state/mainframe-state';
 
 export interface IStoryEvent {
-  key: string;
   requirements: {
     level?: number;
     faction?: Faction;

@@ -6,3 +6,5 @@ export * from './sidejob-validator-facade';
 export * from './district-type-validator-facade';
 export * from './faction-validator-facade';
 export * from './constants-validator-facade';
+export * from './story-events-validator-facade';
+export * from './scenarios-validator-facade';

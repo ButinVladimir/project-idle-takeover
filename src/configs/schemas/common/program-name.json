@@ -1,4 +1,5 @@
 {
+  "$id": "common/program-name.json",
   "type": "string",
   "description": "Program name",
   "enum": [

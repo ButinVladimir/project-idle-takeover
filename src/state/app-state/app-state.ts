@@ -103,7 +103,7 @@ export class AppState implements IAppState {
     this._growthState.clearValues();
     this._unlockState.recalculate();
 
-    this._scenarioState.storyEvents.visitStartingEvents();
+    this._scenarioState.storyEvents.visitEvents();
   }
 
   serialize(): ISerializedState {

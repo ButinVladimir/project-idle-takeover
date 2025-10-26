@@ -2,7 +2,6 @@ import { html, nothing } from 'lit';
 import { localized, msg, str } from '@lit/localize';
 import { customElement, property } from 'lit/decorators.js';
 import { BaseComponent, capitalizeFirstLetter, type Faction, Feature, MapSpecialEvent } from '@shared/index';
-import { StoryGoalState } from '@state/global-state';
 import { ProgramName } from '@state/mainframe-state';
 import { UNLOCKED_FEATURE_TEXTS, STORY_MESSAGES, SPECIAL_EVENTS_MESSAGES, FACTION_TEXTS } from '@texts/index';
 import { KEYS_SEPARATOR } from '../../../../constants';
@@ -13,6 +12,12 @@ import { OverviewStoryGoalController } from './controller';
 @customElement('ca-overview-story-goal')
 export class OverviewStoryGoal extends BaseComponent {
   static styles = styles;
+
+  @property({
+    attribute: 'name',
+    type: String,
+  })
+  name!: string;
 
   @property({
     attribute: 'level',
@@ -68,12 +73,6 @@ export class OverviewStoryGoal extends BaseComponent {
   })
   sidejobs?: string;
 
-  @property({
-    attribute: 'state',
-    type: String,
-  })
-  state!: StoryGoalState;
-
   private _controller: OverviewStoryGoalController;
 
   constructor() {
@@ -83,8 +82,10 @@ export class OverviewStoryGoal extends BaseComponent {
   }
 
   protected renderDesktop() {
+    const disabled = !this._controller.isStoryEventUnlocked(this.name);
+
     return html`
-      <sl-details ?disabled=${this.state !== StoryGoalState.passed}>
+      <sl-details ?disabled=${disabled}>
         <h4 class="title" slot="summary">${this.renderSummary()}</h4>
 
         <article>${this.renderDetails()}</article>
@@ -117,7 +118,7 @@ export class OverviewStoryGoal extends BaseComponent {
   };
 
   private renderDetails = () => {
-    if (this.state !== StoryGoalState.passed) {
+    if (!this._controller.isStoryEventUnlocked(this.name)) {
       return nothing;
     }
 

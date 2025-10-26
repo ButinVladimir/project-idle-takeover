@@ -1,6 +1,8 @@
 import { inject, injectable } from 'inversify';
+import Ajv from 'ajv';
 import { styleText } from 'node:util';
 import names from '@configs/names.json';
+import namesSchema from '@configs/schemas/names.json';
 import { type INameValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
 
@@ -9,34 +11,36 @@ export class NameValidatorFacade implements IValidatorFacade {
   @inject(VALIDATOR_TYPES.NameValidator)
   private _nameValidator!: INameValidator;
 
-  async validate(): Promise<void> {
+  async validate(ajv: Ajv): Promise<void> {
     console.log('Name validation has started');
 
-    names.clones.forEach((name) => {
-      this.validateCloneName(name);
-    });
-    names.districts.forEach((name) => {
-      this.validateDistrictName(name);
-    });
+    await this.validateSchema(ajv);
+    this.validateCloneNames();
+    this.validateDistrictNames();
 
     console.log('Name validation has finished');
   }
 
-  private validateCloneName(name: string) {
-    if (!this._nameValidator.validateCloneName(name)) {
-      this.printError(name, 'Clone name');
+  private async validateSchema(ajv: Ajv): Promise<void> {
+    console.log(`\tValidating ${styleText('cyanBright', 'names schema')}`);
+
+    const validate = await ajv.compile(namesSchema);
+
+    if (!validate(names)) {
+      console.log(`\t\t${styleText('cyanBright', 'Names schema')} is ${styleText('redBright', 'incorrect')}`);
+      console.error(validate.errors);
     }
   }
 
-  private validateDistrictName(name: string) {
-    if (!this._nameValidator.validateDistrictName(name)) {
-      this.printError(name, 'District name');
-    }
+  private validateCloneNames() {
+    names.clones.forEach((name) => {
+      this._nameValidator.validateCloneName(name);
+    });
   }
 
-  private printError(name: string, nameType: string) {
-    const text = `${styleText('redBright', nameType)} ${styleText('cyanBright', name)} is missing`;
-
-    console.log(text);
+  private validateDistrictNames() {
+    names.districts.forEach((name) => {
+      this._nameValidator.validateDistrictName(name);
+    });
   }
 }

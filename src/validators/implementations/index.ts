@@ -4,3 +4,7 @@ export * from './theme-validator';
 export * from './clone-template-validator';
 export * from './sidejob-validator';
 export * from './district-type-validator';
+export * from './story-events-validator';
+export * from './scenarios-validator';
+export * from './constants-validator';
+export * from './faction-validator';

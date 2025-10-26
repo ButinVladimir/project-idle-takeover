@@ -1,51 +1,44 @@
 import { inject, injectable } from 'inversify';
+import { Ajv } from 'ajv';
+import programs from '@configs/programs.json';
+import programsSchema from '@configs/schemas/programs.json';
 import { styleText } from 'node:util';
-import { AutobuyerProgramName, MultiplierProgramName, OtherProgramName, ProgramName } from '@state/mainframe-state';
+import { AutobuyerProgramName, MultiplierProgramName, OtherProgramName } from '@state/mainframe-state';
 import { type IProgramValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
 
 @injectable()
 export class ProgramValidatorFacade implements IValidatorFacade {
   @inject(VALIDATOR_TYPES.ProgramValidator)
-  private _programValidator!: IProgramValidator;
+  private _programValidatorValidator!: IProgramValidator;
 
-  private _parameters!: { fn: (programName: ProgramName) => boolean; name: string }[];
-
-  async validate(): Promise<void> {
+  async validate(ajv: Ajv): Promise<void> {
     console.log('Program validation has started');
 
-    this._parameters = [
-      { fn: this._programValidator.validateConfig, name: 'configuration' },
-      { fn: this._programValidator.validateTitle, name: 'title' },
-      { fn: this._programValidator.validateOverview, name: 'overview' },
-    ];
-
-    Object.values(MultiplierProgramName).forEach((programName) => {
-      this.validateProgram(programName);
-    });
-    Object.values(AutobuyerProgramName).forEach((programName) => {
-      this.validateProgram(programName);
-    });
-    Object.values(OtherProgramName).forEach((programName) => {
-      this.validateProgram(programName);
-    });
+    await this.validateSchema(ajv);
+    this.validatePrograms();
 
     console.log('Program validation has finished');
   }
 
-  private validateProgram(programName: ProgramName) {
-    this._parameters.forEach((parameter) => {
-      const result = parameter.fn.call(this._programValidator, programName);
+  private async validateSchema(ajv: Ajv): Promise<void> {
+    console.log(`\tValidating ${styleText('cyanBright', 'programs schema')}`);
 
-      if (!result) {
-        this.printError(programName, parameter.name);
-      }
-    });
+    const validate = await ajv.compile(programsSchema);
+
+    if (!validate(programs)) {
+      console.log(`\t\t${styleText('cyanBright', 'Programs schema')} is ${styleText('redBright', 'incorrect')}`);
+      console.error(validate.errors);
+    }
   }
 
-  private printError(programName: ProgramName, error: string) {
-    const text = `Program ${styleText('cyanBright', programName)} is missing ${styleText('redBright', error)}`;
-
-    console.log(text);
+  private validatePrograms(): void {
+    [
+      ...Object.values(MultiplierProgramName),
+      ...Object.values(AutobuyerProgramName),
+      ...Object.values(OtherProgramName),
+    ].forEach((programName) => {
+      this._programValidatorValidator.validate(programName);
+    });
   }
 }

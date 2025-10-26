@@ -4,8 +4,8 @@ import { TYPES } from '@state/types';
 import { type IMainframeState, InformationCollectorProgram, MultiplierProgramName } from '@state/mainframe-state';
 import { type ICityState } from '@state/city-state';
 import { type ICompanyState } from '@state/company-state';
+import { calculatePower } from '@shared/index';
 import { IConnectivityGrowthState } from '../interfaces';
-import { calculatePower } from '@/shared';
 
 const { lazyInject } = decorators;
 

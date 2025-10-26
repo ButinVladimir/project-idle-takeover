@@ -5,3 +5,6 @@ export * from './clone-template-validator';
 export * from './sidejob-validator';
 export * from './district-type-validator';
 export * from './faction-validator';
+export * from './constants-validator';
+export * from './story-events-validator';
+export * from './scenarios-validator';

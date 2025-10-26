@@ -1,6 +1,8 @@
+import Ajv from 'ajv';
 import { inject, injectable } from 'inversify';
 import { styleText } from 'node:util';
 import districtTypes from '@configs/district-types.json';
+import districtTypesSchema from '@configs/schemas/district-types.json';
 import { SCHEMA_PROPERTY } from '@shared/index';
 import { type IDistrictTypeValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
@@ -10,40 +12,33 @@ export class DistrictTypeValidatorFacade implements IValidatorFacade {
   @inject(VALIDATOR_TYPES.DistrictTypeValidator)
   private _districtTypeValidator!: IDistrictTypeValidator;
 
-  private _parameters!: { fn: (districtTypeName: string) => boolean; name: string }[];
-
-  async validate(): Promise<void> {
+  async validate(ajv: Ajv): Promise<void> {
     console.log('District types validation has started');
 
-    this._parameters = [
-      { fn: this._districtTypeValidator.validateDistrictTypeTitle, name: 'title' },
-      { fn: this._districtTypeValidator.validateDistrictTypeOverview, name: 'overview' },
-    ];
-
-    Object.keys(districtTypes).forEach((districtTypeName) => {
-      if (districtTypeName === SCHEMA_PROPERTY) {
-        return;
-      }
-
-      this.validateDistrictType(districtTypeName);
-    });
+    await this.validateSchema(ajv);
+    this.validateDistrictTypes();
 
     console.log('District types validation has finished');
   }
 
-  private validateDistrictType(districtType: string) {
-    this._parameters.forEach((parameter) => {
-      const result = parameter.fn.call(this._districtTypeValidator, districtType);
+  private async validateSchema(ajv: Ajv): Promise<void> {
+    console.log(`\tValidating ${styleText('cyanBright', 'district types schema')}`);
 
-      if (!result) {
-        this.printError(districtType, parameter.name);
-      }
-    });
+    const validate = await ajv.compile(districtTypesSchema);
+
+    if (!validate(districtTypes)) {
+      console.log(`\t\t${styleText('cyanBright', 'District types schema')} is ${styleText('redBright', 'incorrect')}`);
+      console.error(validate.errors);
+    }
   }
 
-  private printError(districtTypeName: string, error: string) {
-    const text = `District type ${styleText('cyanBright', districtTypeName)} is missing ${styleText('redBright', error)}`;
+  private validateDistrictTypes() {
+    Object.keys(districtTypes).forEach((cloneTemplateName) => {
+      if (cloneTemplateName === SCHEMA_PROPERTY) {
+        return;
+      }
 
-    console.log(text);
+      this._districtTypeValidator.validate(cloneTemplateName);
+    });
   }
 }

@@ -1,6 +1,6 @@
 import { IAssignSidejobArguments, IClone, ISidejob } from '@state/company-state';
 import { BaseController } from '@shared/base-controller';
-import { IDistrictState } from '@/state/city-state';
+import { IDistrictState } from '@state/city-state';
 
 export class AssignCloneSidejobDialogController extends BaseController {
   private _sidejob?: ISidejob;

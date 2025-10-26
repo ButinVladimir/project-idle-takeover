@@ -82,7 +82,7 @@ export class DevelopmentState implements IDevelopmentState {
         GameStateEvent.levelReached,
         msg(str`Development level ${formattedLevel} has been reached`),
       );
-      this._scenarioState.storyEvents.visitEvents({ level: prevLevel });
+      this._scenarioState.storyEvents.visitEvents();
     }
   }
 

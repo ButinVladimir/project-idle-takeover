@@ -1,4 +1,4 @@
-import { BaseController } from '@/shared';
+import { BaseController } from '@shared/index';
 
 export class ClonesListItemExperienceController extends BaseController {
   get developmentLevel() {

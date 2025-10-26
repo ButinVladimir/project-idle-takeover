@@ -1,6 +1,8 @@
+import Ajv from 'ajv';
 import { inject, injectable } from 'inversify';
 import { styleText } from 'node:util';
 import sidejobs from '@configs/sidejobs.json';
+import sidejobsSchema from '@configs/schemas/sidejobs.json';
 import { SCHEMA_PROPERTY } from '@shared/index';
 import { type ISidejobValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
@@ -10,40 +12,33 @@ export class SidejobValidatorFacade implements IValidatorFacade {
   @inject(VALIDATOR_TYPES.SidejobValidator)
   private _sidejobValidator!: ISidejobValidator;
 
-  private _parameters!: { fn: (sidejobName: string) => boolean; name: string }[];
-
-  async validate(): Promise<void> {
+  async validate(ajv: Ajv): Promise<void> {
     console.log('Sidejobs validation has started');
 
-    this._parameters = [
-      { fn: this._sidejobValidator.validateSidejobTitle, name: 'title' },
-      { fn: this._sidejobValidator.validateSidejobOverview, name: 'overview' },
-    ];
+    await this.validateSchema(ajv);
+    this.validateSidejobs();
 
+    console.log('Sidejobs validation has finished');
+  }
+
+  private async validateSchema(ajv: Ajv): Promise<void> {
+    console.log(`\tValidating ${styleText('cyanBright', 'sidejobs schema')}`);
+
+    const validate = await ajv.compile(sidejobsSchema);
+
+    if (!validate(sidejobs)) {
+      console.log(`\t\t${styleText('cyanBright', 'Sidejobs schema')} is ${styleText('redBright', 'incorrect')}`);
+      console.error(validate.errors);
+    }
+  }
+
+  private validateSidejobs() {
     Object.keys(sidejobs).forEach((sidejobName) => {
       if (sidejobName === SCHEMA_PROPERTY) {
         return;
       }
 
-      this.validateSidejob(sidejobName);
+      this._sidejobValidator.validate(sidejobName);
     });
-
-    console.log('Sidejobs validation has finished');
-  }
-
-  private validateSidejob(sidejob: string) {
-    this._parameters.forEach((parameter) => {
-      const result = parameter.fn.call(this._sidejobValidator, sidejob);
-
-      if (!result) {
-        this.printError(sidejob, parameter.name);
-      }
-    });
-  }
-
-  private printError(sidejobName: string, error: string) {
-    const text = `Sidejob ${styleText('cyanBright', sidejobName)} is missing ${styleText('redBright', error)}`;
-
-    console.log(text);
   }
 }

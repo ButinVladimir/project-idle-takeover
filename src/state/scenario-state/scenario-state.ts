@@ -40,15 +40,18 @@ export class ScenarioState implements IScenarioState {
 
   async startNewState(): Promise<void> {
     this.currentScenario = constants.startingScenario as Scenario;
+    await this._storyEventsState.startNewState();
   }
 
   async deserialize(serializedState: IScenarioSerializedState): Promise<void> {
     this.currentScenario = serializedState.currentScenario;
+    await this._storyEventsState.deserialize(serializedState.storyEvents);
   }
 
   serialize(): IScenarioSerializedState {
     return {
       currentScenario: this._scenario,
+      storyEvents: this._storyEventsState.serialize(),
     };
   }
 }

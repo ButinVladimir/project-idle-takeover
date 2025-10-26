@@ -88,6 +88,7 @@ export class OverviewStoryPanel extends BaseComponent {
 
     return html`
       <ca-overview-story-goal
+        name=${goal.name}
         level=${ifDefined(goal.requirements.level)}
         faction=${ifDefined(goal.requirements.faction)}
         captured-districts-count=${ifDefined(goal.requirements.capturedDistrictsCount)}
@@ -97,7 +98,6 @@ export class OverviewStoryPanel extends BaseComponent {
         programs=${ifDefined(programs)}
         clone-templates=${ifDefined(cloneTemplates)}
         sidejobs=${ifDefined(sidejobs)}
-        state=${goal.state}
       ></ca-overview-story-goal>
     `;
   };

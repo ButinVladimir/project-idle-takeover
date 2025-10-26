@@ -1,0 +1,173 @@
+{
+  "$schema": "./schemas/story-events.json",
+  "tutorial_1": {
+    "requirements": {
+      "level": 0
+    },
+    "messages": ["disclaimer", "tutorial_1_1", "tutorial_1_2", "tutorial_1_3"]
+  },
+  "tutorial_2": {
+    "requirements": {
+      "level": 1
+    },
+    "messages": ["tutorial_2_1"],
+    "unlockFeatures": ["mainframePrograms"],
+    "rewardDesigns": {
+      "programs": ["shareServer"]
+    }
+  },
+  "tutorial_level_3": {
+    "requirements": {
+      "level": 4
+    },
+    "messages": ["tutorial_3_1"],
+    "unlockFeatures": ["mainframeHardware"]
+  },
+  "tutorial_level_4": {
+    "requirements": {
+      "level": 9
+    },
+    "messages": ["tutorial_4_1"],
+    "unlockFeatures": ["companyManagement"],
+    "rewardDesigns": {
+      "cloneTemplates": ["anthrodrone"]
+    },
+    "unlockSidejobs": ["oddjob"]
+  },
+  "tutorial_level_5": {
+    "requirements": {
+      "level": 14
+    },
+    "messages": ["tutorial_5_1"],
+    "unlockFeatures": ["automation"],
+    "rewardDesigns": {
+      "programs": ["cloneLevelAutoupgrader"]
+    }
+  },
+  "tutorial_level_6": {
+    "requirements": {
+      "faction": "wsa"
+    },
+    "messages": ["tutorial_6_1"],
+    "unlockFeatures": ["influence"]
+  },
+  "tutorial_level_7": {
+    "requirements": {
+      "level": 19
+    },
+    "messages": ["tutorial_7_1"],
+    "unlockFeatures": ["connectivity"],
+    "rewardDesigns": {
+      "programs": ["informationCollector"]
+    },
+    "unlockSidejobs": ["infoBroker"]
+  },
+  "tutorial_level_8": {
+    "requirements": {
+      "level": 24
+    },
+    "messages": ["disclaimer_content_end"],
+    "unlockSidejobs": ["mainframeRelay"]
+  },
+  "tutorial_level_9": {
+    "requirements": {
+      "faction": "wsa",
+      "capturedDistrictsCount": 0
+    },
+    "unlockFeatures": ["rewards"],
+    "rewardDesigns": {
+      "programs": ["dealMaker"]
+    },
+    "unlockSidejobs": ["mediator"]
+  },
+  "tutorial_level_10": {
+    "requirements": {
+      "capturedDistrictsCount": 1
+    },
+    "unlockFeatures": ["computationalBase"],
+    "rewardDesigns": {
+      "programs": ["circuitDesigner"]
+    },
+    "unlockSidejobs": ["computerRepairer"]
+  },
+  "tutorial_level_11": {
+    "requirements": {
+      "capturedDistrictsCount": 2
+    },
+    "unlockFeatures": ["automationMainframeHardware"],
+    "rewardDesigns": {
+      "programs": ["mainframeHardwareAutobuyer"]
+    }
+  },
+  "tutorial_level_12": {
+    "requirements": {
+      "capturedDistrictsCount": 3
+    },
+    "unlockFeatures": ["experienceShare"],
+    "rewardDesigns": {
+      "programs": ["peerReviewer"]
+    },
+    "unlockSidejobs": ["feedAnalyzer"]
+  },
+  "tutorial_level_13": {
+    "requirements": {
+      "capturedDistrictsCount": 4
+    },
+    "unlockFeatures": ["codeBase"],
+    "rewardDesigns": {
+      "programs": ["codeGenerator"]
+    },
+    "unlockSidejobs": ["freelanceProgrammer"]
+  },
+  "tutorial_level_14": {
+    "requirements": {
+      "capturedDistrictsCount": 5
+    },
+    "unlockFeatures": ["automationMainframePrograms"],
+    "rewardDesigns": {
+      "programs": ["mainframeProgramsAutobuyer"]
+    }
+  },
+  "tutorial_level_15": {
+    "requirements": {
+      "level": 4
+    },
+    "unlockFeatures": ["factions"],
+    "specialEvents": ["factionsAvailable"]
+  },
+  "tutorial_level_16": {
+    "requirements": {
+      "level": 9,
+      "faction": "wsa"
+    },
+    "specialEvents": ["districtUnlocked"]
+  },
+  "tutorial_level_17": {
+    "requirements": {
+      "level": 14,
+      "faction": "wsa"
+    },
+    "specialEvents": ["districtUnlocked"]
+  },
+  "tutorial_level_18": {
+    "requirements": {
+      "level": 19,
+      "faction": "wsa"
+    },
+    "specialEvents": ["districtUnlocked"]
+  },
+  "tutorial_level_19": {
+    "requirements": {
+      "level": 24,
+      "faction": "wsa"
+    },
+    "specialEvents": ["districtUnlocked"]
+  },
+  "tutorial_level_20": {
+    "requirements": {
+      "level": 29,
+      "faction": "wsa"
+    },
+    "specialEvents": ["districtUnlocked"]
+  }
+}

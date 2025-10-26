@@ -1,4 +1,4 @@
-import { Feature } from '@/shared';
+import { Feature } from '@shared/index';
 import { BaseController } from '@shared/base-controller';
 
 export class ClonesPanelController extends BaseController {

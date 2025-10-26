@@ -1,5 +1,8 @@
+import Ajv from 'ajv';
 import { inject, injectable } from 'inversify';
 import { styleText } from 'node:util';
+import constants from '@configs/constants.json';
+import constantsSchema from '@configs/schemas/constants.json';
 import { type IConstantsValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
 
@@ -8,19 +11,23 @@ export class ConstantsValidatorFacade implements IValidatorFacade {
   @inject(VALIDATOR_TYPES.ConstantsValidator)
   private _constantsValidator!: IConstantsValidator;
 
-  async validate(): Promise<void> {
+  async validate(ajv: Ajv): Promise<void> {
     console.log('Constants validation has started');
 
-    this.validateStartingScenario();
+    await this.validateSchema(ajv);
+    this._constantsValidator.validate();
 
-    console.log('District types validation has finished');
+    console.log('Constants validation has finished');
   }
 
-  private validateStartingScenario() {
-    if (!this._constantsValidator.validateStartingScenario()) {
-      const text = `Constants have incorrect ${styleText('redBright', 'starting scenario')}`;
+  private async validateSchema(ajv: Ajv): Promise<void> {
+    console.log(`\tValidating ${styleText('cyanBright', 'constants schema')}`);
 
-      console.log(text);
+    const validate = await ajv.compile(constantsSchema);
+
+    if (!validate(constants)) {
+      console.log(`\t\t${styleText('cyanBright', 'Constants schema')} is ${styleText('redBright', 'incorrect')}`);
+      console.error(validate.errors);
     }
   }
 }

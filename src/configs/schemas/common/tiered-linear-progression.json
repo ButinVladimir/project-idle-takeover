@@ -1,4 +1,5 @@
 {
+  "$id": "common/tiered-linear-progression.json",
   "allOf": [
     { "$ref": "./linear-progression.json" },
     {

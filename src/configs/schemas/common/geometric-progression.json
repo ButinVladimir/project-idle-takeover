@@ -1,4 +1,5 @@
 {
+  "$id": "common/geometric-progression.json",
   "type": "object",
   "properties": {
     "multiplier": {

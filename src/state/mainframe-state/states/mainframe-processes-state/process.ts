@@ -1,8 +1,8 @@
-import { IProgram } from '@state/mainframe-state/states/progam-factory/interfaces/program';
+import { IProgram } from '@state/mainframe-state';
 import { decorators } from '@state/container';
 import { type IStateUIConnector } from '@state/state-ui-connector';
+import { TYPES } from '@state/types';
 import { IProcess, type IProcessParameters, ISerializedProcess } from './interfaces';
-import { TYPES } from '@/state/types';
 import { type IMainframeState } from '../../interfaces';
 
 const { lazyInject } = decorators;

@@ -3,7 +3,7 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IGlobalState } from '@state/global-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
-import { type ICompanyState } from '@/state/company-state';
+import { type ICompanyState } from '@state/company-state';
 import { type IMessageLogState } from '@state/message-log-state';
 import { type INotificationsState } from '@state/notifications-state';
 import { type IScenarioState } from '@state/scenario-state';
@@ -132,7 +132,6 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
 
   private handleDistrictCapture() {
     if (this._district.state !== DistrictUnlockState.captured) {
-      const capturedDistrictsCount = this._cityState.getCapturedDistrictsCount();
       this._district.state = DistrictUnlockState.captured;
 
       this._notificationsState.pushNotification(
@@ -140,9 +139,7 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
         msg(str`District "${DISTRICT_NAMES[this._district.name]()}" has been captured. It's tier now can be increased`),
       );
 
-      this._scenarioState.storyEvents.visitEvents({
-        capturedDistrictsCount,
-      });
+      this._scenarioState.storyEvents.visitEvents();
     }
   }
 

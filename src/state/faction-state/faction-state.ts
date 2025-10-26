@@ -1,5 +1,4 @@
 import { injectable } from 'inversify';
-import merge from 'lodash/merge';
 import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
 import factions from '@configs/factions.json';
@@ -70,7 +69,7 @@ export class FactionState implements IFactionState {
   }
 
   getFactionValues(faction: Faction): IFactionValues {
-    return merge({}, (factions as any as Record<Faction, IFactionValues>)[faction]) as IFactionValues;
+    return (factions as any as Record<Faction, IFactionValues>)[faction];
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -122,7 +121,7 @@ export class FactionState implements IFactionState {
       ),
     );
 
-    this._scenarioState.storyEvents.visitEvents({ faction: 'neutral' });
+    this._scenarioState.storyEvents.visitEvents();
 
     return true;
   }

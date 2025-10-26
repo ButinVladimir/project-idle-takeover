@@ -4,7 +4,7 @@ import {
   IAvailableActivitiesState,
   type IAvailableSidejobsState,
 } from './interfaces';
-import { TYPES } from '@/state/types';
+import { TYPES } from '@state/types';
 
 @injectable()
 export class AvailableActivitiesState implements IAvailableActivitiesState {

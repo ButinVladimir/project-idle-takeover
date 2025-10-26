@@ -1,4 +1,4 @@
-import { Feature, RewardParameter } from '@/shared';
+import { Feature, RewardParameter } from '@shared/index';
 
 export const SIDEJOB_PARAMETERS = [
   RewardParameter.money,

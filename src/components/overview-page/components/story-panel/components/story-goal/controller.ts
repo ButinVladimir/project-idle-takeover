@@ -2,6 +2,10 @@ import { BaseController } from '@shared/index';
 import { ProgramName } from '@state/mainframe-state';
 
 export class OverviewStoryGoalController extends BaseController {
+  isStoryEventUnlocked(storyEventName: string): boolean {
+    return this.scenarioState.storyEvents.isEventUnlocked(storyEventName);
+  }
+
   makeProgramUnlockMessage(programName: ProgramName): string {
     return this.unlockState.items.programs.makeUnlockNotificationMessage(programName, this.getFormattedTier());
   }

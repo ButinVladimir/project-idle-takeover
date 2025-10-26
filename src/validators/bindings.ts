@@ -1,4 +1,4 @@
-import { ValidatorFacade } from './validator-facade';
+import { MainValidatorFacade } from './main-validator-facade';
 import {
   ProgramValidator,
   NameValidator,
@@ -6,36 +6,43 @@ import {
   CloneTemplateValidator,
   SidejobValidator,
   DistrictTypeValidator,
+  StoryEventsValidator,
+  ScenariosValidator,
+  FactionValidator,
+  ConstantsValidator,
 } from './implementations';
 import {
-  ProgramValidatorFacade,
-  NameValidatorFacade,
-  ThemeValidatorFacade,
   CloneTemplateValidatorFacade,
   SidejobValidatorFacade,
   DistrictTypeValidatorFacade,
   FactionValidatorFacade,
   ConstantsValidatorFacade,
+  ProgramValidatorFacade,
+  NameValidatorFacade,
+  ThemeValidatorFacade,
+  StoryEventsValidatorFacade,
+  ScenariosValidatorFacade,
 } from './facades';
 import {
-  INameValidator,
-  IProgramValidator,
   IValidatorFacade,
-  IThemeValidator,
+  IMainValidatorFacade,
   ICloneTemplateValidator,
   ISidejobValidator,
   IDistrictTypeValidator,
   IFactionValidator,
   IConstantsValidator,
+  IProgramValidator,
+  INameValidator,
+  IThemeValidator,
+  IStoryEventsValidator,
+  IScenariosValidator,
 } from './interfaces';
 import { validatorContainer } from './container';
 import { VALIDATOR_TYPES } from './types';
-import { FactionValidator } from './implementations/faction-validator';
-import { ConstantsValidator } from './implementations/constants-validator';
 
 validatorContainer
-  .bind<IValidatorFacade>(VALIDATOR_TYPES.ValidatorFacade)
-  .to(ValidatorFacade)
+  .bind<IMainValidatorFacade>(VALIDATOR_TYPES.MainValidatorFacade)
+  .to(MainValidatorFacade)
   .inSingletonScope()
   .whenTargetIsDefault();
 
@@ -132,5 +139,29 @@ validatorContainer
 validatorContainer
   .bind<IConstantsValidator>(VALIDATOR_TYPES.ConstantsValidator)
   .to(ConstantsValidator)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+validatorContainer
+  .bind<IValidatorFacade>(VALIDATOR_TYPES.StoryEventsValidatorFacade)
+  .to(StoryEventsValidatorFacade)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+validatorContainer
+  .bind<IStoryEventsValidator>(VALIDATOR_TYPES.StoryEventsValidator)
+  .to(StoryEventsValidator)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+validatorContainer
+  .bind<IValidatorFacade>(VALIDATOR_TYPES.ScenariosValidatorFacade)
+  .to(ScenariosValidatorFacade)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+validatorContainer
+  .bind<IScenariosValidator>(VALIDATOR_TYPES.ScenariosValidator)
+  .to(ScenariosValidator)
   .inSingletonScope()
   .whenTargetIsDefault();

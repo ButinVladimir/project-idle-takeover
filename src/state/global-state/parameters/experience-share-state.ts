@@ -4,7 +4,7 @@ import { decorators } from '@state/container';
 import { type IGlobalState } from '@state/global-state';
 import { type ICityState } from '@state/city-state';
 import { OtherProgramName, PeerReviewerProgram, type IMainframeState } from '@state/mainframe-state';
-import { type IScenarioState } from '@/state/scenario-state';
+import { type IScenarioState } from '@state/scenario-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type IUnlockState } from '@state/unlock-state';
 import { Feature } from '@shared/index';

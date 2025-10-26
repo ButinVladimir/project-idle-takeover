@@ -156,7 +156,14 @@
             "description": "Cores price (geometric)"
           }
         },
-        "required": ["basePerformanceLevel", "baseCoresLevel", "baseRamLevel", "performancePrice", "ramPrice", "coresPrice"]
+        "required": [
+          "basePerformanceLevel",
+          "baseCoresLevel",
+          "baseRamLevel",
+          "performancePrice",
+          "ramPrice",
+          "coresPrice"
+        ]
       },
       "mainframeSoftware": {
         "type": "object",
@@ -183,6 +190,10 @@
           }
         },
         "required": ["performanceBoost", "startingPrograms", "minProcessCompletionTime"]
+      },
+      "developmentLevelRequirements": {
+        "$ref": "./common/geometric-progression.json",
+        "description": "Development level requirements"
       },
       "programMultipliers": {
         "type": "object",
@@ -219,107 +230,9 @@
         "type": "array",
         "description": "Story events",
         "items": {
-          "type": "object",
-          "description": "Story event",
-          "properties": {
-            "key": {
-              "type": "string",
-              "description": "Story event key (unique)",
-              "minLength": 1
-            },
-            "requirements": {
-              "type": "object",
-              "description": "Requirements for story event",
-              "properties": {
-                "level": {
-                  "type": "number",
-                  "description": "Required development level",
-                  "minimum": 0
-                },
-                "faction": {
-                  "type": "string",
-                  "description": "Required faction",
-                  "minLength": 0
-                },
-                "capturedDistrictsCount": {
-                  "type": "number",
-                  "description": "Required amount of captured districts",
-                  "minimum": 0
-                }
-              }
-            },
-            "messages": {
-              "type": "array",
-              "description": "Story event messages",
-              "minItems": 1,
-              "items": {
-                "type": "string",
-                "description": "Message key",
-                "minLength": 1
-              }
-            },
-            "unlockFeatures": {
-              "type": "array",
-              "description": "Story event unlocked features",
-              "minItems": 1,
-              "items": {
-                "$ref": "./common/feature.json",
-                "description": "Unlocked feature",
-                "minLength": 1
-              }
-            },
-            "rewardDesigns": {
-              "type": "object",
-              "description": "Story event rewarded designs",
-              "properties": {
-                "programs": {
-                  "type": "array",
-                  "description": "Rewarded programs",
-                  "minItems": 1,
-                  "unique": true,
-                  "items" :{
-                    "$ref": "./common/program-name.json",
-                    "description": "Program"
-                  }
-                },
-                "cloneTemplates": {
-                  "type": "array",
-                  "description": "Rewarded clone templates",
-                  "minItems": 1,
-                  "unique": true,
-                  "items" :{
-                    "type": "string",
-                    "description": "Clone template",
-                    "minLength": 1
-                  }
-                }
-              }
-            },
-            "unlockSidejobs": {
-              "type": "array",
-              "description": "Story event unlocked sidejobs",
-              "minItems": 1,
-              "items": {
-                "type": "string",
-                "description": "Unlocked sidejob",
-                "minLength": 1
-              }
-            },
-            "specialEvents": {
-              "type": "array",
-              "description": "Story event special events",
-              "minItems": 1,
-              "items": {
-                "type": "string",
-                "description": "Special event",
-                "enum": [
-                  "factionsAvailable",
-                  "districtUnlocked"
-                ]
-              }
-            }
-          },
-          "required": ["key", "requirements"]
+          "type": "string",
+          "description": "Story event key",
+          "minLength": 1
         }
       }
     },

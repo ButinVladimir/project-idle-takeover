@@ -1,5 +1,5 @@
 export const VALIDATOR_TYPES = {
-  ValidatorFacade: Symbol('ValidatorFacade'),
+  MainValidatorFacade: Symbol('MainValidatorFacade'),
   ProgramValidator: Symbol('ProgramValidator'),
   ProgramValidatorFacade: Symbol('ProgrmaValidatorFacade'),
   NameValidator: Symbol('NameValidator'),
@@ -16,4 +16,8 @@ export const VALIDATOR_TYPES = {
   FactionValidatorFacade: Symbol('FactionValidatorFacade'),
   ConstantsValidator: Symbol('ConstantsValidator'),
   ConstantsValidatorFacade: Symbol('ConstantsValidatorFacade'),
+  StoryEventsValidator: Symbol('StoryEventsValidator'),
+  StoryEventsValidatorFacade: Symbol('StoryEventsValidatorFacade'),
+  ScenariosValidator: Symbol('ScenariosValidator'),
+  ScenariosValidatorFacade: Symbol('ScenariosValidatorFacade'),
 };

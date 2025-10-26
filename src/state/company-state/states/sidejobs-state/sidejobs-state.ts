@@ -7,8 +7,9 @@ import { type IGlobalState } from '@state/global-state';
 import { DistrictUnlockState, type ICityState } from '@state/city-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type IMessageLogState } from '@state/message-log-state';
-import { type IUnlockState } from '@/state/unlock-state';
+import { type IUnlockState } from '@state/unlock-state';
 import { TYPES } from '@state/types';
+import { DISTRICT_NAMES, SIDEJOB_TEXTS } from '@texts/index';
 import { type ICompanyState } from '../../interfaces';
 import {
   ISidejob,
@@ -20,7 +21,6 @@ import {
   ISerializedSidejob,
 } from './interfaces';
 import { Sidejob } from './sidejob';
-import { DISTRICT_NAMES, SIDEJOB_TEXTS } from '@/texts';
 
 const { lazyInject } = decorators;
 

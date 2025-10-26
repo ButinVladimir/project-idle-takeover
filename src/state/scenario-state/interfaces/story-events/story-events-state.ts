@@ -1,8 +1,9 @@
+import { ISerializeable } from '@shared/index';
 import { IStoryGoal } from './story-goal';
-import { IStoryStateValues } from './story-state-values';
+import { IStoryEventsSerializedState } from './story-events-serialized-state';
 
-export interface IStoryEventsState {
-  visitEvents(prevStoryStateValues: Partial<IStoryStateValues>): void;
+export interface IStoryEventsState extends ISerializeable<IStoryEventsSerializedState> {
+  visitEvents(): void;
   listGoals(): IStoryGoal[];
-  visitStartingEvents(): void;
+  isEventUnlocked(storyEventName: string): boolean;
 }

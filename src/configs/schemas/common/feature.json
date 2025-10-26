@@ -1,4 +1,6 @@
 {
+  "$id": "common/feature.json",
+  "type": "string",
   "description": "Feature",
   "enum": [
     "automation",

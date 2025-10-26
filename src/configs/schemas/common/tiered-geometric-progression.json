@@ -1,4 +1,5 @@
 {
+  "$id": "common/tiered-geometric-progression.json",
   "allOf": [
     { "$ref": "./geometric-progression.json" },
     {

@@ -1,6 +1,5 @@
 import { Faction, IExponent, ILinear, RANDOM_TYPE } from '@shared/index';
 import { ProgramName } from '@state/mainframe-state';
-import { IStoryEvent } from './story-events';
 import { IMultiplierScenarioParameters } from './multiplier-scenario-parameters';
 
 interface IDistrictValues {
@@ -60,5 +59,5 @@ export interface IScenarioValues {
     };
     rewards: IMultiplierScenarioParameters;
   };
-  storyEvents: IStoryEvent[];
+  storyEvents: string[];
 }
