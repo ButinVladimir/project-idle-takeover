@@ -16,7 +16,7 @@ export class AssignCloneSidejobDialogController extends BaseController {
   }
 
   listAvailableSidejobs(): string[] {
-    return this.unlockState.activities.sidejobs.listUnlockedSidejobs();
+    return this.unlockState.activities.sidejobs.listAvailableActivities();
   }
 
   listAvailableDistricts(): IDistrictState[] {

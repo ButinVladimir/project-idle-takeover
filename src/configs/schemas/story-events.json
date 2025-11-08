@@ -76,14 +76,30 @@
           }
         }
       },
-      "unlockSidejobs": {
-        "type": "array",
-        "description": "Story event unlocked sidejobs",
-        "minItems": 1,
-        "items": {
-          "type": "string",
-          "description": "Unlocked sidejob",
-          "minLength": 1
+      "unlockActivities": {
+        "type": "object",
+        "description": "Story event unlocked activities",
+        "properties": {
+          "sidejobs": {
+            "type": "array",
+            "description": "Unlocked sidejobs",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "description": "Unlocked sidejob",
+              "minLength": 1
+            }
+          },
+          "contracts": {
+            "type": "array",
+            "description": "Unlocked sidejobs",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "description": "Unlocked sidejob",
+              "minLength": 1
+            }
+          }
         }
       },
       "specialEvents": {

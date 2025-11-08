@@ -32,7 +32,9 @@
     "rewardDesigns": {
       "cloneTemplates": ["anthrodrone"]
     },
-    "unlockSidejobs": ["oddjob"]
+    "unlockActivities": {
+      "sidejobs": ["oddjob"]
+    }
   },
   "tutorial_level_5": {
     "requirements": {
@@ -49,7 +51,10 @@
       "faction": "wsa"
     },
     "messages": ["tutorial_6_1"],
-    "unlockFeatures": ["influence"]
+    "unlockFeatures": ["influence"],
+    "unlockActivities": {
+      "contracts": ["guarding"]
+    }
   },
   "tutorial_level_7": {
     "requirements": {
@@ -60,14 +65,18 @@
     "rewardDesigns": {
       "programs": ["informationCollector"]
     },
-    "unlockSidejobs": ["infoBroker"]
+    "unlockActivities": {
+      "sidejobs": ["infoBroker"]
+    }
   },
   "tutorial_level_8": {
     "requirements": {
       "level": 24
     },
     "messages": ["disclaimer_content_end"],
-    "unlockSidejobs": ["mainframeRelay"]
+    "unlockActivities": {
+      "sidejobs": ["mainframeRelay"]
+    }
   },
   "tutorial_level_9": {
     "requirements": {
@@ -78,7 +87,9 @@
     "rewardDesigns": {
       "programs": ["dealMaker"]
     },
-    "unlockSidejobs": ["mediator"]
+    "unlockActivities": {
+      "sidejobs": ["mediator"]
+    }
   },
   "tutorial_level_10": {
     "requirements": {
@@ -88,7 +99,9 @@
     "rewardDesigns": {
       "programs": ["circuitDesigner"]
     },
-    "unlockSidejobs": ["computerRepairer"]
+    "unlockActivities": {
+      "sidejobs": ["computerRepairer"]
+    }
   },
   "tutorial_level_11": {
     "requirements": {
@@ -107,7 +120,9 @@
     "rewardDesigns": {
       "programs": ["peerReviewer"]
     },
-    "unlockSidejobs": ["feedAnalyzer"]
+    "unlockActivities": {
+      "sidejobs": ["feedAnalyzer"]
+    }
   },
   "tutorial_level_13": {
     "requirements": {
@@ -117,7 +132,9 @@
     "rewardDesigns": {
       "programs": ["codeGenerator"]
     },
-    "unlockSidejobs": ["freelanceProgrammer"]
+    "unlockActivities": {
+      "sidejobs": ["freelanceProgrammer"]
+    }
   },
   "tutorial_level_14": {
     "requirements": {

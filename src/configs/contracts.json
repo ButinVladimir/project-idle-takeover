@@ -1,0 +1,40 @@
+{
+  "$schema": "./schemas/contracts.json",
+  "guarding": {
+    "requirements": {
+      "baseCompletionTime": 10,
+      "teamSize": { "min": 1, "max": 3 },
+      "connectivity": { "multiplier": 1, "base": 1 },
+      "attributes": {
+        "strength": { "teamSize": 1, "multiplier": 1, "base": 1 },
+        "endurance": { "teamSize": 1, "multiplier": 1, "base": 1 },
+        "agility": { "teamSize": 1, "multiplier": 1, "base": 1 },
+        "perception": { "teamSize": 1, "multiplier": 1, "base": 1 },
+        "intellect": { "teamSize": 1, "multiplier": 1, "base": 1 },
+        "charisma": { "teamSize": 1, "multiplier": 1, "base": 1 }
+      },
+      "skills": {
+        "closeCombat": { "teamSize": 1, "multiplier": 1, "base": 1 },
+        "rangedCombat": { "teamSize": 1, "multiplier": 1, "base": 1 },
+        "engineering": { "teamSize": 1, "multiplier": 1, "base": 1 },
+        "hacking": { "teamSize": 1, "multiplier": 1, "base": 1 },
+        "stealth": { "teamSize": 1, "multiplier": 1, "base": 1 },
+        "diplomacy": { "teamSize": 1, "multiplier": 1, "base": 1 }
+      }
+    },
+    "rewardModifiers": {
+      "attributes": {
+        "rangedCombat": { "multiplier": 0.1, "base": 1 }
+      },
+      "skills": {
+        "closeCombat": { "multiplier": 0.1, "base": 1 }
+      }
+    },
+    "rewards": {
+      "experience": { "multiplier": 1, "base": 1 },
+      "money": { "multiplier": 1, "base": 1 },
+      "developmentPoints": { "multiplier": 1, "base": 1 },
+      "influence": { "multiplier": 1, "base": 1 }
+    }
+  }
+}

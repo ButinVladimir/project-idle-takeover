@@ -1,4 +1,4 @@
-import { BaseController } from '@shared/index';
+import { BaseController, Feature } from '@shared/index';
 
 export class OverviewUnlockedFeaturesController extends BaseController {
   listUnlockedFeatures(): Feature[] {

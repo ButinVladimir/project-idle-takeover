@@ -15,7 +15,6 @@
     "cy:open": "cypress open",
     "localize:extract": "lit-localize extract",
     "localize:build": "lit-localize build",
-    "serve:local": "http-server ./dist",
     "validate": "vite-node ./src/validate.ts"
   },
   "dependencies": {
@@ -49,7 +48,6 @@
     "eslint-plugin-lit": "^1.15.0",
     "eslint-plugin-wc": "^2.2.1",
     "globals": "^16.0.0",
-    "http-server": "^14.1.1",
     "prettier": "^3.3.3",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.32.0",

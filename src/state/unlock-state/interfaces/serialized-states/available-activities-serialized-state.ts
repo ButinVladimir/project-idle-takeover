@@ -1,5 +1,6 @@
-import { IAvailableSidejobsSerializedState } from '../activities';
+import { IAvailableCategoryActivitiesSerializedState } from './available-category-activities-serialized-state';
 
 export interface IAvailableActivitiesSerializedState {
-  sidejobs: IAvailableSidejobsSerializedState;
+  sidejobs: IAvailableCategoryActivitiesSerializedState;
+  contracts: IAvailableCategoryActivitiesSerializedState;
 }

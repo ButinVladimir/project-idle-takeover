@@ -22,6 +22,7 @@ export const TYPES = {
   UnlockedFeaturesState: Symbol('UnlockedFeaturesState'),
   AvailableActivitiesState: Symbol('AvailableActivitiesState'),
   AvailableSidejobsState: Symbol('AvailableSidejobsState'),
+  AvailableContractsState: Symbol('AvailableContractsState'),
   UnlockState: Symbol('UnlockState'),
   GrowthState: Symbol('GrowthState'),
   MoneyGrowthState: Symbol('MoneyGrowthState'),

@@ -1,4 +1,3 @@
-import districtTypes from '@configs/district-types.json';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { IPoint, Faction } from '@shared/index';
 import { decorators } from '@state/container';
@@ -7,12 +6,12 @@ import {
   IDistrictState,
   IDistrictSerializedState,
   IDistrictParameters,
-  IDistrictTypeTemplate,
   IDistrictArguments,
   IMapGeneratorDistrict,
 } from './interfaces';
 import { DistrictUnlockState } from './types';
 import { DistrictParameters } from './district-parameters';
+import { typedDistrictTypes } from './constants';
 
 const { lazyInject } = decorators;
 
@@ -28,8 +27,6 @@ export class DistrictState implements IDistrictState {
   private _state: DistrictUnlockState;
   private _parameters: IDistrictParameters;
 
-  private _template: IDistrictTypeTemplate;
-
   constructor(args: IDistrictArguments) {
     this._index = args.index;
     this._name = args.name;
@@ -38,8 +35,6 @@ export class DistrictState implements IDistrictState {
     this._faction = args.faction;
     this._state = args.state;
     this._parameters = new DistrictParameters(this);
-
-    this._template = (districtTypes as any as Record<string, IDistrictTypeTemplate>)[this._districtType];
 
     this._stateUiConnector.registerEventEmitter(this, []);
   }
@@ -75,7 +70,7 @@ export class DistrictState implements IDistrictState {
   }
 
   get template() {
-    return this._template;
+    return typedDistrictTypes[this._districtType];
   }
 
   get name(): string {

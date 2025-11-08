@@ -1,7 +1,6 @@
 import { injectable } from 'inversify';
-import programs from '@configs/programs.json';
 import { styleText } from 'node:util';
-import { ProgramName } from '@state/mainframe-state';
+import { ProgramName, typedPrograms } from '@state/mainframe-state';
 import { PROGRAM_TEXTS } from '@texts/index';
 import { IProgramValidator } from '../interfaces';
 
@@ -16,7 +15,7 @@ export class ProgramValidator implements IProgramValidator {
   }
 
   private validateConfig(programName: ProgramName) {
-    if (!programs[programName]) {
+    if (!typedPrograms[programName]) {
       this.printMissingProperty(programName, 'config');
     }
   }

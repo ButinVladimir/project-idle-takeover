@@ -1,9 +1,10 @@
+import constants from '@configs/constants.json';
+import names from '@configs/names.json';
 import {
   GameStateEvent,
   Language,
   MiscMenuItem,
   OverviewMenuItem,
-  Scenario,
   Theme,
   ProgramsEvent,
   LongNumberFormat,
@@ -25,6 +26,10 @@ import {
   GameAlertGroup,
   Hotkey,
 } from './types';
+import { INames, type IConstants } from './interfaces';
+
+export const typedConstants = constants as IConstants;
+export const typedNames = names as INames;
 
 export const CURRENT_VERSION = GameVersion['0.3.0'];
 
@@ -35,8 +40,6 @@ export const THEMES: Theme[] = Object.values(Theme);
 export const OVERVIEW_MENU_ITEMS: OverviewMenuItem[] = Object.values(OverviewMenuItem);
 
 export const MISC_MENU_ITEMS: MiscMenuItem[] = Object.values(MiscMenuItem);
-
-export const SCENARIOS: Scenario[] = Object.values(Scenario);
 
 export const MESSAGE_EVENT_GROUP_LIST = Object.values(MessageEventGroup);
 

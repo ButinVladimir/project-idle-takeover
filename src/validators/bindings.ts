@@ -10,6 +10,7 @@ import {
   ScenariosValidator,
   FactionValidator,
   ConstantsValidator,
+  ContractValidator,
 } from './implementations';
 import {
   CloneTemplateValidatorFacade,
@@ -22,6 +23,7 @@ import {
   ThemeValidatorFacade,
   StoryEventsValidatorFacade,
   ScenariosValidatorFacade,
+  ContractValidatorFacade,
 } from './facades';
 import {
   IValidatorFacade,
@@ -36,6 +38,7 @@ import {
   IThemeValidator,
   IStoryEventsValidator,
   IScenariosValidator,
+  IContractValidator,
 } from './interfaces';
 import { validatorContainer } from './container';
 import { VALIDATOR_TYPES } from './types';
@@ -103,6 +106,18 @@ validatorContainer
 validatorContainer
   .bind<ISidejobValidator>(VALIDATOR_TYPES.SidejobValidator)
   .to(SidejobValidator)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+validatorContainer
+  .bind<IValidatorFacade>(VALIDATOR_TYPES.ContractValidatorFacade)
+  .to(ContractValidatorFacade)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+validatorContainer
+  .bind<IContractValidator>(VALIDATOR_TYPES.ContractValidator)
+  .to(ContractValidator)
   .inSingletonScope()
   .whenTargetIsDefault();
 

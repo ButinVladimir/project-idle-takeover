@@ -1,10 +1,9 @@
 import { injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
-import programs from '@configs/programs.json';
 import { ProgramName } from '@state/mainframe-state/states/progam-factory/types';
-import { Feature } from '@shared/index';
 import { BaseAvailableCategoryItemsState } from './base-available-category-items-state';
 import { PROGRAM_TEXTS } from '@texts/index';
+import { typedPrograms } from '@/state/mainframe-state';
 
 @injectable()
 export class AvailableProgramsState extends BaseAvailableCategoryItemsState<ProgramName> {
@@ -17,7 +16,7 @@ export class AvailableProgramsState extends BaseAvailableCategoryItemsState<Prog
   }
 
   protected checkRequiredFeatures(itemName: ProgramName): boolean {
-    const features = programs[itemName].requiredFeatures as Feature[];
+    const features = typedPrograms[itemName].requiredFeatures;
 
     return features.every((feature) => this._unlockState.features.isFeatureUnlocked(feature));
   }

@@ -1,9 +1,8 @@
 import Ajv from 'ajv';
 import { inject, injectable } from 'inversify';
 import { styleText } from 'node:util';
-import storyEvents from '@configs/story-events.json';
 import storyEventsSchema from '@configs/schemas/story-events.json';
-import { SCHEMA_PROPERTY } from '@shared/index';
+import { typedStoryEvents } from '@state/scenario-state';
 import { type IStoryEventsValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
 
@@ -26,18 +25,14 @@ export class StoryEventsValidatorFacade implements IValidatorFacade {
 
     const validate = await ajv.compile(storyEventsSchema);
 
-    if (!validate(storyEvents)) {
+    if (!validate(typedStoryEvents)) {
       console.log(`\t\t${styleText('cyanBright', 'Story events schema')} is ${styleText('redBright', 'incorrect')}`);
       console.error(validate.errors);
     }
   }
 
   private validateStoryEvents() {
-    Object.keys(storyEvents).forEach((storyEvent) => {
-      if (storyEvent === SCHEMA_PROPERTY) {
-        return;
-      }
-
+    Object.keys(typedStoryEvents).forEach((storyEvent) => {
       this._storyEventsValidator.validate(storyEvent);
     });
   }

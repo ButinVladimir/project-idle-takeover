@@ -10,6 +10,8 @@ export const VALIDATOR_TYPES = {
   CloneTemplateValidatorFacade: Symbol('CloneTemplateValidatorFacade'),
   SidejobValidator: Symbol('SidejobValidator'),
   SidejobValidatorFacade: Symbol('SidejobValidatorFacade'),
+  ContractValidator: Symbol('ContractValidator'),
+  ContractValidatorFacade: Symbol('ContractValidatorFacade'),
   DistrictTypeValidator: Symbol('DistrictTypeValidator'),
   DistrictTypeValidatorFacade: Symbol('DistrictTypeValidatorFacade'),
   FactionValidator: Symbol('FactionValidator'),

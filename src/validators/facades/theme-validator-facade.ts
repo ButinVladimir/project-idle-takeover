@@ -1,9 +1,9 @@
 import { inject, injectable } from 'inversify';
 import Ajv from 'ajv';
 import { styleText } from 'node:util';
-import themes from '@configs/themes.json';
 import themesSchema from '@configs/schemas/themes.json';
 import { THEMES } from '@shared/index';
+import { typedThemes } from '@state/settings-state';
 import { type IThemeValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
 
@@ -26,7 +26,7 @@ export class ThemeValidatorFacade implements IValidatorFacade {
 
     const validate = await ajv.compile(themesSchema);
 
-    if (!validate(themes)) {
+    if (!validate(typedThemes)) {
       console.log(`\t\t${styleText('cyanBright', 'Themes schema')} is ${styleText('redBright', 'incorrect')}`);
       console.error(validate.errors);
     }

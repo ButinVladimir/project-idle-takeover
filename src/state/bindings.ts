@@ -14,9 +14,10 @@ import {
   AvailableActivitiesState,
   IAvailableActivitiesState,
   AvailableSidejobsState,
-  IAvailableSidejobsState,
+  IAvailableCategoryActivitiesState,
   IUnlockState,
   UnlockState,
+  AvailableContractsState,
 } from '@state/unlock-state';
 import {
   IGlobalState,
@@ -210,8 +211,14 @@ container
   .whenTargetIsDefault();
 
 container
-  .bind<IAvailableSidejobsState>(TYPES.AvailableSidejobsState)
+  .bind<IAvailableCategoryActivitiesState>(TYPES.AvailableSidejobsState)
   .to(AvailableSidejobsState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IAvailableCategoryActivitiesState>(TYPES.AvailableContractsState)
+  .to(AvailableContractsState)
   .inSingletonScope()
   .whenTargetIsDefault();
 

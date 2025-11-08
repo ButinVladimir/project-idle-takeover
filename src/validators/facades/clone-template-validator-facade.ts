@@ -1,9 +1,8 @@
 import Ajv from 'ajv';
 import { inject, injectable } from 'inversify';
 import { styleText } from 'node:util';
-import cloneTemplates from '@configs/clone-templates.json';
 import cloneTemplatesSchema from '@configs/schemas/clone-templates.json';
-import { SCHEMA_PROPERTY } from '@shared/index';
+import { typedCloneTemplates } from '@state/company-state';
 import { type ICloneTemplateValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
 
@@ -11,8 +10,6 @@ import { VALIDATOR_TYPES } from '../types';
 export class CloneTemplateValidatorFacade implements IValidatorFacade {
   @inject(VALIDATOR_TYPES.CloneTemplateValidator)
   private _cloneTemplateValidator!: ICloneTemplateValidator;
-
-  private _parameters!: { fn: (cloneTemplateName: string) => boolean; name: string }[];
 
   async validate(ajv: Ajv): Promise<void> {
     console.log('Clone templates validation has started');
@@ -28,18 +25,14 @@ export class CloneTemplateValidatorFacade implements IValidatorFacade {
 
     const validate = await ajv.compile(cloneTemplatesSchema);
 
-    if (!validate(cloneTemplates)) {
+    if (!validate(typedCloneTemplates)) {
       console.log(`\t\t${styleText('cyanBright', 'Clone templates schema')} is ${styleText('redBright', 'incorrect')}`);
       console.error(validate.errors);
     }
   }
 
   private validateCloneTemplates() {
-    Object.keys(cloneTemplates).forEach((cloneTemplateName) => {
-      if (cloneTemplateName === SCHEMA_PROPERTY) {
-        return;
-      }
-
+    Object.keys(typedCloneTemplates).forEach((cloneTemplateName) => {
       this._cloneTemplateValidator.validate(cloneTemplateName);
     });
   }

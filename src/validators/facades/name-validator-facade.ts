@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify';
 import Ajv from 'ajv';
 import { styleText } from 'node:util';
-import names from '@configs/names.json';
 import namesSchema from '@configs/schemas/names.json';
+import { typedNames } from '@shared/index';
 import { type INameValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
 
@@ -26,20 +26,20 @@ export class NameValidatorFacade implements IValidatorFacade {
 
     const validate = await ajv.compile(namesSchema);
 
-    if (!validate(names)) {
+    if (!validate(typedNames)) {
       console.log(`\t\t${styleText('cyanBright', 'Names schema')} is ${styleText('redBright', 'incorrect')}`);
       console.error(validate.errors);
     }
   }
 
   private validateCloneNames() {
-    names.clones.forEach((name) => {
+    typedNames.clones.forEach((name) => {
       this._nameValidator.validateCloneName(name);
     });
   }
 
   private validateDistrictNames() {
-    names.districts.forEach((name) => {
+    typedNames.districts.forEach((name) => {
       this._nameValidator.validateDistrictName(name);
     });
   }

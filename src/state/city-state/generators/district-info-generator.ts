@@ -1,16 +1,15 @@
 import { injectable } from 'inversify';
-import names from '@configs/names.json';
-import districtTypes from '@configs/district-types.json';
 import { decorators } from '@state/container';
 import { type IScenarioState } from '@state/scenario-state';
 import { type IGlobalState } from '@state/global-state';
 import { TYPES } from '@state/types';
-import { RandomQueue, RANDOM_TYPE, SCHEMA_PROPERTY } from '@shared/index';
+import { RandomQueue, RANDOM_TYPE, typedNames } from '@shared/index';
 import {
   IDistrictInfoGenerator,
   IDistrictInfoGeneratorDistrictResult,
   IDistrictInfoGeneratorResult,
 } from '../interfaces';
+import { typedDistrictTypes } from '../constants';
 
 const { lazyInject } = decorators;
 
@@ -24,7 +23,7 @@ export class DistrictInfoGenerator implements IDistrictInfoGenerator {
 
   private _names!: RandomQueue<string>;
 
-  private _districtTypesList = Object.keys(districtTypes).filter((districtType) => districtType !== SCHEMA_PROPERTY);
+  private _districtTypesList = Object.keys(typedDistrictTypes);
 
   async generate(): Promise<IDistrictInfoGeneratorResult> {
     return new Promise((resolve) => {
@@ -50,7 +49,7 @@ export class DistrictInfoGenerator implements IDistrictInfoGenerator {
   private initNames() {
     this._names = new RandomQueue(this._globalState.random);
 
-    names.districts.forEach((name) => {
+    typedNames.districts.forEach((name) => {
       this._names.push(name);
     });
   }

@@ -1,7 +1,6 @@
 import { injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
-import factions from '@configs/factions.json';
 import { Faction, NotificationType } from '@shared/types';
 import { type IScenarioState } from '@state/scenario-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
@@ -11,6 +10,7 @@ import { type ICityState } from '../city-state';
 import { TYPES } from '@state/types';
 import { FACTION_TEXTS, SPECIAL_EVENTS_MESSAGES } from '@texts/index';
 import { IFactionValues, IFactionState, IFactionSerializedState } from './interfaces';
+import { typedFactions } from './constants';
 
 const { lazyInject } = decorators;
 
@@ -35,7 +35,6 @@ export class FactionState implements IFactionState {
   private _allFactionsList: Faction[];
   private _availableFactionsList: Faction[];
   private _currentFaction!: Faction;
-  private _currentFactionValues!: IFactionValues;
 
   constructor() {
     this._joiningFactionAvailable = false;
@@ -57,11 +56,10 @@ export class FactionState implements IFactionState {
 
   private set currentFaction(value: Faction) {
     this._currentFaction = value;
-    this._currentFactionValues = this.getFactionValues(value);
   }
 
   get currentFactionValues() {
-    return this._currentFactionValues;
+    return this.getFactionValues(this._currentFaction);
   }
 
   get joiningFactionAvailable() {
@@ -69,7 +67,7 @@ export class FactionState implements IFactionState {
   }
 
   getFactionValues(faction: Faction): IFactionValues {
-    return (factions as any as Record<Faction, IFactionValues>)[faction];
+    return typedFactions[faction];
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

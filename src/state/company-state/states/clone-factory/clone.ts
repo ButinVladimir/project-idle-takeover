@@ -1,5 +1,4 @@
 import { msg, str } from '@lit/localize';
-import cloneTemplates from '@configs/clone-templates.json';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import {
   Attribute,
@@ -19,7 +18,7 @@ import { type IMessageLogState } from '@state/message-log-state';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { IClone, IMakeCloneParameters } from './interfaces';
-import { ICloneTemplate } from './interfaces/clone-template';
+import { typedCloneTemplates } from './constants';
 
 const { lazyInject } = decorators;
 
@@ -42,7 +41,6 @@ export class Clone implements IClone {
   private _id: string;
   private _name: string;
   private _templateName: string;
-  private _template: ICloneTemplate;
   private _experience: number;
   private _level: number;
   private _tier: number;
@@ -57,7 +55,6 @@ export class Clone implements IClone {
     this._id = parameters.id;
     this._name = parameters.name;
     this._templateName = parameters.templateName;
-    this._template = (cloneTemplates as any as Record<string, ICloneTemplate>)[parameters.templateName];
     this._experience = parameters.experience;
     this._level = parameters.level;
     this._tier = parameters.tier;
@@ -102,6 +99,10 @@ export class Clone implements IClone {
 
   get templateName() {
     return this._templateName;
+  }
+
+  get template() {
+    return typedCloneTemplates[this._templateName];
   }
 
   get experience() {
@@ -162,8 +163,8 @@ export class Clone implements IClone {
 
     return calculateGeometricProgressionSum(
       level,
-      this._template.levelRequirements.multiplier,
-      this._template.levelRequirements.base,
+      this.template.levelRequirements.multiplier,
+      this.template.levelRequirements.base,
     );
   }
 
@@ -197,8 +198,8 @@ export class Clone implements IClone {
 
   private initSynchronization() {
     this._synchronization = Math.ceil(
-      this._template.synchronization.multiplier *
-        calculateTierMultiplier(this._tier, this._template.synchronization.baseTier),
+      this.template.synchronization.multiplier *
+        calculateTierMultiplier(this._tier, this.template.synchronization.baseTier),
     );
   }
 
@@ -242,7 +243,7 @@ export class Clone implements IClone {
 
   private recalculateAttributes(): void {
     ATTRIBUTES.forEach((attribute) => {
-      const templateValues = this._template.attributes[attribute];
+      const templateValues = this.template.attributes[attribute];
 
       const baseValue = calculateTierLinear(this._level, this._tier, templateValues);
       const totalValue = Math.floor(baseValue);
@@ -253,7 +254,7 @@ export class Clone implements IClone {
 
   private recalculateSkills(): void {
     SKILLS.forEach((skill) => {
-      const templateValues = this._template.skills[skill];
+      const templateValues = this.template.skills[skill];
 
       const baseValue = calculateTierLinear(this._level, this._tier, templateValues);
       const totalValue = Math.floor(baseValue);
@@ -266,12 +267,12 @@ export class Clone implements IClone {
     this._experienceMultiplier = calculateTierLinear(
       this.getTotalAttributeValue(Attribute.intellect),
       this._tier,
-      this._template.experienceMultiplier,
+      this.template.experienceMultiplier,
     );
   }
 
   private calculateLevelFromExperience(): number {
-    const { base, multiplier } = this._template.levelRequirements;
+    const { base, multiplier } = this.template.levelRequirements;
 
     return Math.min(
       reverseGeometricProgressionSum(this._experience, multiplier, base),

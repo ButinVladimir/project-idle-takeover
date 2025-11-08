@@ -13,6 +13,9 @@ export interface IStoryEvent {
     programs?: ProgramName[];
     cloneTemplates?: string[];
   };
-  unlockSidejobs?: string[];
+  unlockActivities?: {
+    sidejobs?: string[];
+    contracts?: string[];
+  };
   specialEvents?: MapSpecialEvent[];
 }

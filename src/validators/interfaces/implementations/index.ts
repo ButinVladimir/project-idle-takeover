@@ -8,3 +8,4 @@ export * from './faction-validator';
 export * from './constants-validator';
 export * from './story-events-validator';
 export * from './scenarios-validator';
+export * from './contract-validator';

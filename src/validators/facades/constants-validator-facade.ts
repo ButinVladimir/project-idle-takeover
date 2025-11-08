@@ -1,8 +1,8 @@
 import Ajv from 'ajv';
 import { inject, injectable } from 'inversify';
 import { styleText } from 'node:util';
-import constants from '@configs/constants.json';
 import constantsSchema from '@configs/schemas/constants.json';
+import { typedConstants } from '@shared/index';
 import { type IConstantsValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
 
@@ -25,7 +25,7 @@ export class ConstantsValidatorFacade implements IValidatorFacade {
 
     const validate = await ajv.compile(constantsSchema);
 
-    if (!validate(constants)) {
+    if (!validate(typedConstants)) {
       console.log(`\t\t${styleText('cyanBright', 'Constants schema')} is ${styleText('redBright', 'incorrect')}`);
       console.error(validate.errors);
     }

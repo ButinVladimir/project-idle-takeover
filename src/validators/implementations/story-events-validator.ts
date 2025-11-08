@@ -1,14 +1,9 @@
 import { injectable } from 'inversify';
 import { styleText } from 'node:util';
-import storyEvents from '@configs/story-events.json';
-import factions from '@configs/factions.json';
-import cloneTemplates from '@configs/clone-templates.json';
-import sidejobs from '@configs/sidejobs.json';
-import { IStoryEvent } from '@state/scenario-state';
-import { IFactionValues } from '@state/faction-state';
-import { Faction } from '@shared/index';
+import { IStoryEvent, typedStoryEvents } from '@state/scenario-state';
+import { typedFactions } from '@state/faction-state';
 import { STORY_MESSAGES } from '@texts/index';
-import { ICloneTemplate, ISidejobTemplate } from '@state/company-state';
+import { typedCloneTemplates, typedContracts, typedSidejobs } from '@state/company-state';
 import { IStoryEventsValidator } from '../interfaces';
 
 @injectable()
@@ -16,12 +11,13 @@ export class StoryEventsValidator implements IStoryEventsValidator {
   validate(name: string): void {
     console.log(`\tValidating story event ${styleText('cyanBright', name)}`);
 
-    const storyEvent = this.getStoryEvent(name);
+    const storyEvent = typedStoryEvents[name];
 
     this.validateRequiredFaction(name, storyEvent);
     this.validateMessages(name, storyEvent);
     this.validateCloneTemplates(name, storyEvent);
     this.validateSidejobs(name, storyEvent);
+    this.validateContracts(name, storyEvent);
   }
 
   private validateRequiredFaction(name: string, storyEvent: IStoryEvent) {
@@ -31,9 +27,7 @@ export class StoryEventsValidator implements IStoryEventsValidator {
       return;
     }
 
-    const convertedFactions = factions as any as Record<Faction, IFactionValues>;
-
-    if (!convertedFactions[faction]) {
+    if (!typedFactions[faction]) {
       console.log(
         `\t\tStory event ${styleText('cyanBright', name)} has ${styleText('redBright', 'incorrect')} required faction ${faction}`,
       );
@@ -63,10 +57,8 @@ export class StoryEventsValidator implements IStoryEventsValidator {
       return;
     }
 
-    const convertedCloneTemplates = cloneTemplates as any as Record<Faction, ICloneTemplate>;
-
     rewardedCloneTemplates.forEach((cloneTemplate) => {
-      if (!convertedCloneTemplates[cloneTemplate]) {
+      if (!typedCloneTemplates[cloneTemplate]) {
         console.log(
           `\t\tStory event ${styleText('cyanBright', name)} has ${styleText('redBright', 'incorrect')} clone template ${cloneTemplate}`,
         );
@@ -75,16 +67,14 @@ export class StoryEventsValidator implements IStoryEventsValidator {
   }
 
   private validateSidejobs(name: string, storyEvent: IStoryEvent) {
-    const unlockedSidejobs = storyEvent.unlockSidejobs;
+    const unlockedSidejobs = storyEvent.unlockActivities?.sidejobs;
 
     if (!unlockedSidejobs) {
       return;
     }
 
-    const convertedSidejobs = sidejobs as any as Record<Faction, ISidejobTemplate>;
-
     unlockedSidejobs.forEach((sidejob) => {
-      if (!convertedSidejobs[sidejob]) {
+      if (!typedSidejobs[sidejob]) {
         console.log(
           `\t\tStory event ${styleText('cyanBright', name)} has ${styleText('redBright', 'incorrect')} sidejob ${sidejob}`,
         );
@@ -92,7 +82,19 @@ export class StoryEventsValidator implements IStoryEventsValidator {
     });
   }
 
-  private getStoryEvent(name: string): IStoryEvent {
-    return (storyEvents as any as Record<string, IStoryEvent>)[name];
+  private validateContracts(name: string, storyEvent: IStoryEvent) {
+    const unlockedContracts = storyEvent.unlockActivities?.contracts;
+
+    if (!unlockedContracts) {
+      return;
+    }
+
+    unlockedContracts.forEach((contract) => {
+      if (!typedContracts[contract]) {
+        console.log(
+          `\t\tStory event ${styleText('cyanBright', name)} has ${styleText('redBright', 'incorrect')} contract ${contract}`,
+        );
+      }
+    });
   }
 }

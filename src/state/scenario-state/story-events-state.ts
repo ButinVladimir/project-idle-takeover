@@ -1,5 +1,4 @@
 import { injectable } from 'inversify';
-import storyEvents from '@configs/story-events.json';
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
 import { MapSpecialEvent, NotificationType } from '@shared/index';
@@ -19,6 +18,7 @@ import {
   IStoryEventsSerializedState,
 } from './interfaces';
 import { StoryGoalState } from './types';
+import { typedStoryEvents } from './constants';
 
 const { lazyInject } = decorators;
 
@@ -94,7 +94,7 @@ export class StoryEventsState implements IStoryEventsState {
 
     for (const storyEventName of storyEventsList) {
       const state = this.getStoryGoalState(storyEventName, currentState);
-      const storyEvent = this.getStoryEvent(storyEventName);
+      const storyEvent = typedStoryEvents[storyEventName];
 
       availableGoals.push({
         ...storyEvent,
@@ -135,41 +135,15 @@ export class StoryEventsState implements IStoryEventsState {
   }
 
   private visitSingleStoryEvent(storyEventName: string) {
-    const storyEvent = this.getStoryEvent(storyEventName);
+    const storyEvent = typedStoryEvents[storyEventName];
 
-    if (!this._visitedAllEvents.has(storyEventName) && storyEvent.messages) {
-      storyEvent.messages.forEach((messageKey) => {
-        this._notificationsState.pushNotification(NotificationType.storyEvent, STORY_MESSAGES[messageKey]());
-      });
-    }
-
-    if (storyEvent.unlockFeatures) {
-      storyEvent.unlockFeatures.forEach((feature) => {
-        this._unlockState.features.unlockFeature(feature);
-      });
-    }
-
-    if (storyEvent.specialEvents) {
-      storyEvent.specialEvents.forEach(this.unlockSpecialEvent);
-    }
-
-    if (storyEvent.rewardDesigns?.programs) {
-      storyEvent.rewardDesigns.programs.forEach((program) => {
-        this._unlockState.items.programs.unlockDesign(program, 0, true);
-      });
-    }
-
-    if (storyEvent.rewardDesigns?.cloneTemplates) {
-      storyEvent.rewardDesigns.cloneTemplates.forEach((cloneTemplate) => {
-        this._unlockState.items.cloneTemplates.unlockDesign(cloneTemplate, 0, true);
-      });
-    }
-
-    if (storyEvent.unlockSidejobs) {
-      storyEvent.unlockSidejobs.forEach((sidejob) => {
-        this._unlockState.activities.sidejobs.unlockSidejob(sidejob);
-      });
-    }
+    this.processStoryEventMessages(storyEventName, storyEvent);
+    this.processStoryEventFeatures(storyEvent);
+    this.processStoryEventEvents(storyEvent);
+    this.processStoryEventPrograms(storyEvent);
+    this.processStoryEventCloneTemplates(storyEvent);
+    this.processStoryEventSidejobs(storyEvent);
+    this.processStoryEventContracts(storyEvent);
 
     this._visitedAllEvents.add(storyEventName);
     this._visitedScenarioEvents.add(storyEventName);
@@ -192,7 +166,7 @@ export class StoryEventsState implements IStoryEventsState {
   }
 
   private isStoryEventNotAvailable(storyEventName: string, storyStateValues: IStoryStateValues) {
-    const storyEvent = this.getStoryEvent(storyEventName);
+    const storyEvent = typedStoryEvents[storyEventName];
 
     if (storyEvent.requirements.faction === undefined) {
       return false;
@@ -206,7 +180,7 @@ export class StoryEventsState implements IStoryEventsState {
   }
 
   private canStoryEventBePassed(storyEventName: string, storyStateValues: IStoryStateValues) {
-    const storyEvent = this.getStoryEvent(storyEventName);
+    const storyEvent = typedStoryEvents[storyEventName];
 
     if (storyEvent.requirements.level !== undefined && storyStateValues.level < storyEvent.requirements.level) {
       return false;
@@ -246,7 +220,57 @@ export class StoryEventsState implements IStoryEventsState {
     this._cityState.recalculateDistrictsState();
   }
 
-  private getStoryEvent(storyEventName: string): IStoryEvent {
-    return (storyEvents as any as Record<string, IStoryEvent>)[storyEventName];
+  private processStoryEventMessages(storyEventName: string, storyEvent: IStoryEvent) {
+    if (!this._visitedAllEvents.has(storyEventName) && storyEvent.messages) {
+      storyEvent.messages.forEach((messageKey) => {
+        this._notificationsState.pushNotification(NotificationType.storyEvent, STORY_MESSAGES[messageKey]());
+      });
+    }
+  }
+
+  private processStoryEventFeatures(storyEvent: IStoryEvent) {
+    if (storyEvent.unlockFeatures) {
+      storyEvent.unlockFeatures.forEach((feature) => {
+        this._unlockState.features.unlockFeature(feature);
+      });
+    }
+  }
+
+  private processStoryEventEvents(storyEvent: IStoryEvent) {
+    if (storyEvent.specialEvents) {
+      storyEvent.specialEvents.forEach(this.unlockSpecialEvent);
+    }
+  }
+
+  private processStoryEventPrograms(storyEvent: IStoryEvent) {
+    if (storyEvent.rewardDesigns?.programs) {
+      storyEvent.rewardDesigns.programs.forEach((program) => {
+        this._unlockState.items.programs.unlockDesign(program, 0, true);
+      });
+    }
+  }
+
+  private processStoryEventCloneTemplates(storyEvent: IStoryEvent) {
+    if (storyEvent.rewardDesigns?.cloneTemplates) {
+      storyEvent.rewardDesigns.cloneTemplates.forEach((cloneTemplate) => {
+        this._unlockState.items.cloneTemplates.unlockDesign(cloneTemplate, 0, true);
+      });
+    }
+  }
+
+  private processStoryEventSidejobs(storyEvent: IStoryEvent) {
+    if (storyEvent.unlockActivities?.sidejobs) {
+      storyEvent.unlockActivities.sidejobs.forEach((sidejob) => {
+        this._unlockState.activities.sidejobs.unlockActivity(sidejob);
+      });
+    }
+  }
+
+  private processStoryEventContracts(storyEvent: IStoryEvent) {
+    if (storyEvent.unlockActivities?.contracts) {
+      storyEvent.unlockActivities.contracts.forEach((contract) => {
+        this._unlockState.activities.contracts.unlockActivity(contract);
+      });
+    }
   }
 }

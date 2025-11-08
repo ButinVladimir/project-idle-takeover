@@ -1,10 +1,10 @@
-import programs from '@configs/programs.json';
 import { type ISettingsState } from '@state/settings-state';
 import { calculateLinear, calculateTierLinear, IncomeSource } from '@shared/index';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { OtherProgramName } from '../types';
 import { BaseProgram } from './base-program';
+import { typedPrograms } from '../constants';
 
 const { lazyInject } = decorators;
 
@@ -30,7 +30,7 @@ export class ShareServerProgram extends BaseProgram {
   }
 
   calculateMoneyDelta(threads: number, usedRam: number, passedTime: number): number {
-    const programData = programs[this.name];
+    const programData = typedPrograms[this.name];
 
     return (
       this.scenarioState.currentValues.programMultipliers.money.pointsMultiplier *
@@ -42,7 +42,7 @@ export class ShareServerProgram extends BaseProgram {
   }
 
   calculateDevelopmentPointsDelta(threads: number, usedRam: number, passedTime: number): number {
-    const programData = programs[this.name];
+    const programData = typedPrograms[this.name];
 
     return (
       this.scenarioState.currentValues.programMultipliers.developmentPoints.pointsMultiplier *

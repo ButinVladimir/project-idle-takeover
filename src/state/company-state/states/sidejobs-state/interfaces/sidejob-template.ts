@@ -1,11 +1,10 @@
-import { Attribute, Feature, IExponent, Skill } from '@shared/index';
+import { Attribute, IExponent, Skill } from '@shared/index';
 
 export interface ISidejobTemplate {
   requirements: {
     connectivity: IExponent;
     attributes: Record<Attribute, IExponent | undefined>;
     skills: Record<Skill, IExponent | undefined>;
-    requiredFeatures: Feature[];
   };
   rewardModifiers: {
     attributes: Record<Attribute, IExponent | undefined>;

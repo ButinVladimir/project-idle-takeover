@@ -1,10 +1,12 @@
 import { Attribute, Skill } from '@shared/types';
 import { IMakeCloneParameters } from './make-clone-parameters';
+import { ICloneTemplate } from './clone-template';
 
 export interface IClone {
   id: string;
   name: string;
   templateName: string;
+  template: ICloneTemplate;
   experience: number;
   tier: number;
   level: number;

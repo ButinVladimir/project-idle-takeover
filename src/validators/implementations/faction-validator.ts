@@ -1,12 +1,10 @@
 import { injectable } from 'inversify';
 import { styleText } from 'node:util';
-import factions from '@configs/factions.json';
-import programs from '@configs/programs.json';
-import cloneTemplates from '@configs/clone-templates.json';
 import { FACTION_TEXTS } from '@texts/index';
 import { Faction } from '@shared/index';
-import { IFactionValues } from '@state/faction-state';
-import { ICloneTemplate } from '@state/company-state';
+import { typedFactions } from '@state/faction-state';
+import { typedCloneTemplates, typedContracts } from '@state/company-state';
+import { typedPrograms } from '@state/mainframe-state';
 import { IFactionValidator } from '../interfaces';
 
 @injectable()
@@ -18,6 +16,7 @@ export class FactionValidator implements IFactionValidator {
     this.validateOverview(name);
     this.validateItems(name, false);
     this.validateItems(name, true);
+    this.validateActivity(name);
   }
 
   private validateTitle(name: Faction) {
@@ -39,26 +38,38 @@ export class FactionValidator implements IFactionValidator {
 
   private validatePrograms(name: Faction, special: boolean) {
     this.getItems(name, special)
-      .programs.filter((program) => !programs[program])
+      .programs.filter((program) => !typedPrograms[program])
       .forEach((program) => {
         this.printUnimplementedItem(name, special, 'program', program);
       });
   }
 
   private validateCloneTemplates(name: Faction, special: boolean) {
-    const allCloneTemplates = cloneTemplates as any as Record<string, ICloneTemplate>;
-
     this.getItems(name, special)
-      .cloneTemplates.filter((cloneTemplate) => !allCloneTemplates[cloneTemplate])
+      .cloneTemplates.filter((cloneTemplate) => !typedCloneTemplates[cloneTemplate])
       .forEach((cloneTemplate) => {
         this.printUnimplementedItem(name, special, 'clone template', cloneTemplate);
       });
   }
 
   private getItems(name: Faction, special: boolean) {
-    const faction = (factions as any as Record<string, IFactionValues>)[name];
+    const faction = typedFactions[name];
 
     return special ? faction.special : faction.loans;
+  }
+
+  private validateActivity(name: Faction) {
+    this.validateContracts(name);
+  }
+
+  private validateContracts(name: Faction) {
+    typedFactions[name].activities.contracts
+      .filter((contract) => !typedContracts[contract])
+      .forEach((contract) => {
+        console.log(
+          `Faction ${styleText('cyanBright', name)} contract ${contract} is ${styleText('redBright', 'incorrect')}`,
+        );
+      });
   }
 
   private printMissingProperty(name: string, property: string) {

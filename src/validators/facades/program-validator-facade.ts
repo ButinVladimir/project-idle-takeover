@@ -1,9 +1,8 @@
 import { inject, injectable } from 'inversify';
 import { Ajv } from 'ajv';
-import programs from '@configs/programs.json';
 import programsSchema from '@configs/schemas/programs.json';
 import { styleText } from 'node:util';
-import { AutobuyerProgramName, MultiplierProgramName, OtherProgramName } from '@state/mainframe-state';
+import { AutobuyerProgramName, MultiplierProgramName, OtherProgramName, typedPrograms } from '@state/mainframe-state';
 import { type IProgramValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
 
@@ -26,7 +25,7 @@ export class ProgramValidatorFacade implements IValidatorFacade {
 
     const validate = await ajv.compile(programsSchema);
 
-    if (!validate(programs)) {
+    if (!validate(typedPrograms)) {
       console.log(`\t\t${styleText('cyanBright', 'Programs schema')} is ${styleText('redBright', 'incorrect')}`);
       console.error(validate.errors);
     }

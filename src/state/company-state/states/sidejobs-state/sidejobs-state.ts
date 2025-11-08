@@ -1,6 +1,5 @@
 import { v4 as uuid } from 'uuid';
 import { msg, str } from '@lit/localize';
-import sidejobs from '@configs/sidejobs.json';
 import { calculatePower, removeElementsFromArray, SidejobsEvent } from '@shared/index';
 import { decorators } from '@state/container';
 import { type IGlobalState } from '@state/global-state';
@@ -17,10 +16,10 @@ import {
   ICompanySidejobsSerializedState,
   ICompanySidejobsState,
   IAssignSidejobArguments,
-  ISidejobTemplate,
   ISerializedSidejob,
 } from './interfaces';
 import { Sidejob } from './sidejob';
+import { typedSidejobs } from './constants';
 
 const { lazyInject } = decorators;
 
@@ -56,9 +55,7 @@ export class CompanySidejobsState implements ICompanySidejobsState {
   }
 
   getConnectivityRequirement(sidejobName: string): number {
-    const template = (sidejobs as any as Record<string, ISidejobTemplate>)[sidejobName];
-
-    return calculatePower(this._globalState.threat.level, template.requirements.connectivity);
+    return calculatePower(this._globalState.threat.level, typedSidejobs[sidejobName].requirements.connectivity);
   }
 
   listSidejobs(): ISidejob[] {
@@ -89,7 +86,7 @@ export class CompanySidejobsState implements ICompanySidejobsState {
       return false;
     }
 
-    if (!this._unlockState.activities.sidejobs.isSidejobUnlocked(sidejobParameters.sidejobName)) {
+    if (!this._unlockState.activities.sidejobs.isActivityAvailable(sidejobParameters.sidejobName)) {
       return false;
     }
 

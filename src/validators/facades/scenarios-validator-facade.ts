@@ -1,11 +1,10 @@
 import Ajv from 'ajv';
 import { inject, injectable } from 'inversify';
 import { styleText } from 'node:util';
-import scenarios from '@configs/scenarios.json';
 import scenariosSchema from '@configs/schemas/scenarios.json';
-import { SCHEMA_PROPERTY } from '@shared/index';
 import { type IScenariosValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
+import { typedScenarios } from '@/state/scenario-state';
 
 @injectable()
 export class ScenariosValidatorFacade implements IValidatorFacade {
@@ -26,18 +25,14 @@ export class ScenariosValidatorFacade implements IValidatorFacade {
 
     const validate = await ajv.compile(scenariosSchema);
 
-    if (!validate(scenarios)) {
+    if (!validate(typedScenarios)) {
       console.log(`\t\t${styleText('cyanBright', 'Scenarios schema')} is ${styleText('redBright', 'incorrect')}`);
       console.error(validate.errors);
     }
   }
 
   private validateScenarios() {
-    Object.keys(scenarios).forEach((scenario) => {
-      if (scenario === SCHEMA_PROPERTY) {
-        return;
-      }
-
+    Object.keys(typedScenarios).forEach((scenario) => {
       this._scenariosValidator.validate(scenario);
     });
   }

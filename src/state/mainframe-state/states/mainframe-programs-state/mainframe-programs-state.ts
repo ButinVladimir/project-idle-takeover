@@ -1,7 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
-import programs from '@configs/programs.json';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type IGlobalState } from '@state/global-state';
 import { type IMessageLogState } from '@state/message-log-state';
@@ -24,7 +23,7 @@ import {
   IMainframeProgramsSerializedState,
   type IMainframeProgramsUpgrader,
 } from './interfaces';
-import { ProgramName, IMakeProgramParameters, IProgram } from '../progam-factory';
+import { ProgramName, IMakeProgramParameters, IProgram, typedPrograms } from '../progam-factory';
 
 const { lazyInject } = decorators;
 
@@ -69,13 +68,13 @@ export class MainframeProgramsState implements IMainframeProgramsState {
   }
 
   calculateProgramCost(name: ProgramName, tier: number, level: number): number {
-    const programData = programs[name];
+    const programData = typedPrograms[name];
 
     return calculateTierPower(level, tier, programData.cost) / this._globalState.multipliers.codeBase.totalMultiplier;
   }
 
   calculateLevelFromMoney(name: ProgramName, tier: number, money: number): number {
-    const programData = programs[name];
+    const programData = typedPrograms[name];
 
     const availableMoney = money * this._globalState.multipliers.codeBase.totalMultiplier;
 

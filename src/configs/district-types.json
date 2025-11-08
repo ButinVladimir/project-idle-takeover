@@ -2,6 +2,10 @@
   "$schema": "./schemas/district-types.json",
   "residential": {
     "activityRequirementModifier": 1,
+    "primaryActivityimeMultipliers": {
+      "completionTime": 1,
+      "generationTime": 5
+    },
     "parameters": {
       "experience": { "multiplier": 1, "base": 1.5 },
       "money": { "multiplier": 1, "base": 1.5 },
@@ -36,6 +40,10 @@
   },
   "corpoDistrict": {
     "activityRequirementModifier": 1,
+    "primaryActivityimeMultipliers": {
+      "completionTime": 1,
+      "generationTime": 5
+    },
     "parameters": {
       "experience": { "multiplier": 1, "base": 1.1 },
       "money": { "multiplier": 10, "base": 1.1 },

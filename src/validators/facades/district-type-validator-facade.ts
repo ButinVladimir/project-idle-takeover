@@ -1,9 +1,8 @@
 import Ajv from 'ajv';
 import { inject, injectable } from 'inversify';
 import { styleText } from 'node:util';
-import districtTypes from '@configs/district-types.json';
 import districtTypesSchema from '@configs/schemas/district-types.json';
-import { SCHEMA_PROPERTY } from '@shared/index';
+import { typedDistrictTypes } from '@state/city-state';
 import { type IDistrictTypeValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
 
@@ -26,18 +25,14 @@ export class DistrictTypeValidatorFacade implements IValidatorFacade {
 
     const validate = await ajv.compile(districtTypesSchema);
 
-    if (!validate(districtTypes)) {
+    if (!validate(typedDistrictTypes)) {
       console.log(`\t\t${styleText('cyanBright', 'District types schema')} is ${styleText('redBright', 'incorrect')}`);
       console.error(validate.errors);
     }
   }
 
   private validateDistrictTypes() {
-    Object.keys(districtTypes).forEach((cloneTemplateName) => {
-      if (cloneTemplateName === SCHEMA_PROPERTY) {
-        return;
-      }
-
+    Object.keys(typedDistrictTypes).forEach((cloneTemplateName) => {
       this._districtTypeValidator.validate(cloneTemplateName);
     });
   }

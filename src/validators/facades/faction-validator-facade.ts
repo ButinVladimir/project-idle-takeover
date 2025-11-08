@@ -1,9 +1,8 @@
 import Ajv from 'ajv';
 import { inject, injectable } from 'inversify';
 import { styleText } from 'node:util';
-import factions from '@configs/factions.json';
 import factionsSchema from '@configs/schemas/factions.json';
-import { SCHEMA_PROPERTY } from '@shared/index';
+import { typedFactions } from '@state/faction-state';
 import { type IFactionValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
 
@@ -26,18 +25,14 @@ export class FactionValidatorFacade implements IValidatorFacade {
 
     const validate = await ajv.compile(factionsSchema);
 
-    if (!validate(factions)) {
+    if (!validate(typedFactions)) {
       console.log(`\t\t${styleText('cyanBright', 'Factions schema')} is ${styleText('redBright', 'incorrect')}`);
       console.error(validate.errors);
     }
   }
 
   private validateFactions() {
-    Object.keys(factions).forEach((faction) => {
-      if (faction === SCHEMA_PROPERTY) {
-        return;
-      }
-
+    Object.keys(typedFactions).forEach((faction) => {
       this._factionValidator.validate(faction);
     });
   }

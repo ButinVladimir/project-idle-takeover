@@ -1,7 +1,7 @@
-import programs from '@configs/programs.json';
 import { calculateTierLinear } from '@shared/helpers';
 import { MultiplierProgramName } from '../types';
 import { BaseProgram } from './base-program';
+import { typedPrograms } from '../constants';
 
 export class CodeGeneratorProgram extends BaseProgram {
   public readonly name = MultiplierProgramName.codeGenerator;
@@ -14,7 +14,7 @@ export class CodeGeneratorProgram extends BaseProgram {
   }
 
   calculateDelta(threads: number): number {
-    const programData = programs[this.name];
+    const programData = typedPrograms[this.name];
 
     return (
       this.scenarioState.currentValues.programMultipliers.codeBase.pointsMultiplier *

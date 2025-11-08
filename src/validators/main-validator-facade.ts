@@ -26,6 +26,9 @@ export class MainValidatorFacade implements IMainValidatorFacade {
   @inject(VALIDATOR_TYPES.SidejobValidatorFacade)
   private _sidejobValidatorFacade!: IValidatorFacade;
 
+  @inject(VALIDATOR_TYPES.ContractValidatorFacade)
+  private _contractValidatorFacade!: IValidatorFacade;
+
   @inject(VALIDATOR_TYPES.DistrictTypeValidatorFacade)
   private _districtTypeValidatorFacade!: IValidatorFacade;
 
@@ -51,6 +54,7 @@ export class MainValidatorFacade implements IMainValidatorFacade {
     await this._themeValidatorFacade.validate(ajv);
     await this._cloneTemplateValidatorFacade.validate(ajv);
     await this._sidejobValidatorFacade.validate(ajv);
+    await this._contractValidatorFacade.validate(ajv);
     await this._districtTypeValidatorFacade.validate(ajv);
     await this._factionValidatorFacade.validate(ajv);
     await this._constantsValidatorFacade.validate(ajv);
@@ -70,6 +74,7 @@ export class MainValidatorFacade implements IMainValidatorFacade {
         tieredGeometricProgressionSchema,
         featuresSchema,
       ],
+      allErrors: true,
     });
   }
 }

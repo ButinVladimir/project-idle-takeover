@@ -1,7 +1,7 @@
-import programs from '@configs/programs.json';
 import { calculateLinear, calculateTierLinear } from '@shared/index';
 import { OtherProgramName } from '../types';
 import { BaseProgram } from './base-program';
+import { typedPrograms } from '../constants';
 
 export class PeerReviewerProgram extends BaseProgram {
   public readonly name = OtherProgramName.peerReviewer;
@@ -14,7 +14,7 @@ export class PeerReviewerProgram extends BaseProgram {
   perform(): void {}
 
   calculateExperienceShareMultiplier(threads: number, usedRam: number): number {
-    const programData = programs[this.name];
+    const programData = typedPrograms[this.name];
 
     return (
       1 +

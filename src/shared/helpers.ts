@@ -1,5 +1,6 @@
 import clamp from 'lodash/clamp';
 import { IExponent, ILinear, ITierExponent, ITierLinear } from './interfaces/formulas';
+import { SCHEMA_PROPERTY } from './constants';
 
 export const calculatePower = (exponent: number, params: IExponent): number => {
   return params.multiplier * Math.pow(params.base, exponent);
@@ -118,4 +119,8 @@ export function calculateLevelProgressPercentage(
   const nextLevelDistance = nextLevelPoints - basePoints;
 
   return clamp((currentDistance / nextLevelDistance) * 100, 0, 100);
+}
+
+export function typeConfigEntries<T>(data: Record<string, any>): Record<string, T> {
+  return Object.fromEntries(Object.entries(data).filter(([key]) => key !== SCHEMA_PROPERTY));
 }

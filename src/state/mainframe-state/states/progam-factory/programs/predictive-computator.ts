@@ -1,7 +1,7 @@
-import programs from '@configs/programs.json';
 import { calculateLinear, calculateTierLinear } from '@shared/helpers';
 import { OtherProgramName } from '../types';
 import { BaseProgram } from './base-program';
+import { typedPrograms } from '../constants';
 
 export class PredictiveComputatorProgram extends BaseProgram {
   public readonly name = OtherProgramName.predictiveComputator;
@@ -14,7 +14,7 @@ export class PredictiveComputatorProgram extends BaseProgram {
   perform(): void {}
 
   calculateProcessCompletionSpeedMultiplier(threads: number, usedRam: number): number {
-    const programData = programs[this.name];
+    const programData = typedPrograms[this.name];
 
     return (
       1 +

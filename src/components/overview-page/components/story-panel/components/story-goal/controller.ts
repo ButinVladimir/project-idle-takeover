@@ -18,7 +18,7 @@ export class OverviewStoryGoalController extends BaseController {
   }
 
   makeSidejobUnlockMessage(sidejobName: string): string {
-    return this.unlockState.activities.sidejobs.makeUnlockSidejobMessage(sidejobName);
+    return this.unlockState.activities.sidejobs.makeUnlockActivityMessage(sidejobName);
   }
 
   private getFormattedTier() {

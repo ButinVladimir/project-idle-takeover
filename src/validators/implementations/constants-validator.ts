@@ -1,7 +1,6 @@
 import { styleText } from 'node:util';
-import constants from '@configs/constants.json';
-import scenarios from '@configs/scenarios.json';
-import { IScenarioValues } from '@state/scenario-state';
+import { typedScenarios } from '@state/scenario-state';
+import { typedConstants } from '@shared/index';
 import { IConstantsValidator } from '../interfaces';
 
 export class ConstantsValidator implements IConstantsValidator {
@@ -12,9 +11,9 @@ export class ConstantsValidator implements IConstantsValidator {
   }
 
   private validateStartingScenario() {
-    const startingScenario = constants.startingScenario;
+    const startingScenario = typedConstants.startingScenario;
 
-    if (!(scenarios as any as Record<string, IScenarioValues>)[startingScenario]) {
+    if (!typedScenarios[startingScenario]) {
       console.log(
         `\t\tStarting scenario ${styleText('cyanBright', startingScenario)} is ${styleText('redBright', 'incorrect')}`,
       );

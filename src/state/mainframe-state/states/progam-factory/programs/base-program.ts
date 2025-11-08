@@ -1,10 +1,8 @@
-import programs from '@configs/programs.json';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type IFormatter, calculateLinear } from '@shared/index';
 import { type IGlobalState } from '@state/global-state';
-import { type IMainframeState } from '@state/mainframe-state';
+import { typedPrograms, type IMainframeState } from '@state/mainframe-state';
 import { type IScenarioState } from '@state/scenario-state';
-import { Feature } from '@shared/types';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { ProgramName } from '../types';
@@ -53,7 +51,7 @@ export abstract class BaseProgram implements IProgram {
   }
 
   get completionPoints() {
-    return programs[this.name].completionPoints;
+    return typedPrograms[this.name].completionPoints;
   }
 
   get autoUpgradeEnabled() {
@@ -67,7 +65,7 @@ export abstract class BaseProgram implements IProgram {
   abstract get isAutoscalable(): boolean;
 
   get ram(): number {
-    return programs[this.name].ram;
+    return typedPrograms[this.name].ram;
   }
 
   get cores() {
@@ -75,7 +73,7 @@ export abstract class BaseProgram implements IProgram {
   }
 
   get unlockFeatures() {
-    return programs[this.name].requiredFeatures as Feature[];
+    return typedPrograms[this.name].requiredFeatures;
   }
 
   abstract handlePerformanceUpdate(): void;
@@ -95,7 +93,7 @@ export abstract class BaseProgram implements IProgram {
       return 0;
     }
 
-    const programData = programs[this.name];
+    const programData = typedPrograms[this.name];
 
     const currentSpeed =
       this.globalState.processCompletionSpeed.totalMultiplier *

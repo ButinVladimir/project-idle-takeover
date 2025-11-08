@@ -33,10 +33,6 @@ export enum MiscMenuItem {
   credits = 'credits',
 }
 
-export enum Scenario {
-  tutorial = 'tutorial',
-}
-
 export type Faction = string | 'neutral' | 'scavs';
 
 export enum GameStateEvent {
@@ -128,7 +124,7 @@ export enum NotificationType {
   featureUnlocked = 'featureUnlocked',
   timeAccumulated = 'timeAccumulated',
   gameVersionUpdated = 'gameVersionUpdated',
-  sidejobUnlocked = 'sidejobUnlocked',
+  activityUnlocked = 'activityUnlocked',
   designUnlocked = 'designUnlocked',
   factionsAvailable = 'factionsAvailable',
   factionJoined = 'factionJoined',

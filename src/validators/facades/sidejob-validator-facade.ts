@@ -1,9 +1,8 @@
 import Ajv from 'ajv';
 import { inject, injectable } from 'inversify';
 import { styleText } from 'node:util';
-import sidejobs from '@configs/sidejobs.json';
 import sidejobsSchema from '@configs/schemas/sidejobs.json';
-import { SCHEMA_PROPERTY } from '@shared/index';
+import { typedSidejobs } from '@state/company-state';
 import { type ISidejobValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
 
@@ -26,18 +25,14 @@ export class SidejobValidatorFacade implements IValidatorFacade {
 
     const validate = await ajv.compile(sidejobsSchema);
 
-    if (!validate(sidejobs)) {
+    if (!validate(typedSidejobs)) {
       console.log(`\t\t${styleText('cyanBright', 'Sidejobs schema')} is ${styleText('redBright', 'incorrect')}`);
       console.error(validate.errors);
     }
   }
 
   private validateSidejobs() {
-    Object.keys(sidejobs).forEach((sidejobName) => {
-      if (sidejobName === SCHEMA_PROPERTY) {
-        return;
-      }
-
+    Object.keys(typedSidejobs).forEach((sidejobName) => {
       this._sidejobValidator.validate(sidejobName);
     });
   }

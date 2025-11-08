@@ -3,6 +3,10 @@ import { IDistrictTypeMultiplierParameters } from './district-type-multiplier-pa
 
 export interface IDistrictTypeTemplate {
   activityRequirementModifier: number;
+  primaryActivityimeMultipliers: {
+    completionTime: number;
+    generationTime: number;
+  };
   parameters: {
     experience: IExponent;
     money: IExponent;

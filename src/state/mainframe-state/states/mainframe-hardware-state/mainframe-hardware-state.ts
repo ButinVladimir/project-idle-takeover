@@ -1,9 +1,8 @@
 import { inject, injectable } from 'inversify';
-import constants from '@configs/constants.json';
 import { decorators } from '@state/container';
-import type { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
+import type { IStateUIConnector } from '@state/state-ui-connector';
 import { TYPES } from '@state/types';
-import { moveElementInArray } from '@shared/helpers';
+import { moveElementInArray, typedConstants } from '@shared/index';
 import {
   IMainframeHardwareState,
   IMainframeHardwareSerializedState,
@@ -39,9 +38,7 @@ export class MainframeHardwareState implements IMainframeHardwareState {
   constructor() {
     this._parametersList = [];
 
-    this.buildParametersList(
-      constants.defaultAutomationSettings.mainframeHardwareAutobuyer.priority as MainframeHardwareParameterType[],
-    );
+    this.buildParametersList(typedConstants.defaultAutomationSettings.mainframeHardwareAutobuyer.priority);
 
     this._stateUiConnector.registerEventEmitter(this, ['_parametersList']);
   }
@@ -81,9 +78,7 @@ export class MainframeHardwareState implements IMainframeHardwareState {
     await this._cores.startNewState();
     await this._ram.startNewState();
 
-    this.buildParametersList(
-      constants.defaultAutomationSettings.mainframeHardwareAutobuyer.priority as MainframeHardwareParameterType[],
-    );
+    this.buildParametersList(typedConstants.defaultAutomationSettings.mainframeHardwareAutobuyer.priority);
   }
 
   async deserialize(serializedState: IMainframeHardwareSerializedState): Promise<void> {

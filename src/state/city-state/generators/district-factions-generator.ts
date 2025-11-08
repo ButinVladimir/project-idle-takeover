@@ -1,17 +1,16 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
-import districtTypes from '@configs/district-types.json';
 import { type IScenarioState } from '@state/scenario-state';
 import { type IGlobalState } from '@state/global-state';
 import { TYPES } from '@state/types';
 import { RandomQueue, calculatePower } from '@shared/index';
 import {
-  IDistrictTypeTemplate,
   IDistrictFactionsGenerator,
   IDistrictFactionsGeneratorResult,
   IDistrictInfoGeneratorResult,
   type ICityState,
 } from '../interfaces';
+import { typedDistrictTypes } from '../constants';
 
 const { lazyInject } = decorators;
 
@@ -65,7 +64,7 @@ export class DistrictFactionsGenerator implements IDistrictFactionsGenerator {
 
       const districtInfo = this._districtInfos.districts.get(startingDistrict)!;
       const startingDistrictType = districtInfo.districtType;
-      const districtTypeData = this.getDistrictTypeData(startingDistrictType);
+      const districtTypeData = typedDistrictTypes[startingDistrictType];
 
       const startingDistrictDifficulty =
         this._cityState.getDistrictSize(startingDistrict) *
@@ -103,7 +102,7 @@ export class DistrictFactionsGenerator implements IDistrictFactionsGenerator {
 
           const districtInfo = this._districtInfos.districts.get(nextDistrict)!;
           const districtType = districtInfo.districtType;
-          const districtTypeData = this.getDistrictTypeData(districtType);
+          const districtTypeData = typedDistrictTypes[districtType];
 
           const factionControlledArea = this._controlledAreaMap.get(index)!;
           const districtDifficulty =
@@ -131,9 +130,5 @@ export class DistrictFactionsGenerator implements IDistrictFactionsGenerator {
         this._districtFactionIndexes.set(i, this._scenarioState.currentValues.map.neutralFactionIndex);
       }
     }
-  }
-
-  private getDistrictTypeData(districtType: string): IDistrictTypeTemplate {
-    return (districtTypes as any as Record<string, IDistrictTypeTemplate>)[districtType];
   }
 }

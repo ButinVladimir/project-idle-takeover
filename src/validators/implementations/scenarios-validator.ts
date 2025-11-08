@@ -1,13 +1,9 @@
 import { injectable } from 'inversify';
 import { styleText } from 'node:util';
-import scenarios from '@configs/scenarios.json';
-import districtTypes from '@configs/district-types.json';
-import factions from '@configs/factions.json';
-import storyEvents from '@configs/story-events.json';
-import { IScenarioValues, IStoryEvent } from '@state/scenario-state';
-import { IFactionValues } from '@state/faction-state';
+import { IScenarioValues, typedScenarios, typedStoryEvents } from '@state/scenario-state';
+import { typedFactions } from '@state/faction-state';
 import { RANDOM_TYPE } from '@shared/index';
-import { IDistrictTypeTemplate } from '@state/city-state';
+import { typedDistrictTypes } from '@state/city-state';
 import { IScenariosValidator } from '../interfaces';
 
 @injectable()
@@ -15,7 +11,7 @@ export class ScenariosValidator implements IScenariosValidator {
   validate(name: string): void {
     console.log(`\tValidating scenario ${styleText('cyanBright', name)}`);
 
-    const scenario = this.getScenario(name);
+    const scenario = typedScenarios[name];
 
     this.validateMap(name, scenario);
     this.validateStoryEvents(name, scenario);
@@ -45,10 +41,8 @@ export class ScenariosValidator implements IScenariosValidator {
   private validateMapDistrictTypes(name: string, scenario: IScenarioValues) {
     const districts = scenario.map.districts;
 
-    const convertedDistrictTypes = districtTypes as any as Record<string, IDistrictTypeTemplate>;
-
     districts.forEach((district, index) => {
-      if (district.type !== RANDOM_TYPE && !convertedDistrictTypes[district.type]) {
+      if (district.type !== RANDOM_TYPE && !typedDistrictTypes[district.type]) {
         console.log(
           `\t\tScenario ${styleText('cyanBright', name)} has ${styleText('redBright', 'incorrect')} district type for district ${index}`,
         );
@@ -72,10 +66,8 @@ export class ScenariosValidator implements IScenariosValidator {
   private validateMapFactionNames(name: string, scenario: IScenarioValues) {
     const startingFactions = scenario.map.factions;
 
-    const convertedFactions = factions as any as Record<string, IFactionValues>;
-
     startingFactions.forEach((faction, index) => {
-      if (faction.name !== RANDOM_TYPE && !convertedFactions[faction.name]) {
+      if (faction.name !== RANDOM_TYPE && !typedFactions[faction.name]) {
         console.log(
           `\t\tScenario ${styleText('cyanBright', name)} has ${styleText('redBright', 'incorrect')} faction name ${faction.name} for starting faction ${index}`,
         );
@@ -106,18 +98,12 @@ export class ScenariosValidator implements IScenariosValidator {
   private validateStoryEvents(name: string, scenario: IScenarioValues) {
     const scenarioStoryEvents = scenario.storyEvents;
 
-    const convertedStoryEvents = storyEvents as any as Record<string, IStoryEvent>;
-
     scenarioStoryEvents.forEach((storyEvent) => {
-      if (!convertedStoryEvents[storyEvent]) {
+      if (!typedStoryEvents[storyEvent]) {
         console.log(
           `\t\tScenario ${styleText('cyanBright', name)} has ${styleText('redBright', 'incorrect')} story event ${storyEvent}`,
         );
       }
     });
-  }
-
-  private getScenario(name: string): IScenarioValues {
-    return (scenarios as any as Record<string, IScenarioValues>)[name];
   }
 }

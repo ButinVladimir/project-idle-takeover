@@ -2,8 +2,6 @@ import { inject, injectable } from 'inversify';
 import { v4 as uuid } from 'uuid';
 import { msg, str } from '@lit/localize';
 import padStart from 'lodash/padStart';
-import cloneTemplates from '@configs/clone-templates.json';
-import names from '@configs/names.json';
 import { decorators } from '@state/container';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type IGlobalState } from '@state/global-state';
@@ -20,6 +18,7 @@ import {
   removeElementsFromArray,
   reverseTierPower,
   type IFormatter,
+  typedNames,
 } from '@shared/index';
 import { CLONE_TEMPLATE_TEXTS, CLONE_NAMES } from '@texts/index';
 import type { ICompanyState } from '../../interfaces/company-state';
@@ -30,7 +29,7 @@ import {
   ICompanyClonesState,
   IPurchaseCloneArgs,
 } from './interfaces';
-import { ICloneTemplate, IMakeCloneParameters } from '../clone-factory';
+import { IMakeCloneParameters, typedCloneTemplates } from '../clone-factory';
 
 const { lazyInject } = decorators;
 
@@ -80,18 +79,18 @@ export class CompanyClonesState implements ICompanyClonesState {
   }
 
   calculateCloneCost(templateName: string, tier: number, level: number): number {
-    return calculateTierPower(level, tier, this.getTemplate(templateName).cost);
+    return calculateTierPower(level, tier, typedCloneTemplates[templateName].cost);
   }
 
   calculateCloneLevelFromMoney(templateName: string, tier: number, money: number): number {
     return Math.min(
-      reverseTierPower(money, tier, this.getTemplate(templateName).cost),
+      reverseTierPower(money, tier, typedCloneTemplates[templateName].cost),
       this._globalState.development.level,
     );
   }
 
   calculateCloneSynchronization(templateName: string, tier: number): number {
-    const template = this.getTemplate(templateName);
+    const template = typedCloneTemplates[templateName];
 
     return Math.ceil(
       template.synchronization.multiplier * calculateTierMultiplier(tier, template.synchronization.baseTier),
@@ -183,7 +182,7 @@ export class CompanyClonesState implements ICompanyClonesState {
   }
 
   generateCloneName(): string {
-    const namePart = CLONE_NAMES[this._globalState.random.choice(names.clones)]();
+    const namePart = CLONE_NAMES[this._globalState.random.choice(typedNames.clones)]();
 
     const serialNumber = this._globalState.random.randRange(0, 9999);
     const serialNumberPart = padStart(serialNumber.toString(), 4, '0');
@@ -212,10 +211,6 @@ export class CompanyClonesState implements ICompanyClonesState {
     return {
       clones: this._clonesList.map(this.serializeClone),
     };
-  }
-
-  private getTemplate(templateName: string): ICloneTemplate {
-    return (cloneTemplates as any as Record<string, ICloneTemplate>)[templateName];
   }
 
   private serializeClone = (clone: IClone): IMakeCloneParameters => {

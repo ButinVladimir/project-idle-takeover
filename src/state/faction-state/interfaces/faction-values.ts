@@ -9,4 +9,7 @@ export interface IFactionValues {
     programs: ProgramName[];
     cloneTemplates: string[];
   };
+  activities: {
+    contracts: string[];
+  };
 }

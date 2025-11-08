@@ -1,8 +1,7 @@
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { cache } from 'lit/directives/cache.js';
-import constants from '@configs/constants.json';
-import { BaseComponent, Feature, OverviewMenuItem, MiscMenuItem } from '@shared/index';
+import { BaseComponent, OverviewMenuItem, MiscMenuItem, typedConstants } from '@shared/index';
 import { ViewportController } from './controller';
 import styles from './styles';
 
@@ -29,8 +28,8 @@ export class Viewport extends BaseComponent {
   }
 
   private renderPage = () => {
-    const requirements = constants.menuUnlockRequirements as Record<string, Feature>;
-    const feature = requirements[this.selectedMenuItem] as Feature | undefined;
+    const requirements = typedConstants.menuUnlockRequirements;
+    const feature = requirements[this.selectedMenuItem];
 
     if (feature && !this._controller.isFeatureUnlocked(feature)) {
       return nothing;
