@@ -1,12 +1,10 @@
-import { IDistrictSerializedParameters } from './serialized-states/district-serialized-parameters';
-import {
-  IDistrictConnectivityParameter,
-  IDistrictExperienceShareMultiplierParameter,
-  IDistrictProcessCompletionSpeedParameter,
-  IDistrictRewardsParameter,
-  IDistrictSynchronizationParameter,
-  IDistrictInfluenceParameter,
-} from './parameters';
+import { IDistrictSerializedParameters } from '../serialized-states';
+import { IDistrictConnectivityParameter } from './district-connectivity-parameter';
+import { IDistrictExperienceShareMultiplierParameter } from './district-experience-share-multiplier-parameter';
+import { IDistrictProcessCompletionSpeedParameter } from './district-process-completion-speed-parameter';
+import { IDistrictRewardsParameter } from './district-rewards-parameter';
+import { IDistrictSynchronizationParameter } from './district-synchronization-parameter';
+import { IDistrictInfluenceParameter } from './district-influence-parameter';
 import { IDistrictMultipliers } from './district-multipliers';
 
 export interface IDistrictParameters {

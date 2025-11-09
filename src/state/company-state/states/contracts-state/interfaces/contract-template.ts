@@ -7,7 +7,10 @@ export interface IContractTemplate {
       min: number;
       max: number;
     };
-    connectivity: IExponent;
+    connectivity: {
+      amount: IExponent;
+      threat: IExponent;
+    };
     attributes: Record<Attribute, IExponent | undefined>;
     skills: Record<Skill, IExponent | undefined>;
   };

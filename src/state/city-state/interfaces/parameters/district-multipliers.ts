@@ -1,5 +1,5 @@
-import { IDistrictMultiplierParameter } from './parameters';
-import { IDistrictSerializedMultipliers } from './serialized-states/district-serialized-multipliers';
+import { IDistrictMultiplierParameter } from './district-multiplier-parameter';
+import { IDistrictSerializedMultipliers } from '../serialized-states';
 
 export interface IDistrictMultipliers {
   codeBase: IDistrictMultiplierParameter;

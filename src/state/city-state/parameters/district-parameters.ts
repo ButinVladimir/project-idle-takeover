@@ -1,4 +1,4 @@
-import { DistrictMultipliers } from './district-multipliers';
+import { DistrictMultipliers } from './multipliers/district-multipliers';
 import {
   IDistrictInfluenceParameter,
   IDistrictSerializedParameters,
@@ -10,15 +10,13 @@ import {
   IDistrictProcessCompletionSpeedParameter,
   IDistrictRewardsParameter,
   IDistrictExperienceShareMultiplierParameter,
-} from './interfaces';
-import {
-  DistrictConnectivityParameter,
-  DistrictInfluenceParameter,
-  DistrictSynchronizationParameter,
-  DistrictProcessCompletionSpeedParameter,
-  DistrictRewardsParameter,
-} from './parameters';
-import { DistrictExperienceShareMultiplierParameter } from './parameters/district-experience-share-multiplier-parameter';
+} from '../interfaces';
+import { DistrictConnectivityParameter } from './district-connectivity-parameter';
+import { DistrictInfluenceParameter } from './district-influence-parameter';
+import { DistrictSynchronizationParameter } from './district-synchronization-parameter';
+import { DistrictRewardsParameter } from './district-rewards-parameter';
+import { DistrictProcessCompletionSpeedParameter } from './district-process-completion-speed-parameter';
+import { DistrictExperienceShareMultiplierParameter } from './district-experience-share-multiplier-parameter';
 
 export class DistrictParameters implements IDistrictParameters {
   private _tier: IDistrictInfluenceParameter;

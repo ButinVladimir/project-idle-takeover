@@ -3,8 +3,9 @@ import {
   IDistrictMultipliers,
   IDistrictMultiplierParameter,
   IDistrictSerializedMultipliers,
-} from './interfaces';
-import { DistrictCodeBaseParameter, DistrictComputationalBaseParameter } from './parameters';
+} from '../../interfaces';
+import { DistrictCodeBaseParameter } from './district-code-base-parameter';
+import { DistrictComputationalBaseParameter } from './district-computational-base-parameter';
 
 export class DistrictMultipliers implements IDistrictMultipliers {
   private _codeBase: IDistrictMultiplierParameter;

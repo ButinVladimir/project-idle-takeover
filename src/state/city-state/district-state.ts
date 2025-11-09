@@ -8,9 +8,11 @@ import {
   IDistrictParameters,
   IDistrictArguments,
   IMapGeneratorDistrict,
+  IDistrictContractsState,
 } from './interfaces';
 import { DistrictUnlockState } from './types';
-import { DistrictParameters } from './district-parameters';
+import { DistrictParameters } from './parameters';
+import { DistrictContractsState } from './contracts';
 import { typedDistrictTypes } from './constants';
 
 const { lazyInject } = decorators;
@@ -26,6 +28,7 @@ export class DistrictState implements IDistrictState {
   private _faction;
   private _state: DistrictUnlockState;
   private _parameters: IDistrictParameters;
+  private _contracts: IDistrictContractsState;
 
   constructor(args: IDistrictArguments) {
     this._index = args.index;
@@ -35,6 +38,7 @@ export class DistrictState implements IDistrictState {
     this._faction = args.faction;
     this._state = args.state;
     this._parameters = new DistrictParameters(this);
+    this._contracts = new DistrictContractsState(this);
 
     this._stateUiConnector.registerEventEmitter(this, []);
   }
@@ -61,6 +65,7 @@ export class DistrictState implements IDistrictState {
     });
 
     districtState._parameters.deserialize(serializedState.parameters);
+    districtState._contracts.deserialize(serializedState.contracts);
 
     return districtState;
   }
@@ -101,8 +106,13 @@ export class DistrictState implements IDistrictState {
     return this._parameters;
   }
 
+  get contracts() {
+    return this._contracts;
+  }
+
   recalculate() {
     this._parameters.recalculate();
+    this._contracts.processTick();
   }
 
   serialize(): IDistrictSerializedState {
@@ -113,6 +123,7 @@ export class DistrictState implements IDistrictState {
       faction: this._faction,
       state: this._state,
       parameters: this._parameters.serialize(),
+      contracts: this._contracts.serialize(),
     };
   }
 

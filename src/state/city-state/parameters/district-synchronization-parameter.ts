@@ -1,4 +1,4 @@
-import { calculatePower } from '@shared/helpers';
+import { calculatePower } from '@shared/index';
 import { decorators } from '@state/container';
 import { type IStateUIConnector } from '@state/state-ui-connector/interfaces';
 import { TYPES } from '@state/types';

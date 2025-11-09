@@ -24,12 +24,16 @@ const styles = [
         flex-direction: row;
         align-items: center;
 
-        div.sidejob {
+        div.contract {
+          flex: 2;
+        }
+
+        div.available {
           flex: 1;
         }
 
-        div.progress-bar {
-          flex: 2;
+        div.generation {
+          flex: 3;
         }
       }
     }

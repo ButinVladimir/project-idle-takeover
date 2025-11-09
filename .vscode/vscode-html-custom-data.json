@@ -86,11 +86,31 @@
     },
     {
       "name": "ca-city-district-page",
-      "description": "Attributes:\n\n  * `district-index` {`number`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `districtIndex` {`number`} - \n\n  * `renderTabs` - \n\n  * `renderTab` - \n\n  * `renderTabPanels` - \n\n  * `renderTabPanel` - \n\n  * `renderTabPanelContent` - \n\n  * `handleGoBack` - \n\n  * `_controller` {`CityDistrictPageController`} - ",
+      "description": "Attributes:\n\n  * `district-index` {`number`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `districtIndex` {`number`} - \n\n  * `renderTabs` - \n\n  * `renderTab` - \n\n  * `renderTabPanels` - \n\n  * `renderTabPanel` - \n\n  * `renderTabPanelContent` - \n\n  * `handleGoBack` - \n\n  * `isTabUnlocked` - \n\n  * `_controller` {`CityDistrictPageController`} - ",
       "attributes": [
         {
           "name": "district-index",
           "description": "`district-index` {`number`} - \n\nProperty: districtIndex"
+        }
+      ]
+    },
+    {
+      "name": "ca-city-district-contract-panel",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderContent` - \n\n  * `renderHeader` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderList` - \n\n  * `renderContract` - \n\n  * `_controller` {`CityDistrictContractsPanelController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-city-district-contracts-list-item-generation-progress",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`true`} - \n\n  * `_districtIndex` {`number`} - \n\n  * `_contractName` {`string`} - \n\n  * `_progressBarRef` {`Ref<SlProgressBar>`} - \n\n  * `_timerRef` {`Ref<HTMLSpanElement>`} - \n\n  * `_chanceRef` {`Ref<HTMLSpanElement>`} - \n\n  * `_unlockedMessageRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`CityDistrictSidejobsListItemUnlockProgressController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-city-district-contracts-list-item",
+      "description": "Attributes:\n\n  * `contract-name` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `contractName` {`string`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `renderDescription` - \n\n  * `renderAvailable` - \n\n  * `renderGenerationProgress` - \n\n  * `_controller` {`CityDistrictContractsListItemController`} - ",
+      "attributes": [
+        {
+          "name": "contract-name",
+          "description": "`contract-name` {`string`} - \n\nProperty: contractName"
         }
       ]
     },

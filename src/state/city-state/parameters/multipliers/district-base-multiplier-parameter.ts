@@ -1,5 +1,9 @@
-import { IMultiplierParameters } from '@shared/index';
-import { IDistrictMultiplierParameter, IDistrictState, IDistrictMultiplierSerializedParameter } from '../../interfaces';
+import {
+  IDistrictMultiplierParameter,
+  IDistrictState,
+  IDistrictMultiplierSerializedParameter,
+  IDistrictTypeMultiplierParameters,
+} from '../../interfaces';
 
 export abstract class DistrictBaseMultiplierParameter implements IDistrictMultiplierParameter {
   protected _district: IDistrictState;
@@ -41,5 +45,5 @@ export abstract class DistrictBaseMultiplierParameter implements IDistrictMultip
     };
   }
 
-  protected abstract getMultiplierParameters(): IMultiplierParameters;
+  protected abstract getMultiplierParameters(): IDistrictTypeMultiplierParameters;
 }

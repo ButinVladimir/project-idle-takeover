@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { localized, msg } from '@lit/localize';
 import { provide } from '@lit/context';
@@ -61,6 +61,10 @@ export class CityDistrictPage extends BaseComponent {
   };
 
   private renderTab = (tab: CityDistrictPageTabs) => {
+    if (!this.isTabUnlocked(tab)) {
+      return nothing;
+    }
+
     return html`<sl-tab slot="nav" panel=${tab}>${CITY_DISTRICT_PAGE_TAB_TITLES[tab]()}</sl-tab>`;
   };
 
@@ -69,20 +73,36 @@ export class CityDistrictPage extends BaseComponent {
   };
 
   private renderTabPanel = (tab: CityDistrictPageTabs) => {
+    if (!this.isTabUnlocked(tab)) {
+      return nothing;
+    }
+
     return html`<sl-tab-panel name=${tab}>${this.renderTabPanelContent(tab)}</sl-tab-panel>`;
   };
 
   private renderTabPanelContent = (tab: CityDistrictPageTabs) => {
     switch (tab) {
       case CityDistrictPageTabs.overview:
-        return html` <ca-city-district-overview-panel> </ca-city-district-overview-panel> `;
+        return html`<ca-city-district-overview-panel></ca-city-district-overview-panel>`;
 
       case CityDistrictPageTabs.sidejobs:
-        return html` <ca-city-district-sidejobs-panel> </ca-city-district-sidejobs-panel> `;
+        return html`<ca-city-district-sidejobs-panel></ca-city-district-sidejobs-panel>`;
+
+      case CityDistrictPageTabs.contracts:
+        return html`<ca-city-district-contract-panel></ca-city-district-contract-panel>`;
     }
   };
 
   private handleGoBack = () => {
     this.dispatchEvent(new ReturnCityMapPageEvent());
+  };
+
+  private isTabUnlocked = (tab: CityDistrictPageTabs) => {
+    switch (tab) {
+      case CityDistrictPageTabs.contracts:
+        return this._controller.isContractsTabUnlocked();
+      default:
+        return true;
+    }
   };
 }

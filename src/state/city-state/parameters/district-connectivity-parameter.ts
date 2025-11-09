@@ -1,7 +1,7 @@
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import type { IGlobalState } from '@state/global-state/interfaces/global-state';
-import { calculatePower } from '@shared/helpers';
+import { calculatePower } from '@shared/index';
 import {
   IDistrictConnectivityParameter,
   IDistrictState,
@@ -43,7 +43,8 @@ export class DistrictConnectivityParameter implements IDistrictConnectivityParam
       this._district.parameters.influence.tier,
       districtTypeData.parameters.connectivity.programPointsMultiplier,
     );
-    this._totalValue = 1 + this._points + this._globalState.connectivity.pointsByProgram * programPointsMultiplier;
+    this._totalValue =
+      (1 + this._points) * (1 + this._globalState.connectivity.pointsByProgram * programPointsMultiplier);
   }
 
   async deserialize(serializedState: IDistrictConnectivitySerializedParameter): Promise<void> {

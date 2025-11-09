@@ -1,4 +1,4 @@
-import { IDistrictInfluenceSerializedParameter } from '../serialized-states/district-influence-serialized-parameter';
+import { IDistrictInfluenceSerializedParameter } from '../serialized-states/parameters/district-influence-serialized-parameter';
 
 export interface IDistrictInfluenceParameter {
   tier: number;

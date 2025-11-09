@@ -31,8 +31,19 @@
             }
           },
           "connectivity": {
-            "$ref": "./common/geometric-progression.json",
-            "description": "Contract connectivity requirement (geometric)"
+            "type": "object",
+            "description": "Contract connectivity requirements",
+            "properties": {
+              "amount": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "Contract connectivity amount requirements (geometric)"
+              },
+              "threat": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "Contract connectivity threat requirements (geometric)"
+              }
+            },
+            "required": ["amount", "threat"]
           },
           "attributes": {
             "type": "object",
