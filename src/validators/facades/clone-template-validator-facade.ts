@@ -2,7 +2,7 @@ import Ajv from 'ajv';
 import { inject, injectable } from 'inversify';
 import { styleText } from 'node:util';
 import cloneTemplatesSchema from '@configs/schemas/clone-templates.json';
-import { typedCloneTemplates } from '@state/company-state';
+import { typedCloneTemplates } from '@state/clones-state';
 import { type ICloneTemplateValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
 

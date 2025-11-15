@@ -4,7 +4,7 @@ import { consume } from '@lit/context';
 import { customElement } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ATTRIBUTE_TEXTS, COMMON_TEXTS, SKILL_TEXTS } from '@texts/index';
-import { type ISidejob } from '@state/company-state';
+import { type ISidejob } from '@state/activity-state';
 import {
   BaseComponent,
   Attribute,

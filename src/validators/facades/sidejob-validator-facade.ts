@@ -2,7 +2,7 @@ import Ajv from 'ajv';
 import { inject, injectable } from 'inversify';
 import { styleText } from 'node:util';
 import sidejobsSchema from '@configs/schemas/sidejobs.json';
-import { typedSidejobs } from '@state/company-state';
+import { typedSidejobs } from '@state/activity-state';
 import { type ISidejobValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
 

@@ -1,7 +1,7 @@
 import { decorators } from '@state/container';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { TYPES } from '@state/types';
-import { type ICompanyState } from '@state/company-state';
+import { type IActivityState } from '@state/activity-state';
 import { IDistrictProcessCompletionSpeedParameter, IDistrictState } from '../interfaces';
 
 const { lazyInject } = decorators;
@@ -10,8 +10,8 @@ export class DistrictProcessCompletionSpeedParameter implements IDistrictProcess
   @lazyInject(TYPES.StateUIConnector)
   private _stateUIConnector!: IStateUIConnector;
 
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
 
   private _district: IDistrictState;
   private _value: number;
@@ -30,7 +30,7 @@ export class DistrictProcessCompletionSpeedParameter implements IDistrictProcess
   recalculate(): void {
     this._value = 1;
 
-    for (const sidejob of this._companyState.sidejobs.listSidejobs()) {
+    for (const sidejob of this._activityState.sidejobs.listSidejobs()) {
       if (sidejob.district.index === this._district.index && sidejob.isActive) {
         this._value += sidejob.calculateProcessCompletionSpeedDelta();
       }

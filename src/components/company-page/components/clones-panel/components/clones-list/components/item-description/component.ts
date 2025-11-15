@@ -4,7 +4,7 @@ import { customElement } from 'lit/decorators.js';
 import { consume } from '@lit/context';
 import { ATTRIBUTE_TEXTS, COMMON_TEXTS, SKILL_TEXTS } from '@texts/index';
 import { Attribute, Skill, ATTRIBUTES, SKILLS, BaseComponent } from '@shared/index';
-import { type IClone } from '@state/company-state';
+import { type IClone } from '@state/clones-state';
 import { ClonesListItemDescriptionController } from './controller';
 import { cloneContext } from '../item/contexts';
 import styles from './styles';

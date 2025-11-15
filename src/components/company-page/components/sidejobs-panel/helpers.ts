@@ -1,5 +1,5 @@
 import { MS_IN_SECOND, RewardParameter } from '@shared/index';
-import { ISidejob } from '@state/company-state';
+import { ISidejob } from '@state/activity-state';
 
 export const calculateSidejobParameterValue = (sidejob: ISidejob, parameter: RewardParameter) => {
   switch (parameter) {

@@ -1,6 +1,5 @@
 import { IDistrictState } from '@state/city-state/interfaces/district-state';
-import { BaseController } from '@shared/base-controller';
-import { IPoint } from '@shared/interfaces/point';
+import { BaseController, IPoint } from '@shared/index';
 
 export class CityMapController extends BaseController {
   get runId() {

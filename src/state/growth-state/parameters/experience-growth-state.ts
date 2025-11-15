@@ -1,16 +1,20 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
-import { type ICompanyState } from '@state/company-state';
 import { type IGlobalState } from '@state/global-state';
+import { type IActivityState } from '@state/activity-state';
+import { type IClonesState } from '@state/clones-state';
 import { IExperienceGrowthState } from '../interfaces';
 
 const { lazyInject } = decorators;
 
 @injectable()
 export class ExperienceGrowthState implements IExperienceGrowthState {
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
+
+  @lazyInject(TYPES.ClonesState)
+  private _clonesState!: IClonesState;
 
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
@@ -44,7 +48,7 @@ export class ExperienceGrowthState implements IExperienceGrowthState {
 
     this._recalculated = true;
 
-    for (const clone of this._companyState.clones.listClones()) {
+    for (const clone of this._clonesState.ownedClones.listClones()) {
       this._growthByCloneId.set(clone.id, 0);
     }
 
@@ -53,7 +57,7 @@ export class ExperienceGrowthState implements IExperienceGrowthState {
   }
 
   private updateGrowthBySidejobs(): void {
-    for (const sidejob of this._companyState.sidejobs.listSidejobs()) {
+    for (const sidejob of this._activityState.sidejobs.listSidejobs()) {
       if (!sidejob.isActive) {
         continue;
       }
@@ -67,13 +71,13 @@ export class ExperienceGrowthState implements IExperienceGrowthState {
   private updateGrowthBySharing(): void {
     let sharedExperience = 0;
 
-    for (const clone of this._companyState.clones.listClones()) {
+    for (const clone of this._clonesState.ownedClones.listClones()) {
       sharedExperience += this._growthByCloneId.get(clone.id) ?? 0;
     }
 
     sharedExperience *= this._globalState.experienceShare.totalMultiplier;
 
-    for (const clone of this._companyState.clones.listClones()) {
+    for (const clone of this._clonesState.ownedClones.listClones()) {
       const currentExperience = this._growthByCloneId.get(clone.id) ?? 0;
 
       this._growthByCloneId.set(clone.id, currentExperience + sharedExperience);

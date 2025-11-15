@@ -1,5 +1,4 @@
-import { Feature } from '@shared/index';
-import { BaseController } from '@shared/base-controller';
+import { Feature, BaseController } from '@shared/index';
 
 export class ClonesPanelController extends BaseController {
   get availableSynchronization(): number {

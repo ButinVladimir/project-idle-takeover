@@ -6,7 +6,7 @@ import { consume } from '@lit/context';
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
 import { BaseComponent } from '@shared/index';
 import { COMMON_TEXTS } from '@texts/index';
-import { type IClone } from '@state/company-state';
+import { type IClone } from '@state/clones-state';
 import { PurchaseCloneDialogButtonsController } from './controller';
 import { CancelEvent, PurchaseCloneEvent } from './events';
 import { temporaryCloneContext } from '../../contexts';

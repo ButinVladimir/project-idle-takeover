@@ -3,7 +3,7 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IMainframeState, InformationCollectorProgram, MultiplierProgramName } from '@state/mainframe-state';
 import { type ICityState } from '@state/city-state';
-import { type ICompanyState } from '@state/company-state';
+import { type IActivityState } from '@state/activity-state';
 import { calculatePower } from '@shared/index';
 import { IConnectivityGrowthState } from '../interfaces';
 
@@ -17,8 +17,8 @@ export class ConnectivityGrowthState implements IConnectivityGrowthState {
   @lazyInject(TYPES.CityState)
   private _cityState!: ICityState;
 
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
 
   private _recalculated: boolean;
   protected _baseGrowthByProgram: number;
@@ -91,7 +91,7 @@ export class ConnectivityGrowthState implements IConnectivityGrowthState {
   }
 
   private updateGrowthBySidejobs(): void {
-    for (const sidejob of this._companyState.sidejobs.listSidejobs()) {
+    for (const sidejob of this._activityState.sidejobs.listSidejobs()) {
       if (!sidejob.isActive) {
         continue;
       }

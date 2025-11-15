@@ -5,7 +5,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { COMMON_TEXTS } from '@texts/common';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { CLONE_TEMPLATE_TEXTS } from '@texts/clone-templates';
-import { type IClone } from '@state/company-state';
+import { type IClone } from '@state/clones-state';
 import { BaseComponent, CloneAlert, AUTOUPGRADE_VALUES } from '@shared/index';
 import { ClonesListItemController } from './controller';
 import { OpenCloneListItemDialogEvent } from '../../../../events/open-clone-list-item-dialog';

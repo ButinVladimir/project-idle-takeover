@@ -5,7 +5,7 @@ import { type IGlobalState } from '@state/global-state';
 import { type ISettingsState } from '@state/settings-state';
 import { type IUnlockState } from '@state/unlock-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
-import { typedContracts } from '@state/company-state';
+import { typedContracts } from '@state/activity-state';
 import { calculatePower } from '@shared/index';
 import {
   IDistrictContractsCountersSerializedState,

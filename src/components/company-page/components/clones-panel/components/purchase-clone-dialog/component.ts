@@ -9,7 +9,7 @@ import clamp from 'lodash/clamp';
 import { provide } from '@lit/context';
 import { BaseComponent } from '@shared/index';
 import { COMMON_TEXTS, CLONE_TEMPLATE_TEXTS } from '@texts/index';
-import { type IClone } from '@state/company-state';
+import { type IClone } from '@state/clones-state';
 import { PurchaseCloneDialogCloseEvent } from './events';
 import { PurchaseCloneDialogController } from './controller';
 import { temporaryCloneContext } from './contexts';

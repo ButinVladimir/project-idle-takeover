@@ -1,5 +1,4 @@
-import { BaseController } from '@shared/base-controller';
-import { Feature } from '@shared/index';
+import { BaseController, Feature } from '@shared/index';
 
 export class AssignCloneSidejobDialogRewardsController extends BaseController {
   isFeatureUnlocked(feature: Feature) {

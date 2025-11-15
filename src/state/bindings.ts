@@ -116,15 +116,14 @@ import { IFormatter, Formatter } from '@shared/index';
 import {
   ICloneFactory,
   CloneFactory,
-  ICompanyClonesState,
-  CompanyClonesState,
-  ICompanyState,
-  CompanyState,
-  ICompanySidejobsState,
-  CompanySidejobsState,
-  ICompanyClonesLevelUpgrader,
-  CompanyClonesLevelUpgrader,
-} from '@state/company-state';
+  IOwnedClonesState,
+  OwnedClonesState,
+  IClonesState,
+  ClonesState,
+  IOwnedClonesLevelUpgrader,
+  OwnedClonesLevelUpgrader,
+} from '@state/clones-state';
+import { IActivityState, ActivityState, ISidejobsState, SidejobsState } from '@state/activity-state';
 import { TYPES } from './types';
 import { container } from './container';
 
@@ -394,22 +393,16 @@ container.bind<IFormatter>(TYPES.Formatter).to(Formatter).inSingletonScope().whe
 
 container.bind<ICloneFactory>(TYPES.CloneFactory).to(CloneFactory).inSingletonScope().whenTargetIsDefault();
 
+container.bind<IOwnedClonesState>(TYPES.OwnedClonesState).to(OwnedClonesState).inSingletonScope().whenTargetIsDefault();
+
 container
-  .bind<ICompanyClonesState>(TYPES.CompanyClonesState)
-  .to(CompanyClonesState)
+  .bind<IOwnedClonesLevelUpgrader>(TYPES.OwnedClonesLevelUpgrader)
+  .to(OwnedClonesLevelUpgrader)
   .inSingletonScope()
   .whenTargetIsDefault();
 
-container
-  .bind<ICompanySidejobsState>(TYPES.CompanySidejobsState)
-  .to(CompanySidejobsState)
-  .inSingletonScope()
-  .whenTargetIsDefault();
+container.bind<IClonesState>(TYPES.ClonesState).to(ClonesState).inSingletonScope().whenTargetIsDefault();
 
-container
-  .bind<ICompanyClonesLevelUpgrader>(TYPES.CompanyClonesLevelUpgrader)
-  .to(CompanyClonesLevelUpgrader)
-  .inSingletonScope()
-  .whenTargetIsDefault();
+container.bind<ISidejobsState>(TYPES.SidejobsState).to(SidejobsState).inSingletonScope().whenTargetIsDefault();
 
-container.bind<ICompanyState>(TYPES.CompanyState).to(CompanyState).inSingletonScope().whenTargetIsDefault();
+container.bind<IActivityState>(TYPES.ActivityState).to(ActivityState).inSingletonScope().whenTargetIsDefault();

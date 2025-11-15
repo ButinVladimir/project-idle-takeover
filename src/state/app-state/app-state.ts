@@ -7,7 +7,8 @@ import { type IMainframeState } from '@state/mainframe-state';
 import { type IGlobalState } from '@state/global-state';
 import { type IAutomationState } from '@state/automation-state';
 import { type IGrowthState } from '@state/growth-state';
-import { type ICompanyState } from '@state/company-state';
+import { type IClonesState } from '@state/clones-state';
+import { type IActivityState } from '@state/activity-state';
 import { type IFactionState } from '@state/faction-state';
 import { type IScenarioState } from '@state/scenario-state';
 import { type IUnlockState } from '@state/unlock-state';
@@ -50,8 +51,11 @@ export class AppState implements IAppState {
   @inject(TYPES.AutomationState)
   private _automationState!: IAutomationState;
 
-  @inject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @inject(TYPES.ClonesState)
+  private _clonesState!: IClonesState;
+
+  @inject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
 
   updateState() {
     if (this._globalState.gameSpeed === GameSpeed.paused) {
@@ -94,10 +98,11 @@ export class AppState implements IAppState {
     await this._scenarioState.startNewState();
     await this._factionState.startNewState();
     await this._unlockState.startNewState();
+    await this._clonesState.startNewState();
     await this._cityState.startNewState();
     await this._mainframeState.startNewState();
     await this._automationState.startNewState();
-    await this._companyState.startNewState();
+    await this._activityState.startNewState();
 
     this._globalState.recalculate();
     this._growthState.clearValues();
@@ -114,10 +119,11 @@ export class AppState implements IAppState {
       unlock: this._unlockState.serialize(),
       global: this._globalState.serialize(),
       settings: this._settingsState.serialize(),
+      clones: this._clonesState.serialize(),
       city: this._cityState.serialize(),
       mainframe: this._mainframeState.serialize(),
       automation: this._automationState.serialize(),
-      company: this._companyState.serialize(),
+      activity: this._activityState.serialize(),
     };
 
     return saveState;
@@ -144,10 +150,11 @@ export class AppState implements IAppState {
     await this._scenarioState.deserialize(migratedSaveData.scenario);
     await this._factionState.deserialize(migratedSaveData.faction);
     await this._unlockState.deserialize(migratedSaveData.unlock);
+    await this._clonesState.deserialize(migratedSaveData.clones);
     await this._cityState.deserialize(migratedSaveData.city);
     await this._mainframeState.deserialize(migratedSaveData.mainframe);
     await this._automationState.deserialize(migratedSaveData.automation);
-    await this._companyState.deserialize(migratedSaveData.company);
+    await this._activityState.deserialize(migratedSaveData.activity);
 
     this._globalState.recalculate();
     this._growthState.clearValues();
@@ -167,8 +174,9 @@ export class AppState implements IAppState {
   }
 
   private processSingleTick = () => {
+    this._activityState.processTick();
     this._mainframeState.processes.processTick();
-    this._companyState.processTick();
+    this._clonesState.recalculate();
     this._globalState.makeNextTick();
     this._cityState.recalculate();
     this._globalState.recalculate();

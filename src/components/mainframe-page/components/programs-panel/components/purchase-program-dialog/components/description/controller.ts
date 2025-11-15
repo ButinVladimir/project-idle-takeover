@@ -1,5 +1,5 @@
-import { BaseController } from '@shared/base-controller';
-import { ProgramName } from '@state/mainframe-state/states/progam-factory/types';
+import { BaseController } from '@shared/index';
+import { ProgramName } from '@state/mainframe-state';
 
 export class ProgramDiffTextController extends BaseController {
   get money(): number {

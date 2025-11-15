@@ -1,5 +1,6 @@
-import { IAssignSidejobArguments, IClone, ISidejob } from '@state/company-state';
-import { BaseController } from '@shared/base-controller';
+import { IAssignSidejobArguments, ISidejob } from '@state/activity-state';
+import { IClone } from '@state/clones-state';
+import { BaseController } from '@shared/index';
 import { IDistrictState } from '@state/city-state';
 
 export class AssignCloneSidejobDialogController extends BaseController {
@@ -12,7 +13,7 @@ export class AssignCloneSidejobDialogController extends BaseController {
   }
 
   listClones(): IClone[] {
-    return this.companyState.clones.listClones();
+    return this.clonesState.ownedClones.listClones();
   }
 
   listAvailableSidejobs(): string[] {
@@ -28,7 +29,7 @@ export class AssignCloneSidejobDialogController extends BaseController {
   }
 
   getRequiredConnectivity(sidejobName: string): number {
-    return this.companyState.sidejobs.getConnectivityRequirement(sidejobName);
+    return this.activityState.sidejobs.getConnectivityRequirement(sidejobName);
   }
 
   getSidejob(args: IAssignSidejobArguments): ISidejob {
@@ -39,7 +40,7 @@ export class AssignCloneSidejobDialogController extends BaseController {
     ) {
       this.deleteSidejob();
 
-      this._sidejob = this.companyState.sidejobs.makeSidejob({
+      this._sidejob = this.activityState.sidejobs.makeSidejob({
         id: 'temporary',
         ...args,
       });
@@ -53,11 +54,11 @@ export class AssignCloneSidejobDialogController extends BaseController {
       return undefined;
     }
 
-    return this.companyState.sidejobs.getSidejobByCloneId(cloneId);
+    return this.activityState.sidejobs.getSidejobByCloneId(cloneId);
   }
 
   assignClone(args: IAssignSidejobArguments) {
-    this.companyState.sidejobs.assignSidejob(args);
+    this.activityState.sidejobs.assignSidejob(args);
   }
 
   private deleteSidejob() {

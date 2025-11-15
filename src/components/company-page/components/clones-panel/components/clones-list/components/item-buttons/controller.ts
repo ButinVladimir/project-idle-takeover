@@ -1,4 +1,4 @@
-import { IClone } from '@state/company-state';
+import { IClone } from '@state/clones-state';
 import { BaseController } from '@shared/index';
 
 export class ClonesListItemButtonsController extends BaseController {
@@ -7,7 +7,7 @@ export class ClonesListItemButtonsController extends BaseController {
       return 0;
     }
 
-    return this.companyState.clones.calculateCloneLevelFromMoney(
+    return this.clonesState.ownedClones.calculateCloneLevelFromMoney(
       clone.templateName,
       clone.tier,
       this.globalState.money.money,
@@ -21,12 +21,12 @@ export class ClonesListItemButtonsController extends BaseController {
 
     return (
       this.globalState.money.money >=
-      this.companyState.clones.calculateCloneCost(clone.templateName, clone.tier, clone.level + 1)
+      this.clonesState.ownedClones.calculateCloneCost(clone.templateName, clone.tier, clone.level + 1)
     );
   }
 
   upgradeCloneLevel(clone: IClone) {
-    this.companyState.clones.levelUpgrader.upgradeMaxClone(clone.id);
+    this.clonesState.ownedClones.levelUpgrader.upgradeMaxClone(clone.id);
   }
 
   private checkCloneUpgradeAvailable(clone: IClone): boolean {

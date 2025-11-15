@@ -1,4 +1,4 @@
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 import { IDistrictState } from '@state/city-state';
 
 export class StatisticsRewardsPointsIncomeController extends BaseController {

@@ -3,7 +3,7 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { ProgramName, IProcess, type IMainframeState } from '@state/mainframe-state';
 import { type ICityState } from '@state/city-state';
-import { ISidejob, type ICompanyState } from '@state/company-state';
+import { ISidejob, type IActivityState } from '@state/activity-state';
 import { IMultiplierGrowthState } from '../../interfaces/parameters/multiplier-growth-state';
 
 const { lazyInject } = decorators;
@@ -16,8 +16,8 @@ export abstract class BaseMultiplierGrowthState implements IMultiplierGrowthStat
   @lazyInject(TYPES.CityState)
   private _cityState!: ICityState;
 
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
 
   private _recalculated: boolean;
   protected _growthByProgram: number;
@@ -80,7 +80,7 @@ export abstract class BaseMultiplierGrowthState implements IMultiplierGrowthStat
   }
 
   private updateGrowthBySidejobs(): void {
-    for (const sidejob of this._companyState.sidejobs.listSidejobs()) {
+    for (const sidejob of this._activityState.sidejobs.listSidejobs()) {
       if (!sidejob.isActive) {
         continue;
       }

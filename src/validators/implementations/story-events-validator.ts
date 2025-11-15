@@ -3,7 +3,8 @@ import { styleText } from 'node:util';
 import { IStoryEvent, typedStoryEvents } from '@state/scenario-state';
 import { typedFactions } from '@state/faction-state';
 import { STORY_MESSAGES } from '@texts/index';
-import { typedCloneTemplates, typedContracts, typedSidejobs } from '@state/company-state';
+import { typedContracts, typedSidejobs } from '@state/activity-state';
+import { typedCloneTemplates } from '@state/clones-state';
 import { IStoryEventsValidator } from '../interfaces';
 
 @injectable()

@@ -1,4 +1,4 @@
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 
 export class CityDistrictSidejobsListItemUnlockProgressController extends BaseController {
   getCurrentConnectivity(districtIndex: number) {
@@ -6,7 +6,7 @@ export class CityDistrictSidejobsListItemUnlockProgressController extends BaseCo
   }
 
   getRequiredConnectivity(sidejobName: string) {
-    return this.companyState.sidejobs.getConnectivityRequirement(sidejobName);
+    return this.activityState.sidejobs.getConnectivityRequirement(sidejobName);
   }
 
   getConnectivityGrowth(districtIndex: number) {

@@ -3,7 +3,7 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { DealMakerProgram, type IMainframeState, MultiplierProgramName } from '@state/mainframe-state';
 import { type ICityState } from '@state/city-state';
-import { type ICompanyState } from '@state/company-state';
+import { type IActivityState } from '@state/activity-state';
 import { IRewardsGrowthState } from '../interfaces';
 
 const { lazyInject } = decorators;
@@ -16,8 +16,8 @@ export class RewardsGrowthState implements IRewardsGrowthState {
   @lazyInject(TYPES.CityState)
   private _cityState!: ICityState;
 
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
 
   private _recalculated: boolean;
 
@@ -81,7 +81,7 @@ export class RewardsGrowthState implements IRewardsGrowthState {
   }
 
   private updateGrowthBySidejobs(): void {
-    for (const sidejob of this._companyState.sidejobs.listSidejobs()) {
+    for (const sidejob of this._activityState.sidejobs.listSidejobs()) {
       if (!sidejob.isActive) {
         continue;
       }

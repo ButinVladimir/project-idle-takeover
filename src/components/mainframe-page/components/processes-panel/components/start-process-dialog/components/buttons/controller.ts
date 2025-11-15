@@ -1,4 +1,4 @@
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 import { IProcess, ProgramName } from '@state/mainframe-state';
 
 export class StartProcessDialogButtonsController extends BaseController {

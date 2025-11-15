@@ -1,5 +1,4 @@
-import { BaseController } from '@shared/base-controller';
-import { PurchaseType } from '@shared/types';
+import { BaseController, PurchaseType } from '@shared/index';
 
 export class StatisticsMoneyExpensesController extends BaseController {
   getMoneyExpenses = (purchaseType: PurchaseType) => {

@@ -3,9 +3,9 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type ICityState } from '@state/city-state';
-import { type IGlobalState, ISynchronizationState } from '../interfaces';
-import { type ICompanyState } from '@state/company-state';
 import { type IScenarioState } from '@state/scenario-state';
+import { type IClonesState } from '@state/clones-state';
+import { type IGlobalState, ISynchronizationState } from '../interfaces';
 
 const { lazyInject } = decorators;
 
@@ -20,8 +20,8 @@ export class SynchronizationState implements ISynchronizationState {
   @lazyInject(TYPES.CityState)
   private _cityState!: ICityState;
 
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @lazyInject(TYPES.ClonesState)
+  private _clonesState!: IClonesState;
 
   @lazyInject(TYPES.StateUIConnector)
   private _stateUIConnector!: IStateUIConnector;
@@ -88,8 +88,11 @@ export class SynchronizationState implements ISynchronizationState {
   private calculateAvailableValue() {
     this._availableValue = this._totalValue;
 
-    for (const clone of this._companyState.clones.listClones()) {
-      this._availableValue -= this._companyState.clones.calculateCloneSynchronization(clone.templateName, clone.tier);
+    for (const clone of this._clonesState.ownedClones.listClones()) {
+      this._availableValue -= this._clonesState.ownedClones.calculateCloneSynchronization(
+        clone.templateName,
+        clone.tier,
+      );
     }
   }
 }

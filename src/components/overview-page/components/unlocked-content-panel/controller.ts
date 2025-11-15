@@ -1,4 +1,4 @@
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 import { Feature } from '@shared/types';
 
 export class OverviewUnlockedContentPanelController extends BaseController {

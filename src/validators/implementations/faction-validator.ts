@@ -3,7 +3,8 @@ import { styleText } from 'node:util';
 import { FACTION_TEXTS } from '@texts/index';
 import { Faction } from '@shared/index';
 import { typedFactions } from '@state/faction-state';
-import { typedCloneTemplates, typedContracts } from '@state/company-state';
+import { typedCloneTemplates } from '@state/clones-state';
+import { typedContracts } from '@state/activity-state';
 import { typedPrograms } from '@state/mainframe-state';
 import { IFactionValidator } from '../interfaces';
 

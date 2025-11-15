@@ -4,9 +4,10 @@ import { ICitySerializedState } from '@state/city-state';
 import { IMainframeSerializedState } from '@state/mainframe-state';
 import { IGlobalSerializedState } from '@state/global-state';
 import { IAutomationSerializedState } from '@state/automation-state';
-import { ICompanySerializedState } from '@state/company-state';
 import { IScenarioSerializedState } from '@state/scenario-state';
 import { IUnlockSerializedState } from '@state/unlock-state';
+import { IClonesSerializedState } from '@state/clones-state';
+import { IActivitySerializedState } from '@state/activity-state';
 import { GameVersion } from '@shared/types';
 
 export interface ISerializedState {
@@ -19,5 +20,6 @@ export interface ISerializedState {
   city: ICitySerializedState;
   mainframe: IMainframeSerializedState;
   automation: IAutomationSerializedState;
-  company: ICompanySerializedState;
+  clones: IClonesSerializedState;
+  activity: IActivitySerializedState;
 }

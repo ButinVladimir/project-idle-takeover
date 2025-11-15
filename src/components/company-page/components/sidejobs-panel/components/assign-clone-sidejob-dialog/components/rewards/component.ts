@@ -3,7 +3,7 @@ import { localized } from '@lit/localize';
 import { consume } from '@lit/context';
 import { customElement, queryAll } from 'lit/decorators.js';
 import { BaseComponent, diffFormatterParameters, getHighlightDifferenceClass, RewardParameter } from '@shared/index';
-import { type ISidejob } from '@state/company-state';
+import { type ISidejob } from '@state/activity-state';
 import { COMMON_TEXTS, REWARD_PARAMETER_NAMES } from '@texts/index';
 import { existingSidejobContext, temporarySidejobContext } from '../../contexts';
 import { DISPLAY_TYPES } from './constants';

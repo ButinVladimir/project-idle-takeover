@@ -1,12 +1,12 @@
-import { ISidejob } from '@state/company-state';
+import { ISidejob } from '@state/activity-state';
 import { BaseController } from '@shared/index';
 
 export class SidejobsListController extends BaseController {
   listSidejobs(): ISidejob[] {
-    return this.companyState.sidejobs.listSidejobs();
+    return this.activityState.sidejobs.listSidejobs();
   }
 
   cancelAllSidejobs(): void {
-    this.companyState.sidejobs.cancelAllSidejobs();
+    this.activityState.sidejobs.cancelAllSidejobs();
   }
 }

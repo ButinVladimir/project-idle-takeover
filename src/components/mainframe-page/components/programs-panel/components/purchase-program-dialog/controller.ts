@@ -1,4 +1,4 @@
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 import { IProgram, ProgramName } from '@state/mainframe-state';
 
 export class PurchaseProgramDialogController extends BaseController {

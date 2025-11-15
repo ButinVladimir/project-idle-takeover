@@ -2,7 +2,7 @@ import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type ICityState } from '@state/city-state';
-import { type ICompanyState } from '@state/company-state';
+import { type IActivityState } from '@state/activity-state';
 import { IInfluenceGrowthState } from '../interfaces';
 
 const { lazyInject } = decorators;
@@ -12,8 +12,8 @@ export class InfluenceGrowthState implements IInfluenceGrowthState {
   @lazyInject(TYPES.CityState)
   private _cityState!: ICityState;
 
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
 
   private _recalculated: boolean;
   private _growthByDistrict: Map<number, number>;
@@ -52,7 +52,7 @@ export class InfluenceGrowthState implements IInfluenceGrowthState {
   }
 
   private updateGrowthBySidejobs(): void {
-    for (const sidejob of this._companyState.sidejobs.listSidejobs()) {
+    for (const sidejob of this._activityState.sidejobs.listSidejobs()) {
       if (!sidejob.isActive) {
         continue;
       }

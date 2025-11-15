@@ -1,7 +1,5 @@
-import { BaseController } from '@shared/base-controller';
-import { IProgram } from '@state/mainframe-state/states/progam-factory/interfaces/program';
-import { ProgramName } from '@state/mainframe-state/states/progam-factory/types';
-import { IProcess } from '@state/mainframe-state/states/mainframe-processes-state/interfaces/process';
+import { BaseController } from '@shared/index';
+import { IProgram, ProgramName, IProcess } from '@state/mainframe-state';
 
 export class StartProcessDialogController extends BaseController {
   private _program?: IProgram;

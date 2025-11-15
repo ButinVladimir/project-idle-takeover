@@ -6,7 +6,7 @@ import { SortableElementMovedEvent } from '@components/shared/sortable-list/even
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { COMMON_TEXTS } from '@texts/index';
 import { BaseComponent, CloneAlert, AUTOUPGRADE_VALUES, DELETE_VALUES } from '@shared/index';
-import { IClone } from '@state/company-state/states/clone-factory/interfaces/clone';
+import { IClone } from '@state/clones-state';
 import { ClonesListController } from './controller';
 import { CLONE_LIST_ITEMS_GAP } from './constants';
 import styles from './styles';

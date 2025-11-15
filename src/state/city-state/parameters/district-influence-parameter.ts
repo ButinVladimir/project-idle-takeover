@@ -3,10 +3,10 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IGlobalState } from '@state/global-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
-import { type ICompanyState } from '@state/company-state';
 import { type IMessageLogState } from '@state/message-log-state';
 import { type INotificationsState } from '@state/notifications-state';
 import { type IScenarioState } from '@state/scenario-state';
+import { type IActivityState } from '@state/activity-state';
 import {
   type IFormatter,
   CityEvent,
@@ -29,8 +29,8 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
   @lazyInject(TYPES.CityState)
   private _cityState!: ICityState;
 
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
 
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
@@ -145,7 +145,7 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
 
   private handleTierUpdate() {
     this._globalState.synchronization.requestRecalculation();
-    this._companyState.requestReassignment();
-    this._companyState.sidejobs.updateAllSidejobsPerformance();
+    this._activityState.requestReassignment();
+    this._activityState.sidejobs.updateAllSidejobsPerformance();
   }
 }

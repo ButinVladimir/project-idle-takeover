@@ -6,7 +6,7 @@ import { consume } from '@lit/context';
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
 import { BaseComponent } from '@shared/index';
 import { COMMON_TEXTS, DISTRICT_NAMES, SIDEJOB_TEXTS } from '@texts/index';
-import { type ISidejob } from '@state/company-state';
+import { type ISidejob } from '@state/activity-state';
 import { AssignCloneSidejobDialogButtonsController } from './controller';
 import { AssignCloneEvent, CancelEvent } from './events';
 import { existingSidejobContext, temporarySidejobContext } from '../../contexts';

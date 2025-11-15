@@ -6,9 +6,9 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { BaseComponent, SidejobAlert, DELETE_VALUES, DESCRIPTION_ICONS } from '@shared/index';
 import { COMMON_TEXTS, DISTRICT_NAMES, SIDEJOB_TEXTS } from '@texts/index';
+import { type ISidejob } from '@state/activity-state';
 import { SidejobsListItemController } from './controller';
 import { sidejobContext } from './contexts';
-import { type ISidejob } from '@state/company-state';
 import styles from './styles';
 
 @localized()

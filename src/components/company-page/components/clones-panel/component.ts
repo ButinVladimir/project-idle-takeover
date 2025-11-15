@@ -4,7 +4,7 @@ import { provide } from '@lit/context';
 import { msg, localized } from '@lit/localize';
 import { customElement, state } from 'lit/decorators.js';
 import { BaseComponent } from '@shared/index';
-import { type IClone } from '@state/company-state';
+import { type IClone } from '@state/clones-state';
 import { COMMON_TEXTS } from '@texts/index';
 import { ClonesPanelController } from './controller';
 import { type CloneListItemDialog } from './type';

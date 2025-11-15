@@ -4,7 +4,7 @@ import { customElement } from 'lit/decorators.js';
 import { consume } from '@lit/context';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { type IClone } from '@state/company-state';
+import { type IClone } from '@state/clones-state';
 import { ATTRIBUTE_TEXTS, CLONE_TEMPLATE_TEXTS, COMMON_TEXTS, SKILL_TEXTS } from '@texts/index';
 import {
   BaseComponent,

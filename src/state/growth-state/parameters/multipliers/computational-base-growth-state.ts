@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { MultiplierProgramName, ProgramName, CircuitDesignerProgram, IProcess } from '@state/mainframe-state';
-import { ISidejob } from '@state/company-state';
+import { ISidejob } from '@state/activity-state';
 import { BaseMultiplierGrowthState } from './base-multiplier-growth-state';
 
 @injectable()

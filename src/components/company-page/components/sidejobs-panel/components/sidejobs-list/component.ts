@@ -4,7 +4,7 @@ import { customElement } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { BaseComponent, DELETE_VALUES, SidejobAlert } from '@shared/index';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
-import { ISidejob } from '@state/company-state';
+import { ISidejob } from '@state/activity-state';
 import { SidejobsListController } from './controller';
 import styles from './styles';
 

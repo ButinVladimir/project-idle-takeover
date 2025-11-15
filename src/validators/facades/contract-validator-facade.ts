@@ -2,7 +2,7 @@ import Ajv from 'ajv';
 import { inject, injectable } from 'inversify';
 import { styleText } from 'node:util';
 import contractsSchema from '@configs/schemas/contracts.json';
-import { typedContracts } from '@state/company-state';
+import { typedContracts } from '@state/activity-state';
 import { type IContractValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
 

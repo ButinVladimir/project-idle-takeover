@@ -14,10 +14,10 @@ export class PurchaseCloneDialogButtonsController extends BaseController {
   }
 
   getCloneCost(cloneTemplateName: string, tier: number, level: number): number {
-    return this.companyState.clones.calculateCloneCost(cloneTemplateName, tier, level);
+    return this.clonesState.ownedClones.calculateCloneCost(cloneTemplateName, tier, level);
   }
 
   getCloneSynchronization(cloneTemplateName: string, tier: number): number {
-    return this.companyState.clones.calculateCloneSynchronization(cloneTemplateName, tier);
+    return this.clonesState.ownedClones.calculateCloneSynchronization(cloneTemplateName, tier);
   }
 }

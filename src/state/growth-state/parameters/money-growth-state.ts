@@ -2,7 +2,7 @@ import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IMainframeState, OtherProgramName, ShareServerProgram } from '@state/mainframe-state';
-import { type ICompanyState } from '@state/company-state';
+import { type IActivityState } from '@state/activity-state';
 import { INCOME_SOURCES, IncomeSource } from '@shared/index';
 import { IMoneyGrowthState } from '../interfaces/parameters/money-growth-state';
 
@@ -13,8 +13,8 @@ export class MoneyGrowthState implements IMoneyGrowthState {
   @lazyInject(TYPES.MainframeState)
   private _mainframeState!: IMainframeState;
 
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
 
   private _recalculated: boolean;
   private _totalGrowth: number;
@@ -72,7 +72,7 @@ export class MoneyGrowthState implements IMoneyGrowthState {
   private updateGrowthBySidejobs() {
     let incomeBySidejobs = 0;
 
-    for (const sidejob of this._companyState.sidejobs.listSidejobs()) {
+    for (const sidejob of this._activityState.sidejobs.listSidejobs()) {
       if (!sidejob.isActive) {
         continue;
       }
