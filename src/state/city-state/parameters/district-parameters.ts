@@ -19,7 +19,7 @@ import { DistrictProcessCompletionSpeedParameter } from './district-process-comp
 import { DistrictExperienceShareMultiplierParameter } from './district-experience-share-multiplier-parameter';
 
 export class DistrictParameters implements IDistrictParameters {
-  private _tier: IDistrictInfluenceParameter;
+  private _influence: IDistrictInfluenceParameter;
 
   private _connectivity: IDistrictConnectivityParameter;
 
@@ -34,7 +34,7 @@ export class DistrictParameters implements IDistrictParameters {
   private _experienceShareMultiplier: IDistrictExperienceShareMultiplierParameter;
 
   constructor(districtState: IDistrictState) {
-    this._tier = new DistrictInfluenceParameter(districtState);
+    this._influence = new DistrictInfluenceParameter(districtState);
     this._connectivity = new DistrictConnectivityParameter(districtState);
     this._rewards = new DistrictRewardsParameter(districtState);
     this._synchronization = new DistrictSynchronizationParameter(districtState);
@@ -44,7 +44,7 @@ export class DistrictParameters implements IDistrictParameters {
   }
 
   get influence() {
-    return this._tier;
+    return this._influence;
   }
 
   get synchronization() {
@@ -72,14 +72,14 @@ export class DistrictParameters implements IDistrictParameters {
   }
 
   recalculate(): void {
-    this._tier.recalculate();
+    this._influence.recalculate();
     this._connectivity.recalculate();
     this._rewards.recalculate();
   }
 
   serialize(): IDistrictSerializedParameters {
     return {
-      tier: this._tier.serialize(),
+      tier: this._influence.serialize(),
       connectivtiy: this._connectivity.serialize(),
       multipliers: this._multipliers.serialize(),
       rewards: this._rewards.serialize(),
@@ -87,15 +87,16 @@ export class DistrictParameters implements IDistrictParameters {
   }
 
   deserialize(serializedParameters: IDistrictSerializedParameters): void {
-    this._tier.deserialize(serializedParameters.tier);
+    this._influence.deserialize(serializedParameters.tier);
     this._connectivity.deserialize(serializedParameters.connectivtiy);
     this._multipliers.deserialize(serializedParameters.multipliers);
     this._rewards.deserialize(serializedParameters.rewards);
   }
 
   removeAllEventListeners(): void {
-    this._tier.removeAllEventListeners();
+    this._influence.removeAllEventListeners();
     this._synchronization.removeAllEventListeners();
     this._processCompletionSpeed.removeAllEventListeners();
+    this._experienceShareMultiplier.removeAllEventListeners();
   }
 }

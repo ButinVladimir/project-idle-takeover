@@ -129,5 +129,6 @@ export class DistrictState implements IDistrictState {
 
   removeAllEventListeners(): void {
     this._parameters.removeAllEventListeners();
+    this._contracts.removeAllEventListeners();
   }
 }

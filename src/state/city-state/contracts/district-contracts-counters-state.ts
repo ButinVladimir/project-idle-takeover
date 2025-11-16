@@ -96,6 +96,10 @@ export class DistrictContractsCountersState implements IDistrictContractsCounter
     });
   }
 
+  removeAllEventListeners() {
+    this._stateUiConnector.unregisterEventEmitter(this);
+  }
+
   private processContract(contractName: string) {
     let newTime = this.getPassedGenerationTime(contractName) + this._settingsState.updateInterval;
     const requiredTime = this.getRequiredGenerationTime(contractName);

@@ -8,4 +8,5 @@ export interface IDistrictContractsCountersState {
   processTick(): void;
   serialize(): IDistrictContractsCountersSerializedState;
   deserialize(serializedState: IDistrictContractsCountersSerializedState): void;
+  removeAllEventListeners(): void;
 }

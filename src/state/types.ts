@@ -62,6 +62,7 @@ export const TYPES = {
   OwnedClonesState: Symbol('OwnedClonesState'),
   ActivityState: Symbol('ActivityState'),
   SidejobsState: Symbol('SidejobsState'),
+  ContractsAutomationState: Symbol('ContractsAutomationState'),
   ExperienceShareState: Symbol('ExperienceShareState'),
   ProcessCompletionSpeedState: Symbol('ProcessCompletionSpeedState'),
   OwnedClonesLevelUpgrader: Symbol('OwnedClonesLevelUpgrader'),

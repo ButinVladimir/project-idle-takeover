@@ -10,7 +10,7 @@ export class CloneLevelAutoupgraderProgram extends BaseProgram {
   public readonly name = AutobuyerProgramName.cloneLevelAutoupgrader;
   public readonly isAutoscalable = false;
 
-  @lazyInject(TYPES.ActivityState)
+  @lazyInject(TYPES.ClonesState)
   private _clonesState!: IClonesState;
 
   handlePerformanceUpdate(): void {}
