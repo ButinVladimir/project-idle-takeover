@@ -32,10 +32,10 @@ export class DistrictRewardsParameter implements IDistrictRewardsParameter {
   }
 
   recalculate(): void {
-    const parameters = this._district.template.parameters.rewards;
+    const base = this._district.template.multiplierParameterBases.rewards;
 
     const districtMultiplier =
-      1 + Math.log(1 + this._points / parameters.pointsToSoftCap) / Math.log(parameters.logBase);
+      1 + Math.log(1 + this._points) / Math.log(base);
 
     this._totalMultiplier = districtMultiplier * this._globalState.rewards.multiplierByProgram;
   }

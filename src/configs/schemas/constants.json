@@ -1,10 +1,22 @@
 {
   "type": "object",
   "properties": {
-    "startingScenario": {
-      "type": "string",
-      "description": "Starting scenario",
-      "minLength": 1
+    "startingValues": {
+      "type": "object",
+      "description": "Starting values",
+      "properties": {
+        "scenario": {
+          "type": "string",
+          "description": "Starting scenario",
+          "minLength": 1
+        },
+        "accumulatedTime": {
+          "type": "number",
+          "description": "Starting accumulated time",
+          "minimum": 0
+        }
+      },
+      "required": ["scenario", "accumulatedTime"]
     },
     "defaultSettings": {
       "type": "object",
@@ -196,5 +208,5 @@
       "required": ["city", "company", "automation", "factions"]
     }
   },
-  "required": ["startingScenario", "defaultSettings", "defaultAutomationSettings", "menuUnlockRequirements"]
+  "required": ["startingValues", "defaultSettings", "defaultAutomationSettings", "menuUnlockRequirements"]
 }

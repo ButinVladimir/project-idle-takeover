@@ -30,7 +30,7 @@ export class PeerReviewerDescriptionEffectRenderer implements IDescriptionEffect
 
     return html`<p>
       ${COMMON_TEXTS.parameterValue(
-        REWARD_PARAMETER_NAMES[RewardParameter.sharedExperienceMultiplier](),
+        REWARD_PARAMETER_NAMES[RewardParameter.experienceShareMultiplier](),
         PROGRAM_DESCRIPTION_TEXTS.upToValue(formattedValue),
       )}
     </p>`;

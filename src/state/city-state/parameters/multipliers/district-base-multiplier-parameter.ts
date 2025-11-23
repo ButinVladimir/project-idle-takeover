@@ -2,7 +2,6 @@ import {
   IDistrictMultiplierParameter,
   IDistrictState,
   IDistrictMultiplierSerializedParameter,
-  IDistrictTypeMultiplierParameters,
 } from '../../interfaces';
 
 export abstract class DistrictBaseMultiplierParameter implements IDistrictMultiplierParameter {
@@ -29,9 +28,9 @@ export abstract class DistrictBaseMultiplierParameter implements IDistrictMultip
   }
 
   recalculate(): void {
-    const parameters = this.getMultiplierParameters();
+    const base = this.getBase();
 
-    this._multiplier = 1 + Math.log(1 + this._points / parameters.pointsToSoftCap) / Math.log(parameters.logBase);
+    this._multiplier = 1 + Math.log(1 + this._points) / Math.log(base);
   }
 
   async deserialize(serializedState: IDistrictMultiplierSerializedParameter): Promise<void> {
@@ -45,5 +44,5 @@ export abstract class DistrictBaseMultiplierParameter implements IDistrictMultip
     };
   }
 
-  protected abstract getMultiplierParameters(): IDistrictTypeMultiplierParameters;
+  protected abstract getBase(): number;
 }

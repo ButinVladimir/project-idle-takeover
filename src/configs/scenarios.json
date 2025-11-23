@@ -58,11 +58,12 @@
       "neutralFactionIndex": 0,
       "startingDistrict": 0
     },
-    "startingMoney": 100000000000,
-    "startingDevelopmentLevel": 0,
-    "startingAccumulatedTime": 1000000000,
-    "startingSynchronization": 0,
-    "baseSharedExperienceMultiplier": 1,
+    "startingValues": {
+      "money": 100000000000,
+      "developmentLevel": 0,
+      "synchronization": 0,
+      "experienceShareMultiplier": 1
+    },
     "mainframeHardware": {
       "basePerformanceLevel": 0,
       "baseCoresLevel": 1,
@@ -79,29 +80,42 @@
     "developmentLevelRequirements": { "multiplier": 30, "base": 1.5 },
     "programMultipliers": {
       "money": {
-        "pointsMultiplier": 1
+        "multiplier": 1,
+        "exponent": 1
       },
       "developmentPoints": {
-        "pointsMultiplier": 1
-      },
-      "codeBase": {
-        "pointsMultiplier": 5,
-        "pointsToSoftCap": 288,
-        "logBase": 2
-      },
-      "computationalBase": {
-        "pointsMultiplier": 5,
-        "pointsToSoftCap": 288,
-        "logBase": 2
+        "multiplier": 1,
+        "exponent": 1
       },
       "connectivity": {
-        "pointsMultiplier": 1
+        "multiplier": 1,
+        "exponent": 1
+      },
+      "codeBase": {
+        "multiplier": 1,
+        "exponent": 1
+      },
+      "computationalBase": {
+        "multiplier": 1,
+        "exponent": 1
       },
       "rewards": {
-        "pointsMultiplier": 5,
-        "pointsToSoftCap": 288,
-        "logBase": 2
+        "multiplier": 1,
+        "exponent": 1
+      },
+      "processCompletionSpeed": {
+        "multiplier": 1,
+        "exponent": 1
+      },
+      "experienceShareMultiplier": {
+        "multiplier": 1,
+        "exponent": 1
       }
+    },
+    "multiplierParameterBases": {
+      "codeBase": 1,
+      "computationalBase": 1,
+      "rewards": 1
     },
     "storyEvents": [
       "tutorial_1",

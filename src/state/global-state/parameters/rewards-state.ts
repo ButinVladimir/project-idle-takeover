@@ -32,10 +32,10 @@ export class RewardsState implements IRewardsState {
   }
 
   recalculateMultiplier() {
-    const parameters = this._scenarioState.currentValues.programMultipliers.rewards;
+    const base = this._scenarioState.currentValues.multiplierParameterBases.rewards;
 
     this._multiplierByProgram =
-      1 + Math.log(1 + this._pointsByProgram / parameters.pointsToSoftCap) / Math.log(parameters.logBase);
+      1 + Math.log(1 + this._pointsByProgram) / Math.log(base);
   }
 
   async startNewState(): Promise<void> {

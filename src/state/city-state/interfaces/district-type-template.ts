@@ -1,5 +1,5 @@
-import { IExponent } from '@shared/index';
-import { IDistrictTypeMultiplierParameters } from './district-type-multiplier-parameters';
+import { IExponent, RewardParameterWithBase } from '@shared/index';
+import { DistrictTypeRewardParameter } from '../types';
 
 export interface IDistrictTypeTemplate {
   activityRequirementModifier: number;
@@ -7,23 +7,16 @@ export interface IDistrictTypeTemplate {
     completionTime: number;
     generationTime: number;
   };
-  parameters: {
-    experience: IExponent;
-    money: IExponent;
-    developmentPoints: IExponent;
-    influence: {
-      requirements: IExponent;
-      pointsMultiplier: IExponent;
-    };
-    synchronization: IExponent;
-    connectivity: {
-      pointsMultiplier: IExponent;
-      programPointsMultiplier: IExponent;
-    };
-    codeBase: IDistrictTypeMultiplierParameters;
-    computationalBase: IDistrictTypeMultiplierParameters;
-    rewards: IDistrictTypeMultiplierParameters;
-    processCompletionSpeed: IExponent;
-    experienceShareMultiplier: IExponent;
+  synchronization: IExponent;
+  parameters: Record<
+    DistrictTypeRewardParameter,
+    {
+      progression: IExponent;
+      exponent: number;
+    }
+  >;
+  requirements: {
+    influence: IExponent;
   };
+  multiplierParameterBases: Record<RewardParameterWithBase, number>;
 }

@@ -31,29 +31,33 @@ export class ShareServerProgram extends BaseProgram {
 
   calculateMoneyDelta(threads: number, usedRam: number, passedTime: number): number {
     const programData = typedPrograms[this.name];
+    const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.money;
 
-    return (
-      this.scenarioState.currentValues.programMultipliers.money.pointsMultiplier *
-      this.calculateModifier(passedTime) *
-      calculateTierLinear(this.level, this.tier, programData.money.main) *
-      calculateLinear(usedRam, programData.money.ram) *
-      calculateLinear(threads, programData.money.cores)
+    return Math.pow(
+      multiplier *
+        this.calculateCommonModifier(passedTime) *
+        calculateTierLinear(this.level, this.tier, programData.money.main) *
+        calculateLinear(usedRam, programData.money.ram) *
+        calculateLinear(threads, programData.money.cores),
+      exponent,
     );
   }
 
   calculateDevelopmentPointsDelta(threads: number, usedRam: number, passedTime: number): number {
     const programData = typedPrograms[this.name];
+    const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.developmentPoints;
 
-    return (
-      this.scenarioState.currentValues.programMultipliers.developmentPoints.pointsMultiplier *
-      this.calculateModifier(passedTime) *
-      calculateTierLinear(this.level, this.tier, programData.developmentPoints.main) *
-      calculateLinear(usedRam, programData.developmentPoints.ram) *
-      calculateLinear(threads, programData.developmentPoints.cores)
+    return Math.pow(
+      multiplier *
+        this.calculateCommonModifier(passedTime) *
+        calculateTierLinear(this.level, this.tier, programData.developmentPoints.main) *
+        calculateLinear(usedRam, programData.developmentPoints.ram) *
+        calculateLinear(threads, programData.developmentPoints.cores),
+      exponent,
     );
   }
 
-  private calculateModifier(passedTime: number): number {
+  private calculateCommonModifier(passedTime: number): number {
     const hardwareMultiplier = calculateLinear(
       this.mainframeState.hardware.performance.totalLevel,
       this.scenarioState.currentValues.mainframeSoftware.performanceBoost,

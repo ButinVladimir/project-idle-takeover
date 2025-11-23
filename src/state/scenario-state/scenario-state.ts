@@ -12,7 +12,7 @@ export class ScenarioState implements IScenarioState {
   private _scenario!: string;
 
   constructor() {
-    this.currentScenario = typedConstants.startingScenario;
+    this.currentScenario = typedConstants.startingValues.scenario;
   }
 
   get currentScenario() {
@@ -36,7 +36,7 @@ export class ScenarioState implements IScenarioState {
   }
 
   async startNewState(): Promise<void> {
-    this.currentScenario = typedConstants.startingScenario;
+    this.currentScenario = typedConstants.startingValues.scenario;
 
     await this._storyEventsState.startNewState();
   }

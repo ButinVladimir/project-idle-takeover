@@ -87,7 +87,7 @@ export class DevelopmentState implements IDevelopmentState {
   }
 
   async startNewState(): Promise<void> {
-    this._level = this._scenarioState.currentValues.startingDevelopmentLevel;
+    this._level = this._scenarioState.currentValues.startingValues.developmentLevel;
     this._points = this.getLevelRequirements(this._level - 1);
     this._income.clear();
   }

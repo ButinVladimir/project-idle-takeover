@@ -6,7 +6,7 @@ import { type ISettingsState } from '@state/settings-state';
 import { type INotificationsState } from '@state/notifications-state';
 import { type IScenarioState } from '@state/scenario-state';
 import { TYPES } from '@state/types';
-import { NotificationType, type IFormatter } from '@shared/index';
+import { NotificationType, typedConstants, type IFormatter } from '@shared/index';
 import { ITimeState, ITimeSerializedState } from '../interfaces';
 
 const { lazyInject } = decorators;
@@ -110,7 +110,7 @@ export class TimeState implements ITimeState {
 
   async startNewState(): Promise<void> {
     this._lastUpdateTime = Date.now();
-    this._accumulatedTime = this._scenarioState.currentValues.startingAccumulatedTime;
+    this._accumulatedTime = typedConstants.startingValues.accumulatedTime;
     this._activeTime = 0;
     this._gameTime = 0;
     this._gameTimeTotal = 0;

@@ -4,7 +4,6 @@ import {
   IMultipliersSerializedState,
   type IMultiplierState,
   type IMultipliersState,
-  type IRewardsState,
 } from '../interfaces';
 
 @injectable()
@@ -14,9 +13,6 @@ export class MultipliersState implements IMultipliersState {
 
   @inject(TYPES.ComputationalBaseState)
   private _computationalBaseState!: IMultiplierState;
-
-  @inject(TYPES.RewardsState)
-  private _rewardsState!: IRewardsState;
 
   get codeBase() {
     return this._codeBaseState;

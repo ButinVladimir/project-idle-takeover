@@ -190,16 +190,22 @@ export enum Skill {
 
 export enum RewardParameter {
   money = 'money',
-  developmentPoints = 'development-points',
+  developmentPoints = 'developmentPoints',
   experience = 'experience',
   influence = 'influence',
   connectivity = 'connectivity',
-  codeBase = 'code-base',
-  computationalBase = 'computational-base',
+  codeBase = 'codeBase',
+  computationalBase = 'computationalBase',
   rewards = 'rewards',
-  processCompletionSpeedMultiplier = 'process-completion-speed-multiplier',
+  processCompletionSpeed = 'processCompletionSpeed',
+  experienceShareMultiplier = 'experienceShareMultiplier',
   actions = 'actions',
-  sharedExperienceMultiplier = 'shared-experience-multiplier',
+}
+
+export enum RewardParameterWithBase {
+  codeBase = 'codeBase',
+  computationalBase = 'computationalBase',
+  rewards = 'rewards',
 }
 
 export type Layout = 'mobile' | 'tablet' | 'desktop';

@@ -1,6 +1,6 @@
-import { Faction, IExponent, ILinear, RANDOM_TYPE } from '@shared/index';
+import { Faction, IExponent, ILinear, RANDOM_TYPE, RewardParameterWithBase } from '@shared/index';
 import { ProgramName } from '@state/mainframe-state';
-import { IMultiplierScenarioParameters } from './multiplier-scenario-parameters';
+import { ScenarioRewardParameter } from '../types';
 
 interface IDistrictValues {
   type: string | typeof RANDOM_TYPE;
@@ -26,11 +26,12 @@ export interface IScenarioValues {
     neutralFactionIndex: number;
     startingDistrict: number;
   };
-  startingMoney: number;
-  startingDevelopmentLevel: number;
-  startingAccumulatedTime: number;
-  startingSynchronization: number;
-  baseSharedExperienceMultiplier: number;
+  startingValues: {
+    money: number;
+    developmentLevel: number;
+    synchronization: number;
+    experienceShareMultiplier: number;
+  };
   mainframeHardware: {
     basePerformanceLevel: number;
     baseCoresLevel: number;
@@ -45,19 +46,13 @@ export interface IScenarioValues {
     minProcessCompletionTime: number;
   };
   developmentLevelRequirements: IExponent;
-  programMultipliers: {
-    money: {
-      pointsMultiplier: number;
-    };
-    developmentPoints: {
-      pointsMultiplier: number;
-    };
-    codeBase: IMultiplierScenarioParameters;
-    computationalBase: IMultiplierScenarioParameters;
-    connectivity: {
-      pointsMultiplier: number;
-    };
-    rewards: IMultiplierScenarioParameters;
-  };
+  programMultipliers: Record<
+    ScenarioRewardParameter,
+    {
+      multiplier: number;
+      exponent: number;
+    }
+  >;
+  multiplierParameterBases: Record<RewardParameterWithBase, number>;
   storyEvents: string[];
 }

@@ -1,9 +1,9 @@
 import { DistrictBaseMultiplierParameter } from './district-base-multiplier-parameter';
 
 export class DistrictComputationalBaseParameter extends DistrictBaseMultiplierParameter {
-  getMultiplierParameters() {
+  getBase() {
     const districtTypeInfo = this._district.template;
 
-    return districtTypeInfo.parameters.computationalBase;
+    return districtTypeInfo.multiplierParameterBases.computationalBase;
   }
 }

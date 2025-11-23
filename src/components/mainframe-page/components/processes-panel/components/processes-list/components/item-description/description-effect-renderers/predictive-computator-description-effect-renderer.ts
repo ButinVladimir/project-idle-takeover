@@ -29,7 +29,7 @@ export class PredictiveComputatorDescriptionEffectRenderer implements IDescripti
 
     return html`<p>
       ${COMMON_TEXTS.parameterValue(
-        REWARD_PARAMETER_NAMES[RewardParameter.processCompletionSpeedMultiplier](),
+        REWARD_PARAMETER_NAMES[RewardParameter.processCompletionSpeed](),
         formattedValue,
       )}
     </p>`;

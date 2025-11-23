@@ -1,6 +1,9 @@
 {
   "$schema": "./schemas/constants.json",
-  "startingScenario": "tutorial",
+  "startingValues": {
+    "scenario": "tutorial",
+    "accumulatedTime": 0
+  },
   "defaultSettings": {
     "messageLogSize": 30,
     "toastDuration": 5000,

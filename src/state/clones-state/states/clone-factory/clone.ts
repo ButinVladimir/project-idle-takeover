@@ -44,12 +44,12 @@ export class Clone implements IClone {
   private _experience: number;
   private _level: number;
   private _tier: number;
-  private _synchronization!: number;
+  private _synchronization: number;
   private _autoUpgradeEnabled: boolean;
   private _experienceMultiplier: number;
 
-  private _attributes!: Map<Attribute, number>;
-  private _skills!: Map<Skill, number>;
+  private _attributes: Map<Attribute, number>;
+  private _skills: Map<Skill, number>;
 
   constructor(parameters: IMakeCloneParameters) {
     this._id = parameters.id;
@@ -60,6 +60,9 @@ export class Clone implements IClone {
     this._tier = parameters.tier;
     this._autoUpgradeEnabled = parameters.autoUpgradeEnabled;
     this._experienceMultiplier = 1;
+    this._synchronization = 0;
+    this._attributes = new Map<Attribute, number>();
+    this._skills = new Map<Skill, number>();
 
     this.initSynchronization();
     this.initExperience();
@@ -208,14 +211,10 @@ export class Clone implements IClone {
   }
 
   private initAttributes() {
-    this._attributes = new Map<Attribute, number>();
-
     ATTRIBUTES.forEach((attribute) => this._attributes.set(attribute, 0));
   }
 
   private initSkills() {
-    this._skills = new Map<Skill, number>();
-
     SKILLS.forEach((skill) => this._skills.set(skill, 0));
   }
 

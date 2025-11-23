@@ -53,7 +53,7 @@ export class ExperienceShareState implements IExperienceShareState {
   }
 
   get baseMultiplier() {
-    return this._scenarioState.currentValues.baseSharedExperienceMultiplier;
+    return this._scenarioState.currentValues.startingValues.experienceShareMultiplier;
   }
 
   get synchronizationMultiplier() {

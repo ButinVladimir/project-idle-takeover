@@ -2,7 +2,10 @@ import { MainframeHardwareParameterType } from '@state/mainframe-state/states/ma
 import { Feature, Hotkey, LongNumberFormat } from '../types';
 
 export interface IConstants {
-  startingScenario: string;
+  startingValues: {
+    scenario: string;
+    accumulatedTime: number;
+  }
   defaultSettings: {
     messageLogSize: number;
     toastDuration: number;

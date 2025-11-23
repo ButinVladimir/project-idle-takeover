@@ -19,9 +19,9 @@ export const calculateSidejobParameterValue = (sidejob: ISidejob, parameter: Rew
       return sidejob.calculateComputationalBaseDelta(MS_IN_SECOND);
     case RewardParameter.rewards:
       return sidejob.calculateRewardsDelta(MS_IN_SECOND);
-    case RewardParameter.processCompletionSpeedMultiplier:
+    case RewardParameter.processCompletionSpeed:
       return sidejob.calculateProcessCompletionSpeedDelta();
-    case RewardParameter.sharedExperienceMultiplier:
+    case RewardParameter.experienceShareMultiplier:
       return sidejob.calculateExperienceShareMultiplierDelta();
     default:
       return 0;
@@ -56,10 +56,10 @@ export const checkSidejobParameterVisibility = (sidejob: ISidejob, parameter: Re
     case RewardParameter.rewards:
       value = sidejob.sidejobTemplate.rewards.rewards;
       break;
-    case RewardParameter.processCompletionSpeedMultiplier:
+    case RewardParameter.processCompletionSpeed:
       value = sidejob.sidejobTemplate.rewards.processCompletionSpeed;
       break;
-    case RewardParameter.sharedExperienceMultiplier:
+    case RewardParameter.experienceShareMultiplier:
       value = sidejob.sidejobTemplate.rewards.experienceShareMultiplier;
       break;
     default:

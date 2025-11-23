@@ -2,40 +2,33 @@
   "$schema": "./schemas/district-types.json",
   "residential": {
     "activityRequirementModifier": 1,
-    "primaryActivityimeMultipliers": {
+    "primaryActivityTimeMultipliers": {
       "completionTime": 1,
       "generationTime": 5
     },
+    "synchronization": { "multiplier": 10, "base": 1.1 },
     "parameters": {
-      "experience": { "multiplier": 1, "base": 1.5 },
-      "money": { "multiplier": 1, "base": 1.5 },
-      "developmentPoints": { "multiplier": 1, "base": 1.5 },
+      "experience": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
+      "money": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
+      "developmentPoints": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
       "influence": {
-        "requirements": { "multiplier": 1000, "base": 10 },
-        "pointsMultiplier": { "multiplier": 1, "base": 1 }
+        "progression": { "multiplier": 1, "base": 10 },
+        "exponent": 1
       },
-      "synchronization": { "multiplier": 10, "base": 1.1 },
-      "connectivity": {
-        "pointsMultiplier": { "multiplier": 1, "base": 1.5 },
-        "programPointsMultiplier": { "multiplier": 1, "base": 1.1 }
-      },
-      "codeBase": {
-        "pointsMultiplier": { "multiplier": 1, "base": 1.5 },
-        "pointsToSoftCap": 86400,
-        "logBase": 2
-      },
-      "computationalBase": {
-        "pointsMultiplier": { "multiplier": 1, "base": 1.5 },
-        "pointsToSoftCap": 86400,
-        "logBase": 2
-      },
-      "rewards": {
-        "pointsMultiplier": { "multiplier": 1, "base": 1.5 },
-        "pointsToSoftCap": 86400,
-        "logBase": 2
-      },
-      "processCompletionSpeed": { "multiplier": 1, "base": 1.1 },
-      "experienceShareMultiplier": { "multiplier": 1, "base": 1.1 }
+      "connectivity": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
+      "codeBase": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
+      "computationalBase": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
+      "rewards": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
+      "processCompletionSpeed": { "progression": { "multiplier": 1, "base": 1.1 }, "exponent": 1 },
+      "experienceShareMultiplier": { "progression": { "multiplier": 1, "base": 1.1 }, "exponent": 1 }
+    },
+    "requirements": {
+      "influence": { "multiplier": 1000, "base": 10 }
+    },
+    "multiplierParameterBases": {
+      "codeBase": 2,
+      "computationalBase": 2,
+      "rewards": 2
     }
   },
   "corpoDistrict": {
@@ -44,39 +37,32 @@
       "completionTime": 1,
       "generationTime": 5
     },
+    "synchronization": {
+      "multiplier": 30,
+      "base": 1.1
+    },
     "parameters": {
-      "experience": { "multiplier": 1, "base": 1.1 },
-      "money": { "multiplier": 10, "base": 1.1 },
-      "developmentPoints": { "multiplier": 5, "base": 1.1 },
+      "experience": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
+      "money": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
+      "developmentPoints": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
       "influence": {
-        "requirements": { "multiplier": 60000, "base": 1.5 },
-        "pointsMultiplier": { "multiplier": 1, "base": 1 }
+        "progression": { "multiplier": 1, "base": 10 },
+        "exponent": 1
       },
-      "synchronization": {
-        "multiplier": 30,
-        "base": 1.1
-      },
-      "connectivity": {
-        "pointsMultiplier": { "multiplier": 5, "base": 1.5 },
-        "programPointsMultiplier": { "multiplier": 5, "base": 1.5 }
-      },
-      "codeBase": {
-        "pointsMultiplier": { "multiplier": 5, "base": 1.5 },
-        "pointsToSoftCap": 86400,
-        "logBase": 20
-      },
-      "computationalBase": {
-        "pointsMultiplier": { "multiplier": 5, "base": 1.5 },
-        "pointsToSoftCap": 86400,
-        "logBase": 20
-      },
-      "rewards": {
-        "pointsMultiplier": { "multiplier": 3, "base": 1.5 },
-        "pointsToSoftCap": 86400,
-        "logBase": 20
-      },
-      "processCompletionSpeed": { "multiplier": 1, "base": 1.1 },
-      "experienceShareMultiplier": { "multiplier": 1, "base": 1.1 }
+      "connectivity": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
+      "codeBase": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
+      "computationalBase": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
+      "rewards": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
+      "processCompletionSpeed": { "progression": { "multiplier": 1, "base": 1.1 }, "exponent": 1 },
+      "experienceShareMultiplier": { "progression": { "multiplier": 1, "base": 1.1 }, "exponent": 1 }
+    },
+    "requirements": {
+      "influence": { "multiplier": 1000, "base": 10 }
+    },
+    "multiplierParameterBases": {
+      "codeBase": 2,
+      "computationalBase": 2,
+      "rewards": 2
     }
   }
 }

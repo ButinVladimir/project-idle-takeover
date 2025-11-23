@@ -76,7 +76,7 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
 
   getTierRequirements(tier: number): number {
     const districtTypeInfo = this._district.template;
-    const { base, multiplier } = districtTypeInfo.parameters.influence.requirements;
+    const { base, multiplier } = districtTypeInfo.requirements.influence;
     const size = this._cityState.getDistrictSize(this._district.index);
 
     return calculateGeometricProgressionSum(tier, size * multiplier, base);
@@ -124,7 +124,7 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
 
   private calculateTierFromPoints(): number {
     const districtTypeInfo = this._district.template;
-    const { base, multiplier } = districtTypeInfo.parameters.influence.requirements;
+    const { base, multiplier } = districtTypeInfo.requirements.influence;
     const size = this._cityState.getDistrictSize(this._district.index);
 
     return reverseGeometricProgressionSum(this._points, size * multiplier, base);

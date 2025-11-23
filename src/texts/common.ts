@@ -74,7 +74,7 @@ export const REWARD_PARAMETER_NAMES = {
   [RewardParameter.codeBase]: () => msg('Code base points'),
   [RewardParameter.computationalBase]: () => msg('Computational base points'),
   [RewardParameter.rewards]: () => msg('Rewards points'),
-  [RewardParameter.processCompletionSpeedMultiplier]: () => msg('Process completion speed multiplier'),
+  [RewardParameter.processCompletionSpeed]: () => msg('Process completion speed multiplier'),
   [RewardParameter.actions]: () => msg('Actions'),
-  [RewardParameter.sharedExperienceMultiplier]: () => msg('Shared experience multiplier'),
+  [RewardParameter.experienceShareMultiplier]: () => msg('Shared experience multiplier'),
 };

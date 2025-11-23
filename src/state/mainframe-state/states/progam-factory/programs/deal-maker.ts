@@ -15,12 +15,14 @@ export class DealMakerProgram extends BaseProgram {
 
   calculateDelta(threads: number): number {
     const programData = typedPrograms[this.name];
+    const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.rewards;
 
-    return (
-      this.scenarioState.currentValues.programMultipliers.rewards.pointsMultiplier *
-      this.globalState.rewards.multiplierByProgram *
-      threads *
-      calculateTierLinear(this.level, this.tier, programData.rewards)
+    return Math.pow(
+      multiplier *
+        this.globalState.rewards.multiplierByProgram *
+        threads *
+        calculateTierLinear(this.level, this.tier, programData.rewards),
+      exponent,
     );
   }
 }

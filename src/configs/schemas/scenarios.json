@@ -99,30 +99,32 @@
         },
         "required": ["width", "height", "districts", "factions", "neutralFactionIndex", "startingDistrict"]
       },
-      "startingMoney": {
-        "type": "number",
-        "description": "Starting money",
-        "minimum": 0
-      },
-      "startingDevelopmentLevel": {
-        "type": "number",
-        "description": "Starting development level",
-        "minimum": 0
-      },
-      "startingAccumulatedTime": {
-        "type": "number",
-        "description": "Starting accumulated time",
-        "minimum": 0
-      },
-      "startingSynchronization": {
-        "type": "number",
-        "description": "Starting synchronization",
-        "minimum": 0
-      },
-      "baseSharedExperienceMultiplier": {
-        "type": "number",
-        "description": "Base shared experience multiplier",
-        "minimum": 1
+      "startingValues": {
+        "type": "object",
+        "description": "Starting values",
+        "properties": {
+          "money": {
+            "type": "number",
+            "description": "Starting money",
+            "minimum": 0
+          },
+          "developmentLevel": {
+            "type": "number",
+            "description": "Starting development level",
+            "minimum": 0
+          },
+          "synchronization": {
+            "type": "number",
+            "description": "Starting synchronization",
+            "minimum": 0
+          },
+          "experienceShareMultiplier": {
+            "type": "number",
+            "description": "Starting experience share multiplier",
+            "minimum": 0
+          }
+        },
+        "required": ["money", "developmentLevel", "synchronization", "experienceShareMultiplier"]
       },
       "mainframeHardware": {
         "type": "object",
@@ -201,30 +203,66 @@
         "properties": {
           "money": {
             "$ref": "#/$defs/multiplierParameter",
-            "description": "Money multipliers"
+            "description": "Money multiplier"
           },
           "developmentPoints": {
             "$ref": "#/$defs/multiplierParameter",
-            "description": "Development points multipliers"
-          },
-          "codeBase": {
-            "$ref": "#/$defs/multiplierBaseParameters",
-            "description": "Code base multipliers"
-          },
-          "computationalBase": {
-            "$ref": "#/$defs/multiplierBaseParameters",
-            "description": "Computational base multipliers"
+            "description": "Development points multiplier"
           },
           "connectivity": {
             "$ref": "#/$defs/multiplierParameter",
-            "description": "Connectivity points multipliers"
+            "description": "Development points multiplier"
+          },
+          "codeBase": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "Code base multiplier"
+          },
+          "computationalBase": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "Computational base multiplier"
           },
           "rewards": {
-            "$ref": "#/$defs/multiplierBaseParameters",
-            "description": "Rewards multipliers"
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "Rewards multiplier"
+          },
+          "processCompletionSpeed": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "Process completion speed multiplier"
+          },
+          "experienceShareMultiplier": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "Experience share multiplier"
           }
         },
-        "required": ["money", "developmentPoints", "codeBase", "computationalBase", "connectivity", "rewards"]
+        "required": [
+          "money",
+          "developmentPoints",
+          "connectivity",
+          "codeBase",
+          "computationalBase",
+          "rewards",
+          "processCompletionSpeed",
+          "experienceShareMultiplier"
+        ]
+      },
+      "multiplierParameterBases": {
+        "type": "object",
+        "description": "Multiplier parameters bases",
+        "properties": {
+          "codeBase": {
+            "$ref": "#/$defs/multiplierParameterBase",
+            "description": "District type code base value"
+          },
+          "computationalBase": {
+            "$ref": "#/$defs/multiplierParameterBase",
+            "description": "District type computational base value"
+          },
+          "rewards": {
+            "$ref": "#/$defs/multiplierParameterBase",
+            "description": "District type rewards value"
+          }
+        },
+        "required": ["codeBase", "computationalBase", "rewards"]
       },
       "storyEvents": {
         "type": "array",
@@ -238,14 +276,11 @@
     },
     "required": [
       "map",
-      "startingMoney",
-      "startingDevelopmentLevel",
-      "startingAccumulatedTime",
-      "startingSynchronization",
-      "baseSharedExperienceMultiplier",
+      "startingValues",
       "mainframeHardware",
       "mainframeSoftware",
       "programMultipliers",
+      "multiplierParameterBases",
       "storyEvents"
     ]
   },
@@ -253,31 +288,20 @@
     "multiplierParameter": {
       "type": "object",
       "properties": {
-        "pointsMultiplier": {
+        "multiplier": {
           "type": "number",
           "description": "Points multiplier",
           "exclusiveMinimum": 0
+        },
+        "exponent": {
+          "type": "number",
+          "description": "Parameter exponent"
         }
-      },
-      "required": ["pointsMultiplier"]
+      }
     },
-    "multiplierBaseParameters": {
-      "type": "object",
-      "properties": {
-        "pointsMultiplier": {
-          "type": "number",
-          "description": "Points modifier (geometric)"
-        },
-        "pointsToSoftCap": {
-          "type": "number",
-          "description": "Points divisor"
-        },
-        "logBase": {
-          "type": "number",
-          "description": "Logarithmic base"
-        }
-      },
-      "required": ["pointsMultiplier", "pointsToSoftCap", "logBase"]
+    "multiplierParameterBase": {
+      "type": "number",
+      "description": "Logarithmic base"
     }
   }
 }

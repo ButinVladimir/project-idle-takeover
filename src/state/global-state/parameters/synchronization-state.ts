@@ -71,7 +71,7 @@ export class SynchronizationState implements ISynchronizationState {
   }
 
   private calculateBaseValue() {
-    this._baseValue = Math.ceil(this._scenarioState.currentValues.startingSynchronization);
+    this._baseValue = Math.ceil(this._scenarioState.currentValues.startingValues.synchronization);
     this._totalValue = this._baseValue;
   }
 

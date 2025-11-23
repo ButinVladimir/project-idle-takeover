@@ -12,7 +12,7 @@
         "type": "number",
         "description": "District type activity requirement modifier"
       },
-      "primaryActivityimeMultipliers": {
+      "primaryActivityTimeMultipliers": {
         "type": "object",
         "description": "District type primary action time multipliers",
         "properties": {
@@ -26,74 +26,52 @@
           }
         }
       },
+      "synchronization": {
+        "$ref": "./common/geometric-progression.json",
+        "description": "District type synchronization modifier (geometric)"
+      },
       "parameters": {
         "type": "object",
         "description": "District type parameters",
         "properties": {
           "experience": {
-            "$ref": "./common/geometric-progression.json",
+            "$ref": "#/$defs/multiplierParameter",
             "description": "District type experience modifier (geometric)"
           },
           "money": {
-            "$ref": "./common/geometric-progression.json",
+            "$ref": "#/$defs/multiplierParameter",
             "description": "District type money modifier (geometric)"
           },
           "developmentPoints": {
-            "$ref": "./common/geometric-progression.json",
+            "$ref": "#/$defs/multiplierParameter",
             "description": "District type development points modifier (geometric)"
           },
           "influence": {
-            "type": "object",
-            "description": "District type faction influence values",
-            "properties": {
-              "requirements": {
-                "$ref": "./common/geometric-progression.json",
-                "description": "District type faction influence requirements for the next tier (geometric)"
-              },
-              "pointsMultiplier": {
-                "$ref": "./common/geometric-progression.json",
-                "description": "District type faction influence modifier (geometric)"
-              }
-            },
-            "required": ["requirements", "pointsMultiplier"]
-          },
-          "synchronization": {
-            "$ref": "./common/geometric-progression.json",
-            "description": "District type synchronization modifier (geometric)"
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "District type faction influence modifier (geometric)"
           },
           "connectivity": {
-            "type": "object",
-            "description": "District type connectivity values",
-            "properties": {
-              "pointsMultiplier": {
-                "$ref": "./common/geometric-progression.json",
-                "description": "District type connectivity modifier for district points (geometric)"
-              },
-              "programPointsMultiplier": {
-                "$ref": "./common/geometric-progression.json",
-                "description": "District type connectivity modifier for program points (geometric)"
-              }
-            },
-            "required": ["pointsMultiplier", "programPointsMultiplier"]
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "District type connectivity modifier (geometric)"
           },
           "codeBase": {
-            "$ref": "#/$defs/multiplierBaseParameters",
-            "description": "District type code base values"
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "District type code base modifier (geometric)"
           },
           "computationalBase": {
-            "$ref": "#/$defs/multiplierBaseParameters",
-            "description": "District type computational base values"
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "District type computational base modifier (geometric)"
           },
           "rewards": {
-            "$ref": "#/$defs/multiplierBaseParameters",
-            "description": "District type rewards values"
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "District type rewards modifier (geometric)"
           },
           "processCompletionSpeed": {
-            "$ref": "./common/geometric-progression.json",
+            "$ref": "#/$defs/multiplierParameter",
             "description": "District type process completion speed modifier (geometric)"
           },
           "experienceShareMultiplier": {
-            "$ref": "./common/geometric-progression.json",
+            "$ref": "#/$defs/multiplierParameter",
             "description": "District type experience share multiplier modifier (geometric)"
           }
         },
@@ -102,7 +80,6 @@
           "money",
           "developmentPoints",
           "influence",
-          "synchronization",
           "connectivity",
           "codeBase",
           "computationalBase",
@@ -110,27 +87,64 @@
           "processCompletionSpeed",
           "experienceShareMultiplier"
         ]
+      },
+      "requirements": {
+        "type": "object",
+        "description": "District type requirements",
+        "parameters": {
+          "influence": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "District type faction influence requirements for the next tier (geometric)"
+          }
+        },
+        "required": ["influence"]
+      },
+      "multiplierParameterBases": {
+        "type": "object",
+        "description": "District type multiplier parameters bases",
+        "properties": {
+          "codeBase": {
+            "$ref": "#/$defs/multiplierParameterBase",
+            "description": "District type code base value"
+          },
+          "computationalBase": {
+            "$ref": "#/$defs/multiplierParameterBase",
+            "description": "District type computational base value"
+          },
+          "rewards": {
+            "$ref": "#/$defs/multiplierParameterBase",
+            "description": "District type rewards value"
+          }
+        },
+        "required": ["codeBase", "computationalBase", "rewards"]
       }
     },
-    "required": ["activityRequirementModifier", "parameters"]
+    "required": [
+      "activityRequirementModifier",
+      "synchronization",
+      "parameters",
+      "requirements",
+      "multiplierParameterBases"
+    ]
   },
   "$defs": {
-    "multiplierBaseParameters": {
+    "multiplierParameter": {
       "type": "object",
       "properties": {
-        "pointsMultiplier": {
+        "progression": {
           "$ref": "./common/geometric-progression.json",
-          "description": "Points modifier (geometric)"
+          "description": "Parameter progression (geometric)"
         },
-        "pointsToSoftCap": {
+        "exponent": {
           "type": "number",
-          "description": "Points divisor"
-        },
-        "logBase": {
-          "type": "number",
-          "description": "Logarithmic base"
+          "description": "Parameter exponent"
         }
-      }
+      },
+      "required": ["progression", "exponent"]
+    },
+    "multiplierParameterBase": {
+      "type": "number",
+      "description": "Logarithmic base"
     }
   }
 }

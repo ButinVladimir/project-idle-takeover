@@ -1,4 +1,4 @@
-import { calculateTierLinear } from '@shared/helpers';
+import { calculateTierLinear } from '@shared/index';
 import { MultiplierProgramName } from '../types';
 import { BaseProgram } from './base-program';
 import { typedPrograms } from '../constants';
@@ -15,12 +15,14 @@ export class InformationCollectorProgram extends BaseProgram {
 
   calculateDelta(threads: number): number {
     const programData = typedPrograms[this.name];
+    const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.connectivity;
 
-    return (
-      this.scenarioState.currentValues.programMultipliers.connectivity.pointsMultiplier *
-      this.globalState.rewards.multiplierByProgram *
-      threads *
-      calculateTierLinear(this.level, this.tier, programData.connectivity)
+    return Math.pow(
+      multiplier *
+        this.globalState.rewards.multiplierByProgram *
+        threads *
+        calculateTierLinear(this.level, this.tier, programData.connectivity),
+      exponent,
     );
   }
 }

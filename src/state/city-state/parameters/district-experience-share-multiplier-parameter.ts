@@ -20,7 +20,7 @@ export class DistrictExperienceShareMultiplierParameter implements IDistrictExpe
     this._district = district;
     this._value = 1;
 
-    this._stateUIConnector.registerEventEmitter(this, ['_value']);
+    this._stateUIConnector.registerEventEmitter(this, []);
   }
 
   get value(): number {

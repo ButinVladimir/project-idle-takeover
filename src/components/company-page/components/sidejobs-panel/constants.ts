@@ -9,8 +9,8 @@ export const SIDEJOB_PARAMETERS = [
   RewardParameter.codeBase,
   RewardParameter.computationalBase,
   RewardParameter.rewards,
-  RewardParameter.processCompletionSpeedMultiplier,
-  RewardParameter.sharedExperienceMultiplier,
+  RewardParameter.processCompletionSpeed,
+  RewardParameter.experienceShareMultiplier,
 ];
 
 interface ISidejobParameterValues {
@@ -51,11 +51,11 @@ export const SIDEJOB_PARAMETER_VALUES: Record<RewardParameter, ISidejobParameter
     requirements: [Feature.rewards],
     isSpeed: true,
   },
-  [RewardParameter.processCompletionSpeedMultiplier]: {
+  [RewardParameter.processCompletionSpeed]: {
     requirements: [],
     isSpeed: false,
   },
-  [RewardParameter.sharedExperienceMultiplier]: {
+  [RewardParameter.experienceShareMultiplier]: {
     requirements: [Feature.experienceShare],
     isSpeed: false,
   },

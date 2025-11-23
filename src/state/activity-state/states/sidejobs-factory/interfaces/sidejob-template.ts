@@ -1,4 +1,5 @@
 import { Attribute, IExponent, Skill } from '@shared/index';
+import { DistrictTypeRewardParameter } from '@state/city-state';
 
 export interface ISidejobTemplate {
   requirements: {
@@ -10,16 +11,5 @@ export interface ISidejobTemplate {
     attributes: Record<Attribute, IExponent | undefined>;
     skills: Record<Skill, IExponent | undefined>;
   };
-  rewards: {
-    experience?: IExponent;
-    money?: IExponent;
-    developmentPoints?: IExponent;
-    influence?: IExponent;
-    codeBase?: IExponent;
-    computationalBase?: IExponent;
-    connectivity?: IExponent;
-    rewards?: IExponent;
-    processCompletionSpeed?: IExponent;
-    experienceShareMultiplier?: IExponent;
-  };
+  rewards: Record<DistrictTypeRewardParameter, IExponent | undefined>;
 }

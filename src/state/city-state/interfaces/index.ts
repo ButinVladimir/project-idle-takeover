@@ -3,7 +3,6 @@ export * from './parameters';
 export * from './city-state';
 export * from './generators';
 export * from './district-state';
-export * from './district-type-multiplier-parameters';
 export * from './district-type-template';
 export * from './district-arguments';
 export * from './contracts';
