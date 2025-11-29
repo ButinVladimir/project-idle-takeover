@@ -4,13 +4,17 @@ import { TYPES } from '@state/types';
 import { type IMainframeState, InformationCollectorProgram, MultiplierProgramName } from '@state/mainframe-state';
 import { type ICityState } from '@state/city-state';
 import { type IActivityState } from '@state/activity-state';
-import { calculatePower } from '@shared/index';
+import { type IGlobalState } from '@state/global-state';
+import { DistrictTypeRewardParameter } from '@shared/index';
 import { IConnectivityGrowthState } from '../interfaces';
 
 const { lazyInject } = decorators;
 
 @injectable()
 export class ConnectivityGrowthState implements IConnectivityGrowthState {
+  @lazyInject(TYPES.GlobalState)
+  private _globalState!: IGlobalState;
+
   @lazyInject(TYPES.MainframeState)
   private _mainframeState!: IMainframeState;
 
@@ -21,9 +25,9 @@ export class ConnectivityGrowthState implements IConnectivityGrowthState {
   private _activityState!: IActivityState;
 
   private _recalculated: boolean;
-  protected _baseGrowthByProgram: number;
-  protected _baseGrowthByDistrict: Map<number, number>;
-  protected _totalGrowthByDistrict: Map<number, number>;
+  private _baseGrowthByProgram: number;
+  private _baseGrowthByDistrict: Map<number, number>;
+  private _totalGrowthByDistrict: Map<number, number>;
 
   constructor() {
     this._recalculated = false;
@@ -91,29 +95,26 @@ export class ConnectivityGrowthState implements IConnectivityGrowthState {
   }
 
   private updateGrowthBySidejobs(): void {
-    for (const sidejob of this._activityState.sidejobs.listSidejobs()) {
-      if (!sidejob.isActive) {
+    for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
+      if (!sidejobActivity.active) {
         continue;
       }
 
-      let currentGrow = this._baseGrowthByDistrict.get(sidejob.district.index)!;
-      currentGrow += sidejob.calculateConnectivityDelta(1);
-      this._baseGrowthByDistrict.set(sidejob.district.index, currentGrow);
+      const districtIndex = sidejobActivity.sidejob.district.index;
+      let currentGrow = this._baseGrowthByDistrict.get(districtIndex) ?? 0;
+      currentGrow += sidejobActivity.sidejob.calculateParameterDelta(DistrictTypeRewardParameter.connectivity, 1);
+      this._baseGrowthByDistrict.set(districtIndex, currentGrow);
     }
   }
 
   private updateTotalGrowth(): void {
     for (let districtIndex = 0; districtIndex < this._cityState.districtsCount; districtIndex++) {
       const district = this._cityState.getDistrictState(districtIndex);
-      const totalGrowthByProgram =
-        this._baseGrowthByProgram *
-        calculatePower(
-          district.parameters.influence.tier,
-          district.template.parameters.connectivity.programPointsMultiplier,
-        );
-      const baseGrowthByDistrict = this._baseGrowthByDistrict.get(districtIndex) ?? 0;
 
-      this._totalGrowthByDistrict.set(districtIndex, totalGrowthByProgram + baseGrowthByDistrict);
+      const nextTotalValue =
+        (1 + this._globalState.connectivity.pointsByProgram + this._baseGrowthByProgram) *
+        (1 + district.parameters.connectivity.points + (this._baseGrowthByDistrict.get(districtIndex) ?? 0));
+      this._totalGrowthByDistrict.set(districtIndex, nextTotalValue - district.parameters.connectivity.totalValue);
     }
   }
 }

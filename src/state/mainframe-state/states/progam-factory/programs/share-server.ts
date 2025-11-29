@@ -33,13 +33,16 @@ export class ShareServerProgram extends BaseProgram {
     const programData = typedPrograms[this.name];
     const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.money;
 
-    return Math.pow(
-      multiplier *
-        this.calculateCommonModifier(passedTime) *
-        calculateTierLinear(this.level, this.tier, programData.money.main) *
-        calculateLinear(usedRam, programData.money.ram) *
-        calculateLinear(threads, programData.money.cores),
-      exponent,
+    return (
+      passedTime *
+      Math.pow(
+        multiplier *
+          this.calculateCommonModifier() *
+          calculateTierLinear(this.level, this.tier, programData.money.main) *
+          calculateLinear(usedRam, programData.money.ram) *
+          calculateLinear(threads, programData.money.cores),
+        exponent,
+      )
     );
   }
 
@@ -47,22 +50,25 @@ export class ShareServerProgram extends BaseProgram {
     const programData = typedPrograms[this.name];
     const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.developmentPoints;
 
-    return Math.pow(
-      multiplier *
-        this.calculateCommonModifier(passedTime) *
-        calculateTierLinear(this.level, this.tier, programData.developmentPoints.main) *
-        calculateLinear(usedRam, programData.developmentPoints.ram) *
-        calculateLinear(threads, programData.developmentPoints.cores),
-      exponent,
+    return (
+      passedTime *
+      Math.pow(
+        multiplier *
+          this.calculateCommonModifier() *
+          calculateTierLinear(this.level, this.tier, programData.developmentPoints.main) *
+          calculateLinear(usedRam, programData.developmentPoints.ram) *
+          calculateLinear(threads, programData.developmentPoints.cores),
+        exponent,
+      )
     );
   }
 
-  private calculateCommonModifier(passedTime: number): number {
+  private calculateCommonModifier(): number {
     const hardwareMultiplier = calculateLinear(
       this.mainframeState.hardware.performance.totalLevel,
       this.scenarioState.currentValues.mainframeSoftware.performanceBoost,
     );
 
-    return this.globalState.rewards.multiplierByProgram * passedTime * hardwareMultiplier;
+    return this.globalState.rewards.multiplierByProgram * hardwareMultiplier;
   }
 }

@@ -1,6 +1,6 @@
 import { Feature, BaseController } from '@shared/index';
 
-export class ClonesPanelController extends BaseController {
+export class ClonesSynchronizationValuesController extends BaseController {
   get availableSynchronization(): number {
     return this.globalState.synchronization.availableValue;
   }

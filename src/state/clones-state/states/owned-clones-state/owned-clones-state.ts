@@ -157,7 +157,7 @@ export class OwnedClonesState implements IOwnedClonesState {
 
   deleteAllClones(): void {
     this.clearState();
-    this._activityState.sidejobs.cancelAllSidejobs();
+    this._activityState.sidejobsActivity.cancelAllActivities();
 
     this._messageLogState.postMessage(ClonesEvent.allClonesDeleted, msg('All clones have been deleted'));
 
@@ -265,10 +265,10 @@ export class OwnedClonesState implements IOwnedClonesState {
   };
 
   private deleteCloneRelatedObjects(clone: IClone) {
-    const sidejob = this._activityState.sidejobs.getSidejobByCloneId(clone.id);
+    const sidejob = this._activityState.sidejobsActivity.getActivityByCloneId(clone.id);
 
     if (sidejob) {
-      this._activityState.sidejobs.cancelSidejob(sidejob.id);
+      this._activityState.sidejobsActivity.cancelActivity(sidejob.id);
     }
   }
 }

@@ -91,7 +91,7 @@
       "requirements": {
         "type": "object",
         "description": "District type requirements",
-        "parameters": {
+        "properties": {
           "influence": {
             "$ref": "./common/geometric-progression.json",
             "description": "District type faction influence requirements for the next tier (geometric)"

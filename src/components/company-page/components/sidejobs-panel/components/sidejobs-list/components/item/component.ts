@@ -6,9 +6,9 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { BaseComponent, SidejobAlert, DELETE_VALUES, DESCRIPTION_ICONS } from '@shared/index';
 import { COMMON_TEXTS, DISTRICT_NAMES, SIDEJOB_TEXTS } from '@texts/index';
-import { type ISidejob } from '@state/activity-state';
+import { type ISidejobActivity } from '@state/activity-state';
 import { SidejobsListItemController } from './controller';
-import { sidejobContext } from './contexts';
+import { sidejobActivityContext } from './contexts';
 import styles from './styles';
 
 @localized()
@@ -17,10 +17,10 @@ export class SidejobsListItem extends BaseComponent {
   static styles = styles;
 
   @property({
-    attribute: 'sidejob-id',
+    attribute: 'activity-id',
     type: String,
   })
-  sidejobId!: string;
+  activityId!: string;
 
   @state()
   _descriptionVisible = false;
@@ -29,8 +29,8 @@ export class SidejobsListItem extends BaseComponent {
 
   private _controller: SidejobsListItemController;
 
-  @provide({ context: sidejobContext })
-  private _sidejob?: ISidejob;
+  @provide({ context: sidejobActivityContext })
+  private _activity?: ISidejobActivity;
 
   constructor() {
     super();
@@ -45,11 +45,11 @@ export class SidejobsListItem extends BaseComponent {
   }
 
   protected renderDesktop() {
-    if (!this._sidejob) {
+    if (!this._activity) {
       return nothing;
     }
 
-    const sidejobTitle = SIDEJOB_TEXTS[this._sidejob.sidejobName].title();
+    const sidejobTitle = SIDEJOB_TEXTS[this._activity.sidejob.sidejobName].title();
 
     const descriptionButtonName = this._descriptionVisible ? DESCRIPTION_ICONS.expanded : DESCRIPTION_ICONS.hidden;
     const descriptionButtonLabel = this._descriptionVisible
@@ -60,8 +60,8 @@ export class SidejobsListItem extends BaseComponent {
       visible: this._descriptionVisible,
     });
 
-    const districtName = DISTRICT_NAMES[this._sidejob.district.name]();
-    const cloneName = this._sidejob.assignedClone!.name;
+    const districtName = DISTRICT_NAMES[this._activity.sidejob.district.name]();
+    const cloneName = this._activity.sidejob.assignedClone.name;
 
     const cancelSidejobLabel = msg('Cancel sidejob');
 
@@ -110,11 +110,11 @@ export class SidejobsListItem extends BaseComponent {
   }
 
   protected renderMobile() {
-    if (!this._sidejob) {
+    if (!this._activity) {
       return nothing;
     }
 
-    const sidejobTitle = SIDEJOB_TEXTS[this._sidejob.sidejobName].title();
+    const sidejobTitle = SIDEJOB_TEXTS[this._activity.sidejob.sidejobName].title();
 
     const descriptionButtonName = this._descriptionVisible ? DESCRIPTION_ICONS.expanded : DESCRIPTION_ICONS.hidden;
     const descriptionButtonLabel = this._descriptionVisible
@@ -125,8 +125,8 @@ export class SidejobsListItem extends BaseComponent {
       visible: this._descriptionVisible,
     });
 
-    const districtName = DISTRICT_NAMES[this._sidejob.district.name]();
-    const cloneName = this._sidejob.assignedClone!.name;
+    const districtName = DISTRICT_NAMES[this._activity.sidejob.district.name]();
+    const cloneName = this._activity.sidejob.assignedClone.name;
 
     const districtNameFull = COMMON_TEXTS.parameterValue(msg('District'), districtName);
     const cloneNameFull = COMMON_TEXTS.parameterValue(msg('Assigned clone'), cloneName);
@@ -172,10 +172,10 @@ export class SidejobsListItem extends BaseComponent {
   }
 
   private updateContext() {
-    if (this.sidejobId) {
-      this._sidejob = this._controller.getSidejobById(this.sidejobId);
+    if (this.activityId) {
+      this._activity = this._controller.getActivityById(this.activityId);
     } else {
-      this._sidejob = undefined;
+      this._activity = undefined;
     }
   }
 
@@ -184,9 +184,9 @@ export class SidejobsListItem extends BaseComponent {
   };
 
   private handleOpenCancelSidejobDialog = () => {
-    const sidejobName = SIDEJOB_TEXTS[this._sidejob!.sidejobName].title();
-    const districtName = DISTRICT_NAMES[this._sidejob!.district.name]();
-    const cloneName = this._sidejob!.assignedClone!.name;
+    const sidejobName = SIDEJOB_TEXTS[this._activity!.sidejob.sidejobName].title();
+    const districtName = DISTRICT_NAMES[this._activity!.sidejob.district.name]();
+    const cloneName = this._activity!.sidejob.assignedClone.name;
 
     this.dispatchEvent(
       new ConfirmationAlertOpenEvent(
@@ -200,6 +200,6 @@ export class SidejobsListItem extends BaseComponent {
   };
 
   private handleCancelSidejob = () => {
-    this._controller.cancelSidejobById(this.sidejobId);
+    this._controller.cancelActivityById(this.activityId);
   };
 }

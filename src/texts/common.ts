@@ -1,5 +1,5 @@
 import { msg, str } from '@lit/localize';
-import { Attribute, ItemCategory, RewardParameter, Skill } from '@shared/types';
+import { Attribute, DistrictTypeRewardParameter, ItemCategory, RewardParameter, Skill } from '@shared/types';
 import { html } from 'lit';
 
 export const COMMON_TEXTS = {
@@ -65,7 +65,7 @@ export const SKILL_TEXTS: Record<Skill, () => string> = {
   stealth: () => msg('Stealth'),
 };
 
-export const REWARD_PARAMETER_NAMES = {
+export const REWARD_PARAMETER_NAMES: Record<DistrictTypeRewardParameter | RewardParameter, () => string> = {
   [RewardParameter.money]: () => msg('Money'),
   [RewardParameter.developmentPoints]: () => msg('Development points'),
   [RewardParameter.experience]: () => msg('Experience'),

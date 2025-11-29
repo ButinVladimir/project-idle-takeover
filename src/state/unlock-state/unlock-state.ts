@@ -46,8 +46,6 @@ export class UnlockState implements IUnlockState {
 
   requestRecalculation() {
     this._recalculationRequested = true;
-
-    this._globalState.experienceShare.requestRecalculation();
   }
 
   recalculate() {

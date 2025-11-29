@@ -3,6 +3,7 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type ICityState } from '@state/city-state';
 import { type IActivityState } from '@state/activity-state';
+import { DistrictTypeRewardParameter } from '@shared/index';
 import { IInfluenceGrowthState } from '../interfaces';
 
 const { lazyInject } = decorators;
@@ -52,14 +53,15 @@ export class InfluenceGrowthState implements IInfluenceGrowthState {
   }
 
   private updateGrowthBySidejobs(): void {
-    for (const sidejob of this._activityState.sidejobs.listSidejobs()) {
-      if (!sidejob.isActive) {
+    for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
+      if (!sidejobActivity.active) {
         continue;
       }
 
-      let currentGrowth = this._growthByDistrict.get(sidejob.district.index) ?? 0;
-      currentGrowth += sidejob.calculateInfluenceDelta(1);
-      this._growthByDistrict.set(sidejob.district.index, currentGrowth);
+      const districtIndex = sidejobActivity.sidejob.district.index;
+      let currentGrowth = this._growthByDistrict.get(districtIndex) ?? 0;
+      currentGrowth += sidejobActivity.sidejob.calculateParameterDelta(DistrictTypeRewardParameter.influence, 1);
+      this._growthByDistrict.set(districtIndex, currentGrowth);
     }
   }
 }

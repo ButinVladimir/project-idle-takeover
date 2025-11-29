@@ -8,7 +8,7 @@ import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.com
 import { BaseComponent, SidejobAlert } from '@shared/index';
 import { IDistrictState } from '@state/city-state';
 import { SIDEJOB_TEXTS, DISTRICT_NAMES } from '@texts/index';
-import { type ISidejob } from '@state/activity-state';
+import { SidejobValidationResult, type ISidejob } from '@state/activity-state';
 import { IClone } from '@state/clones-state';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { AssignCloneSidejobDialogCloseEvent } from './events';
@@ -63,7 +63,7 @@ export class AssignCloneSidejobDialog extends BaseComponent {
   }
 
   performUpdate() {
-    if (this._sidejobName !== undefined && this._districtIndex !== undefined) {
+    if (this._sidejobName !== undefined && this._districtIndex !== undefined && this._cloneId !== undefined) {
       const sidejob = this._controller.getSidejob({
         assignedCloneId: this._cloneId,
         districtIndex: this._districtIndex,
@@ -259,14 +259,6 @@ Sidejobs availability depends on unlocked features and district connectivity.`)}
       return false;
     }
 
-    const totalConnectivity = this._controller.getTotalConnectivity(this._sidejob.district.index);
-    const requiredConnectivity = this._controller.getRequiredConnectivity(this._sidejob.sidejobName);
-
-    return !!(
-      this._sidejob &&
-      this._sidejob.assignedClone &&
-      this._sidejob.checkRequirements() &&
-      totalConnectivity >= requiredConnectivity
-    );
+    return !!(this._sidejob && this._controller.validateSidejob(this._sidejob) === SidejobValidationResult.valid);
   }
 }

@@ -4,6 +4,7 @@ import { TYPES } from '@state/types';
 import { DealMakerProgram, type IMainframeState, MultiplierProgramName } from '@state/mainframe-state';
 import { type ICityState } from '@state/city-state';
 import { type IActivityState } from '@state/activity-state';
+import { DistrictTypeRewardParameter } from '@shared/index';
 import { IRewardsGrowthState } from '../interfaces';
 
 const { lazyInject } = decorators;
@@ -81,14 +82,15 @@ export class RewardsGrowthState implements IRewardsGrowthState {
   }
 
   private updateGrowthBySidejobs(): void {
-    for (const sidejob of this._activityState.sidejobs.listSidejobs()) {
-      if (!sidejob.isActive) {
+    for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
+      if (!sidejobActivity.active) {
         continue;
       }
 
-      let currentGrow = this._growthByDistrict.get(sidejob.district.index)!;
-      currentGrow += sidejob.calculateRewardsDelta(1);
-      this._growthByDistrict.set(sidejob.district.index, currentGrow);
+      const districtIndex = sidejobActivity.sidejob.district.index;
+      let currentGrow = this._growthByDistrict.get(districtIndex) ?? 0;
+      currentGrow += sidejobActivity.sidejob.calculateParameterDelta(DistrictTypeRewardParameter.rewards, 1);
+      this._growthByDistrict.set(districtIndex, currentGrow);
     }
   }
 }

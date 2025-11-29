@@ -1,12 +1,10 @@
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { choose } from 'lit/directives/choose.js';
 import { provide } from '@lit/context';
 import { msg, localized } from '@lit/localize';
 import { customElement, state } from 'lit/decorators.js';
 import { BaseComponent } from '@shared/index';
 import { type IClone } from '@state/clones-state';
-import { COMMON_TEXTS } from '@texts/index';
-import { ClonesPanelController } from './controller';
 import { type CloneListItemDialog } from './type';
 import { OpenCloneListItemDialogEvent } from './events';
 import { modalCloneContext } from './contexts';
@@ -22,8 +20,6 @@ export class CompanyClonesPanel extends BaseComponent {
   @state()
   private _isPurchaseCloneDialogOpen = false;
 
-  private _controller: ClonesPanelController;
-
   @state()
   private _cloneListItemDialogOpen = false;
 
@@ -32,12 +28,6 @@ export class CompanyClonesPanel extends BaseComponent {
 
   @provide({ context: modalCloneContext })
   private _modalClone?: IClone;
-
-  constructor() {
-    super();
-
-    this._controller = new ClonesPanelController(this);
-  }
 
   renderMobile() {
     return html`<div class="host-content mobile">${this.renderContent()}</div>`;
@@ -48,13 +38,6 @@ export class CompanyClonesPanel extends BaseComponent {
   }
 
   renderContent = () => {
-    const formatter = this._controller.formatter;
-
-    const formattedAvailableSynchronization = formatter.formatNumberDecimal(this._controller.availableSynchronization);
-    const formattedTotalSynchronization = formatter.formatNumberDecimal(this._controller.totalSynchronization);
-
-    const formattedExperienceShareMultiplier = formatter.formatNumberFloat(this._controller.experienceShareMultiplier);
-
     return html`
       <p class="hint">
         ${msg(`Clone autoupgrade priority can be changed by dragging it by the name.
@@ -67,20 +50,7 @@ Clone level cannot be above development level.`)}
           ${msg('Purchase clone')}
         </sl-button>
 
-        <div>
-          ${COMMON_TEXTS.parameterValue(
-            msg('Available synchronization'),
-            `${formattedAvailableSynchronization} / ${formattedTotalSynchronization}`,
-          )}
-        </div>
-
-        ${this._controller.isExperienceShareUnlocked()
-          ? html`
-              <div>
-                ${COMMON_TEXTS.parameterValue(msg('Shared experience'), `× ${formattedExperienceShareMultiplier}`)}
-              </div>
-            `
-          : nothing}
+        <ca-clones-synchronization-values></ca-clones-synchronization-values>
       </div>
 
       <ca-clones-list @open-clone-list-item-dialog=${this.handleCloneListItemDialogOpen}></ca-clones-list>

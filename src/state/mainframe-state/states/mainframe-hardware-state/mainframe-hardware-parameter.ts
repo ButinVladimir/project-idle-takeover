@@ -148,7 +148,6 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
     this._level += increase;
     this.postPurchaseMessge();
 
-    this.globalState.processCompletionSpeed.requestRecalculation();
     this.mainframeState.processes.requestUpdateRunningProcesses();
     this.mainframeState.processes.updateAllProcessesPerformance();
   };

@@ -30,8 +30,8 @@ export class DistrictTypeValidator implements IDistrictTypeValidator {
     const districtType = typedDistrictTypes[name];
 
     if (
-      districtType.primaryActivityimeMultipliers.completionTime >=
-      districtType.primaryActivityimeMultipliers.generationTime
+      districtType.primaryActivityTimeMultipliers.completionTime >=
+      districtType.primaryActivityTimeMultipliers.generationTime
     ) {
       console.log(
         `\t\tDistrict type ${styleText('cyanBright', name)} primary activity completion time ${styleText('redBright', 'is bigger than generation time')}`,

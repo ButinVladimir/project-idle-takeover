@@ -1,8 +1,4 @@
-import {
-  IDistrictMultiplierParameter,
-  IDistrictState,
-  IDistrictMultiplierSerializedParameter,
-} from '../../interfaces';
+import { IDistrictMultiplierParameter, IDistrictState, IDistrictMultiplierSerializedParameter } from '../../interfaces';
 
 export abstract class DistrictBaseMultiplierParameter implements IDistrictMultiplierParameter {
   protected _district: IDistrictState;

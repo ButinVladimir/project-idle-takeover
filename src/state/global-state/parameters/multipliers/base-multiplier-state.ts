@@ -71,8 +71,7 @@ export abstract class BaseMultiplierState implements IMultiplierState {
   private updateMultiplierByProgram() {
     const base = this.getBase();
 
-    this._multiplierByProgram =
-      1 + Math.log(1 + this._pointsByProgram) / Math.log(base);
+    this._multiplierByProgram = 1 + Math.log(1 + this._pointsByProgram) / Math.log(base);
   }
 
   private updateTotalMultiplier() {

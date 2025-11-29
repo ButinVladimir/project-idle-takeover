@@ -1,65 +1,42 @@
-import { MS_IN_SECOND, RewardParameter } from '@shared/index';
+import { DistrictTypeRewardParameter, MS_IN_SECOND } from '@shared/index';
 import { ISidejob } from '@state/activity-state';
 
-export const calculateSidejobParameterValue = (sidejob: ISidejob, parameter: RewardParameter) => {
-  switch (parameter) {
-    case RewardParameter.money:
-      return sidejob.calculateMoneyDelta(MS_IN_SECOND);
-    case RewardParameter.developmentPoints:
-      return sidejob.calculateDevelopmentPointsDelta(MS_IN_SECOND);
-    case RewardParameter.experience:
-      return sidejob.calculateExperienceDelta(MS_IN_SECOND);
-    case RewardParameter.influence:
-      return sidejob.calculateInfluenceDelta(MS_IN_SECOND);
-    case RewardParameter.connectivity:
-      return sidejob.calculateConnectivityDelta(MS_IN_SECOND);
-    case RewardParameter.codeBase:
-      return sidejob.calculateCodeBaseDelta(MS_IN_SECOND);
-    case RewardParameter.computationalBase:
-      return sidejob.calculateComputationalBaseDelta(MS_IN_SECOND);
-    case RewardParameter.rewards:
-      return sidejob.calculateRewardsDelta(MS_IN_SECOND);
-    case RewardParameter.processCompletionSpeed:
-      return sidejob.calculateProcessCompletionSpeedDelta();
-    case RewardParameter.experienceShareMultiplier:
-      return sidejob.calculateExperienceShareMultiplierDelta();
-    default:
-      return 0;
-  }
+export const calculateSidejobParameterValue = (sidejob: ISidejob, parameter: DistrictTypeRewardParameter) => {
+  return sidejob.calculateParameterDelta(parameter, MS_IN_SECOND);
 };
 
-export const checkSidejobParameterVisibility = (sidejob: ISidejob, parameter: RewardParameter): boolean => {
+export const checkSidejobParameterVisibility = (sidejob: ISidejob, parameter: DistrictTypeRewardParameter): boolean => {
   let value: any;
 
   switch (parameter) {
-    case RewardParameter.money:
+    case DistrictTypeRewardParameter.money:
       value = sidejob.sidejobTemplate.rewards.money;
       break;
-    case RewardParameter.developmentPoints:
+    case DistrictTypeRewardParameter.developmentPoints:
       value = sidejob.sidejobTemplate.rewards.developmentPoints;
       break;
-    case RewardParameter.experience:
+    case DistrictTypeRewardParameter.experience:
       value = sidejob.sidejobTemplate.rewards.experience;
       break;
-    case RewardParameter.influence:
+    case DistrictTypeRewardParameter.influence:
       value = sidejob.sidejobTemplate.rewards.influence;
       break;
-    case RewardParameter.connectivity:
+    case DistrictTypeRewardParameter.connectivity:
       value = sidejob.sidejobTemplate.rewards.connectivity;
       break;
-    case RewardParameter.codeBase:
+    case DistrictTypeRewardParameter.codeBase:
       value = sidejob.sidejobTemplate.rewards.codeBase;
       break;
-    case RewardParameter.computationalBase:
+    case DistrictTypeRewardParameter.computationalBase:
       value = sidejob.sidejobTemplate.rewards.computationalBase;
       break;
-    case RewardParameter.rewards:
+    case DistrictTypeRewardParameter.rewards:
       value = sidejob.sidejobTemplate.rewards.rewards;
       break;
-    case RewardParameter.processCompletionSpeed:
+    case DistrictTypeRewardParameter.processCompletionSpeed:
       value = sidejob.sidejobTemplate.rewards.processCompletionSpeed;
       break;
-    case RewardParameter.experienceShareMultiplier:
+    case DistrictTypeRewardParameter.experienceShareMultiplier:
       value = sidejob.sidejobTemplate.rewards.experienceShareMultiplier;
       break;
     default:

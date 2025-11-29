@@ -11,7 +11,7 @@ export class ConstantsValidator implements IConstantsValidator {
   }
 
   private validateStartingScenario() {
-    const startingScenario = typedConstants.startingScenario;
+    const startingScenario = typedConstants.startingValues.scenario;
 
     if (!typedScenarios[startingScenario]) {
       console.log(

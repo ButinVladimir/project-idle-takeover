@@ -1,5 +1,4 @@
-import { Attribute, IExponent, Skill } from '@shared/index';
-import { DistrictTypeRewardParameter } from '@state/city-state';
+import { Attribute, IExponent, Skill, DistrictTypeRewardParameter } from '@shared/index';
 
 export interface ISidejobTemplate {
   requirements: {

@@ -1,4 +1,4 @@
 import { createContext } from '@lit/context';
-import { ISidejob } from '@state/activity-state';
+import { ISidejobActivity } from '@state/activity-state';
 
-export const sidejobContext = createContext<ISidejob>(Symbol('Sidejob'));
+export const sidejobActivityContext = createContext<ISidejobActivity>(Symbol('SidejobActivity'));

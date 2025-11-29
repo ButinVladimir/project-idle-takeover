@@ -4,7 +4,6 @@ import { decorators } from '@state/container';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type ISettingsState } from '@state/settings-state';
 import { type INotificationsState } from '@state/notifications-state';
-import { type IScenarioState } from '@state/scenario-state';
 import { TYPES } from '@state/types';
 import { NotificationType, typedConstants, type IFormatter } from '@shared/index';
 import { ITimeState, ITimeSerializedState } from '../interfaces';
@@ -21,9 +20,6 @@ export class TimeState implements ITimeState {
 
   @lazyInject(TYPES.NotificationsState)
   private _notificationsState!: INotificationsState;
-
-  @lazyInject(TYPES.ScenarioState)
-  private _scenarioState!: IScenarioState;
 
   @lazyInject(TYPES.Formatter)
   private _formatter!: IFormatter;

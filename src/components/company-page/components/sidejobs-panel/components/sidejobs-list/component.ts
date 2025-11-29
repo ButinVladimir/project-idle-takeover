@@ -4,7 +4,7 @@ import { customElement } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { BaseComponent, DELETE_VALUES, SidejobAlert } from '@shared/index';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
-import { ISidejob } from '@state/activity-state';
+import { ISidejobActivity } from '@state/activity-state';
 import { SidejobsListController } from './controller';
 import styles from './styles';
 
@@ -70,10 +70,10 @@ export class SidejobsList extends BaseComponent {
   }
 
   private renderSidejobsList = () => {
-    const sidejobs = this._controller.listSidejobs();
+    const activities = this._controller.listActivities();
 
-    return sidejobs.length > 0
-      ? html`${repeat(sidejobs, (sidejob) => sidejob.id, this.renderSidejob)}`
+    return activities.length > 0
+      ? html`${repeat(activities, (sidejobActivity) => sidejobActivity.id, this.renderSidejob)}`
       : this.renderEmptyListNotification();
   };
 
@@ -81,8 +81,8 @@ export class SidejobsList extends BaseComponent {
     return html` <div class="notification">${msg("You don't have any assigned sidejobs")}</div> `;
   };
 
-  private renderSidejob = (sidejob: ISidejob) => {
-    return html`<ca-sidejobs-list-item sidejob-id=${sidejob.id}></ca-sidejobs-list-item>`;
+  private renderSidejob = (activity: ISidejobActivity) => {
+    return html`<ca-sidejobs-list-item activity-id=${activity.id}></ca-sidejobs-list-item>`;
   };
 
   private handleOpenCancelAllSidejobsDialog = () => {
@@ -96,6 +96,6 @@ export class SidejobsList extends BaseComponent {
   };
 
   private handleCancelAllSidejobs = () => {
-    this._controller.cancelAllSidejobs();
+    this._controller.cancelAllActivities();
   };
 }

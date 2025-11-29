@@ -1,6 +1,7 @@
 import { injectable } from 'inversify';
 import { MultiplierProgramName, ProgramName, CircuitDesignerProgram, IProcess } from '@state/mainframe-state';
 import { ISidejob } from '@state/activity-state';
+import { DistrictTypeRewardParameter } from '@shared/index';
 import { BaseMultiplierGrowthState } from './base-multiplier-growth-state';
 
 @injectable()
@@ -16,6 +17,6 @@ export class ComputationalBaseGrowthState extends BaseMultiplierGrowthState {
   }
 
   getGrowthBySidejob(sidejob: ISidejob): number {
-    return sidejob.calculateComputationalBaseDelta(1);
+    return sidejob.calculateParameterDelta(DistrictTypeRewardParameter.computationalBase, 1);
   }
 }

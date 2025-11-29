@@ -4,9 +4,17 @@ import { RewardParameter, IFormatter, diffFormatterParameters, getHighlightDiffe
 import { COMMON_TEXTS, PROGRAM_DESCRIPTION_TEXTS, REWARD_PARAMETER_NAMES } from '@texts/index';
 import { IDescriptionParameters, IDescriptionEffectRenderer } from '../interfaces';
 
+const VALUES = {
+  processCompletionSpeed: 'process-completion-speed',
+};
+
 export class PredictiveComputatorDescriptionEffectRenderer implements IDescriptionEffectRenderer {
-  public readonly values = {};
-  public readonly diffs = {};
+  public readonly values = {
+    [VALUES.processCompletionSpeed]: '',
+  };
+  public readonly diffs = {
+    [VALUES.processCompletionSpeed]: { value: '', className: '' },
+  };
 
   private _program: PredictiveComputatorProgram;
 
@@ -27,25 +35,28 @@ export class PredictiveComputatorDescriptionEffectRenderer implements IDescripti
   }
 
   public renderEffect = () => {
+    return html`<p>
+      ${COMMON_TEXTS.parameterValue(
+        REWARD_PARAMETER_NAMES[RewardParameter.processCompletionSpeed](),
+        PROGRAM_DESCRIPTION_TEXTS.upToDiff(
+          html`<span data-value=${VALUES.processCompletionSpeed}></span>`,
+          html`<span data-diff=${VALUES.processCompletionSpeed}></span>`,
+        ),
+      )}
+    </p>`;
+  };
+
+  public recalculateValues(): void {
     const value = this._program.calculateProcessCompletionSpeedMultiplier(this._cores, this._ram);
     const valueDiff = this._ownedProgram
       ? value - this._ownedProgram.calculateProcessCompletionSpeedMultiplier(this._cores, this._ram)
       : value;
 
     const formattedValue = this._formatter.formatNumberFloat(value);
+    const formattedDiff = this._formatter.formatNumberFloat(valueDiff, diffFormatterParameters);
 
-    const valueDiffClass = getHighlightDifferenceClass(valueDiff);
-    const valueDiffEl = html`<span class=${valueDiffClass}
-      >${this._formatter.formatNumberFloat(valueDiff, diffFormatterParameters)}</span
-    >`;
-
-    return html`<p>
-      ${COMMON_TEXTS.parameterValue(
-        REWARD_PARAMETER_NAMES[RewardParameter.processCompletionSpeed](),
-        PROGRAM_DESCRIPTION_TEXTS.upToDiff(formattedValue, valueDiffEl),
-      )}
-    </p>`;
-  };
-
-  public recalculateValues(): void {}
+    this.values[VALUES.processCompletionSpeed] = formattedValue;
+    this.diffs[VALUES.processCompletionSpeed].className = getHighlightDifferenceClass(valueDiff);
+    this.diffs[VALUES.processCompletionSpeed].value = formattedDiff;
+  }
 }

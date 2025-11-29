@@ -1,9 +1,8 @@
-import { IExponent, RewardParameterWithBase } from '@shared/index';
-import { DistrictTypeRewardParameter } from '../types';
+import { IExponent, RewardParameterWithBase, DistrictTypeRewardParameter } from '@shared/index';
 
 export interface IDistrictTypeTemplate {
   activityRequirementModifier: number;
-  primaryActivityimeMultipliers: {
+  primaryActivityTimeMultipliers: {
     completionTime: number;
     generationTime: number;
   };

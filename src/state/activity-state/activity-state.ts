@@ -1,21 +1,43 @@
 import { injectable, inject } from 'inversify';
 import { TYPES } from '@state/types';
 import { IActivitySerializedState, IActivityState } from './interfaces';
-import { type ISidejobsState } from './states';
+import {
+  ISidejobActivity,
+  type ISidejobsFactory,
+  type ISidejobActivityValidator,
+  type ISidejobsActivityState,
+} from './states';
+import { IClone } from '../clones-state';
 
 @injectable()
 export class ActivityState implements IActivityState {
-  @inject(TYPES.SidejobsState)
-  private _sidejobs!: ISidejobsState;
+  @inject(TYPES.SidejobsFactory)
+  private _sidejobsFactory!: ISidejobsFactory;
+
+  @inject(TYPES.SidejobActivityValidator)
+  private _sidejobActivityValidator!: ISidejobActivityValidator;
+
+  @inject(TYPES.SidejobsActivityState)
+  private _sidejobsActivity!: ISidejobsActivityState;
 
   private _assignmentRequested: boolean;
+  private _assignedClones: Set<IClone>;
 
   constructor() {
     this._assignmentRequested = true;
+    this._assignedClones = new Set<IClone>();
   }
 
-  get sidejobs() {
-    return this._sidejobs;
+  get sidejobsFactory() {
+    return this._sidejobsFactory;
+  }
+
+  get sidejobActivityValidator() {
+    return this._sidejobActivityValidator;
+  }
+
+  get sidejobsActivity() {
+    return this._sidejobsActivity;
   }
 
   requestReassignment() {
@@ -24,7 +46,7 @@ export class ActivityState implements IActivityState {
 
   processTick() {
     this.reassign();
-    this._sidejobs.perform();
+    this._sidejobsActivity.perform();
   }
 
   private reassign() {
@@ -34,32 +56,37 @@ export class ActivityState implements IActivityState {
 
     this._assignmentRequested = false;
 
-    this.sidejobs.filterSidejobs();
+    this._assignedClones.clear();
 
-    for (const sidejob of this._sidejobs.listSidejobs()) {
-      const prevState = sidejob.isActive;
-      const newState = true;
-      sidejob.isActive = true;
-
-      if (newState !== prevState) {
-        sidejob.handlePerformanceUpdate();
-      }
+    for (const sidejobActivity of this._sidejobsActivity.listActivities()) {
+      this.tryAssignSidejob(sidejobActivity);
     }
   }
 
   async startNewState(): Promise<void> {
-    await this._sidejobs.startNewState();
+    await this._sidejobsActivity.startNewState();
     this.requestReassignment();
   }
 
   async deserialize(serializedState: IActivitySerializedState): Promise<void> {
-    await this._sidejobs.deserialize(serializedState.sidejobs);
+    await this._sidejobsActivity.deserialize(serializedState.sidejobs);
     this.requestReassignment();
   }
 
   serialize(): IActivitySerializedState {
     return {
-      sidejobs: this._sidejobs.serialize(),
+      sidejobs: this._sidejobsActivity.serialize(),
     };
+  }
+
+  private tryAssignSidejob(sidejobActivity: ISidejobActivity) {
+    const assignedClone = sidejobActivity.sidejob.assignedClone;
+
+    if (this._sidejobActivityValidator.validate(sidejobActivity.sidejob) && !this._assignedClones.has(assignedClone)) {
+      sidejobActivity.active = true;
+      this._assignedClones.add(assignedClone);
+    } else {
+      sidejobActivity.active = false;
+    }
   }
 }

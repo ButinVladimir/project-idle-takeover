@@ -80,14 +80,16 @@ export abstract class BaseMultiplierGrowthState implements IMultiplierGrowthStat
   }
 
   private updateGrowthBySidejobs(): void {
-    for (const sidejob of this._activityState.sidejobs.listSidejobs()) {
-      if (!sidejob.isActive) {
+    for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
+      if (!sidejobActivity.active) {
         continue;
       }
 
-      let currentGrow = this._growthByDistrict.get(sidejob.district.index) ?? 0;
-      currentGrow += this.getGrowthBySidejob(sidejob);
-      this._growthByDistrict.set(sidejob.district.index, currentGrow);
+      const districtIndex = sidejobActivity.sidejob.district.index;
+
+      let currentGrow = this._growthByDistrict.get(districtIndex) ?? 0;
+      currentGrow += this.getGrowthBySidejob(sidejobActivity.sidejob);
+      this._growthByDistrict.set(districtIndex, currentGrow);
     }
   }
 

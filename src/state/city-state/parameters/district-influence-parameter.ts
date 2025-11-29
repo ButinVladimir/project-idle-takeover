@@ -146,6 +146,5 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
   private handleTierUpdate() {
     this._globalState.synchronization.requestRecalculation();
     this._activityState.requestReassignment();
-    this._activityState.sidejobs.updateAllSidejobsPerformance();
   }
 }

@@ -202,6 +202,19 @@ export enum RewardParameter {
   actions = 'actions',
 }
 
+export enum DistrictTypeRewardParameter {
+  money = 'money',
+  developmentPoints = 'developmentPoints',
+  experience = 'experience',
+  influence = 'influence',
+  connectivity = 'connectivity',
+  codeBase = 'codeBase',
+  computationalBase = 'computationalBase',
+  rewards = 'rewards',
+  processCompletionSpeed = 'processCompletionSpeed',
+  experienceShareMultiplier = 'experienceShareMultiplier',
+}
+
 export enum RewardParameterWithBase {
   codeBase = 'codeBase',
   computationalBase = 'computationalBase',

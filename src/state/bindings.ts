@@ -125,7 +125,16 @@ import {
   IOwnedClonesLevelUpgrader,
   OwnedClonesLevelUpgrader,
 } from '@state/clones-state';
-import { IActivityState, ActivityState, ISidejobsState, SidejobsState } from '@state/activity-state';
+import {
+  IActivityState,
+  ActivityState,
+  ISidejobsActivityState,
+  SidejobsActivityState,
+  ISidejobsFactory,
+  SidejobsFactory,
+  ISidejobActivityValidator,
+  SidejobActivtiyValidator,
+} from '@state/activity-state';
 import { TYPES } from './types';
 import { container } from './container';
 
@@ -411,6 +420,18 @@ container
 
 container.bind<IClonesState>(TYPES.ClonesState).to(ClonesState).inSingletonScope().whenTargetIsDefault();
 
-container.bind<ISidejobsState>(TYPES.SidejobsState).to(SidejobsState).inSingletonScope().whenTargetIsDefault();
+container
+  .bind<ISidejobActivityValidator>(TYPES.SidejobActivityValidator)
+  .to(SidejobActivtiyValidator)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container.bind<ISidejobsFactory>(TYPES.SidejobsFactory).to(SidejobsFactory).inSingletonScope().whenTargetIsDefault();
+
+container
+  .bind<ISidejobsActivityState>(TYPES.SidejobsActivityState)
+  .to(SidejobsActivityState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
 
 container.bind<IActivityState>(TYPES.ActivityState).to(ActivityState).inSingletonScope().whenTargetIsDefault();

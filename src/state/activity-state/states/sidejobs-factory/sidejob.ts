@@ -1,9 +1,8 @@
-import { Attribute, Skill, calculatePower, ATTRIBUTES, SKILLS } from '@shared/index';
+import { Attribute, Skill, calculatePower, ATTRIBUTES, SKILLS, DistrictTypeRewardParameter } from '@shared/index';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IGlobalState } from '@state/global-state';
-import { DistrictTypeRewardParameter, IDistrictState } from '@state/city-state';
-import { type IStateUIConnector } from '@state/state-ui-connector';
+import { IDistrictState } from '@state/city-state';
 import { IClone } from '@state/clones-state';
 import { ISerializedSidejob, ISidejob, ISidejobArguments } from './interfaces';
 import { typedSidejobs } from './constants';
@@ -14,9 +13,6 @@ export class Sidejob implements ISidejob {
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
 
-  @lazyInject(TYPES.StateUIConnector)
-  private _stateUIConnector!: IStateUIConnector;
-
   private _templateName: string;
   private _district: IDistrictState;
   private _assignedClone: IClone;
@@ -25,8 +21,6 @@ export class Sidejob implements ISidejob {
     this._templateName = args.sidejobName;
     this._district = args.district;
     this._assignedClone = args.assignedClone;
-
-    this._stateUIConnector.registerEventEmitter(this, ['_assignedClone']);
   }
 
   get sidejobName() {
@@ -103,6 +97,14 @@ export class Sidejob implements ISidejob {
     const rewardsModifier = this._district.parameters.rewards.totalMultiplier;
     const districtTypeModifier = this._district.template.parameters[parameter];
 
+    const baseDelta = Math.pow(
+      rewardsModifier *
+        cloneParametersModifier *
+        calculatePower(this._globalState.threat.level, sidejobModifier) *
+        calculatePower(this._district.parameters.influence.tier, districtTypeModifier.progression),
+      districtTypeModifier.exponent,
+    );
+
     switch (parameter) {
       case DistrictTypeRewardParameter.money:
       case DistrictTypeRewardParameter.developmentPoints:
@@ -112,23 +114,10 @@ export class Sidejob implements ISidejob {
       case DistrictTypeRewardParameter.codeBase:
       case DistrictTypeRewardParameter.computationalBase:
       case DistrictTypeRewardParameter.rewards:
-        return Math.pow(
-          passedTime *
-            rewardsModifier *
-            cloneParametersModifier *
-            calculatePower(this._globalState.threat.level, sidejobModifier) *
-            calculatePower(this._district.parameters.influence.tier, districtTypeModifier.progression),
-          districtTypeModifier.exponent,
-        );
+        return passedTime * baseDelta;
       case DistrictTypeRewardParameter.processCompletionSpeed:
       case DistrictTypeRewardParameter.experienceShareMultiplier:
-        return Math.pow(
-          rewardsModifier *
-            cloneParametersModifier *
-            calculatePower(this._globalState.threat.level, sidejobModifier) *
-            calculatePower(this._district.parameters.influence.tier, districtTypeModifier.progression),
-          districtTypeModifier.exponent,
-        );
+        return baseDelta;
     }
   }
 
@@ -138,10 +127,6 @@ export class Sidejob implements ISidejob {
       districtIndex: this._district.index,
       assignedCloneId: this._assignedClone.id,
     };
-  }
-
-  removeAllEventListeners(): void {
-    this._stateUIConnector.unregisterEventEmitter(this);
   }
 
   private getCloneParametersModifier(): number {

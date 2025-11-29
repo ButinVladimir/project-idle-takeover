@@ -1,4 +1,5 @@
 import { BaseController } from '@shared/index';
+import { ISidejob, SidejobValidationResult } from '@state/activity-state';
 
 export class AssignCloneSidejobDialogButtonsController extends BaseController {
   getTotalConnectivity(districtIndex: number): number {
@@ -6,10 +7,14 @@ export class AssignCloneSidejobDialogButtonsController extends BaseController {
   }
 
   getRequiredConnectivity(sidejobName: string): number {
-    return this.activityState.sidejobs.getConnectivityRequirement(sidejobName);
+    return this.activityState.sidejobActivityValidator.getConnectivityRequirement(sidejobName);
   }
 
   getConnectivityGrowth(districtIndex: number): number {
     return this.growthState.connectivity.getTotalGrowthByDistrict(districtIndex);
+  }
+
+  validateSidejob(sidejob: ISidejob): SidejobValidationResult {
+    return this.activityState.sidejobActivityValidator.validate(sidejob);
   }
 }

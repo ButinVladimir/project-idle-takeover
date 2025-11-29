@@ -1,10 +1,6 @@
 import { injectable, inject } from 'inversify';
 import { TYPES } from '@state/types';
-import {
-  IMultipliersSerializedState,
-  type IMultiplierState,
-  type IMultipliersState,
-} from '../interfaces';
+import { IMultipliersSerializedState, type IMultiplierState, type IMultipliersState } from '../interfaces';
 
 @injectable()
 export class MultipliersState implements IMultipliersState {

@@ -1,16 +1,10 @@
-import { IAssignSidejobArguments, ISidejob } from '@state/activity-state';
+import { ISerializedSidejob, ISidejob, SidejobValidationResult } from '@state/activity-state';
 import { IClone } from '@state/clones-state';
 import { BaseController } from '@shared/index';
 import { IDistrictState } from '@state/city-state';
 
 export class AssignCloneSidejobDialogController extends BaseController {
   private _sidejob?: ISidejob;
-
-  hostDisconnected() {
-    super.hostDisconnected();
-
-    this.deleteSidejob();
-  }
 
   listClones(): IClone[] {
     return this.clonesState.ownedClones.listClones();
@@ -24,27 +18,8 @@ export class AssignCloneSidejobDialogController extends BaseController {
     return this.cityState.listAvailableDistricts();
   }
 
-  getTotalConnectivity(districtIndex: number): number {
-    return this.cityState.getDistrictState(districtIndex).parameters.connectivity.totalValue;
-  }
-
-  getRequiredConnectivity(sidejobName: string): number {
-    return this.activityState.sidejobs.getConnectivityRequirement(sidejobName);
-  }
-
-  getSidejob(args: IAssignSidejobArguments): ISidejob {
-    if (
-      this._sidejob?.assignedClone?.id !== args.assignedCloneId ||
-      this._sidejob?.sidejobName !== args.sidejobName ||
-      this._sidejob?.district.index !== args.districtIndex
-    ) {
-      this.deleteSidejob();
-
-      this._sidejob = this.activityState.sidejobs.makeSidejob({
-        id: 'temporary',
-        ...args,
-      });
-    }
+  getSidejob(args: ISerializedSidejob): ISidejob {
+    this._sidejob = this.activityState.sidejobsFactory.makeSidejob(args);
 
     return this._sidejob;
   }
@@ -54,16 +29,14 @@ export class AssignCloneSidejobDialogController extends BaseController {
       return undefined;
     }
 
-    return this.activityState.sidejobs.getSidejobByCloneId(cloneId);
+    return this.activityState.sidejobsActivity.getActivityByCloneId(cloneId)?.sidejob;
   }
 
-  assignClone(args: IAssignSidejobArguments) {
-    this.activityState.sidejobs.assignSidejob(args);
+  assignClone(args: ISerializedSidejob) {
+    this.activityState.sidejobsActivity.assignSidejob(args);
   }
 
-  private deleteSidejob() {
-    if (this._sidejob) {
-      this._sidejob.removeAllEventListeners();
-    }
+  validateSidejob(sidejob: ISidejob): SidejobValidationResult {
+    return this.activityState.sidejobActivityValidator.validate(sidejob);
   }
 }

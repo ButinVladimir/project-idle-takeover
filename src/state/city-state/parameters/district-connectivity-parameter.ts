@@ -36,8 +36,7 @@ export class DistrictConnectivityParameter implements IDistrictConnectivityParam
   }
 
   recalculate(): void {
-    this._totalValue =
-      (1 + this._points) * (1 + this._globalState.connectivity.pointsByProgram);
+    this._totalValue = (1 + this._points) * (1 + this._globalState.connectivity.pointsByProgram);
   }
 
   async deserialize(serializedState: IDistrictConnectivitySerializedParameter): Promise<void> {

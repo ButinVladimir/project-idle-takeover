@@ -2,14 +2,20 @@ import { html, nothing } from 'lit';
 import { localized } from '@lit/localize';
 import { consume } from '@lit/context';
 import { customElement, queryAll } from 'lit/decorators.js';
-import { BaseComponent, diffFormatterParameters, getHighlightDifferenceClass, RewardParameter } from '@shared/index';
+import {
+  BaseComponent,
+  diffFormatterParameters,
+  DISTRICT_TYPE_REWARD_PARAMETERS,
+  DistrictTypeRewardParameter,
+  getHighlightDifferenceClass,
+} from '@shared/index';
 import { type ISidejob } from '@state/activity-state';
 import { COMMON_TEXTS, REWARD_PARAMETER_NAMES } from '@texts/index';
 import { existingSidejobContext, temporarySidejobContext } from '../../contexts';
 import { DISPLAY_TYPES } from './constants';
 import { AssignCloneSidejobDialogRewardsController } from './controller';
 import styles from './styles';
-import { SIDEJOB_PARAMETER_VALUES, SIDEJOB_PARAMETERS } from '../../../../constants';
+import { SIDEJOB_PARAMETER_VALUES } from '../../../../constants';
 import { IRewardValue } from './types';
 import { calculateSidejobParameterValue, checkSidejobParameterVisibility } from '../../../../helpers';
 
@@ -34,9 +40,9 @@ export class AssignCloneSidejobDialogRewards extends BaseComponent {
   @consume({ context: existingSidejobContext, subscribe: true })
   private _existingSidejob?: ISidejob;
 
-  private _rewardValues: Record<RewardParameter, IRewardValue> = Object.fromEntries(
-    SIDEJOB_PARAMETERS.map((parameter) => [parameter, { value: 0, diff: 0 }]),
-  ) as Record<RewardParameter, IRewardValue>;
+  private _rewardValues: Record<DistrictTypeRewardParameter, IRewardValue> = Object.fromEntries(
+    DISTRICT_TYPE_REWARD_PARAMETERS.map((parameter) => [parameter, { value: 0, diff: 0 }]),
+  ) as Record<DistrictTypeRewardParameter, IRewardValue>;
 
   constructor() {
     super();
@@ -49,10 +55,10 @@ export class AssignCloneSidejobDialogRewards extends BaseComponent {
       return nothing;
     }
 
-    return html` ${SIDEJOB_PARAMETERS.map((parameter) => this.renderParameter(parameter))} `;
+    return html` ${DISTRICT_TYPE_REWARD_PARAMETERS.map((parameter) => this.renderParameter(parameter))} `;
   }
 
-  private renderParameter = (parameter: RewardParameter) => {
+  private renderParameter = (parameter: DistrictTypeRewardParameter) => {
     const parameterValues = SIDEJOB_PARAMETER_VALUES[parameter];
 
     if (!checkSidejobParameterVisibility(this._sidejob!, parameter)) {
@@ -79,13 +85,13 @@ export class AssignCloneSidejobDialogRewards extends BaseComponent {
       return;
     }
 
-    SIDEJOB_PARAMETERS.forEach(this.updateParameter);
+    DISTRICT_TYPE_REWARD_PARAMETERS.forEach(this.updateParameter);
 
     this._rewardValueElements.forEach(this.updateValueElement);
     this._rewardDiffElements.forEach(this.updateDiffElement);
   };
 
-  private updateParameter = (parameter: RewardParameter) => {
+  private updateParameter = (parameter: DistrictTypeRewardParameter) => {
     const newValue = calculateSidejobParameterValue(this._sidejob!, parameter);
     const oldValue = this._existingSidejob ? calculateSidejobParameterValue(this._existingSidejob, parameter) : 0;
 
@@ -94,14 +100,14 @@ export class AssignCloneSidejobDialogRewards extends BaseComponent {
   };
 
   private updateValueElement = (element: HTMLSpanElement) => {
-    const parameter = element.dataset.value as RewardParameter;
+    const parameter = element.dataset.value as DistrictTypeRewardParameter;
     const value = this._rewardValues[parameter].value;
 
     element.textContent = this._controller.formatter.formatNumberFloat(value);
   };
 
   private updateDiffElement = (element: HTMLSpanElement) => {
-    const parameter = element.dataset.value as RewardParameter;
+    const parameter = element.dataset.value as DistrictTypeRewardParameter;
     const diff = this._rewardValues[parameter].diff;
     const className = getHighlightDifferenceClass(diff);
 

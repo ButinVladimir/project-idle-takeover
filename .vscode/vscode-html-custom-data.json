@@ -156,7 +156,7 @@
     },
     {
       "name": "ca-company-clones-panel",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_isPurchaseCloneDialogOpen` {`boolean`} - \n\n  * `_cloneListItemDialogOpen` {`boolean`} - \n\n  * `_cloneListItemDialog` {`\"rename-clone\" | undefined`} - \n\n  * `_modalClone` - \n\n  * `renderContent` - \n\n  * `handlePurchaseCloneDialogOpen` - \n\n  * `handlePurchaseCloneDialogClose` - \n\n  * `handleCloneListItemDialogOpen` - \n\n  * `handleCloneListItemDialogClose` - \n\n  * `_controller` {`ClonesPanelController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_isPurchaseCloneDialogOpen` {`boolean`} - \n\n  * `_cloneListItemDialogOpen` {`boolean`} - \n\n  * `_cloneListItemDialog` {`\"rename-clone\" | undefined`} - \n\n  * `_modalClone` - \n\n  * `renderContent` - \n\n  * `handlePurchaseCloneDialogOpen` - \n\n  * `handlePurchaseCloneDialogClose` - \n\n  * `handleCloneListItemDialogOpen` - \n\n  * `handleCloneListItemDialogClose` - ",
       "attributes": []
     },
     {
@@ -239,6 +239,11 @@
       ]
     },
     {
+      "name": "ca-clones-synchronization-values",
+      "description": "Properties:\n\n  * `styles` {`CSSResult[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_experienceShareRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`ClonesSynchronizationValuesController`} - ",
+      "attributes": []
+    },
+    {
       "name": "ca-company-sidejobs-panel",
       "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_assignCloneDialogOpened` {`boolean`} - \n\n  * `handleAssignCloneSidejobDialogOpen` - \n\n  * `handleAssignCloneSidejobDialogClose` - ",
       "attributes": []
@@ -256,7 +261,7 @@
     },
     {
       "name": "ca-assign-clone-sidejob-dialog-buttons",
-      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_assignButtonRef` {`Ref<SlButton>`} - \n\n  * `_availableTimeRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handlePartialUpdate` - \n\n  * `renderWarnings` - \n\n  * `renderOtherWarnings` - \n\n  * `handleCancel` - \n\n  * `handleAssignClone` - \n\n  * `_controller` {`AssignCloneSidejobDialogButtonsController`} - ",
+      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_assignButtonRef` {`Ref<SlButton>`} - \n\n  * `_availableTimeRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handlePartialUpdate` - \n\n  * `renderWarnings` - \n\n  * `renderAlreadySelectedWarning` - \n\n  * `handleCancel` - \n\n  * `handleAssignClone` - \n\n  * `_controller` {`AssignCloneSidejobDialogButtonsController`} - ",
       "attributes": [
         {
           "name": "disabled",
@@ -292,16 +297,16 @@
     },
     {
       "name": "ca-sidejobs-list-item-description",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_rewardValueElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_sidejob` - \n\n  * `_rewardValues` - \n\n  * `renderParameter` - \n\n  * `handlePartialUpdate` - \n\n  * `updateParameter` - \n\n  * `updateValueElement` - \n\n  * `_controller` {`SidejobsListItemDescriptionController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_rewardValueElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_activity` - \n\n  * `_rewardValues` - \n\n  * `renderParameter` - \n\n  * `handlePartialUpdate` - \n\n  * `updateParameter` - \n\n  * `updateValueElement` - \n\n  * `_controller` {`SidejobsListItemDescriptionController`} - ",
       "attributes": []
     },
     {
       "name": "ca-sidejobs-list-item",
-      "description": "Attributes:\n\n  * `sidejob-id` {`string`} - \n\nProperties:\n\n  * `styles` {`CSSResult[]`} - \n\n  * `sidejobId` {`string`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_sidejob` - \n\n  * `handleToggleDescription` - \n\n  * `handleOpenCancelSidejobDialog` - \n\n  * `handleCancelSidejob` - \n\n  * `_controller` {`SidejobsListItemController`} - ",
+      "description": "Attributes:\n\n  * `activity-id` {`string`} - \n\nProperties:\n\n  * `styles` {`CSSResult[]`} - \n\n  * `activityId` {`string`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_activity` - \n\n  * `handleToggleDescription` - \n\n  * `handleOpenCancelSidejobDialog` - \n\n  * `handleCancelSidejob` - \n\n  * `_controller` {`SidejobsListItemController`} - ",
       "attributes": [
         {
-          "name": "sidejob-id",
-          "description": "`sidejob-id` {`string`} - \n\nProperty: sidejobId"
+          "name": "activity-id",
+          "description": "`activity-id` {`string`} - \n\nProperty: activityId"
         }
       ]
     },
@@ -855,7 +860,7 @@
     },
     {
       "name": "ca-statistics-experience-share",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `_controller` {`StatisticsExperienceShareController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programMultiplierRef` {`Ref<HTMLDivElement>`} - \n\n  * `_totalMultiplierRef` {`Ref<HTMLDivElement>`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`StatisticsExperienceShareController`} - ",
       "attributes": []
     },
     {
@@ -883,7 +888,7 @@
     },
     {
       "name": "ca-statistics-process-completion-speed",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `_controller` {`StatisticsProcessCompletionSpeedController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programMultiplierRef` {`Ref<HTMLDivElement>`} - \n\n  * `_totalMultiplierRef` {`Ref<HTMLDivElement>`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`StatisticsProcessCompletionSpeedController`} - ",
       "attributes": []
     },
     {

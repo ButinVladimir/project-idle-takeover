@@ -6,6 +6,5 @@ export interface IExperienceShareState {
   sharedExperience: number;
   resetExperience(): void;
   increaseExperience(delta: number): void;
-  requestRecalculation(): void;
   recalculate(): void;
 }

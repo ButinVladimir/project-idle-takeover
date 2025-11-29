@@ -153,8 +153,6 @@ export class GlobalState implements IGlobalState {
     await this._rewardsState.startNewState();
 
     this._synchronization.requestRecalculation();
-    this._experienceShare.requestRecalculation();
-    this._processCompletionSpeed.requestRecalculation();
   }
 
   async deserialize(serializedState: IGlobalSerializedState): Promise<void> {
@@ -172,8 +170,6 @@ export class GlobalState implements IGlobalState {
     await this._rewardsState.deserialize(serializedState.rewards);
 
     this._synchronization.requestRecalculation();
-    this._experienceShare.requestRecalculation();
-    this._processCompletionSpeed.requestRecalculation();
   }
 
   serialize(): IGlobalSerializedState {

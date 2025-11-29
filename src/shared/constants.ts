@@ -25,6 +25,7 @@ import {
   MessageEventGroup,
   GameAlertGroup,
   Hotkey,
+  DistrictTypeRewardParameter,
 } from './types';
 import { INames, type IConstants } from './interfaces';
 
@@ -89,3 +90,5 @@ export const RANDOM_TYPE = 'random';
 export const HOTKEYS = Object.values(Hotkey);
 
 export const SCHEMA_PROPERTY = '$schema';
+
+export const DISTRICT_TYPE_REWARD_PARAMETERS = Object.values(DistrictTypeRewardParameter);

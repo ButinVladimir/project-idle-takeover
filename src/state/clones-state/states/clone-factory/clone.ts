@@ -280,7 +280,7 @@ export class Clone implements IClone {
   }
 
   private handlePerformanceUpdate(): void {
-    const sidejob = this._activityState.sidejobs.getSidejobByCloneId(this._id);
+    const sidejob = this._activityState.sidejobsActivity.getActivityByCloneId(this._id);
 
     if (sidejob?.isActive) {
       sidejob.handlePerformanceUpdate();

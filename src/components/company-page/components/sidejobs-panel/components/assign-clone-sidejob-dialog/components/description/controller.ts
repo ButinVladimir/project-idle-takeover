@@ -6,6 +6,6 @@ export class AssignCloneSidejobDialogDescriptionController extends BaseControlle
   }
 
   getRequiredConnectivity(sidejobName: string): number {
-    return this.activityState.sidejobs.getConnectivityRequirement(sidejobName);
+    return this.activityState.sidejobActivityValidator.getConnectivityRequirement(sidejobName);
   }
 }

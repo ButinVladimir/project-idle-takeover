@@ -7,9 +7,7 @@ export class PeerReviewerProgram extends BaseProgram {
   public readonly name = OtherProgramName.peerReviewer;
   public readonly isAutoscalable = true;
 
-  handlePerformanceUpdate(): void {
-    this.globalState.experienceShare.requestRecalculation();
-  }
+  handlePerformanceUpdate(): void {}
 
   perform(): void {}
 
@@ -20,6 +18,7 @@ export class PeerReviewerProgram extends BaseProgram {
     return Math.pow(
       1 +
         multiplier *
+          this.globalState.rewards.multiplierByProgram *
           calculateTierLinear(this.level, this.tier, programData.cloneExperience.main) *
           calculateLinear(
             this.mainframeState.hardware.performance.totalLevel,

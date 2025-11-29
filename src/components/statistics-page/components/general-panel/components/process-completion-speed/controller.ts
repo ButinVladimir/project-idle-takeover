@@ -21,4 +21,8 @@ export class StatisticsProcessCompletionSpeedController extends BaseController {
   listAvailableDistricts(): IDistrictState[] {
     return this.cityState.listAvailableDistricts();
   }
+
+  getDistrictMultiplier(districtIndex: number): number {
+    return this.cityState.getDistrictState(districtIndex).parameters.processCompletionSpeed.value;
+  }
 }

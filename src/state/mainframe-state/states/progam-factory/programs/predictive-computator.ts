@@ -7,9 +7,7 @@ export class PredictiveComputatorProgram extends BaseProgram {
   public readonly name = OtherProgramName.predictiveComputator;
   public readonly isAutoscalable = true;
 
-  handlePerformanceUpdate(): void {
-    this.globalState.processCompletionSpeed.requestRecalculation();
-  }
+  handlePerformanceUpdate(): void {}
 
   perform(): void {}
 
@@ -20,6 +18,7 @@ export class PredictiveComputatorProgram extends BaseProgram {
     return Math.pow(
       1 +
         multiplier *
+          this.globalState.rewards.multiplierByProgram *
           calculateTierLinear(this.level, this.tier, programData.programCompletionSpeed.main) *
           calculateLinear(
             this.mainframeState.hardware.performance.totalLevel,

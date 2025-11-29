@@ -1,5 +1,5 @@
-import { Attribute, Skill } from '@shared/index';
-import { DistrictTypeRewardParameter, IDistrictState } from '@state/city-state';
+import { Attribute, Skill, DistrictTypeRewardParameter } from '@shared/index';
+import { IDistrictState } from '@state/city-state';
 import { IClone } from '@state/clones-state';
 import { ISerializedSidejob } from './serialized-sidejob';
 import { ISidejobTemplate } from './sidejob-template';
@@ -7,7 +7,7 @@ import { ISidejobTemplate } from './sidejob-template';
 export interface ISidejob {
   sidejobName: string;
   district: IDistrictState;
-  assignedClone?: IClone;
+  assignedClone: IClone;
   sidejobTemplate: ISidejobTemplate;
   requiredConnectivity: number;
   getAttributeRequirement(attribute: Attribute): number;
@@ -16,5 +16,4 @@ export interface ISidejob {
   getSkillModifier(skill: Skill): number;
   calculateParameterDelta(parameter: DistrictTypeRewardParameter, passedTime: number): number;
   serialize(): ISerializedSidejob;
-  removeAllEventListeners(): void;
 }

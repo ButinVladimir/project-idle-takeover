@@ -54,8 +54,6 @@ export class SynchronizationState implements ISynchronizationState {
 
   requestRecalculation() {
     this._recalculationRequested = true;
-
-    this._globalState.experienceShare.requestRecalculation();
   }
 
   recalculate() {

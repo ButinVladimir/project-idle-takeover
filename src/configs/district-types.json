@@ -12,15 +12,15 @@
       "money": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
       "developmentPoints": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
       "influence": {
-        "progression": { "multiplier": 1, "base": 10 },
+        "progression": { "multiplier": 1, "base": 1 },
         "exponent": 1
       },
-      "connectivity": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
+      "connectivity": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 0.5 },
       "codeBase": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
       "computationalBase": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
       "rewards": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
-      "processCompletionSpeed": { "progression": { "multiplier": 1, "base": 1.1 }, "exponent": 1 },
-      "experienceShareMultiplier": { "progression": { "multiplier": 1, "base": 1.1 }, "exponent": 1 }
+      "processCompletionSpeed": { "progression": { "multiplier": 1, "base": 1.1 }, "exponent": 0.3 },
+      "experienceShareMultiplier": { "progression": { "multiplier": 1, "base": 1.1 }, "exponent": 0.9 }
     },
     "requirements": {
       "influence": { "multiplier": 1000, "base": 10 }
@@ -33,7 +33,7 @@
   },
   "corpoDistrict": {
     "activityRequirementModifier": 1,
-    "primaryActivityimeMultipliers": {
+    "primaryActivityTimeMultipliers": {
       "completionTime": 1,
       "generationTime": 5
     },

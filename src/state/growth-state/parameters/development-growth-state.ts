@@ -3,8 +3,8 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IMainframeState, OtherProgramName, ShareServerProgram } from '@state/mainframe-state';
 import { type IActivityState } from '@state/activity-state';
-import { INCOME_SOURCES, IncomeSource } from '@shared/index';
-import { IDevelopmentGrowthState } from '../interfaces/parameters/development-growth-state';
+import { DistrictTypeRewardParameter, INCOME_SOURCES, IncomeSource } from '@shared/index';
+import { IDevelopmentGrowthState } from '../interfaces';
 
 const { lazyInject } = decorators;
 
@@ -74,12 +74,15 @@ export class DevelopmentGrowthState implements IDevelopmentGrowthState {
   private updateGrowthBySidejobs() {
     let incomeBySidejobs = 0;
 
-    for (const sidejob of this._activityState.sidejobs.listSidejobs()) {
-      if (!sidejob.isActive) {
+    for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
+      if (!sidejobActivity.active) {
         continue;
       }
 
-      incomeBySidejobs += sidejob.calculateDevelopmentPointsDelta(1);
+      incomeBySidejobs += sidejobActivity.sidejob.calculateParameterDelta(
+        DistrictTypeRewardParameter.developmentPoints,
+        1,
+      );
     }
 
     this._growth.set(IncomeSource.sidejob, incomeBySidejobs);

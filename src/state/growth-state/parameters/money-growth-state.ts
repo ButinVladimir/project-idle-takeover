@@ -3,7 +3,7 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IMainframeState, OtherProgramName, ShareServerProgram } from '@state/mainframe-state';
 import { type IActivityState } from '@state/activity-state';
-import { INCOME_SOURCES, IncomeSource } from '@shared/index';
+import { DistrictTypeRewardParameter, INCOME_SOURCES, IncomeSource } from '@shared/index';
 import { IMoneyGrowthState } from '../interfaces/parameters/money-growth-state';
 
 const { lazyInject } = decorators;
@@ -72,12 +72,12 @@ export class MoneyGrowthState implements IMoneyGrowthState {
   private updateGrowthBySidejobs() {
     let incomeBySidejobs = 0;
 
-    for (const sidejob of this._activityState.sidejobs.listSidejobs()) {
-      if (!sidejob.isActive) {
+    for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
+      if (!sidejobActivity.active) {
         continue;
       }
 
-      incomeBySidejobs += sidejob.calculateMoneyDelta(1);
+      incomeBySidejobs += sidejobActivity.sidejob.calculateParameterDelta(DistrictTypeRewardParameter.money, 1);
     }
 
     this._growth.set(IncomeSource.sidejob, incomeBySidejobs);

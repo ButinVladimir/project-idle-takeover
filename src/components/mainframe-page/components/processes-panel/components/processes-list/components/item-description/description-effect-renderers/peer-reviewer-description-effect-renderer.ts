@@ -4,8 +4,14 @@ import { IFormatter, RewardParameter } from '@shared/index';
 import { COMMON_TEXTS, REWARD_PARAMETER_NAMES } from '@texts/index';
 import { IDescriptionParameters, IDescriptionEffectRenderer } from '../interfaces';
 
+const VALUES = {
+  experienceShareMultiplier: 'experienceShareMultiplier',
+};
+
 export class PeerReviewerDescriptionEffectRenderer implements IDescriptionEffectRenderer {
-  public readonly values = {};
+  public readonly values = {
+    [VALUES.experienceShareMultiplier]: '',
+  };
 
   private _process: IProcess;
 
@@ -20,6 +26,15 @@ export class PeerReviewerDescriptionEffectRenderer implements IDescriptionEffect
   }
 
   public renderEffect = () => {
+    return html`<p>
+      ${COMMON_TEXTS.parameterValue(
+        REWARD_PARAMETER_NAMES[RewardParameter.experienceShareMultiplier](),
+        html`<span data-value=${VALUES.experienceShareMultiplier}></span>`,
+      )}
+    </p>`;
+  };
+
+  public recalculateValues() {
     const { usedCores } = this._process;
     const program = this._process.program as PeerReviewerProgram;
 
@@ -27,13 +42,6 @@ export class PeerReviewerDescriptionEffectRenderer implements IDescriptionEffect
       program.calculateExperienceShareMultiplier(usedCores, this._availableRam),
     );
 
-    return html`<p>
-      ${COMMON_TEXTS.parameterValue(
-        REWARD_PARAMETER_NAMES[RewardParameter.experienceShareMultiplier](),
-        formattedValue,
-      )}
-    </p>`;
-  };
-
-  public recalculateValues() {}
+    this.values[VALUES.experienceShareMultiplier] = formattedValue;
+  }
 }

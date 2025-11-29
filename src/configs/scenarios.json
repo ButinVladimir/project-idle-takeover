@@ -89,7 +89,7 @@
       },
       "connectivity": {
         "multiplier": 1,
-        "exponent": 1
+        "exponent": 0.5
       },
       "codeBase": {
         "multiplier": 1,
@@ -105,17 +105,17 @@
       },
       "processCompletionSpeed": {
         "multiplier": 1,
-        "exponent": 1
+        "exponent": 0.3
       },
       "experienceShareMultiplier": {
         "multiplier": 1,
-        "exponent": 1
+        "exponent": 0.9
       }
     },
     "multiplierParameterBases": {
-      "codeBase": 1,
-      "computationalBase": 1,
-      "rewards": 1
+      "codeBase": 2,
+      "computationalBase": 2,
+      "rewards": 2
     },
     "storyEvents": [
       "tutorial_1",

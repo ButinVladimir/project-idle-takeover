@@ -68,7 +68,7 @@ export class DistrictFactionsGenerator implements IDistrictFactionsGenerator {
 
       const startingDistrictDifficulty =
         this._cityState.getDistrictSize(startingDistrict) *
-        calculatePower(districtInfo.tier, districtTypeData.parameters.influence.requirements);
+        calculatePower(districtInfo.tier, districtTypeData.requirements.influence);
 
       const districtQueue = new RandomQueue<number>(this._globalState.random);
 
@@ -107,7 +107,7 @@ export class DistrictFactionsGenerator implements IDistrictFactionsGenerator {
           const factionControlledArea = this._controlledAreaMap.get(index)!;
           const districtDifficulty =
             this._cityState.getDistrictSize(nextDistrict) *
-            calculatePower(districtInfo.tier, districtTypeData.parameters.influence.requirements);
+            calculatePower(districtInfo.tier, districtTypeData.requirements.influence);
 
           if (!this._districtFactionIndexes.has(nextDistrict) && factionControlledArea >= districtDifficulty) {
             this._controlledAreaMap.set(index, factionControlledArea - districtDifficulty);

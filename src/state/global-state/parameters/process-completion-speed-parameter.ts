@@ -27,19 +27,13 @@ export class ProcessCompletionSpeedState implements IProcessCompletionSpeedState
   private _multiplierByProgram: number;
   private _multiplierByHardware: number;
   private _totalMultiplier: number;
-  private _multiplierUpdateRequested: boolean;
 
   constructor() {
     this._multiplierByProgram = 1;
     this._multiplierByHardware = 1;
     this._totalMultiplier = 1;
-    this._multiplierUpdateRequested = true;
 
-    this._stateUiConnector.registerEventEmitter(this, [
-      '_multiplierByProgram',
-      '_multiplierByHardware',
-      '_totalMultiplier',
-    ]);
+    this._stateUiConnector.registerEventEmitter(this, ['_multiplierByHardware']);
   }
 
   get multiplierByProgram() {
@@ -54,16 +48,7 @@ export class ProcessCompletionSpeedState implements IProcessCompletionSpeedState
     return this._totalMultiplier;
   }
 
-  requestRecalculation() {
-    this._multiplierUpdateRequested = true;
-  }
-
   recalculate() {
-    if (!this._multiplierUpdateRequested) {
-      return;
-    }
-
-    this._multiplierUpdateRequested = false;
     this._totalMultiplier = 1;
 
     this.updateMultiplierByProgram();

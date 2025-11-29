@@ -1,18 +1,18 @@
 import { BaseController } from '@shared/index';
-import { ISidejob } from '@state/activity-state';
+import { ISidejobActivity } from '@state/activity-state';
 
 export class SidejobsListItemController extends BaseController {
-  private _sidejob?: ISidejob;
+  private _activity?: ISidejobActivity;
 
-  getSidejobById(id: string): ISidejob | undefined {
-    if (this._sidejob?.id !== id) {
-      this._sidejob = this.activityState.sidejobs.getSidejobById(id);
+  getActivityById(id: string): ISidejobActivity | undefined {
+    if (this._activity?.id !== id) {
+      this._activity = this.activityState.sidejobsActivity.getActivityById(id);
     }
 
-    return this._sidejob;
+    return this._activity;
   }
 
-  cancelSidejobById(id: string) {
-    this.activityState.sidejobs.cancelSidejob(id);
+  cancelActivityById(id: string) {
+    this.activityState.sidejobsActivity.cancelActivity(id);
   }
 }

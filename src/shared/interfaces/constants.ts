@@ -5,7 +5,7 @@ export interface IConstants {
   startingValues: {
     scenario: string;
     accumulatedTime: number;
-  }
+  };
   defaultSettings: {
     messageLogSize: number;
     toastDuration: number;

@@ -4,6 +4,7 @@ import { TYPES } from '@state/types';
 import { type IGlobalState } from '@state/global-state';
 import { type IActivityState } from '@state/activity-state';
 import { type IClonesState } from '@state/clones-state';
+import { DistrictTypeRewardParameter } from '@shared/index';
 import { IExperienceGrowthState } from '../interfaces';
 
 const { lazyInject } = decorators;
@@ -57,14 +58,15 @@ export class ExperienceGrowthState implements IExperienceGrowthState {
   }
 
   private updateGrowthBySidejobs(): void {
-    for (const sidejob of this._activityState.sidejobs.listSidejobs()) {
-      if (!sidejob.isActive) {
+    for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
+      if (!sidejobActivity.active) {
         continue;
       }
 
-      let currentGrowth = this._growthByCloneId.get(sidejob.assignedClone!.id) ?? 0;
-      currentGrowth += sidejob.calculateExperienceDelta(1);
-      this._growthByCloneId.set(sidejob.assignedClone!.id, currentGrowth);
+      const cloneId = sidejobActivity.sidejob.assignedClone.id;
+      let currentGrowth = this._growthByCloneId.get(cloneId) ?? 0;
+      currentGrowth += sidejobActivity.sidejob.calculateParameterDelta(DistrictTypeRewardParameter.experience, 1);
+      this._growthByCloneId.set(cloneId, currentGrowth);
     }
   }
 

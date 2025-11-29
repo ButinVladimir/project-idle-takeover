@@ -1,66 +1,49 @@
-import { Feature, RewardParameter } from '@shared/index';
-
-export const SIDEJOB_PARAMETERS = [
-  RewardParameter.money,
-  RewardParameter.developmentPoints,
-  RewardParameter.experience,
-  RewardParameter.influence,
-  RewardParameter.connectivity,
-  RewardParameter.codeBase,
-  RewardParameter.computationalBase,
-  RewardParameter.rewards,
-  RewardParameter.processCompletionSpeed,
-  RewardParameter.experienceShareMultiplier,
-];
+import { DistrictTypeRewardParameter, Feature } from '@shared/index';
 
 interface ISidejobParameterValues {
   requirements: Feature[];
   isSpeed: boolean;
 }
 
-export const SIDEJOB_PARAMETER_VALUES: Record<RewardParameter, ISidejobParameterValues> = {
-  [RewardParameter.money]: {
+export const SIDEJOB_PARAMETER_VALUES: Record<DistrictTypeRewardParameter, ISidejobParameterValues> = {
+  [DistrictTypeRewardParameter.money]: {
     requirements: [],
     isSpeed: true,
   },
-  [RewardParameter.developmentPoints]: {
+  [DistrictTypeRewardParameter.developmentPoints]: {
     requirements: [],
     isSpeed: true,
   },
-  [RewardParameter.experience]: {
+  [DistrictTypeRewardParameter.experience]: {
     requirements: [],
     isSpeed: true,
   },
-  [RewardParameter.influence]: {
+  [DistrictTypeRewardParameter.influence]: {
     requirements: [Feature.influence],
     isSpeed: true,
   },
-  [RewardParameter.connectivity]: {
+  [DistrictTypeRewardParameter.connectivity]: {
     requirements: [Feature.connectivity],
     isSpeed: true,
   },
-  [RewardParameter.codeBase]: {
+  [DistrictTypeRewardParameter.codeBase]: {
     requirements: [Feature.codeBase],
     isSpeed: true,
   },
-  [RewardParameter.computationalBase]: {
+  [DistrictTypeRewardParameter.computationalBase]: {
     requirements: [Feature.computationalBase],
     isSpeed: true,
   },
-  [RewardParameter.rewards]: {
+  [DistrictTypeRewardParameter.rewards]: {
     requirements: [Feature.rewards],
     isSpeed: true,
   },
-  [RewardParameter.processCompletionSpeed]: {
+  [DistrictTypeRewardParameter.processCompletionSpeed]: {
     requirements: [],
     isSpeed: false,
   },
-  [RewardParameter.experienceShareMultiplier]: {
+  [DistrictTypeRewardParameter.experienceShareMultiplier]: {
     requirements: [Feature.experienceShare],
     isSpeed: false,
-  },
-  [RewardParameter.actions]: {
-    requirements: [],
-    isSpeed: true,
   },
 };
