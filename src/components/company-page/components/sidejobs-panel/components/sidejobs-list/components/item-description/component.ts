@@ -2,13 +2,17 @@ import { html, nothing } from 'lit';
 import { localized } from '@lit/localize';
 import { consume } from '@lit/context';
 import { customElement, queryAll } from 'lit/decorators.js';
-import { BaseComponent, DISTRICT_TYPE_REWARD_PARAMETERS, DistrictTypeRewardParameter } from '@shared/index';
+import {
+  BaseComponent,
+  DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES,
+  DISTRICT_TYPE_REWARD_PARAMETERS,
+  DistrictTypeRewardParameter,
+} from '@shared/index';
 import { type ISidejobActivity } from '@state/activity-state';
 import { COMMON_TEXTS, REWARD_PARAMETER_NAMES, SIDEJOB_TEXTS } from '@texts/index';
 import { SidejobsListItemDescriptionController } from './controller';
 import { sidejobActivityContext } from '../item/contexts';
 import styles from './styles';
-import { SIDEJOB_PARAMETER_VALUES } from '../../../../constants';
 import { calculateSidejobParameterValue, checkSidejobParameterVisibility } from '../../../../helpers';
 
 @localized()
@@ -49,7 +53,7 @@ export class SidejobsListItemDescription extends BaseComponent {
   }
 
   private renderParameter = (parameter: DistrictTypeRewardParameter) => {
-    const parameterValues = SIDEJOB_PARAMETER_VALUES[parameter];
+    const parameterValues = DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES[parameter];
 
     if (!checkSidejobParameterVisibility(this._activity!.sidejob, parameter)) {
       return nothing;

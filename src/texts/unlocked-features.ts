@@ -1,7 +1,10 @@
 import { msg } from '@lit/localize';
 import { Feature } from '@shared/types';
 
-export const UNLOCKED_FEATURE_TEXTS = {
+export const UNLOCKED_FEATURE_TEXTS: Record<
+  Feature,
+  { title: () => string; hint: () => string; message: () => string }
+> = {
   [Feature.automation]: {
     title: () => msg('Basic automation'),
     hint: () => msg('Automation page and clone level autoupgrade are available'),
@@ -90,10 +93,17 @@ The higher district tier is, the better rewards are from performing actions with
   },
   [Feature.factions]: {
     title: () => msg('Factions'),
-    hint: () => msg('Factions, faction power and contracts are now available'),
+    hint: () => msg('Factions and faction power are now available'),
     message: () =>
-      msg(`Factions, faction power and contracts are now available.
-Joining a faction gives access to loaned designs and allows capturing districts by performing contracts.
+      msg(`Factions and faction power are now available.
+Joining a faction gives access to it's loaned designs and contracts.`),
+  },
+  [Feature.contracts]: {
+    title: () => msg('Contracts'),
+    hint: () => msg('Contracts are now available'),
+    message: () =>
+      msg(`Contracts are now available.
+Districts can be captured by performing contracts.
 Contracts can increase faction power and provide substantial earnings.`),
   },
 };

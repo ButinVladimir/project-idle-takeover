@@ -9,7 +9,6 @@ export interface ISidejob {
   district: IDistrictState;
   assignedClone: IClone;
   sidejobTemplate: ISidejobTemplate;
-  requiredConnectivity: number;
   getAttributeRequirement(attribute: Attribute): number;
   getSkillRequirement(skill: Skill): number;
   getAttributeModifier(attribute: Attribute): number;

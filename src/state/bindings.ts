@@ -133,7 +133,11 @@ import {
   ISidejobsFactory,
   SidejobsFactory,
   ISidejobActivityValidator,
-  SidejobActivtiyValidator,
+  SidejobActivityValidator,
+  IContractsFactory,
+  ContractsFactory,
+  IContractActivityValidator,
+  ContractActivityValidator,
 } from '@state/activity-state';
 import { TYPES } from './types';
 import { container } from './container';
@@ -422,7 +426,7 @@ container.bind<IClonesState>(TYPES.ClonesState).to(ClonesState).inSingletonScope
 
 container
   .bind<ISidejobActivityValidator>(TYPES.SidejobActivityValidator)
-  .to(SidejobActivtiyValidator)
+  .to(SidejobActivityValidator)
   .inSingletonScope()
   .whenTargetIsDefault();
 
@@ -431,6 +435,14 @@ container.bind<ISidejobsFactory>(TYPES.SidejobsFactory).to(SidejobsFactory).inSi
 container
   .bind<ISidejobsActivityState>(TYPES.SidejobsActivityState)
   .to(SidejobsActivityState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container.bind<IContractsFactory>(TYPES.ContractsFactory).to(ContractsFactory).inSingletonScope().whenTargetIsDefault();
+
+container
+  .bind<IContractActivityValidator>(TYPES.ContractActivityValidator)
+  .to(ContractActivityValidator)
   .inSingletonScope()
   .whenTargetIsDefault();
 

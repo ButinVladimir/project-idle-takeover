@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
-import { Faction, NotificationType } from '@shared/types';
+import { Faction, Feature, NotificationType } from '@shared/types';
 import { type IScenarioState } from '@state/scenario-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type INotificationsState } from '@state/notifications-state';
@@ -100,6 +100,10 @@ export class FactionState implements IFactionState {
   }
 
   joinFaction(faction: Faction): boolean {
+    if (!this._unlockState.features.isFeatureUnlocked(Feature.factions)) {
+      return false;
+    }
+
     if (this._currentFaction !== 'neutral') {
       return false;
     }

@@ -43,5 +43,5 @@ export const checkSidejobParameterVisibility = (sidejob: ISidejob, parameter: Di
       return false;
   }
 
-  return !!value;
+  return value !== undefined;
 };

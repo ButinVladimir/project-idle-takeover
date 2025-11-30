@@ -8,11 +8,11 @@ import {
   IDistrictParameters,
   IDistrictArguments,
   IMapGeneratorDistrict,
-  IDistrictContractsState,
+  IDistrictCountersState,
 } from './interfaces';
 import { DistrictUnlockState } from './types';
 import { DistrictParameters } from './parameters';
-import { DistrictContractsState } from './contracts';
+import { DistrictCountersState } from './counters';
 import { typedDistrictTypes } from './constants';
 
 const { lazyInject } = decorators;
@@ -28,7 +28,7 @@ export class DistrictState implements IDistrictState {
   private _faction;
   private _state: DistrictUnlockState;
   private _parameters: IDistrictParameters;
-  private _contracts: IDistrictContractsState;
+  private _counters: IDistrictCountersState;
 
   constructor(args: IDistrictArguments) {
     this._index = args.index;
@@ -38,7 +38,7 @@ export class DistrictState implements IDistrictState {
     this._faction = args.faction;
     this._state = args.state;
     this._parameters = new DistrictParameters(this);
-    this._contracts = new DistrictContractsState(this);
+    this._counters = new DistrictCountersState(this);
 
     this._stateUiConnector.registerEventEmitter(this, []);
   }
@@ -65,7 +65,7 @@ export class DistrictState implements IDistrictState {
     });
 
     districtState._parameters.deserialize(serializedState.parameters);
-    districtState._contracts.deserialize(serializedState.contracts);
+    districtState._counters.deserialize(serializedState.counters);
 
     return districtState;
   }
@@ -106,13 +106,13 @@ export class DistrictState implements IDistrictState {
     return this._parameters;
   }
 
-  get contracts() {
-    return this._contracts;
+  get counters() {
+    return this._counters;
   }
 
   recalculate() {
     this._parameters.recalculate();
-    this._contracts.processTick();
+    this._counters.processTick();
   }
 
   serialize(): IDistrictSerializedState {
@@ -123,12 +123,12 @@ export class DistrictState implements IDistrictState {
       faction: this._faction,
       state: this._state,
       parameters: this._parameters.serialize(),
-      contracts: this._contracts.serialize(),
+      counters: this._counters.serialize(),
     };
   }
 
   removeAllEventListeners(): void {
     this._parameters.removeAllEventListeners();
-    this._contracts.removeAllEventListeners();
+    this._counters.removeAllEventListeners();
   }
 }

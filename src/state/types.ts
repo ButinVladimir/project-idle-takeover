@@ -64,6 +64,8 @@ export const TYPES = {
   SidejobActivityValidator: Symbol('SidejobActivityValidator'),
   SidejobsFactory: Symbol('SidejobsFactory'),
   SidejobsActivityState: Symbol('SidejobsActivityState'),
+  ContractsFactory: Symbol('ContractsFactory'),
+  ContractActivityValidator: Symbol('ContractActivityValidator'),
   ContractsAutomationState: Symbol('ContractsAutomationState'),
   ExperienceShareState: Symbol('ExperienceShareState'),
   ProcessCompletionSpeedState: Symbol('ProcessCompletionSpeedState'),

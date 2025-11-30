@@ -151,7 +151,7 @@
     },
     {
       "name": "ca-company-page",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderTab` - \n\n  * `renderTabPanel` - \n\n  * `renderTabPanelContent` - \n\n  * `_controller` {`CompanyPageController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `isTabUnlocked` - \n\n  * `renderTab` - \n\n  * `renderTabPanel` - \n\n  * `renderTabPanelContent` - \n\n  * `_controller` {`CompanyPageController`} - ",
       "attributes": []
     },
     {
@@ -244,6 +244,53 @@
       "attributes": []
     },
     {
+      "name": "ca-company-contracts-panel",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_assignClonesDialogOpened` {`boolean`} - \n\n  * `handleAssignClonesContractDialogOpen` - \n\n  * `handleAssignClonesContractDialogClose` - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-assign-clones-contract-dialog",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_clonesIdInputRef` {`Ref<SlSelect>`} - \n\n  * `_districtIndexInputRef` {`Ref<SlSelect>`} - \n\n  * `_contractNameInputRef` {`Ref<SlSelect>`} - \n\n  * `open` {`boolean`} - \n\n  * `_cloneIds` {`string[]`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `_contractName` {`string | undefined`} - \n\n  * `_contract` - \n\n  * `_existingContract` - \n\n  * `renderCloneOption` - \n\n  * `renderDistrictOption` - \n\n  * `renderContractName` - \n\n  * `handleClose` - \n\n  * `handleCloneIdsChange` - \n\n  * `handleContractNameChange` - \n\n  * `handleDistrictIndexChange` - \n\n  * `handleSubmit` - \n\n  * `handleAssignClones` - \n\n  * `_controller` {`AssignClonesContractDialogController`} - ",
+      "attributes": [
+        {
+          "name": "open",
+          "description": "`open` {`boolean`} - \n\nProperty: open\n\nDefault: false",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-assign-clones-contract-dialog-buttons",
+      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_contract` - \n\n  * `_existingContract` - \n\n  * `renderWarning` - \n\n  * `buildAlreadySelectedWarning` - \n\n  * `handleCancel` - \n\n  * `handleAssignClones` - \n\n  * `_controller` {`AssignClonesContractDialogButtonsController`} - ",
+      "attributes": [
+        {
+          "name": "disabled",
+          "description": "`disabled` {`boolean`} - \n\nProperty: disabled\n\nDefault: false",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-assign-clones-contract-dialog-description",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_descriptionModelInputRef` {`Ref<SlRadioGroup>`} - \n\n  * `_contract` - \n\n  * `_desciptionMode` {`AssignClonesContractDialogDescriptionMode`} - \n\n  * `renderTeamSizeString` - \n\n  * `handleDescriptionModeChange` - \n\n  * `renderDescriptionModes` - \n\n  * `renderDescriptionMode` - \n\n  * `renderRequirements` - \n\n  * `renderRewardMultipliers` - \n\n  * `renderRewards` - \n\n  * `_controller` {`AssignCloneSidejobDialogDescriptionController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-assign-clones-contract-dialog-requirements",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_contract` - \n\n  * `renderRequirementAttribute` - \n\n  * `renderRequirementSkill` - \n\n  * `_controller` {`AssignClonesContractDialogRequirementsController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-assign-clones-contract-dialog-rewards-multipliers",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_contract` - \n\n  * `_existingContract` - \n\n  * `renderRewardsMultplierAttribute` - \n\n  * `renderRewardsMultplierSkill` - \n\n  * `_controller` - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-assign-clones-contract-dialog-rewards",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_rewardValueElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_rewardDiffElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_contract` - \n\n  * `_existingContract` - \n\n  * `_rewardValues` - \n\n  * `renderParameter` - \n\n  * `handlePartialUpdate` - \n\n  * `updateParameter` - \n\n  * `updateValueElement` - \n\n  * `updateDiffElement` - \n\n  * `_controller` {`AssignCloneSidejobDialogRewardsController`} - ",
+      "attributes": []
+    },
+    {
       "name": "ca-company-sidejobs-panel",
       "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_assignCloneDialogOpened` {`boolean`} - \n\n  * `handleAssignCloneSidejobDialogOpen` - \n\n  * `handleAssignCloneSidejobDialogClose` - ",
       "attributes": []
@@ -261,7 +308,7 @@
     },
     {
       "name": "ca-assign-clone-sidejob-dialog-buttons",
-      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_assignButtonRef` {`Ref<SlButton>`} - \n\n  * `_availableTimeRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handlePartialUpdate` - \n\n  * `renderWarnings` - \n\n  * `renderAlreadySelectedWarning` - \n\n  * `handleCancel` - \n\n  * `handleAssignClone` - \n\n  * `_controller` {`AssignCloneSidejobDialogButtonsController`} - ",
+      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_availableTimeRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handlePartialUpdate` - \n\n  * `renderWarnings` - \n\n  * `renderAlreadySelectedWarning` - \n\n  * `handleCancel` - \n\n  * `handleAssignClone` - \n\n  * `_controller` {`AssignCloneSidejobDialogButtonsController`} - ",
       "attributes": [
         {
           "name": "disabled",
@@ -277,7 +324,7 @@
     },
     {
       "name": "ca-assign-clone-sidejob-dialog-requirements",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_sidejob` - \n\n  * `renderRequirementAttribute` - \n\n  * `renderRequirementSkill` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_sidejob` - \n\n  * `renderRequirementAttribute` - \n\n  * `renderRequirementSkill` - \n\n  * `_controller` {`AssignCloneSidejobDialogRequirementsController`} - ",
       "attributes": []
     },
     {

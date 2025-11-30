@@ -39,10 +39,6 @@ export class Sidejob implements ISidejob {
     return typedSidejobs[this._templateName];
   }
 
-  get requiredConnectivity() {
-    return calculatePower(this._globalState.threat.level, this.sidejobTemplate.requirements.connectivity);
-  }
-
   getAttributeRequirement(attribute: Attribute): number {
     if (!this.sidejobTemplate.requirements.attributes[attribute]) {
       return 0;
@@ -130,14 +126,14 @@ export class Sidejob implements ISidejob {
   }
 
   private getCloneParametersModifier(): number {
-    let modifier = 0;
+    let modifier = 1;
 
     for (const attribute of ATTRIBUTES) {
-      modifier += this.getAttributeModifier(attribute);
+      modifier *= this.getAttributeModifier(attribute);
     }
 
     for (const skill of SKILLS) {
-      modifier += this.getSkillModifier(skill);
+      modifier *= this.getSkillModifier(skill);
     }
 
     return modifier;

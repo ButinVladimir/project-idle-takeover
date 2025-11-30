@@ -1,15 +1,25 @@
 import { msg } from '@lit/localize';
-import { GameStateEvent, ProgramsEvent, ClonesEvent, SidejobsEvent, CityEvent, MessageEventGroup } from '@shared/index';
+import {
+  GameStateEvent,
+  ProgramsEvent,
+  ClonesEvent,
+  SidejobsEvent,
+  CityEvent,
+  MessageEventGroup,
+  ContractsEvent,
+  MessageEvent,
+} from '@shared/index';
 
-export const MESSAGE_EVENT_GROUP_NAMES = {
+export const MESSAGE_EVENT_GROUP_NAMES: Record<MessageEventGroup, () => string> = {
   [MessageEventGroup.gameState]: () => msg('Game state events'),
   [MessageEventGroup.programs]: () => msg('Programs events'),
   [MessageEventGroup.clones]: () => msg('Clones events'),
   [MessageEventGroup.sidejobs]: () => msg('Sidejobs events'),
+  [MessageEventGroup.contracts]: () => msg('Contracts events'),
   [MessageEventGroup.city]: () => msg('City events'),
 };
 
-export const MESSAGE_EVENT_NAMES = {
+export const MESSAGE_EVENT_NAMES: Record<MessageEvent, () => string> = {
   [GameStateEvent.gameStarted]: () => msg('Game started'),
   [GameStateEvent.gameSaved]: () => msg('Game saved'),
   [GameStateEvent.fastForwared]: () => msg('Accumulated time spent'),
@@ -30,5 +40,8 @@ export const MESSAGE_EVENT_NAMES = {
   [SidejobsEvent.sidejobAssigned]: () => msg('Sidejob assigned'),
   [SidejobsEvent.sidejobCancelled]: () => msg('Sidejob cancelled'),
   [SidejobsEvent.allSidejobsCancelled]: () => msg('All sidejobs cancelled'),
+  [ContractsEvent.contractAssigned]: () => msg('Contract assigned'),
+  [ContractsEvent.contractCancelled]: () => msg('Contract cancelled'),
+  [ContractsEvent.allContractsCancelled]: () => msg('All contracts cancelled'),
   [CityEvent.districtTierIncreased]: () => msg('City district tier increased'),
 };

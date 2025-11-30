@@ -1,9 +1,9 @@
+import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type ICityState } from '@state/city-state';
 import { type IClonesState } from '@state/clones-state';
 import { ISerializedSidejob, ISidejob, ISidejobsFactory } from './interfaces';
-import { injectable } from 'inversify';
 import { Sidejob } from './sidejob';
 
 const { lazyInject } = decorators;

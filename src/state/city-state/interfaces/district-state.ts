@@ -3,7 +3,7 @@ import { IDistrictSerializedState } from './serialized-states';
 import { DistrictUnlockState } from '../types';
 import { IDistrictParameters } from './parameters';
 import { IDistrictTypeTemplate } from './district-type-template';
-import { IDistrictContractsState } from './contracts';
+import { IDistrictCountersState } from './counters';
 
 export interface IDistrictState {
   index: number;
@@ -14,7 +14,7 @@ export interface IDistrictState {
   state: DistrictUnlockState;
   faction: Faction;
   parameters: IDistrictParameters;
-  contracts: IDistrictContractsState;
+  counters: IDistrictCountersState;
   recalculate(): void;
   serialize(): IDistrictSerializedState;
   removeAllEventListeners(): void;

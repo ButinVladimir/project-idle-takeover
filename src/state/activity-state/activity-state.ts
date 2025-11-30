@@ -6,6 +6,8 @@ import {
   type ISidejobsFactory,
   type ISidejobActivityValidator,
   type ISidejobsActivityState,
+  type IContractsFactory,
+  type IContractActivityValidator,
 } from './states';
 import { IClone } from '../clones-state';
 
@@ -19,6 +21,12 @@ export class ActivityState implements IActivityState {
 
   @inject(TYPES.SidejobsActivityState)
   private _sidejobsActivity!: ISidejobsActivityState;
+
+  @inject(TYPES.ContractsFactory)
+  private _contractsFactory!: IContractsFactory;
+
+  @inject(TYPES.ContractActivityValidator)
+  private _contractActivityValidator!: IContractActivityValidator;
 
   private _assignmentRequested: boolean;
   private _assignedClones: Set<IClone>;
@@ -38,6 +46,14 @@ export class ActivityState implements IActivityState {
 
   get sidejobsActivity() {
     return this._sidejobsActivity;
+  }
+
+  get contractsFactory() {
+    return this._contractsFactory;
+  }
+
+  get contractActivityValidator() {
+    return this._contractActivityValidator;
   }
 
   requestReassignment() {

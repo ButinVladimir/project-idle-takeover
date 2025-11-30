@@ -1,0 +1,7 @@
+import { BaseController, Feature } from '@shared/index';
+
+export class AssignCloneSidejobDialogRewardsController extends BaseController {
+  isFeatureUnlocked(feature: Feature) {
+    return this.unlockState.features.isFeatureUnlocked(feature);
+  }
+}

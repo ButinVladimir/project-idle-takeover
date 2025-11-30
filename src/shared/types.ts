@@ -67,6 +67,12 @@ export enum SidejobsEvent {
   allSidejobsCancelled = 'allSidejobsCancelled',
 }
 
+export enum ContractsEvent {
+  contractAssigned = 'contractAssigned',
+  contractCancelled = 'contractCancelled',
+  allContractsCancelled = 'allContractsCancelled',
+}
+
 export enum CityEvent {
   districtTierIncreased = 'districtTierIncreased',
 }
@@ -76,10 +82,11 @@ export enum MessageEventGroup {
   programs = 'programs',
   clones = 'clones',
   sidejobs = 'sidejobs',
+  contracts = 'contracts',
   city = 'city',
 }
 
-export type MessageEvent = GameStateEvent | ProgramsEvent | ClonesEvent | SidejobsEvent | CityEvent;
+export type MessageEvent = GameStateEvent | ProgramsEvent | ClonesEvent | SidejobsEvent | ContractsEvent | CityEvent;
 
 export enum GameStateAlert {
   saveImport = 'saveImport',
@@ -110,14 +117,21 @@ export enum SidejobAlert {
   replaceSidejob = 'replaceSidejob',
 }
 
+export enum ContractAlert {
+  contractCancel = 'contractCancel',
+  cancelAllContracts = 'cancelAllContracts',
+  replaceContract = 'replaceContract',
+}
+
 export enum GameAlertGroup {
   gameState = 'gameState',
   programs = 'programs',
   clones = 'clones',
   sidejobs = 'sidejobs',
+  contracts = 'contracts',
 }
 
-export type GameAlert = GameStateAlert | ProgramAlert | CloneAlert | SidejobAlert;
+export type GameAlert = GameStateAlert | ProgramAlert | CloneAlert | SidejobAlert | ContractAlert;
 
 export enum NotificationType {
   storyEvent = 'storyEvent',
@@ -164,6 +178,7 @@ export enum Feature {
   experienceShare = 'experienceShare',
   influence = 'influence',
   factions = 'factions',
+  contracts = 'contracts',
 }
 
 export type PointsMultiplierType = 'codeBase' | 'computationalBase';

@@ -113,8 +113,7 @@ export class AssignCloneSidejobDialog extends BaseComponent {
           <div class="body">
             <p class="hint">
               ${msg(`Select clone, district and sidejob name to assign clone.
-Clone can be assigned only to one sidejob.
-Sidejobs availability depends on unlocked features and district connectivity.`)}
+Clone can be assigned only to one sidejob.`)}
             </p>
 
             <div class=${inputsContainerClasses}>
@@ -215,7 +214,7 @@ Sidejobs availability depends on unlocked features and district connectivity.`)}
   private handleSubmit = (event: Event) => {
     event.preventDefault();
 
-    if (!this.checkAvailability()) {
+    if (!this.validate()) {
       return;
     }
 
@@ -250,11 +249,11 @@ Sidejobs availability depends on unlocked features and district connectivity.`)}
 
   handlePartialUpdate = () => {
     if (this._buttonsRef.value) {
-      this._buttonsRef.value.disabled = !this.checkAvailability();
+      this._buttonsRef.value.disabled = !this.validate();
     }
   };
 
-  private checkAvailability(): boolean {
+  private validate(): boolean {
     if (!this._sidejob) {
       return false;
     }

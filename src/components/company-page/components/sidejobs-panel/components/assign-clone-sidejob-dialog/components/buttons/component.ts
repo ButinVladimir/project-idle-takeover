@@ -3,7 +3,6 @@ import { customElement, property, queryAll } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { msg, localized, str } from '@lit/localize';
 import { consume } from '@lit/context';
-import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
 import { BaseComponent } from '@shared/index';
 import { COMMON_TEXTS, DISTRICT_NAMES, SIDEJOB_TEXTS } from '@texts/index';
 import { SidejobValidationResult, type ISidejob } from '@state/activity-state';
@@ -37,8 +36,6 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
   @queryAll('p[data-warning]')
   private _warningElements!: NodeListOf<HTMLParagraphElement>;
 
-  private _assignButtonRef = createRef<SlButton>();
-
   private _availableTimeRef = createRef<HTMLSpanElement>();
 
   constructor() {
@@ -54,13 +51,7 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
       <div class="buttons">
         <sl-button size="medium" variant="default" @click=${this.handleCancel}> ${COMMON_TEXTS.close()} </sl-button>
 
-        <sl-button
-          ${ref(this._assignButtonRef)}
-          size="medium"
-          variant="primary"
-          ?disabled=${this.disabled}
-          @click=${this.handleAssignClone}
-        >
+        <sl-button size="medium" variant="primary" ?disabled=${this.disabled} @click=${this.handleAssignClone}>
           ${msg('Assign clone')}
         </sl-button>
       </div>

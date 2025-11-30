@@ -3,7 +3,7 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IGlobalState } from '@state/global-state';
 import { type IUnlockState } from '@state/unlock-state';
-import { ATTRIBUTES, calculatePower, SKILLS } from '@shared/index';
+import { Attribute, ATTRIBUTES, calculatePower, Skill, SKILLS } from '@shared/index';
 import { DistrictUnlockState } from '@state/city-state';
 import { ISidejob, typedSidejobs } from '../sidejobs-factory';
 import { ISidejobActivityValidator } from './interfaces';
@@ -12,7 +12,7 @@ import { SidejobValidationResult } from './types';
 const { lazyInject } = decorators;
 
 @injectable()
-export class SidejobActivtiyValidator implements ISidejobActivityValidator {
+export class SidejobActivityValidator implements ISidejobActivityValidator {
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
 
@@ -45,15 +45,23 @@ export class SidejobActivtiyValidator implements ISidejobActivityValidator {
     return SidejobValidationResult.valid;
   }
 
+  validateAttribute(sidejob: ISidejob, attribute: Attribute): boolean {
+    return sidejob.assignedClone.getTotalAttributeValue(attribute) >= sidejob.getAttributeRequirement(attribute);
+  }
+
+  validateSkill(sidejob: ISidejob, skill: Skill): boolean {
+    return sidejob.assignedClone.getTotalSkillValue(skill) >= sidejob.getSkillRequirement(skill);
+  }
+
   private checkRequirements(sidejob: ISidejob): boolean {
     for (const attribute of ATTRIBUTES) {
-      if (sidejob.assignedClone.getTotalAttributeValue(attribute) < sidejob.getAttributeRequirement(attribute)) {
+      if (!this.validateAttribute(sidejob, attribute)) {
         return false;
       }
     }
 
     for (const skill of SKILLS) {
-      if (sidejob.assignedClone.getTotalSkillValue(skill) < sidejob.getSkillRequirement(skill)) {
+      if (!this.validateSkill(sidejob, skill)) {
         return false;
       }
     }

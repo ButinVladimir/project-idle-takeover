@@ -2,9 +2,9 @@ import Ajv from 'ajv';
 import { inject, injectable } from 'inversify';
 import { styleText } from 'node:util';
 import scenariosSchema from '@configs/schemas/scenarios.json';
+import { typedScenarios } from '@state/scenario-state';
 import { type IScenariosValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
-import { typedScenarios } from '@/state/scenario-state';
 
 @injectable()
 export class ScenariosValidatorFacade implements IValidatorFacade {

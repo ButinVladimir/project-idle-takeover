@@ -1,14 +1,23 @@
 import { msg } from '@lit/localize';
-import { GameStateAlert, ProgramAlert, CloneAlert, SidejobAlert, GameAlertGroup } from '@shared/index';
+import {
+  GameStateAlert,
+  ProgramAlert,
+  CloneAlert,
+  SidejobAlert,
+  GameAlertGroup,
+  GameAlert,
+  ContractAlert,
+} from '@shared/index';
 
-export const GAME_ALERT_GROUP_NAMES = {
+export const GAME_ALERT_GROUP_NAMES: Record<GameAlertGroup, () => string> = {
   [GameAlertGroup.gameState]: () => msg('Game state alerts'),
   [GameAlertGroup.programs]: () => msg('Programs alerts'),
   [GameAlertGroup.clones]: () => msg('Clones alerts'),
   [GameAlertGroup.sidejobs]: () => msg('Sidejobs alerts'),
+  [GameAlertGroup.contracts]: () => msg('Contracts alerts'),
 };
 
-export const GAME_ALERT_NAMES = {
+export const GAME_ALERT_NAMES: Record<GameAlert, () => string> = {
   [GameStateAlert.saveImport]: () => msg('Import savefile'),
   [GameStateAlert.saveDelete]: () => msg('Delete save data'),
   [GameStateAlert.clearMessages]: () => msg('Clear log messages'),
@@ -26,4 +35,7 @@ export const GAME_ALERT_NAMES = {
   [SidejobAlert.sidejobCancel]: () => msg('Cancel an assigned sidejob'),
   [SidejobAlert.cancelAllSidejobs]: () => msg('Cancel all sidejobs'),
   [SidejobAlert.replaceSidejob]: () => msg('Replace an assigned sidejob'),
+  [ContractAlert.contractCancel]: () => msg('Cancel an assigned contract'),
+  [ContractAlert.cancelAllContracts]: () => msg('Cancel all contracts'),
+  [ContractAlert.replaceContract]: () => msg('Replace an assigned contract'),
 };

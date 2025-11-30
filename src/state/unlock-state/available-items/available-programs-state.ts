@@ -1,9 +1,9 @@
 import { injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
 import { ProgramName } from '@state/mainframe-state/states/progam-factory/types';
-import { BaseAvailableCategoryItemsState } from './base-available-category-items-state';
 import { PROGRAM_TEXTS } from '@texts/index';
-import { typedPrograms } from '@/state/mainframe-state';
+import { typedPrograms } from '@state/mainframe-state';
+import { BaseAvailableCategoryItemsState } from './base-available-category-items-state';
 
 @injectable()
 export class AvailableProgramsState extends BaseAvailableCategoryItemsState<ProgramName> {

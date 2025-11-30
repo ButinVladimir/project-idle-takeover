@@ -100,7 +100,7 @@ export class AssignCloneSidejobDialogRewardsMultipliers extends BaseComponent {
   private renderRewardsMultplierSkill = (skill: Skill) => {
     const value = this._sidejob!.getSkillModifier(skill);
 
-    if (value <= 1) {
+    if (value === 1) {
       return nothing;
     }
 

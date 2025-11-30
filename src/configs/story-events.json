@@ -51,7 +51,7 @@
       "faction": "wsa"
     },
     "messages": ["tutorial_6_1"],
-    "unlockFeatures": ["influence"],
+    "unlockFeatures": ["contracts", "influence"],
     "unlockActivities": {
       "contracts": ["guarding"]
     }

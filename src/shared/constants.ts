@@ -26,6 +26,8 @@ import {
   GameAlertGroup,
   Hotkey,
   DistrictTypeRewardParameter,
+  ContractAlert,
+  ContractsEvent,
 } from './types';
 import { INames, type IConstants } from './interfaces';
 
@@ -49,6 +51,7 @@ export const MESSAGE_EVENT_GROUPS = {
   [MessageEventGroup.programs]: Object.values(ProgramsEvent),
   [MessageEventGroup.clones]: Object.values(ClonesEvent),
   [MessageEventGroup.sidejobs]: Object.values(SidejobsEvent),
+  [MessageEventGroup.contracts]: Object.values(ContractsEvent),
   [MessageEventGroup.city]: Object.values(CityEvent),
 };
 
@@ -59,6 +62,7 @@ export const GAME_ALERT_GROUPS = {
   [GameAlertGroup.programs]: Object.values(ProgramAlert),
   [GameAlertGroup.clones]: Object.values(CloneAlert),
   [GameAlertGroup.sidejobs]: Object.values(SidejobAlert),
+  [GameAlertGroup.contracts]: Object.values(ContractAlert),
 };
 
 export const FORCE_NOTIFICATION_TYPES: Set<NotificationType> = new Set<NotificationType>([
@@ -92,3 +96,52 @@ export const HOTKEYS = Object.values(Hotkey);
 export const SCHEMA_PROPERTY = '$schema';
 
 export const DISTRICT_TYPE_REWARD_PARAMETERS = Object.values(DistrictTypeRewardParameter);
+
+export const DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES: Record<
+  DistrictTypeRewardParameter,
+  {
+    requirements: Feature[];
+    isSpeed: boolean;
+  }
+> = {
+  [DistrictTypeRewardParameter.money]: {
+    requirements: [],
+    isSpeed: true,
+  },
+  [DistrictTypeRewardParameter.developmentPoints]: {
+    requirements: [],
+    isSpeed: true,
+  },
+  [DistrictTypeRewardParameter.experience]: {
+    requirements: [],
+    isSpeed: true,
+  },
+  [DistrictTypeRewardParameter.influence]: {
+    requirements: [Feature.influence],
+    isSpeed: true,
+  },
+  [DistrictTypeRewardParameter.connectivity]: {
+    requirements: [Feature.connectivity],
+    isSpeed: true,
+  },
+  [DistrictTypeRewardParameter.codeBase]: {
+    requirements: [Feature.codeBase],
+    isSpeed: true,
+  },
+  [DistrictTypeRewardParameter.computationalBase]: {
+    requirements: [Feature.computationalBase],
+    isSpeed: true,
+  },
+  [DistrictTypeRewardParameter.rewards]: {
+    requirements: [Feature.rewards],
+    isSpeed: true,
+  },
+  [DistrictTypeRewardParameter.processCompletionSpeed]: {
+    requirements: [],
+    isSpeed: false,
+  },
+  [DistrictTypeRewardParameter.experienceShareMultiplier]: {
+    requirements: [Feature.experienceShare],
+    isSpeed: false,
+  },
+};

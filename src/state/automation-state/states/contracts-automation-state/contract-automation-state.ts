@@ -1,7 +1,12 @@
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
 import { type IStateUIConnector } from '@state/state-ui-connector';
-import { IContractAutomationSerializedState, IContractAutomationState } from './interfaces';
+import { IContract } from '@state/activity-state';
+import {
+  IContractAutomationSerializedState,
+  IContractAutomationState,
+  IContractAutomationStateArguments,
+} from './interfaces';
 
 const { lazyInject } = decorators;
 
@@ -9,24 +14,24 @@ export class ContractAutomationState implements IContractAutomationState {
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
 
-  private _contractName: string;
-  private _districtIndex: number;
+  private _id: string;
+  private _contract: IContract;
   private _active: boolean;
 
-  constructor(serializedState: IContractAutomationSerializedState) {
-    this._contractName = serializedState.contractName;
-    this._districtIndex = serializedState.districtIndex;
-    this._active = serializedState.active;
+  constructor(args: IContractAutomationStateArguments) {
+    this._id = args.id;
+    this._contract = args.contract;
+    this._active = args.active;
 
-    this._stateUiConnector.registerEventEmitter(this, ['_contractName', '_districtIndex', '_active']);
+    this._stateUiConnector.registerEventEmitter(this, ['_active']);
   }
 
-  get contractName() {
-    return this._contractName;
+  get id() {
+    return this._id;
   }
 
-  get districtIndex() {
-    return this._districtIndex;
+  get contract() {
+    return this._contract;
   }
 
   get active() {
@@ -43,8 +48,8 @@ export class ContractAutomationState implements IContractAutomationState {
 
   serialize(): IContractAutomationSerializedState {
     return {
-      contractName: this._contractName,
-      districtIndex: this._districtIndex,
+      id: this._id,
+      contract: this._contract.serialize(),
       active: this._active,
     };
   }

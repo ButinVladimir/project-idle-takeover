@@ -1,5 +1,7 @@
+import { ISerializedContract } from '@state/activity-state';
+
 export interface IContractAutomationSerializedState {
-  districtIndex: number;
-  contractName: string;
+  id: string;
+  contract: ISerializedContract;
   active: boolean;
 }

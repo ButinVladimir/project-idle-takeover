@@ -5,6 +5,7 @@ import { customElement, queryAll } from 'lit/decorators.js';
 import {
   BaseComponent,
   diffFormatterParameters,
+  DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES,
   DISTRICT_TYPE_REWARD_PARAMETERS,
   DistrictTypeRewardParameter,
   getHighlightDifferenceClass,
@@ -15,7 +16,6 @@ import { existingSidejobContext, temporarySidejobContext } from '../../contexts'
 import { DISPLAY_TYPES } from './constants';
 import { AssignCloneSidejobDialogRewardsController } from './controller';
 import styles from './styles';
-import { SIDEJOB_PARAMETER_VALUES } from '../../../../constants';
 import { IRewardValue } from './types';
 import { calculateSidejobParameterValue, checkSidejobParameterVisibility } from '../../../../helpers';
 
@@ -59,7 +59,7 @@ export class AssignCloneSidejobDialogRewards extends BaseComponent {
   }
 
   private renderParameter = (parameter: DistrictTypeRewardParameter) => {
-    const parameterValues = SIDEJOB_PARAMETER_VALUES[parameter];
+    const parameterValues = DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES[parameter];
 
     if (!checkSidejobParameterVisibility(this._sidejob!, parameter)) {
       return nothing;
