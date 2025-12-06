@@ -46,12 +46,18 @@ export class AssignClonesContractDialogDescription extends BaseComponent {
       this._contract.contractName,
     );
     const formattedAvalailableCount = this._controller.formatter.formatNumberDecimal(availableCount);
+    const availableCountClassses = getHighlightValueClass(availableCount > 0);
 
     return html`
       <p class="hint">${CONTRACT_TEXTS[this._contract.contractName].overview()}</p>
 
       ${this.renderTeamSizeString()}
-      <p class="text">${COMMON_TEXTS.parameterValue(msg('Available'), formattedAvalailableCount)}</p>
+      <p class="text">
+        ${COMMON_TEXTS.parameterValue(
+          msg('Available'),
+          html`<span class=${availableCountClassses}>${formattedAvalailableCount}</span>`,
+        )}
+      </p>
 
       <sl-radio-group
         ${ref(this._descriptionModelInputRef)}

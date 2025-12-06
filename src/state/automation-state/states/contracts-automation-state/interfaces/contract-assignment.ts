@@ -1,12 +1,12 @@
 import { IContract } from '@state/activity-state';
-import { IContractAutomationSerializedState } from './contract-automation-serialized-state';
+import { ISerializedContractAssignment } from './serialized-contract-assignment';
 
-export interface IContractAutomationState {
+export interface IContractAssignment {
   id: string;
   contract: IContract;
   active: boolean;
   canBeRepeated(): boolean;
   toggleActive(active: boolean): void;
-  serialize(): IContractAutomationSerializedState;
+  serialize(): ISerializedContractAssignment;
   removeAllEventListeners(): void;
 }

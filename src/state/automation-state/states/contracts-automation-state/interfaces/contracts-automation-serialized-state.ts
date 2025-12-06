@@ -1,5 +1,5 @@
-import { IContractAutomationSerializedState } from './contract-automation-serialized-state';
+import { ISerializedContractAssignment } from './serialized-contract-assignment';
 
 export interface IContractsAutomationSerializedState {
-  contractPriorities: IContractAutomationSerializedState[];
+  contractAssignments: ISerializedContractAssignment[];
 }

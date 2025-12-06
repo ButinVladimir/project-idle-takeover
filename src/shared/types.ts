@@ -69,8 +69,8 @@ export enum SidejobsEvent {
 
 export enum ContractsEvent {
   contractAssigned = 'contractAssigned',
-  contractCancelled = 'contractCancelled',
-  allContractsCancelled = 'allContractsCancelled',
+  contractAssignmentRemoved = 'contractAssignmentRemoved',
+  allContractAssignmentsRemoved = 'allContractAssignmentsRemoved',
 }
 
 export enum CityEvent {
@@ -118,9 +118,9 @@ export enum SidejobAlert {
 }
 
 export enum ContractAlert {
-  contractCancel = 'contractCancel',
-  cancelAllContracts = 'cancelAllContracts',
-  replaceContract = 'replaceContract',
+  contractAssignmentRemove = 'contractAssignmentCancel',
+  removeAllContractAssignments = 'cancelAllContractAssignments',
+  replaceContractAssignment = 'replaceContractAssignment',
 }
 
 export enum GameAlertGroup {
@@ -254,4 +254,10 @@ export enum Hotkey {
 export enum MapSpecialEvent {
   districtUnlocked = 'districtUnlocked',
   factionsAvailable = 'factionsAvailable',
+}
+
+export enum ActivityUIStatus {
+  active = 'active',
+  paused = 'paused',
+  invalid = 'invalid',
 }

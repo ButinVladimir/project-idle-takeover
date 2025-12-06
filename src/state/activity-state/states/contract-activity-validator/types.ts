@@ -4,5 +4,6 @@ export enum ContractValidationResult {
   requirementsNotMet = 'requirementsNotMet',
   notEnoughClones = 'notEnoughClones',
   tooManyClones = 'tooManyClones',
+  noContractsAvailable = 'noContractsAvailable',
   valid = 'valid',
 }

@@ -8,13 +8,13 @@ import { type IActivityState } from '@state/activity-state';
 import { type IMessageLogState } from '@state/message-log-state';
 import { ContractsEvent, moveElementInArray, removeElementsFromArray } from '@shared/index';
 import {
-  IContractAutomationSerializedState,
-  IContractAutomationState,
+  ISerializedContractAssignment,
+  IContractAssignment,
   IContractsAutomationSerializedState,
   IContractsAutomationState,
   IMakeContractAutomationStateArgs,
 } from './interfaces';
-import { ContractAutomationState } from './contract-automation-state';
+import { ContractAssignment } from './contract-assignment';
 import { CONTRACT_TEXTS, DISTRICT_NAMES } from '@/texts';
 
 const { lazyInject } = decorators;
@@ -30,116 +30,116 @@ export class ContractsAutomationState implements IContractsAutomationState {
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
 
-  private _contractPriorities: IContractAutomationState[];
-  private _contractPrioritiesMap: Map<string, IContractAutomationState>;
+  private _contractAssignments: IContractAssignment[];
+  private _contractAssignmentsIdMap: Map<string, IContractAssignment>;
 
   constructor() {
-    this._contractPriorities = [];
-    this._contractPrioritiesMap = new Map<string, IContractAutomationState>();
+    this._contractAssignments = [];
+    this._contractAssignmentsIdMap = new Map<string, IContractAssignment>();
 
-    this._stateUiConnector.registerEventEmitter(this, ['_contractPriorities']);
+    this._stateUiConnector.registerEventEmitter(this, ['_contractAssignments']);
   }
 
-  listContractPriorities(): IContractAutomationState[] {
-    return this._contractPriorities;
+  listContractAssignments(): IContractAssignment[] {
+    return this._contractAssignments;
   }
 
-  getContractAutomationById(id: string): IContractAutomationState | undefined {
-    return this._contractPrioritiesMap.get(id);
+  getContractAssignmentById(id: string): IContractAssignment | undefined {
+    return this._contractAssignmentsIdMap.get(id);
   }
 
-  getContractAutomationByDistrictAndContract(
+  getContractAssignmentByDistrictAndContract(
     districtIndex: number,
     contractName: string,
-  ): IContractAutomationState | undefined {
+  ): IContractAssignment | undefined {
     const existingAutomationIndex = this.getContactAutomationIndexByDistrictAndContract(districtIndex, contractName);
 
     if (existingAutomationIndex === -1) {
       return undefined;
     }
 
-    return this._contractPriorities[existingAutomationIndex];
+    return this._contractAssignments[existingAutomationIndex];
   }
 
-  addContractAutomation(parameters: IMakeContractAutomationStateArgs): void {
+  addContractAssignment(parameters: IMakeContractAutomationStateArgs): void {
     const existingAutomationIndex = this.getContactAutomationIndexByDistrictAndContract(
       parameters.contract.districtIndex,
       parameters.contract.contractName,
     );
 
-    let newAutomation: IContractAutomationState;
+    let newAutomation: IContractAssignment;
 
     if (existingAutomationIndex === -1) {
-      newAutomation = this.makeContractAutomationState({
+      newAutomation = this.makeContractAssignment({
         id: uuid(),
         contract: parameters.contract,
         active: true,
       });
 
-      this._contractPriorities.push(newAutomation);
-      this._contractPrioritiesMap.set(newAutomation.id, newAutomation);
+      this._contractAssignments.push(newAutomation);
+      this._contractAssignmentsIdMap.set(newAutomation.id, newAutomation);
     } else {
-      const oldAutomation = this._contractPriorities[existingAutomationIndex];
-      newAutomation = this.makeContractAutomationState({
+      const oldAutomation = this._contractAssignments[existingAutomationIndex];
+      newAutomation = this.makeContractAssignment({
         id: uuid(),
         contract: parameters.contract,
         active: oldAutomation.active,
       });
 
-      this._contractPriorities[existingAutomationIndex] = newAutomation;
-      this._contractPrioritiesMap.set(newAutomation.id, newAutomation);
+      this._contractAssignments[existingAutomationIndex] = newAutomation;
+      this._contractAssignmentsIdMap.set(newAutomation.id, newAutomation);
       oldAutomation.removeAllEventListeners();
     }
 
     this._messageLogState.postMessage(
       ContractsEvent.contractAssigned,
       msg(
-        str`Contract "${CONTRACT_TEXTS[newAutomation.contract.contractName].title()}" assignment in district "${DISTRICT_NAMES[newAutomation.contract.district.name]()}" has been added`,
+        str`Contract assignment for contract "${CONTRACT_TEXTS[newAutomation.contract.contractName].title()}" in district "${DISTRICT_NAMES[newAutomation.contract.district.name]()}" has been added`,
       ),
     );
   }
 
-  removeContractAutomation(id: string): void {
+  removeContractAssignmentById(id: string): void {
     const exisitingIndex = this.getContactAutomationIndexById(id);
 
     if (exisitingIndex !== -1) {
-      removeElementsFromArray(this._contractPriorities, exisitingIndex, 1);
+      removeElementsFromArray(this._contractAssignments, exisitingIndex, 1);
     }
 
-    const contractAutomation = this.getContractAutomationById(id);
+    const contractAutomation = this.getContractAssignmentById(id);
 
     if (contractAutomation) {
-      this._contractPrioritiesMap.delete(id);
+      this._contractAssignmentsIdMap.delete(id);
       contractAutomation.removeAllEventListeners();
 
       this._messageLogState.postMessage(
-        ContractsEvent.contractCancelled,
+        ContractsEvent.contractAssignmentRemoved,
         msg(
-          str`Contract "${CONTRACT_TEXTS[contractAutomation.contract.contractName].title()}" assignment in district "${DISTRICT_NAMES[contractAutomation.contract.district.name]()}" has been removed`,
+          str`Contract assignment for contract "${CONTRACT_TEXTS[contractAutomation.contract.contractName].title()}" in district "${DISTRICT_NAMES[contractAutomation.contract.district.name]()}" has been removed`,
         ),
       );
     }
   }
 
-  removeAllContractAutomations(): void {
-    this.clearPriorities();
+  removeAllContractAssignments(): void {
+    this.clearAssignments();
 
     this._messageLogState.postMessage(
-      ContractsEvent.allContractsCancelled,
+      ContractsEvent.allContractAssignmentsRemoved,
       msg('All contract assignments have been removed'),
     );
   }
 
-  moveContractAutomation(id: string, nextPosition: number): void {
+  moveContractAssignment(id: string, nextPosition: number): void {
     const currentPosition = this.getContactAutomationIndexById(id);
 
     if (currentPosition !== -1) {
-      moveElementInArray(this._contractPriorities, currentPosition, nextPosition);
+      moveElementInArray(this._contractAssignments, currentPosition, nextPosition);
     }
   }
 
   toggleActiveAll(active: boolean): void {
-    this._contractPriorities.forEach((contractAutomationState) => {
+    this._contractAssignments.forEach((contractAutomationState) => {
       contractAutomationState.toggleActive(active);
     });
   }
@@ -149,47 +149,49 @@ export class ContractsAutomationState implements IContractsAutomationState {
   }
 
   async startNewState(): Promise<void> {
-    this.clearPriorities();
+    this.clearAssignments();
   }
 
   async deserialize(serializedState: IContractsAutomationSerializedState): Promise<void> {
-    this.clearPriorities();
+    this.clearAssignments();
 
-    serializedState.contractPriorities.forEach((contractAutomationSerializedState) => {
-      this._contractPriorities.push(this.makeContractAutomationState(contractAutomationSerializedState));
+    serializedState.contractAssignments.forEach((serializedContractAssignment) => {
+      const contractAssignment = this.makeContractAssignment(serializedContractAssignment);
+      this._contractAssignments.push(this.makeContractAssignment(serializedContractAssignment));
+      this._contractAssignmentsIdMap.set(contractAssignment.id, contractAssignment);
     });
   }
 
   serialize(): IContractsAutomationSerializedState {
     return {
-      contractPriorities: this._contractPriorities.map((contractAutomationState) =>
+      contractAssignments: this._contractAssignments.map((contractAutomationState) =>
         contractAutomationState.serialize(),
       ),
     };
   }
 
   private getContactAutomationIndexById(id: string): number {
-    return this._contractPriorities.findIndex((contractAutomationState) => contractAutomationState.id === id);
+    return this._contractAssignments.findIndex((contractAutomationState) => contractAutomationState.id === id);
   }
 
   private getContactAutomationIndexByDistrictAndContract(districtIndex: number, contractName: string): number {
-    return this._contractPriorities.findIndex(
+    return this._contractAssignments.findIndex(
       (contractAutomationState) =>
         contractAutomationState.contract.district.index === districtIndex &&
         contractAutomationState.contract.contractName === contractName,
     );
   }
 
-  private clearPriorities() {
-    this._contractPriorities.forEach((contactAutomationState) => {
+  private clearAssignments() {
+    this._contractAssignments.forEach((contactAutomationState) => {
       contactAutomationState.removeAllEventListeners();
     });
 
-    this._contractPriorities.length = 0;
+    this._contractAssignments.length = 0;
   }
 
-  private makeContractAutomationState(serializedState: IContractAutomationSerializedState): IContractAutomationState {
-    return new ContractAutomationState({
+  private makeContractAssignment(serializedState: ISerializedContractAssignment): IContractAssignment {
+    return new ContractAssignment({
       id: serializedState.id,
       contract: this._activityState.contractsFactory.makeContract(serializedState.contract),
       active: serializedState.active,

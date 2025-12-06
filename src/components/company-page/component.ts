@@ -32,7 +32,7 @@ export class CompanyPage extends BaseComponent {
 
   private isTabUnlocked = (tab: CompanyPageTabs): boolean => {
     switch (tab) {
-      case CompanyPageTabs.contracts:
+      case CompanyPageTabs.contractAssignments:
         return this._controller.areContractsUnlocked();
       default:
         return true;
@@ -63,8 +63,8 @@ export class CompanyPage extends BaseComponent {
       case CompanyPageTabs.sidejobs:
         return html`<ca-company-sidejobs-panel></ca-company-sidejobs-panel>`;
 
-      case CompanyPageTabs.contracts:
-        return html`<ca-company-contracts-panel></ca-company-contracts-panel>`;
+      case CompanyPageTabs.contractAssignments:
+        return html`<ca-company-contract-assignments-panel></ca-company-contract-assignments-panel>`;
     }
   };
 }

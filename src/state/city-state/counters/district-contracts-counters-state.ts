@@ -48,7 +48,7 @@ export class DistrictContractsCountersState implements IDistrictContractsCounter
 
   getRequiredGenerationTime(contractName: string): number {
     return (
-      this._districtState.template.primaryActivityTimeMultipliers.generationTime *
+      this._districtState.template.primaryActivityTimeMultipliers.contractGenerationTime *
       typedContracts[contractName].requirements.baseCompletionTime
     );
   }

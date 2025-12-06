@@ -28,6 +28,7 @@ import {
   DistrictTypeRewardParameter,
   ContractAlert,
   ContractsEvent,
+  ActivityUIStatus,
 } from './types';
 import { INames, type IConstants } from './interfaces';
 
@@ -145,3 +146,5 @@ export const DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES: Record<
     isSpeed: false,
   },
 };
+
+export const ACTIVITY_UI_STATUSES = Object.values(ActivityUIStatus);

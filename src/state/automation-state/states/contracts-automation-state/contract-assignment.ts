@@ -2,15 +2,11 @@ import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { IContract } from '@state/activity-state';
-import {
-  IContractAutomationSerializedState,
-  IContractAutomationState,
-  IContractAutomationStateArguments,
-} from './interfaces';
+import { ISerializedContractAssignment, IContractAssignment, IContractAssignmentArguments } from './interfaces';
 
 const { lazyInject } = decorators;
 
-export class ContractAutomationState implements IContractAutomationState {
+export class ContractAssignment implements IContractAssignment {
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
 
@@ -18,7 +14,7 @@ export class ContractAutomationState implements IContractAutomationState {
   private _contract: IContract;
   private _active: boolean;
 
-  constructor(args: IContractAutomationStateArguments) {
+  constructor(args: IContractAssignmentArguments) {
     this._id = args.id;
     this._contract = args.contract;
     this._active = args.active;
@@ -46,7 +42,7 @@ export class ContractAutomationState implements IContractAutomationState {
     this._active = active;
   }
 
-  serialize(): IContractAutomationSerializedState {
+  serialize(): ISerializedContractAssignment {
     return {
       id: this._id,
       contract: this._contract.serialize(),

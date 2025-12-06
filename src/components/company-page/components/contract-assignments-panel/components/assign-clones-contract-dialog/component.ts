@@ -119,18 +119,6 @@ Only one team of clones can be assigned per district and contract.`)}
 
             <div class=${inputsContainerClasses}>
               <sl-select
-                ${ref(this._districtIndexInputRef)}
-                name="districtIndex"
-                value=${this._districtIndex ?? ''}
-                hoist
-                @sl-change=${this.handleDistrictIndexChange}
-              >
-                <span class="input-label" slot="label"> ${msg('District')} </span>
-
-                ${this._controller.listAvailableDistricts().map(this.renderDistrictOption)}
-              </sl-select>
-
-              <sl-select
                 ${ref(this._contractNameInputRef)}
                 name="contractName"
                 value=${this._contractName ?? ''}
@@ -140,6 +128,18 @@ Only one team of clones can be assigned per district and contract.`)}
                 <span class="input-label" slot="label"> ${msg('Contract')} </span>
 
                 ${this._controller.listAvailableContracts().map(this.renderContractName)}
+              </sl-select>
+
+              <sl-select
+                ${ref(this._districtIndexInputRef)}
+                name="districtIndex"
+                value=${this._districtIndex ?? ''}
+                hoist
+                @sl-change=${this.handleDistrictIndexChange}
+              >
+                <span class="input-label" slot="label"> ${msg('District')} </span>
+
+                ${this._controller.listAvailableDistricts().map(this.renderDistrictOption)}
               </sl-select>
 
               <sl-select
@@ -227,7 +227,7 @@ Only one team of clones can be assigned per district and contract.`)}
 
       this.dispatchEvent(
         new ConfirmationAlertOpenEvent(
-          ContractAlert.replaceContract,
+          ContractAlert.replaceContractAssignment,
           msg(
             str`Are you sure want to replace contract assignment for contract "${contractName}" in district "${districtName}"? All contracts in progress won't be affected.`,
           ),

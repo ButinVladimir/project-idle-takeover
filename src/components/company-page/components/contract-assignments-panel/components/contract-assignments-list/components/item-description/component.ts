@@ -8,27 +8,27 @@ import {
   DISTRICT_TYPE_REWARD_PARAMETERS,
   DistrictTypeRewardParameter,
 } from '@shared/index';
-import { type ISidejobActivity } from '@state/activity-state';
-import { COMMON_TEXTS, REWARD_PARAMETER_NAMES, SIDEJOB_TEXTS } from '@texts/index';
-import { SidejobsListItemDescriptionController } from './controller';
-import { sidejobActivityContext } from '../item/contexts';
+import { type IContractAssignment } from '@state/automation-state';
+import { COMMON_TEXTS, CONTRACT_TEXTS, REWARD_PARAMETER_NAMES } from '@texts/index';
+import { ContractsAssignmentsListItemDescriptionController } from './controller';
+import { contractAssignmentActivityContext } from '../item/contexts';
 import styles from './styles';
-import { calculateSidejobParameterValue, checkSidejobParameterVisibility } from '../../../../helpers';
+import { checkContractParameterVisibility } from '../../../../helpers';
 
 @localized()
-@customElement('ca-sidejobs-list-item-description')
-export class SidejobsListItemDescription extends BaseComponent {
+@customElement('ca-contracts-assignments-list-item-description')
+export class ContractsAssignmentsListItemDescription extends BaseComponent {
   static styles = styles;
 
   hasPartialUpdate = true;
 
-  private _controller: SidejobsListItemDescriptionController;
+  private _controller: ContractsAssignmentsListItemDescriptionController;
 
   @queryAll(`span[data-value]`)
   private _rewardValueElements!: NodeListOf<HTMLSpanElement>;
 
-  @consume({ context: sidejobActivityContext, subscribe: true })
-  private _activity?: ISidejobActivity;
+  @consume({ context: contractAssignmentActivityContext, subscribe: true })
+  private _assignment?: IContractAssignment;
 
   private _rewardValues: Record<DistrictTypeRewardParameter, number> = Object.fromEntries(
     DISTRICT_TYPE_REWARD_PARAMETERS.map((parameter) => [parameter, 0]),
@@ -37,16 +37,16 @@ export class SidejobsListItemDescription extends BaseComponent {
   constructor() {
     super();
 
-    this._controller = new SidejobsListItemDescriptionController(this);
+    this._controller = new ContractsAssignmentsListItemDescriptionController(this);
   }
 
   protected renderDesktop() {
-    if (!this._activity) {
+    if (!this._assignment) {
       return nothing;
     }
 
     return html`
-      <p class="overview">${SIDEJOB_TEXTS[this._activity.sidejob.sidejobName].overview()}</p>
+      <p class="overview">${CONTRACT_TEXTS[this._assignment.contract.contractName].overview()}</p>
 
       ${DISTRICT_TYPE_REWARD_PARAMETERS.map((parameter) => this.renderParameter(parameter))}
     `;
@@ -55,7 +55,7 @@ export class SidejobsListItemDescription extends BaseComponent {
   private renderParameter = (parameter: DistrictTypeRewardParameter) => {
     const parameterValues = DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES[parameter];
 
-    if (!checkSidejobParameterVisibility(this._activity!.sidejob, parameter)) {
+    if (!checkContractParameterVisibility(this._assignment!.contract, parameter)) {
       return nothing;
     }
 
@@ -72,7 +72,7 @@ export class SidejobsListItemDescription extends BaseComponent {
   };
 
   handlePartialUpdate = () => {
-    if (!this._activity) {
+    if (!this._assignment) {
       return;
     }
 
@@ -82,7 +82,7 @@ export class SidejobsListItemDescription extends BaseComponent {
   };
 
   private updateParameter = (parameter: DistrictTypeRewardParameter) => {
-    this._rewardValues[parameter] = calculateSidejobParameterValue(this._activity!.sidejob, parameter);
+    this._rewardValues[parameter] = this._assignment!.contract.calculateParameterDelta(parameter);
   };
 
   private updateValueElement = (element: HTMLSpanElement) => {

@@ -25,12 +25,12 @@ export class AssignClonesContractDialogController extends BaseController {
   }
 
   getExistingContractByDistrictAndContract(districtIndex: number, contractName: string): IContract | undefined {
-    return this.automationState.contracts.getContractAutomationByDistrictAndContract(districtIndex, contractName)
+    return this.automationState.contracts.getContractAssignmentByDistrictAndContract(districtIndex, contractName)
       ?.contract;
   }
 
   assignClones(args: ISerializedContract) {
-    this.automationState.contracts.addContractAutomation({
+    this.automationState.contracts.addContractAssignment({
       contract: {
         assignedCloneIds: args.assignedCloneIds,
         contractName: args.contractName,

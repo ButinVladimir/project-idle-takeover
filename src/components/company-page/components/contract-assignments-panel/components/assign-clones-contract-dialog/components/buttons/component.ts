@@ -1,4 +1,4 @@
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { msg, localized, str } from '@lit/localize';
 import { consume } from '@lit/context';
@@ -10,6 +10,7 @@ import { AssignClonesEvent, CancelEvent } from './events';
 import { existingContractContext, temporaryContractContext } from '../../contexts';
 import { AssignClonesContractDialogFormWarning, AssignClonesContractDialogWarning } from './types';
 import styles from './styles';
+import { classMap } from 'lit/directives/class-map.js';
 
 @localized()
 @customElement('ca-assign-clones-contract-dialog-buttons')
@@ -84,6 +85,9 @@ export class AssignClonesContractDialogButtons extends BaseComponent {
       case ContractValidationResult.requirementsNotMet:
         warningText = msg(`Clones don't fit requirements`);
         break;
+      case ContractValidationResult.noContractsAvailable:
+        warningText = msg(`No available contracts`);
+        break;
       case AssignClonesContractDialogFormWarning.notSelected:
         warningText = msg('Select contract name, district and clones');
         break;
@@ -91,10 +95,16 @@ export class AssignClonesContractDialogButtons extends BaseComponent {
         warningText = this.buildAlreadySelectedWarning();
         break;
       case ContractValidationResult.valid:
-        return nothing;
+        warningText = '';
+        break;
     }
 
-    return html` <p class="warning">${warningText}</p> `;
+    const warningClasses = classMap({
+      warning: true,
+      visible: warning !== ContractValidationResult.valid,
+    });
+
+    return html` <p class=${warningClasses}>${warningText}</p> `;
   };
 
   private buildAlreadySelectedWarning = () => {

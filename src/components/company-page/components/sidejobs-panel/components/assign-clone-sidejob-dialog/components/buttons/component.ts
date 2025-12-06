@@ -11,6 +11,7 @@ import { AssignCloneEvent, CancelEvent } from './events';
 import { existingSidejobContext, temporarySidejobContext } from '../../contexts';
 import { AssignCloneSidejobDialogFormWarning, AssignCloneSidejobDialogWarning } from './types';
 import styles from './styles';
+import { SIDEJOB_VALIDATION_TEXTS } from '../../../../constants';
 
 @localized()
 @customElement('ca-assign-clone-sidejob-dialog-buttons')
@@ -74,13 +75,17 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
 
   private renderWarnings = () => {
     return html`
-      <p class="warning" data-warning=${SidejobValidationResult.activityLocked}>${msg('Sidejob is locked')}</p>
-      <p class="warning" data-warning=${SidejobValidationResult.districtLocked}>${msg('District is locked')}</p>
+      <p class="warning" data-warning=${SidejobValidationResult.activityLocked}>
+        ${SIDEJOB_VALIDATION_TEXTS[SidejobValidationResult.activityLocked]()}
+      </p>
+      <p class="warning" data-warning=${SidejobValidationResult.districtLocked}>
+        ${SIDEJOB_VALIDATION_TEXTS[SidejobValidationResult.districtLocked]()}
+      </p>
       <p class="warning" data-warning=${SidejobValidationResult.requirementsNotMet}>
-        ${msg(`Clone doesn't fit requirements`)}
+        ${SIDEJOB_VALIDATION_TEXTS[SidejobValidationResult.requirementsNotMet]()}
       </p>
       <p class="warning" data-warning=${SidejobValidationResult.notEnoughConnectivity}>
-        ${msg(`Not enough connectivity`)}
+        ${SIDEJOB_VALIDATION_TEXTS[SidejobValidationResult.notEnoughConnectivity]()}
       </p>
       <p class="warning" data-warning=${AssignCloneSidejobDialogFormWarning.notSelected}>
         ${msg(`Select sidejob name, district and clone`)}

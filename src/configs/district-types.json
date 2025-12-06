@@ -3,8 +3,7 @@
   "residential": {
     "activityRequirementModifier": 1,
     "primaryActivityTimeMultipliers": {
-      "completionTime": 1,
-      "generationTime": 5
+      "contractGenerationTime": 5
     },
     "synchronization": { "multiplier": 10, "base": 1.1 },
     "parameters": {
@@ -34,8 +33,7 @@
   "corpoDistrict": {
     "activityRequirementModifier": 1,
     "primaryActivityTimeMultipliers": {
-      "completionTime": 1,
-      "generationTime": 5
+      "contractGenerationTime": 5
     },
     "synchronization": {
       "multiplier": 30,

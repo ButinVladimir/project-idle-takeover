@@ -56,7 +56,7 @@ const styles = css`
     border-bottom: var(--ca-border);
   }
 
-  ca-sidejobs-list-item {
+  ca-contracts-list-item {
     &:nth-child(2n) {
       background-color: var(--ca-table-row-odd-color);
     }

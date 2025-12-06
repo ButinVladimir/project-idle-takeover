@@ -6,5 +6,5 @@ export const COMPANY_PAGE_TABS_LIST = Array.from(Object.values(CompanyPageTabs))
 export const COMPANY_PAGE_TAB_TITLES: Record<CompanyPageTabs, () => string> = {
   [CompanyPageTabs.clones]: () => msg('Clones'),
   [CompanyPageTabs.sidejobs]: () => msg('Sidejobs'),
-  [CompanyPageTabs.contracts]: () => msg('Contracts'),
+  [CompanyPageTabs.contractAssignments]: () => msg('Contracts assignments'),
 };

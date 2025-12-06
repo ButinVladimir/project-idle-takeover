@@ -1,19 +1,19 @@
 import { ISerializeable } from '@shared/index';
 import { IContractsAutomationSerializedState } from './contracts-automation-serialized-state';
-import { IContractAutomationState } from './contract-automation-state';
-import { IMakeContractAutomationStateArgs } from './make-contract-automation-state-args';
+import { IContractAssignment } from './contract-assignment';
+import { IMakeContractAutomationStateArgs } from './make-contract-assignment-state-args';
 
 export interface IContractsAutomationState extends ISerializeable<IContractsAutomationSerializedState> {
-  listContractPriorities(): IContractAutomationState[];
-  getContractAutomationById(id: string): IContractAutomationState | undefined;
-  getContractAutomationByDistrictAndContract(
+  listContractAssignments(): IContractAssignment[];
+  getContractAssignmentById(id: string): IContractAssignment | undefined;
+  getContractAssignmentByDistrictAndContract(
     districtIndex: number,
     contractName: string,
-  ): IContractAutomationState | undefined;
-  addContractAutomation(parameters: IMakeContractAutomationStateArgs): void;
-  removeContractAutomation(id: string): void;
-  removeAllContractAutomations(): void;
-  moveContractAutomation(id: string, position: number): void;
+  ): IContractAssignment | undefined;
+  addContractAssignment(parameters: IMakeContractAutomationStateArgs): void;
+  removeContractAssignmentById(id: string): void;
+  removeAllContractAssignments(): void;
+  moveContractAssignment(id: string, position: number): void;
   toggleActiveAll(active: boolean): void;
   repeatAll(): void;
 }

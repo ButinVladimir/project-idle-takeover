@@ -1,4 +1,5 @@
 import { css } from 'lit';
+import { ActivityUIStatus } from './types';
 
 export const LAYOUT_WIDTH_THRESHOLDS = {
   TABLET: 768,
@@ -233,6 +234,10 @@ export const highlightedValuesStyle = css`
   .danger {
     color: var(--ca-danger-color);
   }
+
+  .warning {
+    color: var(--ca-warning-color);
+  }
 `;
 
 export const dialogButtonsStyle = css`
@@ -273,3 +278,18 @@ export const formStyle = css`
     display: contents;
   }
 `;
+
+export const ACTIVITY_UI_STATUS_VALUES = {
+  [ActivityUIStatus.active]: {
+    class: 'success',
+    icon: 'play-fill',
+  },
+  [ActivityUIStatus.paused]: {
+    class: 'warning',
+    icon: 'pause-fill',
+  },
+  [ActivityUIStatus.invalid]: {
+    class: 'danger',
+    icon: 'exclamation-lg',
+  },
+};

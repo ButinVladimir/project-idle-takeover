@@ -1,3 +1,3 @@
 import './clones-panel';
 import './sidejobs-panel';
-import './contracts-panel';
+import './contract-assignments-panel';

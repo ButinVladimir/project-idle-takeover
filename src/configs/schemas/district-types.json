@@ -16,15 +16,12 @@
         "type": "object",
         "description": "District type primary action time multipliers",
         "properties": {
-          "completionTime": {
+          "contractGenerationTime": {
             "type": "number",
-            "description": "Primary action completion time multiplier"
-          },
-          "generationTime": {
-            "type": "number",
-            "description": "Primary action generation time multiplier"
+            "description": "Contract generation time multiplier"
           }
-        }
+        },
+        "required": ["contractGenerationTime"]
       },
       "synchronization": {
         "$ref": "./common/geometric-progression.json",

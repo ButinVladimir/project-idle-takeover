@@ -67,10 +67,6 @@ export class SidejobsListItem extends BaseComponent {
 
     return html`
       <div class="host-content desktop">
-        <div>${cloneName}</div>
-
-        <div>${districtName}</div>
-
         <div class="sidejob">
           <div class="sidejob-title">
             ${sidejobTitle}
@@ -91,6 +87,12 @@ export class SidejobsListItem extends BaseComponent {
             <ca-sidejobs-list-item-description></ca-sidejobs-list-item-description>
           </div>
         </div>
+
+        <div>${districtName}</div>
+
+        <div>${cloneName}</div>
+
+        <div><ca-sidejobs-list-item-status></ca-sidejobs-list-item-status></div>
 
         <div class="buttons">
           <sl-tooltip>
@@ -130,15 +132,15 @@ export class SidejobsListItem extends BaseComponent {
 
     const districtNameFull = COMMON_TEXTS.parameterValue(msg('District'), districtName);
     const cloneNameFull = COMMON_TEXTS.parameterValue(msg('Assigned clone'), cloneName);
+    const statusFull = COMMON_TEXTS.parameterValue(
+      msg('Status'),
+      html`<ca-sidejobs-list-item-status></ca-sidejobs-list-item-status>`,
+    );
 
     const cancelSidejobLabel = msg('Cancel sidejob');
 
     return html`
       <div class="host-content mobile">
-        <div>${cloneNameFull}</div>
-
-        <div>${districtNameFull}</div>
-
         <div class="sidejob">
           <div class="sidejob-title">
             ${sidejobTitle}
@@ -159,6 +161,12 @@ export class SidejobsListItem extends BaseComponent {
             <ca-sidejobs-list-item-description></ca-sidejobs-list-item-description>
           </div>
         </div>
+
+        <div>${districtNameFull}</div>
+
+        <div>${cloneNameFull}</div>
+
+        <div>${statusFull}</div>
 
         <div class="buttons">
           <sl-button variant=${DELETE_VALUES.buttonVariant} size="medium" @click=${this.handleOpenCancelSidejobDialog}>

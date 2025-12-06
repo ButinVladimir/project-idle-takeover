@@ -244,7 +244,7 @@
       "attributes": []
     },
     {
-      "name": "ca-company-contracts-panel",
+      "name": "ca-company-contract-assignments-panel",
       "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_assignClonesDialogOpened` {`boolean`} - \n\n  * `handleAssignClonesContractDialogOpen` - \n\n  * `handleAssignClonesContractDialogClose` - ",
       "attributes": []
     },
@@ -289,6 +289,26 @@
       "name": "ca-assign-clones-contract-dialog-rewards",
       "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_rewardValueElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_rewardDiffElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_contract` - \n\n  * `_existingContract` - \n\n  * `_rewardValues` - \n\n  * `renderParameter` - \n\n  * `handlePartialUpdate` - \n\n  * `updateParameter` - \n\n  * `updateValueElement` - \n\n  * `updateDiffElement` - \n\n  * `_controller` {`AssignCloneSidejobDialogRewardsController`} - ",
       "attributes": []
+    },
+    {
+      "name": "ca-contract-assignments-list",
+      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderContractAssignmentsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderContractAssignment` - \n\n  * `handleOpenRemoveAllContractAssignmentsDialog` - \n\n  * `handleRemoveAllContractAssignments` - \n\n  * `_controller` {`ContractAssignmentsListController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-contracts-assignments-list-item-description",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_rewardValueElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_assignment` - \n\n  * `_rewardValues` - \n\n  * `renderParameter` - \n\n  * `handlePartialUpdate` - \n\n  * `updateParameter` - \n\n  * `updateValueElement` - \n\n  * `_controller` {`ContractsAssignmentsListItemDescriptionController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-contract-assignments-list-item",
+      "description": "Attributes:\n\n  * `assignment-id` {`string`} - \n\nProperties:\n\n  * `styles` {`CSSResult[]`} - \n\n  * `assignmentId` {`string`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_contractAssignment` - \n\n  * `handleToggleDescription` - \n\n  * `handleOpenRemoveContractAssignmentDialog` - \n\n  * `handleRemoveContractAssignment` - \n\n  * `_controller` {`ContractAssignmentsListItemController`} - ",
+      "attributes": [
+        {
+          "name": "assignment-id",
+          "description": "`assignment-id` {`string`} - \n\nProperty: assignmentId"
+        }
+      ]
     },
     {
       "name": "ca-company-sidejobs-panel",
@@ -345,6 +365,11 @@
     {
       "name": "ca-sidejobs-list-item-description",
       "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_rewardValueElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_activity` - \n\n  * `_rewardValues` - \n\n  * `renderParameter` - \n\n  * `handlePartialUpdate` - \n\n  * `updateParameter` - \n\n  * `updateValueElement` - \n\n  * `_controller` {`SidejobsListItemDescriptionController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-sidejobs-list-item-status",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_mobileTextRef` {`Ref<HTMLSpanElement>`} - \n\n  * `_desktopTooltipRef` {`Ref<HTMLSpanElement>`} - \n\n  * `_desktopIconRef` {`Ref<SlIcon>`} - \n\n  * `_activity` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`SidejobsListItemStatusController`} - ",
       "attributes": []
     },
     {

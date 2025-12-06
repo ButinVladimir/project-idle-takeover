@@ -3,8 +3,7 @@ import { IExponent, RewardParameterWithBase, DistrictTypeRewardParameter } from 
 export interface IDistrictTypeTemplate {
   activityRequirementModifier: number;
   primaryActivityTimeMultipliers: {
-    completionTime: number;
-    generationTime: number;
+    contractGenerationTime: number;
   };
   synchronization: IExponent;
   parameters: Record<

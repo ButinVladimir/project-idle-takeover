@@ -13,12 +13,12 @@ const styles = [
       box-sizing: border-box;
       border-bottom: var(--ca-border);
 
-      .sidejob-title sl-icon-button.description-button {
+      .contract-title sl-icon-button.description-button {
         position: relative;
         top: 0.25rem;
       }
 
-      .sidejob-description {
+      .contract-assignment-description {
         box-sizing: border-box;
         height: 0;
         overflow: hidden;
@@ -36,6 +36,10 @@ const styles = [
         grid-template-columns: 2fr 1fr 1fr 1fr auto;
         grid-template-rows: auto;
         align-items: center;
+
+        .clones p {
+          margin: 0;
+        }
 
         .buttons {
           font-size: var(--sl-font-size-large);

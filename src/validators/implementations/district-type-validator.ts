@@ -1,6 +1,5 @@
 import { injectable } from 'inversify';
 import { styleText } from 'node:util';
-import { typedDistrictTypes } from '@state/city-state';
 import { DISTRICT_TYPE_TEXTS } from '@texts/index';
 import { IDistrictTypeValidator } from '../interfaces';
 
@@ -11,7 +10,6 @@ export class DistrictTypeValidator implements IDistrictTypeValidator {
 
     this.validateTitle(name);
     this.validateOverview(name);
-    this.validatePrimaryActivityCompletionTime(name);
   }
 
   private validateTitle(name: string) {
@@ -23,19 +21,6 @@ export class DistrictTypeValidator implements IDistrictTypeValidator {
   private validateOverview(name: string) {
     if (!DISTRICT_TYPE_TEXTS[name]?.overview) {
       this.printMissingProperty(name, 'overview');
-    }
-  }
-
-  private validatePrimaryActivityCompletionTime(name: string) {
-    const districtType = typedDistrictTypes[name];
-
-    if (
-      districtType.primaryActivityTimeMultipliers.completionTime >=
-      districtType.primaryActivityTimeMultipliers.generationTime
-    ) {
-      console.log(
-        `\t\tDistrict type ${styleText('cyanBright', name)} primary activity completion time ${styleText('redBright', 'is bigger than generation time')}`,
-      );
     }
   }
 

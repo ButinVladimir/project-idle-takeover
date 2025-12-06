@@ -41,7 +41,7 @@ export const MESSAGE_EVENT_NAMES: Record<MessageEvent, () => string> = {
   [SidejobsEvent.sidejobCancelled]: () => msg('Sidejob cancelled'),
   [SidejobsEvent.allSidejobsCancelled]: () => msg('All sidejobs cancelled'),
   [ContractsEvent.contractAssigned]: () => msg('Contract assigned'),
-  [ContractsEvent.contractCancelled]: () => msg('Contract cancelled'),
-  [ContractsEvent.allContractsCancelled]: () => msg('All contracts cancelled'),
+  [ContractsEvent.contractAssignmentRemoved]: () => msg('Contract assignment removed'),
+  [ContractsEvent.allContractAssignmentsRemoved]: () => msg('All contracts assignments removed'),
   [CityEvent.districtTierIncreased]: () => msg('City district tier increased'),
 };

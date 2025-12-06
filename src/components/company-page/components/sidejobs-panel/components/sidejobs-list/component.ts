@@ -28,9 +28,10 @@ export class SidejobsList extends BaseComponent {
 
     return html`
       <div class="header desktop">
-        <div class="header-column">${msg('Assigned clone')}</div>
-        <div class="header-column">${msg('District')}</div>
         <div class="header-column">${msg('Sidejob')}</div>
+        <div class="header-column">${msg('District')}</div>
+        <div class="header-column">${msg('Assigned clone')}</div>
+        <div class="header-column">${msg('Status')}</div>
         <div class="buttons">
           <sl-tooltip>
             <span slot="content"> ${cancelAllSidejobs} </span>

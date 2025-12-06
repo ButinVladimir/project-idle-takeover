@@ -118,15 +118,15 @@ Clone can be assigned only to one sidejob.`)}
 
             <div class=${inputsContainerClasses}>
               <sl-select
-                ${ref(this._cloneIdInputRef)}
-                name="cloneId"
-                value=${this._cloneId ?? ''}
+                ${ref(this._sidejobNameInputRef)}
+                name="sidejobName"
+                value=${this._sidejobName ?? ''}
                 hoist
-                @sl-change=${this.handleCloneIdChange}
+                @sl-change=${this.handleSidejobNameChange}
               >
-                <span class="input-label" slot="label"> ${msg('Clone')} </span>
+                <span class="input-label" slot="label"> ${msg('Sidejob')} </span>
 
-                ${this._controller.listClones().map(this.renderCloneOption)}
+                ${this._controller.listAvailableSidejobs().map(this.renderSidejobName)}
               </sl-select>
 
               <sl-select
@@ -142,15 +142,15 @@ Clone can be assigned only to one sidejob.`)}
               </sl-select>
 
               <sl-select
-                ${ref(this._sidejobNameInputRef)}
-                name="sidejobName"
-                value=${this._sidejobName ?? ''}
+                ${ref(this._cloneIdInputRef)}
+                name="cloneId"
+                value=${this._cloneId ?? ''}
                 hoist
-                @sl-change=${this.handleSidejobNameChange}
+                @sl-change=${this.handleCloneIdChange}
               >
-                <span class="input-label" slot="label"> ${msg('Sidejob')} </span>
+                <span class="input-label" slot="label"> ${msg('Clone')} </span>
 
-                ${this._controller.listAvailableSidejobs().map(this.renderSidejobName)}
+                ${this._controller.listClones().map(this.renderCloneOption)}
               </sl-select>
             </div>
           </div>

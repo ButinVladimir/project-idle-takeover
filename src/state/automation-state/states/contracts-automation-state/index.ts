@@ -1,3 +1,3 @@
 export * from './interfaces';
-export * from './contract-automation-state';
+export * from './contract-assignment';
 export * from './contracts-automation-state';

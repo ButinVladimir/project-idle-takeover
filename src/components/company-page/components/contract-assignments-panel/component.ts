@@ -5,7 +5,7 @@ import { BaseComponent } from '@shared/index';
 import styles from './styles';
 
 @localized()
-@customElement('ca-company-contracts-panel')
+@customElement('ca-company-contract-assignments-panel')
 export class CompanyContractsPanel extends BaseComponent {
   static styles = styles;
 
@@ -33,7 +33,7 @@ Contracts won't be re-added to the primary activity queue after they're exhauste
         </sl-button>
       </div>
 
-      <ca-sidejobs-list></ca-sidejobs-list>
+      <ca-contract-assignments-list></ca-contract-assignments-list>
 
       <ca-assign-clones-contract-dialog
         ?open=${this._assignClonesDialogOpened}
