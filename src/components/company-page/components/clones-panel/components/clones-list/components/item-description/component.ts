@@ -55,8 +55,8 @@ export class ClonesListItemAttributes extends BaseComponent {
     });
 
     return html`
-      <div>${COMMON_TEXTS.parameterValue(COMMON_TEXTS.synchronization(), formattedSynchronization)}</div>
-      <div>${COMMON_TEXTS.parameterValue(COMMON_TEXTS.experienceMultiplier(), formattedExperienceMultiplier)}</div>
+      <div>${COMMON_TEXTS.parameterRow(COMMON_TEXTS.synchronization(), formattedSynchronization)}</div>
+      <div>${COMMON_TEXTS.parameterRow(COMMON_TEXTS.experienceMultiplier(), formattedExperienceMultiplier)}</div>
 
       <div class=${attributesSkillsTablesClasses}>
         <div>

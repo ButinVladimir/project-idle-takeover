@@ -65,7 +65,7 @@ export abstract class BaseAutobuyerProgramDescriptionEffectRenderer implements I
 
     return html`
       <p>
-        ${COMMON_TEXTS.parameterValue(
+        ${COMMON_TEXTS.parameterRow(
           REWARD_PARAMETER_NAMES[RewardParameter.actions](),
           PROGRAM_DESCRIPTION_TEXTS.actionCompletionDiffs(
             formattedActionCount,

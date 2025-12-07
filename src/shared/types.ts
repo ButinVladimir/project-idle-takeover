@@ -261,3 +261,8 @@ export enum ActivityUIStatus {
   paused = 'paused',
   invalid = 'invalid',
 }
+
+export enum ActivityUIValidity {
+  valid = 'valid',
+  invalid = 'invalid',
+}

@@ -5,18 +5,11 @@ const styles = [
   highlightedValuesStyle,
   css`
     :host {
-      display: flex;
-      align-items: stretch;
-      gap: var(--sl-spacing-medium);
-      flex-direction: column;
+      display: contents;
     }
 
-    p.hint {
-      margin: 0;
-    }
-
-    p.text {
-      margin: 0;
+    .status-icon.desktop {
+      font-size: var(--sl-font-size-large);
     }
   `,
 ];

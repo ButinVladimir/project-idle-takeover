@@ -84,7 +84,7 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
           <h4 class="title" draggable="true" @dragstart=${this.handleDragStart}>
             <sl-icon id="drag-icon" name="grip-vertical"> </sl-icon>
 
-            ${COMMON_TEXTS.parameterValue(MAINFRAME_HARDWARE_TEXTS[this.type].title(), formatter.formatLevel(level))}
+            ${COMMON_TEXTS.parameterRow(MAINFRAME_HARDWARE_TEXTS[this.type].title(), formatter.formatLevel(level))}
 
             <sl-tooltip>
               <span slot="content"> ${autoupgradeLabel} </span>
@@ -101,7 +101,7 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
         </div>
 
         <p class="cost">
-          ${COMMON_TEXTS.parameterValue(COMMON_TEXTS.cost(), html`<span ${ref(this._costElRef)}></span>`)}
+          ${COMMON_TEXTS.parameterRow(COMMON_TEXTS.cost(), html`<span ${ref(this._costElRef)}></span>`)}
         </p>
 
         <p class="hint">${MAINFRAME_HARDWARE_TEXTS[this.type].hint()}</p>

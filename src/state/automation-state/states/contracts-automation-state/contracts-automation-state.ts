@@ -7,6 +7,7 @@ import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type IActivityState } from '@state/activity-state';
 import { type IMessageLogState } from '@state/message-log-state';
 import { ContractsEvent, moveElementInArray, removeElementsFromArray } from '@shared/index';
+import { CONTRACT_TEXTS, DISTRICT_NAMES } from '@texts/index';
 import {
   ISerializedContractAssignment,
   IContractAssignment,
@@ -15,7 +16,6 @@ import {
   IMakeContractAutomationStateArgs,
 } from './interfaces';
 import { ContractAssignment } from './contract-assignment';
-import { CONTRACT_TEXTS, DISTRICT_NAMES } from '@/texts';
 
 const { lazyInject } = decorators;
 
@@ -88,6 +88,7 @@ export class ContractsAutomationState implements IContractsAutomationState {
 
       this._contractAssignments[existingAutomationIndex] = newAutomation;
       this._contractAssignmentsIdMap.set(newAutomation.id, newAutomation);
+      this._contractAssignmentsIdMap.delete(oldAutomation.id);
       oldAutomation.removeAllEventListeners();
     }
 
@@ -138,9 +139,9 @@ export class ContractsAutomationState implements IContractsAutomationState {
     }
   }
 
-  toggleActiveAll(active: boolean): void {
-    this._contractAssignments.forEach((contractAutomationState) => {
-      contractAutomationState.toggleActive(active);
+  toggleAllContractAssignments(active: boolean): void {
+    this._contractAssignments.forEach((contractAssignment) => {
+      contractAssignment.toggleActive(active);
     });
   }
 
@@ -157,7 +158,7 @@ export class ContractsAutomationState implements IContractsAutomationState {
 
     serializedState.contractAssignments.forEach((serializedContractAssignment) => {
       const contractAssignment = this.makeContractAssignment(serializedContractAssignment);
-      this._contractAssignments.push(this.makeContractAssignment(serializedContractAssignment));
+      this._contractAssignments.push(contractAssignment);
       this._contractAssignmentsIdMap.set(contractAssignment.id, contractAssignment);
     });
   }

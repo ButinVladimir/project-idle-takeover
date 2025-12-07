@@ -14,6 +14,6 @@ export interface IContractsAutomationState extends ISerializeable<IContractsAuto
   removeContractAssignmentById(id: string): void;
   removeAllContractAssignments(): void;
   moveContractAssignment(id: string, position: number): void;
-  toggleActiveAll(active: boolean): void;
+  toggleAllContractAssignments(active: boolean): void;
   repeatAll(): void;
 }

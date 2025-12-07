@@ -1,6 +1,8 @@
 import { css } from 'lit';
+import { dragIconStyle } from '@shared/index';
 
 const styles = [
+  dragIconStyle,
   css`
     :host {
       display: block;
@@ -13,9 +15,13 @@ const styles = [
       box-sizing: border-box;
       border-bottom: var(--ca-border);
 
-      .contract-title sl-icon-button.description-button {
-        position: relative;
-        top: 0.25rem;
+      .contract-title {
+        cursor: grab;
+
+        sl-icon-button.description-button {
+          position: relative;
+          top: 0.25rem;
+        }
       }
 
       .contract-assignment-description {
@@ -32,6 +38,13 @@ const styles = [
         }
       }
 
+      .buttons {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        gap: var(--sl-spacing-small);
+      }
+
       &.desktop {
         grid-template-columns: 2fr 1fr 1fr 1fr auto;
         grid-template-rows: auto;
@@ -42,6 +55,7 @@ const styles = [
         }
 
         .buttons {
+          justify-content: flex-end;
           font-size: var(--sl-font-size-large);
         }
 
@@ -53,6 +67,11 @@ const styles = [
       &.mobile {
         grid-template-columns: auto;
         grid-template-rows: repeat(1fr);
+
+        .buttons {
+          flex-wrap: wrap;
+          justify-content: flex-start;
+        }
       }
     }
   `,

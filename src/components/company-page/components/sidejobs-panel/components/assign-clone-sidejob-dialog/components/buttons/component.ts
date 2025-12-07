@@ -11,7 +11,7 @@ import { AssignCloneEvent, CancelEvent } from './events';
 import { existingSidejobContext, temporarySidejobContext } from '../../contexts';
 import { AssignCloneSidejobDialogFormWarning, AssignCloneSidejobDialogWarning } from './types';
 import styles from './styles';
-import { SIDEJOB_VALIDATION_TEXTS } from '../../../../constants';
+import { SIDEJOB_VALIDATION_TEXTS } from '../../../../../../constants';
 
 @localized()
 @customElement('ca-assign-clone-sidejob-dialog-buttons')

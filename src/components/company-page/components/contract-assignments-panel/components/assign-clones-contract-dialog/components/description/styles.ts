@@ -1,9 +1,8 @@
 import { css } from 'lit';
-import { highlightedValuesStyle, hintStyle } from '@shared/index';
+import { highlightedValuesStyle } from '@shared/index';
 
 const styles = [
   highlightedValuesStyle,
-  hintStyle,
   css`
     :host {
       display: flex;
@@ -12,7 +11,7 @@ const styles = [
       flex-direction: column;
     }
 
-    p.hint {
+    p.description {
       margin: 0 0 var(--sl-spacing-medium);
     }
 

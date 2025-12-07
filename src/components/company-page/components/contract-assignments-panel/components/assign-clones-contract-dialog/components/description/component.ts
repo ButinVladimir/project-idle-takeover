@@ -46,18 +46,23 @@ export class AssignClonesContractDialogDescription extends BaseComponent {
       this._contract.contractName,
     );
     const formattedAvalailableCount = this._controller.formatter.formatNumberDecimal(availableCount);
-    const availableCountClassses = getHighlightValueClass(availableCount > 0);
+    const availableCountClasses = getHighlightValueClass(availableCount > 0);
+
+    const formattedCompletionTime = this._controller.formatter.formatTimeShort(this._contract.completionTime);
 
     return html`
-      <p class="hint">${CONTRACT_TEXTS[this._contract.contractName].overview()}</p>
+      <p class="description">${CONTRACT_TEXTS[this._contract.contractName].overview()}</p>
 
       ${this.renderTeamSizeString()}
+
       <p class="text">
-        ${COMMON_TEXTS.parameterValue(
+        ${COMMON_TEXTS.parameterRow(
           msg('Available'),
-          html`<span class=${availableCountClassses}>${formattedAvalailableCount}</span>`,
+          html`<span class=${availableCountClasses}>${formattedAvalailableCount}</span>`,
         )}
       </p>
+
+      <p class="text">${COMMON_TEXTS.parameterRow(msg('Completion time'), formattedCompletionTime)}</p>
 
       <sl-radio-group
         ${ref(this._descriptionModelInputRef)}
@@ -93,7 +98,7 @@ export class AssignClonesContractDialogDescription extends BaseComponent {
     const assignedClonesText = msg(str`${formattedAssignedClones} / ${formattedMinClones} (max ${formattedMaxClones})`);
     const assignedClonesElem = html`<span class=${valueClass}>${assignedClonesText}</span>`;
 
-    return html` <p class="text">${COMMON_TEXTS.parameterValue(msg('Assigned clones'), assignedClonesElem)}</p> `;
+    return html` <p class="text">${COMMON_TEXTS.parameterRow(msg('Assigned clones'), assignedClonesElem)}</p> `;
   };
 
   private handleDescriptionModeChange = () => {

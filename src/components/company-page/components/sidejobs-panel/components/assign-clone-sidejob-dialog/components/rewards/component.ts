@@ -77,7 +77,7 @@ export class AssignCloneSidejobDialogRewards extends BaseComponent {
       ? COMMON_TEXTS.parameterSpeedDiff(valueElement, diffElement)
       : COMMON_TEXTS.parameterDiff(valueElement, diffElement);
 
-    return html`<p class="text">${COMMON_TEXTS.parameterValue(parameterName, parameterText)}</p>`;
+    return html`<p class="text">${COMMON_TEXTS.parameterRow(parameterName, parameterText)}</p>`;
   };
 
   handlePartialUpdate = () => {

@@ -4,7 +4,7 @@ import { provide } from '@lit/context';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
-import { BaseComponent, DELETE_VALUES, DESCRIPTION_ICONS, ContractAlert } from '@shared/index';
+import { BaseComponent, DELETE_VALUES, DESCRIPTION_ICONS, ContractAlert, ENTITY_ACTIVE_VALUES } from '@shared/index';
 import { COMMON_TEXTS, CONTRACT_TEXTS, DISTRICT_NAMES } from '@texts/index';
 import { type IContractAssignment } from '@state/automation-state';
 import { ContractAssignmentsListItemController } from './controller';
@@ -63,12 +63,21 @@ export class ContractAssignmentListItem extends BaseComponent {
 
     const districtName = DISTRICT_NAMES[this._contractAssignment.contract.district.name]();
 
+    const toggleIcon = this._contractAssignment.active
+      ? ENTITY_ACTIVE_VALUES.icon.active
+      : ENTITY_ACTIVE_VALUES.icon.stopped;
+    const toggleLabel = this._contractAssignment.active
+      ? msg('Disable contract assignment')
+      : msg('Enable contract assignment');
+
     const removeContractAssignmentLabel = msg('Remove contract assignment');
 
     return html`
       <div class="host-content desktop">
         <div class="contract-assignment">
-          <div class="contract-title">
+          <div class="contract-title" draggable="true" @dragstart=${this.handleDragStart}>
+            <sl-icon name="grip-vertical"> </sl-icon>
+
             ${contractTitle}
 
             <sl-tooltip>
@@ -98,9 +107,16 @@ export class ContractAssignmentListItem extends BaseComponent {
           )}
         </div>
 
-        <div>Status</div>
+        <div><ca-contract-assignments-list-item-validity></ca-contract-assignments-list-item-validity></div>
 
         <div class="buttons">
+          <sl-tooltip>
+            <span slot="content"> ${toggleLabel} </span>
+
+            <sl-icon-button name=${toggleIcon} label=${toggleLabel} @click=${this.handleToggleContractAssignment}>
+            </sl-icon-button>
+          </sl-tooltip>
+
           <sl-tooltip>
             <span slot="content"> ${removeContractAssignmentLabel} </span>
 
@@ -136,16 +152,31 @@ export class ContractAssignmentListItem extends BaseComponent {
     const districtName = DISTRICT_NAMES[this._contractAssignment.contract.district.name]();
     const cloneNames = this._contractAssignment.contract.assignedClones.map((clone) => clone.name);
 
-    const districtNameFull = COMMON_TEXTS.parameterValue(msg('District'), districtName);
-    const cloneNamesFull = COMMON_TEXTS.parameterValue(msg('Assigned clones'), cloneNames.join(', '));
-    const statusFull = COMMON_TEXTS.parameterValue(msg('Status'), html`Status`);
+    const districtNameFull = COMMON_TEXTS.parameterRow(msg('District'), districtName);
+    const cloneNamesFull = COMMON_TEXTS.parameterRow(msg('Assigned clones'), cloneNames.join(', '));
+    const validityFull = COMMON_TEXTS.parameterRow(
+      msg('Validity'),
+      html`<ca-contract-assignments-list-item-validity></ca-contract-assignments-list-item-validity>`,
+    );
+
+    const toggleIcon = this._contractAssignment.active
+      ? ENTITY_ACTIVE_VALUES.icon.active
+      : ENTITY_ACTIVE_VALUES.icon.stopped;
+    const toggleLabel = this._contractAssignment.active
+      ? msg('Disable contract assignment')
+      : msg('Enable contract assignment');
+    const toggleVariant = this._contractAssignment.active
+      ? ENTITY_ACTIVE_VALUES.buttonVariant.active
+      : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
 
     const removeContractAssignmentLabel = msg('Remove contract assignment');
 
     return html`
       <div class="host-content mobile">
         <div class="contract-assignment">
-          <div class="contract-title">
+          <div class="contract-title" draggable="true" @dragstart=${this.handleDragStart}>
+            <sl-icon name="grip-vertical"> </sl-icon>
+
             ${contractTitle}
 
             <sl-tooltip>
@@ -169,9 +200,15 @@ export class ContractAssignmentListItem extends BaseComponent {
 
         <div>${cloneNamesFull}</div>
 
-        <div>${statusFull}</div>
+        <div>${validityFull}</div>
 
         <div class="buttons">
+          <sl-button variant=${toggleVariant} size="medium" @click=${this.handleToggleContractAssignment}>
+            <sl-icon slot="prefix" name=${toggleIcon}></sl-icon>
+
+            ${toggleLabel}
+          </sl-button>
+
           <sl-button
             variant=${DELETE_VALUES.buttonVariant}
             size="medium"
@@ -216,5 +253,15 @@ export class ContractAssignmentListItem extends BaseComponent {
 
   private handleRemoveContractAssignment = () => {
     this._controller.removeContractAssignmentById(this.assignmentId);
+  };
+
+  private handleDragStart = (event: DragEvent) => {
+    if (event.dataTransfer) {
+      event.dataTransfer.setData('text/plain', this.assignmentId);
+    }
+  };
+
+  private handleToggleContractAssignment = () => {
+    this._controller.toggleContractAssignment();
   };
 }

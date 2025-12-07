@@ -1,5 +1,5 @@
 import { html, nothing } from 'lit';
-import { localized } from '@lit/localize';
+import { localized, msg } from '@lit/localize';
 import { consume } from '@lit/context';
 import { customElement, queryAll } from 'lit/decorators.js';
 import {
@@ -48,6 +48,8 @@ export class SidejobsListItemDescription extends BaseComponent {
     return html`
       <p class="overview">${SIDEJOB_TEXTS[this._activity.sidejob.sidejobName].overview()}</p>
 
+      <p class="text">${msg('Rewards')}</p>
+
       ${DISTRICT_TYPE_REWARD_PARAMETERS.map((parameter) => this.renderParameter(parameter))}
     `;
   }
@@ -68,7 +70,7 @@ export class SidejobsListItemDescription extends BaseComponent {
 
     const parameterText = parameterValues.isSpeed ? COMMON_TEXTS.parameterSpeed(valueElement) : valueElement;
 
-    return html`<p class="text">${COMMON_TEXTS.parameterValue(parameterName, parameterText)}</p>`;
+    return html`<p class="text">${COMMON_TEXTS.parameterRow(parameterName, parameterText)}</p>`;
   };
 
   handlePartialUpdate = () => {

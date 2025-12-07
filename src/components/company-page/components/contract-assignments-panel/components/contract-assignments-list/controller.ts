@@ -9,4 +9,13 @@ export class ContractAssignmentsListController extends BaseController {
   removeAllContractAssignments(): void {
     this.automationState.contracts.removeAllContractAssignments();
   }
+
+  moveContractAssignment(id: string, position: number) {
+    this.automationState.contracts.moveContractAssignment(id, position);
+    this.host.requestUpdate();
+  }
+
+  toggleAllContractAssignments(active: boolean) {
+    this.automationState.contracts.toggleAllContractAssignments(active);
+  }
 }

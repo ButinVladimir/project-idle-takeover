@@ -30,13 +30,13 @@ export class ShareServerDescriptionEffectRenderer implements IDescriptionEffectR
   public renderEffect = () => {
     return html`
       <p>
-        ${COMMON_TEXTS.parameterValue(
+        ${COMMON_TEXTS.parameterRow(
           REWARD_PARAMETER_NAMES[RewardParameter.money](),
           COMMON_TEXTS.parameterSpeed(html`<span data-value=${VALUES.money}></span>`),
         )}
       </p>
       <p>
-        ${COMMON_TEXTS.parameterValue(
+        ${COMMON_TEXTS.parameterRow(
           REWARD_PARAMETER_NAMES[RewardParameter.developmentPoints](),
           COMMON_TEXTS.parameterSpeed(html`<span data-value=${VALUES.developmentPoints}></span>`),
         )}

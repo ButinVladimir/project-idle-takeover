@@ -16,6 +16,11 @@ const styles = [
       margin-bottom: var(--sl-spacing-small);
     }
 
+    p.rewards {
+      margin-top: var(--sl-spacing-small);
+      margin-bottom: 0;
+    }
+
     p.text {
       margin: 0;
     }

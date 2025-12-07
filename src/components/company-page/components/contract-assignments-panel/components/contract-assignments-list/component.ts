@@ -2,8 +2,9 @@ import { html } from 'lit';
 import { localized, msg } from '@lit/localize';
 import { customElement } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { BaseComponent, ContractAlert, DELETE_VALUES } from '@shared/index';
+import { BaseComponent, ContractAlert, DELETE_VALUES, ENTITY_ACTIVE_VALUES } from '@shared/index';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
+import { SortableElementMovedEvent } from '@components/shared/sortable-list/events/sortable-element-moved';
 import { IContractAssignment } from '@state/automation-state';
 import { ContractAssignmentsListController } from './controller';
 import styles from './styles';
@@ -26,13 +27,32 @@ export class ContractAssignmentsList extends BaseComponent {
   protected renderDesktop() {
     const removeAllContractAssignments = msg('Remove all contract assignments');
 
+    const contractAssignmentsActive = this.checkSomeContractAssignmentsEnabled();
+    const toggleContractAssignmentsIcon = contractAssignmentsActive
+      ? ENTITY_ACTIVE_VALUES.icon.active
+      : ENTITY_ACTIVE_VALUES.icon.stopped;
+    const toggleContractAssignmentsLabel = contractAssignmentsActive
+      ? msg('Disable all contract assignments')
+      : msg('Enable all contract assignments');
+
     return html`
       <div class="header desktop">
         <div class="header-column">${msg('Contract')}</div>
         <div class="header-column">${msg('District')}</div>
         <div class="header-column">${msg('Assigned clones')}</div>
-        <div class="header-column">${msg('Status')}</div>
+        <div class="header-column">${msg('Validity')}</div>
         <div class="buttons">
+          <sl-tooltip>
+            <span slot="content"> ${toggleContractAssignmentsLabel} </span>
+
+            <sl-icon-button
+              name=${toggleContractAssignmentsIcon}
+              label=${toggleContractAssignmentsLabel}
+              @click=${this.handleToggleAllContractAssignments}
+            >
+            </sl-icon-button>
+          </sl-tooltip>
+
           <sl-tooltip>
             <span slot="content"> ${removeAllContractAssignments} </span>
 
@@ -52,9 +72,30 @@ export class ContractAssignmentsList extends BaseComponent {
   }
 
   protected renderMobile() {
+    const contractAssignmentsActive = this.checkSomeContractAssignmentsEnabled();
+    const toggleContractAssignmentsIcon = contractAssignmentsActive
+      ? ENTITY_ACTIVE_VALUES.icon.active
+      : ENTITY_ACTIVE_VALUES.icon.stopped;
+    const toggleContractAssignmentsLabel = contractAssignmentsActive
+      ? msg('Disable all contract assignments')
+      : msg('Enable all contract assignments');
+    const toggleContractAssignmentsVariant = contractAssignmentsActive
+      ? ENTITY_ACTIVE_VALUES.buttonVariant.active
+      : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
+
     return html`
       <div class="header mobile">
         <div class="buttons">
+          <sl-button
+            variant=${toggleContractAssignmentsVariant}
+            size="medium"
+            @click=${this.handleToggleAllContractAssignments}
+          >
+            <sl-icon slot="prefix" name=${toggleContractAssignmentsIcon}></sl-icon>
+
+            ${toggleContractAssignmentsLabel}
+          </sl-button>
+
           <sl-button
             variant=${DELETE_VALUES.buttonVariant}
             size="medium"
@@ -74,7 +115,11 @@ export class ContractAssignmentsList extends BaseComponent {
     const assignments = this._controller.listContractAssignments();
 
     return assignments.length > 0
-      ? html`${repeat(assignments, (contractAssignment) => contractAssignment.id, this.renderContractAssignment)}`
+      ? html`
+          <ca-sortable-list @sortable-element-moved=${this.handleMoveContractAssignment}>
+            ${repeat(assignments, (contractAssignment) => contractAssignment.id, this.renderContractAssignment)}
+          </ca-sortable-list>
+        `
       : this.renderEmptyListNotification();
   };
 
@@ -85,6 +130,7 @@ export class ContractAssignmentsList extends BaseComponent {
   private renderContractAssignment = (contractAssignment: IContractAssignment) => {
     return html`<ca-contract-assignments-list-item
       assignment-id=${contractAssignment.id}
+      data-drag-id=${contractAssignment.id}
     ></ca-contract-assignments-list-item>`;
   };
 
@@ -100,5 +146,19 @@ export class ContractAssignmentsList extends BaseComponent {
 
   private handleRemoveAllContractAssignments = () => {
     this._controller.removeAllContractAssignments();
+  };
+
+  private handleMoveContractAssignment = (event: SortableElementMovedEvent) => {
+    this._controller.moveContractAssignment(event.keyName, event.position);
+  };
+
+  private checkSomeContractAssignmentsEnabled(): boolean {
+    return this._controller.listContractAssignments().some((contractAssignment) => contractAssignment.active);
+  }
+
+  private handleToggleAllContractAssignments = () => {
+    const contractAssignmentsActive = this.checkSomeContractAssignmentsEnabled();
+
+    this._controller.toggleAllContractAssignments(!contractAssignmentsActive);
   };
 }

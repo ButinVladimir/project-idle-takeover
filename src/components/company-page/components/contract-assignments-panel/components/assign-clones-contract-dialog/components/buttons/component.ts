@@ -3,6 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { msg, localized, str } from '@lit/localize';
 import { consume } from '@lit/context';
 import { BaseComponent } from '@shared/index';
+import { classMap } from 'lit/directives/class-map.js';
 import { COMMON_TEXTS, CONTRACT_TEXTS, DISTRICT_NAMES } from '@texts/index';
 import { type IContract, ContractValidationResult } from '@state/activity-state';
 import { AssignClonesContractDialogButtonsController } from './controller';
@@ -10,7 +11,7 @@ import { AssignClonesEvent, CancelEvent } from './events';
 import { existingContractContext, temporaryContractContext } from '../../contexts';
 import { AssignClonesContractDialogFormWarning, AssignClonesContractDialogWarning } from './types';
 import styles from './styles';
-import { classMap } from 'lit/directives/class-map.js';
+import { CONTRACT_VALIDATION_TEXTS } from '../../../../../../constants';
 
 @localized()
 @customElement('ca-assign-clones-contract-dialog-buttons')
@@ -71,22 +72,12 @@ export class AssignClonesContractDialogButtons extends BaseComponent {
 
     switch (warning) {
       case ContractValidationResult.activityLocked:
-        warningText = msg('Contract is locked');
-        break;
       case ContractValidationResult.districtLocked:
-        warningText = msg('District is locked');
-        break;
       case ContractValidationResult.notEnoughClones:
-        warningText = msg('Not enough clones selected');
-        break;
       case ContractValidationResult.tooManyClones:
-        warningText = msg('Too many clones selected');
-        break;
       case ContractValidationResult.requirementsNotMet:
-        warningText = msg(`Clones don't fit requirements`);
-        break;
       case ContractValidationResult.noContractsAvailable:
-        warningText = msg(`No available contracts`);
+        warningText = CONTRACT_VALIDATION_TEXTS[warning]();
         break;
       case AssignClonesContractDialogFormWarning.notSelected:
         warningText = msg('Select contract name, district and clones');

@@ -36,7 +36,7 @@ export class PeerReviewerDescriptionEffectRenderer implements IDescriptionEffect
 
   public renderEffect = () => {
     return html`<p>
-      ${COMMON_TEXTS.parameterValue(
+      ${COMMON_TEXTS.parameterRow(
         REWARD_PARAMETER_NAMES[RewardParameter.experienceShareMultiplier](),
         PROGRAM_DESCRIPTION_TEXTS.upToDiff(
           html`<span data-value=${VALUES.experienceShareMultiplier}></span>`,

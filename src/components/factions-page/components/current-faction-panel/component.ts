@@ -23,7 +23,7 @@ export class FactionsCurrentFactionPanel extends BaseComponent {
 
     return html`
       <p class="text">
-        ${COMMON_TEXTS.parameterValue(msg('Current faction'), FACTION_TEXTS[currentFaction].title())}
+        ${COMMON_TEXTS.parameterRow(msg('Current faction'), FACTION_TEXTS[currentFaction].title())}
 
         <sl-tooltip>
           <span slot="content">${FACTION_TEXTS[currentFaction].overview()}</span>

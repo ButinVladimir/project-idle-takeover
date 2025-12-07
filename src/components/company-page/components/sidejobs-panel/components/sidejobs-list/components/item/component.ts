@@ -130,9 +130,9 @@ export class SidejobsListItem extends BaseComponent {
     const districtName = DISTRICT_NAMES[this._activity.sidejob.district.name]();
     const cloneName = this._activity.sidejob.assignedClone.name;
 
-    const districtNameFull = COMMON_TEXTS.parameterValue(msg('District'), districtName);
-    const cloneNameFull = COMMON_TEXTS.parameterValue(msg('Assigned clone'), cloneName);
-    const statusFull = COMMON_TEXTS.parameterValue(
+    const districtNameFull = COMMON_TEXTS.parameterRow(msg('District'), districtName);
+    const cloneNameFull = COMMON_TEXTS.parameterRow(msg('Assigned clone'), cloneName);
+    const statusFull = COMMON_TEXTS.parameterRow(
       msg('Status'),
       html`<ca-sidejobs-list-item-status></ca-sidejobs-list-item-status>`,
     );

@@ -32,7 +32,7 @@ export class ClonesSynchronizationValuesPanel extends BaseComponent {
 
     return html`
       <div>
-        ${COMMON_TEXTS.parameterValue(
+        ${COMMON_TEXTS.parameterRow(
           msg('Available synchronization'),
           `${formattedAvailableSynchronization} / ${formattedTotalSynchronization}`,
         )}
@@ -41,7 +41,7 @@ export class ClonesSynchronizationValuesPanel extends BaseComponent {
       ${this._controller.isExperienceShareUnlocked()
         ? html`
             <div>
-              ${COMMON_TEXTS.parameterValue(
+              ${COMMON_TEXTS.parameterRow(
                 msg('Shared experience'),
                 html`× <span ${ref(this._experienceShareRef)}></span>`,
               )}

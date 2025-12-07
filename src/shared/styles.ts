@@ -1,5 +1,5 @@
 import { css } from 'lit';
-import { ActivityUIStatus } from './types';
+import { ActivityUIStatus, ActivityUIValidity } from './types';
 
 export const LAYOUT_WIDTH_THRESHOLDS = {
   TABLET: 768,
@@ -186,9 +186,6 @@ export const attributesSkillsTablesStyle = css`
   div.attributes-skills-tables {
     width: 100%;
     display: flex;
-    color: var(--ca-hint-color);
-    font-size: var(--ca-hint-font-size);
-    line-height: var(--ca-hint-line-height);
 
     h5.title {
       margin: 0;
@@ -291,5 +288,16 @@ export const ACTIVITY_UI_STATUS_VALUES = {
   [ActivityUIStatus.invalid]: {
     class: 'danger',
     icon: 'exclamation-lg',
+  },
+};
+
+export const ACTIVITY_UI_VALIDITY_VALUES = {
+  [ActivityUIValidity.valid]: {
+    class: 'success',
+    icon: 'check-lg',
+  },
+  [ActivityUIValidity.invalid]: {
+    class: 'danger',
+    icon: 'x-lg',
   },
 };

@@ -47,7 +47,7 @@ export class AssignCloneSidejobDialogDescription extends BaseComponent {
     }
 
     return html`
-      <p class="hint">${SIDEJOB_TEXTS[this._sidejob.sidejobName].overview()}</p>
+      <p class="text">${SIDEJOB_TEXTS[this._sidejob.sidejobName].overview()}</p>
 
       ${this.renderConnectivityString()}
 
@@ -83,7 +83,7 @@ export class AssignCloneSidejobDialogDescription extends BaseComponent {
 
     return html`
       <p class="text">
-        ${COMMON_TEXTS.parameterValue(REWARD_PARAMETER_NAMES[RewardParameter.connectivity](), connectivityValue)}
+        ${COMMON_TEXTS.parameterRow(REWARD_PARAMETER_NAMES[RewardParameter.connectivity](), connectivityValue)}
       </p>
     `;
   };

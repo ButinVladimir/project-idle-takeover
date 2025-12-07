@@ -27,7 +27,7 @@ export class PredictiveComputatorDescriptionEffectRenderer implements IDescripti
 
   public renderEffect = () => {
     return html`<p>
-      ${COMMON_TEXTS.parameterValue(
+      ${COMMON_TEXTS.parameterRow(
         REWARD_PARAMETER_NAMES[RewardParameter.processCompletionSpeed](),
         html`<span data-value=${VALUES.processCompletionSpeed}></span>`,
       )}

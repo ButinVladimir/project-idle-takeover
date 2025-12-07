@@ -40,10 +40,7 @@ export class Contract implements IContract {
   }
 
   get completionTime() {
-    return (
-      this._district.template.primaryActivityTimeMultipliers.completionTime *
-      typedContracts[this._templateName].requirements.baseCompletionTime
-    );
+    return typedContracts[this._templateName].requirements.baseCompletionTime;
   }
 
   get minRequiredClones() {

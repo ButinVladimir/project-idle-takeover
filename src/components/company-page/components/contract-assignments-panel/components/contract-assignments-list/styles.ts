@@ -56,9 +56,25 @@ const styles = css`
     border-bottom: var(--ca-border);
   }
 
-  ca-contracts-list-item {
-    &:nth-child(2n) {
-      background-color: var(--ca-table-row-odd-color);
+  ca-sortable-list {
+    width: 100%;
+
+    &::part(list) {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    ca-contract-assignments-list-item {
+      &:nth-child(2n + 1) {
+        background-color: var(--ca-table-row-odd-color);
+      }
+
+      &.dragged {
+        background-color: var(--ca-dragged-color);
+      }
     }
   }
 `;

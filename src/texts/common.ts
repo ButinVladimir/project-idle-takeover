@@ -35,11 +35,16 @@ export const COMMON_TEXTS = {
   synchronization: () => msg('Synchronization'),
   experienceMultiplier: () => msg('Experience multiplier'),
   faction: () => msg('Faction'),
-  parameterValue: (parameterName: string, valueElement: any) => msg(html`${parameterName}: ${valueElement}`),
+  parameterRow: (parameterName: string, valueElement: any) => msg(html`${parameterName}: ${valueElement}`),
   parameterDiff: (valueElement: any, diffElement: any) => msg(html`${valueElement} (${diffElement})`),
   parameterSpeed: (value: any) => msg(html`${value} per second`),
   parameterSpeedDiff: (valueElement: any, diffElement: any) => msg(html`${valueElement} (${diffElement}) per second`),
+  parameterCompletion: (valueElement: any, speedElement: any) =>
+    msg(html`${valueElement} per completion (${speedElement} per second)`),
+  parameterCompletionDiff: (valueElement: any, diffElement: any, speedElement: any, speedDiffElement: any) =>
+    msg(html`${valueElement} (${diffElement}) per completion (${speedElement} per second) (${speedDiffElement})`),
   hotkey: (hotkey?: string) => msg(str`Hotkey: ${hotkey?.toLocaleUpperCase() ?? ''}`),
+  completionTime: () => msg('Completion time'),
 };
 
 export const CATEGORY_TEXTS: Record<ItemCategory, () => string> = {

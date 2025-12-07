@@ -150,7 +150,7 @@ export class ProcessesListItem extends BaseComponent {
     const formattedMaxCores = formatter.formatNumberDecimal(this._process.maxCores);
     const coresFull = this._process.program.isAutoscalable
       ? msg('Autoscalable')
-      : COMMON_TEXTS.parameterValue(msg('Uses cores'), `${formattedUsedCores} / ${formattedMaxCores}`);
+      : COMMON_TEXTS.parameterRow(msg('Uses cores'), `${formattedUsedCores} / ${formattedMaxCores}`);
 
     const toggleIcon = this._process.isActive ? ENTITY_ACTIVE_VALUES.icon.active : ENTITY_ACTIVE_VALUES.icon.stopped;
     const toggleLabel = this._process.isActive ? msg('Disable process') : msg('Enable process');

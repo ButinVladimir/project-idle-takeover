@@ -1,4 +1,4 @@
-import { IContractAssignment } from '@/state/automation-state';
+import { IContractAssignment } from '@state/automation-state';
 import { BaseController } from '@shared/index';
 
 export class ContractAssignmentsListItemController extends BaseController {
@@ -14,5 +14,9 @@ export class ContractAssignmentsListItemController extends BaseController {
 
   removeContractAssignmentById(id: string) {
     this.automationState.contracts.removeContractAssignmentById(id);
+  }
+
+  toggleContractAssignment(): void {
+    this._assignment?.toggleActive(!this._assignment.active);
   }
 }

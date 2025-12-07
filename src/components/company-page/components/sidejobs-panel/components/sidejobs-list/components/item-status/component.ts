@@ -9,7 +9,7 @@ import { SidejobValidationResult, type ISidejobActivity } from '@state/activity-
 import { SidejobsListItemStatusController } from './controller';
 import { sidejobActivityContext } from '../item/contexts';
 import styles from './styles';
-import { SIDEJOB_VALIDATION_TEXTS } from '../../../../constants';
+import { SIDEJOB_VALIDATION_TEXTS } from '../../../../../../constants';
 
 @localized()
 @customElement('ca-sidejobs-list-item-status')
