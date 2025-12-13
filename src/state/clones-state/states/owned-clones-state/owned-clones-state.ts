@@ -22,6 +22,7 @@ import {
 } from '@shared/index';
 import { CLONE_TEMPLATE_TEXTS, CLONE_NAMES } from '@texts/index';
 import { type IActivityState } from '@state/activity-state';
+import { type IAutomationState } from '@state/automation-state';
 import { type IClonesState } from '../../interfaces';
 import { IClone } from '../clone-factory/interfaces/clone';
 import {
@@ -41,6 +42,9 @@ export class OwnedClonesState implements IOwnedClonesState {
 
   @lazyInject(TYPES.ActivityState)
   private _activityState!: IActivityState;
+
+  @lazyInject(TYPES.AutomationState)
+  private _automationState!: IAutomationState;
 
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
@@ -158,6 +162,7 @@ export class OwnedClonesState implements IOwnedClonesState {
   deleteAllClones(): void {
     this.clearState();
     this._activityState.sidejobsActivity.cancelAllActivities();
+    this._automationState.contracts.removeAllContractAssignments();
 
     this._messageLogState.postMessage(ClonesEvent.allClonesDeleted, msg('All clones have been deleted'));
 
@@ -270,5 +275,7 @@ export class OwnedClonesState implements IOwnedClonesState {
     if (sidejob) {
       this._activityState.sidejobsActivity.cancelActivity(sidejob.id);
     }
+
+    this._automationState.contracts.removeCloneFromAssignments(clone.id);
   }
 }

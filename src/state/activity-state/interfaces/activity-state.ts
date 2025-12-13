@@ -3,6 +3,7 @@ import { IActivitySerializedState } from './activity-serialized-state';
 import {
   IContractActivityValidator,
   IContractsFactory,
+  IPrimaryActivityQueue,
   ISidejobActivityValidator,
   ISidejobsActivityState,
   ISidejobsFactory,
@@ -14,6 +15,7 @@ export interface IActivityState extends ISerializeable<IActivitySerializedState>
   sidejobActivityValidator: ISidejobActivityValidator;
   contractsFactory: IContractsFactory;
   contractActivityValidator: IContractActivityValidator;
+  primaryActivityQueue: IPrimaryActivityQueue;
   requestReassignment(): void;
   processTick(): void;
 }

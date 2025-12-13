@@ -4,14 +4,13 @@ import { msg, localized, str } from '@lit/localize';
 import { consume } from '@lit/context';
 import { BaseComponent } from '@shared/index';
 import { classMap } from 'lit/directives/class-map.js';
-import { COMMON_TEXTS, CONTRACT_TEXTS, DISTRICT_NAMES } from '@texts/index';
+import { COMMON_TEXTS, CONTRACT_TEXTS, DISTRICT_NAMES, CONTRACT_VALIDATION_TEXTS } from '@texts/index';
 import { type IContract, ContractValidationResult } from '@state/activity-state';
 import { AssignClonesContractDialogButtonsController } from './controller';
 import { AssignClonesEvent, CancelEvent } from './events';
 import { existingContractContext, temporaryContractContext } from '../../contexts';
 import { AssignClonesContractDialogFormWarning, AssignClonesContractDialogWarning } from './types';
 import styles from './styles';
-import { CONTRACT_VALIDATION_TEXTS } from '../../../../../../constants';
 
 @localized()
 @customElement('ca-assign-clones-contract-dialog-buttons')
@@ -76,7 +75,6 @@ export class AssignClonesContractDialogButtons extends BaseComponent {
       case ContractValidationResult.notEnoughClones:
       case ContractValidationResult.tooManyClones:
       case ContractValidationResult.requirementsNotMet:
-      case ContractValidationResult.noContractsAvailable:
         warningText = CONTRACT_VALIDATION_TEXTS[warning]();
         break;
       case AssignClonesContractDialogFormWarning.notSelected:

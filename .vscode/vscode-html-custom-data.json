@@ -301,13 +301,13 @@
       "attributes": []
     },
     {
-      "name": "ca-contract-assignments-list-item-validity",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_assignment` - \n\n  * `_controller` {`ContractAssignmentsListItemValidityController`} - ",
+      "name": "ca-contract-assignments-list-item-status",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_assignment` - \n\n  * `_controller` {`ContractAssignmentsListItemStatusController`} - ",
       "attributes": []
     },
     {
       "name": "ca-contract-assignments-list-item",
-      "description": "Attributes:\n\n  * `assignment-id` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `assignmentId` {`string`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_contractAssignment` - \n\n  * `handleToggleDescription` - \n\n  * `handleOpenRemoveContractAssignmentDialog` - \n\n  * `handleRemoveContractAssignment` - \n\n  * `handleDragStart` - \n\n  * `handleToggleContractAssignment` - \n\n  * `_controller` {`ContractAssignmentsListItemController`} - ",
+      "description": "Attributes:\n\n  * `assignment-id` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `assignmentId` {`string`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_contractAssignment` - \n\n  * `handleToggleDescription` - \n\n  * `handleOpenRemoveContractAssignmentDialog` - \n\n  * `handleRemoveContractAssignment` - \n\n  * `handleDragStart` - \n\n  * `handleToggleContractAssignment` - \n\n  * `handleStartContractAssignment` - \n\n  * `_controller` {`ContractAssignmentsListItemController`} - ",
       "attributes": [
         {
           "name": "assignment-id",

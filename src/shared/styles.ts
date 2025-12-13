@@ -1,5 +1,5 @@
 import { css } from 'lit';
-import { ActivityUIStatus, ActivityUIValidity } from './types';
+import { ActivityUIActivityStatus } from './types';
 
 export const LAYOUT_WIDTH_THRESHOLDS = {
   TABLET: 768,
@@ -276,28 +276,23 @@ export const formStyle = css`
   }
 `;
 
-export const ACTIVITY_UI_STATUS_VALUES = {
-  [ActivityUIStatus.active]: {
+export const ACTIVITY_UI_ACTIVITY_VALUES = {
+  [ActivityUIActivityStatus.active]: {
     class: 'success',
     icon: 'play-fill',
   },
-  [ActivityUIStatus.paused]: {
-    class: 'warning',
-    icon: 'pause-fill',
-  },
-  [ActivityUIStatus.invalid]: {
-    class: 'danger',
-    icon: 'exclamation-lg',
-  },
-};
-
-export const ACTIVITY_UI_VALIDITY_VALUES = {
-  [ActivityUIValidity.valid]: {
+  [ActivityUIActivityStatus.valid]: {
     class: 'success',
     icon: 'check-lg',
   },
-  [ActivityUIValidity.invalid]: {
+  [ActivityUIActivityStatus.notAvailable]: {
+    class: 'warning',
+    icon: 'exclamation-lg',
+  },
+  [ActivityUIActivityStatus.invalid]: {
     class: 'danger',
     icon: 'x-lg',
   },
 };
+
+export const START_ACTIVITY_ICON = 'arrow-clockwise';

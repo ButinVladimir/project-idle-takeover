@@ -1,12 +1,15 @@
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
 import { type IStateUIConnector } from '@state/state-ui-connector';
-import { IContract } from '@state/activity-state';
+import { ContractValidationResult, type IActivityState, IContract } from '@state/activity-state';
 import { ISerializedContractAssignment, IContractAssignment, IContractAssignmentArguments } from './interfaces';
 
 const { lazyInject } = decorators;
 
 export class ContractAssignment implements IContractAssignment {
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
+
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
 
@@ -19,7 +22,7 @@ export class ContractAssignment implements IContractAssignment {
     this._contract = args.contract;
     this._active = args.active;
 
-    this._stateUiConnector.registerEventEmitter(this, ['_active']);
+    this._stateUiConnector.registerEventEmitter(this, ['_contract', '_active']);
   }
 
   get id() {
@@ -30,12 +33,31 @@ export class ContractAssignment implements IContractAssignment {
     return this._contract;
   }
 
+  set contract(value: IContract) {
+    this._contract = value;
+  }
+
   get active() {
     return this._active;
   }
 
-  canBeRepeated(): boolean {
-    throw new Error('Method not implemented.');
+  canBeStarted(): boolean {
+    return (
+      !this._activityState.primaryActivityQueue.getActivityByAssignmentId(this._id) &&
+      this._contract.district.counters.contracts.getAvailableAmount(this._contract.contractName) > 0 &&
+      this._activityState.contractActivityValidator.validate(this._contract) === ContractValidationResult.valid
+    );
+  }
+
+  start(): void {
+    if (!this.canBeStarted()) {
+      return;
+    }
+
+    this._activityState.primaryActivityQueue.addActivity({
+      assignmentId: this._id,
+      type: 'contract',
+    });
   }
 
   toggleActive(active: boolean): void {

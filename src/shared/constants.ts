@@ -28,7 +28,8 @@ import {
   DistrictTypeRewardParameter,
   ContractAlert,
   ContractsEvent,
-  ActivityUIStatus,
+  ActivityUIActivityStatus,
+  PrimaryActivitiesEvent,
 } from './types';
 import { INames, type IConstants } from './interfaces';
 
@@ -53,6 +54,7 @@ export const MESSAGE_EVENT_GROUPS = {
   [MessageEventGroup.clones]: Object.values(ClonesEvent),
   [MessageEventGroup.sidejobs]: Object.values(SidejobsEvent),
   [MessageEventGroup.contracts]: Object.values(ContractsEvent),
+  [MessageEventGroup.primaryActivities]: Object.values(PrimaryActivitiesEvent),
   [MessageEventGroup.city]: Object.values(CityEvent),
 };
 
@@ -147,4 +149,4 @@ export const DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES: Record<
   },
 };
 
-export const ACTIVITY_UI_STATUSES = Object.values(ActivityUIStatus);
+export const ACTIVITY_UI_STATUSES = Object.values(ActivityUIActivityStatus);

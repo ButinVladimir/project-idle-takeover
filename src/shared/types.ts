@@ -73,6 +73,13 @@ export enum ContractsEvent {
   allContractAssignmentsRemoved = 'allContractAssignmentsRemoved',
 }
 
+export enum PrimaryActivitiesEvent {
+  primaryActivityStarted = 'primaryActivityStarted',
+  primaryActivityFinished = 'primaryActivityFinished',
+  primaryActivityCancelled = 'primaryActivityCancelled',
+  allPrimaryActivitiesCancelled = 'allPrimaryActivitiesCancelled',
+}
+
 export enum CityEvent {
   districtTierIncreased = 'districtTierIncreased',
 }
@@ -83,10 +90,18 @@ export enum MessageEventGroup {
   clones = 'clones',
   sidejobs = 'sidejobs',
   contracts = 'contracts',
+  primaryActivities = 'primaryActivities',
   city = 'city',
 }
 
-export type MessageEvent = GameStateEvent | ProgramsEvent | ClonesEvent | SidejobsEvent | ContractsEvent | CityEvent;
+export type MessageEvent =
+  | GameStateEvent
+  | ProgramsEvent
+  | ClonesEvent
+  | SidejobsEvent
+  | ContractsEvent
+  | PrimaryActivitiesEvent
+  | CityEvent;
 
 export enum GameStateAlert {
   saveImport = 'saveImport',
@@ -162,6 +177,7 @@ export enum PurchaseType {
 export enum IncomeSource {
   program = 'program',
   sidejob = 'sidejob',
+  contract = 'contract',
 }
 
 export enum Feature {
@@ -256,13 +272,9 @@ export enum MapSpecialEvent {
   factionsAvailable = 'factionsAvailable',
 }
 
-export enum ActivityUIStatus {
+export enum ActivityUIActivityStatus {
   active = 'active',
-  paused = 'paused',
-  invalid = 'invalid',
-}
-
-export enum ActivityUIValidity {
   valid = 'valid',
+  notAvailable = 'notAvailable',
   invalid = 'invalid',
 }

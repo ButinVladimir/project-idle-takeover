@@ -5,7 +5,8 @@ export interface IContractAssignment {
   id: string;
   contract: IContract;
   active: boolean;
-  canBeRepeated(): boolean;
+  canBeStarted(): boolean;
+  start(): void;
   toggleActive(active: boolean): void;
   serialize(): ISerializedContractAssignment;
   removeAllEventListeners(): void;

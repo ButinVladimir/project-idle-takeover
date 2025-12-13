@@ -2,12 +2,13 @@ import { injectable, inject } from 'inversify';
 import { TYPES } from '@state/types';
 import { IActivitySerializedState, IActivityState } from './interfaces';
 import {
-  ISidejobActivity,
   type ISidejobsFactory,
   type ISidejobActivityValidator,
   type ISidejobsActivityState,
   type IContractsFactory,
   type IContractActivityValidator,
+  type IPrimaryActivityQueue,
+  PrimaryActivityState,
 } from './states';
 import { IClone } from '../clones-state';
 
@@ -27,6 +28,9 @@ export class ActivityState implements IActivityState {
 
   @inject(TYPES.ContractActivityValidator)
   private _contractActivityValidator!: IContractActivityValidator;
+
+  @inject(TYPES.PrimaryActivityQueue)
+  private _primaryActivityQueue!: IPrimaryActivityQueue;
 
   private _assignmentRequested: boolean;
   private _assignedClones: Set<IClone>;
@@ -56,12 +60,17 @@ export class ActivityState implements IActivityState {
     return this._contractActivityValidator;
   }
 
+  get primaryActivityQueue() {
+    return this._primaryActivityQueue;
+  }
+
   requestReassignment() {
     this._assignmentRequested = true;
   }
 
   processTick() {
     this.reassign();
+    this._primaryActivityQueue.perform();
     this._sidejobsActivity.perform();
   }
 
@@ -74,35 +83,94 @@ export class ActivityState implements IActivityState {
 
     this._assignedClones.clear();
 
-    for (const sidejobActivity of this._sidejobsActivity.listActivities()) {
-      this.tryAssignSidejob(sidejobActivity);
-    }
+    this.assignActivePrimaryActivities();
+    this.assignFinishedActivities();
+    this.assignInactiveActivities();
+    this.assignSidejobs();
+
+    this._primaryActivityQueue.filterActivities();
   }
 
   async startNewState(): Promise<void> {
     await this._sidejobsActivity.startNewState();
+    await this._primaryActivityQueue.startNewState();
     this.requestReassignment();
   }
 
   async deserialize(serializedState: IActivitySerializedState): Promise<void> {
     await this._sidejobsActivity.deserialize(serializedState.sidejobs);
+    await this._primaryActivityQueue.deserialize(serializedState.primaryActivityQueue);
     this.requestReassignment();
   }
 
   serialize(): IActivitySerializedState {
     return {
       sidejobs: this._sidejobsActivity.serialize(),
+      primaryActivityQueue: this._primaryActivityQueue.serialize(),
     };
   }
 
-  private tryAssignSidejob(sidejobActivity: ISidejobActivity) {
-    const assignedClone = sidejobActivity.sidejob.assignedClone;
+  private assignActivePrimaryActivities() {
+    for (const primaryActivity of this._primaryActivityQueue.listActivities()) {
+      if (primaryActivity.state !== PrimaryActivityState.active) {
+        continue;
+      }
 
-    if (this._sidejobActivityValidator.validate(sidejobActivity.sidejob) && !this._assignedClones.has(assignedClone)) {
-      sidejobActivity.active = true;
-      this._assignedClones.add(assignedClone);
-    } else {
-      sidejobActivity.active = false;
+      primaryActivity.assignedClones.forEach((clone) => {
+        this._assignedClones.add(clone);
+      });
+    }
+  }
+
+  private assignFinishedActivities() {
+    for (const primaryActivity of this._primaryActivityQueue.listActivities()) {
+      if (primaryActivity.state !== PrimaryActivityState.finishedPerforming) {
+        continue;
+      }
+
+      if (primaryActivity.assignedClones.some((clone) => this._assignedClones.has(clone))) {
+        continue;
+      }
+
+      if (primaryActivity.start()) {
+        primaryActivity.assignedClones.forEach((clone) => {
+          this._assignedClones.add(clone);
+        });
+      }
+    }
+  }
+
+  private assignInactiveActivities() {
+    for (const primaryActivity of this._primaryActivityQueue.listActivities()) {
+      if (primaryActivity.state !== PrimaryActivityState.inactive) {
+        continue;
+      }
+
+      if (primaryActivity.assignedClones.some((clone) => this._assignedClones.has(clone))) {
+        continue;
+      }
+
+      if (primaryActivity.start()) {
+        primaryActivity.assignedClones.forEach((clone) => {
+          this._assignedClones.add(clone);
+        });
+      }
+    }
+  }
+
+  private assignSidejobs() {
+    for (const sidejobActivity of this._sidejobsActivity.listActivities()) {
+      const assignedClone = sidejobActivity.sidejob.assignedClone;
+
+      if (
+        this._sidejobActivityValidator.validate(sidejobActivity.sidejob) &&
+        !this._assignedClones.has(assignedClone)
+      ) {
+        sidejobActivity.active = true;
+        this._assignedClones.add(assignedClone);
+      } else {
+        sidejobActivity.active = false;
+      }
     }
   }
 }

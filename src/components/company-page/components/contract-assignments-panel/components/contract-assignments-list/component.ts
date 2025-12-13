@@ -40,7 +40,7 @@ export class ContractAssignmentsList extends BaseComponent {
         <div class="header-column">${msg('Contract')}</div>
         <div class="header-column">${msg('District')}</div>
         <div class="header-column">${msg('Assigned clones')}</div>
-        <div class="header-column">${msg('Validity')}</div>
+        <div class="header-column">${msg('Status')}</div>
         <div class="buttons">
           <sl-tooltip>
             <span slot="content"> ${toggleContractAssignmentsLabel} </span>

@@ -67,6 +67,18 @@ export class DistrictContractsCountersState implements IDistrictContractsCounter
     return Math.min(this._districtState.parameters.connectivity.totalValue / requiredConnectivity, 1);
   }
 
+  useContract(contractName: string): boolean {
+    const availableAmount = this.getAvailableAmount(contractName);
+
+    if (availableAmount <= 0) {
+      return false;
+    }
+
+    this._availableAmountsMap.set(contractName, availableAmount - 1);
+
+    return true;
+  }
+
   processTick(): void {
     const availableActivities = this._unlockState.activities.contracts.listAvailableActivities();
 

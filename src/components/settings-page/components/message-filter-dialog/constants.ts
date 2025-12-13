@@ -8,6 +8,7 @@ import {
   MessageEventGroup,
   ContractsEvent,
   MessageEvent,
+  PrimaryActivitiesEvent,
 } from '@shared/index';
 
 export const MESSAGE_EVENT_GROUP_NAMES: Record<MessageEventGroup, () => string> = {
@@ -16,6 +17,7 @@ export const MESSAGE_EVENT_GROUP_NAMES: Record<MessageEventGroup, () => string> 
   [MessageEventGroup.clones]: () => msg('Clones events'),
   [MessageEventGroup.sidejobs]: () => msg('Sidejobs events'),
   [MessageEventGroup.contracts]: () => msg('Contracts events'),
+  [MessageEventGroup.primaryActivities]: () => msg('Primary activities events'),
   [MessageEventGroup.city]: () => msg('City events'),
 };
 
@@ -43,5 +45,9 @@ export const MESSAGE_EVENT_NAMES: Record<MessageEvent, () => string> = {
   [ContractsEvent.contractAssigned]: () => msg('Contract assigned'),
   [ContractsEvent.contractAssignmentRemoved]: () => msg('Contract assignment removed'),
   [ContractsEvent.allContractAssignmentsRemoved]: () => msg('All contracts assignments removed'),
+  [PrimaryActivitiesEvent.primaryActivityStarted]: () => msg('Primary activity started'),
+  [PrimaryActivitiesEvent.primaryActivityCancelled]: () => msg('Primary activity cancelled'),
+  [PrimaryActivitiesEvent.primaryActivityFinished]: () => msg('Primary activity finished'),
+  [PrimaryActivitiesEvent.allPrimaryActivitiesCancelled]: () => msg('All primary activities finished'),
   [CityEvent.districtTierIncreased]: () => msg('City district tier increased'),
 };

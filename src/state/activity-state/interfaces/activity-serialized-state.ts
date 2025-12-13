@@ -1,5 +1,6 @@
-import { ISidejobsSerializedState } from '../states';
+import { ISerializedPrimaryActivityQueue, ISidejobsActivitySerializedState } from '../states';
 
 export interface IActivitySerializedState {
-  sidejobs: ISidejobsSerializedState;
+  sidejobs: ISidejobsActivitySerializedState;
+  primaryActivityQueue: ISerializedPrimaryActivityQueue;
 }

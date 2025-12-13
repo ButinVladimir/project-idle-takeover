@@ -12,9 +12,10 @@ export const STATISTICS_PAGE_TAB_NAMES = {
   [StatisticsPageTabs.income]: () => msg('Income'),
 };
 
-export const INCOME_SOURCE_NAMES = {
+export const INCOME_SOURCE_NAMES: Record<IncomeSource, () => string> = {
   [IncomeSource.program]: () => msg('By programs'),
   [IncomeSource.sidejob]: () => msg('By sidejobs'),
+  [IncomeSource.contract]: () => msg('By contracts'),
 };
 
 export const STATISTIC_PAGE_TEXTS = {

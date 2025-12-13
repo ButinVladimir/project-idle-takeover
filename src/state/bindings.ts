@@ -138,9 +138,11 @@ import {
   ContractsFactory,
   IContractActivityValidator,
   ContractActivityValidator,
+  IPrimaryActivityQueue,
 } from '@state/activity-state';
 import { TYPES } from './types';
 import { container } from './container';
+import { PrimaryActivityQueue } from './activity-state/states/primary-activity-queue/primary-activity-queue';
 
 container.bind<IStateUIConnector>(TYPES.StateUIConnector).to(StateUIConnector).inSingletonScope().whenTargetIsDefault();
 
@@ -439,6 +441,12 @@ container
   .whenTargetIsDefault();
 
 container.bind<IContractsFactory>(TYPES.ContractsFactory).to(ContractsFactory).inSingletonScope().whenTargetIsDefault();
+
+container
+  .bind<IPrimaryActivityQueue>(TYPES.PrimaryActivityQueue)
+  .to(PrimaryActivityQueue)
+  .inSingletonScope()
+  .whenTargetIsDefault();
 
 container
   .bind<IContractActivityValidator>(TYPES.ContractActivityValidator)

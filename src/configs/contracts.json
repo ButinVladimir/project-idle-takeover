@@ -34,10 +34,14 @@
       }
     },
     "rewards": {
-      "experience": { "multiplier": 1, "base": 1 },
-      "money": { "multiplier": 1, "base": 1 },
-      "developmentPoints": { "multiplier": 1, "base": 1 },
-      "influence": { "multiplier": 1, "base": 1 }
+      "experience": { "multiplier": 100000, "base": 1 },
+      "money": { "multiplier": 100000, "base": 1 },
+      "developmentPoints": { "multiplier": 100000, "base": 1 },
+      "influence": { "multiplier": 100000, "base": 1 },
+      "connectivity": { "multiplier": 100000, "base": 1 },
+      "rewards": { "multiplier": 100000, "base": 1 },
+      "codeBase": { "multiplier": 100000, "base": 1 },
+      "computationalBase": { "multiplier": 100000, "base": 1 }
     }
   }
 }

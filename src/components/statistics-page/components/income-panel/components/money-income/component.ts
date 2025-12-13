@@ -37,6 +37,9 @@ export class StatisticsMoneyIncome extends BaseComponent {
           ${this._controller.isFeatureUnlocked(Feature.companyManagement)
             ? this.renderIncomeSource(IncomeSource.sidejob)
             : nothing}
+          ${this._controller.isFeatureUnlocked(Feature.contracts)
+            ? this.renderIncomeSource(IncomeSource.contract)
+            : nothing}
 
           <div>${STATISTIC_PAGE_TEXTS.total()}</div>
           <div ${ref(this._totalIncomeRef)}></div>

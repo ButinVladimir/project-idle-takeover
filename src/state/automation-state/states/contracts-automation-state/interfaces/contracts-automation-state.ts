@@ -13,7 +13,8 @@ export interface IContractsAutomationState extends ISerializeable<IContractsAuto
   addContractAssignment(parameters: IMakeContractAutomationStateArgs): void;
   removeContractAssignmentById(id: string): void;
   removeAllContractAssignments(): void;
+  removeCloneFromAssignments(cloneId: string): void;
   moveContractAssignment(id: string, position: number): void;
   toggleAllContractAssignments(active: boolean): void;
-  repeatAll(): void;
+  startAll(): void;
 }

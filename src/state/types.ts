@@ -67,6 +67,7 @@ export const TYPES = {
   ContractsFactory: Symbol('ContractsFactory'),
   ContractActivityValidator: Symbol('ContractActivityValidator'),
   ContractsAutomationState: Symbol('ContractsAutomationState'),
+  PrimaryActivityQueue: Symbol('PrimaryActivityQueue'),
   ExperienceShareState: Symbol('ExperienceShareState'),
   ProcessCompletionSpeedState: Symbol('ProcessCompletionSpeedState'),
   OwnedClonesLevelUpgrader: Symbol('OwnedClonesLevelUpgrader'),

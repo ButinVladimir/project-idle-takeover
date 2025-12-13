@@ -36,10 +36,6 @@ export class ContractActivityValidator implements IContractActivityValidator {
       return ContractValidationResult.requirementsNotMet;
     }
 
-    if (contract.district.counters.contracts.getAvailableAmount(contract.contractName) <= 0) {
-      return ContractValidationResult.noContractsAvailable;
-    }
-
     return ContractValidationResult.valid;
   }
 

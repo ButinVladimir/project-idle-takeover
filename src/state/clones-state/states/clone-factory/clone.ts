@@ -156,7 +156,6 @@ export class Clone implements IClone {
     );
 
     this.recalculateParameters();
-    this.handlePerformanceUpdate();
   }
 
   getLevelRequirements(level: number): number {
@@ -230,7 +229,6 @@ export class Clone implements IClone {
       );
 
       this.recalculateParameters();
-      this.handlePerformanceUpdate();
     }
   }
 
@@ -277,13 +275,5 @@ export class Clone implements IClone {
       reverseGeometricProgressionSum(this._experience, multiplier, base),
       this._globalState.development.level,
     );
-  }
-
-  private handlePerformanceUpdate(): void {
-    const sidejob = this._activityState.sidejobsActivity.getActivityByCloneId(this._id);
-
-    if (sidejob?.isActive) {
-      sidejob.handlePerformanceUpdate();
-    }
   }
 }

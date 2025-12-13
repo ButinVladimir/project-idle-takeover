@@ -4,7 +4,14 @@ import { provide } from '@lit/context';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
-import { BaseComponent, DELETE_VALUES, DESCRIPTION_ICONS, ContractAlert, ENTITY_ACTIVE_VALUES } from '@shared/index';
+import {
+  BaseComponent,
+  DELETE_VALUES,
+  DESCRIPTION_ICONS,
+  ContractAlert,
+  ENTITY_ACTIVE_VALUES,
+  START_ACTIVITY_ICON,
+} from '@shared/index';
 import { COMMON_TEXTS, CONTRACT_TEXTS, DISTRICT_NAMES } from '@texts/index';
 import { type IContractAssignment } from '@state/automation-state';
 import { ContractAssignmentsListItemController } from './controller';
@@ -63,6 +70,9 @@ export class ContractAssignmentListItem extends BaseComponent {
 
     const districtName = DISTRICT_NAMES[this._contractAssignment.contract.district.name]();
 
+    const canBeStarted = this._contractAssignment.canBeStarted();
+    const startLabel = msg('Start performing assigned contracts');
+
     const toggleIcon = this._contractAssignment.active
       ? ENTITY_ACTIVE_VALUES.icon.active
       : ENTITY_ACTIVE_VALUES.icon.stopped;
@@ -107,9 +117,21 @@ export class ContractAssignmentListItem extends BaseComponent {
           )}
         </div>
 
-        <div><ca-contract-assignments-list-item-validity></ca-contract-assignments-list-item-validity></div>
+        <div><ca-contract-assignments-list-item-status></ca-contract-assignments-list-item-status></div>
 
         <div class="buttons">
+          <sl-tooltip>
+            <span slot="content"> ${startLabel} </span>
+
+            <sl-icon-button
+              ?disabled=${!canBeStarted}
+              name=${START_ACTIVITY_ICON}
+              label=${startLabel}
+              @click=${this.handleStartContractAssignment}
+            >
+            </sl-icon-button>
+          </sl-tooltip>
+
           <sl-tooltip>
             <span slot="content"> ${toggleLabel} </span>
 
@@ -154,10 +176,16 @@ export class ContractAssignmentListItem extends BaseComponent {
 
     const districtNameFull = COMMON_TEXTS.parameterRow(msg('District'), districtName);
     const cloneNamesFull = COMMON_TEXTS.parameterRow(msg('Assigned clones'), cloneNames.join(', '));
-    const validityFull = COMMON_TEXTS.parameterRow(
-      msg('Validity'),
-      html`<ca-contract-assignments-list-item-validity></ca-contract-assignments-list-item-validity>`,
+    const statusFull = COMMON_TEXTS.parameterRow(
+      msg('Status'),
+      html`<ca-contract-assignments-list-item-status></ca-contract-assignments-list-item-status>`,
     );
+
+    const canBeStarted = this._contractAssignment.canBeStarted();
+    const startLabel = msg('Start performing assigned contracts');
+    const startVariant = canBeStarted
+      ? ENTITY_ACTIVE_VALUES.buttonVariant.active
+      : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
 
     const toggleIcon = this._contractAssignment.active
       ? ENTITY_ACTIVE_VALUES.icon.active
@@ -200,9 +228,20 @@ export class ContractAssignmentListItem extends BaseComponent {
 
         <div>${cloneNamesFull}</div>
 
-        <div>${validityFull}</div>
+        <div>${statusFull}</div>
 
         <div class="buttons">
+          <sl-button
+            ?disabled=${!canBeStarted}
+            variant=${startVariant}
+            size="medium"
+            @click=${this.handleStartContractAssignment}
+          >
+            <sl-icon slot="prefix" name=${START_ACTIVITY_ICON}></sl-icon>
+
+            ${startLabel}
+          </sl-button>
+
           <sl-button variant=${toggleVariant} size="medium" @click=${this.handleToggleContractAssignment}>
             <sl-icon slot="prefix" name=${toggleIcon}></sl-icon>
 
@@ -263,5 +302,9 @@ export class ContractAssignmentListItem extends BaseComponent {
 
   private handleToggleContractAssignment = () => {
     this._controller.toggleContractAssignment();
+  };
+
+  private handleStartContractAssignment = () => {
+    this._contractAssignment!.start();
   };
 }
