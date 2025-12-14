@@ -81,6 +81,12 @@ export class ContractsAutomationState implements IContractsAutomationState {
     } else {
       contractAssignment = this._contractAssignmentsList[existingAutomationIndex];
       contractAssignment.contract = this._activityState.contractsFactory.makeContract(parameters.contract);
+
+      const activity = this._activityState.primaryActivityQueue.getActivityByAssignmentId(contractAssignment.id);
+
+      if (activity) {
+        activity.abortCurrentCompletion();
+      }
     }
 
     this._messageLogState.postMessage(
@@ -116,9 +122,14 @@ export class ContractsAutomationState implements IContractsAutomationState {
   }
 
   removeAllContractAssignments(): void {
-    this.clearAssignments();
+    this._contractAssignmentsList.forEach((contractAssignment) => {
+      const activity = this._activityState.primaryActivityQueue.getActivityByAssignmentId(contractAssignment.id);
+      if (activity) {
+        this._activityState.primaryActivityQueue.cancelActivityById(activity.activityId);
+      }
+    });
 
-    this._activityState.primaryActivityQueue.cancelAllActivities();
+    this.clearAssignments();
 
     this._messageLogState.postMessage(
       ContractsEvent.allContractAssignmentsRemoved,
@@ -203,8 +214,8 @@ export class ContractsAutomationState implements IContractsAutomationState {
   }
 
   private clearAssignments() {
-    this._contractAssignmentsList.forEach((contactAutomationState) => {
-      contactAutomationState.removeAllEventListeners();
+    this._contractAssignmentsList.forEach((contractAssignment) => {
+      contractAssignment.removeAllEventListeners();
     });
 
     this._contractAssignmentsList.length = 0;

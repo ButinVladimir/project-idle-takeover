@@ -50,6 +50,10 @@ const styles = css`
     }
   }
 
+  .tooltip-content p {
+    margin: 0;
+  }
+
   .notification {
     padding: var(--sl-spacing-3x-large);
     text-align: center;

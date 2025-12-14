@@ -18,10 +18,6 @@ const styles = [
     sl-progress-bar {
       --height: var(--sl-spacing-large);
     }
-
-    sl-progress-bar::part(label) {
-      font-size: var(--sl-font-size-small);
-    }
   `,
 ];
 

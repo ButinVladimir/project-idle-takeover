@@ -39,9 +39,10 @@ export const COMMON_TEXTS = {
   parameterDiff: (valueElement: any, diffElement: any) => msg(html`${valueElement} (${diffElement})`),
   parameterSpeed: (value: any) => msg(html`${value} per second`),
   parameterSpeedDiff: (valueElement: any, diffElement: any) => msg(html`${valueElement} (${diffElement}) per second`),
-  parameterCompletion: (valueElement: any, speedElement: any) =>
+  parameterCompletion: (valueElement: any) => msg(html`${valueElement} per completion`),
+  parameterCompletionSpeed: (valueElement: any, speedElement: any) =>
     msg(html`${valueElement} per completion (${speedElement} per second)`),
-  parameterCompletionDiff: (valueElement: any, diffElement: any, speedElement: any, speedDiffElement: any) =>
+  parameterCompletionSpeedDiff: (valueElement: any, diffElement: any, speedElement: any, speedDiffElement: any) =>
     msg(html`${valueElement} (${diffElement}) per completion (${speedElement} per second) (${speedDiffElement})`),
   hotkey: (hotkey?: string) => msg(str`Hotkey: ${hotkey?.toLocaleUpperCase() ?? ''}`),
   completionTime: () => msg('Completion time'),

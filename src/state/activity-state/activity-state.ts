@@ -69,9 +69,9 @@ export class ActivityState implements IActivityState {
   }
 
   processTick() {
-    this.reassign();
     this._primaryActivityQueue.perform();
     this._sidejobsActivity.perform();
+    this.reassign();
   }
 
   private reassign() {
@@ -84,8 +84,7 @@ export class ActivityState implements IActivityState {
     this._assignedClones.clear();
 
     this.assignActivePrimaryActivities();
-    this.assignFinishedActivities();
-    this.assignInactiveActivities();
+    this.assignInactivePrimaryActivities();
     this.assignSidejobs();
 
     this._primaryActivityQueue.filterActivities();
@@ -122,25 +121,7 @@ export class ActivityState implements IActivityState {
     }
   }
 
-  private assignFinishedActivities() {
-    for (const primaryActivity of this._primaryActivityQueue.listActivities()) {
-      if (primaryActivity.state !== PrimaryActivityState.finishedPerforming) {
-        continue;
-      }
-
-      if (primaryActivity.assignedClones.some((clone) => this._assignedClones.has(clone))) {
-        continue;
-      }
-
-      if (primaryActivity.start()) {
-        primaryActivity.assignedClones.forEach((clone) => {
-          this._assignedClones.add(clone);
-        });
-      }
-    }
-  }
-
-  private assignInactiveActivities() {
+  private assignInactivePrimaryActivities() {
     for (const primaryActivity of this._primaryActivityQueue.listActivities()) {
       if (primaryActivity.state !== PrimaryActivityState.inactive) {
         continue;

@@ -4,8 +4,6 @@ import { BaseController } from '@shared/index';
 import { IDistrictState } from '@state/city-state';
 
 export class AssignClonesContractDialogController extends BaseController {
-  private _contract?: IContract;
-
   listClones(): IClone[] {
     return this.clonesState.ownedClones.listClones();
   }
@@ -19,9 +17,7 @@ export class AssignClonesContractDialogController extends BaseController {
   }
 
   getContract(args: ISerializedContract): IContract {
-    this._contract = this.activityState.contractsFactory.makeContract(args);
-
-    return this._contract;
+    return this.activityState.contractsFactory.makeContract(args);
   }
 
   getExistingContractByDistrictAndContract(districtIndex: number, contractName: string): IContract | undefined {

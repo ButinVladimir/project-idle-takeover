@@ -18,6 +18,7 @@
       "playNormalSpeed": "w",
       "playFastSpeed": "e",
       "saveGame": "t",
+      "addContractAssignments": "u",
       "upgradeMainframeHardware": "a",
       "upgradeMainframePerformance": "s",
       "upgradeMainframeRam": "d",

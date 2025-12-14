@@ -30,6 +30,7 @@ import {
   ContractsEvent,
   ActivityUIActivityStatus,
   PrimaryActivitiesEvent,
+  PrimaryActivityAlert,
 } from './types';
 import { INames, type IConstants } from './interfaces';
 
@@ -66,6 +67,7 @@ export const GAME_ALERT_GROUPS = {
   [GameAlertGroup.clones]: Object.values(CloneAlert),
   [GameAlertGroup.sidejobs]: Object.values(SidejobAlert),
   [GameAlertGroup.contracts]: Object.values(ContractAlert),
+  [GameAlertGroup.primaryActivity]: Object.values(PrimaryActivityAlert),
 };
 
 export const FORCE_NOTIFICATION_TYPES: Set<NotificationType> = new Set<NotificationType>([

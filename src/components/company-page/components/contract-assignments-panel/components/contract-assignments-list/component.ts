@@ -2,10 +2,11 @@ import { html } from 'lit';
 import { localized, msg } from '@lit/localize';
 import { customElement } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { BaseComponent, ContractAlert, DELETE_VALUES, ENTITY_ACTIVE_VALUES } from '@shared/index';
+import { BaseComponent, ContractAlert, DELETE_VALUES, ENTITY_ACTIVE_VALUES, START_ACTIVITY_ICON } from '@shared/index';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { SortableElementMovedEvent } from '@components/shared/sortable-list/events/sortable-element-moved';
 import { IContractAssignment } from '@state/automation-state';
+import { COMMON_TEXTS } from '@texts/index';
 import { ContractAssignmentsListController } from './controller';
 import styles from './styles';
 
@@ -35,6 +36,10 @@ export class ContractAssignmentsList extends BaseComponent {
       ? msg('Disable all contract assignments')
       : msg('Enable all contract assignments');
 
+    const canStartContractAssignments = this._controller.checkCanStartAll();
+    const startLabel = msg('Add all assigned contracts to the queue');
+    const startHotkey = this._controller.getStartHotkey();
+
     return html`
       <div class="header desktop">
         <div class="header-column">${msg('Contract')}</div>
@@ -42,6 +47,21 @@ export class ContractAssignmentsList extends BaseComponent {
         <div class="header-column">${msg('Assigned clones')}</div>
         <div class="header-column">${msg('Status')}</div>
         <div class="buttons">
+          <sl-tooltip>
+            <div class="tooltip-content" slot="content">
+              <p>${startLabel}</p>
+              <p>${COMMON_TEXTS.hotkey(startHotkey)}</p>
+            </div>
+
+            <sl-icon-button
+              ?disabled=${!canStartContractAssignments}
+              name=${START_ACTIVITY_ICON}
+              label=${startLabel}
+              @click=${this.handleStartAllContractAssignments}
+            >
+            </sl-icon-button>
+          </sl-tooltip>
+
           <sl-tooltip>
             <span slot="content"> ${toggleContractAssignmentsLabel} </span>
 
@@ -83,9 +103,31 @@ export class ContractAssignmentsList extends BaseComponent {
       ? ENTITY_ACTIVE_VALUES.buttonVariant.active
       : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
 
+    const canStartContractAssignments = this._controller.checkCanStartAll();
+    const startLabel = msg('Add all assigned contracts to the queue');
+    const startVariant = canStartContractAssignments
+      ? ENTITY_ACTIVE_VALUES.buttonVariant.active
+      : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
+    const startHotkey = this._controller.getStartHotkey();
+
     return html`
       <div class="header mobile">
         <div class="buttons">
+          <sl-tooltip>
+            <span slot="content">${COMMON_TEXTS.hotkey(startHotkey)} </span>
+
+            <sl-button
+              ?disabled=${!canStartContractAssignments}
+              variant=${startVariant}
+              size="medium"
+              @click=${this.handleStartAllContractAssignments}
+            >
+              <sl-icon slot="prefix" name=${START_ACTIVITY_ICON}></sl-icon>
+
+              ${startLabel}
+            </sl-button>
+          </sl-tooltip>
+
           <sl-button
             variant=${toggleContractAssignmentsVariant}
             size="medium"
@@ -142,6 +184,10 @@ export class ContractAssignmentsList extends BaseComponent {
         this.handleRemoveAllContractAssignments,
       ),
     );
+  };
+
+  private handleStartAllContractAssignments = () => {
+    this._controller.startAllContractAssignments();
   };
 
   private handleRemoveAllContractAssignments = () => {

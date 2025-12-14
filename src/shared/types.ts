@@ -74,7 +74,7 @@ export enum ContractsEvent {
 }
 
 export enum PrimaryActivitiesEvent {
-  primaryActivityStarted = 'primaryActivityStarted',
+  primaryActivityAdded = 'primaryActivityAdded',
   primaryActivityFinished = 'primaryActivityFinished',
   primaryActivityCancelled = 'primaryActivityCancelled',
   allPrimaryActivitiesCancelled = 'allPrimaryActivitiesCancelled',
@@ -138,15 +138,27 @@ export enum ContractAlert {
   replaceContractAssignment = 'replaceContractAssignment',
 }
 
+export enum PrimaryActivityAlert {
+  cancelAllPrimaryActivities = 'cancelAllPrimaryActivities',
+  cancelPrimaryActivity = 'cancelPrimaryActivity',
+}
+
 export enum GameAlertGroup {
   gameState = 'gameState',
   programs = 'programs',
   clones = 'clones',
   sidejobs = 'sidejobs',
   contracts = 'contracts',
+  primaryActivity = 'primaryActivity',
 }
 
-export type GameAlert = GameStateAlert | ProgramAlert | CloneAlert | SidejobAlert | ContractAlert;
+export type GameAlert =
+  | GameStateAlert
+  | ProgramAlert
+  | CloneAlert
+  | SidejobAlert
+  | ContractAlert
+  | PrimaryActivityAlert;
 
 export enum NotificationType {
   storyEvent = 'storyEvent',
@@ -259,6 +271,7 @@ export enum Hotkey {
   playNormalSpeed = 'playNormalSpeed',
   playFastSpeed = 'playFastSpeed',
   saveGame = 'saveGame',
+  addContractAssignments = 'addContractAssignments',
   upgradeMainframeHardware = 'upgradeMainframeHardware',
   upgradeMainframePerformance = 'upgradeMainframePerformance',
   upgradeMainframeRam = 'upgradeMainframeRam',

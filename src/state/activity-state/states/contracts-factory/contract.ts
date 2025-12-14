@@ -111,10 +111,10 @@ export class Contract implements IContract {
     );
   }
 
-  calculateParameterDelta(parameter: DistrictTypeRewardParameter): number {
+  calculateParameterDelta(parameter: DistrictTypeRewardParameter): number | undefined {
     const sidejobModifier = this.contractTemplate.rewards[parameter];
     if (!sidejobModifier) {
-      return 0;
+      return undefined;
     }
 
     const cloneParametersModifier = this.getCloneParametersModifier();
@@ -140,7 +140,7 @@ export class Contract implements IContract {
       case DistrictTypeRewardParameter.rewards:
         return baseDelta;
       default:
-        return 0;
+        return undefined;
     }
   }
 

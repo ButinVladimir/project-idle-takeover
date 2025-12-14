@@ -4,8 +4,6 @@ import { IContractAssignment } from '@state/automation-state';
 
 export class ContractAssignmentsListItemStatusController extends BaseController {
   getContractActivity(contractAssignment: IContractAssignment): IPrimaryActivity | undefined {
-    debugger;
-
     return this.activityState.primaryActivityQueue.getActivityByAssignmentId(contractAssignment.id);
   }
 

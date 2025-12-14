@@ -82,6 +82,8 @@ export class PrimaryActivityQueue implements IPrimaryActivityQueue {
 
     this._activityState.requestReassignment();
 
+    this._messageLogState.postMessage(PrimaryActivitiesEvent.primaryActivityAdded, activity.getActivityAddedMessage());
+
     return true;
   }
 
@@ -217,6 +219,10 @@ export class PrimaryActivityQueue implements IPrimaryActivityQueue {
   private rewardActivity(activity: IPrimaryActivity): void {
     for (const parameter of DISTRICT_TYPE_REWARD_PARAMETERS) {
       const delta = activity.getParameterReward(parameter);
+
+      if (delta === undefined) {
+        continue;
+      }
 
       switch (parameter) {
         case DistrictTypeRewardParameter.money:

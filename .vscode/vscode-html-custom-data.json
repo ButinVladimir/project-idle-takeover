@@ -292,7 +292,7 @@
     },
     {
       "name": "ca-contract-assignments-list",
-      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderContractAssignmentsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderContractAssignment` - \n\n  * `handleOpenRemoveAllContractAssignmentsDialog` - \n\n  * `handleRemoveAllContractAssignments` - \n\n  * `handleMoveContractAssignment` - \n\n  * `handleToggleAllContractAssignments` - \n\n  * `_controller` {`ContractAssignmentsListController`} - ",
+      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderContractAssignmentsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderContractAssignment` - \n\n  * `handleOpenRemoveAllContractAssignmentsDialog` - \n\n  * `handleStartAllContractAssignments` - \n\n  * `handleRemoveAllContractAssignments` - \n\n  * `handleMoveContractAssignment` - \n\n  * `handleToggleAllContractAssignments` - \n\n  * `_controller` {`ContractAssignmentsListController`} - ",
       "attributes": []
     },
     {
@@ -312,6 +312,53 @@
         {
           "name": "assignment-id",
           "description": "`assignment-id` {`string`} - \n\nProperty: assignmentId"
+        }
+      ]
+    },
+    {
+      "name": "ca-company-primary-activity-queue-panel",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderContent` - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-primary-activity-queue-list",
+      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderPrimaryActivity` - \n\n  * `handleOpenCancelAllPrimaryActivitiesDialog` - \n\n  * `handleCancelAllPrimaryActivities` - \n\n  * `_controller` {`PrimaryActivityQueueListController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-primary-activity-queue-list-item-contract-description",
+      "description": "Attributes:\n\n  * `details-visible` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `detailsVisible` {`boolean`} - \n\n  * `_contractActivity` - \n\n  * `_progressBarRef` {`Ref<SlProgressBar>`} - \n\n  * `_timerRef` {`Ref<HTMLSpanElement>`} - \n\n  * `renderDetails` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "details-visible",
+          "description": "`details-visible` {`boolean`} - \n\nProperty: detailsVisible",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-primary-activity-queue-list-item-description",
+      "description": "Attributes:\n\n  * `details-visible` {`boolean`} - \n\nProperties:\n\n  * `styles` {`CSSResult[]`} - \n\n  * `detailsVisible` {`boolean`} - \n\n  * `_primaryActivity` - \n\n  * `renderTypeSpecificDescription` - \n\n  * `renderRewards` - ",
+      "attributes": [
+        {
+          "name": "details-visible",
+          "description": "`details-visible` {`boolean`} - \n\nProperty: detailsVisible",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-primary-activity-queue-list-item-rewards",
+      "description": "Properties:\n\n  * `styles` {`CSSResult[]`} - \n\n  * `_primaryActivity` - \n\n  * `renderParameter` - \n\n  * `_controller` {`PrimaryActivityQueueListItemDescriptionController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-primary-activity-queue-list-item",
+      "description": "Attributes:\n\n  * `activity-id` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `activityId` {`string`} - \n\n  * `_detailsVisible` {`boolean`} - \n\n  * `_activity` - \n\n  * `handleOpenDeleteCloneDialog` - \n\n  * `handleCancelPrimaryActivity` - \n\n  * `handleToggleDetails` - \n\n  * `_controller` {`PrimaryActivityQueueListItemController`} - ",
+      "attributes": [
+        {
+          "name": "activity-id",
+          "description": "`activity-id` {`string`} - \n\nProperty: activityId"
         }
       ]
     },
@@ -781,7 +828,7 @@
     },
     {
       "name": "ca-overview-unlocked-content-panel",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_itemTypeFilterInputRef` {`Ref<SlSelect>`} - \n\n  * `_itemTypeFilter` {`ItemTypeFilter`} - \n\n  * `handleItemTypeFilterChange` - \n\n  * `_controller` {`OverviewUnlockedContentPanelController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_itemTypeFilterInputRef` {`Ref<SlSelect>`} - \n\n  * `_itemTypeFilter` {`ItemTypeFilter`} - \n\n  * `handleItemTypeFilterChange` - \n\n  * `renderSidejobs` - \n\n  * `renderContracts` - \n\n  * `renderPrograms` - \n\n  * `renderClones` - \n\n  * `_controller` {`OverviewUnlockedContentPanelController`} - ",
       "attributes": []
     },
     {
@@ -804,6 +851,11 @@
           ]
         }
       ]
+    },
+    {
+      "name": "ca-overview-unlocked-contracts",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderList` - \n\n  * `renderListItem` - \n\n  * `_controller` {`OverviewUnlockedContractsController`} - ",
+      "attributes": []
     },
     {
       "name": "ca-overview-unlocked-features",

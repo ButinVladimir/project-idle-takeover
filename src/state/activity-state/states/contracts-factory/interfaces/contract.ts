@@ -18,6 +18,6 @@ export interface IContract {
   getSkillRequiredTeamSize(skill: Skill): number;
   getAttributeModifier(attribute: Attribute): number;
   getSkillModifier(skill: Skill): number;
-  calculateParameterDelta(parameter: DistrictTypeRewardParameter): number;
+  calculateParameterDelta(parameter: DistrictTypeRewardParameter): number | undefined;
   serialize(): ISerializedContract;
 }

@@ -7,6 +7,7 @@ import {
   GameAlertGroup,
   GameAlert,
   ContractAlert,
+  PrimaryActivityAlert,
 } from '@shared/index';
 
 export const GAME_ALERT_GROUP_NAMES: Record<GameAlertGroup, () => string> = {
@@ -15,6 +16,7 @@ export const GAME_ALERT_GROUP_NAMES: Record<GameAlertGroup, () => string> = {
   [GameAlertGroup.clones]: () => msg('Clones alerts'),
   [GameAlertGroup.sidejobs]: () => msg('Sidejobs alerts'),
   [GameAlertGroup.contracts]: () => msg('Contracts alerts'),
+  [GameAlertGroup.primaryActivity]: () => msg('Primary activities alerts'),
 };
 
 export const GAME_ALERT_NAMES: Record<GameAlert, () => string> = {
@@ -38,4 +40,6 @@ export const GAME_ALERT_NAMES: Record<GameAlert, () => string> = {
   [ContractAlert.contractAssignmentRemove]: () => msg('Remove a contract assignments'),
   [ContractAlert.removeAllContractAssignments]: () => msg('Remove all contract assignments'),
   [ContractAlert.replaceContractAssignment]: () => msg('Replace a contract assignments'),
+  [PrimaryActivityAlert.cancelPrimaryActivity]: () => msg('Cancel a primary activity'),
+  [PrimaryActivityAlert.cancelAllPrimaryActivities]: () => msg('Cancel all primary activities'),
 };

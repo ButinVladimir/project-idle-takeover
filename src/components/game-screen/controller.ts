@@ -58,6 +58,10 @@ export class GameScreenController extends BaseController {
     this.app.saveGame();
   }
 
+  private startContracts() {
+    this.automationState.contracts.startAll();
+  }
+
   private handleKeyDown = (event: KeyboardEvent) => {
     const target = event.composedPath()[0];
 
@@ -84,6 +88,9 @@ export class GameScreenController extends BaseController {
         break;
       case Hotkey.saveGame:
         this.saveGame();
+        break;
+      case Hotkey.addContractAssignments:
+        this.startContracts();
         break;
       case Hotkey.upgradeMainframeHardware:
         this.upgradeMainframeHardware();

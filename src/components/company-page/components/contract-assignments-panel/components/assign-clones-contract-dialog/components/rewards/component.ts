@@ -82,7 +82,7 @@ export class AssignClonesContractDialogRewards extends BaseComponent {
     const speedElement = html`<span data-value=${parameter} data-type=${DISPLAY_TYPES.SPEED}></span>`;
     const speedDiffElement = html`<span data-value=${parameter} data-type=${DISPLAY_TYPES.SPEED_DIFF}></span>`;
 
-    const parameterText = COMMON_TEXTS.parameterCompletionDiff(
+    const parameterText = COMMON_TEXTS.parameterCompletionSpeedDiff(
       valueElement,
       diffElement,
       speedElement,
@@ -107,7 +107,12 @@ export class AssignClonesContractDialogRewards extends BaseComponent {
 
   private updateParameter = (parameter: DistrictTypeRewardParameter) => {
     const newValue = this._contract!.calculateParameterDelta(parameter);
-    const oldValue = this._existingContract ? this._existingContract!.calculateParameterDelta(parameter) : 0;
+
+    if (newValue === undefined) {
+      return;
+    }
+
+    const oldValue = this._existingContract?.calculateParameterDelta(parameter) ?? 0;
 
     const newSpeed = (newValue / this._contract!.completionTime) * MS_IN_SECOND;
     const oldSpeed = this._existingContract ? (oldValue / this._existingContract.completionTime) * MS_IN_SECOND : 0;

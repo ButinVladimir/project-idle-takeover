@@ -66,7 +66,7 @@ export class ContractsAssignmentsListItemDescription extends BaseComponent {
 
       <p class="text">${COMMON_TEXTS.parameterRow(COMMON_TEXTS.completionTime(), formattedCompletionTime)}</p>
 
-      <p class="rewards">${msg('Rewards')}</p>
+      <p class="rewards">${msg('Projected rewards')}</p>
 
       ${DISTRICT_TYPE_REWARD_PARAMETERS.map((parameter) => this.renderParameter(parameter))}
     `;
@@ -87,7 +87,7 @@ export class ContractsAssignmentsListItemDescription extends BaseComponent {
     const valueElement = html`<span data-value=${parameter} data-type=${DISPLAY_TYPES.VALUE}></span>`;
     const speedElement = html`<span data-value=${parameter} data-type=${DISPLAY_TYPES.SPEED}></span>`;
 
-    const parameterText = COMMON_TEXTS.parameterCompletion(valueElement, speedElement);
+    const parameterText = COMMON_TEXTS.parameterCompletionSpeed(valueElement, speedElement);
 
     return html`<p class="text">${COMMON_TEXTS.parameterRow(parameterName, parameterText)}</p>`;
   };
@@ -105,6 +105,11 @@ export class ContractsAssignmentsListItemDescription extends BaseComponent {
 
   private updateParameter = (parameter: DistrictTypeRewardParameter) => {
     const value = this._assignment!.contract.calculateParameterDelta(parameter);
+
+    if (value === undefined) {
+      return;
+    }
+
     const speed = (value / this._assignment!.contract.completionTime) * MS_IN_SECOND;
 
     this._rewardValues[parameter].value = value;

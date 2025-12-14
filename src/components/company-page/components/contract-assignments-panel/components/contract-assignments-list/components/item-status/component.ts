@@ -88,7 +88,7 @@ export class ContractAssignmentsListItemStatus extends BaseComponent {
   private getText(status: ActivityUIActivityStatus, validationResult: ContractValidationResult): string {
     switch (status) {
       case ActivityUIActivityStatus.active:
-        return msg('Contract assignment is active');
+        return msg('Contract assignment is in primary activity queue');
       case ActivityUIActivityStatus.valid:
         return msg('Contract assignment is valid');
       case ActivityUIActivityStatus.notAvailable:

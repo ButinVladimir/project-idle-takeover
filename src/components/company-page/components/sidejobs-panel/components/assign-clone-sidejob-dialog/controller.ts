@@ -4,8 +4,6 @@ import { BaseController } from '@shared/index';
 import { IDistrictState } from '@state/city-state';
 
 export class AssignCloneSidejobDialogController extends BaseController {
-  private _sidejob?: ISidejob;
-
   listClones(): IClone[] {
     return this.clonesState.ownedClones.listClones();
   }
@@ -19,9 +17,7 @@ export class AssignCloneSidejobDialogController extends BaseController {
   }
 
   getSidejob(args: ISerializedSidejob): ISidejob {
-    this._sidejob = this.activityState.sidejobsFactory.makeSidejob(args);
-
-    return this._sidejob;
+    return this.activityState.sidejobsFactory.makeSidejob(args);
   }
 
   getExistingSidejobByClone(cloneId?: string): ISidejob | undefined {

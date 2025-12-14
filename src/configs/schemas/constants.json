@@ -104,6 +104,10 @@
             "upgradeClonesLevel": {
               "type": "string",
               "description": "Upgrade clones level"
+            },
+            "addContractAssignments": {
+              "type": "string",
+              "description": "Add contract assignments to the primary activity queue"
             }
           },
           "required": [
@@ -116,7 +120,8 @@
             "upgradeMainframeRam",
             "upgradeMainframeCores",
             "upgradeMainframePrograms",
-            "upgradeClonesLevel"
+            "upgradeClonesLevel",
+            "addContractAssignments"
           ]
         }
       },

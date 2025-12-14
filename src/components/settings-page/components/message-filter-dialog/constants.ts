@@ -45,7 +45,7 @@ export const MESSAGE_EVENT_NAMES: Record<MessageEvent, () => string> = {
   [ContractsEvent.contractAssigned]: () => msg('Contract assigned'),
   [ContractsEvent.contractAssignmentRemoved]: () => msg('Contract assignment removed'),
   [ContractsEvent.allContractAssignmentsRemoved]: () => msg('All contracts assignments removed'),
-  [PrimaryActivitiesEvent.primaryActivityStarted]: () => msg('Primary activity started'),
+  [PrimaryActivitiesEvent.primaryActivityAdded]: () => msg('Primary activity added to the queue'),
   [PrimaryActivitiesEvent.primaryActivityCancelled]: () => msg('Primary activity cancelled'),
   [PrimaryActivitiesEvent.primaryActivityFinished]: () => msg('Primary activity finished'),
   [PrimaryActivitiesEvent.allPrimaryActivitiesCancelled]: () => msg('All primary activities finished'),

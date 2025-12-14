@@ -71,7 +71,7 @@ export class ContractAssignmentListItem extends BaseComponent {
     const districtName = DISTRICT_NAMES[this._contractAssignment.contract.district.name]();
 
     const canBeStarted = this._contractAssignment.canBeStarted();
-    const startLabel = msg('Start performing assigned contracts');
+    const startLabel = msg('Add assigned contract to the queue');
 
     const toggleIcon = this._contractAssignment.active
       ? ENTITY_ACTIVE_VALUES.icon.active
@@ -182,7 +182,7 @@ export class ContractAssignmentListItem extends BaseComponent {
     );
 
     const canBeStarted = this._contractAssignment.canBeStarted();
-    const startLabel = msg('Start performing assigned contracts');
+    const startLabel = msg('Add assigned contract to the queue');
     const startVariant = canBeStarted
       ? ENTITY_ACTIVE_VALUES.buttonVariant.active
       : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
@@ -283,7 +283,7 @@ export class ContractAssignmentListItem extends BaseComponent {
       new ConfirmationAlertOpenEvent(
         ContractAlert.replaceContractAssignment,
         msg(
-          str`Are you sure want to remove contract assignment for contract "${contractName}" in district "${districtName}" assigned to clones ${cloneNames}?`,
+          str`Are you sure want to remove contract assignment for contract "${contractName}" in district "${districtName}" assigned to clones ${cloneNames}? It will also be removed from primary activity queue.`,
         ),
         this.handleRemoveContractAssignment,
       ),

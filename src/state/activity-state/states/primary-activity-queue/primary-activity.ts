@@ -55,9 +55,11 @@ export abstract class PrimaryActivity implements IPrimaryActivity {
     this._state = value;
   }
 
-  getParameterReward(parameter: DistrictTypeRewardParameter): number {
-    return this._parameterRewardsMap.get(parameter) ?? 0;
+  getParameterReward(parameter: DistrictTypeRewardParameter): number | undefined {
+    return this._parameterRewardsMap.get(parameter);
   }
+
+  abstract getActivityAddedMessage(): string;
 
   abstract getActivityCancelledMessage(): string;
 
@@ -66,7 +68,7 @@ export abstract class PrimaryActivity implements IPrimaryActivity {
   abstract perform(): PrimaryActivityPerformResult;
 
   abortCurrentCompletion() {
-    this._state = PrimaryActivityState.finishedPerforming;
+    this._state = PrimaryActivityState.inactive;
 
     this._activityState.requestReassignment();
   }

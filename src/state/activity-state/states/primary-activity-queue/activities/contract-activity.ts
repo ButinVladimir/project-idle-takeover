@@ -67,9 +67,23 @@ export class ContractActivity extends PrimaryActivity implements IContractActivi
     return this._contractAssignment.contract.district;
   }
 
-  getActivityCancelledMessage(): string {
+  getActivityAddedMessage(): string {
+    const contractName = CONTRACT_TEXTS[this._contractAssignment.contract.contractName].title();
+    const districtName = DISTRICT_NAMES[this._contractAssignment.contract.district.name]();
+    const cloneNames = this.assignedClones.map((clone) => clone.name).join(', ');
+
     return msg(
-      str`Primary activity for contract "${CONTRACT_TEXTS[this._contractAssignment.contract.contractName].title()}" in district "${DISTRICT_NAMES[this._contractAssignment.contract.district.name]()}" has been cancelled`,
+      str`Primary activity for contract "${contractName}" in district "${districtName}" assigned to ${cloneNames} has been added to the primary activity queue`,
+    );
+  }
+
+  getActivityCancelledMessage(): string {
+    const contractName = CONTRACT_TEXTS[this._contractAssignment.contract.contractName].title();
+    const districtName = DISTRICT_NAMES[this._contractAssignment.contract.district.name]();
+    const cloneNames = this.assignedClones.map((clone) => clone.name).join(', ');
+
+    return msg(
+      str`Primary activity for contract "${contractName}" in district "${districtName}" assigned to ${cloneNames} has been cancelled`,
     );
   }
 
@@ -82,6 +96,10 @@ export class ContractActivity extends PrimaryActivity implements IContractActivi
       return false;
     }
 
+    const contractName = CONTRACT_TEXTS[this._contractAssignment.contract.contractName].title();
+    const districtName = DISTRICT_NAMES[this._contractAssignment.contract.district.name]();
+    const cloneNames = this.assignedClones.map((clone) => clone.name).join(', ');
+
     if (
       this._contractAssignment.contract.district.counters.contracts.getAvailableAmount(
         this._contractAssignment.contract.contractName,
@@ -92,7 +110,7 @@ export class ContractActivity extends PrimaryActivity implements IContractActivi
       this._messageLogState.postMessage(
         PrimaryActivitiesEvent.primaryActivityFinished,
         msg(
-          str`Primary activity for contract "${CONTRACT_TEXTS[this._contractAssignment.contract.contractName].title()}" in district "${DISTRICT_NAMES[this._contractAssignment.contract.district.name]()}" has been finished because no more available contracts are left`,
+          str`Primary activity for contract "${contractName}" in district "${districtName}" assigned to ${cloneNames} has been finished because no more available contracts are left`,
         ),
       );
 
@@ -104,25 +122,16 @@ export class ContractActivity extends PrimaryActivity implements IContractActivi
     if (validationResult !== ContractValidationResult.valid) {
       this.state = PrimaryActivityState.toBeRemoved;
 
-      const validationText = CONTRACT_VALIDATION_TEXTS[validationResult];
+      const validationText = CONTRACT_VALIDATION_TEXTS[validationResult]();
 
       this._messageLogState.postMessage(
         PrimaryActivitiesEvent.primaryActivityFinished,
         msg(
-          str`Primary activity for contract "${CONTRACT_TEXTS[this._contractAssignment.contract.contractName].title()}" in district "${DISTRICT_NAMES[this._contractAssignment.contract.district.name]()}" has been stopped, reason "${validationText}"`,
+          str`Primary activity for contract "${contractName}" in district "${districtName}" assigned to ${cloneNames} has been stopped, reason "${validationText}"`,
         ),
       );
 
       return false;
-    }
-
-    if (this.state === PrimaryActivityState.inactive) {
-      this._messageLogState.postMessage(
-        PrimaryActivitiesEvent.primaryActivityStarted,
-        msg(
-          str`Performing contract "${CONTRACT_TEXTS[this._contractAssignment.contract.contractName].title()}" in district "${DISTRICT_NAMES[this._contractAssignment.contract.district.name]()}" has been started`,
-        ),
-      );
     }
 
     this.initPerformance();
@@ -134,7 +143,7 @@ export class ContractActivity extends PrimaryActivity implements IContractActivi
     this._passedTime += this._settingsState.updateInterval;
 
     if (this._passedTime >= this._contractAssignment.contract.completionTime) {
-      this.state = PrimaryActivityState.finishedPerforming;
+      this.state = PrimaryActivityState.inactive;
 
       return PrimaryActivityPerformResult.reward;
     }
@@ -158,7 +167,11 @@ export class ContractActivity extends PrimaryActivity implements IContractActivi
     this._passedTime = 0;
 
     for (const parameter of DISTRICT_TYPE_REWARD_PARAMETERS) {
-      this._parameterRewardsMap.set(parameter, this._contractAssignment.contract.calculateParameterDelta(parameter));
+      const value = this._contractAssignment.contract.calculateParameterDelta(parameter);
+
+      if (value !== undefined) {
+        this._parameterRewardsMap.set(parameter, value);
+      }
     }
   }
 }
