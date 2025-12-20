@@ -15,27 +15,27 @@ export class Process implements IProcess {
   private _mainframeState!: IMainframeState;
 
   private _program: IProgram;
-  private _isActive: boolean;
+  private _enabled: boolean;
   private _threads: number;
   private _currentCompletionPoints: number;
   private _usedCores: number;
 
   constructor(parameters: IProcessParameters) {
     this._program = parameters.program;
-    this._isActive = parameters.isActive;
+    this._enabled = parameters.enabled;
     this._threads = parameters.threads;
     this._currentCompletionPoints = parameters.currentCompletionPoints;
     this._usedCores = 0;
 
-    this._stateUiConnector.registerEventEmitter(this, ['_isActive', '_threads', '_usedCores']);
+    this._stateUiConnector.registerEventEmitter(this, ['_enabled', '_threads', '_usedCores']);
   }
 
   get program() {
     return this._program;
   }
 
-  get isActive() {
-    return this._isActive;
+  get enabled() {
+    return this._enabled;
   }
 
   get threads() {
@@ -76,8 +76,8 @@ export class Process implements IProcess {
     return this.program.calculateCompletionTime(this.threads, this.usedCores);
   }
 
-  toggleActive(active: boolean) {
-    this._isActive = active;
+  toggleEnabled(enabled: boolean) {
+    this._enabled = enabled;
     this._mainframeState.processes.requestUpdateRunningProcesses();
   }
 
@@ -105,7 +105,7 @@ export class Process implements IProcess {
   serialize(): ISerializedProcess {
     return {
       programName: this.program.name,
-      isActive: this.isActive,
+      enabled: this.enabled,
       threads: this._threads,
       currentCompletionPoints: this.currentCompletionPoints,
     };

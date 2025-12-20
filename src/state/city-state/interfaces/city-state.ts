@@ -1,4 +1,4 @@
-import { ISerializeable, Faction } from '@shared/index';
+import { ISerializeable } from '@shared/index';
 import { ICitySerializedState } from './serialized-states/city-serialized-state';
 import { IDistrictState } from './district-state';
 
@@ -10,7 +10,7 @@ export interface ICityState extends ISerializeable<ICitySerializedState> {
   getDistrictSize(districtIndex: number): number;
   getCapturedDistrictsCount(): number;
   listAvailableDistricts(): IDistrictState[];
-  updateDistrictsStateAfterJoiningFaction(faction: Faction): void;
+  updateDistrictsStateAfterJoiningFaction(faction: string): void;
   recalculateDistrictsState(): void;
   recalculate(): void;
 }

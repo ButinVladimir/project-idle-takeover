@@ -191,22 +191,22 @@
     },
     "menuUnlockRequirements": {
       "type": "object",
-      "description": "Required features for menu",
+      "description": "Required milestones for menu",
       "properties": {
         "city": {
-          "$ref": "./common/feature.json",
+          "$ref": "./common/milestone.json",
           "description": "City"
         },
         "company": {
-          "$ref": "./common/feature.json",
+          "$ref": "./common/milestone.json",
           "description": "Company"
         },
         "automation": {
-          "$ref": "./common/feature.json",
+          "$ref": "./common/milestone.json",
           "description": "Automation"
         },
         "factions": {
-          "$ref": "./common/feature.json",
+          "$ref": "./common/milestone.json",
           "description": "Factions"
         }
       },

@@ -19,7 +19,7 @@ export const TYPES = {
   AvailableItemsState: Symbol('AvailableItemsState'),
   AvailableProgramsState: Symbol('AvailableProgramsState'),
   AvailableCloneTemplatesState: Symbol('AvailableCloneTemplatesState'),
-  UnlockedFeaturesState: Symbol('UnlockedFeaturesState'),
+  ReachedMilestonesState: Symbol('ReachedMilestonesState'),
   AvailableActivitiesState: Symbol('AvailableActivitiesState'),
   AvailableSidejobsState: Symbol('AvailableSidejobsState'),
   AvailableContractsState: Symbol('AvailableContractsState'),

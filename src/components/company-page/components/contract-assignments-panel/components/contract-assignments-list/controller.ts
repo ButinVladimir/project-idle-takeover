@@ -5,7 +5,7 @@ export class ContractAssignmentsListController extends BaseController {
   checkCanStartAll(): boolean {
     return this.automationState.contracts
       .listContractAssignments()
-      .some((contractAssignment) => contractAssignment.active && contractAssignment.canBeStarted());
+      .some((contractAssignment) => contractAssignment.enabled && contractAssignment.canBeStarted());
   }
 
   getStartHotkey(): string | undefined {
@@ -29,7 +29,7 @@ export class ContractAssignmentsListController extends BaseController {
     this.host.requestUpdate();
   }
 
-  toggleAllContractAssignments(active: boolean) {
-    this.automationState.contracts.toggleAllContractAssignments(active);
+  toggleAllContractAssignments(enabled: boolean) {
+    this.automationState.contracts.toggleAllContractAssignments(enabled);
   }
 }

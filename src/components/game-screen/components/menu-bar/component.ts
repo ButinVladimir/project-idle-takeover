@@ -39,9 +39,9 @@ export class MenuBar extends BaseComponent {
 
   private renderMenuItem = (menuItem: string) => {
     const requirements = typedConstants.menuUnlockRequirements;
-    const feature = requirements[menuItem];
+    const milestone = requirements[menuItem];
 
-    if (feature && !this._controller.isFeatureUnlocked(feature)) {
+    if (milestone && !this._controller.isMilestoneUnlocked(milestone)) {
       return nothing;
     }
 

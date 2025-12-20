@@ -17,6 +17,6 @@ export class ContractAssignmentsListItemController extends BaseController {
   }
 
   toggleContractAssignment(): void {
-    this._assignment?.toggleActive(!this._assignment.active);
+    this._assignment?.toggleEnabled(!this._assignment.enabled);
   }
 }

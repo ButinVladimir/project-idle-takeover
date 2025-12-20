@@ -4,8 +4,8 @@ import { AppState, IAppState } from '@state/app-state';
 import { ScenarioState, IScenarioState, IStoryEventsState, StoryEventsState } from '@state/scenario-state';
 import { IFactionState, FactionState } from '@state/faction-state';
 import {
-  IUnlockedFeaturesState,
-  UnlockedFeaturesState,
+  IReachedMilestonesState,
+  ReachedMilestonesState,
   IAvailableCategoryItemsState,
   AvailableProgramsState,
   AvailableCloneTemplatesState,
@@ -203,8 +203,8 @@ container
 container.bind<IGlobalState>(TYPES.GlobalState).to(GlobalState).inSingletonScope().whenTargetIsDefault();
 
 container
-  .bind<IUnlockedFeaturesState>(TYPES.UnlockedFeaturesState)
-  .to(UnlockedFeaturesState)
+  .bind<IReachedMilestonesState>(TYPES.ReachedMilestonesState)
+  .to(ReachedMilestonesState)
   .inSingletonScope()
   .whenTargetIsDefault();
 

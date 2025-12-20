@@ -3,6 +3,7 @@ import { type IFormatter, calculateLinear } from '@shared/index';
 import { type IGlobalState } from '@state/global-state';
 import { typedPrograms, type IMainframeState } from '@state/mainframe-state';
 import { type IScenarioState } from '@state/scenario-state';
+import { type IUnlockState } from '@state/unlock-state';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { ProgramName } from '../types';
@@ -23,6 +24,9 @@ export abstract class BaseProgram implements IProgram {
 
   @lazyInject(TYPES.MainframeState)
   protected mainframeState!: IMainframeState;
+
+  @lazyInject(TYPES.UnlockState)
+  protected unlockState!: IUnlockState;
 
   @lazyInject(TYPES.Formatter)
   protected formatter!: IFormatter;
@@ -72,8 +76,8 @@ export abstract class BaseProgram implements IProgram {
     return this.tier + 1;
   }
 
-  get unlockFeatures() {
-    return typedPrograms[this.name].requiredFeatures;
+  get requiredMilestones() {
+    return typedPrograms[this.name].requiredMilestones;
   }
 
   abstract handlePerformanceUpdate(): void;

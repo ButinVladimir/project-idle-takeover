@@ -2,12 +2,7 @@ import { html, nothing } from 'lit';
 import { localized, msg } from '@lit/localize';
 import { customElement } from 'lit/decorators.js';
 import { consume } from '@lit/context';
-import {
-  BaseComponent,
-  DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES,
-  DISTRICT_TYPE_REWARD_PARAMETERS,
-  DistrictTypeRewardParameter,
-} from '@shared/index';
+import { BaseComponent, DISTRICT_TYPE_REWARD_PARAMETERS, DistrictTypeRewardParameter } from '@shared/index';
 import { type IPrimaryActivity } from '@state/activity-state';
 import { COMMON_TEXTS, REWARD_PARAMETER_NAMES } from '@texts/index';
 import { PrimaryActivityQueueListItemDescriptionController } from './controller';
@@ -43,17 +38,11 @@ export class PrimaryActivityQueueListItemDescription extends BaseComponent {
   }
 
   private renderParameter = (parameter: DistrictTypeRewardParameter) => {
-    const parameterValues = DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES[parameter];
-
-    const value = this._primaryActivity?.getParameterReward(parameter);
-
-    if (value === undefined) {
+    if (!this._primaryActivity!.getParameterVisibility(parameter)) {
       return nothing;
     }
 
-    if (!parameterValues.requirements.every((requirement) => this._controller.isFeatureUnlocked(requirement))) {
-      return nothing;
-    }
+    const value = this._primaryActivity!.getParameterReward(parameter);
 
     const parameterName = REWARD_PARAMETER_NAMES[parameter]();
 

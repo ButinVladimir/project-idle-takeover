@@ -1,6 +1,6 @@
 import { html, nothing } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { BaseComponent, Feature } from '@shared/index';
+import { BaseComponent, Milestone } from '@shared/index';
 import { AutomationAutobuyersPanelController } from './controller';
 import automationPageAutobuyersPanelStyles from './styles';
 
@@ -18,13 +18,13 @@ export class AutomationAutobuyersPanel extends BaseComponent {
 
   protected renderDesktop() {
     return html`
-      ${this._controller.isFeatureUnlocked(Feature.companyManagement)
+      ${this._controller.isMilestoneReached(Milestone.unlockedCompanyManagement)
         ? html`<ca-automation-clone-level-autoupgrader></ca-automation-clone-level-autoupgrader>`
         : nothing}
-      ${this._controller.isFeatureUnlocked(Feature.automationMainframeHardware)
+      ${this._controller.isMilestoneReached(Milestone.unlockedAutomationMainframeHardware)
         ? html`<ca-automation-mainframe-hardware-autobuyer></ca-automation-mainframe-hardware-autobuyer>`
         : nothing}
-      ${this._controller.isFeatureUnlocked(Feature.automationMainframePrograms)
+      ${this._controller.isMilestoneReached(Milestone.unlockedAutomationMainframePrograms)
         ? html`<ca-automation-mainframe-programs-autobuyer></ca-automation-mainframe-programs-autobuyer>`
         : nothing}
     `;

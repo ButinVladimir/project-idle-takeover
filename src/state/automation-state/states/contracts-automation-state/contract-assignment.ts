@@ -15,14 +15,14 @@ export class ContractAssignment implements IContractAssignment {
 
   private _id: string;
   private _contract: IContract;
-  private _active: boolean;
+  private _enabled: boolean;
 
   constructor(args: IContractAssignmentArguments) {
     this._id = args.id;
     this._contract = args.contract;
-    this._active = args.active;
+    this._enabled = args.enabled;
 
-    this._stateUiConnector.registerEventEmitter(this, ['_contract', '_active']);
+    this._stateUiConnector.registerEventEmitter(this, ['_contract', '_enabled']);
   }
 
   get id() {
@@ -37,8 +37,8 @@ export class ContractAssignment implements IContractAssignment {
     this._contract = value;
   }
 
-  get active() {
-    return this._active;
+  get enabled() {
+    return this._enabled;
   }
 
   canBeStarted(): boolean {
@@ -60,15 +60,15 @@ export class ContractAssignment implements IContractAssignment {
     });
   }
 
-  toggleActive(active: boolean): void {
-    this._active = active;
+  toggleEnabled(enabled: boolean): void {
+    this._enabled = enabled;
   }
 
   serialize(): ISerializedContractAssignment {
     return {
       id: this._id,
       contract: this._contract.serialize(),
-      active: this._active,
+      active: this._enabled,
     };
   }
 

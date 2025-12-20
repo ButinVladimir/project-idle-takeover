@@ -10,7 +10,7 @@ import { type IUnlockState } from '@state/unlock-state';
 import { TYPES } from '@state/types';
 import {
   type IFormatter,
-  Feature,
+  Milestone,
   ProgramsEvent,
   PurchaseType,
   calculateTierPower,
@@ -82,7 +82,7 @@ export class MainframeProgramsState implements IMainframeProgramsState {
   }
 
   purchaseProgram(name: ProgramName, tier: number, level: number): boolean {
-    if (!this._unlockState.features.isFeatureUnlocked(Feature.mainframePrograms)) {
+    if (!this._unlockState.milestones.isMilestoneReached(Milestone.unlockedMainframePrograms)) {
       return false;
     }
 
@@ -168,10 +168,6 @@ export class MainframeProgramsState implements IMainframeProgramsState {
 
       this._ownedPrograms.set(newProgram.name, newProgram);
       this._programsList.push(newProgram);
-
-      for (const feature of newProgram.unlockFeatures) {
-        this._unlockState.features.unlockFeature(feature);
-      }
     }
   }
 

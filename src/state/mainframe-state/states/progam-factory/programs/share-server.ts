@@ -1,5 +1,5 @@
 import { type ISettingsState } from '@state/settings-state';
-import { calculateLinear, calculateTierLinear, IncomeSource } from '@shared/index';
+import { calculateLinear, calculateTierLinear, DistrictTypeRewardParameter, IncomeSource } from '@shared/index';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { OtherProgramName } from '../types';
@@ -30,6 +30,10 @@ export class ShareServerProgram extends BaseProgram {
   }
 
   calculateMoneyDelta(threads: number, usedRam: number, passedTime: number): number {
+    if (!this.unlockState.milestones.isRewardParameterUnlocked(DistrictTypeRewardParameter.money)) {
+      return 0;
+    }
+
     const programData = typedPrograms[this.name];
     const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.money;
 
@@ -47,6 +51,10 @@ export class ShareServerProgram extends BaseProgram {
   }
 
   calculateDevelopmentPointsDelta(threads: number, usedRam: number, passedTime: number): number {
+    if (!this.unlockState.milestones.isRewardParameterUnlocked(DistrictTypeRewardParameter.developmentPoints)) {
+      return 0;
+    }
+
     const programData = typedPrograms[this.name];
     const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.developmentPoints;
 

@@ -4,7 +4,7 @@ import { customElement, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.component.js';
-import { BaseComponent, Feature } from '@shared/index';
+import { BaseComponent, Milestone } from '@shared/index';
 import { OverviewUnlockedContentPanelController } from './controller';
 import styles from './styles';
 import { ItemTypeFilter } from './types';
@@ -66,7 +66,7 @@ Number next to item name is it's maximum tier available.`)}
       </div>
 
       <div class="categories">
-        <ca-overview-unlocked-features></ca-overview-unlocked-features>
+        <ca-overview-reached-milestones></ca-overview-reached-milestones>
 
         ${this.renderSidejobs()} ${this.renderContracts()} ${this.renderPrograms()} ${this.renderClones()}
       </div>
@@ -83,7 +83,7 @@ Number next to item name is it's maximum tier available.`)}
   };
 
   private renderSidejobs = () => {
-    if (!this._controller.isFeatureUnlocked(Feature.companyManagement)) {
+    if (!this._controller.isMilestoneUnlocked(Milestone.unlockedCompanyManagement)) {
       return nothing;
     }
 
@@ -91,7 +91,7 @@ Number next to item name is it's maximum tier available.`)}
   };
 
   private renderContracts = () => {
-    if (!this._controller.isFeatureUnlocked(Feature.contracts)) {
+    if (!this._controller.isMilestoneUnlocked(Milestone.unlockedPrimaryActivity)) {
       return nothing;
     }
 
@@ -99,7 +99,7 @@ Number next to item name is it's maximum tier available.`)}
   };
 
   private renderPrograms = () => {
-    if (!this._controller.isFeatureUnlocked(Feature.mainframePrograms)) {
+    if (!this._controller.isMilestoneUnlocked(Milestone.unlockedMainframePrograms)) {
       return nothing;
     }
 
@@ -109,7 +109,7 @@ Number next to item name is it's maximum tier available.`)}
   };
 
   private renderClones = () => {
-    if (!this._controller.isFeatureUnlocked(Feature.companyManagement)) {
+    if (!this._controller.isMilestoneUnlocked(Milestone.unlockedCompanyManagement)) {
       return nothing;
     }
 

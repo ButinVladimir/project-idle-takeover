@@ -2,7 +2,7 @@ import { html } from 'lit';
 import { msg, localized } from '@lit/localize';
 import { customElement } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { BaseComponent, Faction } from '@shared/index';
+import { BaseComponent } from '@shared/index';
 import { FactionsAvailableFactionsListController } from './controller';
 import styles from './styles';
 
@@ -45,7 +45,7 @@ export class FactionsAvailableFactionsList extends BaseComponent {
     return html` ${repeat(availableFactions, (faction) => faction, this.renderFaction)} `;
   };
 
-  private renderFaction = (faction: Faction) => {
+  private renderFaction = (faction: string) => {
     return html`
       <ca-factions-available-factions-list-item faction=${faction}></ca-factions-available-factions-list-item>
     `;

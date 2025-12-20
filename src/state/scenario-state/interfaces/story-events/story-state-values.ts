@@ -1,7 +1,5 @@
-import { Faction } from '@shared/index';
-
 export interface IStoryStateValues {
   level: number;
-  faction: Faction;
+  faction: string;
   capturedDistrictsCount: number;
 }

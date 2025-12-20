@@ -5,7 +5,7 @@ import {
   type IFormatter,
   calculateGeometricProgressionSum,
   IExponent,
-  Feature,
+  Milestone,
   PurchaseType,
   reverseGeometricProgressionSum,
 } from '@shared/index';
@@ -114,7 +114,7 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
       return false;
     }
 
-    if (!this.unlockState.features.isFeatureUnlocked(Feature.mainframeHardware)) {
+    if (!this.unlockState.milestones.isMilestoneReached(Milestone.unlockedMainframeHardware)) {
       return false;
     }
 

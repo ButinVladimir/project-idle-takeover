@@ -1,7 +1,7 @@
-import { BaseController, Feature } from '@shared/index';
+import { BaseController, Milestone } from '@shared/index';
 
 export class AutomationAutobuyersPanelController extends BaseController {
-  isFeatureUnlocked(feature: Feature): boolean {
-    return this.unlockState.features.isFeatureUnlocked(feature);
+  isMilestoneReached(milestone: Milestone): boolean {
+    return this.unlockState.milestones.isMilestoneReached(milestone);
   }
 }

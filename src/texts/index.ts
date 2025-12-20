@@ -1,5 +1,5 @@
 export * from './story';
-export * from './unlocked-features';
+export * from './milestones';
 export * from './programs';
 export * from './clone-templates';
 export * from './common';

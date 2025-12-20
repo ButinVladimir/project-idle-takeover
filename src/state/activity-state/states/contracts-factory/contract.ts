@@ -2,6 +2,7 @@ import { Attribute, Skill, calculatePower, ATTRIBUTES, SKILLS, DistrictTypeRewar
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IGlobalState } from '@state/global-state';
+import { type IUnlockState } from '@state/unlock-state';
 import { IDistrictState } from '@state/city-state';
 import { IClone } from '@state/clones-state';
 import { IContract, IContractArguments, ISerializedContract } from './interfaces';
@@ -12,6 +13,9 @@ const { lazyInject } = decorators;
 export class Contract implements IContract {
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
+
+  @lazyInject(TYPES.UnlockState)
+  private _unlockState!: IUnlockState;
 
   private _templateName: string;
   private _district: IDistrictState;
@@ -111,10 +115,21 @@ export class Contract implements IContract {
     );
   }
 
-  calculateParameterDelta(parameter: DistrictTypeRewardParameter): number | undefined {
-    const sidejobModifier = this.contractTemplate.rewards[parameter];
-    if (!sidejobModifier) {
-      return undefined;
+  getParameterVisibility(parameter: DistrictTypeRewardParameter): boolean {
+    const contractModifier = this.contractTemplate.rewards[parameter];
+
+    return !!contractModifier;
+  }
+
+  calculateParameterDelta(parameter: DistrictTypeRewardParameter): number {
+    const contractModifier = this.contractTemplate.rewards[parameter];
+
+    if (!contractModifier) {
+      return 0;
+    }
+
+    if (!this._unlockState.milestones.isRewardParameterUnlocked(parameter)) {
+      return 0;
     }
 
     const cloneParametersModifier = this.getCloneParametersModifier();
@@ -124,7 +139,7 @@ export class Contract implements IContract {
     const baseDelta = Math.pow(
       rewardsModifier *
         cloneParametersModifier *
-        calculatePower(this._globalState.threat.level, sidejobModifier) *
+        calculatePower(this._globalState.threat.level, contractModifier) *
         calculatePower(this._district.parameters.influence.tier, districtTypeModifier.progression),
       districtTypeModifier.exponent,
     );
@@ -140,7 +155,7 @@ export class Contract implements IContract {
       case DistrictTypeRewardParameter.rewards:
         return baseDelta;
       default:
-        return undefined;
+        return 0;
     }
   }
 

@@ -51,6 +51,7 @@ export class MoneyGrowthState implements IMoneyGrowthState {
 
     this.updateGrowthByProgram();
     this.updateGrowthBySidejobs();
+    this.updateGrowthByPrimaryActivity();
     this.updateTotalGrowth();
   }
 
@@ -58,7 +59,7 @@ export class MoneyGrowthState implements IMoneyGrowthState {
     const shareServerProcess = this._mainframeState.processes.getProcessByName(OtherProgramName.shareServer);
     let incomeByProgram = 0;
 
-    if (shareServerProcess?.isActive) {
+    if (shareServerProcess?.enabled) {
       incomeByProgram = (shareServerProcess.program as ShareServerProgram).calculateMoneyDelta(
         shareServerProcess.usedCores,
         shareServerProcess.totalRam,
@@ -73,14 +74,20 @@ export class MoneyGrowthState implements IMoneyGrowthState {
     let incomeBySidejobs = 0;
 
     for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
-      if (!sidejobActivity.active) {
-        continue;
-      }
-
-      incomeBySidejobs += sidejobActivity.sidejob.calculateParameterDelta(DistrictTypeRewardParameter.money, 1);
+      incomeBySidejobs += sidejobActivity.getParameterGrowth(DistrictTypeRewardParameter.money);
     }
 
     this._growth.set(IncomeSource.sidejob, incomeBySidejobs);
+  }
+
+  private updateGrowthByPrimaryActivity(): void {
+    let incomeByPrimaryActivity = 0;
+
+    for (const primaryActivity of this._activityState.primaryActivityQueue.listActivities()) {
+      incomeByPrimaryActivity += primaryActivity.getParameterGrowth(DistrictTypeRewardParameter.money);
+    }
+
+    this._growth.set(IncomeSource.primaryActivity, incomeByPrimaryActivity);
   }
 
   private updateTotalGrowth() {

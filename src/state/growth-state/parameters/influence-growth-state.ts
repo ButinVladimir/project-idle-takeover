@@ -50,17 +50,23 @@ export class InfluenceGrowthState implements IInfluenceGrowthState {
     }
 
     this.updateGrowthBySidejobs();
+    this.updateGrowthByPrimaryActivity();
   }
 
   private updateGrowthBySidejobs(): void {
     for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
-      if (!sidejobActivity.active) {
-        continue;
-      }
-
       const districtIndex = sidejobActivity.sidejob.district.index;
       let currentGrowth = this._growthByDistrict.get(districtIndex) ?? 0;
-      currentGrowth += sidejobActivity.sidejob.calculateParameterDelta(DistrictTypeRewardParameter.influence, 1);
+      currentGrowth += sidejobActivity.getParameterGrowth(DistrictTypeRewardParameter.influence);
+      this._growthByDistrict.set(districtIndex, currentGrowth);
+    }
+  }
+
+  private updateGrowthByPrimaryActivity(): void {
+    for (const primaryActivity of this._activityState.primaryActivityQueue.listActivities()) {
+      const districtIndex = primaryActivity.district.index;
+      let currentGrowth = this._growthByDistrict.get(districtIndex) ?? 0;
+      currentGrowth += primaryActivity.getParameterGrowth(DistrictTypeRewardParameter.influence);
       this._growthByDistrict.set(districtIndex, currentGrowth);
     }
   }

@@ -2,16 +2,23 @@ import { injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
-import { NotificationType } from '@shared/index';
+import { Milestone, NotificationType } from '@shared/index';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type INotificationsState } from '@state/notifications-state';
 import { SIDEJOB_TEXTS } from '@texts/index';
-import { IAvailableCategoryActivitiesSerializedState, IAvailableCategoryActivitiesState } from '../interfaces';
+import {
+  IAvailableCategoryActivitiesSerializedState,
+  IAvailableCategoryActivitiesState,
+  type IUnlockState,
+} from '../interfaces';
 
 const { lazyInject } = decorators;
 
 @injectable()
 export class AvailableSidejobsState implements IAvailableCategoryActivitiesState {
+  @lazyInject(TYPES.UnlockState)
+  private _unlockState!: IUnlockState;
+
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
 
@@ -41,7 +48,10 @@ export class AvailableSidejobsState implements IAvailableCategoryActivitiesState
   }
 
   isActivityAvailable(sidejob: string): boolean {
-    return this.isActivityUnlocked(sidejob);
+    return (
+      this._unlockState.milestones.isMilestoneReached(Milestone.unlockedCompanyManagement) &&
+      this.isActivityUnlocked(sidejob)
+    );
   }
 
   unlockActivity(sidejob: string): void {

@@ -34,7 +34,7 @@ export class CompanyPage extends BaseComponent {
     switch (tab) {
       case CompanyPageTabs.contractAssignments:
       case CompanyPageTabs.primaryActivityQueue:
-        return this._controller.areContractsUnlocked();
+        return this._controller.isPrimaryActivityUnlocked();
       default:
         return true;
     }

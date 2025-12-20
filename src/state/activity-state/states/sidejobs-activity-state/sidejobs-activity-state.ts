@@ -60,6 +60,7 @@ export class SidejobsActivityState implements ISidejobsActivityState {
     const activity = new SidejobActivity({
       id: uuid(),
       sidejob: sidejobParameters,
+      enabled: true,
     });
 
     if (this._sidejobActivityValidator.validate(activity.sidejob) !== SidejobValidationResult.valid) {
@@ -116,6 +117,12 @@ export class SidejobsActivityState implements ISidejobsActivityState {
       if (activity.active) {
         activity.perform();
       }
+    }
+  }
+
+  toggleAllActivities(enabled: boolean): void {
+    for (const activity of this._activitiesList) {
+      activity.toggleEnabled(enabled);
     }
   }
 

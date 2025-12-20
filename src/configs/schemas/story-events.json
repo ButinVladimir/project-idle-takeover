@@ -40,13 +40,13 @@
           "minLength": 1
         }
       },
-      "unlockFeatures": {
+      "milestones": {
         "type": "array",
-        "description": "Story event unlocked features",
+        "description": "Story event milestones",
         "minItems": 1,
         "items": {
-          "$ref": "./common/feature.json",
-          "description": "Unlocked feature"
+          "$ref": "./common/milestone.json",
+          "description": "Milestone"
         }
       },
       "rewardDesigns": {

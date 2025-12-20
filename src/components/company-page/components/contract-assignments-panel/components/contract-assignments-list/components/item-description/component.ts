@@ -4,7 +4,6 @@ import { consume } from '@lit/context';
 import { customElement, queryAll } from 'lit/decorators.js';
 import {
   BaseComponent,
-  DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES,
   DISTRICT_TYPE_REWARD_PARAMETERS,
   DistrictTypeRewardParameter,
   MS_IN_SECOND,
@@ -14,7 +13,6 @@ import { COMMON_TEXTS, CONTRACT_TEXTS, REWARD_PARAMETER_NAMES } from '@texts/ind
 import { ContractsAssignmentsListItemDescriptionController } from './controller';
 import { contractAssignmentActivityContext } from '../item/contexts';
 import styles from './styles';
-import { checkContractParameterVisibility } from '../../../../helpers';
 import { DISPLAY_TYPES } from './constants';
 import { IRewardValue } from './types';
 
@@ -73,13 +71,7 @@ export class ContractsAssignmentsListItemDescription extends BaseComponent {
   }
 
   private renderParameter = (parameter: DistrictTypeRewardParameter) => {
-    const parameterValues = DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES[parameter];
-
-    if (!checkContractParameterVisibility(this._assignment!.contract, parameter)) {
-      return nothing;
-    }
-
-    if (!parameterValues.requirements.every((requirement) => this._controller.isFeatureUnlocked(requirement))) {
+    if (!this._assignment!.contract.getParameterVisibility(parameter)) {
       return nothing;
     }
 
@@ -105,10 +97,6 @@ export class ContractsAssignmentsListItemDescription extends BaseComponent {
 
   private updateParameter = (parameter: DistrictTypeRewardParameter) => {
     const value = this._assignment!.contract.calculateParameterDelta(parameter);
-
-    if (value === undefined) {
-      return;
-    }
 
     const speed = (value / this._assignment!.contract.completionTime) * MS_IN_SECOND;
 

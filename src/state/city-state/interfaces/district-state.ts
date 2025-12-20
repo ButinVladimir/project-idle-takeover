@@ -1,4 +1,4 @@
-import { IPoint, Faction } from '@shared/index';
+import { IPoint } from '@shared/index';
 import { IDistrictSerializedState } from './serialized-states';
 import { DistrictUnlockState } from '../types';
 import { IDistrictParameters } from './parameters';
@@ -12,7 +12,7 @@ export interface IDistrictState {
   startingPoint: IPoint;
   districtType: string;
   state: DistrictUnlockState;
-  faction: Faction;
+  faction: string;
   parameters: IDistrictParameters;
   counters: IDistrictCountersState;
   recalculate(): void;

@@ -11,7 +11,7 @@
       "level": 1
     },
     "messages": ["tutorial_2_1"],
-    "unlockFeatures": ["mainframePrograms"],
+    "milestones": ["unlockedMainframePrograms"],
     "rewardDesigns": {
       "programs": ["shareServer"]
     }
@@ -21,14 +21,14 @@
       "level": 4
     },
     "messages": ["tutorial_3_1"],
-    "unlockFeatures": ["mainframeHardware"]
+    "milestones": ["unlockedMainframeHardware"]
   },
   "tutorial_level_4": {
     "requirements": {
       "level": 9
     },
     "messages": ["tutorial_4_1"],
-    "unlockFeatures": ["companyManagement"],
+    "milestones": ["unlockedCompanyManagement"],
     "rewardDesigns": {
       "cloneTemplates": ["anthrodrone"]
     },
@@ -41,7 +41,7 @@
       "level": 14
     },
     "messages": ["tutorial_5_1"],
-    "unlockFeatures": ["automation"],
+    "milestones": ["unlockedAutomation"],
     "rewardDesigns": {
       "programs": ["cloneLevelAutoupgrader"]
     }
@@ -51,7 +51,7 @@
       "faction": "wsa"
     },
     "messages": ["tutorial_6_1"],
-    "unlockFeatures": ["contracts", "influence"],
+    "milestones": ["unlockedPrimaryActivity", "unlockedInfluence"],
     "unlockActivities": {
       "contracts": ["guarding"]
     }
@@ -61,7 +61,7 @@
       "level": 19
     },
     "messages": ["tutorial_7_1"],
-    "unlockFeatures": ["connectivity"],
+    "milestones": ["unlockedConnectivity"],
     "rewardDesigns": {
       "programs": ["informationCollector"]
     },
@@ -83,7 +83,7 @@
       "faction": "wsa",
       "capturedDistrictsCount": 0
     },
-    "unlockFeatures": ["rewards"],
+    "milestones": ["unlockedRewards"],
     "rewardDesigns": {
       "programs": ["dealMaker"]
     },
@@ -95,7 +95,7 @@
     "requirements": {
       "capturedDistrictsCount": 1
     },
-    "unlockFeatures": ["computationalBase"],
+    "milestones": ["unlockedComputationalBase"],
     "rewardDesigns": {
       "programs": ["circuitDesigner"]
     },
@@ -107,7 +107,7 @@
     "requirements": {
       "capturedDistrictsCount": 2
     },
-    "unlockFeatures": ["automationMainframeHardware"],
+    "milestones": ["unlockedAutomationMainframeHardware"],
     "rewardDesigns": {
       "programs": ["mainframeHardwareAutobuyer"]
     }
@@ -116,7 +116,7 @@
     "requirements": {
       "capturedDistrictsCount": 3
     },
-    "unlockFeatures": ["experienceShare"],
+    "milestones": ["unlockedExperienceShare"],
     "rewardDesigns": {
       "programs": ["peerReviewer"]
     },
@@ -128,7 +128,7 @@
     "requirements": {
       "capturedDistrictsCount": 4
     },
-    "unlockFeatures": ["codeBase"],
+    "milestones": ["unlockedCodeBase"],
     "rewardDesigns": {
       "programs": ["codeGenerator"]
     },
@@ -140,7 +140,7 @@
     "requirements": {
       "capturedDistrictsCount": 5
     },
-    "unlockFeatures": ["automationMainframePrograms"],
+    "milestones": ["unlockedAutomationMainframePrograms"],
     "rewardDesigns": {
       "programs": ["mainframeProgramsAutobuyer"]
     }
@@ -149,7 +149,7 @@
     "requirements": {
       "level": 4
     },
-    "unlockFeatures": ["factions"],
+    "milestones": ["unlockedFactions"],
     "specialEvents": ["factionsAvailable"]
   },
   "tutorial_level_16": {

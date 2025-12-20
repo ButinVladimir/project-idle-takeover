@@ -29,9 +29,9 @@ export class Viewport extends BaseComponent {
 
   private renderPage = () => {
     const requirements = typedConstants.menuUnlockRequirements;
-    const feature = requirements[this.selectedMenuItem];
+    const milestone = requirements[this.selectedMenuItem];
 
-    if (feature && !this._controller.isFeatureUnlocked(feature)) {
+    if (milestone && !this._controller.isMilestoneUnlocked(milestone)) {
       return nothing;
     }
 

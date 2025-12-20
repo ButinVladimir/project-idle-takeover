@@ -97,10 +97,12 @@ export class SidejobsListItemStatus extends BaseComponent {
     switch (status) {
       case ActivityUIActivityStatus.active:
         return msg('Sidejob is active');
+      case ActivityUIActivityStatus.valid:
+        return msg('Sidejob is valid');
       case ActivityUIActivityStatus.invalid:
         return SIDEJOB_VALIDATION_TEXTS[validationResult]();
       default:
-        return msg('Sidejob is inactive');
+        return '';
     }
   }
 

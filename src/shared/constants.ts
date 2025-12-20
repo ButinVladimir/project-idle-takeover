@@ -14,7 +14,7 @@ import {
   IncomeSource,
   NotificationType,
   GameVersion,
-  Feature,
+  Milestone,
   Attribute,
   Skill,
   ClonesEvent,
@@ -88,7 +88,7 @@ export const PURCHASE_TYPES: PurchaseType[] = Object.values(PurchaseType);
 
 export const INCOME_SOURCES: IncomeSource[] = Object.values(IncomeSource);
 
-export const FEATURES: Feature[] = Object.values(Feature);
+export const MILESTONES: Milestone[] = Object.values(Milestone);
 
 export const ATTRIBUTES: Attribute[] = Object.values(Attribute);
 
@@ -102,51 +102,40 @@ export const SCHEMA_PROPERTY = '$schema';
 
 export const DISTRICT_TYPE_REWARD_PARAMETERS = Object.values(DistrictTypeRewardParameter);
 
-export const DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES: Record<
+export const DISTRICT_TYPE_REWARD_PARAMETER_UI_VALUES: Record<
   DistrictTypeRewardParameter,
   {
-    requirements: Feature[];
     isSpeed: boolean;
   }
 > = {
   [DistrictTypeRewardParameter.money]: {
-    requirements: [],
     isSpeed: true,
   },
   [DistrictTypeRewardParameter.developmentPoints]: {
-    requirements: [],
     isSpeed: true,
   },
   [DistrictTypeRewardParameter.experience]: {
-    requirements: [],
     isSpeed: true,
   },
   [DistrictTypeRewardParameter.influence]: {
-    requirements: [Feature.influence],
     isSpeed: true,
   },
   [DistrictTypeRewardParameter.connectivity]: {
-    requirements: [Feature.connectivity],
     isSpeed: true,
   },
   [DistrictTypeRewardParameter.codeBase]: {
-    requirements: [Feature.codeBase],
     isSpeed: true,
   },
   [DistrictTypeRewardParameter.computationalBase]: {
-    requirements: [Feature.computationalBase],
     isSpeed: true,
   },
   [DistrictTypeRewardParameter.rewards]: {
-    requirements: [Feature.rewards],
     isSpeed: true,
   },
   [DistrictTypeRewardParameter.processCompletionSpeed]: {
-    requirements: [],
     isSpeed: false,
   },
   [DistrictTypeRewardParameter.experienceShareMultiplier]: {
-    requirements: [Feature.experienceShare],
     isSpeed: false,
   },
 };

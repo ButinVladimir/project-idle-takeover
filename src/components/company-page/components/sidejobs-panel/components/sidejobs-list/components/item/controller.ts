@@ -15,4 +15,8 @@ export class SidejobsListItemController extends BaseController {
   cancelActivityById(id: string) {
     this.activityState.sidejobsActivity.cancelActivity(id);
   }
+
+  toggleSidejob(): void {
+    this._activity?.toggleEnabled(!this._activity.enabled);
+  }
 }

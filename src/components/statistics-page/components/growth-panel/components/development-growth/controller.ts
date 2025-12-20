@@ -1,4 +1,4 @@
-import { BaseController, Feature, IncomeSource, MS_IN_SECOND } from '@shared/index';
+import { BaseController, Milestone, IncomeSource, MS_IN_SECOND } from '@shared/index';
 
 export class StatisticsDevelopmentGrowthController extends BaseController {
   get developmentTotalGrowth() {
@@ -9,7 +9,7 @@ export class StatisticsDevelopmentGrowthController extends BaseController {
     return this.growthState.development.getGrowth(incomeSource) * MS_IN_SECOND;
   };
 
-  isFeatureUnlocked(feature: Feature): boolean {
-    return this.unlockState.features.isFeatureUnlocked(feature);
+  isMilestoneUnlocked(milestone: Milestone): boolean {
+    return this.unlockState.milestones.isMilestoneReached(milestone);
   }
 }

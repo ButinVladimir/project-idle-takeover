@@ -167,13 +167,13 @@ export class ContractsAutomationState implements IContractsAutomationState {
 
   toggleAllContractAssignments(active: boolean): void {
     this._contractAssignmentsList.forEach((contractAssignment) => {
-      contractAssignment.toggleActive(active);
+      contractAssignment.toggleEnabled(active);
     });
   }
 
   startAll(): void {
     this._contractAssignmentsList.forEach((contractAssignment) => {
-      if (contractAssignment.active) {
+      if (contractAssignment.enabled) {
         contractAssignment.start();
       }
     });
@@ -225,7 +225,7 @@ export class ContractsAutomationState implements IContractsAutomationState {
     return new ContractAssignment({
       id: serializedState.id,
       contract: this._activityState.contractsFactory.makeContract(serializedState.contract),
-      active: serializedState.active,
+      enabled: serializedState.active,
     });
   }
 }

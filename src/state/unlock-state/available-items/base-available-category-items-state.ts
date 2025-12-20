@@ -114,7 +114,7 @@ export abstract class BaseAvailableCategoryItemsState<Key extends string = strin
 
     this._designsTierMap.set(itemName, tier);
 
-    if (existingTier === undefined && !loaned && this.checkRequiredFeatures(itemName)) {
+    if (existingTier === undefined && !loaned && this.checkRequiredMilestones(itemName)) {
       this._itemsList.push(itemName);
     }
 
@@ -156,7 +156,7 @@ export abstract class BaseAvailableCategoryItemsState<Key extends string = strin
 
   protected abstract getLoanedItemsFromFaction(): Key[];
 
-  protected abstract checkRequiredFeatures(itemName: Key): boolean;
+  protected abstract checkRequiredMilestones(itemName: Key): boolean;
 
   private recalculateLoanedItems() {
     const loanedItems = this.getLoanedItemsFromFaction();
@@ -166,13 +166,13 @@ export abstract class BaseAvailableCategoryItemsState<Key extends string = strin
 
   private recalculateItemsList() {
     this._designsTierMap.forEach((tier, design) => {
-      if (this.checkRequiredFeatures(design)) {
+      if (this.checkRequiredMilestones(design)) {
         this._itemsList.push(design);
       }
     });
 
     this._loanedItems.forEach((loanedItem) => {
-      if (!this._designsTierMap.has(loanedItem) && this.checkRequiredFeatures(loanedItem)) {
+      if (!this._designsTierMap.has(loanedItem) && this.checkRequiredMilestones(loanedItem)) {
         this._itemsList.push(loanedItem);
       }
     });

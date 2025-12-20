@@ -2,7 +2,7 @@ import { IProgram } from '@state/mainframe-state/states/progam-factory/interface
 
 export interface IProcessParameters {
   program: IProgram;
-  isActive: boolean;
+  enabled: boolean;
   threads: number;
   currentCompletionPoints: number;
 }

@@ -1,4 +1,4 @@
-import { Faction, IExponent, ILinear, RANDOM_TYPE, RewardParameterWithBase } from '@shared/index';
+import { IExponent, ILinear, RANDOM_TYPE, RewardParameterWithBase } from '@shared/index';
 import { ProgramName } from '@state/mainframe-state';
 import { ScenarioRewardParameter } from '../types';
 
@@ -11,7 +11,7 @@ interface IDistrictValues {
 }
 
 interface IFactionValues {
-  name: Faction;
+  name: string;
   startingDistrict: number;
   controlledArea: number;
   canBeJoined: boolean;

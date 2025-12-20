@@ -411,7 +411,7 @@
     },
     {
       "name": "ca-sidejobs-list",
-      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderSidejobsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderSidejob` - \n\n  * `handleOpenCancelAllSidejobsDialog` - \n\n  * `handleCancelAllSidejobs` - \n\n  * `_controller` {`SidejobsListController`} - ",
+      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderSidejobsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderSidejob` - \n\n  * `handleOpenCancelAllSidejobsDialog` - \n\n  * `handleCancelAllSidejobs` - \n\n  * `handleToggleAllActivities` - \n\n  * `_controller` {`SidejobsListController`} - ",
       "attributes": []
     },
     {
@@ -426,7 +426,7 @@
     },
     {
       "name": "ca-sidejobs-list-item",
-      "description": "Attributes:\n\n  * `activity-id` {`string`} - \n\nProperties:\n\n  * `styles` {`CSSResult[]`} - \n\n  * `activityId` {`string`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_activity` - \n\n  * `handleToggleDescription` - \n\n  * `handleOpenCancelSidejobDialog` - \n\n  * `handleCancelSidejob` - \n\n  * `_controller` {`SidejobsListItemController`} - ",
+      "description": "Attributes:\n\n  * `activity-id` {`string`} - \n\nProperties:\n\n  * `styles` {`CSSResult[]`} - \n\n  * `activityId` {`string`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_activity` - \n\n  * `handleToggleDescription` - \n\n  * `handleOpenCancelSidejobDialog` - \n\n  * `handleToggleSidejob` - \n\n  * `handleCancelSidejob` - \n\n  * `_controller` {`SidejobsListItemController`} - ",
       "attributes": [
         {
           "name": "activity-id",
@@ -456,11 +456,11 @@
     },
     {
       "name": "ca-factions-available-factions-list-item",
-      "description": "Attributes:\n\n  * `faction` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `faction` - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `handleOpenConfirmationDialog` - \n\n  * `handleJoinFaction` - \n\n  * `_controller` {`FactionsAvailableFactionsListItemController`} - ",
+      "description": "Attributes:\n\n  * `faction` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `faction` {`string`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `handleOpenConfirmationDialog` - \n\n  * `handleJoinFaction` - \n\n  * `_controller` {`FactionsAvailableFactionsListItemController`} - ",
       "attributes": [
         {
           "name": "faction",
-          "description": "`faction` - \n\nProperty: faction"
+          "description": "`faction` {`string`} - \n\nProperty: faction"
         }
       ]
     },
@@ -763,8 +763,8 @@
       "attributes": []
     },
     {
-      "name": "ca-overview-unlocked-features-progress",
-      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `_controller` {`OverviewUnlockedFeaturesProgressController`} - ",
+      "name": "ca-overview-reached-milestones-progress",
+      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `_controller` {`OverviewReachedMilestonesProgressController`} - ",
       "attributes": []
     },
     {
@@ -774,7 +774,7 @@
     },
     {
       "name": "ca-overview-story-goal",
-      "description": "Attributes:\n\n  * `name` {`string`} - \n\n  * `level` {`number | undefined`} - \n\n  * `faction` - \n\n  * `captured-districts-count` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `special-events` {`string | undefined`} - \n\n  * `unlock-features` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `clone-templates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `name` {`string`} - \n\n  * `level` {`number | undefined`} - \n\n  * `faction` - \n\n  * `capturedDistrictsCount` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `specialEvents` {`string | undefined`} - \n\n  * `unlockFeatures` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `cloneTemplates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `renderSummary` - \n\n  * `renderDetails` - \n\n  * `renderMessages` - \n\n  * `renderUnlockFeatures` - \n\n  * `renderSpecialEvents` - \n\n  * `renderPrograms` - \n\n  * `renderCloneTemplates` - \n\n  * `renderSidejobs` - \n\n  * `_controller` {`OverviewStoryGoalController`} - ",
+      "description": "Attributes:\n\n  * `name` {`string`} - \n\n  * `level` {`number | undefined`} - \n\n  * `faction` {`string | undefined`} - \n\n  * `captured-districts-count` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `special-events` {`string | undefined`} - \n\n  * `milestones` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `clone-templates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `contracts` {`string | undefined`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `name` {`string`} - \n\n  * `level` {`number | undefined`} - \n\n  * `faction` {`string | undefined`} - \n\n  * `capturedDistrictsCount` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `specialEvents` {`string | undefined`} - \n\n  * `milestones` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `cloneTemplates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `contracts` {`string | undefined`} - \n\n  * `renderSummary` - \n\n  * `renderDetails` - \n\n  * `renderMessages` - \n\n  * `renderMilestones` - \n\n  * `renderSpecialEvents` - \n\n  * `renderPrograms` - \n\n  * `renderCloneTemplates` - \n\n  * `renderSidejobs` - \n\n  * `renderContracts` - \n\n  * `_controller` {`OverviewStoryGoalController`} - ",
       "attributes": [
         {
           "name": "name",
@@ -787,7 +787,8 @@
         },
         {
           "name": "faction",
-          "description": "`faction` - \n\nProperty: faction"
+          "description": "`faction` {`string | undefined`} - \n\nProperty: faction",
+          "values": []
         },
         {
           "name": "captured-districts-count",
@@ -805,8 +806,8 @@
           "values": []
         },
         {
-          "name": "unlock-features",
-          "description": "`unlock-features` {`string | undefined`} - \n\nProperty: unlockFeatures",
+          "name": "milestones",
+          "description": "`milestones` {`string | undefined`} - \n\nProperty: milestones",
           "values": []
         },
         {
@@ -823,12 +824,22 @@
           "name": "sidejobs",
           "description": "`sidejobs` {`string | undefined`} - \n\nProperty: sidejobs",
           "values": []
+        },
+        {
+          "name": "contracts",
+          "description": "`contracts` {`string | undefined`} - \n\nProperty: contracts",
+          "values": []
         }
       ]
     },
     {
       "name": "ca-overview-unlocked-content-panel",
       "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_itemTypeFilterInputRef` {`Ref<SlSelect>`} - \n\n  * `_itemTypeFilter` {`ItemTypeFilter`} - \n\n  * `handleItemTypeFilterChange` - \n\n  * `renderSidejobs` - \n\n  * `renderContracts` - \n\n  * `renderPrograms` - \n\n  * `renderClones` - \n\n  * `_controller` {`OverviewUnlockedContentPanelController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-overview-reached-milestones",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderList` - \n\n  * `renderListItem` - \n\n  * `_controller` {`OverviewReachedMilestonesController`} - ",
       "attributes": []
     },
     {
@@ -855,11 +866,6 @@
     {
       "name": "ca-overview-unlocked-contracts",
       "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderList` - \n\n  * `renderListItem` - \n\n  * `_controller` {`OverviewUnlockedContractsController`} - ",
-      "attributes": []
-    },
-    {
-      "name": "ca-overview-unlocked-features",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderList` - \n\n  * `renderListItem` - \n\n  * `_controller` {`OverviewUnlockedFeaturesController`} - ",
       "attributes": []
     },
     {

@@ -63,7 +63,7 @@ export class ProcessCompletionSpeedState implements IProcessCompletionSpeedState
 
     let multiplierByProgram = 1;
 
-    if (predictiveComputatorProcess?.isActive) {
+    if (predictiveComputatorProcess?.enabled) {
       const predictiveComputatorProgram = predictiveComputatorProcess.program as PredictiveComputatorProgram;
 
       multiplierByProgram = predictiveComputatorProgram.calculateProcessCompletionSpeedMultiplier(

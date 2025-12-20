@@ -69,6 +69,7 @@ export class ActivityState implements IActivityState {
   }
 
   processTick() {
+    this.reassign();
     this._primaryActivityQueue.perform();
     this._sidejobsActivity.perform();
     this.reassign();
@@ -144,6 +145,7 @@ export class ActivityState implements IActivityState {
       const assignedClone = sidejobActivity.sidejob.assignedClone;
 
       if (
+        sidejobActivity.enabled &&
         this._sidejobActivityValidator.validate(sidejobActivity.sidejob) &&
         !this._assignedClones.has(assignedClone)
       ) {

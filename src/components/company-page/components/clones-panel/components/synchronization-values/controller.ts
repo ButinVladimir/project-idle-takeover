@@ -1,4 +1,4 @@
-import { Feature, BaseController } from '@shared/index';
+import { Milestone, BaseController } from '@shared/index';
 
 export class ClonesSynchronizationValuesController extends BaseController {
   get availableSynchronization(): number {
@@ -14,6 +14,6 @@ export class ClonesSynchronizationValuesController extends BaseController {
   }
 
   isExperienceShareUnlocked(): boolean {
-    return this.unlockState.features.isFeatureUnlocked(Feature.experienceShare);
+    return this.unlockState.milestones.isMilestoneReached(Milestone.unlockedExperienceShare);
   }
 }

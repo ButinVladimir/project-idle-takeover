@@ -1,5 +1,5 @@
 import { type IStateUIConnector } from '@state/state-ui-connector';
-import { IPoint, Faction } from '@shared/index';
+import { IPoint } from '@shared/index';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import {
@@ -90,7 +90,7 @@ export class DistrictState implements IDistrictState {
     return this._districtType;
   }
 
-  get faction(): Faction {
+  get faction(): string {
     return this._faction;
   }
 

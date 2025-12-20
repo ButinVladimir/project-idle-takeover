@@ -43,13 +43,18 @@
     },
     "faction": {
       "type": "object",
-      "description": "Faction items",
+      "description": "Faction parameters",
       "properties": {
-        "loans": {
+        "playstyle": {
+          "type": "string",
+          "description": "Faction playstyle",
+          "enum": ["selectFaction", "captureCity", "raiseThreat"]
+        },
+        "loanedItems": {
           "$ref": "#/$defs/items",
           "description": "Loaned items"
         },
-        "special": {
+        "specialItems": {
           "$ref": "#/$defs/items",
           "description": "Special items, available only as designs"
         },
@@ -70,7 +75,7 @@
           "required": ["contracts"]
         }
       },
-      "required": ["loans", "special", "activities"]
+      "required": ["playstyle", "loanedItems", "specialItems", "activities"]
     }
   }
 }

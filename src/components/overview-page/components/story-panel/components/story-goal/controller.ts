@@ -21,6 +21,10 @@ export class OverviewStoryGoalController extends BaseController {
     return this.unlockState.activities.sidejobs.makeUnlockActivityMessage(sidejobName);
   }
 
+  makeContractUnlockMessage(contractName: string): string {
+    return this.unlockState.activities.contracts.makeUnlockActivityMessage(contractName);
+  }
+
   private getFormattedTier() {
     return this.formatter.formatTier(0);
   }

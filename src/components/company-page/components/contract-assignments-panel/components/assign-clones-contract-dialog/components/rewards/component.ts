@@ -5,7 +5,6 @@ import { customElement, queryAll } from 'lit/decorators.js';
 import {
   BaseComponent,
   diffFormatterParameters,
-  DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES,
   DISTRICT_TYPE_REWARD_PARAMETERS,
   DistrictTypeRewardParameter,
   getHighlightDifferenceClass,
@@ -18,7 +17,6 @@ import { DISPLAY_TYPES } from './constants';
 import { AssignCloneSidejobDialogRewardsController } from './controller';
 import styles from './styles';
 import { IRewardValue } from './types';
-import { checkContractParameterVisibility } from '../../../../helpers';
 
 @localized()
 @customElement('ca-assign-clones-contract-dialog-rewards')
@@ -66,13 +64,7 @@ export class AssignClonesContractDialogRewards extends BaseComponent {
   }
 
   private renderParameter = (parameter: DistrictTypeRewardParameter) => {
-    const parameterValues = DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES[parameter];
-
-    if (!checkContractParameterVisibility(this._contract!, parameter)) {
-      return nothing;
-    }
-
-    if (!parameterValues.requirements.every((requirement) => this._controller.isFeatureUnlocked(requirement))) {
+    if (!this._contract!.getParameterVisibility(parameter)) {
       return nothing;
     }
 
@@ -107,11 +99,6 @@ export class AssignClonesContractDialogRewards extends BaseComponent {
 
   private updateParameter = (parameter: DistrictTypeRewardParameter) => {
     const newValue = this._contract!.calculateParameterDelta(parameter);
-
-    if (newValue === undefined) {
-      return;
-    }
-
     const oldValue = this._existingContract?.calculateParameterDelta(parameter) ?? 0;
 
     const newSpeed = (newValue / this._contract!.completionTime) * MS_IN_SECOND;

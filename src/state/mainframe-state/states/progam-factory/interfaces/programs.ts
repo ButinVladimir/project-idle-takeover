@@ -1,4 +1,4 @@
-import { Feature, ILinear, ITierExponent, ITierLinear } from '@shared/index';
+import { Milestone, ILinear, ITierExponent, ITierLinear } from '@shared/index';
 import { AutobuyerProgramName, MultiplierProgramName, OtherProgramName } from '../types';
 
 interface ICommonProgram {
@@ -7,7 +7,7 @@ interface ICommonProgram {
   levelSpeedBoost: ILinear;
   coreSpeedBoost: ILinear;
   cost: ITierExponent;
-  requiredFeatures: Feature[];
+  requiredMilestones: Milestone[];
 }
 
 interface IAutoscalableValue {

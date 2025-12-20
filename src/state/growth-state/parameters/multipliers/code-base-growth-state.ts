@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { MultiplierProgramName, ProgramName, CodeGeneratorProgram, IProcess } from '@state/mainframe-state';
-import { ISidejob } from '@state/activity-state';
+import { IPrimaryActivity, ISidejobActivity } from '@state/activity-state';
 import { DistrictTypeRewardParameter } from '@shared/index';
 import { BaseMultiplierGrowthState } from './base-multiplier-growth-state';
 
@@ -16,7 +16,11 @@ export class CodeBaseGrowthState extends BaseMultiplierGrowthState {
     return program.calculateDelta(process.threads) / process.calculateCompletionTime();
   }
 
-  getGrowthBySidejob(sidejob: ISidejob): number {
-    return sidejob.calculateParameterDelta(DistrictTypeRewardParameter.codeBase, 1);
+  getGrowthBySidejobActivity(sidejobActivity: ISidejobActivity): number {
+    return sidejobActivity.getParameterGrowth(DistrictTypeRewardParameter.codeBase);
+  }
+
+  getGrowthByPrimaryActivity(primaryActivity: IPrimaryActivity): number {
+    return primaryActivity.getParameterGrowth(DistrictTypeRewardParameter.codeBase);
   }
 }

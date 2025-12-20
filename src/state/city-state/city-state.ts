@@ -7,7 +7,7 @@ import { type IGlobalState } from '@state/global-state';
 import { type INotificationsState } from '@state/notifications-state';
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
-import { Faction, MapSpecialEvent, NotificationType } from '@shared/index';
+import { MapSpecialEvent, NotificationType } from '@shared/index';
 import { DISTRICT_NAMES } from '@texts/index';
 import {
   ICityState,
@@ -121,7 +121,7 @@ export class CityState implements ICityState {
     }
   }
 
-  updateDistrictsStateAfterJoiningFaction(faction: Faction) {
+  updateDistrictsStateAfterJoiningFaction(faction: string) {
     for (const district of this._districts.values()) {
       if (district.faction === faction && district.state === DistrictUnlockState.locked) {
         district.state = DistrictUnlockState.contested;

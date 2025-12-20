@@ -1,21 +1,17 @@
 import { inject, injectable } from 'inversify';
-import { decorators } from '@state/container';
 import {
   type IAvailableActivitiesState,
   type IAvailableItemsState,
-  type IUnlockedFeaturesState,
+  type IReachedMilestonesState,
   IUnlockSerializedState,
   IUnlockState,
 } from './interfaces';
 import { TYPES } from '@state/types';
-import { type IGlobalState } from '@state/global-state';
-
-const { lazyInject } = decorators;
 
 @injectable()
 export class UnlockState implements IUnlockState {
-  @inject(TYPES.UnlockedFeaturesState)
-  private _unlockedFeaturesState!: IUnlockedFeaturesState;
+  @inject(TYPES.ReachedMilestonesState)
+  private _reachedMilestonesState!: IReachedMilestonesState;
 
   @inject(TYPES.AvailableItemsState)
   private _availableItemsState!: IAvailableItemsState;
@@ -23,17 +19,14 @@ export class UnlockState implements IUnlockState {
   @inject(TYPES.AvailableActivitiesState)
   private _availableActivitiesState!: IAvailableActivitiesState;
 
-  @lazyInject(TYPES.GlobalState)
-  private _globalState!: IGlobalState;
-
   private _recalculationRequested: boolean;
 
   constructor() {
     this._recalculationRequested = true;
   }
 
-  get features() {
-    return this._unlockedFeaturesState;
+  get milestones() {
+    return this._reachedMilestonesState;
   }
 
   get items() {
@@ -60,7 +53,7 @@ export class UnlockState implements IUnlockState {
   }
 
   async startNewState(): Promise<void> {
-    await this._unlockedFeaturesState.startNewState();
+    await this._reachedMilestonesState.startNewState();
     await this._availableItemsState.startNewState();
     await this._availableActivitiesState.startNewState();
 
@@ -68,7 +61,7 @@ export class UnlockState implements IUnlockState {
   }
 
   async deserialize(serializedState: IUnlockSerializedState): Promise<void> {
-    await this._unlockedFeaturesState.deserialize(serializedState.features);
+    await this._reachedMilestonesState.deserialize(serializedState.milestones);
     await this._availableItemsState.deserialize(serializedState.items);
     await this._availableActivitiesState.deserialize(serializedState.activities);
 
@@ -77,7 +70,7 @@ export class UnlockState implements IUnlockState {
 
   serialize(): IUnlockSerializedState {
     return {
-      features: this._unlockedFeaturesState.serialize(),
+      milestones: this._reachedMilestonesState.serialize(),
       items: this._availableItemsState.serialize(),
       activities: this._availableActivitiesState.serialize(),
     };

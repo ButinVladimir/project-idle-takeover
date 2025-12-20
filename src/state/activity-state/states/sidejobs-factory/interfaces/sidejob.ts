@@ -13,6 +13,7 @@ export interface ISidejob {
   getSkillRequirement(skill: Skill): number;
   getAttributeModifier(attribute: Attribute): number;
   getSkillModifier(skill: Skill): number;
+  getParameterVisibility(parameter: DistrictTypeRewardParameter): boolean;
   calculateParameterDelta(parameter: DistrictTypeRewardParameter, passedTime: number): number;
   serialize(): ISerializedSidejob;
 }

@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
-import { Feature } from '@shared/index';
+import { Milestone } from '@shared/index';
 import { CLONE_TEMPLATE_TEXTS } from '@texts/index';
 import { BaseAvailableCategoryItemsState } from './base-available-category-items-state';
 
@@ -13,10 +13,10 @@ export class AvailableCloneTemplatesState extends BaseAvailableCategoryItemsStat
   }
 
   protected getLoanedItemsFromFaction(): string[] {
-    return this._factionState.currentFactionValues.loans.cloneTemplates;
+    return this._factionState.currentFactionValues.loanedItems.cloneTemplates;
   }
 
-  protected checkRequiredFeatures(): boolean {
-    return this._unlockState.features.isFeatureUnlocked(Feature.companyManagement);
+  protected checkRequiredMilestones(): boolean {
+    return this._unlockState.milestones.isMilestoneReached(Milestone.unlockedCompanyManagement);
   }
 }

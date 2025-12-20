@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
-import { Faction, Feature, NotificationType } from '@shared/types';
+import { Milestone, NotificationType } from '@shared/types';
 import { type IScenarioState } from '@state/scenario-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type INotificationsState } from '@state/notifications-state';
@@ -32,9 +32,9 @@ export class FactionState implements IFactionState {
   private _cityState!: ICityState;
 
   private _joiningFactionAvailable: boolean;
-  private _allFactionsList: Faction[];
-  private _availableFactionsList: Faction[];
-  private _currentFaction!: Faction;
+  private _allFactionsList: string[];
+  private _availableFactionsList: string[];
+  private _currentFaction!: string;
 
   constructor() {
     this._joiningFactionAvailable = false;
@@ -50,11 +50,11 @@ export class FactionState implements IFactionState {
     ]);
   }
 
-  get currentFaction(): Faction {
+  get currentFaction(): string {
     return this._currentFaction;
   }
 
-  private set currentFaction(value: Faction) {
+  private set currentFaction(value: string) {
     this._currentFaction = value;
   }
 
@@ -66,20 +66,20 @@ export class FactionState implements IFactionState {
     return this._joiningFactionAvailable;
   }
 
-  getFactionValues(faction: Faction): IFactionValues {
+  getFactionValues(faction: string): IFactionValues {
     return typedFactions[faction];
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getFactionLoanTier(faction: Faction) {
+  getFactionLoanTier(faction: string) {
     return 7;
   }
 
-  listAvailableFactions(): Faction[] {
+  listAvailableFactions(): string[] {
     return this._availableFactionsList;
   }
 
-  getFactionByIndex(index: number): Faction {
+  getFactionByIndex(index: number): string {
     if (index < 0 || index >= this._allFactionsList.length) {
       throw new Error('Invalid faction index');
     }
@@ -99,12 +99,12 @@ export class FactionState implements IFactionState {
     );
   }
 
-  joinFaction(faction: Faction): boolean {
-    if (!this._unlockState.features.isFeatureUnlocked(Feature.factions)) {
+  joinFaction(faction: string): boolean {
+    if (!this._unlockState.milestones.isMilestoneReached(Milestone.unlockedFactions)) {
       return false;
     }
 
-    if (this._currentFaction !== 'neutral') {
+    if (this.currentFactionValues.playstyle !== 'selectFaction') {
       return false;
     }
 
@@ -170,7 +170,7 @@ export class FactionState implements IFactionState {
   private updateAvailableFactions() {
     this._availableFactionsList.length = 0;
 
-    if (this._currentFaction !== 'neutral') {
+    if (this.currentFactionValues.playstyle !== 'selectFaction') {
       return;
     }
 

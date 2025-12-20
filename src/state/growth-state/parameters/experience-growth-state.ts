@@ -54,19 +54,27 @@ export class ExperienceGrowthState implements IExperienceGrowthState {
     }
 
     this.updateGrowthBySidejobs();
+    this.updateGrowthByPrimaryActivity();
     this.updateGrowthBySharing();
   }
 
   private updateGrowthBySidejobs(): void {
     for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
-      if (!sidejobActivity.active) {
-        continue;
-      }
-
       const cloneId = sidejobActivity.sidejob.assignedClone.id;
       let currentGrowth = this._growthByCloneId.get(cloneId) ?? 0;
-      currentGrowth += sidejobActivity.sidejob.calculateParameterDelta(DistrictTypeRewardParameter.experience, 1);
+      currentGrowth += sidejobActivity.getParameterGrowth(DistrictTypeRewardParameter.experience);
       this._growthByCloneId.set(cloneId, currentGrowth);
+    }
+  }
+
+  private updateGrowthByPrimaryActivity(): void {
+    for (const primaryActivity of this._activityState.primaryActivityQueue.listActivities()) {
+      for (const clone of primaryActivity.assignedClones) {
+        const cloneId = clone.id;
+        let currentGrowth = this._growthByCloneId.get(cloneId) ?? 0;
+        currentGrowth += primaryActivity.getParameterGrowth(DistrictTypeRewardParameter.experience);
+        this._growthByCloneId.set(cloneId, currentGrowth);
+      }
     }
   }
 

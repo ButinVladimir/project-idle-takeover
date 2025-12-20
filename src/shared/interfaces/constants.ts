@@ -1,5 +1,5 @@
 import { MainframeHardwareParameterType } from '@state/mainframe-state/states/mainframe-hardware-state/types';
-import { Feature, Hotkey, LongNumberFormat } from '../types';
+import { Milestone, Hotkey, LongNumberFormat } from '../types';
 
 export interface IConstants {
   startingValues: {
@@ -29,5 +29,5 @@ export interface IConstants {
       moneyShare: number;
     };
   };
-  menuUnlockRequirements: Record<string, Feature | undefined>;
+  menuUnlockRequirements: Record<string, Milestone | undefined>;
 }

@@ -4,7 +4,7 @@ import { NotificationType } from '@shared/types';
 export const NOTIFICATION_TYPE_NAMES = {
   [NotificationType.storyEvent]: () => msg('Story event'),
   [NotificationType.gameVersionUpdated]: () => msg('Game version updated'),
-  [NotificationType.featureUnlocked]: () => msg('New feature unlocked'),
+  [NotificationType.milestoneReached]: () => msg('New milestone reached'),
   [NotificationType.timeAccumulated]: () => msg('Time accumulated'),
   [NotificationType.activityUnlocked]: () => msg('Activity unlocked'),
   [NotificationType.designUnlocked]: () => msg('Design unlocked'),

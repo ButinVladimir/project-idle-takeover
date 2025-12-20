@@ -2,7 +2,7 @@ import { BaseController } from '@shared/index';
 
 export class CityDistrictPageController extends BaseController {
   isContractsTabUnlocked(): boolean {
-    return this.factionState.currentFaction !== 'neutral';
+    return this.factionState.currentFactionValues.playstyle !== 'selectFaction';
   }
 
   getDistrictState(districtIndex: number) {

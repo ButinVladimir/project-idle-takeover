@@ -1,4 +1,4 @@
-import { calculateTierLinear } from '@shared/index';
+import { calculateTierLinear, DistrictTypeRewardParameter } from '@shared/index';
 import { MultiplierProgramName } from '../types';
 import { BaseProgram } from './base-program';
 import { typedPrograms } from '../constants';
@@ -14,6 +14,10 @@ export class CodeGeneratorProgram extends BaseProgram {
   }
 
   calculateDelta(threads: number): number {
+    if (!this.unlockState.milestones.isRewardParameterUnlocked(DistrictTypeRewardParameter.codeBase)) {
+      return 0;
+    }
+
     const programData = typedPrograms[this.name];
     const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.codeBase;
 

@@ -27,14 +27,17 @@ export class SidejobActivity implements ISidejobActivity {
 
   private _active: boolean;
 
+  private _enabled: boolean;
+
   private _sidejob: ISidejob;
 
   constructor(args: ISerializedSidejobActivity) {
     this._id = args.id;
+    this._enabled = args.enabled;
     this._sidejob = this._activityState.sidejobsFactory.makeSidejob(args.sidejob);
     this._active = false;
 
-    this._stateUiConnector.registerEventEmitter(this, ['_active']);
+    this._stateUiConnector.registerEventEmitter(this, ['_active', '_enabled']);
   }
 
   get id(): string {
@@ -49,6 +52,10 @@ export class SidejobActivity implements ISidejobActivity {
     this._active = value;
   }
 
+  get enabled(): boolean {
+    return this._enabled;
+  }
+
   get sidejob(): ISidejob {
     return this._sidejob;
   }
@@ -59,9 +66,24 @@ export class SidejobActivity implements ISidejobActivity {
     }
   }
 
+  getParameterGrowth(parameter: DistrictTypeRewardParameter): number {
+    if (!this._active) {
+      return 0;
+    }
+
+    return this._sidejob.calculateParameterDelta(parameter, 1);
+  }
+
+  toggleEnabled(enabled: boolean) {
+    this._enabled = enabled;
+
+    this._activityState.requestReassignment();
+  }
+
   serialize(): ISerializedSidejobActivity {
     return {
       id: this._id,
+      enabled: this._enabled,
       sidejob: this._sidejob.serialize(),
     };
   }

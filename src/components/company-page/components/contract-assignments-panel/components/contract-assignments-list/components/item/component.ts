@@ -73,10 +73,10 @@ export class ContractAssignmentListItem extends BaseComponent {
     const canBeStarted = this._contractAssignment.canBeStarted();
     const startLabel = msg('Add assigned contract to the queue');
 
-    const toggleIcon = this._contractAssignment.active
+    const toggleIcon = this._contractAssignment.enabled
       ? ENTITY_ACTIVE_VALUES.icon.active
       : ENTITY_ACTIVE_VALUES.icon.stopped;
-    const toggleLabel = this._contractAssignment.active
+    const toggleLabel = this._contractAssignment.enabled
       ? msg('Disable contract assignment')
       : msg('Enable contract assignment');
 
@@ -187,13 +187,13 @@ export class ContractAssignmentListItem extends BaseComponent {
       ? ENTITY_ACTIVE_VALUES.buttonVariant.active
       : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
 
-    const toggleIcon = this._contractAssignment.active
+    const toggleIcon = this._contractAssignment.enabled
       ? ENTITY_ACTIVE_VALUES.icon.active
       : ENTITY_ACTIVE_VALUES.icon.stopped;
-    const toggleLabel = this._contractAssignment.active
+    const toggleLabel = this._contractAssignment.enabled
       ? msg('Disable contract assignment')
       : msg('Enable contract assignment');
-    const toggleVariant = this._contractAssignment.active
+    const toggleVariant = this._contractAssignment.enabled
       ? ENTITY_ACTIVE_VALUES.buttonVariant.active
       : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
 

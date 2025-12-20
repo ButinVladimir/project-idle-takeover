@@ -1,0 +1,21 @@
+{
+  "$id": "common/milestone.json",
+  "type": "string",
+  "description": "Milestone",
+  "enum": [
+    "unlockedAutomation",
+    "unlockedAutomationMainframeHardware",
+    "unlockedAutomationMainframePrograms",
+    "unlockedMainframePrograms",
+    "unlockedMainframeHardware",
+    "unlockedCompanyManagement",
+    "unlockedCodeBase",
+    "unlockedComputationalBase",
+    "unlockedConnectivity",
+    "unlockedRewards",
+    "unlockedExperienceShare",
+    "unlockedInfluence",
+    "unlockedFactions",
+    "unlockedPrimaryActivity"
+  ]
+}

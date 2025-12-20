@@ -4,10 +4,10 @@ import { ISerializedContractAssignment } from './serialized-contract-assignment'
 export interface IContractAssignment {
   id: string;
   contract: IContract;
-  active: boolean;
+  enabled: boolean;
   canBeStarted(): boolean;
   start(): void;
-  toggleActive(active: boolean): void;
+  toggleEnabled(enabled: boolean): void;
   serialize(): ISerializedContractAssignment;
   removeAllEventListeners(): void;
 }

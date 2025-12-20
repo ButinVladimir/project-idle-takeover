@@ -40,9 +40,9 @@
     }
   },
   "menuUnlockRequirements": {
-    "city": "companyManagement",
-    "company": "companyManagement",
-    "automation": "automation",
-    "factions": "factions"
+    "city": "unlockedCompanyManagement",
+    "company": "unlockedCompanyManagement",
+    "automation": "unlockedAutomation",
+    "factions": "unlockedFactions"
   }
 }

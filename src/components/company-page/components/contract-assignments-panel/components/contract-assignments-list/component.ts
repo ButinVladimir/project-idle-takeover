@@ -199,7 +199,7 @@ export class ContractAssignmentsList extends BaseComponent {
   };
 
   private checkSomeContractAssignmentsEnabled(): boolean {
-    return this._controller.listContractAssignments().some((contractAssignment) => contractAssignment.active);
+    return this._controller.listContractAssignments().some((contractAssignment) => contractAssignment.enabled);
   }
 
   private handleToggleAllContractAssignments = () => {

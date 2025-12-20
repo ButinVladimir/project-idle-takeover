@@ -1,4 +1,4 @@
-import { calculateLinear, calculateTierLinear } from '@shared/index';
+import { calculateLinear, calculateTierLinear, DistrictTypeRewardParameter } from '@shared/index';
 import { OtherProgramName } from '../types';
 import { BaseProgram } from './base-program';
 import { typedPrograms } from '../constants';
@@ -12,6 +12,10 @@ export class PeerReviewerProgram extends BaseProgram {
   perform(): void {}
 
   calculateExperienceShareMultiplier(threads: number, usedRam: number): number {
+    if (!this.unlockState.milestones.isRewardParameterUnlocked(DistrictTypeRewardParameter.experienceShareMultiplier)) {
+      return 0;
+    }
+
     const programData = typedPrograms[this.name];
     const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.experienceShareMultiplier;
 

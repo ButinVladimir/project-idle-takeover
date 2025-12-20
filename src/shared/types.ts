@@ -33,8 +33,6 @@ export enum MiscMenuItem {
   credits = 'credits',
 }
 
-export type Faction = string | 'neutral' | 'scavs';
-
 export enum GameStateEvent {
   gameStarted = 'gameStarted',
   gameSaved = 'gameSaved',
@@ -162,7 +160,7 @@ export type GameAlert =
 
 export enum NotificationType {
   storyEvent = 'storyEvent',
-  featureUnlocked = 'featureUnlocked',
+  milestoneReached = 'milestoneUnlocked',
   timeAccumulated = 'timeAccumulated',
   gameVersionUpdated = 'gameVersionUpdated',
   activityUnlocked = 'activityUnlocked',
@@ -189,24 +187,24 @@ export enum PurchaseType {
 export enum IncomeSource {
   program = 'program',
   sidejob = 'sidejob',
-  contract = 'contract',
+  primaryActivity = 'primaryActivity',
 }
 
-export enum Feature {
-  automation = 'automation',
-  automationMainframeHardware = 'automationMainframeHardware',
-  automationMainframePrograms = 'automationMainframePrograms',
-  mainframePrograms = 'mainframePrograms',
-  mainframeHardware = 'mainframeHardware',
-  companyManagement = 'companyManagement',
-  codeBase = 'codeBase',
-  computationalBase = 'computationalBase',
-  connectivity = 'connectivity',
-  rewards = 'rewards',
-  experienceShare = 'experienceShare',
-  influence = 'influence',
-  factions = 'factions',
-  contracts = 'contracts',
+export enum Milestone {
+  unlockedAutomation = 'unlockedAutomation',
+  unlockedAutomationMainframeHardware = 'unlockedAutomationMainframeHardware',
+  unlockedAutomationMainframePrograms = 'unlockedAutomationMainframePrograms',
+  unlockedMainframePrograms = 'unlockedMainframePrograms',
+  unlockedMainframeHardware = 'unlockedMainframeHardware',
+  unlockedCompanyManagement = 'unlockedCompanyManagement',
+  unlockedCodeBase = 'unlockedCodeBase',
+  unlockedComputationalBase = 'unlockedComputationalBase',
+  unlockedConnectivity = 'unlockedConnectivity',
+  unlockedRewards = 'unlockedRewards',
+  unlockedExperienceShare = 'unlockedExperienceShare',
+  unlockedInfluence = 'unlockedInfluence',
+  unlockedFactions = 'unlockedFactions',
+  unlockedPrimaryActivity = 'unlockedPrimaryActivity',
 }
 
 export type PointsMultiplierType = 'codeBase' | 'computationalBase';

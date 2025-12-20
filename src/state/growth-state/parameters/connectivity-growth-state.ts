@@ -80,7 +80,7 @@ export class ConnectivityGrowthState implements IConnectivityGrowthState {
 
     const process = this._mainframeState.processes.getProcessByName(MultiplierProgramName.informationCollector);
 
-    if (process?.isActive) {
+    if (process?.enabled) {
       const program = process.program as InformationCollectorProgram;
       this._baseGrowthByProgram = program.calculateDelta(process.threads) / process.calculateCompletionTime();
     }
@@ -92,17 +92,23 @@ export class ConnectivityGrowthState implements IConnectivityGrowthState {
     }
 
     this.updateGrowthBySidejobs();
+    this.updateGrowthByPrimaryActivity();
   }
 
   private updateGrowthBySidejobs(): void {
     for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
-      if (!sidejobActivity.active) {
-        continue;
-      }
-
       const districtIndex = sidejobActivity.sidejob.district.index;
       let currentGrow = this._baseGrowthByDistrict.get(districtIndex) ?? 0;
-      currentGrow += sidejobActivity.sidejob.calculateParameterDelta(DistrictTypeRewardParameter.connectivity, 1);
+      currentGrow += sidejobActivity.getParameterGrowth(DistrictTypeRewardParameter.connectivity);
+      this._baseGrowthByDistrict.set(districtIndex, currentGrow);
+    }
+  }
+
+  private updateGrowthByPrimaryActivity(): void {
+    for (const primaryActivity of this._activityState.primaryActivityQueue.listActivities()) {
+      const districtIndex = primaryActivity.district.index;
+      let currentGrow = this._baseGrowthByDistrict.get(districtIndex) ?? 0;
+      currentGrow += primaryActivity.getParameterGrowth(DistrictTypeRewardParameter.connectivity);
       this._baseGrowthByDistrict.set(districtIndex, currentGrow);
     }
   }

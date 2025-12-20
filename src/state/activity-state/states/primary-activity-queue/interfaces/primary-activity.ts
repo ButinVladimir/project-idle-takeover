@@ -12,7 +12,9 @@ export interface IPrimaryActivity {
   assignedClones: IClone[];
   district: IDistrictState;
   incomeSource: IncomeSource;
-  getParameterReward(parameter: DistrictTypeRewardParameter): number | undefined;
+  getParameterVisibility(parameter: DistrictTypeRewardParameter): boolean;
+  getParameterReward(parameter: DistrictTypeRewardParameter): number;
+  getParameterGrowth(parameter: DistrictTypeRewardParameter): number;
   getActivityAddedMessage(): string;
   getActivityCancelledMessage(): string;
   start(): boolean;

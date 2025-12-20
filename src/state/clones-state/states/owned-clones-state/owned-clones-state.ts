@@ -10,7 +10,7 @@ import { type IUnlockState } from '@state/unlock-state';
 import { TYPES } from '@state/types';
 import {
   ClonesEvent,
-  Feature,
+  Milestone,
   PurchaseType,
   calculateTierMultiplier,
   calculateTierPower,
@@ -106,7 +106,7 @@ export class OwnedClonesState implements IOwnedClonesState {
   }
 
   purchaseClone(args: IPurchaseCloneArgs): boolean {
-    if (!this._unlockState.features.isFeatureUnlocked(Feature.companyManagement)) {
+    if (!this._unlockState.milestones.isMilestoneReached(Milestone.unlockedCompanyManagement)) {
       return false;
     }
 

@@ -1,11 +1,12 @@
 import { ProgramName } from '@state/mainframe-state';
 
 export interface IFactionValues {
-  loans: {
+  playstyle: 'selectFaction' | 'captureCity' | 'raiseThreat';
+  loanedItems: {
     programs: ProgramName[];
     cloneTemplates: string[];
   };
-  special: {
+  specialItems: {
     programs: ProgramName[];
     cloneTemplates: string[];
   };

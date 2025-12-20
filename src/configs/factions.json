@@ -1,11 +1,12 @@
 {
   "$schema": "./schemas/factions.json",
   "neutral": {
-    "loans": {
+    "playstyle": "selectFaction",
+    "loanedItems": {
       "programs": [],
       "cloneTemplates": []
     },
-    "special": {
+    "specialItems": {
       "programs": [],
       "cloneTemplates": []
     },
@@ -14,11 +15,12 @@
     }
   },
   "scavs": {
-    "loans": {
+    "playstyle": "raiseThreat",
+    "loanedItems": {
       "programs": [],
       "cloneTemplates": []
     },
-    "special": {
+    "specialItems": {
       "programs": [],
       "cloneTemplates": []
     },
@@ -27,11 +29,12 @@
     }
   },
   "wsa": {
-    "loans": {
+    "playstyle": "captureCity",
+    "loanedItems": {
       "programs": ["predictiveComputator"],
       "cloneTemplates": []
     },
-    "special": {
+    "specialItems": {
       "programs": [],
       "cloneTemplates": []
     },

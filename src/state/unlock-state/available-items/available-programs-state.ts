@@ -12,12 +12,12 @@ export class AvailableProgramsState extends BaseAvailableCategoryItemsState<Prog
   }
 
   protected getLoanedItemsFromFaction(): ProgramName[] {
-    return this._factionState.currentFactionValues.loans.programs;
+    return this._factionState.currentFactionValues.loanedItems.programs;
   }
 
-  protected checkRequiredFeatures(itemName: ProgramName): boolean {
-    const features = typedPrograms[itemName].requiredFeatures;
+  protected checkRequiredMilestones(itemName: ProgramName): boolean {
+    const milestones = typedPrograms[itemName].requiredMilestones;
 
-    return features.every((feature) => this._unlockState.features.isFeatureUnlocked(feature));
+    return milestones.every((milestones) => this._unlockState.milestones.isMilestoneReached(milestones));
   }
 }

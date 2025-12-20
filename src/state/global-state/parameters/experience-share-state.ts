@@ -6,7 +6,7 @@ import { type ICityState } from '@state/city-state';
 import { OtherProgramName, PeerReviewerProgram, type IMainframeState } from '@state/mainframe-state';
 import { type IScenarioState } from '@state/scenario-state';
 import { type IUnlockState } from '@state/unlock-state';
-import { Feature } from '@shared/index';
+import { Milestone } from '@shared/index';
 import { IExperienceShareState } from '../interfaces';
 
 const { lazyInject } = decorators;
@@ -69,7 +69,7 @@ export class ExperienceShareState implements IExperienceShareState {
   }
 
   recalculate(): void {
-    if (!this.isFeatureAvailable()) {
+    if (!this.isMilestoneReached()) {
       this._synchronizationMultiplier = 0;
       this._programMultiplier = 0;
       this._totalMultiplier = 0;
@@ -84,8 +84,8 @@ export class ExperienceShareState implements IExperienceShareState {
     this.updateDistrictMultipliers();
   }
 
-  private isFeatureAvailable(): boolean {
-    return this._unlockState.features.isFeatureUnlocked(Feature.experienceShare);
+  private isMilestoneReached(): boolean {
+    return this._unlockState.milestones.isMilestoneReached(Milestone.unlockedExperienceShare);
   }
 
   private updateSynchronizationMultiplier() {
@@ -102,7 +102,7 @@ export class ExperienceShareState implements IExperienceShareState {
 
     const peerReviewerProcess = this._mainframeState.processes.getProcessByName(OtherProgramName.peerReviewer);
 
-    if (peerReviewerProcess?.isActive) {
+    if (peerReviewerProcess?.enabled) {
       programMultiplier = (peerReviewerProcess.program as PeerReviewerProgram).calculateExperienceShareMultiplier(
         peerReviewerProcess.usedCores,
         peerReviewerProcess.totalRam,

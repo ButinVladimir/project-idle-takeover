@@ -4,7 +4,7 @@ import { provide } from '@lit/context';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
-import { BaseComponent, SidejobAlert, DELETE_VALUES, DESCRIPTION_ICONS } from '@shared/index';
+import { BaseComponent, SidejobAlert, DELETE_VALUES, DESCRIPTION_ICONS, ENTITY_ACTIVE_VALUES } from '@shared/index';
 import { COMMON_TEXTS, DISTRICT_NAMES, SIDEJOB_TEXTS } from '@texts/index';
 import { type ISidejobActivity } from '@state/activity-state';
 import { SidejobsListItemController } from './controller';
@@ -63,6 +63,9 @@ export class SidejobsListItem extends BaseComponent {
     const districtName = DISTRICT_NAMES[this._activity.sidejob.district.name]();
     const cloneName = this._activity.sidejob.assignedClone.name;
 
+    const toggleIcon = this._activity.enabled ? ENTITY_ACTIVE_VALUES.icon.active : ENTITY_ACTIVE_VALUES.icon.stopped;
+    const toggleLabel = this._activity.enabled ? msg('Disable sidejob') : msg('Enable sidejob');
+
     const cancelSidejobLabel = msg('Cancel sidejob');
 
     return html`
@@ -95,6 +98,13 @@ export class SidejobsListItem extends BaseComponent {
         <div><ca-sidejobs-list-item-status></ca-sidejobs-list-item-status></div>
 
         <div class="buttons">
+          <sl-tooltip>
+            <span slot="content"> ${toggleLabel} </span>
+
+            <sl-icon-button name=${toggleIcon} label=${toggleLabel} @click=${this.handleToggleSidejob}>
+            </sl-icon-button>
+          </sl-tooltip>
+
           <sl-tooltip>
             <span slot="content"> ${cancelSidejobLabel} </span>
 
@@ -137,6 +147,12 @@ export class SidejobsListItem extends BaseComponent {
       html`<ca-sidejobs-list-item-status></ca-sidejobs-list-item-status>`,
     );
 
+    const toggleIcon = this._activity.enabled ? ENTITY_ACTIVE_VALUES.icon.active : ENTITY_ACTIVE_VALUES.icon.stopped;
+    const toggleLabel = this._activity.enabled ? msg('Disable sidejob') : msg('Enable sidejob');
+    const toggleVariant = this._activity.enabled
+      ? ENTITY_ACTIVE_VALUES.buttonVariant.active
+      : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
+
     const cancelSidejobLabel = msg('Cancel sidejob');
 
     return html`
@@ -169,6 +185,12 @@ export class SidejobsListItem extends BaseComponent {
         <div>${statusFull}</div>
 
         <div class="buttons">
+          <sl-button variant=${toggleVariant} size="medium" @click=${this.handleToggleSidejob}>
+            <sl-icon slot="prefix" name=${toggleIcon}></sl-icon>
+
+            ${toggleLabel}
+          </sl-button>
+
           <sl-button variant=${DELETE_VALUES.buttonVariant} size="medium" @click=${this.handleOpenCancelSidejobDialog}>
             <sl-icon slot="prefix" name=${DELETE_VALUES.icon}> </sl-icon>
 
@@ -205,6 +227,10 @@ export class SidejobsListItem extends BaseComponent {
         this.handleCancelSidejob,
       ),
     );
+  };
+
+  private handleToggleSidejob = () => {
+    this._controller.toggleSidejob();
   };
 
   private handleCancelSidejob = () => {

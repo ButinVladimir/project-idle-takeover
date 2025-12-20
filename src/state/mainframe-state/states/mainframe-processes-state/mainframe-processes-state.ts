@@ -113,7 +113,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
       existingProcess.update(threads);
     } else {
       const process = this.createProcess({
-        isActive: true,
+        enabled: true,
         threads: threadCount,
         currentCompletionPoints: 0,
         programName: programName,
@@ -151,7 +151,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
 
   toggleAllProcesses(active: boolean): void {
     for (const process of this._processesList) {
-      process.toggleActive(active);
+      process.toggleEnabled(active);
     }
 
     this.requestUpdateRunningProcesses();
@@ -204,7 +204,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
 
   updateAllProcessesPerformance() {
     for (const process of this._processesList) {
-      if (process.isActive && process.usedCores > 0) {
+      if (process.enabled && process.usedCores > 0) {
         process.program.handlePerformanceUpdate();
       }
     }
@@ -215,7 +215,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
       this.updateRunningProcesses();
     }
 
-    if (this._runningScalableProcess?.isActive) {
+    if (this._runningScalableProcess?.enabled) {
       this._runningScalableProcess.program.perform(
         this._runningScalableProcess.usedCores,
         this._runningScalableProcess.totalRam,
@@ -317,7 +317,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
       availableRam--;
     }
 
-    if (availableCores > 0 && this._runningScalableProcess?.isActive) {
+    if (availableCores > 0 && this._runningScalableProcess?.enabled) {
       availableCores--;
       runningScalableProcessCores++;
     }
@@ -335,7 +335,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
       availableRam -= processRam;
       prevUsedCores = process.usedCores;
 
-      if (!process.isActive) {
+      if (!process.enabled) {
         usedCores = 0;
       } else {
         usedCores = Math.min(process.maxCores, availableCores);
@@ -354,7 +354,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
       }
     }
 
-    if (this._runningScalableProcess?.isActive) {
+    if (this._runningScalableProcess?.enabled) {
       runningScalableProcessCores += availableCores;
     }
 
@@ -389,7 +389,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
 
   private createProcess = (processParameters: ISerializedProcess): IProcess => {
     const process = new Process({
-      isActive: processParameters.isActive,
+      enabled: processParameters.enabled,
       threads: processParameters.threads,
       program: this._mainframeState.programs.getOwnedProgramByName(processParameters.programName)!,
       currentCompletionPoints: processParameters.currentCompletionPoints,

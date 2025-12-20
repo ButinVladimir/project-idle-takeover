@@ -138,7 +138,7 @@ export class StoryEventsState implements IStoryEventsState {
     const storyEvent = typedStoryEvents[storyEventName];
 
     this.processStoryEventMessages(storyEventName, storyEvent);
-    this.processStoryEventFeatures(storyEvent);
+    this.processStoryEventMilestones(storyEvent);
     this.processStoryEventEvents(storyEvent);
     this.processStoryEventPrograms(storyEvent);
     this.processStoryEventCloneTemplates(storyEvent);
@@ -172,7 +172,10 @@ export class StoryEventsState implements IStoryEventsState {
       return false;
     }
 
-    if (storyStateValues.faction !== 'neutral' && storyStateValues.faction !== storyEvent.requirements.faction) {
+    if (
+      this._factionState.currentFactionValues.playstyle !== 'selectFaction' &&
+      storyStateValues.faction !== storyEvent.requirements.faction
+    ) {
       return true;
     }
 
@@ -228,10 +231,10 @@ export class StoryEventsState implements IStoryEventsState {
     }
   }
 
-  private processStoryEventFeatures(storyEvent: IStoryEvent) {
-    if (storyEvent.unlockFeatures) {
-      storyEvent.unlockFeatures.forEach((feature) => {
-        this._unlockState.features.unlockFeature(feature);
+  private processStoryEventMilestones(storyEvent: IStoryEvent) {
+    if (storyEvent.milestones) {
+      storyEvent.milestones.forEach((milestone) => {
+        this._unlockState.milestones.reachMilestone(milestone);
       });
     }
   }

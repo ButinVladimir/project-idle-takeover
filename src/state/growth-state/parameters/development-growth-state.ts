@@ -51,6 +51,7 @@ export class DevelopmentGrowthState implements IDevelopmentGrowthState {
 
     this.updateGrowthByProgram();
     this.updateGrowthBySidejobs();
+    this.updateGrowthByPrimaryActivity();
     this.updateTotalGrowth();
   }
 
@@ -60,7 +61,7 @@ export class DevelopmentGrowthState implements IDevelopmentGrowthState {
     const shareServerProcess = mainframeProcessesState.getProcessByName(OtherProgramName.shareServer);
     let incomeByProgram = 0;
 
-    if (shareServerProcess?.isActive) {
+    if (shareServerProcess?.enabled) {
       incomeByProgram = (shareServerProcess.program as ShareServerProgram).calculateDevelopmentPointsDelta(
         shareServerProcess.usedCores,
         shareServerProcess.totalRam,
@@ -75,17 +76,19 @@ export class DevelopmentGrowthState implements IDevelopmentGrowthState {
     let incomeBySidejobs = 0;
 
     for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
-      if (!sidejobActivity.active) {
-        continue;
-      }
-
-      incomeBySidejobs += sidejobActivity.sidejob.calculateParameterDelta(
-        DistrictTypeRewardParameter.developmentPoints,
-        1,
-      );
+      incomeBySidejobs += sidejobActivity.getParameterGrowth(DistrictTypeRewardParameter.developmentPoints);
     }
 
     this._growth.set(IncomeSource.sidejob, incomeBySidejobs);
+  }
+
+  private updateGrowthByPrimaryActivity(): void {
+    let incomeByPrimaryActivity = 0;
+
+    for (const primaryActivity of this._activityState.primaryActivityQueue.listActivities()) {
+      incomeByPrimaryActivity += primaryActivity.getParameterGrowth(DistrictTypeRewardParameter.developmentPoints);
+    }
+    this._growth.set(IncomeSource.primaryActivity, incomeByPrimaryActivity);
   }
 
   private updateTotalGrowth() {

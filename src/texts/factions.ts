@@ -1,12 +1,11 @@
 import { msg } from '@lit/localize';
-import { Faction } from '@shared/types';
 
 interface IFactionTexts {
   title: () => string;
   overview: () => string;
 }
 
-export const FACTION_TEXTS: Record<Faction, IFactionTexts> = {
+export const FACTION_TEXTS: Record<string, IFactionTexts> = {
   neutral: {
     title: () => msg('Neutral'),
     overview: () => msg(`Neutrals who don't belong to any major factions.`),

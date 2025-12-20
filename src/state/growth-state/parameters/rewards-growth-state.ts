@@ -67,7 +67,7 @@ export class RewardsGrowthState implements IRewardsGrowthState {
 
     const process = this._mainframeState.processes.getProcessByName(MultiplierProgramName.dealMaker);
 
-    if (process?.isActive) {
+    if (process?.enabled) {
       const program = process.program as DealMakerProgram;
       this._growthByProgram = program.calculateDelta(process.threads) / process.calculateCompletionTime();
     }
@@ -79,18 +79,24 @@ export class RewardsGrowthState implements IRewardsGrowthState {
     }
 
     this.updateGrowthBySidejobs();
+    this.updateGrowthByPrimaryActivity();
   }
 
   private updateGrowthBySidejobs(): void {
     for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
-      if (!sidejobActivity.active) {
-        continue;
-      }
-
       const districtIndex = sidejobActivity.sidejob.district.index;
       let currentGrow = this._growthByDistrict.get(districtIndex) ?? 0;
-      currentGrow += sidejobActivity.sidejob.calculateParameterDelta(DistrictTypeRewardParameter.rewards, 1);
+      currentGrow += sidejobActivity.getParameterGrowth(DistrictTypeRewardParameter.rewards);
       this._growthByDistrict.set(districtIndex, currentGrow);
+    }
+  }
+
+  private updateGrowthByPrimaryActivity(): void {
+    for (const primaryActivity of this._activityState.primaryActivityQueue.listActivities()) {
+      const districtIndex = primaryActivity.district.index;
+      let currentGrowth = this._growthByDistrict.get(districtIndex) ?? 0;
+      currentGrowth += primaryActivity.getParameterGrowth(DistrictTypeRewardParameter.rewards);
+      this._growthByDistrict.set(districtIndex, currentGrowth);
     }
   }
 }

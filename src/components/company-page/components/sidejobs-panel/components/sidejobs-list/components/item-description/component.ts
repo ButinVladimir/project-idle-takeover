@@ -4,7 +4,7 @@ import { consume } from '@lit/context';
 import { customElement, queryAll } from 'lit/decorators.js';
 import {
   BaseComponent,
-  DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES,
+  DISTRICT_TYPE_REWARD_PARAMETER_UI_VALUES,
   DISTRICT_TYPE_REWARD_PARAMETERS,
   DistrictTypeRewardParameter,
 } from '@shared/index';
@@ -13,7 +13,7 @@ import { COMMON_TEXTS, REWARD_PARAMETER_NAMES, SIDEJOB_TEXTS } from '@texts/inde
 import { SidejobsListItemDescriptionController } from './controller';
 import { sidejobActivityContext } from '../item/contexts';
 import styles from './styles';
-import { calculateSidejobParameterValue, checkSidejobParameterVisibility } from '../../../../helpers';
+import { calculateSidejobParameterValue } from '../../../../helpers';
 
 @localized()
 @customElement('ca-sidejobs-list-item-description')
@@ -55,13 +55,9 @@ export class SidejobsListItemDescription extends BaseComponent {
   }
 
   private renderParameter = (parameter: DistrictTypeRewardParameter) => {
-    const parameterValues = DISTRICT_TYPE_REWARD_PARAMETER_VISIBILITY_VALUES[parameter];
+    const parameterValues = DISTRICT_TYPE_REWARD_PARAMETER_UI_VALUES[parameter];
 
-    if (!checkSidejobParameterVisibility(this._activity!.sidejob, parameter)) {
-      return nothing;
-    }
-
-    if (!parameterValues.requirements.every((requirement) => this._controller.isFeatureUnlocked(requirement))) {
+    if (!this._activity!.sidejob.getParameterVisibility(parameter)) {
       return nothing;
     }
 

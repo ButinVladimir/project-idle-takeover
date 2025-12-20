@@ -1,8 +1,8 @@
-import { BaseController, Feature } from '@shared/index';
+import { BaseController, Milestone } from '@shared/index';
 
 export class ContractsAssignmentsListItemDescriptionController extends BaseController {
-  isFeatureUnlocked(feature: Feature) {
-    return this.unlockState.features.isFeatureUnlocked(feature);
+  isMilestoneUnlocked(milestone: Milestone) {
+    return this.unlockState.milestones.isMilestoneReached(milestone);
   }
 
   getAvailableCount(districtIndex: number, contractName: string): number {

@@ -1,9 +1,9 @@
 import { html, nothing } from 'lit';
 import { localized, msg, str } from '@lit/localize';
 import { customElement, property } from 'lit/decorators.js';
-import { BaseComponent, capitalizeFirstLetter, type Faction, Feature, MapSpecialEvent } from '@shared/index';
+import { BaseComponent, capitalizeFirstLetter, Milestone, MapSpecialEvent } from '@shared/index';
 import { ProgramName } from '@state/mainframe-state';
-import { UNLOCKED_FEATURE_TEXTS, STORY_MESSAGES, SPECIAL_EVENTS_MESSAGES, FACTION_TEXTS } from '@texts/index';
+import { MILESTONE_TEXTS, STORY_MESSAGES, SPECIAL_EVENTS_MESSAGES, FACTION_TEXTS } from '@texts/index';
 import { KEYS_SEPARATOR } from '../../../../constants';
 import styles from './styles';
 import { OverviewStoryGoalController } from './controller';
@@ -29,7 +29,7 @@ export class OverviewStoryGoal extends BaseComponent {
     attribute: 'faction',
     type: String,
   })
-  faction?: Faction;
+  faction?: string;
 
   @property({
     attribute: 'captured-districts-count',
@@ -50,10 +50,10 @@ export class OverviewStoryGoal extends BaseComponent {
   specialEvents?: string;
 
   @property({
-    attribute: 'unlock-features',
+    attribute: 'milestones',
     type: String,
   })
-  unlockFeatures?: string;
+  milestones?: string;
 
   @property({
     attribute: 'programs',
@@ -72,6 +72,12 @@ export class OverviewStoryGoal extends BaseComponent {
     type: String,
   })
   sidejobs?: string;
+
+  @property({
+    attribute: 'contracts',
+    type: String,
+  })
+  contracts?: string;
 
   private _controller: OverviewStoryGoalController;
 
@@ -124,11 +130,12 @@ export class OverviewStoryGoal extends BaseComponent {
 
     const result = [
       ...this.renderMessages(),
-      ...this.renderUnlockFeatures(),
+      ...this.renderMilestones(),
       ...this.renderSpecialEvents(),
       ...this.renderPrograms(),
       ...this.renderCloneTemplates(),
       ...this.renderSidejobs(),
+      ...this.renderContracts(),
     ];
 
     return result;
@@ -142,14 +149,14 @@ export class OverviewStoryGoal extends BaseComponent {
     return this.messages.split(KEYS_SEPARATOR).map((message) => html`<p>${STORY_MESSAGES[message]()}</p>`);
   };
 
-  private renderUnlockFeatures = () => {
-    if (!this.unlockFeatures) {
+  private renderMilestones = () => {
+    if (!this.milestones) {
       return [];
     }
 
-    return this.unlockFeatures
+    return this.milestones
       .split(KEYS_SEPARATOR)
-      .map((feature) => html`<p>${UNLOCKED_FEATURE_TEXTS[feature as Feature].message()}</p>`);
+      .map((milestone) => html`<p>${MILESTONE_TEXTS[milestone as Milestone].message()}</p>`);
   };
 
   private renderSpecialEvents = () => {
@@ -190,5 +197,15 @@ export class OverviewStoryGoal extends BaseComponent {
     return this.sidejobs
       .split(KEYS_SEPARATOR)
       .map((sidejobName) => html`<p>${this._controller.makeSidejobUnlockMessage(sidejobName)}</p>`);
+  };
+
+  private renderContracts = () => {
+    if (!this.contracts) {
+      return [];
+    }
+
+    return this.contracts
+      .split(KEYS_SEPARATOR)
+      .map((contractName) => html`<p>${this._controller.makeContractUnlockMessage(contractName)}</p>`);
   };
 }

@@ -2,7 +2,7 @@ import { html } from 'lit';
 import { msg, localized, str } from '@lit/localize';
 import { customElement, property } from 'lit/decorators.js';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
-import { BaseComponent, type Faction, GameStateAlert, HINT_ICON } from '@shared/index';
+import { BaseComponent, GameStateAlert, HINT_ICON } from '@shared/index';
 import { FACTION_TEXTS } from '@texts/index';
 import { FactionsAvailableFactionsListItemController } from './controller';
 import styles from './styles';
@@ -17,7 +17,7 @@ export class FactionsAvailableFactionsListItem extends BaseComponent {
     attribute: 'faction',
     type: String,
   })
-  faction!: Faction;
+  faction!: string;
 
   protected hasMobileRender = true;
 

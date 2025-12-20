@@ -2,6 +2,7 @@ import { Attribute, Skill, calculatePower, ATTRIBUTES, SKILLS, DistrictTypeRewar
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IGlobalState } from '@state/global-state';
+import { type IUnlockState } from '@state/unlock-state';
 import { IDistrictState } from '@state/city-state';
 import { IClone } from '@state/clones-state';
 import { ISerializedSidejob, ISidejob, ISidejobArguments } from './interfaces';
@@ -12,6 +13,9 @@ const { lazyInject } = decorators;
 export class Sidejob implements ISidejob {
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
+
+  @lazyInject(TYPES.UnlockState)
+  private _unlockState!: IUnlockState;
 
   private _templateName: string;
   private _district: IDistrictState;
@@ -83,9 +87,20 @@ export class Sidejob implements ISidejob {
     );
   }
 
+  getParameterVisibility(parameter: DistrictTypeRewardParameter): boolean {
+    const sidejobModifier = this.sidejobTemplate.rewards[parameter];
+
+    return !!sidejobModifier;
+  }
+
   calculateParameterDelta(parameter: DistrictTypeRewardParameter, passedTime: number): number {
     const sidejobModifier = this.sidejobTemplate.rewards[parameter];
+
     if (!sidejobModifier) {
+      return 0;
+    }
+
+    if (!this._unlockState.milestones.isRewardParameterUnlocked(parameter)) {
       return 0;
     }
 

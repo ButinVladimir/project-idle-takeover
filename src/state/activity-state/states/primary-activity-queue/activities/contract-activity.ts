@@ -4,7 +4,12 @@ import { decorators } from '@state/container';
 import { type IAutomationState, IContractAssignment } from '@state/automation-state';
 import { type IMessageLogState } from '@state/message-log-state';
 import { type ISettingsState } from '@state/settings-state';
-import { DISTRICT_TYPE_REWARD_PARAMETERS, IncomeSource, PrimaryActivitiesEvent } from '@shared/index';
+import {
+  DISTRICT_TYPE_REWARD_PARAMETERS,
+  DistrictTypeRewardParameter,
+  IncomeSource,
+  PrimaryActivitiesEvent,
+} from '@shared/index';
 import { IClone } from '@state/clones-state';
 import { IDistrictState } from '@state/city-state';
 import { IContractActivity, ISerializedContractActivity } from '../interfaces';
@@ -26,7 +31,7 @@ export class ContractActivity extends PrimaryActivity implements IContractActivi
   private _messageLogState!: IMessageLogState;
 
   public readonly type = 'contract';
-  public readonly incomeSource = IncomeSource.contract;
+  public readonly incomeSource = IncomeSource.primaryActivity;
 
   private _contractAssignment: IContractAssignment;
   private _passedTime: number;
@@ -65,6 +70,18 @@ export class ContractActivity extends PrimaryActivity implements IContractActivi
 
   get district(): IDistrictState {
     return this._contractAssignment.contract.district;
+  }
+
+  getParameterVisibility(parameter: DistrictTypeRewardParameter): boolean {
+    return this._contractAssignment.contract.getParameterVisibility(parameter);
+  }
+
+  getParameterGrowth(parameter: DistrictTypeRewardParameter): number {
+    if (this.state !== PrimaryActivityState.active) {
+      return 0;
+    }
+
+    return this.getParameterReward(parameter) / this._contractAssignment.contract.completionTime;
   }
 
   getActivityAddedMessage(): string {
@@ -169,9 +186,7 @@ export class ContractActivity extends PrimaryActivity implements IContractActivi
     for (const parameter of DISTRICT_TYPE_REWARD_PARAMETERS) {
       const value = this._contractAssignment.contract.calculateParameterDelta(parameter);
 
-      if (value !== undefined) {
-        this._parameterRewardsMap.set(parameter, value);
-      }
+      this._parameterRewardsMap.set(parameter, value);
     }
   }
 }

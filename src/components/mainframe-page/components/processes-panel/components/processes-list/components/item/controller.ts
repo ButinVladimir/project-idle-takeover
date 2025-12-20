@@ -13,7 +13,7 @@ export class ProcessesListItemController extends BaseController {
   }
 
   toggleProcess(): void {
-    this._process?.toggleActive(!this._process.isActive);
+    this._process?.toggleEnabled(!this._process.enabled);
   }
 
   deleteProcessByName(programName: ProgramName): void {

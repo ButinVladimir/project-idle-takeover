@@ -186,15 +186,15 @@
           "$ref": "./common/tiered-geometric-progression.json",
           "description": "Program cost (geometric)"
         },
-        "requiredFeatures": {
+        "requiredMilestones": {
           "type": "array",
-          "description": "Required features",
+          "description": "Required milestones",
           "items": {
-            "$ref": "./common/feature.json"
+            "$ref": "./common/milestone.json"
           }
         }
       },
-      "required": ["ram", "completionPoints", "levelSpeedBoost", "coreSpeedBoost", "cost", "requiredFeatures"]
+      "required": ["ram", "completionPoints", "levelSpeedBoost", "coreSpeedBoost", "cost", "requiredMilestones"]
     },
     "autoscalableParameters": {
       "type": "object",

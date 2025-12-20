@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
-import { Feature, PurchaseType } from '@shared/index';
+import { Milestone, PurchaseType } from '@shared/index';
 import { type IGlobalState } from '@state/global-state';
 import { type IAutomationState } from '@state/automation-state';
 import { type IUnlockState } from '@state/unlock-state';
@@ -69,7 +69,7 @@ export class OwnedClonesLevelUpgrader implements IOwnedClonesLevelUpgrader {
   }
 
   private checkUpgradeAvailable() {
-    return this._unlockState.features.isFeatureUnlocked(Feature.companyManagement);
+    return this._unlockState.milestones.isMilestoneReached(Milestone.unlockedCompanyManagement);
   }
 
   private performUpgradeAll() {

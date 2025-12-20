@@ -1,109 +1,105 @@
 import { msg } from '@lit/localize';
-import { Feature } from '@shared/types';
+import { Milestone } from '@shared/types';
 
-export const UNLOCKED_FEATURE_TEXTS: Record<
-  Feature,
-  { title: () => string; hint: () => string; message: () => string }
-> = {
-  [Feature.automation]: {
-    title: () => msg('Basic automation'),
+export const MILESTONE_TEXTS: Record<Milestone, { title: () => string; hint: () => string; message: () => string }> = {
+  [Milestone.unlockedAutomation]: {
+    title: () => msg('Unlocked basic automation'),
     hint: () => msg('Automation page and clone level autoupgrade are available'),
     message: () =>
       msg(`Automation page and clone level autoupgrade settings are now available.
 New program is available.
 `),
   },
-  [Feature.automationMainframeHardware]: {
-    title: () => msg('Mainframe hardware automation'),
+  [Milestone.unlockedAutomationMainframeHardware]: {
+    title: () => msg('Unlocked mainframe hardware automation'),
     hint: () => msg('Mainframe hardware automation settings are available on automation page'),
     message: () =>
       msg(`Mainframe hardware automation settings are now available on automation page.
 New program is available.`),
   },
-  [Feature.automationMainframePrograms]: {
-    title: () => msg('Mainframe programs automation'),
+  [Milestone.unlockedAutomationMainframePrograms]: {
+    title: () => msg('Unlocked mainframe programs automation'),
     hint: () => msg('Mainframe programs automation settings are available on automation page'),
     message: () =>
       msg(`Mainframe programs automation settings are now available on automation page.
 New program is available.`),
   },
-  [Feature.mainframePrograms]: {
-    title: () => msg('Mainframe programs'),
+  [Milestone.unlockedMainframePrograms]: {
+    title: () => msg('Unlocked mainframe programs'),
     hint: () => msg('Mainframe programs are upgradable'),
     message: () => msg('Mainframe programs are now upgradable.'),
   },
-  [Feature.mainframeHardware]: {
-    title: () => msg('Mainframe hardware'),
+  [Milestone.unlockedMainframeHardware]: {
+    title: () => msg('Unlocked mainframe hardware'),
     hint: () => msg('Mainframe hardware is upgradable'),
     message: () => msg('Mainframe hardware is now upgradable.'),
   },
-  [Feature.companyManagement]: {
-    title: () => msg('Company management'),
-    hint: () => msg('Makes possible making clones from templates and sending them to perform sidejobs in the city'),
+  [Milestone.unlockedCompanyManagement]: {
+    title: () => msg('Unlocked company management'),
+    hint: () => msg('Making clones from templates and sending them to perform sidejobs in the city is possible'),
     message: () =>
       msg(`Company management is now available.
 It's now possible to make clones from templates and send them to perform sidejobs in the city.`),
   },
-  [Feature.codeBase]: {
-    title: () => msg('Code base points'),
-    hint: () => msg('Reduces cost of purchasing mainframe programs'),
+  [Milestone.unlockedCodeBase]: {
+    title: () => msg('Unlocked code base points'),
+    hint: () => msg('Code base points reduce cost of purchasing mainframe programs'),
     message: () =>
       msg(`Code base points are now available.
 Increase them to make mainframe programs cheaper.
 Multipliers for programs and districts stack.`),
   },
-  [Feature.computationalBase]: {
-    title: () => msg('Computational base points'),
-    hint: () => msg('Reduces cost of upgrading mainframe hardware'),
+  [Milestone.unlockedComputationalBase]: {
+    title: () => msg('Unlocked computational base points'),
+    hint: () => msg('Computational base points reduce cost of upgrading mainframe hardware'),
     message: () =>
       msg(`Computational base points are now available.
 Increase them to make mainframe hardware cheaper.
 Multipliers for programs and districts stack.`),
   },
-  [Feature.connectivity]: {
-    title: () => msg('Connectivity points'),
-    hint: () => msg('Increases chances to receive new contracts and sidejobs'),
+  [Milestone.unlockedConnectivity]: {
+    title: () => msg('Unlocked connectivity points'),
+    hint: () => msg('Connectivity points increase chances to receive new contracts and sidejobs'),
     message: () =>
       msg(`Connectivity points are now available.
 Increase them to unlock more sidejobs and to increase chances of receiving new contracts from selected faction.
 Multipliers for programs and districts stack.`),
   },
-  [Feature.rewards]: {
-    title: () => msg('Rewards points'),
-    hint: () => msg('Increases rewards from everything'),
+  [Milestone.unlockedRewards]: {
+    title: () => msg('Unlocked rewards points'),
+    hint: () => msg('Rewards points increase rewards from everything'),
     message: () =>
       msg(`Rewards points are now available.
 Increase them to get more rewards from everything.
 Multipliers for programs and districts stack.`),
   },
-  [Feature.experienceShare]: {
-    title: () => msg('Experience share'),
+  [Milestone.unlockedExperienceShare]: {
+    title: () => msg('Unlocked experience share'),
     hint: () => msg('Clones can share their experience between each other'),
     message: () =>
       msg(`Clone experience is now can be shared between them.
 Whenever clone receives experience, all available clones in company will receive part of it.
 How big is this part depends on running processes and available synchronization.`),
   },
-  [Feature.influence]: {
-    title: () => msg('Faction influence'),
+  [Milestone.unlockedInfluence]: {
+    title: () => msg('Unlocked faction influence'),
     hint: () => msg('Faction influence and progress to next tier are now visible'),
     message: () =>
       msg(`Faction influence and progress to next tier are now visible.
 The higher district tier is, the better rewards are from performing actions within it.`),
   },
-  [Feature.factions]: {
-    title: () => msg('Factions'),
+  [Milestone.unlockedFactions]: {
+    title: () => msg('Unlocked factions'),
     hint: () => msg('Factions and faction power are now available'),
     message: () =>
       msg(`Factions and faction power are now available.
 Joining a faction gives access to it's loaned designs and contracts.`),
   },
-  [Feature.contracts]: {
-    title: () => msg('Contracts'),
-    hint: () => msg('Contracts are now available'),
+  [Milestone.unlockedPrimaryActivity]: {
+    title: () => msg('Unlocked primary actvity and contracts'),
+    hint: () => msg('Primary and contracts are now available'),
     message: () =>
-      msg(`Contracts are now available.
-Districts can be captured by performing contracts.
-Contracts can increase faction power and provide substantial earnings.`),
+      msg(`Primary activity and contracts are now available.
+Primary activity can increase certain parameters, like faction influence and notoriety points, and provide substantial rewards.`),
   },
 };

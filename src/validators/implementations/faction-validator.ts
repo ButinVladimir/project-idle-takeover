@@ -1,7 +1,6 @@
 import { injectable } from 'inversify';
 import { styleText } from 'node:util';
 import { FACTION_TEXTS } from '@texts/index';
-import { Faction } from '@shared/index';
 import { typedFactions } from '@state/faction-state';
 import { typedCloneTemplates } from '@state/clones-state';
 import { typedContracts } from '@state/activity-state';
@@ -10,7 +9,7 @@ import { IFactionValidator } from '../interfaces';
 
 @injectable()
 export class FactionValidator implements IFactionValidator {
-  validate(name: Faction) {
+  validate(name: string) {
     console.log(`\tValidating faction ${styleText('cyanBright', name)}`);
 
     this.validateTitle(name);
@@ -20,24 +19,24 @@ export class FactionValidator implements IFactionValidator {
     this.validateActivity(name);
   }
 
-  private validateTitle(name: Faction) {
+  private validateTitle(name: string) {
     if (!FACTION_TEXTS[name]?.title) {
       this.printMissingProperty(name, 'title');
     }
   }
 
-  private validateOverview(name: Faction) {
+  private validateOverview(name: string) {
     if (!FACTION_TEXTS[name]?.overview) {
       this.printMissingProperty(name, 'overview');
     }
   }
 
-  private validateItems(name: Faction, special: boolean) {
+  private validateItems(name: string, special: boolean) {
     this.validatePrograms(name, special);
     this.validateCloneTemplates(name, special);
   }
 
-  private validatePrograms(name: Faction, special: boolean) {
+  private validatePrograms(name: string, special: boolean) {
     this.getItems(name, special)
       .programs.filter((program) => !typedPrograms[program])
       .forEach((program) => {
@@ -45,7 +44,7 @@ export class FactionValidator implements IFactionValidator {
       });
   }
 
-  private validateCloneTemplates(name: Faction, special: boolean) {
+  private validateCloneTemplates(name: string, special: boolean) {
     this.getItems(name, special)
       .cloneTemplates.filter((cloneTemplate) => !typedCloneTemplates[cloneTemplate])
       .forEach((cloneTemplate) => {
@@ -53,17 +52,17 @@ export class FactionValidator implements IFactionValidator {
       });
   }
 
-  private getItems(name: Faction, special: boolean) {
+  private getItems(name: string, special: boolean) {
     const faction = typedFactions[name];
 
-    return special ? faction.special : faction.loans;
+    return special ? faction.specialItems : faction.loanedItems;
   }
 
-  private validateActivity(name: Faction) {
+  private validateActivity(name: string) {
     this.validateContracts(name);
   }
 
-  private validateContracts(name: Faction) {
+  private validateContracts(name: string) {
     typedFactions[name].activities.contracts
       .filter((contract) => !typedContracts[contract])
       .forEach((contract) => {
@@ -77,7 +76,7 @@ export class FactionValidator implements IFactionValidator {
     console.log(`\t\tFaction ${styleText('cyanBright', name)} is ${styleText('redBright', 'missing')} ${property}`);
   }
 
-  private printUnimplementedItem(faction: Faction, special: boolean, itemType: string, item: string) {
+  private printUnimplementedItem(faction: string, special: boolean, itemType: string, item: string) {
     const specialText = special ? 'special' : 'loaned';
 
     console.log(

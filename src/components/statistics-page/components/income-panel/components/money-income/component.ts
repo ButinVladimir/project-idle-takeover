@@ -2,7 +2,7 @@ import { html, nothing } from 'lit';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { msg, localized } from '@lit/localize';
 import { customElement, queryAll } from 'lit/decorators.js';
-import { BaseComponent, Feature, IncomeSource } from '@shared/index';
+import { BaseComponent, Milestone, IncomeSource } from '@shared/index';
 import { INCOME_SOURCE_NAMES, STATISTIC_PAGE_TEXTS } from '../../../../constants';
 import { StatisticsMoneyIncomeController } from './controller';
 import { statisticsPanelContentStyle } from '../../../../styles';
@@ -34,11 +34,11 @@ export class StatisticsMoneyIncome extends BaseComponent {
 
         <div class="parameters-table">
           ${this.renderIncomeSource(IncomeSource.program)}
-          ${this._controller.isFeatureUnlocked(Feature.companyManagement)
+          ${this._controller.isMilestoneUnlocked(Milestone.unlockedCompanyManagement)
             ? this.renderIncomeSource(IncomeSource.sidejob)
             : nothing}
-          ${this._controller.isFeatureUnlocked(Feature.contracts)
-            ? this.renderIncomeSource(IncomeSource.contract)
+          ${this._controller.isMilestoneUnlocked(Milestone.unlockedPrimaryActivity)
+            ? this.renderIncomeSource(IncomeSource.primaryActivity)
             : nothing}
 
           <div>${STATISTIC_PAGE_TEXTS.total()}</div>
