@@ -88,15 +88,11 @@ export class StartProcessDialogDescription extends BaseComponent {
     return html`
       <p>${PROGRAM_DESCRIPTION_TEXTS.requirementsAutoscalable()}</p>
 
-      <p>${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.ram(), ramEl)}</p>
+      <p>${COMMON_TEXTS.parameterRow(PROGRAM_DESCRIPTION_TEXTS.ram(), ramEl)}</p>
 
-      <p>
-        ${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.cores(), PROGRAM_DESCRIPTION_TEXTS.allAvailable(1))}
-      </p>
+      <p>${COMMON_TEXTS.parameterRow(PROGRAM_DESCRIPTION_TEXTS.cores(), PROGRAM_DESCRIPTION_TEXTS.allAvailable(1))}</p>
 
-      <p>
-        ${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.completionTime(), PROGRAM_DESCRIPTION_TEXTS.instant())}
-      </p>
+      <p>${COMMON_TEXTS.parameterRow(COMMON_TEXTS.completionTime(), PROGRAM_DESCRIPTION_TEXTS.instant())}</p>
     `;
   };
 
@@ -163,18 +159,18 @@ export class StartProcessDialogDescription extends BaseComponent {
     return html`
       <p>${PROGRAM_DESCRIPTION_TEXTS.requirementsDiff(formattedThreads, threadsDiffEl)}</p>
 
-      <p>${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.ram(), html`${ramEl} (${ramDiffEl})`)}</p>
+      <p>${COMMON_TEXTS.parameterRow(PROGRAM_DESCRIPTION_TEXTS.ram(), html`${ramEl} (${ramDiffEl})`)}</p>
 
       <p>
-        ${COMMON_TEXTS.parameterValue(
+        ${COMMON_TEXTS.parameterRow(
           PROGRAM_DESCRIPTION_TEXTS.cores(),
           PROGRAM_DESCRIPTION_TEXTS.upToDiff(formattedCores, coresDiffEl),
         )}
       </p>
 
       <p>
-        ${COMMON_TEXTS.parameterValue(
-          PROGRAM_DESCRIPTION_TEXTS.completionTime(),
+        ${COMMON_TEXTS.parameterRow(
+          COMMON_TEXTS.completionTime(),
           PROGRAM_DESCRIPTION_TEXTS.minMaxIntervalDiff(
             formattedMinTime,
             formattedMaxTime,

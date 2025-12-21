@@ -1,8 +1,7 @@
-import { SidejobName } from '@state/company-state';
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 
 export class CityDistrictSidejobsPanelController extends BaseController {
-  getAvailableSidejobs(): SidejobName[] {
-    return this.unlockState.activities.sidejobs.listUnlockedSidejobs();
+  getAvailableSidejobs(): string[] {
+    return this.unlockState.activities.sidejobs.listAvailableActivities();
   }
 }

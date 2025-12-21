@@ -1,8 +1,9 @@
 import { ISerializeable } from '@shared/index';
 import { IAvailableActivitiesSerializedState } from './serialized-states';
-import { IAvailableSidejobsState } from './activities';
+import { IAvailableCategoryActivitiesState } from './available-category-activities-state';
 
 export interface IAvailableActivitiesState extends ISerializeable<IAvailableActivitiesSerializedState> {
-  sidejobs: IAvailableSidejobsState;
+  sidejobs: IAvailableCategoryActivitiesState;
+  contracts: IAvailableCategoryActivitiesState;
   recalculate(): void;
 }

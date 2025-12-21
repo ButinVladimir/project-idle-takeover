@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "clones": {
+      "$ref": "#/$defs/list",
+      "description": "Clones names"
+    },
+    "districts": {
+      "$ref": "#/$defs/list",
+      "description": "Districts names"
+    }
+  },
+  "required": ["clones", "districts"],
+  "$defs": {
+    "list": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Name",
+        "minLength": 1
+      },
+      "minItems": 1
+    }
+  }
+}

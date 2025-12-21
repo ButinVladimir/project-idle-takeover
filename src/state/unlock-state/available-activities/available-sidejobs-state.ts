@@ -2,77 +2,101 @@ import { injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
-import { NotificationType } from '@shared/index';
-import { SidejobName } from '@state/company-state';
+import { Milestone, NotificationType } from '@shared/index';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type INotificationsState } from '@state/notifications-state';
 import { SIDEJOB_TEXTS } from '@texts/index';
-import { IAvailableSidejobsState, IAvailableSidejobsSerializedState } from '../interfaces';
+import {
+  IAvailableCategoryActivitiesSerializedState,
+  IAvailableCategoryActivitiesState,
+  type IUnlockState,
+} from '../interfaces';
 
 const { lazyInject } = decorators;
 
 @injectable()
-export class AvailableSidejobsState implements IAvailableSidejobsState {
+export class AvailableSidejobsState implements IAvailableCategoryActivitiesState {
+  @lazyInject(TYPES.UnlockState)
+  private _unlockState!: IUnlockState;
+
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
 
   @lazyInject(TYPES.NotificationsState)
   private _notificationsState!: INotificationsState;
 
-  private _unlockedSidejobs: Set<SidejobName>;
-  private _unlockedSidejobsList: SidejobName[];
+  private _unlockedSidejobs: Set<string>;
+  private _unlockedSidejobsList: string[];
 
   constructor() {
-    this._unlockedSidejobs = new Set<SidejobName>();
+    this._unlockedSidejobs = new Set<string>();
     this._unlockedSidejobsList = [];
 
     this._stateUiConnector.registerEventEmitter(this, ['_unlockedSidejobs', '_unlockedSidejobsList']);
   }
 
-  listUnlockedSidejobs(): SidejobName[] {
+  listUnlockedActivities(): string[] {
     return this._unlockedSidejobsList;
   }
 
-  isSidejobUnlocked(sidejob: SidejobName): boolean {
+  listAvailableActivities(): string[] {
+    return this._unlockedSidejobsList;
+  }
+
+  isActivityUnlocked(sidejob: string): boolean {
     return this._unlockedSidejobs.has(sidejob);
   }
 
-  unlockSidejob(sidejob: SidejobName): void {
-    if (this.isSidejobUnlocked(sidejob)) {
+  isActivityAvailable(sidejob: string): boolean {
+    return (
+      this._unlockState.milestones.isMilestoneReached(Milestone.unlockedCompanyManagement) &&
+      this.isActivityUnlocked(sidejob)
+    );
+  }
+
+  unlockActivity(sidejob: string): void {
+    if (this.isActivityUnlocked(sidejob)) {
       return;
     }
 
     this._unlockedSidejobs.add(sidejob);
     this._unlockedSidejobsList.push(sidejob);
 
-    this._notificationsState.pushNotification(NotificationType.sidejobUnlocked, this.makeUnlockSidejobMessage(sidejob));
+    this._notificationsState.pushNotification(
+      NotificationType.activityUnlocked,
+      this.makeUnlockActivityMessage(sidejob),
+    );
   }
 
-  makeUnlockSidejobMessage(sidejob: SidejobName) {
+  makeUnlockActivityMessage(sidejob: string) {
     return msg(str`Sidejob "${SIDEJOB_TEXTS[sidejob].title()}" has been unlocked.`);
   }
 
-  async startNewState(): Promise<void> {
-    this.clearState();
-  }
-
-  async deserialize(serializedState: IAvailableSidejobsSerializedState): Promise<void> {
-    this.clearState();
-
-    serializedState.unlockedSidejobs.forEach((sidejob) => {
-      this._unlockedSidejobs.add(sidejob);
+  recalculate() {
+    this._unlockedSidejobsList.length = 0;
+    this._unlockedSidejobs.forEach((sidejob) => {
       this._unlockedSidejobsList.push(sidejob);
     });
   }
 
-  serialize(): IAvailableSidejobsSerializedState {
-    return {
-      unlockedSidejobs: Array.from(this._unlockedSidejobs.values()),
-    };
+  async startNewState(): Promise<void> {
+    this._unlockedSidejobs.clear();
+    this.recalculate();
   }
 
-  private clearState() {
+  async deserialize(serializedState: IAvailableCategoryActivitiesSerializedState): Promise<void> {
     this._unlockedSidejobs.clear();
-    this._unlockedSidejobsList.length = 0;
+
+    serializedState.unlockedActivities.forEach((sidejob) => {
+      this._unlockedSidejobs.add(sidejob);
+    });
+
+    this.recalculate();
+  }
+
+  serialize(): IAvailableCategoryActivitiesSerializedState {
+    return {
+      unlockedActivities: Array.from(this._unlockedSidejobs.values()),
+    };
   }
 }

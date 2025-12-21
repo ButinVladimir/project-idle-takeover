@@ -1,6 +1,5 @@
-import { BaseController } from '@shared/base-controller';
-import { IProcess } from '@state/mainframe-state/states/mainframe-processes-state/interfaces/process';
-import { ProgramName } from '@state/mainframe-state/states/progam-factory/types';
+import { BaseController } from '@shared/index';
+import { IProcess, ProgramName } from '@state/mainframe-state';
 
 export class ProcessesListController extends BaseController {
   listProcesses(): IProcess[] {

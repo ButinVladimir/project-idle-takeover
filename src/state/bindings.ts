@@ -4,8 +4,8 @@ import { AppState, IAppState } from '@state/app-state';
 import { ScenarioState, IScenarioState, IStoryEventsState, StoryEventsState } from '@state/scenario-state';
 import { IFactionState, FactionState } from '@state/faction-state';
 import {
-  IUnlockedFeaturesState,
-  UnlockedFeaturesState,
+  IReachedMilestonesState,
+  ReachedMilestonesState,
   IAvailableCategoryItemsState,
   AvailableProgramsState,
   AvailableCloneTemplatesState,
@@ -14,9 +14,10 @@ import {
   AvailableActivitiesState,
   IAvailableActivitiesState,
   AvailableSidejobsState,
-  IAvailableSidejobsState,
+  IAvailableCategoryActivitiesState,
   IUnlockState,
   UnlockState,
+  AvailableContractsState,
 } from '@state/unlock-state';
 import {
   IGlobalState,
@@ -109,24 +110,41 @@ import {
   CloneLevelAutomationState,
   IAutomationState,
   AutomationState,
+  IContractsAutomationState,
+  ContractsAutomationState,
+  IContractAssignmentsStarter,
+  ContractAssignmentsStarter,
 } from '@state/automation-state';
 import { INotificationsState, NotificationsState } from '@state/notifications-state';
 import { IFormatter, Formatter } from '@shared/index';
 import {
   ICloneFactory,
   CloneFactory,
-  ICompanyClonesState,
-  CompanyClonesState,
-  ICompanyState,
-  CompanyState,
-  CloneTemplateName,
-  ICompanySidejobsState,
-  CompanySidejobsState,
-  ICompanyClonesLevelUpgrader,
-  CompanyClonesLevelUpgrader,
-} from '@state/company-state';
+  IOwnedClonesState,
+  OwnedClonesState,
+  IClonesState,
+  ClonesState,
+  IOwnedClonesLevelUpgrader,
+  OwnedClonesLevelUpgrader,
+} from '@state/clones-state';
+import {
+  IActivityState,
+  ActivityState,
+  ISidejobsActivityState,
+  SidejobsActivityState,
+  ISidejobsFactory,
+  SidejobsFactory,
+  ISidejobActivityValidator,
+  SidejobActivityValidator,
+  IContractsFactory,
+  ContractsFactory,
+  IContractActivityValidator,
+  ContractActivityValidator,
+  IPrimaryActivityQueue,
+} from '@state/activity-state';
 import { TYPES } from './types';
 import { container } from './container';
+import { PrimaryActivityQueue } from './activity-state/states/primary-activity-queue/primary-activity-queue';
 
 container.bind<IStateUIConnector>(TYPES.StateUIConnector).to(StateUIConnector).inSingletonScope().whenTargetIsDefault();
 
@@ -187,8 +205,8 @@ container
 container.bind<IGlobalState>(TYPES.GlobalState).to(GlobalState).inSingletonScope().whenTargetIsDefault();
 
 container
-  .bind<IUnlockedFeaturesState>(TYPES.UnlockedFeaturesState)
-  .to(UnlockedFeaturesState)
+  .bind<IReachedMilestonesState>(TYPES.ReachedMilestonesState)
+  .to(ReachedMilestonesState)
   .inSingletonScope()
   .whenTargetIsDefault();
 
@@ -199,7 +217,7 @@ container
   .whenTargetIsDefault();
 
 container
-  .bind<IAvailableCategoryItemsState<CloneTemplateName>>(TYPES.AvailableCloneTemplatesState)
+  .bind<IAvailableCategoryItemsState<string>>(TYPES.AvailableCloneTemplatesState)
   .to(AvailableCloneTemplatesState)
   .inSingletonScope()
   .whenTargetIsDefault();
@@ -211,8 +229,14 @@ container
   .whenTargetIsDefault();
 
 container
-  .bind<IAvailableSidejobsState>(TYPES.AvailableSidejobsState)
+  .bind<IAvailableCategoryActivitiesState>(TYPES.AvailableSidejobsState)
   .to(AvailableSidejobsState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IAvailableCategoryActivitiesState>(TYPES.AvailableContractsState)
+  .to(AvailableContractsState)
   .inSingletonScope()
   .whenTargetIsDefault();
 
@@ -382,28 +406,60 @@ container
   .inSingletonScope()
   .whenTargetIsDefault();
 
+container
+  .bind<IContractAssignmentsStarter>(TYPES.ContractAssignmentsStarter)
+  .to(ContractAssignmentsStarter)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IContractsAutomationState>(TYPES.ContractsAutomationState)
+  .to(ContractsAutomationState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
 container.bind<IAutomationState>(TYPES.AutomationState).to(AutomationState).inSingletonScope().whenTargetIsDefault();
 
 container.bind<IFormatter>(TYPES.Formatter).to(Formatter).inSingletonScope().whenTargetIsDefault();
 
 container.bind<ICloneFactory>(TYPES.CloneFactory).to(CloneFactory).inSingletonScope().whenTargetIsDefault();
 
+container.bind<IOwnedClonesState>(TYPES.OwnedClonesState).to(OwnedClonesState).inSingletonScope().whenTargetIsDefault();
+
 container
-  .bind<ICompanyClonesState>(TYPES.CompanyClonesState)
-  .to(CompanyClonesState)
+  .bind<IOwnedClonesLevelUpgrader>(TYPES.OwnedClonesLevelUpgrader)
+  .to(OwnedClonesLevelUpgrader)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container.bind<IClonesState>(TYPES.ClonesState).to(ClonesState).inSingletonScope().whenTargetIsDefault();
+
+container
+  .bind<ISidejobActivityValidator>(TYPES.SidejobActivityValidator)
+  .to(SidejobActivityValidator)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container.bind<ISidejobsFactory>(TYPES.SidejobsFactory).to(SidejobsFactory).inSingletonScope().whenTargetIsDefault();
+
+container
+  .bind<ISidejobsActivityState>(TYPES.SidejobsActivityState)
+  .to(SidejobsActivityState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container.bind<IContractsFactory>(TYPES.ContractsFactory).to(ContractsFactory).inSingletonScope().whenTargetIsDefault();
+
+container
+  .bind<IPrimaryActivityQueue>(TYPES.PrimaryActivityQueue)
+  .to(PrimaryActivityQueue)
   .inSingletonScope()
   .whenTargetIsDefault();
 
 container
-  .bind<ICompanySidejobsState>(TYPES.CompanySidejobsState)
-  .to(CompanySidejobsState)
+  .bind<IContractActivityValidator>(TYPES.ContractActivityValidator)
+  .to(ContractActivityValidator)
   .inSingletonScope()
   .whenTargetIsDefault();
 
-container
-  .bind<ICompanyClonesLevelUpgrader>(TYPES.CompanyClonesLevelUpgrader)
-  .to(CompanyClonesLevelUpgrader)
-  .inSingletonScope()
-  .whenTargetIsDefault();
-
-container.bind<ICompanyState>(TYPES.CompanyState).to(CompanyState).inSingletonScope().whenTargetIsDefault();
+container.bind<IActivityState>(TYPES.ActivityState).to(ActivityState).inSingletonScope().whenTargetIsDefault();

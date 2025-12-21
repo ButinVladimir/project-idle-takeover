@@ -1,16 +1,24 @@
 import { injectable } from 'inversify';
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
-import { Faction, MapSpecialEvent, NotificationType } from '@shared/index';
+import { MapSpecialEvent, NotificationType } from '@shared/index';
 import { STORY_MESSAGES } from '@texts/story';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type INotificationsState } from '@state/notifications-state';
 import { type IGlobalState } from '@state/global-state';
 import { type IUnlockState } from '@state/unlock-state';
-import { type IFactionState } from '@state/faction-state';
+import { FactionPlaystyle, type IFactionState } from '@state/faction-state';
 import { type ICityState } from '@state/city-state';
-import { type IScenarioState, IStoryEvent, IStoryStateValues, IStoryEventsState, IStoryGoal } from './interfaces';
+import {
+  type IScenarioState,
+  IStoryEvent,
+  IStoryStateValues,
+  IStoryEventsState,
+  IStoryGoal,
+  IStoryEventsSerializedState,
+} from './interfaces';
 import { StoryGoalState } from './types';
+import { typedStoryEvents } from './constants';
 
 const { lazyInject } = decorators;
 
@@ -38,27 +46,25 @@ export class StoryEventsState implements IStoryEventsState {
   private _cityState!: ICityState;
 
   private _districtsStateRecalculationRequested: boolean;
+  private _unlockStateRecalculationRequested: boolean;
+
+  private _visitedAllEvents: Set<string>;
+  private _visitedScenarioEvents: Set<string>;
 
   constructor() {
     this._districtsStateRecalculationRequested = false;
+    this._unlockStateRecalculationRequested = false;
+    this._visitedAllEvents = new Set<string>();
+    this._visitedScenarioEvents = new Set<string>();
 
-    this._stateUiConnector.registerEventEmitter(this, []);
+    this._stateUiConnector.registerEventEmitter(this, ['_visitedAllEvents', '_visitedScenarioEvents']);
   }
 
-  visitEvents(prevStoryStateValues: Partial<IStoryStateValues>) {
-    const completeStoryStateValues: IStoryStateValues = {
-      level: this._globalState.development.level,
-      capturedDistrictsCount: this._cityState.getCapturedDistrictsCount(),
-      faction: this._factionState.currentFaction,
-      ...prevStoryStateValues,
-    };
+  visitEvents() {
+    this._districtsStateRecalculationRequested = false;
+    this._unlockStateRecalculationRequested = false;
 
-    this.visitEventsImplementation(completeStoryStateValues);
-  }
-
-  listGoals(): IStoryGoal[] {
-    const availableGoals: IStoryGoal[] = [];
-    const storyEvents = this._scenarioState.currentValues.storyEvents;
+    const storyEventsList = this._scenarioState.currentValues.storyEvents;
 
     const currentState: IStoryStateValues = {
       level: this._globalState.development.level,
@@ -66,11 +72,38 @@ export class StoryEventsState implements IStoryEventsState {
       capturedDistrictsCount: this._cityState.getCapturedDistrictsCount(),
     };
 
-    for (const storyEvent of storyEvents) {
-      const state = this.getStoryGoalState(storyEvent, currentState);
+    for (const storyEventName of storyEventsList) {
+      const isStoryEventPassed = this.isStoryEventPassed(storyEventName);
+      const canStoryEventBePassed = this.canStoryEventBePassed(storyEventName, currentState);
+
+      if (isStoryEventPassed || !canStoryEventBePassed) {
+        continue;
+      }
+
+      this.visitSingleStoryEvent(storyEventName);
+    }
+
+    this.recalculateDistrictState();
+    this.recalculateUnlockState();
+  }
+
+  listGoals(): IStoryGoal[] {
+    const availableGoals: IStoryGoal[] = [];
+    const storyEventsList = this._scenarioState.currentValues.storyEvents;
+
+    const currentState: IStoryStateValues = {
+      level: this._globalState.development.level,
+      faction: this._factionState.currentFaction,
+      capturedDistrictsCount: this._cityState.getCapturedDistrictsCount(),
+    };
+
+    for (const storyEventName of storyEventsList) {
+      const state = this.getStoryGoalState(storyEventName, currentState);
+      const storyEvent = typedStoryEvents[storyEventName];
 
       availableGoals.push({
         ...storyEvent,
+        name: storyEventName,
         state,
       });
     }
@@ -78,123 +111,101 @@ export class StoryEventsState implements IStoryEventsState {
     return availableGoals;
   }
 
-  visitStartingEvents(): void {
-    this.visitEvents({ level: -1, capturedDistrictsCount: -1, faction: Faction.neutral });
+  isEventUnlocked(storyEventName: string): boolean {
+    return this._visitedAllEvents.has(storyEventName);
   }
 
-  private visitEventsImplementation(prevState: IStoryStateValues) {
-    this._districtsStateRecalculationRequested = false;
-    const storyEvents = this._scenarioState.currentValues.storyEvents;
+  async startNewState(): Promise<void> {
+    this._visitedAllEvents.clear();
+    this._visitedScenarioEvents.clear();
+  }
 
-    const currentState: IStoryStateValues = {
-      level: this._globalState.development.level,
-      faction: this._factionState.currentFaction,
-      capturedDistrictsCount: this._cityState.getCapturedDistrictsCount(),
+  async deserialize(serializedState: IStoryEventsSerializedState): Promise<void> {
+    this._visitedAllEvents.clear();
+    serializedState.visitedAllEvents.forEach((storyEventName) => {
+      this._visitedAllEvents.add(storyEventName);
+    });
+
+    this._visitedScenarioEvents.clear();
+    serializedState.visitedScenarioEvents.forEach((storyEventName) => {
+      this._visitedScenarioEvents.add(storyEventName);
+    });
+  }
+
+  serialize(): IStoryEventsSerializedState {
+    return {
+      visitedAllEvents: Array.from(this._visitedAllEvents.values()),
+      visitedScenarioEvents: Array.from(this._visitedScenarioEvents.values()),
     };
-
-    for (const storyEvent of storyEvents) {
-      const storyEventPrevState = this.getStoryGoalState(storyEvent, prevState);
-      const storyEventCurrentState = this.getStoryGoalState(storyEvent, currentState);
-
-      if (storyEventPrevState === StoryGoalState.passed || storyEventCurrentState !== StoryGoalState.passed) {
-        continue;
-      }
-
-      this.visitSingleStoryEvent(storyEvent);
-    }
-
-    this.unlockDistricts();
   }
 
-  private visitSingleStoryEvent(storyEvent: IStoryEvent) {
-    if (storyEvent.messages) {
-      storyEvent.messages.forEach((messageKey) => {
-        this._notificationsState.pushNotification(NotificationType.storyEvent, STORY_MESSAGES[messageKey]());
-      });
-    }
+  private visitSingleStoryEvent(storyEventName: string) {
+    const storyEvent = typedStoryEvents[storyEventName];
 
-    if (storyEvent.unlockFeatures) {
-      storyEvent.unlockFeatures.forEach((feature) => {
-        this._unlockState.features.unlockFeature(feature);
-      });
-    }
+    this.processStoryEventMessages(storyEventName, storyEvent);
+    this.processStoryEventMilestones(storyEvent);
+    this.processStoryEventEvents(storyEvent);
+    this.processStoryEventPrograms(storyEvent);
+    this.processStoryEventCloneTemplates(storyEvent);
+    this.processStoryEventSidejobs(storyEvent);
+    this.processStoryEventContracts(storyEvent);
 
-    if (storyEvent.specialEvents) {
-      storyEvent.specialEvents.forEach(this.unlockSpecialEvent);
-    }
-
-    if (storyEvent.rewardDesigns?.programs) {
-      storyEvent.rewardDesigns.programs.forEach((program) => {
-        this._unlockState.items.programs.unlockDesign(program, 0, true);
-      });
-    }
-
-    if (storyEvent.rewardDesigns?.cloneTemplates) {
-      storyEvent.rewardDesigns.cloneTemplates.forEach((cloneTemplate) => {
-        this._unlockState.items.cloneTemplates.unlockDesign(cloneTemplate, 0, true);
-      });
-    }
-
-    if (storyEvent.unlockSidejobs) {
-      storyEvent.unlockSidejobs.forEach((sidejob) => {
-        this._unlockState.activities.sidejobs.unlockSidejob(sidejob);
-      });
-    }
+    this._visitedAllEvents.add(storyEventName);
+    this._visitedScenarioEvents.add(storyEventName);
   }
 
-  private getStoryGoalState(storyEvent: IStoryEvent, currentStateValues: IStoryStateValues): StoryGoalState {
-    const states = [
-      this.getStoryGoalLevelState(storyEvent, currentStateValues),
-      this.getStoryGoalFactionState(storyEvent, currentStateValues),
-      this.getStoryGoalCapturedDistrictsCountState(storyEvent, currentStateValues),
-    ];
-
-    if (states.includes(StoryGoalState.notAvailable)) {
+  private getStoryGoalState(storyEventName: string, storyStateValues: IStoryStateValues): StoryGoalState {
+    if (this.isStoryEventNotAvailable(storyEventName, storyStateValues)) {
       return StoryGoalState.notAvailable;
     }
 
-    if (states.includes(StoryGoalState.available)) {
-      return StoryGoalState.available;
-    }
-
-    return StoryGoalState.passed;
-  }
-
-  private getStoryGoalLevelState(storyEvent: IStoryEvent, currentStateValues: IStoryStateValues): StoryGoalState {
-    if (storyEvent.requirements.level !== undefined && storyEvent.requirements.level > currentStateValues.level) {
-      return StoryGoalState.available;
-    }
-
-    return StoryGoalState.passed;
-  }
-
-  private getStoryGoalFactionState(storyEvent: IStoryEvent, currentStateValues: IStoryStateValues): StoryGoalState {
-    if (
-      storyEvent.requirements.faction === undefined ||
-      storyEvent.requirements.faction === currentStateValues.faction
-    ) {
+    if (this.isStoryEventPassed(storyEventName)) {
       return StoryGoalState.passed;
     }
 
-    if (currentStateValues.faction === Faction.neutral) {
-      return StoryGoalState.available;
-    }
-
-    return StoryGoalState.notAvailable;
+    return StoryGoalState.available;
   }
 
-  private getStoryGoalCapturedDistrictsCountState(
-    storyEvent: IStoryEvent,
-    currentStateValues: IStoryStateValues,
-  ): StoryGoalState {
-    if (
-      storyEvent.requirements.capturedDistrictsCount !== undefined &&
-      storyEvent.requirements.capturedDistrictsCount > currentStateValues.capturedDistrictsCount
-    ) {
-      return StoryGoalState.available;
+  private isStoryEventPassed(storyEventName: string): boolean {
+    return this._visitedScenarioEvents.has(storyEventName);
+  }
+
+  private isStoryEventNotAvailable(storyEventName: string, storyStateValues: IStoryStateValues) {
+    const storyEvent = typedStoryEvents[storyEventName];
+
+    if (storyEvent.requirements.faction === undefined) {
+      return false;
     }
 
-    return StoryGoalState.passed;
+    if (
+      this._factionState.currentFactionValues.playstyle !== FactionPlaystyle.selectFaction &&
+      storyStateValues.faction !== storyEvent.requirements.faction
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+
+  private canStoryEventBePassed(storyEventName: string, storyStateValues: IStoryStateValues) {
+    const storyEvent = typedStoryEvents[storyEventName];
+
+    if (storyEvent.requirements.level !== undefined && storyStateValues.level < storyEvent.requirements.level) {
+      return false;
+    }
+
+    if (
+      storyEvent.requirements.capturedDistrictsCount !== undefined &&
+      storyStateValues.capturedDistrictsCount < storyEvent.requirements.capturedDistrictsCount
+    ) {
+      return false;
+    }
+
+    if (storyEvent.requirements.faction !== undefined && storyStateValues.faction !== storyEvent.requirements.faction) {
+      return false;
+    }
+
+    return true;
   }
 
   private unlockSpecialEvent = (event: MapSpecialEvent) => {
@@ -208,12 +219,77 @@ export class StoryEventsState implements IStoryEventsState {
     }
   };
 
-  private unlockDistricts() {
+  private recalculateDistrictState() {
     if (!this._districtsStateRecalculationRequested) {
       return;
     }
 
     this._districtsStateRecalculationRequested = false;
     this._cityState.recalculateDistrictsState();
+  }
+
+  private recalculateUnlockState() {
+    if (!this._unlockStateRecalculationRequested) {
+      return;
+    }
+
+    this._unlockStateRecalculationRequested = false;
+    this._unlockState.recalculate();
+  }
+
+  private processStoryEventMessages(storyEventName: string, storyEvent: IStoryEvent) {
+    if (!this._visitedAllEvents.has(storyEventName) && storyEvent.messages) {
+      storyEvent.messages.forEach((messageKey) => {
+        this._notificationsState.pushNotification(NotificationType.storyEvent, STORY_MESSAGES[messageKey]());
+      });
+    }
+  }
+
+  private processStoryEventMilestones(storyEvent: IStoryEvent) {
+    if (storyEvent.milestones) {
+      storyEvent.milestones.forEach((milestone) => {
+        if (this._unlockState.milestones.reachMilestone(milestone)) {
+          this._unlockStateRecalculationRequested = true;
+        }
+      });
+    }
+  }
+
+  private processStoryEventEvents(storyEvent: IStoryEvent) {
+    if (storyEvent.specialEvents) {
+      storyEvent.specialEvents.forEach(this.unlockSpecialEvent);
+    }
+  }
+
+  private processStoryEventPrograms(storyEvent: IStoryEvent) {
+    if (storyEvent.rewardDesigns?.programs) {
+      storyEvent.rewardDesigns.programs.forEach((program) => {
+        this._unlockState.items.programs.unlockDesign(program, 0, true);
+      });
+    }
+  }
+
+  private processStoryEventCloneTemplates(storyEvent: IStoryEvent) {
+    if (storyEvent.rewardDesigns?.cloneTemplates) {
+      storyEvent.rewardDesigns.cloneTemplates.forEach((cloneTemplate) => {
+        this._unlockState.items.cloneTemplates.unlockDesign(cloneTemplate, 0, true);
+      });
+    }
+  }
+
+  private processStoryEventSidejobs(storyEvent: IStoryEvent) {
+    if (storyEvent.unlockActivities?.sidejobs) {
+      storyEvent.unlockActivities.sidejobs.forEach((sidejob) => {
+        this._unlockState.activities.sidejobs.unlockActivity(sidejob);
+      });
+    }
+  }
+
+  private processStoryEventContracts(storyEvent: IStoryEvent) {
+    if (storyEvent.unlockActivities?.contracts) {
+      storyEvent.unlockActivities.contracts.forEach((contract) => {
+        this._unlockState.activities.contracts.unlockActivity(contract);
+      });
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { MultiplierProgramName, AutomationProgram, OtherProgramName, ProgramName } from '@state/mainframe-state';
 import { CodeGeneratorDescriptionEffectRenderer } from './code-generator-description-effect-renderer';
 import { CircuitDesignerDescriptionEffectRenderer } from './circuit-designer-description-effect-renderer';
 import { DealMakerDescriptionEffectRenderer } from './deal-maker-description-effect-renderer';
@@ -8,16 +9,17 @@ import { CloneLevelAutoupgraderDescriptionEffectRenderer } from './clone-level-a
 import { ShareServerDescriptionEffectRenderer } from './share-server-description-effect-renderer';
 import { PredictiveComputatorDescriptionEffectRenderer } from './predictive-computator-description-effect-renderer';
 import { PeerReviewerDescriptionEffectRenderer } from './peer-reviewer-description-effect-renderer';
-import { MultiplierProgramName, AutobuyerProgramName, OtherProgramName } from '@state/mainframe-state';
+import { ContractAutostarterDescriptionEffectRenderer } from './contract-autostarter-description-effect-renderer';
 
-export const rendererMap = {
+export const rendererMap: Record<ProgramName, any> = {
   [MultiplierProgramName.codeGenerator]: CodeGeneratorDescriptionEffectRenderer,
   [MultiplierProgramName.circuitDesigner]: CircuitDesignerDescriptionEffectRenderer,
   [MultiplierProgramName.dealMaker]: DealMakerDescriptionEffectRenderer,
   [MultiplierProgramName.informationCollector]: InformationCollectorDescriptionEffectRenderer,
-  [AutobuyerProgramName.mainframeHardwareAutobuyer]: MainframeHardwareAutobuyerDescriptionEffectRenderer,
-  [AutobuyerProgramName.mainframeProgramsAutobuyer]: MainframeProgramsAutobuyerDescriptionEffectRenderer,
-  [AutobuyerProgramName.cloneLevelAutoupgrader]: CloneLevelAutoupgraderDescriptionEffectRenderer,
+  [AutomationProgram.mainframeHardwareAutobuyer]: MainframeHardwareAutobuyerDescriptionEffectRenderer,
+  [AutomationProgram.mainframeProgramsAutobuyer]: MainframeProgramsAutobuyerDescriptionEffectRenderer,
+  [AutomationProgram.cloneLevelAutoupgrader]: CloneLevelAutoupgraderDescriptionEffectRenderer,
+  [AutomationProgram.contractAutostarter]: ContractAutostarterDescriptionEffectRenderer,
   [OtherProgramName.shareServer]: ShareServerDescriptionEffectRenderer,
   [OtherProgramName.predictiveComputator]: PredictiveComputatorDescriptionEffectRenderer,
   [OtherProgramName.peerReviewer]: PeerReviewerDescriptionEffectRenderer,

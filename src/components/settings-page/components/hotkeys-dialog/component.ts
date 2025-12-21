@@ -3,7 +3,7 @@ import { msg, localized } from '@lit/localize';
 import { customElement, property, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
-import { ConfirmationAlertOpenEvent } from '@/components/game-screen/components/confirmation-alert/events';
+import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { BaseComponent, GameStateAlert, Hotkey, HOTKEYS } from '@shared/index';
 import { COMMON_TEXTS } from '@texts/index';
 import { HotkeysDialogCloseEvent } from './events';

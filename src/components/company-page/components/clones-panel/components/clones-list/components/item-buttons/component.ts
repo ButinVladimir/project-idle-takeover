@@ -5,7 +5,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
 import { COMMON_TEXTS } from '@texts/common';
-import { type IClone } from '@state/company-state';
+import { type IClone } from '@state/clones-state';
 import { BaseComponent, TOGGLE_DETAILS_VALUES, UPGRADE_MAX_VALUES } from '@shared/index';
 import { ClonesListItemButtonsController } from './controller';
 import { cloneContext } from '../item/contexts';

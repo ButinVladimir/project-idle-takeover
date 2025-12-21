@@ -134,7 +134,7 @@ export class ProcessesList extends BaseComponent {
   };
 
   private checkSomeProcessesActive(): boolean {
-    return this._controller.listProcesses().some((process) => process.isActive);
+    return this._controller.listProcesses().some((process) => process.enabled);
   }
 
   private handleToggleAllProcesses = () => {

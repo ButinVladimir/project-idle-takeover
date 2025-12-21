@@ -3,7 +3,8 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { DealMakerProgram, type IMainframeState, MultiplierProgramName } from '@state/mainframe-state';
 import { type ICityState } from '@state/city-state';
-import { type ICompanyState } from '@state/company-state';
+import { type IActivityState } from '@state/activity-state';
+import { DistrictTypeRewardParameter } from '@shared/index';
 import { IRewardsGrowthState } from '../interfaces';
 
 const { lazyInject } = decorators;
@@ -16,8 +17,8 @@ export class RewardsGrowthState implements IRewardsGrowthState {
   @lazyInject(TYPES.CityState)
   private _cityState!: ICityState;
 
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
 
   private _recalculated: boolean;
 
@@ -66,7 +67,7 @@ export class RewardsGrowthState implements IRewardsGrowthState {
 
     const process = this._mainframeState.processes.getProcessByName(MultiplierProgramName.dealMaker);
 
-    if (process?.isActive) {
+    if (process?.enabled) {
       const program = process.program as DealMakerProgram;
       this._growthByProgram = program.calculateDelta(process.threads) / process.calculateCompletionTime();
     }
@@ -78,17 +79,24 @@ export class RewardsGrowthState implements IRewardsGrowthState {
     }
 
     this.updateGrowthBySidejobs();
+    this.updateGrowthByPrimaryActivity();
   }
 
   private updateGrowthBySidejobs(): void {
-    for (const sidejob of this._companyState.sidejobs.listSidejobs()) {
-      if (!sidejob.isActive) {
-        continue;
-      }
+    for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
+      const districtIndex = sidejobActivity.sidejob.district.index;
+      let currentGrow = this._growthByDistrict.get(districtIndex) ?? 0;
+      currentGrow += sidejobActivity.getParameterGrowth(DistrictTypeRewardParameter.rewards);
+      this._growthByDistrict.set(districtIndex, currentGrow);
+    }
+  }
 
-      let currentGrow = this._growthByDistrict.get(sidejob.district.index)!;
-      currentGrow += sidejob.calculateRewardsDelta(1);
-      this._growthByDistrict.set(sidejob.district.index, currentGrow);
+  private updateGrowthByPrimaryActivity(): void {
+    for (const primaryActivity of this._activityState.primaryActivityQueue.listActivities()) {
+      const districtIndex = primaryActivity.district.index;
+      let currentGrowth = this._growthByDistrict.get(districtIndex) ?? 0;
+      currentGrowth += primaryActivity.getParameterGrowth(DistrictTypeRewardParameter.rewards);
+      this._growthByDistrict.set(districtIndex, currentGrowth);
     }
   }
 }

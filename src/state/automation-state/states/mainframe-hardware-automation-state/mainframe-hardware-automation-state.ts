@@ -1,6 +1,5 @@
 import { injectable } from 'inversify';
-import constants from '@configs/constants.json';
-import { checkPercentage } from '@shared/helpers';
+import { checkPercentage, typedConstants } from '@shared/index';
 import { IMainframeHardwareAutomationSerializedState, IMainframeHardwareAutomationState } from './interfaces';
 
 @injectable()
@@ -8,7 +7,7 @@ export class MainframeHardwareAutomationState implements IMainframeHardwareAutom
   private _moneyShare: number;
 
   constructor() {
-    this._moneyShare = constants.defaultAutomationSettings.mainframeHardwareAutobuyer.moneyShare;
+    this._moneyShare = typedConstants.defaultAutomationSettings.mainframeHardwareAutobuyer.moneyShare;
   }
 
   get moneyShare() {
@@ -22,7 +21,7 @@ export class MainframeHardwareAutomationState implements IMainframeHardwareAutom
   }
 
   async startNewState(): Promise<void> {
-    this._moneyShare = constants.defaultAutomationSettings.mainframeHardwareAutobuyer.moneyShare;
+    this._moneyShare = typedConstants.defaultAutomationSettings.mainframeHardwareAutobuyer.moneyShare;
   }
 
   async deserialize(serializedState: IMainframeHardwareAutomationSerializedState): Promise<void> {

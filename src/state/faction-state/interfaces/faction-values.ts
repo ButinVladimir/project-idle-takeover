@@ -1,13 +1,17 @@
 import { ProgramName } from '@state/mainframe-state';
-import { CloneTemplateName } from '@state/company-state';
+import { FactionPlaystyle } from '../types';
 
 export interface IFactionValues {
-  loans: {
+  playstyle: FactionPlaystyle;
+  loanedItems: {
     programs: ProgramName[];
-    cloneTemplates: CloneTemplateName[];
+    cloneTemplates: string[];
   };
-  special: {
+  specialItems: {
     programs: ProgramName[];
-    cloneTemplates: CloneTemplateName[];
+    cloneTemplates: string[];
+  };
+  activities: {
+    contracts: string[];
   };
 }

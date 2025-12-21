@@ -1,11 +1,6 @@
 import { injectable, inject } from 'inversify';
 import { TYPES } from '@state/types';
-import {
-  IMultipliersSerializedState,
-  type IMultiplierState,
-  type IMultipliersState,
-  type IRewardsState,
-} from '../interfaces';
+import { IMultipliersSerializedState, type IMultiplierState, type IMultipliersState } from '../interfaces';
 
 @injectable()
 export class MultipliersState implements IMultipliersState {
@@ -14,9 +9,6 @@ export class MultipliersState implements IMultipliersState {
 
   @inject(TYPES.ComputationalBaseState)
   private _computationalBaseState!: IMultiplierState;
-
-  @inject(TYPES.RewardsState)
-  private _rewardsState!: IRewardsState;
 
   get codeBase() {
     return this._codeBaseState;

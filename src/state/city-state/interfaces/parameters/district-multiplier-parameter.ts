@@ -1,4 +1,4 @@
-import { IDistrictMultiplierSerializedParameter } from '../serialized-states/district-multiplier-serialized-parameter';
+import { IDistrictMultiplierSerializedParameter } from '../serialized-states/parameters/district-multiplier-serialized-parameter';
 
 export interface IDistrictMultiplierParameter {
   points: number;

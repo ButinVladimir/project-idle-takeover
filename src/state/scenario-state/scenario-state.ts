@@ -1,55 +1,55 @@
 import { inject, injectable } from 'inversify';
-import merge from 'lodash/merge';
-import { Scenario } from '@shared/types';
-import constants from '@configs/constants.json';
-import scenarios from '@configs/scenarios.json';
+import { typedConstants } from '@shared/index';
 import { IScenarioValues, IScenarioState, IScenarioSerializedState, type IStoryEventsState } from './interfaces';
 import { TYPES } from '../types';
+import { typedScenarios } from './constants';
 
 @injectable()
 export class ScenarioState implements IScenarioState {
   @inject(TYPES.StoryEventsState)
   private _storyEventsState!: IStoryEventsState;
 
-  private _scenario!: Scenario;
-  private _currentValues!: IScenarioValues;
+  private _scenario!: string;
 
   constructor() {
-    this.currentScenario = constants.startingScenario as Scenario;
+    this.currentScenario = typedConstants.startingValues.scenario;
   }
 
   get currentScenario() {
     return this._scenario;
   }
 
-  set currentScenario(value: Scenario) {
+  set currentScenario(value: string) {
     this._scenario = value;
-    this._currentValues = this.getScenarioValues(value);
   }
 
   get currentValues() {
-    return this._currentValues;
+    return this.getScenarioValues(this._scenario);
   }
 
   get storyEvents() {
     return this._storyEventsState;
   }
 
-  getScenarioValues(scenario: Scenario): IScenarioValues {
-    return merge({}, constants.defaultScenarioSettings, scenarios[scenario]) as IScenarioValues;
+  getScenarioValues(scenario: string): IScenarioValues {
+    return typedScenarios[scenario];
   }
 
   async startNewState(): Promise<void> {
-    this.currentScenario = constants.startingScenario as Scenario;
+    this.currentScenario = typedConstants.startingValues.scenario;
+
+    await this._storyEventsState.startNewState();
   }
 
   async deserialize(serializedState: IScenarioSerializedState): Promise<void> {
     this.currentScenario = serializedState.currentScenario;
+    await this._storyEventsState.deserialize(serializedState.storyEvents);
   }
 
   serialize(): IScenarioSerializedState {
     return {
       currentScenario: this._scenario,
+      storyEvents: this._storyEventsState.serialize(),
     };
   }
 }

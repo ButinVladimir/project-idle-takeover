@@ -1,18 +1,19 @@
-import districtTypes from '@configs/district-types.json';
 import { type IStateUIConnector } from '@state/state-ui-connector';
-import { IPoint, DistrictType, Faction } from '@shared/index';
+import { IPoint } from '@shared/index';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import {
   IDistrictState,
   IDistrictSerializedState,
   IDistrictParameters,
-  IDistrictTypeTemplate,
   IDistrictArguments,
   IMapGeneratorDistrict,
+  IDistrictCountersState,
 } from './interfaces';
 import { DistrictUnlockState } from './types';
-import { DistrictParameters } from './district-parameters';
+import { DistrictParameters } from './parameters';
+import { DistrictCountersState } from './counters';
+import { typedDistrictTypes } from './constants';
 
 const { lazyInject } = decorators;
 
@@ -23,12 +24,11 @@ export class DistrictState implements IDistrictState {
   private _index: number;
   private _name: string;
   private _startingPoint: IPoint;
-  private _districtType: DistrictType;
+  private _districtType: string;
   private _faction;
   private _state: DistrictUnlockState;
   private _parameters: IDistrictParameters;
-
-  private _template: IDistrictTypeTemplate;
+  private _counters: IDistrictCountersState;
 
   constructor(args: IDistrictArguments) {
     this._index = args.index;
@@ -38,8 +38,7 @@ export class DistrictState implements IDistrictState {
     this._faction = args.faction;
     this._state = args.state;
     this._parameters = new DistrictParameters(this);
-
-    this._template = districtTypes[this._districtType] as IDistrictTypeTemplate;
+    this._counters = new DistrictCountersState(this);
 
     this._stateUiConnector.registerEventEmitter(this, []);
   }
@@ -54,7 +53,7 @@ export class DistrictState implements IDistrictState {
       state: districtInfo.isUnlocked ? DistrictUnlockState.contested : DistrictUnlockState.locked,
     });
 
-    districtState._parameters.influence.setTier(districtInfo.tier);
+    districtState._parameters.influence.tier = districtInfo.tier;
 
     return districtState;
   }
@@ -66,6 +65,7 @@ export class DistrictState implements IDistrictState {
     });
 
     districtState._parameters.deserialize(serializedState.parameters);
+    districtState._counters.deserialize(serializedState.counters);
 
     return districtState;
   }
@@ -75,7 +75,7 @@ export class DistrictState implements IDistrictState {
   }
 
   get template() {
-    return this._template;
+    return typedDistrictTypes[this._districtType];
   }
 
   get name(): string {
@@ -86,11 +86,11 @@ export class DistrictState implements IDistrictState {
     return this._startingPoint;
   }
 
-  get districtType(): DistrictType {
+  get districtType(): string {
     return this._districtType;
   }
 
-  get faction(): Faction {
+  get faction(): string {
     return this._faction;
   }
 
@@ -106,8 +106,13 @@ export class DistrictState implements IDistrictState {
     return this._parameters;
   }
 
+  get counters() {
+    return this._counters;
+  }
+
   recalculate() {
     this._parameters.recalculate();
+    this._counters.processTick();
   }
 
   serialize(): IDistrictSerializedState {
@@ -118,10 +123,12 @@ export class DistrictState implements IDistrictState {
       faction: this._faction,
       state: this._state,
       parameters: this._parameters.serialize(),
+      counters: this._counters.serialize(),
     };
   }
 
   removeAllEventListeners(): void {
     this._parameters.removeAllEventListeners();
+    this._counters.removeAllEventListeners();
   }
 }

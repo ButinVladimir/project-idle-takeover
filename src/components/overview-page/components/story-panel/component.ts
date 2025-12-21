@@ -81,23 +81,25 @@ export class OverviewStoryPanel extends BaseComponent {
   private renderGoal = (goal: IStoryGoal) => {
     const messages = this.joinMessages(goal.messages);
     const specialEvents = this.joinMessages(goal.specialEvents);
-    const unlockFeatures = this.joinMessages(goal.unlockFeatures);
+    const milestones = this.joinMessages(goal.milestones);
     const programs = this.joinMessages(goal.rewardDesigns?.programs);
     const cloneTemplates = this.joinMessages(goal.rewardDesigns?.cloneTemplates);
-    const sidejobs = this.joinMessages(goal.unlockSidejobs);
+    const sidejobs = this.joinMessages(goal.unlockActivities?.sidejobs);
+    const contracts = this.joinMessages(goal.unlockActivities?.contracts);
 
     return html`
       <ca-overview-story-goal
+        name=${goal.name}
         level=${ifDefined(goal.requirements.level)}
         faction=${ifDefined(goal.requirements.faction)}
         captured-districts-count=${ifDefined(goal.requirements.capturedDistrictsCount)}
         messages=${ifDefined(messages)}
         special-events=${ifDefined(specialEvents)}
-        unlock-features=${ifDefined(unlockFeatures)}
+        milestones=${ifDefined(milestones)}
         programs=${ifDefined(programs)}
         clone-templates=${ifDefined(cloneTemplates)}
         sidejobs=${ifDefined(sidejobs)}
-        state=${goal.state}
+        contracts=${ifDefined(contracts)}
       ></ca-overview-story-goal>
     `;
   };

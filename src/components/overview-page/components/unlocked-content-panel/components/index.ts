@@ -1,4 +1,5 @@
 import './unlocked-programs';
 import './unlocked-clone-templates';
-import './unlocked-features';
+import './reached-milestones';
 import './unlocked-sidejobs';
+import './unlocked-contracts';

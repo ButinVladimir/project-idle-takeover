@@ -1,5 +1,4 @@
 import { BaseController } from '@shared/index';
-import { CloneTemplateName } from '@state/company-state';
 
 export class OverviewUnlockedCloneTemplatesController extends BaseController {
   listAllItems() {
@@ -14,11 +13,11 @@ export class OverviewUnlockedCloneTemplatesController extends BaseController {
     return this.unlockState.items.cloneTemplates.listLoanedItems();
   }
 
-  getItemHighestAvailableTier(itemName: CloneTemplateName) {
+  getItemHighestAvailableTier(itemName: string) {
     return this.unlockState.items.cloneTemplates.getItemHighestAvailableTier(itemName);
   }
 
-  getDesignTier(itemName: CloneTemplateName) {
+  getDesignTier(itemName: string) {
     return this.unlockState.items.cloneTemplates.getDesignTier(itemName);
   }
 

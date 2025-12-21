@@ -1,8 +1,7 @@
-import { Feature } from '@shared/types';
-import { BaseController } from '@shared/base-controller';
+import { BaseController, Milestone } from '@shared/index';
 
 export class StatisticsGrowthPanelController extends BaseController {
-  isFeatureUnlocked(feature: Feature) {
-    return this.unlockState.features.isFeatureUnlocked(feature);
+  isMilestoneUnlocked(milestone: Milestone) {
+    return this.unlockState.milestones.isMilestoneReached(milestone);
   }
 }

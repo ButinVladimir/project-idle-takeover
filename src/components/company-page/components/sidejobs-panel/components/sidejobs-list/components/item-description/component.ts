@@ -1,15 +1,19 @@
 import { html, nothing } from 'lit';
-import { localized } from '@lit/localize';
+import { localized, msg } from '@lit/localize';
 import { consume } from '@lit/context';
 import { customElement, queryAll } from 'lit/decorators.js';
-import { BaseComponent, RewardParameter } from '@shared/index';
-import { type ISidejob } from '@state/company-state';
+import {
+  BaseComponent,
+  DISTRICT_TYPE_REWARD_PARAMETER_UI_VALUES,
+  DISTRICT_TYPE_REWARD_PARAMETERS,
+  DistrictTypeRewardParameter,
+} from '@shared/index';
+import { type ISidejobActivity } from '@state/activity-state';
 import { COMMON_TEXTS, REWARD_PARAMETER_NAMES, SIDEJOB_TEXTS } from '@texts/index';
 import { SidejobsListItemDescriptionController } from './controller';
-import { sidejobContext } from '../item/contexts';
+import { sidejobActivityContext } from '../item/contexts';
 import styles from './styles';
-import { SIDEJOB_PARAMETER_VALUES, SIDEJOB_PARAMETERS } from '../../../../constants';
-import { calculateSidejobParameterValue, checkSidejobParameterVisibility } from '../../../../helpers';
+import { calculateSidejobParameterValue } from '../../../../helpers';
 
 @localized()
 @customElement('ca-sidejobs-list-item-description')
@@ -23,12 +27,12 @@ export class SidejobsListItemDescription extends BaseComponent {
   @queryAll(`span[data-value]`)
   private _rewardValueElements!: NodeListOf<HTMLSpanElement>;
 
-  @consume({ context: sidejobContext, subscribe: true })
-  private _sidejob?: ISidejob;
+  @consume({ context: sidejobActivityContext, subscribe: true })
+  private _activity?: ISidejobActivity;
 
-  private _rewardValues: Record<RewardParameter, number> = Object.fromEntries(
-    SIDEJOB_PARAMETERS.map((parameter) => [parameter, 0]),
-  ) as Record<RewardParameter, number>;
+  private _rewardValues: Record<DistrictTypeRewardParameter, number> = Object.fromEntries(
+    DISTRICT_TYPE_REWARD_PARAMETERS.map((parameter) => [parameter, 0]),
+  ) as Record<DistrictTypeRewardParameter, number>;
 
   constructor() {
     super();
@@ -37,25 +41,23 @@ export class SidejobsListItemDescription extends BaseComponent {
   }
 
   protected renderDesktop() {
-    if (!this._sidejob) {
+    if (!this._activity) {
       return nothing;
     }
 
     return html`
-      <p class="overview">${SIDEJOB_TEXTS[this._sidejob.sidejobName].overview()}</p>
+      <p class="overview">${SIDEJOB_TEXTS[this._activity.sidejob.sidejobName].overview()}</p>
 
-      ${SIDEJOB_PARAMETERS.map((parameter) => this.renderParameter(parameter))}
+      <p class="text">${msg('Rewards')}</p>
+
+      ${DISTRICT_TYPE_REWARD_PARAMETERS.map((parameter) => this.renderParameter(parameter))}
     `;
   }
 
-  private renderParameter = (parameter: RewardParameter) => {
-    const parameterValues = SIDEJOB_PARAMETER_VALUES[parameter];
+  private renderParameter = (parameter: DistrictTypeRewardParameter) => {
+    const parameterValues = DISTRICT_TYPE_REWARD_PARAMETER_UI_VALUES[parameter];
 
-    if (!checkSidejobParameterVisibility(this._sidejob!, parameter)) {
-      return nothing;
-    }
-
-    if (!parameterValues.requirements.every((requirement) => this._controller.isFeatureUnlocked(requirement))) {
+    if (!this._activity!.sidejob.getParameterVisibility(parameter)) {
       return nothing;
     }
 
@@ -64,21 +66,25 @@ export class SidejobsListItemDescription extends BaseComponent {
 
     const parameterText = parameterValues.isSpeed ? COMMON_TEXTS.parameterSpeed(valueElement) : valueElement;
 
-    return html`<p class="text">${COMMON_TEXTS.parameterValue(parameterName, parameterText)}</p>`;
+    return html`<p class="text">${COMMON_TEXTS.parameterRow(parameterName, parameterText)}</p>`;
   };
 
   handlePartialUpdate = () => {
-    SIDEJOB_PARAMETERS.forEach(this.updateParameter);
+    if (!this._activity) {
+      return;
+    }
+
+    DISTRICT_TYPE_REWARD_PARAMETERS.forEach(this.updateParameter);
 
     this._rewardValueElements.forEach(this.updateValueElement);
   };
 
-  private updateParameter = (parameter: RewardParameter) => {
-    this._rewardValues[parameter] = calculateSidejobParameterValue(this._sidejob!, parameter);
+  private updateParameter = (parameter: DistrictTypeRewardParameter) => {
+    this._rewardValues[parameter] = calculateSidejobParameterValue(this._activity!.sidejob, parameter);
   };
 
   private updateValueElement = (element: HTMLSpanElement) => {
-    const parameter = element.dataset.value as RewardParameter;
+    const parameter = element.dataset.value as DistrictTypeRewardParameter;
     const value = this._rewardValues[parameter];
 
     element.textContent = this._controller.formatter.formatNumberFloat(value);

@@ -9,7 +9,8 @@ import { IMainframeState } from '@state/mainframe-state';
 import { INotificationsState } from '@state/notifications-state';
 import { IGrowthState } from '@state/growth-state';
 import { IAutomationState } from '@state/automation-state';
-import { ICompanyState } from '@state/company-state';
+import { IClonesState } from '@state/clones-state';
+import { IActivityState } from '@state/activity-state';
 import { IScenarioState } from '@state/scenario-state';
 import { IUnlockState } from '@state/unlock-state';
 import { IFactionState } from '@state/faction-state';
@@ -107,7 +108,11 @@ export class BaseController<T extends ReactiveControllerHost & HTMLElement = Rea
     return BaseController.getContainerValue(TYPES.AutomationState);
   }
 
-  protected get companyState(): ICompanyState {
-    return BaseController.getContainerValue(TYPES.CompanyState);
+  protected get clonesState(): IClonesState {
+    return BaseController.getContainerValue(TYPES.ClonesState);
+  }
+
+  protected get activityState(): IActivityState {
+    return BaseController.getContainerValue(TYPES.ActivityState);
   }
 }

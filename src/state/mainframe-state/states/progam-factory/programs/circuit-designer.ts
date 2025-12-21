@@ -1,7 +1,7 @@
-import programs from '@configs/programs.json';
-import { calculateTierLinear } from '@shared/helpers';
+import { calculateTierLinear, DistrictTypeRewardParameter } from '@shared/index';
 import { MultiplierProgramName } from '../types';
 import { BaseProgram } from './base-program';
+import { typedPrograms } from '../constants';
 
 export class CircuitDesignerProgram extends BaseProgram {
   public readonly name = MultiplierProgramName.circuitDesigner;
@@ -14,13 +14,19 @@ export class CircuitDesignerProgram extends BaseProgram {
   }
 
   calculateDelta(threads: number): number {
-    const programData = programs[this.name];
+    if (!this.unlockState.milestones.isRewardParameterUnlocked(DistrictTypeRewardParameter.computationalBase)) {
+      return 0;
+    }
 
-    return (
-      this.scenarioState.currentValues.programMultipliers.computationalBase.pointsMultiplier *
-      this.globalState.rewards.multiplierByProgram *
-      threads *
-      calculateTierLinear(this.level, this.tier, programData.computationalBase)
+    const programData = typedPrograms[this.name];
+    const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.computationalBase;
+
+    return Math.pow(
+      multiplier *
+        this.globalState.rewards.multiplierByProgram *
+        threads *
+        calculateTierLinear(this.level, this.tier, programData.computationalBase),
+      exponent,
     );
   }
 }

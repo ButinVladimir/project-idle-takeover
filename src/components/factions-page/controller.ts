@@ -1,7 +1,8 @@
-import { BaseController, Faction } from '@shared/index';
+import { FactionPlaystyle } from '@state/faction-state';
+import { BaseController } from '@shared/index';
 
 export class FactionsPageController extends BaseController {
   isFactionSelected(): boolean {
-    return this.factionState.currentFaction !== Faction.neutral;
+    return this.factionState.currentFactionValues.playstyle !== FactionPlaystyle.selectFaction;
   }
 }

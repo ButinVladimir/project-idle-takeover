@@ -86,11 +86,31 @@
     },
     {
       "name": "ca-city-district-page",
-      "description": "Attributes:\n\n  * `district-index` {`number`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `districtIndex` {`number`} - \n\n  * `renderTabs` - \n\n  * `renderTab` - \n\n  * `renderTabPanels` - \n\n  * `renderTabPanel` - \n\n  * `renderTabPanelContent` - \n\n  * `handleGoBack` - \n\n  * `_controller` {`CityDistrictPageController`} - ",
+      "description": "Attributes:\n\n  * `district-index` {`number`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `districtIndex` {`number`} - \n\n  * `renderTabs` - \n\n  * `renderTab` - \n\n  * `renderTabPanels` - \n\n  * `renderTabPanel` - \n\n  * `renderTabPanelContent` - \n\n  * `handleGoBack` - \n\n  * `isTabUnlocked` - \n\n  * `_controller` {`CityDistrictPageController`} - ",
       "attributes": [
         {
           "name": "district-index",
           "description": "`district-index` {`number`} - \n\nProperty: districtIndex"
+        }
+      ]
+    },
+    {
+      "name": "ca-city-district-contract-panel",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderContent` - \n\n  * `renderHeader` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderList` - \n\n  * `renderContract` - \n\n  * `_controller` {`CityDistrictContractsPanelController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-city-district-contracts-list-item-generation-progress",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`true`} - \n\n  * `_districtIndex` {`number`} - \n\n  * `_contractName` {`string`} - \n\n  * `_progressBarRef` {`Ref<SlProgressBar>`} - \n\n  * `_timerRef` {`Ref<HTMLSpanElement>`} - \n\n  * `_chanceRef` {`Ref<HTMLSpanElement>`} - \n\n  * `_unlockedMessageRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`CityDistrictSidejobsListItemUnlockProgressController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-city-district-contracts-list-item",
+      "description": "Attributes:\n\n  * `contract-name` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `contractName` {`string`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `renderDescription` - \n\n  * `renderAvailable` - \n\n  * `renderGenerationProgress` - \n\n  * `_controller` {`CityDistrictContractsListItemController`} - ",
+      "attributes": [
+        {
+          "name": "contract-name",
+          "description": "`contract-name` {`string`} - \n\nProperty: contractName"
         }
       ]
     },
@@ -116,27 +136,27 @@
     },
     {
       "name": "ca-city-district-sidejobs-list-item-unlock-progress",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`true`} - \n\n  * `_districtIndex` {`number`} - \n\n  * `_sidejobName` - \n\n  * `_progressBarRef` {`Ref<SlProgressBar>`} - \n\n  * `_hintRef` {`Ref<HTMLParagraphElement>`} - \n\n  * `_timerRef` {`Ref<HTMLSpanElement>`} - \n\n  * `_unlockedMessageRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`CityDistrictSidejobsListItemUnlockProgressController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`true`} - \n\n  * `_districtIndex` {`number`} - \n\n  * `_sidejobName` {`string`} - \n\n  * `_progressBarRef` {`Ref<SlProgressBar>`} - \n\n  * `_hintRef` {`Ref<HTMLParagraphElement>`} - \n\n  * `_timerRef` {`Ref<HTMLSpanElement>`} - \n\n  * `_unlockedMessageRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`CityDistrictSidejobsListItemUnlockProgressController`} - ",
       "attributes": []
     },
     {
       "name": "ca-city-district-sidejobs-list-item",
-      "description": "Attributes:\n\n  * `sidejob-name` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `sidejobName` - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `renderContent` - ",
+      "description": "Attributes:\n\n  * `sidejob-name` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `sidejobName` {`string`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `renderContent` - ",
       "attributes": [
         {
           "name": "sidejob-name",
-          "description": "`sidejob-name` - \n\nProperty: sidejobName"
+          "description": "`sidejob-name` {`string`} - \n\nProperty: sidejobName"
         }
       ]
     },
     {
       "name": "ca-company-page",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderTab` - \n\n  * `renderTabPanel` - \n\n  * `renderTabPanelContent` - \n\n  * `_controller` {`CompanyPageController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `isTabUnlocked` - \n\n  * `renderTab` - \n\n  * `renderTabPanel` - \n\n  * `renderTabPanelContent` - \n\n  * `_controller` {`CompanyPageController`} - ",
       "attributes": []
     },
     {
       "name": "ca-company-clones-panel",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_isPurchaseCloneDialogOpen` {`boolean`} - \n\n  * `_cloneListItemDialogOpen` {`boolean`} - \n\n  * `_cloneListItemDialog` {`\"rename-clone\" | undefined`} - \n\n  * `_modalClone` - \n\n  * `renderContent` - \n\n  * `handlePurchaseCloneDialogOpen` - \n\n  * `handlePurchaseCloneDialogClose` - \n\n  * `handleCloneListItemDialogOpen` - \n\n  * `handleCloneListItemDialogClose` - \n\n  * `_controller` {`ClonesPanelController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_isPurchaseCloneDialogOpen` {`boolean`} - \n\n  * `_cloneListItemDialogOpen` {`boolean`} - \n\n  * `_cloneListItemDialog` {`\"rename-clone\" | undefined`} - \n\n  * `_modalClone` - \n\n  * `renderContent` - \n\n  * `handlePurchaseCloneDialogOpen` - \n\n  * `handlePurchaseCloneDialogClose` - \n\n  * `handleCloneListItemDialogOpen` - \n\n  * `handleCloneListItemDialogClose` - ",
       "attributes": []
     },
     {
@@ -182,7 +202,7 @@
     },
     {
       "name": "ca-purchase-clone-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_nameInputRef` {`Ref<SlInput>`} - \n\n  * `_cloneTemplateInputRef` {`Ref<SlSelect>`} - \n\n  * `_tierInputRef` {`Ref<SlSelect>`} - \n\n  * `_levelInputRef` {`Ref<SlInput>`} - \n\n  * `open` {`boolean`} - \n\n  * `_name` {`string`} - \n\n  * `_cloneTemplateName` - \n\n  * `_tier` {`number`} - \n\n  * `_level` {`number`} - \n\n  * `_clone` - \n\n  * `_buttonsRef` {`Ref<PurchaseCloneDialogButtons>`} - \n\n  * `handlePartialUpdate` - \n\n  * `renderCloneTemplateOption` - \n\n  * `renderTierOptions` - \n\n  * `handleClose` - \n\n  * `handleNameChange` - \n\n  * `handleCloneTemplateChange` - \n\n  * `handleTierChange` - \n\n  * `handleLevelChange` - \n\n  * `handleSubmit` - \n\n  * `handleGenerateName` - \n\n  * `_controller` {`PurchaseCloneDialogController`} - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_nameInputRef` {`Ref<SlInput>`} - \n\n  * `_cloneTemplateInputRef` {`Ref<SlSelect>`} - \n\n  * `_tierInputRef` {`Ref<SlSelect>`} - \n\n  * `_levelInputRef` {`Ref<SlInput>`} - \n\n  * `open` {`boolean`} - \n\n  * `_name` {`string`} - \n\n  * `_cloneTemplateName` {`string | undefined`} - \n\n  * `_tier` {`number`} - \n\n  * `_level` {`number`} - \n\n  * `_clone` - \n\n  * `_buttonsRef` {`Ref<PurchaseCloneDialogButtons>`} - \n\n  * `handlePartialUpdate` - \n\n  * `renderCloneTemplateOption` - \n\n  * `renderTierOptions` - \n\n  * `handleClose` - \n\n  * `handleNameChange` - \n\n  * `handleCloneTemplateChange` - \n\n  * `handleTierChange` - \n\n  * `handleLevelChange` - \n\n  * `handleSubmit` - \n\n  * `handleGenerateName` - \n\n  * `_controller` {`PurchaseCloneDialogController`} - ",
       "attributes": [
         {
           "name": "open",
@@ -219,13 +239,137 @@
       ]
     },
     {
+      "name": "ca-clones-synchronization-values",
+      "description": "Properties:\n\n  * `styles` {`CSSResult[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_experienceShareRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`ClonesSynchronizationValuesController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-company-contract-assignments-panel",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_assignClonesDialogOpened` {`boolean`} - \n\n  * `handleAssignClonesContractDialogOpen` - \n\n  * `handleAssignClonesContractDialogClose` - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-assign-clones-contract-dialog",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_clonesIdInputRef` {`Ref<SlSelect>`} - \n\n  * `_districtIndexInputRef` {`Ref<SlSelect>`} - \n\n  * `_contractNameInputRef` {`Ref<SlSelect>`} - \n\n  * `open` {`boolean`} - \n\n  * `_cloneIds` {`string[]`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `_contractName` {`string | undefined`} - \n\n  * `_contract` - \n\n  * `_existingContract` - \n\n  * `renderCloneOption` - \n\n  * `renderDistrictOption` - \n\n  * `renderContractName` - \n\n  * `handleClose` - \n\n  * `handleCloneIdsChange` - \n\n  * `handleContractNameChange` - \n\n  * `handleDistrictIndexChange` - \n\n  * `handleSubmit` - \n\n  * `handleAssignClones` - \n\n  * `_controller` {`AssignClonesContractDialogController`} - ",
+      "attributes": [
+        {
+          "name": "open",
+          "description": "`open` {`boolean`} - \n\nProperty: open\n\nDefault: false",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-assign-clones-contract-dialog-buttons",
+      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_contract` - \n\n  * `_existingContract` - \n\n  * `renderWarning` - \n\n  * `buildAlreadySelectedWarning` - \n\n  * `handleCancel` - \n\n  * `handleAssignClones` - \n\n  * `_controller` {`AssignClonesContractDialogButtonsController`} - ",
+      "attributes": [
+        {
+          "name": "disabled",
+          "description": "`disabled` {`boolean`} - \n\nProperty: disabled\n\nDefault: false",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-assign-clones-contract-dialog-description",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_descriptionModelInputRef` {`Ref<SlRadioGroup>`} - \n\n  * `_contract` - \n\n  * `_desciptionMode` {`AssignClonesContractDialogDescriptionMode`} - \n\n  * `renderTeamSizeString` - \n\n  * `handleDescriptionModeChange` - \n\n  * `renderDescriptionModes` - \n\n  * `renderDescriptionMode` - \n\n  * `renderRequirements` - \n\n  * `renderRewardMultipliers` - \n\n  * `renderRewards` - \n\n  * `_controller` {`AssignCloneSidejobDialogDescriptionController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-assign-clones-contract-dialog-requirements",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_contract` - \n\n  * `renderRequirementAttribute` - \n\n  * `renderRequirementSkill` - \n\n  * `_controller` {`AssignClonesContractDialogRequirementsController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-assign-clones-contract-dialog-rewards-multipliers",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_contract` - \n\n  * `_existingContract` - \n\n  * `renderRewardsMultplierAttribute` - \n\n  * `renderRewardsMultplierSkill` - \n\n  * `_controller` - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-assign-clones-contract-dialog-rewards",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_rewardValueElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_rewardDiffElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_rewardSpeedElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_rewardSpeedDiffElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_contract` - \n\n  * `_existingContract` - \n\n  * `_rewardValues` - \n\n  * `renderParameter` - \n\n  * `handlePartialUpdate` - \n\n  * `updateParameter` - \n\n  * `updateValueElement` - \n\n  * `updateDiffElement` - \n\n  * `updateSpeedElement` - \n\n  * `updateSpeedDiffElement` - \n\n  * `_controller` {`AssignCloneSidejobDialogRewardsController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-contract-assignments-list",
+      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderContractAssignmentsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderContractAssignment` - \n\n  * `handleOpenRemoveAllContractAssignmentsDialog` - \n\n  * `handleStartAllContractAssignments` - \n\n  * `handleRemoveAllContractAssignments` - \n\n  * `handleMoveContractAssignment` - \n\n  * `handleToggleAllContractAssignments` - \n\n  * `_controller` {`ContractAssignmentsListController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-contracts-assignments-list-item-description",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_rewardValueElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_rewardSpeedElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_assignment` - \n\n  * `_rewardValues` - \n\n  * `renderParameter` - \n\n  * `handlePartialUpdate` - \n\n  * `updateParameter` - \n\n  * `updateValueElement` - \n\n  * `updateSpeedElement` - \n\n  * `_controller` {`ContractsAssignmentsListItemDescriptionController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-contract-assignments-list-item-status",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_assignment` - \n\n  * `_controller` {`ContractAssignmentsListItemStatusController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-contract-assignments-list-item",
+      "description": "Attributes:\n\n  * `assignment-id` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `assignmentId` {`string`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_contractAssignment` - \n\n  * `handleToggleDescription` - \n\n  * `handleOpenRemoveContractAssignmentDialog` - \n\n  * `handleRemoveContractAssignment` - \n\n  * `handleDragStart` - \n\n  * `handleToggleContractAssignment` - \n\n  * `handleStartContractAssignment` - \n\n  * `_controller` {`ContractAssignmentsListItemController`} - ",
+      "attributes": [
+        {
+          "name": "assignment-id",
+          "description": "`assignment-id` {`string`} - \n\nProperty: assignmentId"
+        }
+      ]
+    },
+    {
+      "name": "ca-company-primary-activity-queue-panel",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderContent` - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-primary-activity-queue-list",
+      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderPrimaryActivity` - \n\n  * `handleOpenCancelAllPrimaryActivitiesDialog` - \n\n  * `handleCancelAllPrimaryActivities` - \n\n  * `_controller` {`PrimaryActivityQueueListController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-primary-activity-queue-list-item-contract-description",
+      "description": "Attributes:\n\n  * `details-visible` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `detailsVisible` {`boolean`} - \n\n  * `_contractActivity` - \n\n  * `_progressBarRef` {`Ref<SlProgressBar>`} - \n\n  * `_timerRef` {`Ref<HTMLSpanElement>`} - \n\n  * `renderDetails` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "details-visible",
+          "description": "`details-visible` {`boolean`} - \n\nProperty: detailsVisible",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-primary-activity-queue-list-item-description",
+      "description": "Attributes:\n\n  * `details-visible` {`boolean`} - \n\nProperties:\n\n  * `styles` {`CSSResult[]`} - \n\n  * `detailsVisible` {`boolean`} - \n\n  * `_primaryActivity` - \n\n  * `renderTypeSpecificDescription` - \n\n  * `renderRewards` - ",
+      "attributes": [
+        {
+          "name": "details-visible",
+          "description": "`details-visible` {`boolean`} - \n\nProperty: detailsVisible",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-primary-activity-queue-list-item-rewards",
+      "description": "Properties:\n\n  * `styles` {`CSSResult[]`} - \n\n  * `_primaryActivity` - \n\n  * `renderParameter` - \n\n  * `_controller` {`PrimaryActivityQueueListItemDescriptionController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-primary-activity-queue-list-item",
+      "description": "Attributes:\n\n  * `activity-id` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `activityId` {`string`} - \n\n  * `_detailsVisible` {`boolean`} - \n\n  * `_activity` - \n\n  * `handleOpenDeleteCloneDialog` - \n\n  * `handleCancelPrimaryActivity` - \n\n  * `handleToggleDetails` - \n\n  * `_controller` {`PrimaryActivityQueueListItemController`} - ",
+      "attributes": [
+        {
+          "name": "activity-id",
+          "description": "`activity-id` {`string`} - \n\nProperty: activityId"
+        }
+      ]
+    },
+    {
       "name": "ca-company-sidejobs-panel",
       "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_assignCloneDialogOpened` {`boolean`} - \n\n  * `handleAssignCloneSidejobDialogOpen` - \n\n  * `handleAssignCloneSidejobDialogClose` - ",
       "attributes": []
     },
     {
       "name": "ca-assign-clone-sidejob-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneIdInputRef` {`Ref<SlSelect>`} - \n\n  * `_districtIndexInputRef` {`Ref<SlSelect>`} - \n\n  * `_sidejobNameInputRef` {`Ref<SlSelect>`} - \n\n  * `open` {`boolean`} - \n\n  * `_cloneId` {`string | undefined`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `_sidejobName` - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_buttonsRef` {`Ref<AssignCloneSidejobDialogButtons>`} - \n\n  * `renderCloneOption` - \n\n  * `renderDistrictOption` - \n\n  * `renderSidejobName` - \n\n  * `handleClose` - \n\n  * `handleCloneIdChange` - \n\n  * `handleSidejobNameChange` - \n\n  * `handleDistrictIndexChange` - \n\n  * `handleSubmit` - \n\n  * `handleAssignClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`AssignCloneSidejobDialogController`} - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneIdInputRef` {`Ref<SlSelect>`} - \n\n  * `_districtIndexInputRef` {`Ref<SlSelect>`} - \n\n  * `_sidejobNameInputRef` {`Ref<SlSelect>`} - \n\n  * `open` {`boolean`} - \n\n  * `_cloneId` {`string | undefined`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `_sidejobName` {`string | undefined`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_buttonsRef` {`Ref<AssignCloneSidejobDialogButtons>`} - \n\n  * `renderCloneOption` - \n\n  * `renderDistrictOption` - \n\n  * `renderSidejobName` - \n\n  * `handleClose` - \n\n  * `handleCloneIdChange` - \n\n  * `handleSidejobNameChange` - \n\n  * `handleDistrictIndexChange` - \n\n  * `handleSubmit` - \n\n  * `handleAssignClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`AssignCloneSidejobDialogController`} - ",
       "attributes": [
         {
           "name": "open",
@@ -236,7 +380,7 @@
     },
     {
       "name": "ca-assign-clone-sidejob-dialog-buttons",
-      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_assignButtonRef` {`Ref<SlButton>`} - \n\n  * `_availableTimeRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handlePartialUpdate` - \n\n  * `renderWarnings` - \n\n  * `renderOtherWarnings` - \n\n  * `handleCancel` - \n\n  * `handleAssignClone` - \n\n  * `_controller` {`AssignCloneSidejobDialogButtonsController`} - ",
+      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_availableTimeRef` {`Ref<HTMLSpanElement>`} - \n\n  * `handlePartialUpdate` - \n\n  * `renderWarnings` - \n\n  * `renderAlreadySelectedWarning` - \n\n  * `handleCancel` - \n\n  * `handleAssignClone` - \n\n  * `_controller` {`AssignCloneSidejobDialogButtonsController`} - ",
       "attributes": [
         {
           "name": "disabled",
@@ -252,7 +396,7 @@
     },
     {
       "name": "ca-assign-clone-sidejob-dialog-requirements",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_sidejob` - \n\n  * `renderRequirementAttribute` - \n\n  * `renderRequirementSkill` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_sidejob` - \n\n  * `renderRequirementAttribute` - \n\n  * `renderRequirementSkill` - \n\n  * `_controller` {`AssignCloneSidejobDialogRequirementsController`} - ",
       "attributes": []
     },
     {
@@ -267,21 +411,26 @@
     },
     {
       "name": "ca-sidejobs-list",
-      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderSidejobsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderSidejob` - \n\n  * `handleOpenCancelAllSidejobsDialog` - \n\n  * `handleCancelAllSidejobs` - \n\n  * `_controller` {`SidejobsListController`} - ",
+      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderSidejobsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderSidejob` - \n\n  * `handleOpenCancelAllSidejobsDialog` - \n\n  * `handleCancelAllSidejobs` - \n\n  * `handleToggleAllActivities` - \n\n  * `_controller` {`SidejobsListController`} - ",
       "attributes": []
     },
     {
       "name": "ca-sidejobs-list-item-description",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_rewardValueElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_sidejob` - \n\n  * `_rewardValues` - \n\n  * `renderParameter` - \n\n  * `handlePartialUpdate` - \n\n  * `updateParameter` - \n\n  * `updateValueElement` - \n\n  * `_controller` {`SidejobsListItemDescriptionController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_rewardValueElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_activity` - \n\n  * `_rewardValues` - \n\n  * `renderParameter` - \n\n  * `handlePartialUpdate` - \n\n  * `updateParameter` - \n\n  * `updateValueElement` - \n\n  * `_controller` {`SidejobsListItemDescriptionController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-sidejobs-list-item-status",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_mobileTextRef` {`Ref<HTMLSpanElement>`} - \n\n  * `_desktopTooltipRef` {`Ref<HTMLSpanElement>`} - \n\n  * `_desktopIconRef` {`Ref<SlIcon>`} - \n\n  * `_activity` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`SidejobsListItemStatusController`} - ",
       "attributes": []
     },
     {
       "name": "ca-sidejobs-list-item",
-      "description": "Attributes:\n\n  * `sidejob-id` {`string`} - \n\nProperties:\n\n  * `styles` {`CSSResult[]`} - \n\n  * `sidejobId` {`string`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_sidejob` - \n\n  * `handleToggleDescription` - \n\n  * `handleOpenCancelSidejobDialog` - \n\n  * `handleCancelSidejob` - \n\n  * `_controller` {`SidejobsListItemController`} - ",
+      "description": "Attributes:\n\n  * `activity-id` {`string`} - \n\nProperties:\n\n  * `styles` {`CSSResult[]`} - \n\n  * `activityId` {`string`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_activity` - \n\n  * `handleToggleDescription` - \n\n  * `handleOpenCancelSidejobDialog` - \n\n  * `handleToggleSidejob` - \n\n  * `handleCancelSidejob` - \n\n  * `_controller` {`SidejobsListItemController`} - ",
       "attributes": [
         {
-          "name": "sidejob-id",
-          "description": "`sidejob-id` {`string`} - \n\nProperty: sidejobId"
+          "name": "activity-id",
+          "description": "`activity-id` {`string`} - \n\nProperty: activityId"
         }
       ]
     },
@@ -307,11 +456,11 @@
     },
     {
       "name": "ca-factions-available-factions-list-item",
-      "description": "Attributes:\n\n  * `faction` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `faction` - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `handleOpenConfirmationDialog` - \n\n  * `handleJoinFaction` - \n\n  * `_controller` {`FactionsAvailableFactionsListItemController`} - ",
+      "description": "Attributes:\n\n  * `faction` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `faction` {`string`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `handleOpenConfirmationDialog` - \n\n  * `handleJoinFaction` - \n\n  * `_controller` {`FactionsAvailableFactionsListItemController`} - ",
       "attributes": [
         {
           "name": "faction",
-          "description": "`faction` - \n\nProperty: faction"
+          "description": "`faction` {`string`} - \n\nProperty: faction"
         }
       ]
     },
@@ -614,8 +763,8 @@
       "attributes": []
     },
     {
-      "name": "ca-overview-unlocked-features-progress",
-      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `_controller` {`OverviewUnlockedFeaturesProgressController`} - ",
+      "name": "ca-overview-reached-milestones-progress",
+      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `_controller` {`OverviewReachedMilestonesProgressController`} - ",
       "attributes": []
     },
     {
@@ -625,8 +774,12 @@
     },
     {
       "name": "ca-overview-story-goal",
-      "description": "Attributes:\n\n  * `level` {`number | undefined`} - \n\n  * `faction` - \n\n  * `captured-districts-count` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `special-events` {`string | undefined`} - \n\n  * `unlock-features` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `clone-templates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `state` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `level` {`number | undefined`} - \n\n  * `faction` - \n\n  * `capturedDistrictsCount` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `specialEvents` {`string | undefined`} - \n\n  * `unlockFeatures` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `cloneTemplates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `state` - \n\n  * `renderSummary` - \n\n  * `renderDetails` - \n\n  * `renderMessages` - \n\n  * `renderUnlockFeatures` - \n\n  * `renderSpecialEvents` - \n\n  * `renderPrograms` - \n\n  * `renderCloneTemplates` - \n\n  * `renderSidejobs` - \n\n  * `_controller` {`OverviewStoryGoalController`} - ",
+      "description": "Attributes:\n\n  * `name` {`string`} - \n\n  * `level` {`number | undefined`} - \n\n  * `faction` {`string | undefined`} - \n\n  * `captured-districts-count` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `special-events` {`string | undefined`} - \n\n  * `milestones` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `clone-templates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `contracts` {`string | undefined`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `name` {`string`} - \n\n  * `level` {`number | undefined`} - \n\n  * `faction` {`string | undefined`} - \n\n  * `capturedDistrictsCount` {`number | undefined`} - \n\n  * `messages` {`string | undefined`} - \n\n  * `specialEvents` {`string | undefined`} - \n\n  * `milestones` {`string | undefined`} - \n\n  * `programs` {`string | undefined`} - \n\n  * `cloneTemplates` {`string | undefined`} - \n\n  * `sidejobs` {`string | undefined`} - \n\n  * `contracts` {`string | undefined`} - \n\n  * `renderSummary` - \n\n  * `renderDetails` - \n\n  * `renderMessages` - \n\n  * `renderMilestones` - \n\n  * `renderSpecialEvents` - \n\n  * `renderPrograms` - \n\n  * `renderCloneTemplates` - \n\n  * `renderSidejobs` - \n\n  * `renderContracts` - \n\n  * `_controller` {`OverviewStoryGoalController`} - ",
       "attributes": [
+        {
+          "name": "name",
+          "description": "`name` {`string`} - \n\nProperty: name"
+        },
         {
           "name": "level",
           "description": "`level` {`number | undefined`} - \n\nProperty: level",
@@ -634,7 +787,8 @@
         },
         {
           "name": "faction",
-          "description": "`faction` - \n\nProperty: faction"
+          "description": "`faction` {`string | undefined`} - \n\nProperty: faction",
+          "values": []
         },
         {
           "name": "captured-districts-count",
@@ -652,8 +806,8 @@
           "values": []
         },
         {
-          "name": "unlock-features",
-          "description": "`unlock-features` {`string | undefined`} - \n\nProperty: unlockFeatures",
+          "name": "milestones",
+          "description": "`milestones` {`string | undefined`} - \n\nProperty: milestones",
           "values": []
         },
         {
@@ -672,14 +826,20 @@
           "values": []
         },
         {
-          "name": "state",
-          "description": "`state` - \n\nProperty: state"
+          "name": "contracts",
+          "description": "`contracts` {`string | undefined`} - \n\nProperty: contracts",
+          "values": []
         }
       ]
     },
     {
       "name": "ca-overview-unlocked-content-panel",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_itemTypeFilterInputRef` {`Ref<SlSelect>`} - \n\n  * `_itemTypeFilter` {`ItemTypeFilter`} - \n\n  * `handleItemTypeFilterChange` - \n\n  * `_controller` {`OverviewUnlockedContentPanelController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_itemTypeFilterInputRef` {`Ref<SlSelect>`} - \n\n  * `_itemTypeFilter` {`ItemTypeFilter`} - \n\n  * `handleItemTypeFilterChange` - \n\n  * `renderSidejobs` - \n\n  * `renderContracts` - \n\n  * `renderPrograms` - \n\n  * `renderClones` - \n\n  * `_controller` {`OverviewUnlockedContentPanelController`} - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-overview-reached-milestones",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderList` - \n\n  * `renderListItem` - \n\n  * `_controller` {`OverviewReachedMilestonesController`} - ",
       "attributes": []
     },
     {
@@ -704,8 +864,8 @@
       ]
     },
     {
-      "name": "ca-overview-unlocked-features",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderList` - \n\n  * `renderListItem` - \n\n  * `_controller` {`OverviewUnlockedFeaturesController`} - ",
+      "name": "ca-overview-unlocked-contracts",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderList` - \n\n  * `renderListItem` - \n\n  * `_controller` {`OverviewUnlockedContractsController`} - ",
       "attributes": []
     },
     {
@@ -835,7 +995,7 @@
     },
     {
       "name": "ca-statistics-experience-share",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `_controller` {`StatisticsExperienceShareController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programMultiplierRef` {`Ref<HTMLDivElement>`} - \n\n  * `_totalMultiplierRef` {`Ref<HTMLDivElement>`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`StatisticsExperienceShareController`} - ",
       "attributes": []
     },
     {
@@ -863,7 +1023,7 @@
     },
     {
       "name": "ca-statistics-process-completion-speed",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `_controller` {`StatisticsProcessCompletionSpeedController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programMultiplierRef` {`Ref<HTMLDivElement>`} - \n\n  * `_totalMultiplierRef` {`Ref<HTMLDivElement>`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`StatisticsProcessCompletionSpeedController`} - ",
       "attributes": []
     },
     {

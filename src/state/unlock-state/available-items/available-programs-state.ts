@@ -1,10 +1,9 @@
 import { injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
-import programs from '@configs/programs.json';
 import { ProgramName } from '@state/mainframe-state/states/progam-factory/types';
-import { Feature } from '@shared/index';
-import { BaseAvailableCategoryItemsState } from './base-available-category-items-state';
 import { PROGRAM_TEXTS } from '@texts/index';
+import { typedPrograms } from '@state/mainframe-state';
+import { BaseAvailableCategoryItemsState } from './base-available-category-items-state';
 
 @injectable()
 export class AvailableProgramsState extends BaseAvailableCategoryItemsState<ProgramName> {
@@ -13,12 +12,12 @@ export class AvailableProgramsState extends BaseAvailableCategoryItemsState<Prog
   }
 
   protected getLoanedItemsFromFaction(): ProgramName[] {
-    return this._factionState.currentFactionValues.loans.programs;
+    return this._factionState.currentFactionValues.loanedItems.programs;
   }
 
-  protected checkRequiredFeatures(itemName: ProgramName): boolean {
-    const features = programs[itemName].requiredFeatures as Feature[];
+  protected checkRequiredMilestones(itemName: ProgramName): boolean {
+    const milestones = typedPrograms[itemName].requiredMilestones;
 
-    return features.every((feature) => this._unlockState.features.isFeatureUnlocked(feature));
+    return milestones.every((milestones) => this._unlockState.milestones.isMilestoneReached(milestones));
   }
 }

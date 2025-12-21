@@ -1,7 +1,7 @@
-import programs from '@configs/programs.json';
-import { calculateTierLinear } from '@shared/helpers';
+import { DistrictTypeRewardParameter, calculateTierLinear } from '@shared/index';
 import { MultiplierProgramName } from '../types';
 import { BaseProgram } from './base-program';
+import { typedPrograms } from '../constants';
 
 export class DealMakerProgram extends BaseProgram {
   public readonly name = MultiplierProgramName.dealMaker;
@@ -14,13 +14,19 @@ export class DealMakerProgram extends BaseProgram {
   }
 
   calculateDelta(threads: number): number {
-    const programData = programs[this.name];
+    if (!this.unlockState.milestones.isRewardParameterUnlocked(DistrictTypeRewardParameter.rewards)) {
+      return 0;
+    }
 
-    return (
-      this.scenarioState.currentValues.programMultipliers.rewards.pointsMultiplier *
-      this.globalState.rewards.multiplierByProgram *
-      threads *
-      calculateTierLinear(this.level, this.tier, programData.rewards)
+    const programData = typedPrograms[this.name];
+    const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.rewards;
+
+    return Math.pow(
+      multiplier *
+        this.globalState.rewards.multiplierByProgram *
+        threads *
+        calculateTierLinear(this.level, this.tier, programData.rewards),
+      exponent,
     );
   }
 }

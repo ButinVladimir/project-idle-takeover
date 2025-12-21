@@ -1,10 +1,8 @@
 import { injectable } from 'inversify';
-import themes from '@configs/themes.json';
-import constants from '@configs/constants.json';
 import { decorators } from '@state/container';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { getLocale, setLocale } from '@/configure-localization';
-import { Language, LongNumberFormat, Theme, type IFormatter } from '@shared/index';
+import { Language, LongNumberFormat, Theme, type IFormatter, typedConstants } from '@shared/index';
 import type { IApp } from '@state/app';
 import { TYPES } from '@state/types';
 import {
@@ -18,6 +16,7 @@ import { SettingsHotkeys } from './settings-hotkeys';
 import { SettingsMessageEvents } from './settings-message-events';
 import { SettingsGameAlerts } from './settings-game-alerts';
 import { SettingsNotificationTypes } from './settings-notification-types';
+import { typedThemes } from './constants';
 
 const { lazyInject } = decorators;
 
@@ -50,14 +49,14 @@ export class SettingsState implements ISettingsState {
   constructor() {
     this._language = getLocale() as Language;
     this._theme = Theme.light;
-    this._messageLogSize = constants.defaultSettings.messageLogSize;
-    this._toastDuration = constants.defaultSettings.toastDuration;
-    this._updateInterval = constants.defaultSettings.updateInterval;
-    this._autosaveEnabledOnHide = constants.defaultSettings.autosaveEnabledOnHide;
-    this._autosaveInterval = constants.defaultSettings.autosaveInterval;
-    this._fastSpeedMultiplier = constants.defaultSettings.fastSpeedMultiplier;
-    this._maxUpdatesPerTick = constants.defaultSettings.maxUpdatesPerTick;
-    this._longNumberFormat = constants.defaultSettings.longNumberFormat as LongNumberFormat;
+    this._messageLogSize = typedConstants.defaultSettings.messageLogSize;
+    this._toastDuration = typedConstants.defaultSettings.toastDuration;
+    this._updateInterval = typedConstants.defaultSettings.updateInterval;
+    this._autosaveEnabledOnHide = typedConstants.defaultSettings.autosaveEnabledOnHide;
+    this._autosaveInterval = typedConstants.defaultSettings.autosaveInterval;
+    this._fastSpeedMultiplier = typedConstants.defaultSettings.fastSpeedMultiplier;
+    this._maxUpdatesPerTick = typedConstants.defaultSettings.maxUpdatesPerTick;
+    this._longNumberFormat = typedConstants.defaultSettings.longNumberFormat;
     this._messageEvents = new SettingsMessageEvents();
     this._gameAlerts = new SettingsGameAlerts();
     this._notificationTypes = new SettingsNotificationTypes();
@@ -145,7 +144,7 @@ export class SettingsState implements ISettingsState {
   setTheme(theme: Theme) {
     this._theme = theme;
 
-    document.body.className = themes[theme].classes;
+    document.body.className = typedThemes[theme].classes;
   }
 
   setMessageLogSize(messageLogSize: number) {
@@ -186,14 +185,14 @@ export class SettingsState implements ISettingsState {
   async restoreDefaultSettings(): Promise<void> {
     await this.setLanguage(getLocale() as Language);
     this.setTheme(window.matchMedia('(prefers-color-scheme:dark)').matches ? Theme.dark : Theme.light);
-    this.setMessageLogSize(constants.defaultSettings.messageLogSize);
-    this.setToastDuration(constants.defaultSettings.toastDuration);
-    this.setUpdateInterval(constants.defaultSettings.updateInterval);
-    this.setAutosaveEnabledOnHide(constants.defaultSettings.autosaveEnabledOnHide);
-    this.setAutosaveInterval(constants.defaultSettings.autosaveInterval);
-    this.setFastSpeedMultiplier(constants.defaultSettings.fastSpeedMultiplier);
-    this.setMaxUpdatesPerTick(constants.defaultSettings.maxUpdatesPerTick);
-    this.setLongNumberFormat(constants.defaultSettings.longNumberFormat as LongNumberFormat);
+    this.setMessageLogSize(typedConstants.defaultSettings.messageLogSize);
+    this.setToastDuration(typedConstants.defaultSettings.toastDuration);
+    this.setUpdateInterval(typedConstants.defaultSettings.updateInterval);
+    this.setAutosaveEnabledOnHide(typedConstants.defaultSettings.autosaveEnabledOnHide);
+    this.setAutosaveInterval(typedConstants.defaultSettings.autosaveInterval);
+    this.setFastSpeedMultiplier(typedConstants.defaultSettings.fastSpeedMultiplier);
+    this.setMaxUpdatesPerTick(typedConstants.defaultSettings.maxUpdatesPerTick);
+    this.setLongNumberFormat(typedConstants.defaultSettings.longNumberFormat);
     await this._messageEvents.startNewState();
     await this._gameAlerts.startNewState();
     await this._notificationTypes.startNewState();

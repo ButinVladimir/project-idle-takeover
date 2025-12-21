@@ -42,7 +42,7 @@ export class CityDistrictOverviewPanelValues extends BaseComponent {
 
     return html`
       <p class="text">
-        ${COMMON_TEXTS.parameterValue(msg('District type'), DISTRICT_TYPE_TEXTS[districtState.districtType].title())}
+        ${COMMON_TEXTS.parameterRow(msg('District type'), DISTRICT_TYPE_TEXTS[districtState.districtType].title())}
 
         <sl-tooltip>
           <span slot="content">${DISTRICT_TYPE_TEXTS[districtState.districtType].overview()}</span>
@@ -52,7 +52,7 @@ export class CityDistrictOverviewPanelValues extends BaseComponent {
       </p>
 
       <p class="text">
-        ${COMMON_TEXTS.parameterValue(msg('Difficulty'), formattedDifficulty)}
+        ${COMMON_TEXTS.parameterRow(msg('Difficulty'), formattedDifficulty)}
 
         <sl-tooltip>
           <span slot="content"
@@ -66,7 +66,7 @@ export class CityDistrictOverviewPanelValues extends BaseComponent {
       ${this._controller.isInfluenceUnlocked()
         ? html`
             <p class="text">
-              ${COMMON_TEXTS.parameterValue(COMMON_TEXTS.tier(), formattedTier)}
+              ${COMMON_TEXTS.parameterRow(COMMON_TEXTS.tier(), formattedTier)}
 
               <sl-tooltip>
                 <span slot="content">${DISTRICT_TIER_HINT()}</span>
@@ -79,7 +79,7 @@ export class CityDistrictOverviewPanelValues extends BaseComponent {
       ${this._controller.areFactionsUnlocked()
         ? html`
             <p class="text">
-              ${COMMON_TEXTS.parameterValue(COMMON_TEXTS.faction(), FACTION_TEXTS[districtState.faction].title())}
+              ${COMMON_TEXTS.parameterRow(COMMON_TEXTS.faction(), FACTION_TEXTS[districtState.faction].title())}
 
               <sl-tooltip>
                 <span slot="content">${FACTION_TEXTS[districtState.faction].overview()}</span>
@@ -91,7 +91,7 @@ export class CityDistrictOverviewPanelValues extends BaseComponent {
         : nothing}
 
       <p class="text">
-        ${COMMON_TEXTS.parameterValue(msg('State'), DISTRICT_STATE_TEXTS[districtState.state].title())}
+        ${COMMON_TEXTS.parameterRow(msg('State'), DISTRICT_STATE_TEXTS[districtState.state].title())}
 
         <sl-tooltip>
           <span slot="content">${DISTRICT_STATE_TEXTS[districtState.state].hint()}</span>

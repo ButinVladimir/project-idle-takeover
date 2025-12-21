@@ -1,15 +1,27 @@
 import { msg } from '@lit/localize';
-import { GameStateEvent, ProgramsEvent, ClonesEvent, SidejobsEvent, CityEvent, MessageEventGroup } from '@shared/index';
+import {
+  GameStateEvent,
+  ProgramsEvent,
+  ClonesEvent,
+  SidejobsEvent,
+  CityEvent,
+  MessageEventGroup,
+  ContractsEvent,
+  MessageEvent,
+  PrimaryActivitiesEvent,
+} from '@shared/index';
 
-export const MESSAGE_EVENT_GROUP_NAMES = {
+export const MESSAGE_EVENT_GROUP_NAMES: Record<MessageEventGroup, () => string> = {
   [MessageEventGroup.gameState]: () => msg('Game state events'),
   [MessageEventGroup.programs]: () => msg('Programs events'),
   [MessageEventGroup.clones]: () => msg('Clones events'),
   [MessageEventGroup.sidejobs]: () => msg('Sidejobs events'),
+  [MessageEventGroup.contracts]: () => msg('Contracts events'),
+  [MessageEventGroup.primaryActivities]: () => msg('Primary activities events'),
   [MessageEventGroup.city]: () => msg('City events'),
 };
 
-export const MESSAGE_EVENT_NAMES = {
+export const MESSAGE_EVENT_NAMES: Record<MessageEvent, () => string> = {
   [GameStateEvent.gameStarted]: () => msg('Game started'),
   [GameStateEvent.gameSaved]: () => msg('Game saved'),
   [GameStateEvent.fastForwared]: () => msg('Accumulated time spent'),
@@ -30,5 +42,12 @@ export const MESSAGE_EVENT_NAMES = {
   [SidejobsEvent.sidejobAssigned]: () => msg('Sidejob assigned'),
   [SidejobsEvent.sidejobCancelled]: () => msg('Sidejob cancelled'),
   [SidejobsEvent.allSidejobsCancelled]: () => msg('All sidejobs cancelled'),
+  [ContractsEvent.contractAssigned]: () => msg('Contract assigned'),
+  [ContractsEvent.contractAssignmentRemoved]: () => msg('Contract assignment removed'),
+  [ContractsEvent.allContractAssignmentsRemoved]: () => msg('All contracts assignments removed'),
+  [PrimaryActivitiesEvent.primaryActivityAdded]: () => msg('Primary activity added to the queue'),
+  [PrimaryActivitiesEvent.primaryActivityCancelled]: () => msg('Primary activity cancelled'),
+  [PrimaryActivitiesEvent.primaryActivityFinished]: () => msg('Primary activity finished'),
+  [PrimaryActivitiesEvent.allPrimaryActivitiesCancelled]: () => msg('All primary activities finished'),
   [CityEvent.districtTierIncreased]: () => msg('City district tier increased'),
 };

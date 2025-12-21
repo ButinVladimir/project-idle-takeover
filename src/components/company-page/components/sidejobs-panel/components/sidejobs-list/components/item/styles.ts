@@ -32,12 +32,20 @@ const styles = [
         }
       }
 
+      .buttons {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        gap: var(--sl-spacing-small);
+      }
+
       &.desktop {
-        grid-template-columns: 1fr 1fr 2fr auto;
+        grid-template-columns: 2fr 1fr 1fr 1fr auto;
         grid-template-rows: auto;
         align-items: center;
 
         .buttons {
+          justify-content: flex-end;
           font-size: var(--sl-font-size-large);
         }
 
@@ -49,6 +57,11 @@ const styles = [
       &.mobile {
         grid-template-columns: auto;
         grid-template-rows: repeat(1fr);
+
+        .buttons {
+          flex-wrap: wrap;
+          justify-content: flex-start;
+        }
       }
     }
   `,

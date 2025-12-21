@@ -1,32 +1,45 @@
 {
+  "$schema": "./schemas/factions.json",
   "neutral": {
-    "loans": {
+    "playstyle": "selectFaction",
+    "loanedItems": {
       "programs": [],
       "cloneTemplates": []
     },
-    "special": {
+    "specialItems": {
       "programs": [],
       "cloneTemplates": []
+    },
+    "activities": {
+      "contracts": []
     }
   },
   "scavs": {
-    "loans": {
+    "playstyle": "raiseThreat",
+    "loanedItems": {
       "programs": [],
       "cloneTemplates": []
     },
-    "special": {
+    "specialItems": {
       "programs": [],
       "cloneTemplates": []
+    },
+    "activities": {
+      "contracts": []
     }
   },
   "wsa": {
-    "loans": {
-      "programs": ["predictiveComputator"],
+    "playstyle": "captureCity",
+    "loanedItems": {
+      "programs": ["predictiveComputator", "contractAutostarter"],
       "cloneTemplates": []
     },
-    "special": {
+    "specialItems": {
       "programs": [],
       "cloneTemplates": []
+    },
+    "activities": {
+      "contracts": ["guarding"]
     }
   }
 }

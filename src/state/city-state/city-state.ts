@@ -7,7 +7,7 @@ import { type IGlobalState } from '@state/global-state';
 import { type INotificationsState } from '@state/notifications-state';
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
-import { Faction, MapSpecialEvent, NotificationType } from '@shared/index';
+import { MapSpecialEvent, NotificationType } from '@shared/index';
 import { DISTRICT_NAMES } from '@texts/index';
 import {
   ICityState,
@@ -121,9 +121,9 @@ export class CityState implements ICityState {
     }
   }
 
-  updateDistrictsStateAfterJoiningFaction(faction: Faction) {
+  updateDistrictsStateAfterJoiningFaction() {
     for (const district of this._districts.values()) {
-      if (district.faction === faction && district.state === DistrictUnlockState.locked) {
+      if (district.faction === this._factionState.currentFaction && district.state === DistrictUnlockState.locked) {
         district.state = DistrictUnlockState.contested;
       }
     }
@@ -132,14 +132,10 @@ export class CityState implements ICityState {
   }
 
   recalculateDistrictsState() {
-    const unlockedDistrictsCount = this.calculateUnlockedDistrictsCount();
-    const maxUnlockedDistrictsCount = this.calculateMaxUnlockedDistrictsCount();
-
-    for (let districtsCount = unlockedDistrictsCount; districtsCount < maxUnlockedDistrictsCount; districtsCount++) {
-      this.unlockNextDistrict();
-    }
-
+    this.updateUnlockedDistricts();
     this.updateAvailableDistrictsList();
+
+    this._globalState.synchronization.recalculate();
   }
 
   async startNewState(): Promise<void> {
@@ -204,8 +200,7 @@ export class CityState implements ICityState {
     this.clearDistricts();
 
     const mapValues = this._scenarioState.currentValues.map;
-    const startingDistrict = mapValues.factions[mapValues.startingFactionIndex].startingDistrict;
-    const startingFaction = this._factionState.getFactionByIndex(mapValues.startingFactionIndex);
+    const startingDistrict = mapValues.startingDistrict;
 
     for (
       let districtIndex = 0;
@@ -231,10 +226,15 @@ export class CityState implements ICityState {
       this._districts.set(districtIndex, district);
     }
 
-    if (startingFaction !== Faction.neutral) {
-      this.updateDistrictsStateAfterJoiningFaction(startingFaction);
-    } else {
-      this.recalculateDistrictsState();
+    this.recalculateDistrictsState();
+  }
+
+  private updateUnlockedDistricts() {
+    const unlockedDistrictsCount = this.calculateUnlockedDistrictsCount();
+    const maxUnlockedDistrictsCount = this.calculateMaxUnlockedDistrictsCount();
+
+    for (let districtsCount = unlockedDistrictsCount; districtsCount < maxUnlockedDistrictsCount; districtsCount++) {
+      this.unlockNextDistrict();
     }
   }
 
@@ -246,8 +246,6 @@ export class CityState implements ICityState {
         this._availableDistricts.push(district);
       }
     });
-
-    this._globalState.synchronization.requestRecalculation();
   }
 
   private clearDistricts() {

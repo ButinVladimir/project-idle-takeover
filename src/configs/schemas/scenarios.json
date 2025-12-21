@@ -1,0 +1,307 @@
+{
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "map": {
+        "type": "object",
+        "description": "Scenario map settings",
+        "properties": {
+          "width": {
+            "type": "integer",
+            "description": "Map width",
+            "minimum": 1
+          },
+          "height": {
+            "type": "integer",
+            "description": "Map height",
+            "minimum": 1
+          },
+          "districts": {
+            "type": "array",
+            "description": "Map districts",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "description": "District",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "District type"
+                },
+                "tier": {
+                  "type": "object",
+                  "description": "District tier range",
+                  "properties": {
+                    "min": {
+                      "type": "integer",
+                      "description": "District tier minimum",
+                      "minimum": 0
+                    },
+                    "max": {
+                      "type": "integer",
+                      "description": "District tier maximum",
+                      "minimum": 0
+                    }
+                  },
+                  "required": ["min", "max"]
+                }
+              },
+              "required": ["type", "tier"]
+            }
+          },
+          "factions": {
+            "type": "array",
+            "description": "Map factions",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "description": "Faction",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Faction name",
+                  "minLength": 1
+                },
+                "startingDistrict": {
+                  "type": "integer",
+                  "description": "Faction starting district",
+                  "minimum": 0
+                },
+                "controlledArea": {
+                  "type": "number",
+                  "description": "Faction controlled area",
+                  "minimum": 0
+                },
+                "canBeJoined": {
+                  "type": "boolean",
+                  "description": "Can faction be joined"
+                }
+              },
+              "required": ["name", "startingDistrict", "controlledArea", "canBeJoined"]
+            }
+          },
+          "neutralFactionIndex": {
+            "type": "number",
+            "description": "Neutral faction index",
+            "minimum": 0
+          },
+          "startingDistrict": {
+            "type": "number",
+            "description": "Starting district",
+            "minimum": 0
+          }
+        },
+        "required": ["width", "height", "districts", "factions", "neutralFactionIndex", "startingDistrict"]
+      },
+      "startingValues": {
+        "type": "object",
+        "description": "Starting values",
+        "properties": {
+          "money": {
+            "type": "number",
+            "description": "Starting money",
+            "minimum": 0
+          },
+          "developmentLevel": {
+            "type": "number",
+            "description": "Starting development level",
+            "minimum": 0
+          },
+          "synchronization": {
+            "type": "number",
+            "description": "Starting synchronization",
+            "minimum": 0
+          },
+          "experienceShareMultiplier": {
+            "type": "number",
+            "description": "Starting experience share multiplier",
+            "minimum": 0
+          }
+        },
+        "required": ["money", "developmentLevel", "synchronization", "experienceShareMultiplier"]
+      },
+      "mainframeHardware": {
+        "type": "object",
+        "description": "Mainframe hardware settings",
+        "properties": {
+          "basePerformanceLevel": {
+            "type": "integer",
+            "description": "Base performance level",
+            "minimum": 0
+          },
+          "baseCoresLevel": {
+            "type": "integer",
+            "description": "Base cores level",
+            "minimum": 0
+          },
+          "baseRamLevel": {
+            "type": "integer",
+            "description": "Base RAM level",
+            "minimum": 0
+          },
+          "performancePrice": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "Performance price (geometric)"
+          },
+          "ramPrice": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "RAM price (geometric)"
+          },
+          "coresPrice": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "Cores price (geometric)"
+          }
+        },
+        "required": [
+          "basePerformanceLevel",
+          "baseCoresLevel",
+          "baseRamLevel",
+          "performancePrice",
+          "ramPrice",
+          "coresPrice"
+        ]
+      },
+      "mainframeSoftware": {
+        "type": "object",
+        "description": "Mainframe programs settings",
+        "properties": {
+          "performanceBoost": {
+            "$ref": "./common/linear-progression.json",
+            "description": "Performance boost (linear)"
+          },
+          "startingPrograms": {
+            "type": "array",
+            "description": "Starting programs",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "./common/program-name.json",
+              "description": "Program"
+            }
+          },
+          "minProcessCompletionTime": {
+            "type": "number",
+            "description": "Process completion minimum time",
+            "exclusiveMinimum": 0
+          }
+        },
+        "required": ["performanceBoost", "startingPrograms", "minProcessCompletionTime"]
+      },
+      "developmentLevelRequirements": {
+        "$ref": "./common/geometric-progression.json",
+        "description": "Development level requirements"
+      },
+      "programMultipliers": {
+        "type": "object",
+        "description": "Program multipliers",
+        "properties": {
+          "money": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "Money multiplier"
+          },
+          "developmentPoints": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "Development points multiplier"
+          },
+          "connectivity": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "Development points multiplier"
+          },
+          "codeBase": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "Code base multiplier"
+          },
+          "computationalBase": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "Computational base multiplier"
+          },
+          "rewards": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "Rewards multiplier"
+          },
+          "processCompletionSpeed": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "Process completion speed multiplier"
+          },
+          "experienceShareMultiplier": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "Experience share multiplier"
+          }
+        },
+        "required": [
+          "money",
+          "developmentPoints",
+          "connectivity",
+          "codeBase",
+          "computationalBase",
+          "rewards",
+          "processCompletionSpeed",
+          "experienceShareMultiplier"
+        ]
+      },
+      "multiplierParameterBases": {
+        "type": "object",
+        "description": "Multiplier parameters bases",
+        "properties": {
+          "codeBase": {
+            "$ref": "#/$defs/multiplierParameterBase",
+            "description": "District type code base value"
+          },
+          "computationalBase": {
+            "$ref": "#/$defs/multiplierParameterBase",
+            "description": "District type computational base value"
+          },
+          "rewards": {
+            "$ref": "#/$defs/multiplierParameterBase",
+            "description": "District type rewards value"
+          }
+        },
+        "required": ["codeBase", "computationalBase", "rewards"]
+      },
+      "storyEvents": {
+        "type": "array",
+        "description": "Story events",
+        "items": {
+          "type": "string",
+          "description": "Story event key",
+          "minLength": 1
+        }
+      }
+    },
+    "required": [
+      "map",
+      "startingValues",
+      "mainframeHardware",
+      "mainframeSoftware",
+      "programMultipliers",
+      "multiplierParameterBases",
+      "storyEvents"
+    ]
+  },
+  "$defs": {
+    "multiplierParameter": {
+      "type": "object",
+      "properties": {
+        "multiplier": {
+          "type": "number",
+          "description": "Points multiplier",
+          "exclusiveMinimum": 0
+        },
+        "exponent": {
+          "type": "number",
+          "description": "Parameter exponent"
+        }
+      }
+    },
+    "multiplierParameterBase": {
+      "type": "number",
+      "description": "Logarithmic base"
+    }
+  }
+}

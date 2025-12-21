@@ -4,7 +4,7 @@ import { customElement } from 'lit/decorators.js';
 import { consume } from '@lit/context';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { type IClone } from '@state/company-state';
+import { type IClone } from '@state/clones-state';
 import { ATTRIBUTE_TEXTS, CLONE_TEMPLATE_TEXTS, COMMON_TEXTS, SKILL_TEXTS } from '@texts/index';
 import {
   BaseComponent,
@@ -57,9 +57,7 @@ export class PurchaseCloneDialogDescription extends BaseComponent {
     return html`
       <p class="overview">${CLONE_TEMPLATE_TEXTS[this._clone.templateName].overview()}</p>
 
-      <p class="text">
-        ${COMMON_TEXTS.parameterValue(COMMON_TEXTS.cost(), html`<span ${ref(this._costElRef)}></span>`)}
-      </p>
+      <p class="text">${COMMON_TEXTS.parameterRow(COMMON_TEXTS.cost(), html`<span ${ref(this._costElRef)}></span>`)}</p>
       ${this.renderSynchronization()} ${this.renderExperienceMultiplier()} ${this.renderParameters(desktop)}
     `;
   }
@@ -80,9 +78,7 @@ export class PurchaseCloneDialogDescription extends BaseComponent {
       >${formattedCloneSynchronization} / ${formattedAvailableSynchronization}</span
     >`;
 
-    return html`<p class="text">
-      ${COMMON_TEXTS.parameterValue(COMMON_TEXTS.synchronization(), synchronizationValue)}
-    </p>`;
+    return html`<p class="text">${COMMON_TEXTS.parameterRow(COMMON_TEXTS.synchronization(), synchronizationValue)}</p>`;
   };
 
   private renderParameters = (desktop: boolean) => {
@@ -131,7 +127,7 @@ export class PurchaseCloneDialogDescription extends BaseComponent {
     const formattedValue = this._controller.formatter.formatNumberFloat(this._clone!.experienceMultiplier);
 
     return html`
-      <p class="text">${COMMON_TEXTS.parameterValue(COMMON_TEXTS.experienceMultiplier(), formattedValue)}</p>
+      <p class="text">${COMMON_TEXTS.parameterRow(COMMON_TEXTS.experienceMultiplier(), formattedValue)}</p>
     `;
   };
 

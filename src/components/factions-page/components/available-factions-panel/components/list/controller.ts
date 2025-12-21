@@ -1,7 +1,7 @@
-import { BaseController, Faction } from '@shared/index';
+import { BaseController } from '@shared/index';
 
 export class FactionsAvailableFactionsListController extends BaseController {
-  listAvailableFactions(): Faction[] {
+  listAvailableFactions(): string[] {
     return this.factionState.listAvailableFactions();
   }
 

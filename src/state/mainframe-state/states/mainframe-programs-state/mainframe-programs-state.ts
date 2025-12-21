@@ -1,7 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
-import programs from '@configs/programs.json';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type IGlobalState } from '@state/global-state';
 import { type IMessageLogState } from '@state/message-log-state';
@@ -11,7 +10,7 @@ import { type IUnlockState } from '@state/unlock-state';
 import { TYPES } from '@state/types';
 import {
   type IFormatter,
-  Feature,
+  Milestone,
   ProgramsEvent,
   PurchaseType,
   calculateTierPower,
@@ -24,7 +23,7 @@ import {
   IMainframeProgramsSerializedState,
   type IMainframeProgramsUpgrader,
 } from './interfaces';
-import { ProgramName, IMakeProgramParameters, IProgram } from '../progam-factory';
+import { ProgramName, IMakeProgramParameters, IProgram, typedPrograms } from '../progam-factory';
 
 const { lazyInject } = decorators;
 
@@ -69,13 +68,13 @@ export class MainframeProgramsState implements IMainframeProgramsState {
   }
 
   calculateProgramCost(name: ProgramName, tier: number, level: number): number {
-    const programData = programs[name];
+    const programData = typedPrograms[name];
 
     return calculateTierPower(level, tier, programData.cost) / this._globalState.multipliers.codeBase.totalMultiplier;
   }
 
   calculateLevelFromMoney(name: ProgramName, tier: number, money: number): number {
-    const programData = programs[name];
+    const programData = typedPrograms[name];
 
     const availableMoney = money * this._globalState.multipliers.codeBase.totalMultiplier;
 
@@ -83,7 +82,7 @@ export class MainframeProgramsState implements IMainframeProgramsState {
   }
 
   purchaseProgram(name: ProgramName, tier: number, level: number): boolean {
-    if (!this._unlockState.features.isFeatureUnlocked(Feature.mainframePrograms)) {
+    if (!this._unlockState.milestones.isMilestoneReached(Milestone.unlockedMainframePrograms)) {
       return false;
     }
 
@@ -169,10 +168,6 @@ export class MainframeProgramsState implements IMainframeProgramsState {
 
       this._ownedPrograms.set(newProgram.name, newProgram);
       this._programsList.push(newProgram);
-
-      for (const feature of newProgram.unlockFeatures) {
-        this._unlockState.features.unlockFeature(feature);
-      }
     }
   }
 

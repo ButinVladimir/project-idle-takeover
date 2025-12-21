@@ -4,12 +4,12 @@ import { consume } from '@lit/context';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { customElement } from 'lit/decorators.js';
 import SlProgressBar from '@shoelace-style/shoelace/dist/components/progress-bar/progress-bar.component.js';
-import { type IClone } from '@state/company-state';
+import { type IClone } from '@state/clones-state';
 import { BaseComponent, calculateLevelProgressPercentage } from '@shared/index';
+import { COMMON_TEXTS } from '@texts/index';
 import { cloneContext } from '../item/contexts';
 import { ClonesListItemExperienceController } from './controller';
 import styles from './styles';
-import { COMMON_TEXTS } from '@/texts';
 
 @localized()
 @customElement('ca-clones-list-item-experience')

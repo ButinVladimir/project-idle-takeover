@@ -1,5 +1,5 @@
 import { msg, str } from '@lit/localize';
-import { Attribute, ItemCategory, RewardParameter, Skill } from '@shared/types';
+import { Attribute, DistrictTypeRewardParameter, ItemCategory, RewardParameter, Skill } from '@shared/types';
 import { html } from 'lit';
 
 export const COMMON_TEXTS = {
@@ -35,11 +35,17 @@ export const COMMON_TEXTS = {
   synchronization: () => msg('Synchronization'),
   experienceMultiplier: () => msg('Experience multiplier'),
   faction: () => msg('Faction'),
-  parameterValue: (parameterName: string, valueElement: any) => msg(html`${parameterName}: ${valueElement}`),
+  parameterRow: (parameterName: string, valueElement: any) => msg(html`${parameterName}: ${valueElement}`),
   parameterDiff: (valueElement: any, diffElement: any) => msg(html`${valueElement} (${diffElement})`),
   parameterSpeed: (value: any) => msg(html`${value} per second`),
   parameterSpeedDiff: (valueElement: any, diffElement: any) => msg(html`${valueElement} (${diffElement}) per second`),
+  parameterCompletion: (valueElement: any) => msg(html`${valueElement} per completion`),
+  parameterCompletionSpeed: (valueElement: any, speedElement: any) =>
+    msg(html`${valueElement} per completion (${speedElement} per second)`),
+  parameterCompletionSpeedDiff: (valueElement: any, diffElement: any, speedElement: any, speedDiffElement: any) =>
+    msg(html`${valueElement} (${diffElement}) per completion (${speedElement} per second) (${speedDiffElement})`),
   hotkey: (hotkey?: string) => msg(str`Hotkey: ${hotkey?.toLocaleUpperCase() ?? ''}`),
+  completionTime: () => msg('Completion time'),
 };
 
 export const CATEGORY_TEXTS: Record<ItemCategory, () => string> = {
@@ -65,7 +71,7 @@ export const SKILL_TEXTS: Record<Skill, () => string> = {
   stealth: () => msg('Stealth'),
 };
 
-export const REWARD_PARAMETER_NAMES = {
+export const REWARD_PARAMETER_NAMES: Record<DistrictTypeRewardParameter | RewardParameter, () => string> = {
   [RewardParameter.money]: () => msg('Money'),
   [RewardParameter.developmentPoints]: () => msg('Development points'),
   [RewardParameter.experience]: () => msg('Experience'),
@@ -74,7 +80,7 @@ export const REWARD_PARAMETER_NAMES = {
   [RewardParameter.codeBase]: () => msg('Code base points'),
   [RewardParameter.computationalBase]: () => msg('Computational base points'),
   [RewardParameter.rewards]: () => msg('Rewards points'),
-  [RewardParameter.processCompletionSpeedMultiplier]: () => msg('Process completion speed multiplier'),
+  [RewardParameter.processCompletionSpeed]: () => msg('Process completion speed multiplier'),
   [RewardParameter.actions]: () => msg('Actions'),
-  [RewardParameter.sharedExperienceMultiplier]: () => msg('Shared experience multiplier'),
+  [RewardParameter.experienceShareMultiplier]: () => msg('Shared experience multiplier'),
 };

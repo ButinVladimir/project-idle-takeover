@@ -2,7 +2,8 @@ import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type ICityState } from '@state/city-state';
-import { type ICompanyState } from '@state/company-state';
+import { type IActivityState } from '@state/activity-state';
+import { DistrictTypeRewardParameter } from '@shared/index';
 import { IInfluenceGrowthState } from '../interfaces';
 
 const { lazyInject } = decorators;
@@ -12,8 +13,8 @@ export class InfluenceGrowthState implements IInfluenceGrowthState {
   @lazyInject(TYPES.CityState)
   private _cityState!: ICityState;
 
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
 
   private _recalculated: boolean;
   private _growthByDistrict: Map<number, number>;
@@ -49,17 +50,24 @@ export class InfluenceGrowthState implements IInfluenceGrowthState {
     }
 
     this.updateGrowthBySidejobs();
+    this.updateGrowthByPrimaryActivity();
   }
 
   private updateGrowthBySidejobs(): void {
-    for (const sidejob of this._companyState.sidejobs.listSidejobs()) {
-      if (!sidejob.isActive) {
-        continue;
-      }
+    for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
+      const districtIndex = sidejobActivity.sidejob.district.index;
+      let currentGrowth = this._growthByDistrict.get(districtIndex) ?? 0;
+      currentGrowth += sidejobActivity.getParameterGrowth(DistrictTypeRewardParameter.influence);
+      this._growthByDistrict.set(districtIndex, currentGrowth);
+    }
+  }
 
-      let currentGrowth = this._growthByDistrict.get(sidejob.district.index) ?? 0;
-      currentGrowth += sidejob.calculateInfluenceDelta(1);
-      this._growthByDistrict.set(sidejob.district.index, currentGrowth);
+  private updateGrowthByPrimaryActivity(): void {
+    for (const primaryActivity of this._activityState.primaryActivityQueue.listActivities()) {
+      const districtIndex = primaryActivity.district.index;
+      let currentGrowth = this._growthByDistrict.get(districtIndex) ?? 0;
+      currentGrowth += primaryActivity.getParameterGrowth(DistrictTypeRewardParameter.influence);
+      this._growthByDistrict.set(districtIndex, currentGrowth);
     }
   }
 }

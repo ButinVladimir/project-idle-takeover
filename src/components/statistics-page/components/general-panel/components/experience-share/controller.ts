@@ -1,4 +1,4 @@
-import { BaseController, Feature } from '@shared/index';
+import { BaseController, Milestone } from '@shared/index';
 import { IDistrictState } from '@state/city-state';
 
 export class StatisticsExperienceShareController extends BaseController {
@@ -19,10 +19,14 @@ export class StatisticsExperienceShareController extends BaseController {
   }
 
   areDistrictsAvailable() {
-    return this.unlockState.features.isFeatureUnlocked(Feature.companyManagement);
+    return this.unlockState.milestones.isMilestoneReached(Milestone.unlockedCompanyManagement);
   }
 
   listAvailableDistricts(): IDistrictState[] {
     return this.cityState.listAvailableDistricts();
+  }
+
+  getDistrictMultiplier(districtIndex: number): number {
+    return this.cityState.getDistrictState(districtIndex).parameters.experienceShareMultiplier.value;
   }
 }

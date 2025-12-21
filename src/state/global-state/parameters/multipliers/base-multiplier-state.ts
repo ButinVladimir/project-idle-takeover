@@ -3,7 +3,7 @@ import { decorators } from '@state/container';
 import { type IGrowthState } from '@state/growth-state';
 import { TYPES } from '@state/types';
 import { type ICityState, IDistrictMultipliers, IDistrictMultiplierParameter } from '@state/city-state';
-import { IMultiplierScenarioParameters, type IScenarioState } from '@state/scenario-state';
+import { type IScenarioState } from '@state/scenario-state';
 import { IMultiplierState, IMultiplierSerializedState } from '../../interfaces';
 
 const { lazyInject } = decorators;
@@ -69,10 +69,9 @@ export abstract class BaseMultiplierState implements IMultiplierState {
   }
 
   private updateMultiplierByProgram() {
-    const parameters = this.getMultiplierParameters();
+    const base = this.getBase();
 
-    this._multiplierByProgram =
-      1 + Math.log(1 + this._pointsByProgram / parameters.pointsToSoftCap) / Math.log(parameters.logBase);
+    this._multiplierByProgram = 1 + Math.log(1 + this._pointsByProgram) / Math.log(base);
   }
 
   private updateTotalMultiplier() {
@@ -89,7 +88,7 @@ export abstract class BaseMultiplierState implements IMultiplierState {
     });
   }
 
-  protected abstract getMultiplierParameters(): IMultiplierScenarioParameters;
+  protected abstract getBase(): number;
 
   protected abstract getDistrictMultiplierParameter(
     districtMultipliers: IDistrictMultipliers,

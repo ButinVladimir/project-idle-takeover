@@ -5,7 +5,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import SlInput from '@shoelace-style/shoelace/dist/components/input/input.component.js';
 import { BaseComponent } from '@shared/index';
-import { type IClone } from '@state/company-state';
+import { type IClone } from '@state/clones-state';
 import { COMMON_TEXTS } from '@texts/index';
 import { RenameCloneDialogController } from './controller';
 import { CloseCloneListItemDialogEvent } from '../../events/close-clone-list-item-dialog';

@@ -65,11 +65,11 @@ Processes can be rearranged by dragging them by their title.`)}
         </sl-button>
 
         <div class="ram">
-          ${COMMON_TEXTS.parameterValue(msg('Available RAM'), `${formattedAvailableRam} / ${formattedMaxRam}`)}
+          ${COMMON_TEXTS.parameterRow(msg('Available RAM'), `${formattedAvailableRam} / ${formattedMaxRam}`)}
         </div>
 
         <div class="cores">
-          ${COMMON_TEXTS.parameterValue(msg('Available cores'), `${formattedAvailableCores} / ${formattedMaxCores}`)}
+          ${COMMON_TEXTS.parameterRow(msg('Available cores'), `${formattedAvailableCores} / ${formattedMaxCores}`)}
         </div>
       </div>
 

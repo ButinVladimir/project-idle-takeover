@@ -1,10 +1,9 @@
-import { DistrictType, Faction, IExponent, ILinear, RANDOM_TYPE } from '@shared/index';
+import { IExponent, ILinear, RANDOM_TYPE, RewardParameterWithBase } from '@shared/index';
 import { ProgramName } from '@state/mainframe-state';
-import { IStoryEvent } from './story-events';
-import { IMultiplierScenarioParameters } from './multiplier-scenario-parameters';
+import { ScenarioRewardParameter } from '../types';
 
 interface IDistrictValues {
-  type: DistrictType | typeof RANDOM_TYPE;
+  type: string | typeof RANDOM_TYPE;
   tier: {
     min: number;
     max: number;
@@ -12,7 +11,7 @@ interface IDistrictValues {
 }
 
 interface IFactionValues {
-  name: Faction;
+  name: string;
   startingDistrict: number;
   controlledArea: number;
   canBeJoined: boolean;
@@ -24,13 +23,15 @@ export interface IScenarioValues {
     height: number;
     districts: IDistrictValues[];
     factions: IFactionValues[];
-    startingFactionIndex: number;
+    neutralFactionIndex: number;
+    startingDistrict: number;
   };
-  startingMoney: number;
-  startingDevelopmentLevel: number;
-  startingAccumulatedTime: number;
-  startingSynchronization: number;
-  baseSharedExperienceMultiplier: number;
+  startingValues: {
+    money: number;
+    developmentLevel: number;
+    synchronization: number;
+    experienceShareMultiplier: number;
+  };
   mainframeHardware: {
     basePerformanceLevel: number;
     baseCoresLevel: number;
@@ -45,19 +46,13 @@ export interface IScenarioValues {
     minProcessCompletionTime: number;
   };
   developmentLevelRequirements: IExponent;
-  programMultipliers: {
-    money: {
-      pointsMultiplier: number;
-    };
-    developmentPoints: {
-      pointsMultiplier: number;
-    };
-    codeBase: IMultiplierScenarioParameters;
-    computationalBase: IMultiplierScenarioParameters;
-    connectivity: {
-      pointsMultiplier: number;
-    };
-    rewards: IMultiplierScenarioParameters;
-  };
-  storyEvents: IStoryEvent[];
+  programMultipliers: Record<
+    ScenarioRewardParameter,
+    {
+      multiplier: number;
+      exponent: number;
+    }
+  >;
+  multiplierParameterBases: Record<RewardParameterWithBase, number>;
+  storyEvents: string[];
 }

@@ -1,11 +1,11 @@
-import { IPoint, DistrictType, Faction } from '@shared/index';
+import { IPoint } from '@shared/index';
 import { DistrictUnlockState } from '../types';
 
 export interface IDistrictArguments {
   index: number;
   name: string;
   startingPoint: IPoint;
-  districtType: DistrictType;
+  districtType: string;
   state: DistrictUnlockState;
-  faction: Faction;
+  faction: string;
 }

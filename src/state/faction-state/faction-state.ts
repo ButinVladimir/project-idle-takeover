@@ -1,9 +1,7 @@
 import { injectable } from 'inversify';
-import merge from 'lodash/merge';
 import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
-import factions from '@configs/factions.json';
-import { Faction, NotificationType } from '@shared/types';
+import { Milestone, NotificationType } from '@shared/types';
 import { type IScenarioState } from '@state/scenario-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type INotificationsState } from '@state/notifications-state';
@@ -12,6 +10,8 @@ import { type ICityState } from '../city-state';
 import { TYPES } from '@state/types';
 import { FACTION_TEXTS, SPECIAL_EVENTS_MESSAGES } from '@texts/index';
 import { IFactionValues, IFactionState, IFactionSerializedState } from './interfaces';
+import { typedFactions } from './constants';
+import { FactionPlaystyle } from './types';
 
 const { lazyInject } = decorators;
 
@@ -33,14 +33,13 @@ export class FactionState implements IFactionState {
   private _cityState!: ICityState;
 
   private _joiningFactionAvailable: boolean;
-  private _allFactionsList: Faction[];
-  private _availableFactionsList: Faction[];
-  private _currentFaction!: Faction;
-  private _currentFactionValues!: IFactionValues;
+  private _allFactionsList: string[];
+  private _availableFactionsList: string[];
+  private _currentFaction!: string;
 
   constructor() {
     this._joiningFactionAvailable = false;
-    this.currentFaction = Faction.neutral;
+    this.currentFaction = 'neutral';
     this._allFactionsList = [];
     this._availableFactionsList = [];
 
@@ -52,37 +51,36 @@ export class FactionState implements IFactionState {
     ]);
   }
 
-  get currentFaction(): Faction {
+  get currentFaction(): string {
     return this._currentFaction;
   }
 
-  private set currentFaction(value: Faction) {
+  private set currentFaction(value: string) {
     this._currentFaction = value;
-    this._currentFactionValues = this.getFactionValues(value);
   }
 
   get currentFactionValues() {
-    return this._currentFactionValues;
+    return this.getFactionValues(this._currentFaction);
   }
 
   get joiningFactionAvailable() {
     return this._joiningFactionAvailable;
   }
 
-  getFactionValues(faction: Faction): IFactionValues {
-    return merge({}, factions[faction]) as IFactionValues;
+  getFactionValues(faction: string): IFactionValues {
+    return typedFactions[faction];
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getFactionLoanTier(faction: Faction) {
+  getFactionLoanTier(faction: string) {
     return 7;
   }
 
-  listAvailableFactions(): Faction[] {
+  listAvailableFactions(): string[] {
     return this._availableFactionsList;
   }
 
-  getFactionByIndex(index: number): Faction {
+  getFactionByIndex(index: number): string {
     if (index < 0 || index >= this._allFactionsList.length) {
       throw new Error('Invalid faction index');
     }
@@ -102,8 +100,12 @@ export class FactionState implements IFactionState {
     );
   }
 
-  joinFaction(faction: Faction): boolean {
-    if (this._currentFaction !== Faction.neutral) {
+  joinFaction(faction: string): boolean {
+    if (!this._unlockState.milestones.isMilestoneReached(Milestone.unlockedFactions)) {
+      return false;
+    }
+
+    if (this.currentFactionValues.playstyle !== FactionPlaystyle.selectFaction) {
       return false;
     }
 
@@ -112,8 +114,8 @@ export class FactionState implements IFactionState {
     }
 
     this.currentFaction = faction;
-    this._unlockState.requestRecalculation();
-    this._cityState.updateDistrictsStateAfterJoiningFaction(faction);
+    this._unlockState.recalculate();
+    this._cityState.updateDistrictsStateAfterJoiningFaction();
 
     this._notificationsState.pushNotification(
       NotificationType.factionJoined,
@@ -122,7 +124,7 @@ export class FactionState implements IFactionState {
       ),
     );
 
-    this._scenarioState.storyEvents.visitEvents({ faction: Faction.neutral });
+    this._scenarioState.storyEvents.visitEvents();
 
     return true;
   }
@@ -132,7 +134,7 @@ export class FactionState implements IFactionState {
 
     this.makeAllFactionsList();
 
-    this.currentFaction = this.getFactionByIndex(this._scenarioState.currentValues.map.startingFactionIndex);
+    this.currentFaction = 'neutral';
 
     this.updateAvailableFactions();
   }
@@ -169,7 +171,7 @@ export class FactionState implements IFactionState {
   private updateAvailableFactions() {
     this._availableFactionsList.length = 0;
 
-    if (this._currentFaction !== Faction.neutral) {
+    if (this.currentFactionValues.playstyle !== FactionPlaystyle.selectFaction) {
       return;
     }
 

@@ -1,9 +1,9 @@
-import { BaseController } from '@shared/base-controller';
-import { IClone } from '@state/company-state';
+import { BaseController } from '@shared/index';
+import { IClone } from '@state/clones-state';
 
 export class StatisticsExperienceGrowthController extends BaseController {
   listClones(): IClone[] {
-    return this.companyState.clones.listClones();
+    return this.clonesState.ownedClones.listClones();
   }
 
   getGrowthByClone(cloneId: string): number {

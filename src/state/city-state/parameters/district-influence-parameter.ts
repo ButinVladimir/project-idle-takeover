@@ -3,10 +3,10 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IGlobalState } from '@state/global-state';
 import { type IStateUIConnector } from '@state/state-ui-connector';
-import { type ICompanyState } from '@/state/company-state';
 import { type IMessageLogState } from '@state/message-log-state';
 import { type INotificationsState } from '@state/notifications-state';
 import { type IScenarioState } from '@state/scenario-state';
+import { type IActivityState } from '@state/activity-state';
 import {
   type IFormatter,
   CityEvent,
@@ -29,8 +29,8 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
   @lazyInject(TYPES.CityState)
   private _cityState!: ICityState;
 
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
 
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
@@ -66,6 +66,10 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
     return this._tier;
   }
 
+  set tier(value: number) {
+    this._tier = value;
+  }
+
   get points(): number {
     return this._points;
   }
@@ -76,7 +80,7 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
 
   getTierRequirements(tier: number): number {
     const districtTypeInfo = this._district.template;
-    const { base, multiplier } = districtTypeInfo.parameters.influence.requirements;
+    const { base, multiplier } = districtTypeInfo.requirements.influence;
     const size = this._cityState.getDistrictSize(this._district.index);
 
     return calculateGeometricProgressionSum(tier, size * multiplier, base);
@@ -100,12 +104,6 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
     }
   }
 
-  setTier(tier: number): void {
-    this._tier = tier;
-
-    this.handleTierUpdate();
-  }
-
   async deserialize(serializedState: IDistrictInfluenceSerializedParameter): Promise<void> {
     this._points = serializedState.points;
     this._tier = serializedState.tier;
@@ -124,7 +122,7 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
 
   private calculateTierFromPoints(): number {
     const districtTypeInfo = this._district.template;
-    const { base, multiplier } = districtTypeInfo.parameters.influence.requirements;
+    const { base, multiplier } = districtTypeInfo.requirements.influence;
     const size = this._cityState.getDistrictSize(this._district.index);
 
     return reverseGeometricProgressionSum(this._points, size * multiplier, base);
@@ -132,7 +130,6 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
 
   private handleDistrictCapture() {
     if (this._district.state !== DistrictUnlockState.captured) {
-      const capturedDistrictsCount = this._cityState.getCapturedDistrictsCount();
       this._district.state = DistrictUnlockState.captured;
 
       this._notificationsState.pushNotification(
@@ -140,15 +137,12 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
         msg(str`District "${DISTRICT_NAMES[this._district.name]()}" has been captured. It's tier now can be increased`),
       );
 
-      this._scenarioState.storyEvents.visitEvents({
-        capturedDistrictsCount,
-      });
+      this._scenarioState.storyEvents.visitEvents();
     }
   }
 
   private handleTierUpdate() {
-    this._globalState.synchronization.requestRecalculation();
-    this._companyState.requestReassignment();
-    this._companyState.sidejobs.updateAllSidejobsPerformance();
+    this._globalState.synchronization.recalculate();
+    this._activityState.requestReassignment();
   }
 }

@@ -43,20 +43,18 @@ export class CityMapDistrictDescription extends BaseComponent {
     return html`
       <p>${DISTRICT_NAMES[districtState.name]()}</p>
 
-      <p>
-        ${COMMON_TEXTS.parameterValue(msg('District type'), DISTRICT_TYPE_TEXTS[districtState.districtType].title())}
-      </p>
+      <p>${COMMON_TEXTS.parameterRow(msg('District type'), DISTRICT_TYPE_TEXTS[districtState.districtType].title())}</p>
 
-      <p>${COMMON_TEXTS.parameterValue(msg('Difficulty'), formattedDifficulty)}</p>
+      <p>${COMMON_TEXTS.parameterRow(msg('Difficulty'), formattedDifficulty)}</p>
 
       ${this._controller.isInfluenceUnlocked()
-        ? html`<p>${COMMON_TEXTS.parameterValue(COMMON_TEXTS.tier(), formattedTier)}</p>`
+        ? html`<p>${COMMON_TEXTS.parameterRow(COMMON_TEXTS.tier(), formattedTier)}</p>`
         : nothing}
       ${this._controller.areFactionsUnlocked()
-        ? html`<p>${COMMON_TEXTS.parameterValue(msg('Faction'), FACTION_TEXTS[districtState.faction].title())}</p>`
+        ? html`<p>${COMMON_TEXTS.parameterRow(msg('Faction'), FACTION_TEXTS[districtState.faction].title())}</p>`
         : nothing}
 
-      <p>${COMMON_TEXTS.parameterValue(msg('State'), DISTRICT_STATE_TEXTS[districtState.state].title())}</p>
+      <p>${COMMON_TEXTS.parameterRow(msg('State'), DISTRICT_STATE_TEXTS[districtState.state].title())}</p>
     `;
   }
 }

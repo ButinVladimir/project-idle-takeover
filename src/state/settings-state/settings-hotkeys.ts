@@ -1,7 +1,6 @@
-import constants from '@configs/constants.json';
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
-import { Hotkey } from '@shared/index';
+import { Hotkey, typedConstants } from '@shared/index';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { ISettingsHotkeys } from './interfaces';
 import { SettingsHotkeysSerializedState } from './serialized-states';
@@ -56,7 +55,7 @@ export class SettingsHotkeys implements ISettingsHotkeys {
   }
 
   restoreDefaultHotkeys() {
-    this.restoreHotkeys(constants.defaultSettings.hotkeys);
+    this.restoreHotkeys(typedConstants.defaultSettings.hotkeys);
   }
 
   async startNewState(): Promise<void> {

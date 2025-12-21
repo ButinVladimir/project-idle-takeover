@@ -15,13 +15,13 @@
     "cy:open": "cypress open",
     "localize:extract": "lit-localize extract",
     "localize:build": "lit-localize build",
-    "serve:local": "http-server ./dist"
+    "validate": "vite-node ./src/validate.ts"
   },
   "dependencies": {
     "@lit/context": "^1.1.5",
     "@lit/localize": "^0.12.2",
     "@shoelace-style/shoelace": "^2.15.0",
-    "@types/node": "^20.7.0",
+    "ajv": "^8.17.1",
     "eventemitter3": "^5.0.1",
     "inversify": "^6.2.2",
     "inversify-inject-decorators": "^3.1.0",
@@ -38,6 +38,7 @@
     "@eslint/js": "^9.26.0",
     "@lit/localize-tools": "^0.8.0",
     "@types/lodash": "^4.14.200",
+    "@types/node": "^22.15.0",
     "@types/random": "^3.0.1",
     "@types/seedrandom": "^3.0.8",
     "@types/uuid": "^9.0.6",
@@ -47,11 +48,11 @@
     "eslint-plugin-lit": "^1.15.0",
     "eslint-plugin-wc": "^2.2.1",
     "globals": "^16.0.0",
-    "http-server": "^14.1.1",
     "prettier": "^3.3.3",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.32.0",
     "vite": "^6.3.5",
+    "vite-node": "^3.2.4",
     "vite-plugin-static-copy": "^2.3.0",
     "vitest": "^3.0.8"
   }

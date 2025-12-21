@@ -1,4 +1,4 @@
-import { BaseController, Feature } from '@shared/index';
+import { BaseController, Milestone } from '@shared/index';
 
 export class CityDistrictOverviewPanelValuesController extends BaseController {
   getDistrictState(districtIndex: number) {
@@ -6,10 +6,10 @@ export class CityDistrictOverviewPanelValuesController extends BaseController {
   }
 
   isInfluenceUnlocked(): boolean {
-    return this.unlockState.features.isFeatureUnlocked(Feature.influence);
+    return this.unlockState.milestones.isMilestoneReached(Milestone.unlockedInfluence);
   }
 
   areFactionsUnlocked(): boolean {
-    return this.unlockState.features.isFeatureUnlocked(Feature.factions);
+    return this.unlockState.milestones.isMilestoneReached(Milestone.unlockedFactions);
   }
 }

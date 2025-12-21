@@ -4,10 +4,9 @@ import { decorators } from '@state/container';
 import { type IGlobalState } from '@state/global-state';
 import { type ICityState } from '@state/city-state';
 import { OtherProgramName, PeerReviewerProgram, type IMainframeState } from '@state/mainframe-state';
-import { type IScenarioState } from '@/state/scenario-state';
-import { type IStateUIConnector } from '@state/state-ui-connector';
+import { type IScenarioState } from '@state/scenario-state';
 import { type IUnlockState } from '@state/unlock-state';
-import { Feature } from '@shared/index';
+import { Milestone } from '@shared/index';
 import { IExperienceShareState } from '../interfaces';
 
 const { lazyInject } = decorators;
@@ -26,9 +25,6 @@ export class ExperienceShareState implements IExperienceShareState {
   @lazyInject(TYPES.MainframeState)
   private _mainframeState!: IMainframeState;
 
-  @lazyInject(TYPES.StateUIConnector)
-  private _stateUiConnector!: IStateUIConnector;
-
   @lazyInject(TYPES.CityState)
   private _cityState!: ICityState;
 
@@ -36,24 +32,16 @@ export class ExperienceShareState implements IExperienceShareState {
   private _programMultiplier: number;
   private _totalMultiplier: number;
   private _sharedExperience: number;
-  private _recalculationRequested: boolean;
 
   constructor() {
     this._synchronizationMultiplier = 0;
     this._programMultiplier = 0;
     this._totalMultiplier = 0;
     this._sharedExperience = 0;
-    this._recalculationRequested = true;
-
-    this._stateUiConnector.registerEventEmitter(this, [
-      '_synchronizationMultiplier',
-      '_programMultiplier',
-      '_totalMultiplier',
-    ]);
   }
 
   get baseMultiplier() {
-    return this._scenarioState.currentValues.baseSharedExperienceMultiplier;
+    return this._scenarioState.currentValues.startingValues.experienceShareMultiplier;
   }
 
   get synchronizationMultiplier() {
@@ -80,18 +68,8 @@ export class ExperienceShareState implements IExperienceShareState {
     this._sharedExperience += delta * this._totalMultiplier;
   }
 
-  requestRecalculation() {
-    this._recalculationRequested = true;
-  }
-
   recalculate(): void {
-    if (!this._recalculationRequested) {
-      return;
-    }
-
-    this._recalculationRequested = false;
-
-    if (!this.isFeatureAvailable()) {
+    if (!this.isMilestoneReached()) {
       this._synchronizationMultiplier = 0;
       this._programMultiplier = 0;
       this._totalMultiplier = 0;
@@ -106,8 +84,8 @@ export class ExperienceShareState implements IExperienceShareState {
     this.updateDistrictMultipliers();
   }
 
-  private isFeatureAvailable(): boolean {
-    return this._unlockState.features.isFeatureUnlocked(Feature.experienceShare);
+  private isMilestoneReached(): boolean {
+    return this._unlockState.milestones.isMilestoneReached(Milestone.unlockedExperienceShare);
   }
 
   private updateSynchronizationMultiplier() {
@@ -124,7 +102,7 @@ export class ExperienceShareState implements IExperienceShareState {
 
     const peerReviewerProcess = this._mainframeState.processes.getProcessByName(OtherProgramName.peerReviewer);
 
-    if (peerReviewerProcess?.isActive) {
+    if (peerReviewerProcess?.enabled) {
       programMultiplier = (peerReviewerProcess.program as PeerReviewerProgram).calculateExperienceShareMultiplier(
         peerReviewerProcess.usedCores,
         peerReviewerProcess.totalRam,

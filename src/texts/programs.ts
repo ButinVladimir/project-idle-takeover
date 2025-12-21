@@ -1,12 +1,13 @@
+import { html } from 'lit';
 import { msg, str } from '@lit/localize';
 import {
   MultiplierProgramName,
-  AutobuyerProgramName,
+  AutomationProgram,
   OtherProgramName,
+  ProgramName,
 } from '@state/mainframe-state/states/progam-factory/types';
-import { html } from 'lit';
 
-export const PROGRAM_TEXTS = {
+export const PROGRAM_TEXTS: Record<ProgramName, { title: () => string; overview: () => string }> = {
   [OtherProgramName.shareServer]: {
     title: () => msg('Mainframe share server'),
     overview: () =>
@@ -37,17 +38,29 @@ Generates rewards points and improves all rewards.`),
       msg(`Program to collect all sorts of information.
 Generates connectivity points, unlocks sidejobs and improves chances to receive new contracts.`),
   },
-  [AutobuyerProgramName.mainframeHardwareAutobuyer]: {
+  [AutomationProgram.mainframeHardwareAutobuyer]: {
     title: () => msg('Mainframe hardware autobuyer'),
-    overview: () => msg('Program to automatically buy mainframe hardware upgrades.'),
+    overview: () =>
+      msg(`Program to automatically buy mainframe hardware upgrades.
+Sum of level differences after upgrade cannot be above action count.`),
   },
-  [AutobuyerProgramName.mainframeProgramsAutobuyer]: {
+  [AutomationProgram.mainframeProgramsAutobuyer]: {
     title: () => msg('Mainframe programs autobuyer'),
-    overview: () => msg('Program to automatically buy mainframe programs.'),
+    overview: () =>
+      msg(`Program to automatically buy mainframe programs.
+Sum of level differences after upgrade cannot be above action count.`),
   },
-  [AutobuyerProgramName.cloneLevelAutoupgrader]: {
+  [AutomationProgram.cloneLevelAutoupgrader]: {
     title: () => msg('Clone level autoupgrader'),
-    overview: () => msg('Program to automatically upgrade levels of clones.'),
+    overview: () =>
+      msg(`Program to automatically upgrade levels of clones.
+Sum of level differences after upgrade cannot be above action count.`),
+  },
+  [AutomationProgram.contractAutostarter]: {
+    title: () => msg('Contract autostarter'),
+    overview: () =>
+      msg(`Program to automatically add contract assignments to the primary activity queue.
+Cannot add more contract assignments per completion than action count.`),
   },
   [OtherProgramName.predictiveComputator]: {
     title: () => msg('Predictive computator'),
@@ -65,13 +78,12 @@ export const PROGRAM_DESCRIPTION_TEXTS = {
   requirementsDiff: (threads: string, threadsDiffEl: any) =>
     msg(html`Requirements for ${threads} (${threadsDiffEl}) threads`),
   requirementsAutoscalable: () => msg('Requirements for autoscalable program'),
-  requirementsSingle: () => msg('Requirements for single thread'),
+  requirementsSingle: () => msg('Requirements for a single thread'),
   ram: () => msg('RAM'),
   cores: () => msg('Cores'),
   upToValue: (value: any) => msg(html`Up to ${value}`),
   upToDiff: (value: any, diff: any) => msg(html`Up to ${value} (${diff})`),
   allAvailable: (value: any) => msg(str`${value} + All available`),
-  completionTime: () => msg('Completion time'),
   instant: () => msg('Instant'),
   never: () => msg('Never'),
   minMaxInterval: (minValue: string, maxValue: string) => msg(str`${minValue} \u2014 ${maxValue}`),

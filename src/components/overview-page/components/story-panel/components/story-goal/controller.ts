@@ -1,21 +1,28 @@
 import { BaseController } from '@shared/index';
-import { CloneTemplateName, SidejobName } from '@state/company-state';
 import { ProgramName } from '@state/mainframe-state';
 
 export class OverviewStoryGoalController extends BaseController {
+  isStoryEventUnlocked(storyEventName: string): boolean {
+    return this.scenarioState.storyEvents.isEventUnlocked(storyEventName);
+  }
+
   makeProgramUnlockMessage(programName: ProgramName): string {
     return this.unlockState.items.programs.makeUnlockNotificationMessage(programName, this.getFormattedTier());
   }
 
-  makeCloneTemplateUnlockMessage(cloneTemplateName: CloneTemplateName): string {
+  makeCloneTemplateUnlockMessage(cloneTemplateName: string): string {
     return this.unlockState.items.cloneTemplates.makeUnlockNotificationMessage(
       cloneTemplateName,
       this.getFormattedTier(),
     );
   }
 
-  makeSidejobUnlockMessage(sidejobName: SidejobName): string {
-    return this.unlockState.activities.sidejobs.makeUnlockSidejobMessage(sidejobName);
+  makeSidejobUnlockMessage(sidejobName: string): string {
+    return this.unlockState.activities.sidejobs.makeUnlockActivityMessage(sidejobName);
+  }
+
+  makeContractUnlockMessage(contractName: string): string {
+    return this.unlockState.activities.contracts.makeUnlockActivityMessage(contractName);
   }
 
   private getFormattedTier() {

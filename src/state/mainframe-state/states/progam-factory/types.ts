@@ -5,10 +5,11 @@ export enum MultiplierProgramName {
   informationCollector = 'informationCollector',
 }
 
-export enum AutobuyerProgramName {
+export enum AutomationProgram {
   mainframeHardwareAutobuyer = 'mainframeHardwareAutobuyer',
   mainframeProgramsAutobuyer = 'mainframeProgramsAutobuyer',
   cloneLevelAutoupgrader = 'cloneLevelAutoupgrader',
+  contractAutostarter = 'contractAutostarter',
 }
 
 export enum OtherProgramName {
@@ -17,4 +18,4 @@ export enum OtherProgramName {
   peerReviewer = 'peerReviewer',
 }
 
-export type ProgramName = MultiplierProgramName | AutobuyerProgramName | OtherProgramName;
+export type ProgramName = MultiplierProgramName | AutomationProgram | OtherProgramName;

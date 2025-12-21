@@ -17,7 +17,11 @@ export class MainframeHardwareRam extends MainframeHardwareParameter {
     return this.scenarioState.currentValues.mainframeHardware.ramPrice;
   }
 
-  protected postPurchaseMessge(): void {
+  protected handlePostUpgrade(): void {
+    this.mainframeState.processes.recalculateRam();
+  }
+
+  protected postPurchaseMessage(): void {
     const formattedLevel = this.formatter.formatLevel(this._level);
 
     this.messageLogState.postMessage(

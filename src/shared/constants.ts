@@ -1,9 +1,10 @@
+import constants from '@configs/constants.json';
+import names from '@configs/names.json';
 import {
   GameStateEvent,
   Language,
   MiscMenuItem,
   OverviewMenuItem,
-  Scenario,
   Theme,
   ProgramsEvent,
   LongNumberFormat,
@@ -13,19 +14,28 @@ import {
   IncomeSource,
   NotificationType,
   GameVersion,
-  Feature,
+  Milestone,
   Attribute,
   Skill,
   ClonesEvent,
   CloneAlert,
-  DistrictType,
   CityEvent,
   SidejobsEvent,
   SidejobAlert,
   MessageEventGroup,
   GameAlertGroup,
   Hotkey,
+  DistrictTypeRewardParameter,
+  ContractAlert,
+  ContractsEvent,
+  ActivityUIActivityStatus,
+  PrimaryActivitiesEvent,
+  PrimaryActivityAlert,
 } from './types';
+import { INames, type IConstants } from './interfaces';
+
+export const typedConstants = constants as IConstants;
+export const typedNames = names as INames;
 
 export const CURRENT_VERSION = GameVersion['0.3.0'];
 
@@ -37,8 +47,6 @@ export const OVERVIEW_MENU_ITEMS: OverviewMenuItem[] = Object.values(OverviewMen
 
 export const MISC_MENU_ITEMS: MiscMenuItem[] = Object.values(MiscMenuItem);
 
-export const SCENARIOS: Scenario[] = Object.values(Scenario);
-
 export const MESSAGE_EVENT_GROUP_LIST = Object.values(MessageEventGroup);
 
 export const MESSAGE_EVENT_GROUPS = {
@@ -46,6 +54,8 @@ export const MESSAGE_EVENT_GROUPS = {
   [MessageEventGroup.programs]: Object.values(ProgramsEvent),
   [MessageEventGroup.clones]: Object.values(ClonesEvent),
   [MessageEventGroup.sidejobs]: Object.values(SidejobsEvent),
+  [MessageEventGroup.contracts]: Object.values(ContractsEvent),
+  [MessageEventGroup.primaryActivities]: Object.values(PrimaryActivitiesEvent),
   [MessageEventGroup.city]: Object.values(CityEvent),
 };
 
@@ -56,6 +66,8 @@ export const GAME_ALERT_GROUPS = {
   [GameAlertGroup.programs]: Object.values(ProgramAlert),
   [GameAlertGroup.clones]: Object.values(CloneAlert),
   [GameAlertGroup.sidejobs]: Object.values(SidejobAlert),
+  [GameAlertGroup.contracts]: Object.values(ContractAlert),
+  [GameAlertGroup.primaryActivity]: Object.values(PrimaryActivityAlert),
 };
 
 export const FORCE_NOTIFICATION_TYPES: Set<NotificationType> = new Set<NotificationType>([
@@ -76,14 +88,56 @@ export const PURCHASE_TYPES: PurchaseType[] = Object.values(PurchaseType);
 
 export const INCOME_SOURCES: IncomeSource[] = Object.values(IncomeSource);
 
-export const FEATURES: Feature[] = Object.values(Feature);
+export const MILESTONES: Milestone[] = Object.values(Milestone);
 
 export const ATTRIBUTES: Attribute[] = Object.values(Attribute);
 
 export const SKILLS: Skill[] = Object.values(Skill);
 
-export const DISTRICT_TYPES = Object.values(DistrictType);
-
 export const RANDOM_TYPE = 'random';
 
 export const HOTKEYS = Object.values(Hotkey);
+
+export const SCHEMA_PROPERTY = '$schema';
+
+export const DISTRICT_TYPE_REWARD_PARAMETERS = Object.values(DistrictTypeRewardParameter);
+
+export const DISTRICT_TYPE_REWARD_PARAMETER_UI_VALUES: Record<
+  DistrictTypeRewardParameter,
+  {
+    isSpeed: boolean;
+  }
+> = {
+  [DistrictTypeRewardParameter.money]: {
+    isSpeed: true,
+  },
+  [DistrictTypeRewardParameter.developmentPoints]: {
+    isSpeed: true,
+  },
+  [DistrictTypeRewardParameter.experience]: {
+    isSpeed: true,
+  },
+  [DistrictTypeRewardParameter.influence]: {
+    isSpeed: true,
+  },
+  [DistrictTypeRewardParameter.connectivity]: {
+    isSpeed: true,
+  },
+  [DistrictTypeRewardParameter.codeBase]: {
+    isSpeed: true,
+  },
+  [DistrictTypeRewardParameter.computationalBase]: {
+    isSpeed: true,
+  },
+  [DistrictTypeRewardParameter.rewards]: {
+    isSpeed: true,
+  },
+  [DistrictTypeRewardParameter.processCompletionSpeed]: {
+    isSpeed: false,
+  },
+  [DistrictTypeRewardParameter.experienceShareMultiplier]: {
+    isSpeed: false,
+  },
+};
+
+export const ACTIVITY_UI_STATUSES = Object.values(ActivityUIActivityStatus);

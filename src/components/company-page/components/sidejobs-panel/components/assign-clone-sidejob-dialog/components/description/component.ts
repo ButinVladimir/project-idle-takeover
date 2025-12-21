@@ -7,7 +7,7 @@ import { choose } from 'lit/directives/choose.js';
 import SlRadioGroup from '@shoelace-style/shoelace/dist/components/radio-group/radio-group.component.js';
 import { BaseComponent, getHighlightValueClass, RewardParameter } from '@shared/index';
 import { COMMON_TEXTS, REWARD_PARAMETER_NAMES, SIDEJOB_TEXTS } from '@texts/index';
-import { type ISidejob } from '@state/company-state';
+import { type ISidejob } from '@state/activity-state';
 import { temporarySidejobContext } from '../../contexts';
 import { AssignCloneSidejobDialogDescriptionMode } from './types';
 import { DESCRIPTION_MODE_TEXTS, DESCRIPTION_MODES } from './constants';
@@ -47,7 +47,7 @@ export class AssignCloneSidejobDialogDescription extends BaseComponent {
     }
 
     return html`
-      <p class="hint">${SIDEJOB_TEXTS[this._sidejob.sidejobName].overview()}</p>
+      <p class="text">${SIDEJOB_TEXTS[this._sidejob.sidejobName].overview()}</p>
 
       ${this.renderConnectivityString()}
 
@@ -83,7 +83,7 @@ export class AssignCloneSidejobDialogDescription extends BaseComponent {
 
     return html`
       <p class="text">
-        ${COMMON_TEXTS.parameterValue(REWARD_PARAMETER_NAMES[RewardParameter.connectivity](), connectivityValue)}
+        ${COMMON_TEXTS.parameterRow(REWARD_PARAMETER_NAMES[RewardParameter.connectivity](), connectivityValue)}
       </p>
     `;
   };

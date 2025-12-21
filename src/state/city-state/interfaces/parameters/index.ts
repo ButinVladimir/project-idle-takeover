@@ -5,3 +5,5 @@ export * from './district-synchronization-parameter';
 export * from './district-process-completion-speed-parameter';
 export * from './district-rewards-parameter';
 export * from './district-experience-share-multiplier-parameter';
+export * from './district-multipliers';
+export * from './district-parameters';

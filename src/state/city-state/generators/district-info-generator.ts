@@ -1,15 +1,15 @@
 import { injectable } from 'inversify';
-import names from '@configs/names.json';
 import { decorators } from '@state/container';
 import { type IScenarioState } from '@state/scenario-state';
 import { type IGlobalState } from '@state/global-state';
 import { TYPES } from '@state/types';
-import { DistrictType, RandomQueue, DISTRICT_TYPES, RANDOM_TYPE } from '@shared/index';
+import { RandomQueue, RANDOM_TYPE, typedNames } from '@shared/index';
 import {
   IDistrictInfoGenerator,
   IDistrictInfoGeneratorDistrictResult,
   IDistrictInfoGeneratorResult,
 } from '../interfaces';
+import { typedDistrictTypes } from '../constants';
 
 const { lazyInject } = decorators;
 
@@ -22,6 +22,8 @@ export class DistrictInfoGenerator implements IDistrictInfoGenerator {
   private _globalState!: IGlobalState;
 
   private _names!: RandomQueue<string>;
+
+  private _districtTypesList = Object.keys(typedDistrictTypes);
 
   async generate(): Promise<IDistrictInfoGeneratorResult> {
     return new Promise((resolve) => {
@@ -47,7 +49,7 @@ export class DistrictInfoGenerator implements IDistrictInfoGenerator {
   private initNames() {
     this._names = new RandomQueue(this._globalState.random);
 
-    names.districts.forEach((name) => {
+    typedNames.districts.forEach((name) => {
       this._names.push(name);
     });
   }
@@ -56,12 +58,12 @@ export class DistrictInfoGenerator implements IDistrictInfoGenerator {
     const districtData = this._scenarioState.currentValues.map.districts[districtIndex];
 
     const name = this._names.pop();
-    let districtType: DistrictType;
+    let districtType: string;
 
     if (districtData.type === RANDOM_TYPE) {
-      districtType = this._globalState.random.choice(DISTRICT_TYPES);
+      districtType = this._globalState.random.choice(this._districtTypesList);
     } else {
-      districtType = districtData.type as DistrictType;
+      districtType = districtData.type;
     }
 
     const tier = this._globalState.random.randRange(districtData.tier.min, districtData.tier.max + 1);

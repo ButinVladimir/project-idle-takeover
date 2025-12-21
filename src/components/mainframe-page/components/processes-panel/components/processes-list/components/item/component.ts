@@ -68,8 +68,8 @@ export class ProcessesListItem extends BaseComponent {
       ? msg('Autoscalable')
       : `${formattedUsedCores} / ${formattedMaxCores}`;
 
-    const toggleIcon = this._process.isActive ? ENTITY_ACTIVE_VALUES.icon.active : ENTITY_ACTIVE_VALUES.icon.stopped;
-    const toggleLabel = this._process.isActive ? msg('Disable process') : msg('Enable process');
+    const toggleIcon = this._process.enabled ? ENTITY_ACTIVE_VALUES.icon.active : ENTITY_ACTIVE_VALUES.icon.stopped;
+    const toggleLabel = this._process.enabled ? msg('Disable process') : msg('Enable process');
 
     const deleteProcessLabel = msg('Delete process');
 
@@ -150,11 +150,11 @@ export class ProcessesListItem extends BaseComponent {
     const formattedMaxCores = formatter.formatNumberDecimal(this._process.maxCores);
     const coresFull = this._process.program.isAutoscalable
       ? msg('Autoscalable')
-      : COMMON_TEXTS.parameterValue(msg('Uses cores'), `${formattedUsedCores} / ${formattedMaxCores}`);
+      : COMMON_TEXTS.parameterRow(msg('Uses cores'), `${formattedUsedCores} / ${formattedMaxCores}`);
 
-    const toggleIcon = this._process.isActive ? ENTITY_ACTIVE_VALUES.icon.active : ENTITY_ACTIVE_VALUES.icon.stopped;
-    const toggleLabel = this._process.isActive ? msg('Disable process') : msg('Enable process');
-    const toggleVariant = this._process.isActive
+    const toggleIcon = this._process.enabled ? ENTITY_ACTIVE_VALUES.icon.active : ENTITY_ACTIVE_VALUES.icon.stopped;
+    const toggleLabel = this._process.enabled ? msg('Disable process') : msg('Enable process');
+    const toggleVariant = this._process.enabled
       ? ENTITY_ACTIVE_VALUES.buttonVariant.active
       : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
 

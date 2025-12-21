@@ -1,17 +1,16 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
-import districtTypes from '@configs/district-types.json';
 import { type IScenarioState } from '@state/scenario-state';
 import { type IGlobalState } from '@state/global-state';
 import { TYPES } from '@state/types';
 import { RandomQueue, calculatePower } from '@shared/index';
 import {
-  IDistrictTypeTemplate,
   IDistrictFactionsGenerator,
   IDistrictFactionsGeneratorResult,
   IDistrictInfoGeneratorResult,
   type ICityState,
 } from '../interfaces';
+import { typedDistrictTypes } from '../constants';
 
 const { lazyInject } = decorators;
 
@@ -65,11 +64,11 @@ export class DistrictFactionsGenerator implements IDistrictFactionsGenerator {
 
       const districtInfo = this._districtInfos.districts.get(startingDistrict)!;
       const startingDistrictType = districtInfo.districtType;
-      const districtTypeData = districtTypes[startingDistrictType] as IDistrictTypeTemplate;
+      const districtTypeData = typedDistrictTypes[startingDistrictType];
 
       const startingDistrictDifficulty =
         this._cityState.getDistrictSize(startingDistrict) *
-        calculatePower(districtInfo.tier, districtTypeData.captureDifficulty);
+        calculatePower(districtInfo.tier, districtTypeData.requirements.influence);
 
       const districtQueue = new RandomQueue<number>(this._globalState.random);
 
@@ -103,12 +102,12 @@ export class DistrictFactionsGenerator implements IDistrictFactionsGenerator {
 
           const districtInfo = this._districtInfos.districts.get(nextDistrict)!;
           const districtType = districtInfo.districtType;
-          const districtTypeData = districtTypes[districtType] as IDistrictTypeTemplate;
+          const districtTypeData = typedDistrictTypes[districtType];
 
           const factionControlledArea = this._controlledAreaMap.get(index)!;
           const districtDifficulty =
             this._cityState.getDistrictSize(nextDistrict) *
-            calculatePower(districtInfo.tier, districtTypeData.captureDifficulty);
+            calculatePower(districtInfo.tier, districtTypeData.requirements.influence);
 
           if (!this._districtFactionIndexes.has(nextDistrict) && factionControlledArea >= districtDifficulty) {
             this._controlledAreaMap.set(index, factionControlledArea - districtDifficulty);
@@ -128,7 +127,7 @@ export class DistrictFactionsGenerator implements IDistrictFactionsGenerator {
 
     for (let i = 0; i < districtsNum; i++) {
       if (!this._districtFactionIndexes.has(i)) {
-        this._districtFactionIndexes.set(i, this._scenarioState.currentValues.map.startingFactionIndex);
+        this._districtFactionIndexes.set(i, this._scenarioState.currentValues.map.neutralFactionIndex);
       }
     }
   }

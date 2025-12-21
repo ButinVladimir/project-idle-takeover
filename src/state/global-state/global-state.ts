@@ -127,7 +127,6 @@ export class GlobalState implements IGlobalState {
   recalculate() {
     this._developmentState.recalculateLevel();
     this._multipliersState.recalculate();
-    this._synchronization.recalculate();
     this._experienceShare.recalculate();
     this._processCompletionSpeed.recalculate();
     this._rewardsState.recalculateMultiplier();
@@ -151,10 +150,6 @@ export class GlobalState implements IGlobalState {
     await this._connectivity.startNewState();
     await this._multipliersState.startNewState();
     await this._rewardsState.startNewState();
-
-    this._synchronization.requestRecalculation();
-    this._experienceShare.requestRecalculation();
-    this._processCompletionSpeed.requestRecalculation();
   }
 
   async deserialize(serializedState: IGlobalSerializedState): Promise<void> {
@@ -170,10 +165,6 @@ export class GlobalState implements IGlobalState {
     await this._connectivity.deserialize(serializedState.connectivity);
     await this._multipliersState.deserialize(serializedState.multipliers);
     await this._rewardsState.deserialize(serializedState.rewards);
-
-    this._synchronization.requestRecalculation();
-    this._experienceShare.requestRecalculation();
-    this._processCompletionSpeed.requestRecalculation();
   }
 
   serialize(): IGlobalSerializedState {

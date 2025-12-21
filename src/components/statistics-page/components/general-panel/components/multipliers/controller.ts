@@ -1,4 +1,4 @@
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 import { IDistrictMultipliers, IDistrictState } from '@state/city-state';
 import { MultipliersType } from '../../types';
 

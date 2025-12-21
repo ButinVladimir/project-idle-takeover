@@ -1,5 +1,5 @@
-import { IPurchaseCloneArgs, CloneTemplateName, IClone } from '@state/company-state';
-import { BaseController } from '@shared/base-controller';
+import { IPurchaseCloneArgs, IClone } from '@state/clones-state';
+import { BaseController } from '@shared/index';
 
 export class PurchaseCloneDialogController extends BaseController {
   private _clone?: IClone;
@@ -22,35 +22,35 @@ export class PurchaseCloneDialogController extends BaseController {
     return this.globalState.development.level;
   }
 
-  getHighestAvailableTier(cloneTemplateName: CloneTemplateName): number {
+  getHighestAvailableTier(cloneTemplateName: string): number {
     return this.unlockState.items.cloneTemplates.getItemHighestAvailableTier(cloneTemplateName);
   }
 
-  listAvailableCloneTemplates(): CloneTemplateName[] {
+  listAvailableCloneTemplates(): string[] {
     return this.unlockState.items.cloneTemplates.listAvailableItems();
   }
 
   purchaseClone(args: IPurchaseCloneArgs): boolean {
-    return this.companyState.clones.purchaseClone(args);
+    return this.clonesState.ownedClones.purchaseClone(args);
   }
 
   generateName(): string {
-    return this.companyState.clones.generateCloneName();
+    return this.clonesState.ownedClones.generateCloneName();
   }
 
-  getCloneCost(cloneTemplateName: CloneTemplateName, tier: number, level: number): number {
-    return this.companyState.clones.calculateCloneCost(cloneTemplateName, tier, level);
+  getCloneCost(cloneTemplateName: string, tier: number, level: number): number {
+    return this.clonesState.ownedClones.calculateCloneCost(cloneTemplateName, tier, level);
   }
 
-  getCloneSynchronization(cloneTemplateName: CloneTemplateName, tier: number): number {
-    return this.companyState.clones.calculateCloneSynchronization(cloneTemplateName, tier);
+  getCloneSynchronization(cloneTemplateName: string, tier: number): number {
+    return this.clonesState.ownedClones.calculateCloneSynchronization(cloneTemplateName, tier);
   }
 
-  isCloneAvailable(cloneTemplate: CloneTemplateName, tier: number, level: number): boolean {
+  isCloneAvailable(cloneTemplate: string, tier: number, level: number): boolean {
     return this.unlockState.items.cloneTemplates.isItemAvailable(cloneTemplate, tier, level);
   }
 
-  getClone(name: string, cloneTemplateName: CloneTemplateName, tier: number, level: number): IClone {
+  getClone(name: string, cloneTemplateName: string, tier: number, level: number): IClone {
     if (
       this._clone?.name !== name ||
       this._clone.templateName !== cloneTemplateName ||
@@ -59,7 +59,7 @@ export class PurchaseCloneDialogController extends BaseController {
     ) {
       this.deleteTemporaryClone();
 
-      this._clone = this.companyState.cloneFactory.makeClone({
+      this._clone = this.clonesState.cloneFactory.makeClone({
         id: 'temporary',
         name,
         templateName: cloneTemplateName,

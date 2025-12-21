@@ -1,7 +1,5 @@
-import { DistrictType } from '@shared/types';
-
 export interface IDistrictInfoGeneratorDistrictResult {
-  districtType: DistrictType;
+  districtType: string;
   name: string;
   tier: number;
 }

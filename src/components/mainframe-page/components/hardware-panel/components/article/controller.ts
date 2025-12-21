@@ -1,4 +1,4 @@
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 import { IMainframeHardwareParameter, MainframeHardwareParameterType } from '@state/mainframe-state';
 
 export class MainframeHardwarePanelArticleController extends BaseController {

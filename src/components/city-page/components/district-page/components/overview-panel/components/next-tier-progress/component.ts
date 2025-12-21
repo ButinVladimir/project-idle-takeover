@@ -5,10 +5,10 @@ import { customElement } from 'lit/decorators.js';
 import { consume } from '@lit/context';
 import SlProgressBar from '@shoelace-style/shoelace/dist/components/progress-bar/progress-bar.component.js';
 import { BaseComponent, calculateLevelProgressPercentage } from '@shared/index';
+import { DistrictUnlockState } from '@state/city-state';
 import { CityDistrictOverviewPanelNextTierProgressController } from './controller';
 import { districtIndexContext } from '../../../../contexts';
 import styles from './styles';
-import { DistrictUnlockState } from '@/state/city-state';
 
 @localized()
 @customElement('ca-city-district-overview-panel-next-tier-progress')

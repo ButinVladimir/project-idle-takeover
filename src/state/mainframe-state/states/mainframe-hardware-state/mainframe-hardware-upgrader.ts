@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
-import { Feature } from '@shared/index';
+import { Milestone } from '@shared/index';
 import { type IGlobalState } from '@state/global-state';
 import { type IAutomationState } from '@state/automation-state';
 import { type IUnlockState } from '@state/unlock-state';
@@ -65,7 +65,7 @@ export class MainframeHardwareUpgrader implements IMainframeHardwareUpgrader {
   }
 
   private checkUpgradeAvailable() {
-    return this._unlockState.features.isFeatureUnlocked(Feature.mainframeHardware);
+    return this._unlockState.milestones.isMilestoneReached(Milestone.unlockedMainframeHardware);
   }
 
   private getParameterByType(parameterType: MainframeHardwareParameterType): IMainframeHardwareParameter {

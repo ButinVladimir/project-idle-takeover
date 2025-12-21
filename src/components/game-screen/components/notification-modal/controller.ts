@@ -1,5 +1,5 @@
-import { BaseController } from '@shared/base-controller';
-import { INotification } from '@state/notifications-state/interfaces/notitification';
+import { BaseController } from '@shared/index';
+import { INotification } from '@state/notifications-state';
 
 export class NotificationModalController extends BaseController {
   hasUnreadNotifications(): boolean {

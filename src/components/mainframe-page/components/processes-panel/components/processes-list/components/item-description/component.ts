@@ -69,19 +69,15 @@ export class ProcessDescriptionText extends BaseComponent {
       <p>${PROGRAM_DESCRIPTION_TEXTS.requirementsAutoscalable()}</p>
 
       <p>
-        ${COMMON_TEXTS.parameterValue(
+        ${COMMON_TEXTS.parameterRow(
           PROGRAM_DESCRIPTION_TEXTS.ram(),
           PROGRAM_DESCRIPTION_TEXTS.allAvailable(this._process!.program.ram),
         )}
       </p>
 
-      <p>
-        ${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.cores(), PROGRAM_DESCRIPTION_TEXTS.allAvailable(1))}
-      </p>
+      <p>${COMMON_TEXTS.parameterRow(PROGRAM_DESCRIPTION_TEXTS.cores(), PROGRAM_DESCRIPTION_TEXTS.allAvailable(1))}</p>
 
-      <p>
-        ${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.completionTime(), PROGRAM_DESCRIPTION_TEXTS.instant())}
-      </p>
+      <p>${COMMON_TEXTS.parameterRow(COMMON_TEXTS.completionTime(), PROGRAM_DESCRIPTION_TEXTS.instant())}</p>
     `;
   };
 
@@ -111,16 +107,16 @@ export class ProcessDescriptionText extends BaseComponent {
     return html`
       <p>${PROGRAM_DESCRIPTION_TEXTS.requirementsProcess(formattedThreads)}</p>
 
-      <p>${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.ram(), formattedRam)}</p>
+      <p>${COMMON_TEXTS.parameterRow(PROGRAM_DESCRIPTION_TEXTS.ram(), formattedRam)}</p>
 
       <p>
-        ${COMMON_TEXTS.parameterValue(
+        ${COMMON_TEXTS.parameterRow(
           PROGRAM_DESCRIPTION_TEXTS.cores(),
           PROGRAM_DESCRIPTION_TEXTS.upToValue(formattedCores),
         )}
       </p>
 
-      <p>${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.completionTime(), completionTimeLabel)}</p>
+      <p>${COMMON_TEXTS.parameterRow(COMMON_TEXTS.completionTime(), completionTimeLabel)}</p>
     `;
   };
 

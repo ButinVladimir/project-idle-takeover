@@ -4,7 +4,7 @@ import { customElement, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.component.js';
-import { BaseComponent } from '@shared/index';
+import { BaseComponent, Milestone } from '@shared/index';
 import { OverviewUnlockedContentPanelController } from './controller';
 import styles from './styles';
 import { ItemTypeFilter } from './types';
@@ -39,9 +39,6 @@ export class OverviewUnlockedContentPanel extends BaseComponent {
   }
 
   private renderContent(desktop: boolean) {
-    const programsUnlocked = this._controller.areProgramsUnlocked();
-    const companyUnlocked = this._controller.isCompanyUnlocked();
-
     const itemTypeFilterContainerClasses = classMap({
       'item-type-filter-container': true,
       desktop: desktop,
@@ -69,19 +66,9 @@ Number next to item name is it's maximum tier available.`)}
       </div>
 
       <div class="categories">
-        <ca-overview-unlocked-features></ca-overview-unlocked-features>
+        <ca-overview-reached-milestones></ca-overview-reached-milestones>
 
-        ${companyUnlocked ? html`<ca-overview-unlocked-sidejobs></ca-overview-unlocked-sidejobs>` : nothing}
-        ${programsUnlocked
-          ? html`<ca-overview-unlocked-programs
-              item-type-filer=${this._itemTypeFilter}
-            ></ca-overview-unlocked-programs>`
-          : nothing}
-        ${companyUnlocked
-          ? html`<ca-overview-unlocked-clone-templates
-              item-type-filer=${this._itemTypeFilter}
-            ></ca-overview-unlocked-clone-templates>`
-          : nothing}
+        ${this.renderSidejobs()} ${this.renderContracts()} ${this.renderPrograms()} ${this.renderClones()}
       </div>
     `;
   }
@@ -93,5 +80,43 @@ Number next to item name is it's maximum tier available.`)}
 
     const itemTypeFilterValue = this._itemTypeFilterInputRef.value.value as ItemTypeFilter;
     this._itemTypeFilter = itemTypeFilterValue;
+  };
+
+  private renderSidejobs = () => {
+    if (!this._controller.isMilestoneUnlocked(Milestone.unlockedCompanyManagement)) {
+      return nothing;
+    }
+
+    return html`<ca-overview-unlocked-sidejobs></ca-overview-unlocked-sidejobs>`;
+  };
+
+  private renderContracts = () => {
+    if (!this._controller.isMilestoneUnlocked(Milestone.unlockedPrimaryActivity)) {
+      return nothing;
+    }
+
+    return html`<ca-overview-unlocked-contracts></ca-overview-unlocked-contracts>`;
+  };
+
+  private renderPrograms = () => {
+    if (!this._controller.isMilestoneUnlocked(Milestone.unlockedMainframePrograms)) {
+      return nothing;
+    }
+
+    return html`
+      <ca-overview-unlocked-programs item-type-filer=${this._itemTypeFilter}></ca-overview-unlocked-programs>
+    `;
+  };
+
+  private renderClones = () => {
+    if (!this._controller.isMilestoneUnlocked(Milestone.unlockedCompanyManagement)) {
+      return nothing;
+    }
+
+    return html`
+      <ca-overview-unlocked-clone-templates
+        item-type-filer=${this._itemTypeFilter}
+      ></ca-overview-unlocked-clone-templates>
+    `;
   };
 }

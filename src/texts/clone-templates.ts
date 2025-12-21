@@ -1,13 +1,13 @@
 import { msg } from '@lit/localize';
-import { CloneTemplateName } from '@state/company-state';
 
-interface ICloneTemplateTexts {
-  title: () => string;
-  overview: () => string;
-}
-
-export const CLONE_TEMPLATE_TEXTS: Record<CloneTemplateName, ICloneTemplateTexts> = {
-  [CloneTemplateName.anthrodrone]: {
+export const CLONE_TEMPLATE_TEXTS: Record<
+  string,
+  {
+    title: () => string;
+    overview: () => string;
+  }
+> = {
+  anthrodrone: {
     title: () => msg('Anthrodrone'),
     overview: () =>
       msg(`Leftover biomass fused with crude implants.

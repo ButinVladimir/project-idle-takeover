@@ -1,30 +1,36 @@
-import programs from '@configs/programs.json';
-import { calculateLinear, calculateTierLinear } from '@shared/index';
+import { calculateLinear, calculateTierLinear, DistrictTypeRewardParameter } from '@shared/index';
 import { OtherProgramName } from '../types';
 import { BaseProgram } from './base-program';
+import { typedPrograms } from '../constants';
 
 export class PeerReviewerProgram extends BaseProgram {
   public readonly name = OtherProgramName.peerReviewer;
   public readonly isAutoscalable = true;
 
-  handlePerformanceUpdate(): void {
-    this.globalState.experienceShare.requestRecalculation();
-  }
+  handlePerformanceUpdate(): void {}
 
   perform(): void {}
 
   calculateExperienceShareMultiplier(threads: number, usedRam: number): number {
-    const programData = programs[this.name];
+    if (!this.unlockState.milestones.isRewardParameterUnlocked(DistrictTypeRewardParameter.experienceShareMultiplier)) {
+      return 0;
+    }
 
-    return (
+    const programData = typedPrograms[this.name];
+    const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.experienceShareMultiplier;
+
+    return Math.pow(
       1 +
-      calculateTierLinear(this.level, this.tier, programData.cloneExperience.main) *
-        calculateLinear(
-          this.mainframeState.hardware.performance.totalLevel,
-          this.scenarioState.currentValues.mainframeSoftware.performanceBoost,
-        ) *
-        calculateLinear(usedRam, programData.cloneExperience.ram) *
-        calculateLinear(threads, programData.cloneExperience.cores)
+        multiplier *
+          this.globalState.rewards.multiplierByProgram *
+          calculateTierLinear(this.level, this.tier, programData.cloneExperience.main) *
+          calculateLinear(
+            this.mainframeState.hardware.performance.totalLevel,
+            this.scenarioState.currentValues.mainframeSoftware.performanceBoost,
+          ) *
+          calculateLinear(usedRam, programData.cloneExperience.ram) *
+          calculateLinear(threads, programData.cloneExperience.cores),
+      exponent,
     );
   }
 }

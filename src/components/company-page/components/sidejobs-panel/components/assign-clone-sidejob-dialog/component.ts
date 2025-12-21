@@ -8,7 +8,8 @@ import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.com
 import { BaseComponent, SidejobAlert } from '@shared/index';
 import { IDistrictState } from '@state/city-state';
 import { SIDEJOB_TEXTS, DISTRICT_NAMES } from '@texts/index';
-import { IClone, type ISidejob, SidejobName } from '@state/company-state';
+import { SidejobValidationResult, type ISidejob } from '@state/activity-state';
+import { IClone } from '@state/clones-state';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { AssignCloneSidejobDialogCloseEvent } from './events';
 import { AssignCloneSidejobDialogController } from './controller';
@@ -45,7 +46,7 @@ export class AssignCloneSidejobDialog extends BaseComponent {
   private _districtIndex?: number;
 
   @state()
-  private _sidejobName?: SidejobName;
+  private _sidejobName?: string;
 
   @provide({ context: temporarySidejobContext })
   private _sidejob?: ISidejob;
@@ -62,7 +63,7 @@ export class AssignCloneSidejobDialog extends BaseComponent {
   }
 
   performUpdate() {
-    if (this._sidejobName !== undefined && this._districtIndex !== undefined) {
+    if (this._sidejobName !== undefined && this._districtIndex !== undefined && this._cloneId !== undefined) {
       const sidejob = this._controller.getSidejob({
         assignedCloneId: this._cloneId,
         districtIndex: this._districtIndex,
@@ -112,21 +113,20 @@ export class AssignCloneSidejobDialog extends BaseComponent {
           <div class="body">
             <p class="hint">
               ${msg(`Select clone, district and sidejob name to assign clone.
-Clone can be assigned only to one sidejob.
-Sidejobs availability depends on unlocked features and district connectivity.`)}
+Clone can be assigned only to one sidejob.`)}
             </p>
 
             <div class=${inputsContainerClasses}>
               <sl-select
-                ${ref(this._cloneIdInputRef)}
-                name="cloneId"
-                value=${this._cloneId ?? ''}
+                ${ref(this._sidejobNameInputRef)}
+                name="sidejobName"
+                value=${this._sidejobName ?? ''}
                 hoist
-                @sl-change=${this.handleCloneIdChange}
+                @sl-change=${this.handleSidejobNameChange}
               >
-                <span class="input-label" slot="label"> ${msg('Clone')} </span>
+                <span class="input-label" slot="label"> ${msg('Sidejob')} </span>
 
-                ${this._controller.listClones().map(this.renderCloneOption)}
+                ${this._controller.listAvailableSidejobs().map(this.renderSidejobName)}
               </sl-select>
 
               <sl-select
@@ -142,15 +142,15 @@ Sidejobs availability depends on unlocked features and district connectivity.`)}
               </sl-select>
 
               <sl-select
-                ${ref(this._sidejobNameInputRef)}
-                name="sidejobName"
-                value=${this._sidejobName ?? ''}
+                ${ref(this._cloneIdInputRef)}
+                name="cloneId"
+                value=${this._cloneId ?? ''}
                 hoist
-                @sl-change=${this.handleSidejobNameChange}
+                @sl-change=${this.handleCloneIdChange}
               >
-                <span class="input-label" slot="label"> ${msg('Sidejob')} </span>
+                <span class="input-label" slot="label"> ${msg('Clone')} </span>
 
-                ${this._controller.listAvailableSidejobs().map(this.renderSidejobName)}
+                ${this._controller.listClones().map(this.renderCloneOption)}
               </sl-select>
             </div>
           </div>
@@ -176,7 +176,7 @@ Sidejobs availability depends on unlocked features and district connectivity.`)}
     return html`<sl-option value=${districtState.index}> ${DISTRICT_NAMES[districtState.name]()} </sl-option>`;
   };
 
-  private renderSidejobName = (sidejobName: SidejobName) => {
+  private renderSidejobName = (sidejobName: string) => {
     return html` <sl-option value=${sidejobName}> ${SIDEJOB_TEXTS[sidejobName].title()} </sl-option>`;
   };
 
@@ -198,7 +198,7 @@ Sidejobs availability depends on unlocked features and district connectivity.`)}
       return;
     }
 
-    const sidejobName = this._sidejobNameInputRef.value.value as SidejobName;
+    const sidejobName = this._sidejobNameInputRef.value.value as string;
     this._sidejobName = sidejobName;
   };
 
@@ -214,7 +214,7 @@ Sidejobs availability depends on unlocked features and district connectivity.`)}
   private handleSubmit = (event: Event) => {
     event.preventDefault();
 
-    if (!this.checkAvailability()) {
+    if (!this.validate()) {
       return;
     }
 
@@ -249,23 +249,15 @@ Sidejobs availability depends on unlocked features and district connectivity.`)}
 
   handlePartialUpdate = () => {
     if (this._buttonsRef.value) {
-      this._buttonsRef.value.disabled = !this.checkAvailability();
+      this._buttonsRef.value.disabled = !this.validate();
     }
   };
 
-  private checkAvailability(): boolean {
+  private validate(): boolean {
     if (!this._sidejob) {
       return false;
     }
 
-    const totalConnectivity = this._controller.getTotalConnectivity(this._sidejob.district.index);
-    const requiredConnectivity = this._controller.getRequiredConnectivity(this._sidejob.sidejobName);
-
-    return !!(
-      this._sidejob &&
-      this._sidejob.assignedClone &&
-      this._sidejob.checkRequirements() &&
-      totalConnectivity >= requiredConnectivity
-    );
+    return !!(this._sidejob && this._controller.validateSidejob(this._sidejob) === SidejobValidationResult.valid);
   }
 }
