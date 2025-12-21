@@ -2,7 +2,7 @@ import { html } from 'lit';
 import { msg, str } from '@lit/localize';
 import {
   MultiplierProgramName,
-  AutobuyerProgramName,
+  AutomationProgram,
   OtherProgramName,
   ProgramName,
 } from '@state/mainframe-state/states/progam-factory/types';
@@ -38,17 +38,29 @@ Generates rewards points and improves all rewards.`),
       msg(`Program to collect all sorts of information.
 Generates connectivity points, unlocks sidejobs and improves chances to receive new contracts.`),
   },
-  [AutobuyerProgramName.mainframeHardwareAutobuyer]: {
+  [AutomationProgram.mainframeHardwareAutobuyer]: {
     title: () => msg('Mainframe hardware autobuyer'),
-    overview: () => msg('Program to automatically buy mainframe hardware upgrades.'),
+    overview: () =>
+      msg(`Program to automatically buy mainframe hardware upgrades.
+Sum of level differences after upgrade cannot be above action count.`),
   },
-  [AutobuyerProgramName.mainframeProgramsAutobuyer]: {
+  [AutomationProgram.mainframeProgramsAutobuyer]: {
     title: () => msg('Mainframe programs autobuyer'),
-    overview: () => msg('Program to automatically buy mainframe programs.'),
+    overview: () =>
+      msg(`Program to automatically buy mainframe programs.
+Sum of level differences after upgrade cannot be above action count.`),
   },
-  [AutobuyerProgramName.cloneLevelAutoupgrader]: {
+  [AutomationProgram.cloneLevelAutoupgrader]: {
     title: () => msg('Clone level autoupgrader'),
-    overview: () => msg('Program to automatically upgrade levels of clones.'),
+    overview: () =>
+      msg(`Program to automatically upgrade levels of clones.
+Sum of level differences after upgrade cannot be above action count.`),
+  },
+  [AutomationProgram.contractAutostarter]: {
+    title: () => msg('Contract autostarter'),
+    overview: () =>
+      msg(`Program to automatically add contract assignments to the primary activity queue.
+Cannot add more contract assignments per completion than action count.`),
   },
   [OtherProgramName.predictiveComputator]: {
     title: () => msg('Predictive computator'),

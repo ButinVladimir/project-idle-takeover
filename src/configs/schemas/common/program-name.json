@@ -12,6 +12,7 @@
     "dealMaker",
     "mainframeHardwareAutobuyer",
     "mainframeProgramsAutobuyer",
-    "cloneLevelAutoupgrader"
+    "cloneLevelAutoupgrader",
+    "contractAutostarter"
   ]
 }

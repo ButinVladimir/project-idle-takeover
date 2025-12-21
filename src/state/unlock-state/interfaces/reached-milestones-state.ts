@@ -3,7 +3,7 @@ import { IReachedMilestonesSerializedState } from './serialized-states';
 
 export interface IReachedMilestonesState extends ISerializeable<IReachedMilestonesSerializedState> {
   isMilestoneReached(milestone: Milestone): boolean;
-  reachMilestone(milestone: Milestone): void;
+  reachMilestone(milestone: Milestone): boolean;
   listReachedMilestones(): Milestone[];
   isRewardParameterUnlocked(parameter: DistrictTypeRewardParameter): boolean;
 }

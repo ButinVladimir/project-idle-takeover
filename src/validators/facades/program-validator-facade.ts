@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 import { Ajv } from 'ajv';
 import programsSchema from '@configs/schemas/programs.json';
 import { styleText } from 'node:util';
-import { AutobuyerProgramName, MultiplierProgramName, OtherProgramName, typedPrograms } from '@state/mainframe-state';
+import { AutomationProgram, MultiplierProgramName, OtherProgramName, typedPrograms } from '@state/mainframe-state';
 import { type IProgramValidator, IValidatorFacade } from '../interfaces';
 import { VALIDATOR_TYPES } from '../types';
 
@@ -34,7 +34,7 @@ export class ProgramValidatorFacade implements IValidatorFacade {
   private validatePrograms(): void {
     [
       ...Object.values(MultiplierProgramName),
-      ...Object.values(AutobuyerProgramName),
+      ...Object.values(AutomationProgram),
       ...Object.values(OtherProgramName),
     ].forEach((programName) => {
       this._programValidatorValidator.validate(programName);

@@ -1,7 +1,7 @@
 import { MainframeProgramsAutobuyerProgram } from '@state/mainframe-state';
-import { BaseAutobuyerProgramDescriptionEffectRenderer } from './base-autobuyer-program-description-effect-renderer';
+import { BaseAutomationProgramDescriptionEffectRenderer } from './base-automation-program-description-effect-renderer';
 
-export class MainframeProgramsAutobuyerDescriptionEffectRenderer extends BaseAutobuyerProgramDescriptionEffectRenderer {
+export class MainframeProgramsAutobuyerDescriptionEffectRenderer extends BaseAutomationProgramDescriptionEffectRenderer {
   protected getActionCount(): number {
     return (this.program as MainframeProgramsAutobuyerProgram).calculateActionCount(1);
   }

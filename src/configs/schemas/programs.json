@@ -145,6 +145,10 @@
     "cloneLevelAutoupgrader": {
       "$ref": "#/$defs/common",
       "description": "Clone level autoupgrader program"
+    },
+    "contractAutostarter": {
+      "$ref": "#/$defs/common",
+      "description": "Contract autostarter program"
     }
   },
   "required": [
@@ -157,7 +161,8 @@
     "dealMaker",
     "mainframeHardwareAutobuyer",
     "mainframeProgramsAutobuyer",
-    "cloneLevelAutoupgrader"
+    "cloneLevelAutoupgrader",
+    "contractAutostarter"
   ],
   "propertyNames": {
     "oneOf": [{ "$ref": "./common/program-name.json" }, { "enum": ["$schema"] }]

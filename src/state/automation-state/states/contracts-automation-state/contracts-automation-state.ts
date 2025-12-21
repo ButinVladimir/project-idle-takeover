@@ -1,4 +1,4 @@
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { v4 as uuid } from 'uuid';
 import { msg, str } from '@lit/localize';
 import { TYPES } from '@state/types';
@@ -14,6 +14,7 @@ import {
   IContractsAutomationSerializedState,
   IContractsAutomationState,
   IMakeContractAutomationStateArgs,
+  type IContractAssignmentsStarter,
 } from './interfaces';
 import { ContractAssignment } from './contract-assignment';
 
@@ -21,6 +22,9 @@ const { lazyInject } = decorators;
 
 @injectable()
 export class ContractsAutomationState implements IContractsAutomationState {
+  @inject(TYPES.ContractAssignmentsStarter)
+  private _contractAssignmentStarter!: IContractAssignmentsStarter;
+
   @lazyInject(TYPES.ActivityState)
   private _activityState!: IActivityState;
 
@@ -38,6 +42,10 @@ export class ContractsAutomationState implements IContractsAutomationState {
     this._contractAssignmentsIdMap = new Map<string, IContractAssignment>();
 
     this._stateUiConnector.registerEventEmitter(this, ['_contractAssignmentsList', '_contractAssignmentsIdMap']);
+  }
+
+  get starter() {
+    return this._contractAssignmentStarter;
   }
 
   listContractAssignments(): IContractAssignment[] {
@@ -168,14 +176,6 @@ export class ContractsAutomationState implements IContractsAutomationState {
   toggleAllContractAssignments(active: boolean): void {
     this._contractAssignmentsList.forEach((contractAssignment) => {
       contractAssignment.toggleEnabled(active);
-    });
-  }
-
-  startAll(): void {
-    this._contractAssignmentsList.forEach((contractAssignment) => {
-      if (contractAssignment.enabled) {
-        contractAssignment.start();
-      }
     });
   }
 

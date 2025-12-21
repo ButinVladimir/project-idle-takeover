@@ -1,5 +1,5 @@
 import { Milestone, ILinear, ITierExponent, ITierLinear } from '@shared/index';
-import { AutobuyerProgramName, MultiplierProgramName, OtherProgramName } from '../types';
+import { AutomationProgram, MultiplierProgramName, OtherProgramName } from '../types';
 
 interface ICommonProgram {
   ram: number;
@@ -39,7 +39,8 @@ export interface IPrograms {
   [MultiplierProgramName.dealMaker]: {
     rewards: ITierLinear;
   } & ICommonProgram;
-  [AutobuyerProgramName.mainframeHardwareAutobuyer]: ICommonProgram;
-  [AutobuyerProgramName.mainframeProgramsAutobuyer]: ICommonProgram;
-  [AutobuyerProgramName.cloneLevelAutoupgrader]: ICommonProgram;
+  [AutomationProgram.mainframeHardwareAutobuyer]: ICommonProgram;
+  [AutomationProgram.mainframeProgramsAutobuyer]: ICommonProgram;
+  [AutomationProgram.cloneLevelAutoupgrader]: ICommonProgram;
+  [AutomationProgram.contractAutostarter]: ICommonProgram;
 }

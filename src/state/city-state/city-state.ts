@@ -121,9 +121,9 @@ export class CityState implements ICityState {
     }
   }
 
-  updateDistrictsStateAfterJoiningFaction(faction: string) {
+  updateDistrictsStateAfterJoiningFaction() {
     for (const district of this._districts.values()) {
-      if (district.faction === faction && district.state === DistrictUnlockState.locked) {
+      if (district.faction === this._factionState.currentFaction && district.state === DistrictUnlockState.locked) {
         district.state = DistrictUnlockState.contested;
       }
     }
@@ -132,14 +132,10 @@ export class CityState implements ICityState {
   }
 
   recalculateDistrictsState() {
-    const unlockedDistrictsCount = this.calculateUnlockedDistrictsCount();
-    const maxUnlockedDistrictsCount = this.calculateMaxUnlockedDistrictsCount();
-
-    for (let districtsCount = unlockedDistrictsCount; districtsCount < maxUnlockedDistrictsCount; districtsCount++) {
-      this.unlockNextDistrict();
-    }
-
+    this.updateUnlockedDistricts();
     this.updateAvailableDistrictsList();
+
+    this._globalState.synchronization.recalculate();
   }
 
   async startNewState(): Promise<void> {
@@ -233,6 +229,15 @@ export class CityState implements ICityState {
     this.recalculateDistrictsState();
   }
 
+  private updateUnlockedDistricts() {
+    const unlockedDistrictsCount = this.calculateUnlockedDistrictsCount();
+    const maxUnlockedDistrictsCount = this.calculateMaxUnlockedDistrictsCount();
+
+    for (let districtsCount = unlockedDistrictsCount; districtsCount < maxUnlockedDistrictsCount; districtsCount++) {
+      this.unlockNextDistrict();
+    }
+  }
+
   private updateAvailableDistrictsList() {
     this._availableDistricts.length = 0;
 
@@ -241,8 +246,6 @@ export class CityState implements ICityState {
         this._availableDistricts.push(district);
       }
     });
-
-    this._globalState.synchronization.requestRecalculation();
   }
 
   private clearDistricts() {

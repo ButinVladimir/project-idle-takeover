@@ -73,7 +73,9 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
 
   protected abstract get priceExp(): IExponent;
 
-  protected abstract postPurchaseMessge(): void;
+  protected abstract handlePostUpgrade(): void;
+
+  protected abstract postPurchaseMessage(): void;
 
   calculateIncreaseCost(increase: number): number {
     const exp = this.priceExp;
@@ -130,11 +132,15 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
   async startNewState(): Promise<void> {
     this._autoUpgradeEnabled = true;
     this._level = 0;
+
+    this.handlePostUpgrade();
   }
 
   async deserialize(serializedState: IMainframeHardwareParameterSerializedState): Promise<void> {
     this._level = serializedState.level;
     this._autoUpgradeEnabled = serializedState.autoUpgradeEnabled;
+
+    this.handlePostUpgrade();
   }
 
   serialize(): IMainframeHardwareParameterSerializedState {
@@ -146,9 +152,8 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
 
   private handlePurchaseIncrease = (increase: number) => () => {
     this._level += increase;
-    this.postPurchaseMessge();
 
-    this.mainframeState.processes.requestUpdateRunningProcesses();
-    this.mainframeState.processes.updateAllProcessesPerformance();
+    this.postPurchaseMessage();
+    this.handlePostUpgrade();
   };
 }

@@ -17,7 +17,9 @@ export class MainframeHardwarePerformance extends MainframeHardwareParameter {
     return this.scenarioState.currentValues.mainframeHardware.performancePrice;
   }
 
-  protected postPurchaseMessge(): void {
+  protected handlePostUpgrade(): void {}
+
+  protected postPurchaseMessage(): void {
     const formattedLevel = this.formatter.formatLevel(this._level);
 
     this.messageLogState.postMessage(

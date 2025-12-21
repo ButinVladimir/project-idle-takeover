@@ -154,8 +154,7 @@ export class OwnedClonesState implements IOwnedClonesState {
       this._messageLogState.postMessage(ClonesEvent.cloneDeleted, msg(str`Clone "${clone.name}" has been deleted`));
     }
 
-    this._globalState.synchronization.requestRecalculation();
-
+    this._globalState.synchronization.recalculate();
     this._activityState.requestReassignment();
   }
 
@@ -166,8 +165,7 @@ export class OwnedClonesState implements IOwnedClonesState {
 
     this._messageLogState.postMessage(ClonesEvent.allClonesDeleted, msg('All clones have been deleted'));
 
-    this._globalState.synchronization.requestRecalculation();
-
+    this._globalState.synchronization.recalculate();
     this._activityState.requestReassignment();
   }
 
@@ -241,8 +239,6 @@ export class OwnedClonesState implements IOwnedClonesState {
     }
 
     this._clonesMap.set(clone.id, clone);
-
-    this._globalState.synchronization.requestRecalculation();
   }
 
   private handlePurhaseClone = (args: IPurchaseCloneArgs) => () => {
@@ -257,6 +253,8 @@ export class OwnedClonesState implements IOwnedClonesState {
     });
 
     this.addClone(clone);
+
+    this._globalState.synchronization.recalculate();
 
     const formattedLevel = this._formatter.formatLevel(clone.level);
     const formattedTier = this._formatter.formatTier(clone.tier);

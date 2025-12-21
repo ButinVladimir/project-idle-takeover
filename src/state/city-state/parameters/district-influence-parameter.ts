@@ -66,6 +66,10 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
     return this._tier;
   }
 
+  set tier(value: number) {
+    this._tier = value;
+  }
+
   get points(): number {
     return this._points;
   }
@@ -98,12 +102,6 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
 
       this.handleTierUpdate();
     }
-  }
-
-  setTier(tier: number): void {
-    this._tier = tier;
-
-    this.handleTierUpdate();
   }
 
   async deserialize(serializedState: IDistrictInfluenceSerializedParameter): Promise<void> {
@@ -144,7 +142,7 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
   }
 
   private handleTierUpdate() {
-    this._globalState.synchronization.requestRecalculation();
+    this._globalState.synchronization.recalculate();
     this._activityState.requestReassignment();
   }
 }

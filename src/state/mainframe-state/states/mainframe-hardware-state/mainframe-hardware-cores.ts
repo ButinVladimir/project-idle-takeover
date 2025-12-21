@@ -17,7 +17,11 @@ export class MainframeHardwareCores extends MainframeHardwareParameter {
     return this.scenarioState.currentValues.mainframeHardware.coresPrice;
   }
 
-  protected postPurchaseMessge(): void {
+  protected handlePostUpgrade(): void {
+    this.mainframeState.processes.requestUpdateRunningProcesses();
+  }
+
+  protected postPurchaseMessage(): void {
     const formattedLevel = this.formatter.formatLevel(this._level);
 
     this.messageLogState.postMessage(

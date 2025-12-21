@@ -1,10 +1,10 @@
 import { html } from 'lit';
-import { MainframeHardwareAutobuyerProgram, IProcess } from '@state/mainframe-state';
+import { IProcess } from '@state/mainframe-state';
 import { RewardParameter, IFormatter, MS_IN_SECOND } from '@shared/index';
 import { COMMON_TEXTS, PROGRAM_DESCRIPTION_TEXTS, REWARD_PARAMETER_NAMES } from '@texts/index';
 import { IDescriptionParameters, IDescriptionEffectRenderer } from '../interfaces';
 
-export abstract class BaseAutobuyerProgramDescriptionEffectRenderer implements IDescriptionEffectRenderer {
+export abstract class BaseAutomationProgramDescriptionEffectRenderer implements IDescriptionEffectRenderer {
   public readonly values = {};
 
   protected process: IProcess;
@@ -18,7 +18,7 @@ export abstract class BaseAutobuyerProgramDescriptionEffectRenderer implements I
 
   public renderEffect = () => {
     const { usedCores } = this.process;
-    const program = this.process.program as MainframeHardwareAutobuyerProgram;
+    const program = this.process.program;
 
     const actionCount = this.getActionCount();
     const time = program.calculateCompletionTime(actionCount, usedCores);

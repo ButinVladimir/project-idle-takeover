@@ -1,8 +1,8 @@
-import { AutobuyerProgramName } from '../types';
+import { AutomationProgram } from '../types';
 import { BaseProgram } from './base-program';
 
 export class MainframeProgramsAutobuyerProgram extends BaseProgram {
-  public readonly name = AutobuyerProgramName.mainframeProgramsAutobuyer;
+  public readonly name = AutomationProgram.mainframeProgramsAutobuyer;
   public readonly isAutoscalable = false;
 
   handlePerformanceUpdate(): void {}

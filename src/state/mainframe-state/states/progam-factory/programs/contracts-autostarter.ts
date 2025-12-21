@@ -1,24 +1,24 @@
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
-import { type IClonesState } from '@state/clones-state';
+import { type IAutomationState } from '@state/automation-state';
 import { AutomationProgram } from '../types';
 import { BaseProgram } from './base-program';
 
 const { lazyInject } = decorators;
 
-export class CloneLevelAutoupgraderProgram extends BaseProgram {
-  public readonly name = AutomationProgram.cloneLevelAutoupgrader;
+export class ContractAutostarterProgram extends BaseProgram {
+  public readonly name = AutomationProgram.contractAutostarter;
   public readonly isAutoscalable = false;
 
-  @lazyInject(TYPES.ClonesState)
-  private _clonesState!: IClonesState;
+  @lazyInject(TYPES.AutomationState)
+  private _automationState!: IAutomationState;
 
   handlePerformanceUpdate(): void {}
 
   perform(threads: number): void {
     const actionsLeft = this.calculateActionCount(threads);
 
-    this._clonesState.ownedClones.levelUpgrader.autoupgrade(actionsLeft);
+    this._automationState.contracts.starter.autostart(actionsLeft);
   }
 
   calculateActionCount(threads: number): number {

@@ -7,7 +7,7 @@ import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type INotificationsState } from '@state/notifications-state';
 import { type IGlobalState } from '@state/global-state';
 import { type IUnlockState } from '@state/unlock-state';
-import { type IFactionState } from '@state/faction-state';
+import { FactionPlaystyle, type IFactionState } from '@state/faction-state';
 import { type ICityState } from '@state/city-state';
 import {
   type IScenarioState,
@@ -46,12 +46,14 @@ export class StoryEventsState implements IStoryEventsState {
   private _cityState!: ICityState;
 
   private _districtsStateRecalculationRequested: boolean;
+  private _unlockStateRecalculationRequested: boolean;
 
   private _visitedAllEvents: Set<string>;
   private _visitedScenarioEvents: Set<string>;
 
   constructor() {
     this._districtsStateRecalculationRequested = false;
+    this._unlockStateRecalculationRequested = false;
     this._visitedAllEvents = new Set<string>();
     this._visitedScenarioEvents = new Set<string>();
 
@@ -60,6 +62,8 @@ export class StoryEventsState implements IStoryEventsState {
 
   visitEvents() {
     this._districtsStateRecalculationRequested = false;
+    this._unlockStateRecalculationRequested = false;
+
     const storyEventsList = this._scenarioState.currentValues.storyEvents;
 
     const currentState: IStoryStateValues = {
@@ -79,7 +83,8 @@ export class StoryEventsState implements IStoryEventsState {
       this.visitSingleStoryEvent(storyEventName);
     }
 
-    this.unlockDistricts();
+    this.recalculateDistrictState();
+    this.recalculateUnlockState();
   }
 
   listGoals(): IStoryGoal[] {
@@ -173,7 +178,7 @@ export class StoryEventsState implements IStoryEventsState {
     }
 
     if (
-      this._factionState.currentFactionValues.playstyle !== 'selectFaction' &&
+      this._factionState.currentFactionValues.playstyle !== FactionPlaystyle.selectFaction &&
       storyStateValues.faction !== storyEvent.requirements.faction
     ) {
       return true;
@@ -214,13 +219,22 @@ export class StoryEventsState implements IStoryEventsState {
     }
   };
 
-  private unlockDistricts() {
+  private recalculateDistrictState() {
     if (!this._districtsStateRecalculationRequested) {
       return;
     }
 
     this._districtsStateRecalculationRequested = false;
     this._cityState.recalculateDistrictsState();
+  }
+
+  private recalculateUnlockState() {
+    if (!this._unlockStateRecalculationRequested) {
+      return;
+    }
+
+    this._unlockStateRecalculationRequested = false;
+    this._unlockState.recalculate();
   }
 
   private processStoryEventMessages(storyEventName: string, storyEvent: IStoryEvent) {
@@ -234,7 +248,9 @@ export class StoryEventsState implements IStoryEventsState {
   private processStoryEventMilestones(storyEvent: IStoryEvent) {
     if (storyEvent.milestones) {
       storyEvent.milestones.forEach((milestone) => {
-        this._unlockState.milestones.reachMilestone(milestone);
+        if (this._unlockState.milestones.reachMilestone(milestone)) {
+          this._unlockStateRecalculationRequested = true;
+        }
       });
     }
   }

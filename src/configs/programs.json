@@ -103,5 +103,13 @@
     "coreSpeedBoost": { "base": 1, "multiplier": 0.1 },
     "cost": { "multiplier": 10000, "base": 1.2, "baseTier": 10000000 },
     "requiredMilestones": ["unlockedAutomation", "unlockedCompanyManagement"]
+  },
+  "contractAutostarter": {
+    "ram": 5,
+    "completionPoints": 900000,
+    "levelSpeedBoost": { "base": 1, "multiplier": 0.01 },
+    "coreSpeedBoost": { "base": 1, "multiplier": 0.1 },
+    "cost": { "multiplier": 10000, "base": 1.2, "baseTier": 10000000 },
+    "requiredMilestones": ["unlockedPrimaryActivity"]
   }
 }

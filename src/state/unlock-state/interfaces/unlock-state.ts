@@ -8,6 +8,5 @@ export interface IUnlockState extends ISerializeable<IUnlockSerializedState> {
   milestones: IReachedMilestonesState;
   items: IAvailableItemsState;
   activities: IAvailableActivitiesState;
-  requestRecalculation(): void;
   recalculate(): void;
 }

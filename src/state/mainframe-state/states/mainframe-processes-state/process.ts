@@ -99,7 +99,6 @@ export class Process implements IProcess {
     this._threads = threads;
     this.resetCompletion();
     this._mainframeState.processes.requestUpdateRunningProcesses();
-    this.program.handlePerformanceUpdate();
   }
 
   serialize(): ISerializedProcess {

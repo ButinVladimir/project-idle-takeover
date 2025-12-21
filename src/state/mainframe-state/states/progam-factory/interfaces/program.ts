@@ -12,7 +12,6 @@ export interface IProgram {
   autoUpgradeEnabled: boolean;
   upgrade(tier: number, level: number): void;
   removeAllEventListeners(): void;
-  handlePerformanceUpdate(): void;
   perform(threads: number, usedRam: number): void;
   calculateCompletionDelta(threads: number, usedCores: number, passedTime: number): number;
   calculateCompletionTime(threads: number, usedCores: number): number;

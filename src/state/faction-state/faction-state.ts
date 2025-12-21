@@ -11,6 +11,7 @@ import { TYPES } from '@state/types';
 import { FACTION_TEXTS, SPECIAL_EVENTS_MESSAGES } from '@texts/index';
 import { IFactionValues, IFactionState, IFactionSerializedState } from './interfaces';
 import { typedFactions } from './constants';
+import { FactionPlaystyle } from './types';
 
 const { lazyInject } = decorators;
 
@@ -104,7 +105,7 @@ export class FactionState implements IFactionState {
       return false;
     }
 
-    if (this.currentFactionValues.playstyle !== 'selectFaction') {
+    if (this.currentFactionValues.playstyle !== FactionPlaystyle.selectFaction) {
       return false;
     }
 
@@ -113,8 +114,8 @@ export class FactionState implements IFactionState {
     }
 
     this.currentFaction = faction;
-    this._unlockState.requestRecalculation();
-    this._cityState.updateDistrictsStateAfterJoiningFaction(faction);
+    this._unlockState.recalculate();
+    this._cityState.updateDistrictsStateAfterJoiningFaction();
 
     this._notificationsState.pushNotification(
       NotificationType.factionJoined,
@@ -170,7 +171,7 @@ export class FactionState implements IFactionState {
   private updateAvailableFactions() {
     this._availableFactionsList.length = 0;
 
-    if (this.currentFactionValues.playstyle !== 'selectFaction') {
+    if (this.currentFactionValues.playstyle !== FactionPlaystyle.selectFaction) {
       return;
     }
 

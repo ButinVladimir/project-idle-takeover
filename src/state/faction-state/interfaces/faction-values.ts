@@ -1,7 +1,8 @@
 import { ProgramName } from '@state/mainframe-state';
+import { FactionPlaystyle } from '../types';
 
 export interface IFactionValues {
-  playstyle: 'selectFaction' | 'captureCity' | 'raiseThreat';
+  playstyle: FactionPlaystyle;
   loanedItems: {
     programs: ProgramName[];
     cloneTemplates: string[];

@@ -112,6 +112,8 @@ import {
   AutomationState,
   IContractsAutomationState,
   ContractsAutomationState,
+  IContractAssignmentsStarter,
+  ContractAssignmentsStarter,
 } from '@state/automation-state';
 import { INotificationsState, NotificationsState } from '@state/notifications-state';
 import { IFormatter, Formatter } from '@shared/index';
@@ -401,6 +403,12 @@ container
 container
   .bind<ICloneLevelAutomationState>(TYPES.CloneLevelAutomationState)
   .to(CloneLevelAutomationState)
+  .inSingletonScope()
+  .whenTargetIsDefault();
+
+container
+  .bind<IContractAssignmentsStarter>(TYPES.ContractAssignmentsStarter)
+  .to(ContractAssignmentsStarter)
   .inSingletonScope()
   .whenTargetIsDefault();
 

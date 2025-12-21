@@ -19,12 +19,6 @@ export class UnlockState implements IUnlockState {
   @inject(TYPES.AvailableActivitiesState)
   private _availableActivitiesState!: IAvailableActivitiesState;
 
-  private _recalculationRequested: boolean;
-
-  constructor() {
-    this._recalculationRequested = true;
-  }
-
   get milestones() {
     return this._reachedMilestonesState;
   }
@@ -37,17 +31,7 @@ export class UnlockState implements IUnlockState {
     return this._availableActivitiesState;
   }
 
-  requestRecalculation() {
-    this._recalculationRequested = true;
-  }
-
   recalculate() {
-    if (!this._recalculationRequested) {
-      return;
-    }
-
-    this._recalculationRequested = false;
-
     this._availableItemsState.recalculate();
     this._availableActivitiesState.recalculate();
   }
@@ -57,7 +41,7 @@ export class UnlockState implements IUnlockState {
     await this._availableItemsState.startNewState();
     await this._availableActivitiesState.startNewState();
 
-    this.requestRecalculation();
+    this.recalculate();
   }
 
   async deserialize(serializedState: IUnlockSerializedState): Promise<void> {
@@ -65,7 +49,7 @@ export class UnlockState implements IUnlockState {
     await this._availableItemsState.deserialize(serializedState.items);
     await this._availableActivitiesState.deserialize(serializedState.activities);
 
-    this.requestRecalculation();
+    this.recalculate();
   }
 
   serialize(): IUnlockSerializedState {

@@ -70,7 +70,7 @@ export class ContractAssignmentListItem extends BaseComponent {
 
     const districtName = DISTRICT_NAMES[this._contractAssignment.contract.district.name]();
 
-    const canBeStarted = this._contractAssignment.canBeStarted();
+    const canBeStarted = this._controller.checkCanBeStarted(this._contractAssignment);
     const startLabel = msg('Add assigned contract to the queue');
 
     const toggleIcon = this._contractAssignment.enabled
@@ -181,7 +181,7 @@ export class ContractAssignmentListItem extends BaseComponent {
       html`<ca-contract-assignments-list-item-status></ca-contract-assignments-list-item-status>`,
     );
 
-    const canBeStarted = this._contractAssignment.canBeStarted();
+    const canBeStarted = this._controller.checkCanBeStarted(this._contractAssignment);
     const startLabel = msg('Add assigned contract to the queue');
     const startVariant = canBeStarted
       ? ENTITY_ACTIVE_VALUES.buttonVariant.active
@@ -305,6 +305,6 @@ export class ContractAssignmentListItem extends BaseComponent {
   };
 
   private handleStartContractAssignment = () => {
-    this._contractAssignment!.start();
+    this._controller.startContractAssignment(this._contractAssignment!.id);
   };
 }

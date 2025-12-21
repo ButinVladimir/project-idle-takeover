@@ -29,13 +29,11 @@ export class SynchronizationState implements ISynchronizationState {
   private _baseValue: number;
   private _availableValue: number;
   private _totalValue: number;
-  private _recalculationRequested: boolean;
 
   constructor() {
     this._baseValue = 0;
     this._availableValue = 0;
     this._totalValue = 0;
-    this._recalculationRequested = true;
 
     this._stateUIConnector.registerEventEmitter(this, ['_baseValue', '_availableValue', '_totalValue']);
   }
@@ -52,17 +50,7 @@ export class SynchronizationState implements ISynchronizationState {
     return this._totalValue;
   }
 
-  requestRecalculation() {
-    this._recalculationRequested = true;
-  }
-
   recalculate() {
-    if (!this._recalculationRequested) {
-      return;
-    }
-
-    this._recalculationRequested = false;
-
     this.calculateBaseValue();
     this.calculateDistrictValues();
     this.calculateAvailableValue();

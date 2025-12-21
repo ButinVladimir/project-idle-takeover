@@ -5,15 +5,19 @@ export class ContractAssignmentsListController extends BaseController {
   checkCanStartAll(): boolean {
     return this.automationState.contracts
       .listContractAssignments()
-      .some((contractAssignment) => contractAssignment.enabled && contractAssignment.canBeStarted());
+      .some(
+        (contractAssignment) =>
+          contractAssignment.enabled &&
+          this.automationState.contracts.starter.checkContractAssignment(contractAssignment),
+      );
   }
 
   getStartHotkey(): string | undefined {
     return this.settingsState.hotkeys.getKeyByHotkey(Hotkey.addContractAssignments);
   }
 
-  startAllContractAssignments() {
-    this.automationState.contracts.startAll();
+  startAllContractAssignments(): boolean {
+    return this.automationState.contracts.starter.startAllAssignments();
   }
 
   listContractAssignments(): IContractAssignment[] {

@@ -1,15 +1,12 @@
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
 import { type IStateUIConnector } from '@state/state-ui-connector';
-import { ContractValidationResult, type IActivityState, IContract } from '@state/activity-state';
+import { IContract } from '@state/activity-state';
 import { ISerializedContractAssignment, IContractAssignment, IContractAssignmentArguments } from './interfaces';
 
 const { lazyInject } = decorators;
 
 export class ContractAssignment implements IContractAssignment {
-  @lazyInject(TYPES.ActivityState)
-  private _activityState!: IActivityState;
-
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
 
@@ -39,25 +36,6 @@ export class ContractAssignment implements IContractAssignment {
 
   get enabled() {
     return this._enabled;
-  }
-
-  canBeStarted(): boolean {
-    return (
-      !this._activityState.primaryActivityQueue.getActivityByAssignmentId(this._id) &&
-      this._contract.district.counters.contracts.getAvailableAmount(this._contract.contractName) > 0 &&
-      this._activityState.contractActivityValidator.validate(this._contract) === ContractValidationResult.valid
-    );
-  }
-
-  start(): void {
-    if (!this.canBeStarted()) {
-      return;
-    }
-
-    this._activityState.primaryActivityQueue.addActivity({
-      assignmentId: this._id,
-      type: 'contract',
-    });
   }
 
   toggleEnabled(enabled: boolean): void {

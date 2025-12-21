@@ -4,7 +4,7 @@ import { RewardParameter, IFormatter, MS_IN_SECOND } from '@shared/index';
 import { COMMON_TEXTS, PROGRAM_DESCRIPTION_TEXTS, REWARD_PARAMETER_NAMES } from '@texts/index';
 import { IDescriptionParameters, IDescriptionEffectRenderer } from '../interfaces';
 
-export abstract class BaseAutobuyerProgramDescriptionEffectRenderer implements IDescriptionEffectRenderer {
+export abstract class BaseAutomationProgramDescriptionEffectRenderer implements IDescriptionEffectRenderer {
   public readonly values = {};
 
   protected program: IProgram;

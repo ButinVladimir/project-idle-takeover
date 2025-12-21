@@ -129,6 +129,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     }
 
     this.requestUpdateRunningProcesses();
+    this.recalculateRam();
 
     const programTitle = PROGRAM_TEXTS[program.name].title();
 
@@ -188,6 +189,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     }
 
     this.requestUpdateRunningProcesses();
+    this.recalculateRam();
   }
 
   deleteAllProcesses() {
@@ -196,17 +198,18 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     this._messageLogState.postMessage(ProgramsEvent.allProcessesDeleted, msg('All process have been deleted'));
 
     this.requestUpdateRunningProcesses();
+    this.recalculateRam();
   }
 
   requestUpdateRunningProcesses() {
     this._runningProcessesUpdateRequested = true;
   }
 
-  updateAllProcessesPerformance() {
+  recalculateRam() {
+    this._availableRam = this._mainframeState.hardware.ram.totalLevel;
+
     for (const process of this._processesList) {
-      if (process.enabled && process.usedCores > 0) {
-        process.program.handlePerformanceUpdate();
-      }
+      this._availableRam -= process.program.isAutoscalable ? process.program.ram : process.totalRam;
     }
   }
 
@@ -260,7 +263,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     let result = this.availableRam;
 
     if (program.isAutoscalable && this._runningScalableProcess) {
-      result += program.ram;
+      result += this._runningScalableProcess.program.ram;
     }
 
     if (!program.isAutoscalable) {
@@ -278,7 +281,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     this.clearState();
 
     this.requestUpdateRunningProcesses();
-    this.updateAllProcessesPerformance();
+    this.recalculateRam();
   }
 
   async deserialize(serializedState: IMainframeProcessesSerializedState): Promise<void> {
@@ -291,7 +294,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     });
 
     this.requestUpdateRunningProcesses();
-    this.updateAllProcessesPerformance();
+    this.recalculateRam();
   }
 
   serialize(): IMainframeProcessesSerializedState {
@@ -308,32 +311,21 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     this._runningProcessesUpdateRequested = false;
 
     let availableCores = this._mainframeState.hardware.cores.totalLevel;
-    let availableRam = this._mainframeState.hardware.ram.totalLevel;
     this._runningProcesses.length = 0;
     this._runningScalableProcess = this._processesList.find((process) => process.program.isAutoscalable);
     let runningScalableProcessCores = 0;
-
-    if (this._runningScalableProcess) {
-      availableRam--;
-    }
 
     if (availableCores > 0 && this._runningScalableProcess?.enabled) {
       availableCores--;
       runningScalableProcessCores++;
     }
 
-    let processRam = 0;
     let usedCores = 0;
-    let prevUsedCores = 0;
 
     for (const process of this._processesList) {
       if (process.program.isAutoscalable) {
         continue;
       }
-
-      processRam = process.totalRam;
-      availableRam -= processRam;
-      prevUsedCores = process.usedCores;
 
       if (!process.enabled) {
         usedCores = 0;
@@ -348,10 +340,6 @@ export class MainframeProcessesState implements IMainframeProcessesState {
       } else {
         process.usedCores = 0;
       }
-
-      if (prevUsedCores !== usedCores) {
-        process.program.handlePerformanceUpdate();
-      }
     }
 
     if (this._runningScalableProcess?.enabled) {
@@ -359,15 +347,9 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     }
 
     if (this._runningScalableProcess) {
-      prevUsedCores = this._runningScalableProcess.usedCores;
       this._runningScalableProcess.usedCores = runningScalableProcessCores;
-
-      if (prevUsedCores !== runningScalableProcessCores) {
-        this._runningScalableProcess.program.handlePerformanceUpdate();
-      }
     }
 
-    this._availableRam = availableRam;
     this._availableCores = availableCores;
   };
 
@@ -418,8 +400,6 @@ export class MainframeProcessesState implements IMainframeProcessesState {
   }
 
   private handleProcessCleanup(process: IProcess) {
-    process.usedCores = 0;
-    process.program.handlePerformanceUpdate();
     process.removeAllEventListeners();
   }
 }

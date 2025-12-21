@@ -3,18 +3,15 @@ import { decorators } from '@state/container';
 import { DistrictTypeRewardParameter, Milestone, NotificationType } from '@shared/types';
 import type { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
 import type { INotificationsState } from '@state/notifications-state/interfaces/notifications-state';
-import { type IFactionState } from '@state/faction-state';
+import { FactionPlaystyle, type IFactionState } from '@state/faction-state';
 import { TYPES } from '@state/types';
 import { MILESTONE_TEXTS } from '@texts/index';
-import { type IUnlockState, IReachedMilestonesSerializedState, IReachedMilestonesState } from './interfaces';
+import { IReachedMilestonesSerializedState, IReachedMilestonesState } from './interfaces';
 
 const { lazyInject } = decorators;
 
 @injectable()
 export class ReachedMilestonesState implements IReachedMilestonesState {
-  @lazyInject(TYPES.UnlockState)
-  private _unlockState!: IUnlockState;
-
   @lazyInject(TYPES.FactionState)
   private _factionState!: IFactionState;
 
@@ -37,16 +34,15 @@ export class ReachedMilestonesState implements IReachedMilestonesState {
   }
 
   reachMilestone(milestone: Milestone) {
-    if (!this._unlockedMilestones.has(milestone)) {
-      this._unlockedMilestones.add(milestone);
-
-      this._unlockState.requestRecalculation();
-
-      this._notificationsState.pushNotification(
-        NotificationType.milestoneReached,
-        MILESTONE_TEXTS[milestone].message(),
-      );
+    if (this.isMilestoneReached(milestone)) {
+      return false;
     }
+
+    this._unlockedMilestones.add(milestone);
+
+    this._notificationsState.pushNotification(NotificationType.milestoneReached, MILESTONE_TEXTS[milestone].message());
+
+    return true;
   }
 
   listReachedMilestones(): Milestone[] {
@@ -65,7 +61,7 @@ export class ReachedMilestonesState implements IReachedMilestonesState {
         return this.isMilestoneReached(Milestone.unlockedConnectivity);
       case DistrictTypeRewardParameter.influence:
         return (
-          this._factionState.currentFactionValues.playstyle === 'captureCity' &&
+          this._factionState.currentFactionValues.playstyle === FactionPlaystyle.captureCity &&
           this.isMilestoneReached(Milestone.unlockedInfluence)
         );
       case DistrictTypeRewardParameter.rewards:
