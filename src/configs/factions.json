@@ -31,7 +31,7 @@
   "wsa": {
     "playstyle": "captureCity",
     "loanedItems": {
-      "programs": ["predictiveComputator", "contractAutostarter"],
+      "programs": [],
       "cloneTemplates": []
     },
     "specialItems": {
@@ -39,7 +39,7 @@
       "cloneTemplates": []
     },
     "activities": {
-      "contracts": ["guarding"]
+      "contracts": []
     }
   }
 }

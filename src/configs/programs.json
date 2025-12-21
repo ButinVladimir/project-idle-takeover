@@ -5,17 +5,17 @@
     "completionPoints": 0,
     "levelSpeedBoost": { "base": 1, "multiplier": 0 },
     "coreSpeedBoost": { "base": 1, "multiplier": 0 },
-    "cost": { "multiplier": 30, "base": 1.1, "baseTier": 10000 },
+    "cost": { "multiplier": 30, "base": 1.15, "baseTier": 1 },
     "requiredMilestones": [],
     "money": {
-      "main": { "base": 0.01, "multiplier": 0.01, "baseTier": 100 },
-      "ram": { "base": 0, "multiplier": 0.1 },
-      "cores": { "base": 0, "multiplier": 1 }
+      "main": { "base": 1, "multiplier": 1, "baseTier": 1 },
+      "ram": { "base": -4, "multiplier": 5 },
+      "cores": { "base": -9, "multiplier": 10 }
     },
     "developmentPoints": {
-      "main": { "base": 0.01, "multiplier": 0.01, "baseTier": 100 },
-      "ram": { "base": 0, "multiplier": 0.1 },
-      "cores": { "base": 0, "multiplier": 1 }
+      "main": { "base": 1, "multiplier": 1, "baseTier": 1 },
+      "ram": { "base": -4, "multiplier": 5 },
+      "cores": { "base": -9, "multiplier": 10 }
     }
   },
   "predictiveComputator": {

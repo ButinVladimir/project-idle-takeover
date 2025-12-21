@@ -1,33 +1,33 @@
 {
   "$schema": "./schemas/story-events.json",
-  "tutorial_1": {
+  "tutorial_intro": {
     "requirements": {
       "level": 0
     },
-    "messages": ["disclaimer", "tutorial_1_1", "tutorial_1_2", "tutorial_1_3"]
+    "messages": ["disclaimer", "tutorial_intro_1", "tutorial_intro_2", "tutorial_intro_3"]
   },
-  "tutorial_2": {
+  "tutorial_unlock_mainframe_programs": {
     "requirements": {
       "level": 1
     },
-    "messages": ["tutorial_2_1"],
+    "messages": ["tutorial_unlock_mainframe_programs"],
     "milestones": ["unlockedMainframePrograms"],
     "rewardDesigns": {
       "programs": ["shareServer"]
     }
   },
-  "tutorial_level_3": {
+  "tutorial_unlock_mainframe_hardware": {
     "requirements": {
       "level": 4
     },
-    "messages": ["tutorial_3_1"],
+    "messages": ["tutorial_unlock_mainframe_hardware"],
     "milestones": ["unlockedMainframeHardware"]
   },
-  "tutorial_level_4": {
+  "tutorial_unlock_company_management": {
     "requirements": {
-      "level": 9
+      "level": 14
     },
-    "messages": ["tutorial_4_1"],
+    "messages": ["tutorial_unlock_company_management"],
     "milestones": ["unlockedCompanyManagement"],
     "rewardDesigns": {
       "cloneTemplates": ["anthrodrone"]

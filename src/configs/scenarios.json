@@ -16,28 +16,28 @@
           "type": "residential",
           "tier": {
             "min": 0,
-            "max": 1
+            "max": 0
           }
         },
         {
           "type": "residential",
           "tier": {
             "min": 0,
-            "max": 2
+            "max": 0
           }
         },
         {
           "type": "residential",
           "tier": {
             "min": 0,
-            "max": 3
+            "max": 0
           }
         },
         {
           "type": "residential",
           "tier": {
             "min": 0,
-            "max": 4
+            "max": 0
           }
         }
       ],
@@ -45,13 +45,13 @@
         {
           "name": "scavs",
           "startingDistrict": 0,
-          "controlledArea": 5000,
+          "controlledArea": 1000,
           "canBeJoined": false
         },
         {
           "name": "wsa",
           "startingDistrict": 4,
-          "controlledArea": 5000,
+          "controlledArea": 1000,
           "canBeJoined": true
         }
       ],
@@ -59,7 +59,7 @@
       "startingDistrict": 0
     },
     "startingValues": {
-      "money": 100000000000,
+      "money": 0,
       "developmentLevel": 0,
       "synchronization": 0,
       "experienceShareMultiplier": 1
@@ -68,28 +68,28 @@
       "basePerformanceLevel": 0,
       "baseCoresLevel": 1,
       "baseRamLevel": 1,
-      "performancePrice": { "multiplier": 50, "base": 1.3 },
-      "ramPrice": { "multiplier": 500, "base": 1.3 },
-      "coresPrice": { "multiplier": 10000, "base": 5 }
+      "performancePrice": { "multiplier": 100, "base": 1.1 },
+      "ramPrice": { "multiplier": 500, "base": 1.25 },
+      "coresPrice": { "multiplier": 10000, "base": 1.4 }
     },
     "mainframeSoftware": {
       "performanceBoost": { "base": 1, "multiplier": 0.1 },
       "startingPrograms": ["shareServer"],
       "minProcessCompletionTime": 1000
     },
-    "developmentLevelRequirements": { "multiplier": 30, "base": 1.5 },
+    "developmentLevelRequirements": { "multiplier": 30, "base": 1.2 },
     "programMultipliers": {
       "money": {
-        "multiplier": 1,
-        "exponent": 1
+        "multiplier": 0.001,
+        "exponent": 0.333
       },
       "developmentPoints": {
-        "multiplier": 1,
-        "exponent": 1
+        "multiplier": 0.001,
+        "exponent": 0.333
       },
       "connectivity": {
         "multiplier": 1,
-        "exponent": 0.5
+        "exponent": 1
       },
       "codeBase": {
         "multiplier": 1,
@@ -105,11 +105,11 @@
       },
       "processCompletionSpeed": {
         "multiplier": 1,
-        "exponent": 0.3
+        "exponent": 1
       },
       "experienceShareMultiplier": {
         "multiplier": 1,
-        "exponent": 0.9
+        "exponent": 1
       }
     },
     "multiplierParameterBases": {
@@ -118,26 +118,10 @@
       "rewards": 2
     },
     "storyEvents": [
-      "tutorial_1",
-      "tutorial_2",
-      "tutorial_level_3",
-      "tutorial_level_4",
-      "tutorial_level_5",
-      "tutorial_level_6",
-      "tutorial_level_7",
-      "tutorial_level_8",
-      "tutorial_level_9",
-      "tutorial_level_10",
-      "tutorial_level_11",
-      "tutorial_level_12",
-      "tutorial_level_13",
-      "tutorial_level_14",
-      "tutorial_level_15",
-      "tutorial_level_16",
-      "tutorial_level_17",
-      "tutorial_level_18",
-      "tutorial_level_19",
-      "tutorial_level_20"
+      "tutorial_intro",
+      "tutorial_unlock_mainframe_programs",
+      "tutorial_unlock_mainframe_hardware",
+      "tutorial_unlock_company_management"
     ]
   }
 }

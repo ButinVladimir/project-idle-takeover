@@ -21,12 +21,11 @@ export class CircuitDesignerProgram extends BaseProgram {
     const programData = typedPrograms[this.name];
     const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.computationalBase;
 
-    return Math.pow(
+    return (
       multiplier *
-        this.globalState.rewards.multiplierByProgram *
-        threads *
-        calculateTierLinear(this.level, this.tier, programData.computationalBase),
-      exponent,
+      this.globalState.rewards.multiplierByProgram *
+      threads *
+      Math.pow(calculateTierLinear(this.level, this.tier, programData.computationalBase), exponent)
     );
   }
 }

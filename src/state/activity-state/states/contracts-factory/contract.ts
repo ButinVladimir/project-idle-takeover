@@ -136,13 +136,11 @@ export class Contract implements IContract {
     const rewardsModifier = this._district.parameters.rewards.totalMultiplier;
     const districtTypeModifier = this._district.template.parameters[parameter];
 
-    const baseDelta = Math.pow(
+    const baseDelta =
+      calculatePower(this._globalState.threat.level, contractModifier) *
       rewardsModifier *
-        cloneParametersModifier *
-        calculatePower(this._globalState.threat.level, contractModifier) *
-        calculatePower(this._district.parameters.influence.tier, districtTypeModifier.progression),
-      districtTypeModifier.exponent,
-    );
+      calculatePower(this._district.parameters.influence.tier, districtTypeModifier.progression) *
+      Math.pow(cloneParametersModifier, districtTypeModifier.exponent);
 
     switch (parameter) {
       case DistrictTypeRewardParameter.money:

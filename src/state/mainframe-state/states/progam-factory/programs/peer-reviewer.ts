@@ -19,18 +19,20 @@ export class PeerReviewerProgram extends BaseProgram {
     const programData = typedPrograms[this.name];
     const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.experienceShareMultiplier;
 
-    return Math.pow(
+    return (
       1 +
-        multiplier *
-          this.globalState.rewards.multiplierByProgram *
+      multiplier *
+        this.globalState.rewards.multiplierByProgram *
+        Math.pow(
           calculateTierLinear(this.level, this.tier, programData.cloneExperience.main) *
-          calculateLinear(
-            this.mainframeState.hardware.performance.totalLevel,
-            this.scenarioState.currentValues.mainframeSoftware.performanceBoost,
-          ) *
-          calculateLinear(usedRam, programData.cloneExperience.ram) *
-          calculateLinear(threads, programData.cloneExperience.cores),
-      exponent,
+            calculateLinear(
+              this.mainframeState.hardware.performance.totalLevel,
+              this.scenarioState.currentValues.mainframeSoftware.performanceBoost,
+            ) *
+            calculateLinear(usedRam, programData.cloneExperience.ram) *
+            calculateLinear(threads, programData.cloneExperience.cores),
+          exponent,
+        )
     );
   }
 }

@@ -31,7 +31,7 @@
     "rewards": {
       "experience": { "multiplier": 0.001, "base": 1 },
       "money": { "multiplier": 0.001, "base": 1 },
-      "developmentPoints": { "multiplier": 0.01, "base": 1 },
+      "developmentPoints": { "multiplier": 0.005, "base": 1 },
       "influence": { "multiplier": 0.001, "base": 1 }
     }
   },

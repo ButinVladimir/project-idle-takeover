@@ -19,18 +19,20 @@ export class PredictiveComputatorProgram extends BaseProgram {
     const programData = typedPrograms[this.name];
     const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.processCompletionSpeed;
 
-    return Math.pow(
+    return (
       1 +
-        multiplier *
-          this.globalState.rewards.multiplierByProgram *
+      multiplier *
+        this.globalState.rewards.multiplierByProgram *
+        Math.pow(
           calculateTierLinear(this.level, this.tier, programData.programCompletionSpeed.main) *
-          calculateLinear(
-            this.mainframeState.hardware.performance.totalLevel,
-            this.scenarioState.currentValues.mainframeSoftware.performanceBoost,
-          ) *
-          calculateLinear(usedRam, programData.programCompletionSpeed.ram) *
-          calculateLinear(threads, programData.programCompletionSpeed.cores),
-      exponent,
+            calculateLinear(
+              this.mainframeState.hardware.performance.totalLevel,
+              this.scenarioState.currentValues.mainframeSoftware.performanceBoost,
+            ) *
+            calculateLinear(usedRam, programData.programCompletionSpeed.ram) *
+            calculateLinear(threads, programData.programCompletionSpeed.cores),
+          exponent,
+        )
     );
   }
 }
