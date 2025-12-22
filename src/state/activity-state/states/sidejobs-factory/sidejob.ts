@@ -71,8 +71,9 @@ export class Sidejob implements ISidejob {
     }
 
     return (
+      1 +
       calculatePower(this._globalState.threat.level, this.sidejobTemplate.rewardModifiers.attributes[attribute]) *
-      this._assignedClone.getTotalAttributeValue(attribute)
+        this._assignedClone.getTotalAttributeValue(attribute)
     );
   }
 
@@ -82,8 +83,9 @@ export class Sidejob implements ISidejob {
     }
 
     return (
+      1 +
       calculatePower(this._globalState.threat.level, this.sidejobTemplate.rewardModifiers.skills[skill]) *
-      this._assignedClone.getTotalSkillValue(skill)
+        this._assignedClone.getTotalSkillValue(skill)
     );
   }
 

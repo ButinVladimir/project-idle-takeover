@@ -5,24 +5,24 @@
     "primaryActivityTimeMultipliers": {
       "contractGenerationTime": 5
     },
-    "synchronization": { "multiplier": 10, "base": 1.1 },
+    "synchronization": { "multiplier": 1, "base": 1.1 },
     "parameters": {
-      "experience": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
-      "money": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
-      "developmentPoints": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
+      "experience": { "progression": { "multiplier": 0.001, "base": 1.15 }, "exponent": 1 },
+      "money": { "progression": { "multiplier": 0.001, "base": 1.15 }, "exponent": 1 },
+      "developmentPoints": { "progression": { "multiplier": 0.001, "base": 1.15 }, "exponent": 1 },
       "influence": {
-        "progression": { "multiplier": 1, "base": 1 },
+        "progression": { "multiplier": 0.001, "base": 1 },
         "exponent": 1
       },
-      "connectivity": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 0.5 },
-      "codeBase": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
-      "computationalBase": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
-      "rewards": { "progression": { "multiplier": 1, "base": 1.5 }, "exponent": 1 },
-      "processCompletionSpeed": { "progression": { "multiplier": 1, "base": 1.1 }, "exponent": 0.3 },
-      "experienceShareMultiplier": { "progression": { "multiplier": 1, "base": 1.1 }, "exponent": 0.9 }
+      "connectivity": { "progression": { "multiplier": 0.001, "base": 1.15 }, "exponent": 0.5 },
+      "codeBase": { "progression": { "multiplier": 0.001, "base": 1.15 }, "exponent": 1 },
+      "computationalBase": { "progression": { "multiplier": 0.001, "base": 1.15 }, "exponent": 1 },
+      "rewards": { "progression": { "multiplier": 0.001, "base": 1.15 }, "exponent": 1 },
+      "processCompletionSpeed": { "progression": { "multiplier": 1, "base": 1.15 }, "exponent": 1 },
+      "experienceShareMultiplier": { "progression": { "multiplier": 1, "base": 1.15 }, "exponent": 1 }
     },
     "requirements": {
-      "influence": { "multiplier": 1000, "base": 10 }
+      "influence": { "multiplier": 1, "base": 10 }
     },
     "multiplierParameterBases": {
       "codeBase": 2,

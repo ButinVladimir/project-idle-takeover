@@ -5,17 +5,17 @@
     "completionPoints": 0,
     "levelSpeedBoost": { "base": 1, "multiplier": 0 },
     "coreSpeedBoost": { "base": 1, "multiplier": 0 },
-    "cost": { "multiplier": 30, "base": 1.15, "baseTier": 1 },
+    "cost": { "multiplier": 30, "base": 1.1, "baseTier": 1 },
     "requiredMilestones": [],
     "money": {
       "main": { "base": 1, "multiplier": 1, "baseTier": 1 },
-      "ram": { "base": -4, "multiplier": 5 },
-      "cores": { "base": -9, "multiplier": 10 }
+      "ram": { "base": 0, "multiplier": 1 },
+      "cores": { "base": -1, "multiplier": 2 }
     },
     "developmentPoints": {
       "main": { "base": 1, "multiplier": 1, "baseTier": 1 },
-      "ram": { "base": -4, "multiplier": 5 },
-      "cores": { "base": -9, "multiplier": 10 }
+      "ram": { "base": 0, "multiplier": 1 },
+      "cores": { "base": -1, "multiplier": 2 }
     }
   },
   "predictiveComputator": {
@@ -63,13 +63,13 @@
     "computationalBase": { "base": 1, "multiplier": 1.1, "baseTier": 1000 }
   },
   "informationCollector": {
-    "ram": 5,
-    "completionPoints": 300000,
+    "ram": 1,
+    "completionPoints": 150000,
     "levelSpeedBoost": { "base": 1, "multiplier": 0 },
-    "coreSpeedBoost": { "base": 1, "multiplier": 0.1 },
-    "cost": { "multiplier": 20000, "base": 1.15, "baseTier": 1000000 },
+    "coreSpeedBoost": { "base": 1, "multiplier": 0.5 },
+    "cost": { "multiplier": 1000, "base": 1.25, "baseTier": 1 },
     "requiredMilestones": ["unlockedConnectivity"],
-    "connectivity": { "base": 1, "multiplier": 1.1, "baseTier": 1000 }
+    "connectivity": { "base": 150000, "multiplier": 30000, "baseTier": 1 }
   },
   "dealMaker": {
     "ram": 20,

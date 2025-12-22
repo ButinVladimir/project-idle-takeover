@@ -2,8 +2,8 @@
   "$schema": "./schemas/scenarios.json",
   "tutorial": {
     "map": {
-      "width": 100,
-      "height": 100,
+      "width": 10,
+      "height": 10,
       "districts": [
         {
           "type": "residential",
@@ -45,13 +45,13 @@
         {
           "name": "scavs",
           "startingDistrict": 0,
-          "controlledArea": 1000,
+          "controlledArea": 20,
           "canBeJoined": false
         },
         {
           "name": "wsa",
           "startingDistrict": 4,
-          "controlledArea": 1000,
+          "controlledArea": 20,
           "canBeJoined": true
         }
       ],
@@ -61,16 +61,16 @@
     "startingValues": {
       "money": 0,
       "developmentLevel": 0,
-      "synchronization": 0,
+      "synchronization": 10,
       "experienceShareMultiplier": 1
     },
     "mainframeHardware": {
       "basePerformanceLevel": 0,
       "baseCoresLevel": 1,
       "baseRamLevel": 1,
-      "performancePrice": { "multiplier": 100, "base": 1.1 },
+      "performancePrice": { "multiplier": 60, "base": 1.1 },
       "ramPrice": { "multiplier": 500, "base": 1.25 },
-      "coresPrice": { "multiplier": 10000, "base": 1.4 }
+      "coresPrice": { "multiplier": 100000, "base": 1.4 }
     },
     "mainframeSoftware": {
       "performanceBoost": { "base": 1, "multiplier": 0.1 },
@@ -89,7 +89,7 @@
       },
       "connectivity": {
         "multiplier": 1,
-        "exponent": 1
+        "exponent": 0.5
       },
       "codeBase": {
         "multiplier": 1,
@@ -121,7 +121,10 @@
       "tutorial_intro",
       "tutorial_unlock_mainframe_programs",
       "tutorial_unlock_mainframe_hardware",
-      "tutorial_unlock_company_management"
+      "tutorial_unlock_company_management",
+      "tutorial_unlock_connectivity",
+      "tutorial_unlock_factions",
+      "tutorial_unlock_influence"
     ]
   }
 }

@@ -90,9 +90,9 @@ The higher district tier is, the better rewards are from performing actions with
   },
   [Milestone.unlockedFactions]: {
     title: () => msg('Unlocked factions'),
-    hint: () => msg('Factions and faction power are now available'),
+    hint: () => msg('Factions are now available'),
     message: () =>
-      msg(`Factions and faction power are now available.
+      msg(`Factions are now available.
 Joining a faction gives access to it's loaned designs and contracts.`),
   },
   [Milestone.unlockedPrimaryActivity]: {

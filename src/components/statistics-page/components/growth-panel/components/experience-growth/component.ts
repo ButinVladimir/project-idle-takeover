@@ -2,7 +2,7 @@ import { html } from 'lit';
 import { localized, msg } from '@lit/localize';
 import { map } from 'lit/directives/map.js';
 import { customElement, queryAll } from 'lit/decorators.js';
-import { BaseComponent } from '@shared/index';
+import { BaseComponent, MS_IN_SECOND } from '@shared/index';
 import { IClone } from '@state/clones-state';
 import { StatisticsExperienceGrowthController } from './controller';
 import { statisticsPanelContentStyle } from '../../../../styles';
@@ -47,7 +47,7 @@ export class StatisticsExperienceGrowth extends BaseComponent {
 
     this._cloneValueNodes.forEach((element) => {
       const cloneId = element.dataset.clone!;
-      const value = this._controller.getGrowthByClone(cloneId);
+      const value = this._controller.getGrowthByClone(cloneId) * MS_IN_SECOND;
 
       element.textContent = formatter.formatNumberFloat(value);
     });

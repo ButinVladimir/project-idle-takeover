@@ -25,7 +25,7 @@
   },
   "tutorial_unlock_company_management": {
     "requirements": {
-      "level": 14
+      "level": 9
     },
     "messages": ["tutorial_unlock_company_management"],
     "milestones": ["unlockedCompanyManagement"],
@@ -35,6 +35,35 @@
     "unlockActivities": {
       "sidejobs": ["oddjob"]
     }
+  },
+  "tutorial_unlock_connectivity": {
+    "requirements": {
+      "level": 19
+    },
+    "messages": ["tutorial_unlock_connectivity"],
+    "milestones": ["unlockedConnectivity"],
+    "rewardDesigns": {
+      "programs": ["informationCollector"]
+    },
+    "unlockActivities": {
+      "sidejobs": ["infoBroker"]
+    }
+  },
+  "tutorial_unlock_factions": {
+    "requirements": {
+      "level": 29
+    },
+    "messages": ["tutorial_unlock_factions"],
+    "milestones": ["unlockedFactions"],
+    "specialEvents": ["factionsAvailable"]
+  },
+  "tutorial_unlock_influence": {
+    "requirements": {
+      "level": 29,
+      "faction": "wsa"
+    },
+    "messages": ["tutorial_unlock_influence"],
+    "milestones": ["unlockedInfluence"]
   },
   "tutorial_level_5": {
     "requirements": {
@@ -54,19 +83,6 @@
     "milestones": ["unlockedPrimaryActivity", "unlockedInfluence"],
     "unlockActivities": {
       "contracts": ["guarding"]
-    }
-  },
-  "tutorial_level_7": {
-    "requirements": {
-      "level": 19
-    },
-    "messages": ["tutorial_7_1"],
-    "milestones": ["unlockedConnectivity"],
-    "rewardDesigns": {
-      "programs": ["informationCollector"]
-    },
-    "unlockActivities": {
-      "sidejobs": ["infoBroker"]
     }
   },
   "tutorial_level_8": {
@@ -144,13 +160,6 @@
     "rewardDesigns": {
       "programs": ["mainframeProgramsAutobuyer"]
     }
-  },
-  "tutorial_level_15": {
-    "requirements": {
-      "level": 4
-    },
-    "milestones": ["unlockedFactions"],
-    "specialEvents": ["factionsAvailable"]
   },
   "tutorial_level_16": {
     "requirements": {

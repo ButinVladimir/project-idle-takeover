@@ -1,71 +1,71 @@
 {
   "$schema": "./schemas/clone-templates.json",
   "anthrodrone": {
-    "cost": { "multiplier": 1000, "base": 1.2, "baseTier": 1 },
+    "cost": { "multiplier": 500, "base": 1.2, "baseTier": 1 },
     "levelRequirements": { "multiplier": 60, "base": 1.15 },
-    "synchronization": { "multiplier": 10, "baseTier": 1.1 },
+    "synchronization": { "multiplier": 5, "baseTier": 1.1 },
     "experienceMultiplier": { "base": 1, "multiplier": 0.1, "baseTier": 1 },
     "attributes": {
       "strength": {
         "base": 1,
-        "multiplier": 0.1,
+        "multiplier": 1,
         "baseTier": 1
       },
       "endurance": {
         "base": 1,
-        "multiplier": 0.1,
+        "multiplier": 1,
         "baseTier": 1
       },
       "agility": {
         "base": 1,
-        "multiplier": 0.1,
+        "multiplier": 1,
         "baseTier": 1
       },
       "perception": {
         "base": 1,
-        "multiplier": 0.1,
+        "multiplier": 1,
         "baseTier": 1
       },
       "intellect": {
         "base": 1,
-        "multiplier": 0.1,
+        "multiplier": 1,
         "baseTier": 1
       },
       "charisma": {
         "base": 1,
-        "multiplier": 0.1,
+        "multiplier": 1,
         "baseTier": 1
       }
     },
     "skills": {
       "closeCombat": {
         "base": 1,
-        "multiplier": 0.1,
+        "multiplier": 1,
         "baseTier": 1
       },
       "rangedCombat": {
         "base": 1,
-        "multiplier": 0.1,
+        "multiplier": 1,
         "baseTier": 1
       },
       "engineering": {
         "base": 1,
-        "multiplier": 0.1,
+        "multiplier": 1,
         "baseTier": 1
       },
       "hacking": {
         "base": 1,
-        "multiplier": 0.1,
+        "multiplier": 1,
         "baseTier": 1
       },
       "stealth": {
         "base": 1,
-        "multiplier": 0.1,
+        "multiplier": 1,
         "baseTier": 1
       },
       "diplomacy": {
         "base": 1,
-        "multiplier": 0.1,
+        "multiplier": 1,
         "baseTier": 1
       }
     }

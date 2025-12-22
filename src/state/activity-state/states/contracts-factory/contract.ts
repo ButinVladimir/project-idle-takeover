@@ -99,8 +99,9 @@ export class Contract implements IContract {
     }
 
     return (
+      1 +
       calculatePower(this._globalState.threat.level, this.contractTemplate.rewardModifiers.attributes[attribute]) *
-      this.getAttributeSum(attribute)
+        this.getAttributeSum(attribute)
     );
   }
 
@@ -110,8 +111,9 @@ export class Contract implements IContract {
     }
 
     return (
+      1 +
       calculatePower(this._globalState.threat.level, this.contractTemplate.rewardModifiers.skills[skill]) *
-      this.getSkillSum(skill)
+        this.getSkillSum(skill)
     );
   }
 
