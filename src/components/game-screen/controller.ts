@@ -59,7 +59,7 @@ export class GameScreenController extends BaseController {
   }
 
   private startContracts() {
-    this.automationState.contracts.startAll();
+    this.automationState.contracts.starter.startAllAssignments();
   }
 
   private handleKeyDown = (event: KeyboardEvent) => {

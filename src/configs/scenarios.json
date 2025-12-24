@@ -61,7 +61,7 @@
     "startingValues": {
       "money": 0,
       "developmentLevel": 0,
-      "synchronization": 10,
+      "synchronization": 20,
       "experienceShareMultiplier": 1
     },
     "mainframeHardware": {
@@ -113,9 +113,9 @@
       }
     },
     "multiplierParameterBases": {
-      "codeBase": 2,
-      "computationalBase": 2,
-      "rewards": 2
+      "codeBase": 929.51600309,
+      "computationalBase": 929.51600309,
+      "rewards": 929.51600309
     },
     "storyEvents": [
       "tutorial_intro",
@@ -124,7 +124,9 @@
       "tutorial_unlock_company_management",
       "tutorial_unlock_connectivity",
       "tutorial_unlock_factions",
-      "tutorial_unlock_influence"
+      "tutorial_unlock_influence",
+      "tutorial_unlock_rewards",
+      "tutorial_unlock_contracts"
     ]
   }
 }

@@ -1,4 +1,4 @@
-import { Attribute, Skill, calculatePower, ATTRIBUTES, SKILLS, DistrictTypeRewardParameter } from '@shared/index';
+import { Attribute, Skill, calculatePower, ATTRIBUTES, SKILLS, DistrictTypeRewardParameter, calculateLinear } from '@shared/index';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IGlobalState } from '@state/global-state';
@@ -113,7 +113,7 @@ export class Sidejob implements ISidejob {
     const baseDelta =
       calculatePower(this._globalState.threat.level, sidejobModifier) *
       rewardsModifier *
-      calculatePower(this._district.parameters.influence.tier, districtTypeModifier.progression) *
+      calculateLinear(this._district.parameters.influence.tier, districtTypeModifier.progression) *
       Math.pow(cloneParametersModifier, districtTypeModifier.exponent);
 
     switch (parameter) {

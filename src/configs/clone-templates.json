@@ -1,9 +1,9 @@
 {
   "$schema": "./schemas/clone-templates.json",
   "anthrodrone": {
-    "cost": { "multiplier": 500, "base": 1.2, "baseTier": 1 },
-    "levelRequirements": { "multiplier": 60, "base": 1.15 },
-    "synchronization": { "multiplier": 5, "baseTier": 1.1 },
+    "cost": { "multiplier": 250, "base": 1.15, "baseTier": 1 },
+    "levelRequirements": { "multiplier": 250, "base": 1.2 },
+    "synchronization": { "multiplier": 10, "baseTier": 1.1 },
     "experienceMultiplier": { "base": 1, "multiplier": 0.1, "baseTier": 1 },
     "attributes": {
       "strength": {

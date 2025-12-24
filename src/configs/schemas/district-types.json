@@ -24,8 +24,8 @@
         "required": ["contractGenerationTime"]
       },
       "synchronization": {
-        "$ref": "./common/geometric-progression.json",
-        "description": "District type synchronization modifier (geometric)"
+        "$ref": "./common/linear-progression.json",
+        "description": "District type synchronization modifier (linear)"
       },
       "parameters": {
         "type": "object",
@@ -33,43 +33,43 @@
         "properties": {
           "experience": {
             "$ref": "#/$defs/multiplierParameter",
-            "description": "District type experience modifier (geometric)"
+            "description": "District type experience modifier (linear)"
           },
           "money": {
             "$ref": "#/$defs/multiplierParameter",
-            "description": "District type money modifier (geometric)"
+            "description": "District type money modifier (linear)"
           },
           "developmentPoints": {
             "$ref": "#/$defs/multiplierParameter",
-            "description": "District type development points modifier (geometric)"
+            "description": "District type development points modifier (linear)"
           },
           "influence": {
             "$ref": "#/$defs/multiplierParameter",
-            "description": "District type faction influence modifier (geometric)"
+            "description": "District type faction influence modifier (linear)"
           },
           "connectivity": {
             "$ref": "#/$defs/multiplierParameter",
-            "description": "District type connectivity modifier (geometric)"
+            "description": "District type connectivity modifier (linear)"
           },
           "codeBase": {
             "$ref": "#/$defs/multiplierParameter",
-            "description": "District type code base modifier (geometric)"
+            "description": "District type code base modifier (linear)"
           },
           "computationalBase": {
             "$ref": "#/$defs/multiplierParameter",
-            "description": "District type computational base modifier (geometric)"
+            "description": "District type computational base modifier (linear)"
           },
           "rewards": {
             "$ref": "#/$defs/multiplierParameter",
-            "description": "District type rewards modifier (geometric)"
+            "description": "District type rewards modifier (linear)"
           },
           "processCompletionSpeed": {
             "$ref": "#/$defs/multiplierParameter",
-            "description": "District type process completion speed modifier (geometric)"
+            "description": "District type process completion speed modifier (linear)"
           },
           "experienceShareMultiplier": {
             "$ref": "#/$defs/multiplierParameter",
-            "description": "District type experience share multiplier modifier (geometric)"
+            "description": "District type experience share multiplier modifier (linear)"
           }
         },
         "required": [
@@ -129,8 +129,8 @@
       "type": "object",
       "properties": {
         "progression": {
-          "$ref": "./common/geometric-progression.json",
-          "description": "Parameter progression (geometric)"
+          "$ref": "./common/linear-progression.json",
+          "description": "Parameter progression (linear)"
         },
         "exponent": {
           "type": "number",

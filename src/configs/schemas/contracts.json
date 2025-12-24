@@ -181,7 +181,7 @@
         "properties": {
           "experience": {
             "$ref": "./common/geometric-progression.json",
-            "description": "Contract experience reward (geometric)"
+            "description": "Contract experience reward (linear)"
           },
           "money": {
             "$ref": "./common/geometric-progression.json",

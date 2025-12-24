@@ -7,8 +7,8 @@ export const CONTRACT_TEXTS: Record<
     overview: () => string;
   }
 > = {
-  guarding: {
-    title: () => msg('Guarding'),
-    overview: () => msg(`Performing guard duties.`),
+  security: {
+    title: () => msg('Security'),
+    overview: () => msg(`Performing security duties.`),
   },
 };

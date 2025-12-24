@@ -4,7 +4,8 @@
     "requirements": {
       "level": 0
     },
-    "messages": ["disclaimer", "tutorial_intro_1", "tutorial_intro_2", "tutorial_intro_3"]
+    "messages": ["disclaimer", "tutorial_intro_1", "tutorial_intro_2", "tutorial_intro_3"],
+    "specialEvents": ["districtUnlocked"]
   },
   "tutorial_unlock_mainframe_programs": {
     "requirements": {
@@ -63,7 +64,36 @@
       "faction": "wsa"
     },
     "messages": ["tutorial_unlock_influence"],
-    "milestones": ["unlockedInfluence"]
+    "milestones": ["unlockedInfluence"],
+    "specialEvents": ["districtUnlocked"]
+  },
+  "tutorial_unlock_rewards": {
+    "requirements": {
+      "capturedDistrictsCount": 1,
+      "faction": "wsa"
+    },
+    "messages": ["tutorial_unlock_rewards"],
+    "milestones": ["unlockedRewards"],
+    "rewardDesigns": {
+      "programs": ["dealMaker"]
+    },
+    "unlockActivities": {
+      "sidejobs": ["mediator"]
+    },
+    "specialEvents": ["districtUnlocked"]
+  },
+  "tutorial_unlock_contracts": {
+    "requirements": {
+      "level": 54,
+      "capturedDistrictsCount": 2,
+      "faction": "wsa"
+    },
+    "messages": ["tutorial_unlock_rewards"],
+    "milestones": ["unlockedPrimaryActivity"],
+    "unlockActivities": {
+      "contracts": ["security"]
+    },
+    "specialEvents": ["districtUnlocked"]
   },
   "tutorial_level_5": {
     "requirements": {
@@ -82,8 +112,9 @@
     "messages": ["tutorial_6_1"],
     "milestones": ["unlockedPrimaryActivity", "unlockedInfluence"],
     "unlockActivities": {
-      "contracts": ["guarding"]
-    }
+      "contracts": ["security"]
+    },
+    "specialEvents": ["districtUnlocked"]
   },
   "tutorial_level_8": {
     "requirements": {

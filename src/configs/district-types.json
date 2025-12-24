@@ -5,29 +5,29 @@
     "primaryActivityTimeMultipliers": {
       "contractGenerationTime": 5
     },
-    "synchronization": { "multiplier": 1, "base": 1.1 },
+    "synchronization": { "base": 0, "multiplier": 0.1 },
     "parameters": {
-      "experience": { "progression": { "multiplier": 0.001, "base": 1.15 }, "exponent": 1 },
-      "money": { "progression": { "multiplier": 0.001, "base": 1.15 }, "exponent": 1 },
-      "developmentPoints": { "progression": { "multiplier": 0.001, "base": 1.15 }, "exponent": 1 },
+      "experience": { "progression": { "base": 0.001, "multiplier": 0.001 }, "exponent": 1 },
+      "money": { "progression": { "base": 0.001, "multiplier": 0.001 }, "exponent": 1 },
+      "developmentPoints": { "progression": { "base": 0.001, "multiplier": 0.001 }, "exponent": 1 },
       "influence": {
-        "progression": { "multiplier": 0.001, "base": 1 },
+        "progression": { "base": 0.001, "multiplier": 0 },
         "exponent": 1
       },
-      "connectivity": { "progression": { "multiplier": 0.001, "base": 1.15 }, "exponent": 0.5 },
-      "codeBase": { "progression": { "multiplier": 0.001, "base": 1.15 }, "exponent": 1 },
-      "computationalBase": { "progression": { "multiplier": 0.001, "base": 1.15 }, "exponent": 1 },
-      "rewards": { "progression": { "multiplier": 0.001, "base": 1.15 }, "exponent": 1 },
-      "processCompletionSpeed": { "progression": { "multiplier": 1, "base": 1.15 }, "exponent": 1 },
-      "experienceShareMultiplier": { "progression": { "multiplier": 1, "base": 1.15 }, "exponent": 1 }
+      "connectivity": { "progression": { "base": 0.001, "multiplier": 0.001 }, "exponent": 0.5 },
+      "codeBase": { "progression": { "base": 0.001, "multiplier": 0.001 }, "exponent": 1 },
+      "computationalBase": { "progression": { "base": 0.001, "multiplier": 0.001 }, "exponent": 1 },
+      "rewards": { "progression": { "base": 0.001, "multiplier": 0.001 }, "exponent": 1 },
+      "processCompletionSpeed": { "progression": { "base": 1, "multiplier": 1 }, "exponent": 1 },
+      "experienceShareMultiplier": { "progression": { "base": 1, "multiplier": 1 }, "exponent": 1 }
     },
     "requirements": {
-      "influence": { "multiplier": 1, "base": 10 }
+      "influence": { "multiplier": 60, "base": 1.4 }
     },
     "multiplierParameterBases": {
-      "codeBase": 2,
-      "computationalBase": 2,
-      "rewards": 2
+      "codeBase": 19.17463031,
+      "computationalBase": 19.17463031,
+      "rewards": 19.17463031
     }
   },
   "corpoDistrict": {

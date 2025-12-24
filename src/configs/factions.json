@@ -39,7 +39,7 @@
       "cloneTemplates": []
     },
     "activities": {
-      "contracts": []
+      "contracts": ["security"]
     }
   }
 }
