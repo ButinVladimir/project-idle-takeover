@@ -10,9 +10,21 @@ export const CLONE_NAMES: Record<string, () => string> = {
 };
 
 export const DISTRICT_NAMES: Record<string, () => string> = {
-  Banjica: () => msg('Banjica'),
-  Autokomanda: () => msg('Autokomanda'),
-  Zvezdara: () => msg('Zvezdara'),
-  Mirievo: () => msg('Mirievo'),
+  Barajevo: () => msg('Barajevo'),
+  Čukarica: () => msg('Čukarica'),
+  Grocka: () => msg('Grocka'),
+  Lazarevac: () => msg('Lazarevac'),
+  Mladenovac: () => msg('Mladenovac'),
+  'Novi Beograd': () => msg('Novi Beograd'),
+  Obrenovac: () => msg('Obrenovac'),
+  Palilula: () => msg('Palilula'),
+  Rakovica: () => msg('Rakovica'),
+  'Savski Venac': () => msg('Savski Venac'),
+  Sopot: () => msg('Sopot'),
+  'Stari Grad': () => msg('Stari Grad'),
+  Surčin: () => msg('Surčin'),
   Voždovac: () => msg('Voždovac'),
+  Vračar: () => msg('Vračar'),
+  Zemun: () => msg('Zemun'),
+  Zvezdara: () => msg('Zvezdara'),
 };

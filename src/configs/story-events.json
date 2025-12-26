@@ -67,164 +67,138 @@
     "milestones": ["unlockedInfluence"],
     "specialEvents": ["districtUnlocked"]
   },
-  "tutorial_unlock_rewards": {
+  "tutorial_unlock_contracts": {
     "requirements": {
       "capturedDistrictsCount": 1,
       "faction": "wsa"
     },
-    "messages": ["tutorial_unlock_rewards"],
-    "milestones": ["unlockedRewards"],
-    "rewardDesigns": {
-      "programs": ["dealMaker"]
-    },
-    "unlockActivities": {
-      "sidejobs": ["mediator"]
-    },
-    "specialEvents": ["districtUnlocked"]
-  },
-  "tutorial_unlock_contracts": {
-    "requirements": {
-      "level": 54,
-      "capturedDistrictsCount": 2,
-      "faction": "wsa"
-    },
-    "messages": ["tutorial_unlock_rewards"],
+    "messages": ["tutorial_unlock_contracts"],
     "milestones": ["unlockedPrimaryActivity"],
     "unlockActivities": {
       "contracts": ["security"]
     },
     "specialEvents": ["districtUnlocked"]
   },
-  "tutorial_level_5": {
+  "tutorial_unlock_rewards": {
     "requirements": {
-      "level": 14
-    },
-    "messages": ["tutorial_5_1"],
-    "milestones": ["unlockedAutomation"],
-    "rewardDesigns": {
-      "programs": ["cloneLevelAutoupgrader"]
-    }
-  },
-  "tutorial_level_6": {
-    "requirements": {
+      "level": 54,
+      "capturedDistrictsCount": 2,
       "faction": "wsa"
     },
-    "messages": ["tutorial_6_1"],
-    "milestones": ["unlockedPrimaryActivity", "unlockedInfluence"],
-    "unlockActivities": {
-      "contracts": ["security"]
-    },
-    "specialEvents": ["districtUnlocked"]
-  },
-  "tutorial_level_8": {
-    "requirements": {
-      "level": 24
-    },
-    "messages": ["disclaimer_content_end"],
-    "unlockActivities": {
-      "sidejobs": ["mainframeRelay"]
-    }
-  },
-  "tutorial_level_9": {
-    "requirements": {
-      "faction": "wsa",
-      "capturedDistrictsCount": 0
-    },
+    "messages": ["tutorial_unlock_rewards"],
     "milestones": ["unlockedRewards"],
     "rewardDesigns": {
       "programs": ["dealMaker"]
     },
     "unlockActivities": {
       "sidejobs": ["mediator"]
-    }
+    },
+    "specialEvents": ["districtUnlocked"]
   },
-  "tutorial_level_10": {
+  "tutorial_unlock_clone_automation": {
     "requirements": {
-      "capturedDistrictsCount": 1
+      "level": 69,
+      "capturedDistrictsCount": 3,
+      "faction": "wsa"
+    },
+    "messages": ["tutorial_unlock_clone_automation", "disclaimer_content_end"],
+    "milestones": ["unlockedAutomation"],
+    "rewardDesigns": {
+      "programs": ["cloneLevelAutoupgrader"]
+    },
+    "specialEvents": ["districtUnlocked"]
+  },
+  "tutorial_unlock_experience_share": {
+    "requirements": {
+      "level": 74,
+      "capturedDistrictsCount": 4,
+      "faction": "wsa"
+    },
+    "milestones": ["unlockedExperienceShare"],
+    "unlockActivities": {
+      "sidejobs": ["feedAnalyzer"]
+    },
+    "rewardDesigns": {
+      "programs": ["peerReviewer"]
+    },
+    "specialEvents": ["districtUnlocked"]
+  },
+  "tutorial_unlock_mainframe_boost": {
+    "requirements": {
+      "level": 79,
+      "capturedDistrictsCount": 5,
+      "faction": "wsa"
+    },
+    "unlockActivities": {
+      "sidejobs": ["mainframeRelay"]
+    },
+    "rewardDesigns": {
+      "programs": ["predictiveComputator"]
+    },
+    "specialEvents": ["districtUnlocked"]
+  },
+  "tutorial_unlock_computational_base": {
+    "requirements": {
+      "level": 84,
+      "capturedDistrictsCount": 6,
+      "faction": "wsa"
     },
     "milestones": ["unlockedComputationalBase"],
+    "unlockActivities": {
+      "sidejobs": ["computerRepairer"]
+    },
     "rewardDesigns": {
       "programs": ["circuitDesigner"]
     },
-    "unlockActivities": {
-      "sidejobs": ["computerRepairer"]
-    }
+    "specialEvents": ["districtUnlocked"]
   },
-  "tutorial_level_11": {
+  "tutorial_unlock_mainframe_hardware_automation": {
     "requirements": {
-      "capturedDistrictsCount": 2
+      "level": 89,
+      "capturedDistrictsCount": 7,
+      "faction": "wsa"
     },
     "milestones": ["unlockedAutomationMainframeHardware"],
     "rewardDesigns": {
       "programs": ["mainframeHardwareAutobuyer"]
-    }
-  },
-  "tutorial_level_12": {
-    "requirements": {
-      "capturedDistrictsCount": 3
     },
-    "milestones": ["unlockedExperienceShare"],
-    "rewardDesigns": {
-      "programs": ["peerReviewer"]
-    },
-    "unlockActivities": {
-      "sidejobs": ["feedAnalyzer"]
-    }
+    "specialEvents": ["districtUnlocked"]
   },
-  "tutorial_level_13": {
+  "tutorial_unlock_code_base": {
     "requirements": {
-      "capturedDistrictsCount": 4
+      "level": 94,
+      "capturedDistrictsCount": 8,
+      "faction": "wsa"
     },
     "milestones": ["unlockedCodeBase"],
+    "unlockActivities": {
+      "sidejobs": ["freelanceProgrammer"]
+    },
     "rewardDesigns": {
       "programs": ["codeGenerator"]
     },
-    "unlockActivities": {
-      "sidejobs": ["freelanceProgrammer"]
-    }
+    "specialEvents": ["districtUnlocked"]
   },
-  "tutorial_level_14": {
+  "tutorial_unlock_mainframe_programs_automation": {
     "requirements": {
-      "capturedDistrictsCount": 5
+      "level": 99,
+      "capturedDistrictsCount": 9,
+      "faction": "wsa"
     },
     "milestones": ["unlockedAutomationMainframePrograms"],
     "rewardDesigns": {
       "programs": ["mainframeProgramsAutobuyer"]
+    },
+    "specialEvents": ["districtUnlocked"]
+  },
+  "tutorial_unlock_contracts_autostart": {
+    "requirements": {
+      "level": 104,
+      "capturedDistrictsCount": 10,
+      "faction": "wsa"
+    },
+    "rewardDesigns": {
+      "programs": ["contractAutostarter"]
     }
-  },
-  "tutorial_level_16": {
-    "requirements": {
-      "level": 9,
-      "faction": "wsa"
-    },
-    "specialEvents": ["districtUnlocked"]
-  },
-  "tutorial_level_17": {
-    "requirements": {
-      "level": 14,
-      "faction": "wsa"
-    },
-    "specialEvents": ["districtUnlocked"]
-  },
-  "tutorial_level_18": {
-    "requirements": {
-      "level": 19,
-      "faction": "wsa"
-    },
-    "specialEvents": ["districtUnlocked"]
-  },
-  "tutorial_level_19": {
-    "requirements": {
-      "level": 24,
-      "faction": "wsa"
-    },
-    "specialEvents": ["districtUnlocked"]
-  },
-  "tutorial_level_20": {
-    "requirements": {
-      "level": 29,
-      "faction": "wsa"
-    },
-    "specialEvents": ["districtUnlocked"]
   }
 }

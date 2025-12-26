@@ -22,9 +22,9 @@ export class PeerReviewerProgram extends BaseProgram {
     return (
       1 +
       multiplier *
-        this.globalState.rewards.multiplierByProgram *
         Math.pow(
-          calculateTierLinear(this.level, this.tier, programData.cloneExperience.main) *
+          this.globalState.rewards.multiplierByProgram *
+            calculateTierLinear(this.level, this.tier, programData.cloneExperience.main) *
             calculateLinear(
               this.mainframeState.hardware.performance.totalLevel,
               this.scenarioState.currentValues.mainframeSoftware.performanceBoost,

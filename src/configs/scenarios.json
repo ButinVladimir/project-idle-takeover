@@ -2,9 +2,44 @@
   "$schema": "./schemas/scenarios.json",
   "tutorial": {
     "map": {
-      "width": 10,
-      "height": 10,
+      "width": 15,
+      "height": 15,
       "districts": [
+        {
+          "type": "residential",
+          "tier": {
+            "min": 0,
+            "max": 0
+          }
+        },
+        {
+          "type": "residential",
+          "tier": {
+            "min": 0,
+            "max": 0
+          }
+        },
+        {
+          "type": "residential",
+          "tier": {
+            "min": 0,
+            "max": 0
+          }
+        },
+        {
+          "type": "residential",
+          "tier": {
+            "min": 0,
+            "max": 0
+          }
+        },
+        {
+          "type": "residential",
+          "tier": {
+            "min": 0,
+            "max": 0
+          }
+        },
         {
           "type": "residential",
           "tier": {
@@ -50,7 +85,7 @@
         },
         {
           "name": "wsa",
-          "startingDistrict": 4,
+          "startingDistrict": 1,
           "controlledArea": 20,
           "canBeJoined": true
         }
@@ -105,17 +140,17 @@
       },
       "processCompletionSpeed": {
         "multiplier": 1,
-        "exponent": 1
+        "exponent": 0.2
       },
       "experienceShareMultiplier": {
         "multiplier": 1,
-        "exponent": 1
+        "exponent": 0.4
       }
     },
     "multiplierParameterBases": {
-      "codeBase": 929.51600309,
-      "computationalBase": 929.51600309,
-      "rewards": 929.51600309
+      "codeBase": 1609.9689438,
+      "computationalBase": 1609.9689438,
+      "rewards": 1609.9689438
     },
     "storyEvents": [
       "tutorial_intro",
@@ -125,8 +160,16 @@
       "tutorial_unlock_connectivity",
       "tutorial_unlock_factions",
       "tutorial_unlock_influence",
+      "tutorial_unlock_contracts",
       "tutorial_unlock_rewards",
-      "tutorial_unlock_contracts"
+      "tutorial_unlock_clone_automation",
+      "tutorial_unlock_experience_share",
+      "tutorial_unlock_mainframe_boost",
+      "tutorial_unlock_computational_base",
+      "tutorial_unlock_mainframe_hardware_automation",
+      "tutorial_unlock_code_base",
+      "tutorial_unlock_mainframe_programs_automation",
+      "tutorial_unlock_contracts_autostart"
     ]
   }
 }

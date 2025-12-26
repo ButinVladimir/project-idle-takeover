@@ -34,14 +34,15 @@ I should join them.`),
     msg(`Now after joining WSA, I've been tasked with spreading their network and increasing their influence.
 I don't want to expose myself so I have to rely on clones for this task.
 Perhaps they could assist WSA agents by performing oddjobs?`),
-  tutorial_unlock_rewards: () => 
-    msg(`Assisting in capturing first district was too difficult, it's not enough to perform sidejobs.
-Meanwhile I was looking to deepen my connections within city to gain more resources.
-Now I'm able to make private deals, for the good of the WSA, of course.`),
-  tutorial_5_1: () => msg(`Necessity to look after clones interrupts me from my task. I should automate it.`),
-  tutorial_6_1: () =>
-    msg(`At this moment I have enough info about city topology and inhabitants.
-It will be useful later.`),
+  tutorial_unlock_contracts: () =>
+    msg(`Now that I have gain WSA trust, I can perform security contracts for them.
+That will be beneficial for both of us.`),
+  tutorial_unlock_rewards: () =>
+    msg(`I was looking how to deepen my connections within city to gain more resources.
+I have learnt how to to make private deals, for the good of the WSA, of course.`),
+  tutorial_unlock_clone_automation: () =>
+    msg(`With too many things to look after I need to delegate some of them.
+Automating upgrading clones will be the first thing.`),
   disclaimer_content_end: () =>
     msg('This is the end of currently planned content. Later features are supposed to unlocked much later.'),
 };

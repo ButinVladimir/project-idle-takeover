@@ -22,10 +22,10 @@
     },
     "rewardModifiers": {
       "attributes": {
-        "charisma": { "multiplier": 0.005, "base": 1 }
+        "charisma": { "multiplier": 5e-3, "base": 1 }
       },
       "skills": {
-        "diplomacy": { "multiplier": 0.01, "base": 1 }
+        "diplomacy": { "multiplier": 1e-2, "base": 1 }
       }
     },
     "rewards": {
@@ -37,7 +37,7 @@
   },
   "infoBroker": {
     "requirements": {
-      "connectivity": { "multiplier": 1000, "base": 1 },
+      "connectivity": { "multiplier": 1e3, "base": 1 },
       "attributes": {
         "intellect": { "multiplier": 5, "base": 1 },
         "charisma": { "multiplier": 5, "base": 1 }
@@ -48,75 +48,77 @@
     },
     "rewardModifiers": {
       "attributes": {
-        "intellect": { "multiplier": 0.005, "base": 1 },
-        "charisma": { "multiplier": 0.005, "base": 1 }
+        "intellect": { "multiplier": 5e-3, "base": 1 },
+        "charisma": { "multiplier": 5e-3, "base": 1 }
       },
       "skills": {
-        "diplomacy": { "multiplier": 0.01, "base": 1 }
+        "diplomacy": { "multiplier": 1e-2, "base": 1 }
       }
     },
     "rewards": {
       "experience": { "multiplier": 2, "base": 1 },
-      "money": { "multiplier": 2, "base": 1 },
+      "money": { "multiplier": 3, "base": 1 },
       "developmentPoints": { "multiplier": 3, "base": 1 },
       "connectivity": { "multiplier": 1, "base": 1 }
     }
   },
   "freelanceProgrammer": {
     "requirements": {
-      "connectivity": { "multiplier": 30000, "base": 1 },
+      "connectivity": { "multiplier": 1e8, "base": 1 },
       "attributes": {
-        "intellect": { "multiplier": 15, "base": 1 }
+        "intellect": { "multiplier": 25, "base": 1 }
       },
       "skills": {
-        "hacking": { "multiplier": 30, "base": 1 }
+        "hacking": { "multiplier": 50, "base": 1 }
       }
     },
     "rewardModifiers": {
       "attributes": {
-        "intellect": { "multiplier": 3, "base": 1 }
+        "intellect": { "multiplier": 5e-3, "base": 1 },
+        "charisma": { "multiplier": 1e-3, "base": 1 }
       },
       "skills": {
-        "hacking": { "multiplier": 3, "base": 1 }
+        "hacking": { "multiplier": 1e-2, "base": 1 },
+        "diplomacy": { "multiplier": 5e-3, "base": 1 }
       }
     },
     "rewards": {
-      "experience": { "multiplier": 0.02, "base": 1 },
-      "money": { "multiplier": 0.04, "base": 1 },
-      "developmentPoints": { "multiplier": 0.04, "base": 1 },
-      "influence": { "multiplier": 0.004, "base": 1 },
-      "codeBase": { "multiplier": 0.0001, "base": 1 }
+      "experience": { "multiplier": 3, "base": 1 },
+      "money": { "multiplier": 4, "base": 1 },
+      "developmentPoints": { "multiplier": 4, "base": 1 },
+      "codeBase": { "multiplier": 1, "base": 1 }
     }
   },
   "computerRepairer": {
     "requirements": {
-      "connectivity": { "multiplier": 30000, "base": 1 },
+      "connectivity": { "multiplier": 1e8, "base": 1 },
       "attributes": {
-        "intellect": { "multiplier": 15, "base": 1 }
+        "intellect": { "multiplier": 25, "base": 1 }
       },
       "skills": {
-        "hacking": { "multiplier": 30, "base": 1.5 }
+        "hacking": { "multiplier": 50, "base": 1 }
       }
     },
     "rewardModifiers": {
       "attributes": {
-        "intellect": { "multiplier": 3, "base": 1 }
+        "intellect": { "multiplier": 5e-3, "base": 1 },
+        "charisma": { "multiplier": 1e-3, "base": 1 }
       },
       "skills": {
-        "hacking": { "multiplier": 3, "base": 1 }
+        "hacking": { "multiplier": 1e-2, "base": 1 },
+        "diplomacy": { "multiplier": 5e-3, "base": 1 }
       }
     },
     "rewards": {
-      "experience": { "multiplier": 0.02, "base": 1 },
-      "money": { "multiplier": 0.04, "base": 1 },
-      "developmentPoints": { "multiplier": 0.04, "base": 1 },
-      "influence": { "multiplier": 0.004, "base": 1 },
-      "computationalBase": { "multiplier": 0.0001, "base": 1 }
+      "experience": { "multiplier": 3, "base": 1 },
+      "money": { "multiplier": 4, "base": 1 },
+      "developmentPoints": { "multiplier": 4, "base": 1 },
+      "computationalBase": { "multiplier": 1, "base": 1 }
     }
   },
   "mediator": {
     "requirements": {
-      "connectivity": { "multiplier": 25000000, "base": 1 },
+      "connectivity": { "multiplier": 25e6, "base": 1 },
       "attributes": {
         "intellect": { "multiplier": 10, "base": 1 },
         "charisma": { "multiplier": 10, "base": 1 }
@@ -127,54 +129,50 @@
     },
     "rewardModifiers": {
       "attributes": {
-        "intellect": { "multiplier": 0.005, "base": 1 },
-        "charisma": { "multiplier": 0.005, "base": 1 }
+        "intellect": { "multiplier": 5e-3, "base": 1 },
+        "charisma": { "multiplier": 5e-3, "base": 1 }
       },
       "skills": {
-        "diplomacy": { "multiplier": 0.01, "base": 1 }
+        "diplomacy": { "multiplier": 1e-2, "base": 1 }
       }
     },
     "rewards": {
-      "experience": { "multiplier": 2, "base": 1 },
-      "money": { "multiplier": 2, "base": 1 },
-      "developmentPoints": { "multiplier": 3, "base": 1 },
+      "experience": { "multiplier": 3, "base": 1 },
+      "money": { "multiplier": 4, "base": 1 },
+      "developmentPoints": { "multiplier": 4, "base": 1 },
       "rewards": { "multiplier": 1, "base": 1 }
     }
   },
   "mainframeRelay": {
     "requirements": {
       "connectivity": { "multiplier": 1, "base": 1 },
-      "attributes": {
-        "intellect": { "multiplier": 50, "base": 1 }
-      },
+      "attributes": {},
       "skills": {}
     },
     "rewardModifiers": {
       "attributes": {
-        "intellect": { "multiplier": 1, "base": 1 }
+        "intellect": { "multiplier": 1e-3, "base": 1 }
       },
       "skills": {}
     },
     "rewards": {
-      "processCompletionSpeed": { "multiplier": 0.001, "base": 1 }
+      "processCompletionSpeed": { "multiplier": 1, "base": 1 }
     }
   },
   "feedAnalyzer": {
     "requirements": {
       "connectivity": { "multiplier": 1, "base": 1 },
-      "attributes": {
-        "intellect": { "multiplier": 50, "base": 1 }
-      },
+      "attributes": {},
       "skills": {}
     },
     "rewardModifiers": {
       "attributes": {
-        "intellect": { "multiplier": 1, "base": 1 }
+        "intellect": { "multiplier": 1e-2, "base": 1 }
       },
       "skills": {}
     },
     "rewards": {
-      "experienceShareMultiplier": { "multiplier": 0.001, "base": 1 }
+      "experienceShareMultiplier": { "multiplier": 1, "base": 1 }
     }
   }
 }

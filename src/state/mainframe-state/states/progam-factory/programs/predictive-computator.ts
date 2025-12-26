@@ -22,9 +22,9 @@ export class PredictiveComputatorProgram extends BaseProgram {
     return (
       1 +
       multiplier *
-        this.globalState.rewards.multiplierByProgram *
         Math.pow(
-          calculateTierLinear(this.level, this.tier, programData.programCompletionSpeed.main) *
+          this.globalState.rewards.multiplierByProgram *
+            calculateTierLinear(this.level, this.tier, programData.programCompletionSpeed.main) *
             calculateLinear(
               this.mainframeState.hardware.performance.totalLevel,
               this.scenarioState.currentValues.mainframeSoftware.performanceBoost,

@@ -23,9 +23,12 @@ export class CircuitDesignerProgram extends BaseProgram {
 
     return (
       multiplier *
-      this.globalState.rewards.multiplierByProgram *
       threads *
-      Math.pow(calculateTierLinear(this.level, this.tier, programData.computationalBase), exponent)
+      Math.pow(
+        this.globalState.rewards.multiplierByProgram *
+          calculateTierLinear(this.level, this.tier, programData.computationalBase),
+        exponent,
+      )
     );
   }
 }

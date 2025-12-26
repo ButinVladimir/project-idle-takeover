@@ -1,4 +1,12 @@
-import { Attribute, Skill, calculatePower, ATTRIBUTES, SKILLS, DistrictTypeRewardParameter, calculateLinear } from '@shared/index';
+import {
+  Attribute,
+  Skill,
+  calculatePower,
+  ATTRIBUTES,
+  SKILLS,
+  DistrictTypeRewardParameter,
+  calculateLinear,
+} from '@shared/index';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IGlobalState } from '@state/global-state';
@@ -140,9 +148,8 @@ export class Contract implements IContract {
 
     const baseDelta =
       calculatePower(this._globalState.threat.level, contractModifier) *
-      rewardsModifier *
       calculateLinear(this._district.parameters.influence.tier, districtTypeModifier.progression) *
-      Math.pow(cloneParametersModifier, districtTypeModifier.exponent);
+      Math.pow(rewardsModifier * cloneParametersModifier, districtTypeModifier.exponent);
 
     switch (parameter) {
       case DistrictTypeRewardParameter.money:

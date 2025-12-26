@@ -23,9 +23,11 @@ export class CodeGeneratorProgram extends BaseProgram {
 
     return (
       multiplier *
-      this.globalState.rewards.multiplierByProgram *
       threads *
-      Math.pow(calculateTierLinear(this.level, this.tier, programData.codeBase), exponent)
+      Math.pow(
+        this.globalState.rewards.multiplierByProgram * calculateTierLinear(this.level, this.tier, programData.codeBase),
+        exponent,
+      )
     );
   }
 }
