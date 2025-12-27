@@ -3,7 +3,7 @@
   "anthrodrone": {
     "cost": { "multiplier": 250, "base": 1.15, "baseTier": 1 },
     "levelRequirements": { "multiplier": 250, "base": 1.2 },
-    "synchronization": { "multiplier": 10, "baseTier": 1.1 },
+    "synchronization": { "multiplier": 10, "baseTier": 1 },
     "experienceMultiplier": { "base": 1, "multiplier": 0.1, "baseTier": 1 },
     "attributes": {
       "strength": {
@@ -66,6 +66,216 @@
       "diplomacy": {
         "base": 1,
         "multiplier": 1,
+        "baseTier": 1
+      }
+    }
+  },
+  "fixer": {
+    "cost": { "multiplier": 1000, "base": 1.3, "baseTier": 1 },
+    "levelRequirements": { "multiplier": 1000, "base": 1.35 },
+    "synchronization": { "multiplier": 15, "baseTier": 1 },
+    "experienceMultiplier": { "base": 1, "multiplier": 0.1, "baseTier": 1 },
+    "attributes": {
+      "strength": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "endurance": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "agility": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "perception": {
+        "base": 5,
+        "multiplier": 1,
+        "baseTier": 1
+      },
+      "intellect": {
+        "base": 5,
+        "multiplier": 2,
+        "baseTier": 1
+      },
+      "charisma": {
+        "base": 5,
+        "multiplier": 3,
+        "baseTier": 1
+      }
+    },
+    "skills": {
+      "closeCombat": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "rangedCombat": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "engineering": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "hacking": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "stealth": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "diplomacy": {
+        "base": 5,
+        "multiplier": 6,
+        "baseTier": 1
+      }
+    }
+  },
+  "bouncer": {
+    "cost": { "multiplier": 1000, "base": 1.3, "baseTier": 1 },
+    "levelRequirements": { "multiplier": 1000, "base": 1.35 },
+    "synchronization": { "multiplier": 15, "baseTier": 1 },
+    "experienceMultiplier": { "base": 1, "multiplier": 0.1, "baseTier": 1 },
+    "attributes": {
+      "strength": {
+        "base": 5,
+        "multiplier": 2,
+        "baseTier": 1
+      },
+      "endurance": {
+        "base": 5,
+        "multiplier": 1.75,
+        "baseTier": 1
+      },
+      "agility": {
+        "base": 5,
+        "multiplier": 1.25,
+        "baseTier": 1
+      },
+      "perception": {
+        "base": 5,
+        "multiplier": 1,
+        "baseTier": 1
+      },
+      "intellect": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "charisma": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      }
+    },
+    "skills": {
+      "closeCombat": {
+        "base": 5,
+        "multiplier": 6,
+        "baseTier": 1
+      },
+      "rangedCombat": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "engineering": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "hacking": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "stealth": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "diplomacy": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      }
+    }
+  },
+  "gunner": {
+    "cost": { "multiplier": 1000, "base": 1.3, "baseTier": 1 },
+    "levelRequirements": { "multiplier": 1000, "base": 1.35 },
+    "synchronization": { "multiplier": 15, "baseTier": 1 },
+    "experienceMultiplier": { "base": 1, "multiplier": 0.1, "baseTier": 1 },
+    "attributes": {
+      "strength": {
+        "base": 5,
+        "multiplier": 1,
+        "baseTier": 1
+      },
+      "endurance": {
+        "base": 5,
+        "multiplier": 1.5,
+        "baseTier": 1
+      },
+      "agility": {
+        "base": 5,
+        "multiplier": 1.5,
+        "baseTier": 1
+      },
+      "perception": {
+        "base": 5,
+        "multiplier": 2,
+        "baseTier": 1
+      },
+      "intellect": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "charisma": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      }
+    },
+    "skills": {
+      "closeCombat": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "rangedCombat": {
+        "base": 5,
+        "multiplier": 6,
+        "baseTier": 1
+      },
+      "engineering": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "hacking": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "stealth": {
+        "base": 1,
+        "multiplier": 0.1,
+        "baseTier": 1
+      },
+      "diplomacy": {
+        "base": 1,
+        "multiplier": 0.1,
         "baseTier": 1
       }
     }

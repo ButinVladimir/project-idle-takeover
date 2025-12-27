@@ -32,14 +32,14 @@
     "playstyle": "captureCity",
     "loanedItems": {
       "programs": [],
-      "cloneTemplates": []
+      "cloneTemplates": ["fixer", "bouncer", "gunner"]
     },
     "specialItems": {
       "programs": [],
       "cloneTemplates": []
     },
     "activities": {
-      "contracts": ["security"]
+      "contracts": ["security", "backroomDeal"]
     }
   }
 }

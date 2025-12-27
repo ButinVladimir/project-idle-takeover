@@ -81,7 +81,7 @@
   },
   "tutorial_unlock_rewards": {
     "requirements": {
-      "level": 54,
+      "level": 44,
       "capturedDistrictsCount": 2,
       "faction": "wsa"
     },
@@ -91,13 +91,14 @@
       "programs": ["dealMaker"]
     },
     "unlockActivities": {
-      "sidejobs": ["mediator"]
+      "sidejobs": ["mediator"],
+      "contracts": ["backroomDeal"]
     },
     "specialEvents": ["districtUnlocked"]
   },
   "tutorial_unlock_clone_automation": {
     "requirements": {
-      "level": 69,
+      "level": 59,
       "capturedDistrictsCount": 3,
       "faction": "wsa"
     },
@@ -110,7 +111,7 @@
   },
   "tutorial_unlock_experience_share": {
     "requirements": {
-      "level": 74,
+      "level": 64,
       "capturedDistrictsCount": 4,
       "faction": "wsa"
     },
@@ -125,7 +126,7 @@
   },
   "tutorial_unlock_mainframe_boost": {
     "requirements": {
-      "level": 79,
+      "level": 69,
       "capturedDistrictsCount": 5,
       "faction": "wsa"
     },
@@ -139,7 +140,7 @@
   },
   "tutorial_unlock_computational_base": {
     "requirements": {
-      "level": 84,
+      "level": 74,
       "capturedDistrictsCount": 6,
       "faction": "wsa"
     },
@@ -154,7 +155,7 @@
   },
   "tutorial_unlock_mainframe_hardware_automation": {
     "requirements": {
-      "level": 89,
+      "level": 79,
       "capturedDistrictsCount": 7,
       "faction": "wsa"
     },
@@ -166,7 +167,7 @@
   },
   "tutorial_unlock_code_base": {
     "requirements": {
-      "level": 94,
+      "level": 84,
       "capturedDistrictsCount": 8,
       "faction": "wsa"
     },
@@ -181,7 +182,7 @@
   },
   "tutorial_unlock_mainframe_programs_automation": {
     "requirements": {
-      "level": 99,
+      "level": 89,
       "capturedDistrictsCount": 9,
       "faction": "wsa"
     },
@@ -193,7 +194,7 @@
   },
   "tutorial_unlock_contracts_autostart": {
     "requirements": {
-      "level": 104,
+      "level": 94,
       "capturedDistrictsCount": 10,
       "faction": "wsa"
     },

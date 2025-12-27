@@ -13,7 +13,7 @@
           }
         },
         {
-          "type": "residential",
+          "type": "corpoPlaza",
           "tier": {
             "min": 0,
             "max": 0
@@ -62,17 +62,17 @@
           }
         },
         {
-          "type": "residential",
+          "type": "corpoPlaza",
           "tier": {
-            "min": 0,
-            "max": 0
+            "min": 10,
+            "max": 20
           }
         },
         {
-          "type": "residential",
+          "type": "corpoPlaza",
           "tier": {
-            "min": 0,
-            "max": 0
+            "min": 20,
+            "max": 30
           }
         }
       ],
