@@ -23,7 +23,7 @@ describe('Message log state', () => {
 
     listener = vi.fn();
 
-    settingsState.toggleMessageEvent(GameStateEvent.gameStarted, true);
+    settingsState.messageEvents.toggleEvent(GameStateEvent.gameStarted, true);
     settingsState.setMessageLogSize(maxMessageLogSize);
   });
 
@@ -65,7 +65,7 @@ describe('Message log state', () => {
   });
 
   it('does not post message when event is disabled', () => {
-    settingsState.toggleMessageEvent(GameStateEvent.gameStarted, false);
+    settingsState.messageEvents.toggleEvent(GameStateEvent.gameStarted, false);
 
     messageLogState.postMessage(GameStateEvent.gameStarted, 'text');
 
