@@ -59,7 +59,7 @@ export class PrimaryActivityQueueList extends BaseComponent {
     this.dispatchEvent(
       new ConfirmationAlertOpenEvent(
         PrimaryActivityAlert.cancelAllPrimaryActivities,
-        msg('Are you sure want to cancel all primary activities? Their progress will be lost'),
+        msg('Are you sure want to cancel all primary activities? Their progress will be lost.'),
         this.handleCancelAllPrimaryActivities,
       ),
     );

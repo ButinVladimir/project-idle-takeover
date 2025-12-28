@@ -1,6 +1,6 @@
 # Description
 
-Cyberiada is an idle cyberpunk-themed management game inspired by Bitburner. In this game player control mainframe and team of up to 10 members by giving them various orders to perform. Company can travel between cities, representing different scenarios, which have different conditions and unique rewards.
+Project: Idle Takeover is an idle cyberpunk-themed management game inspired by Bitburner. In this game player control mainframe and team of up to 10 members by giving them various orders to perform. Company can travel between cities, representing different scenarios, which have different conditions and unique rewards.
 
 # Terms
 

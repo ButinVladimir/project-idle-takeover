@@ -1,12 +1,13 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
-import { DistrictTypeRewardParameter, Milestone, NotificationType } from '@shared/types';
-import type { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
-import type { INotificationsState } from '@state/notifications-state/interfaces/notifications-state';
+import { DistrictTypeRewardParameter, Milestone, NotificationType, MILESTONES } from '@shared/index';
+import type { IStateUIConnector } from '@state/state-ui-connector';
+import type { INotificationsState } from '@state/notifications-state';
 import { FactionPlaystyle, type IFactionState } from '@state/faction-state';
 import { TYPES } from '@state/types';
 import { MILESTONE_TEXTS } from '@texts/index';
 import { IReachedMilestonesSerializedState, IReachedMilestonesState } from './interfaces';
+import { msg } from '@lit/localize';
 
 const { lazyInject } = decorators;
 
@@ -41,6 +42,14 @@ export class ReachedMilestonesState implements IReachedMilestonesState {
     this._unlockedMilestones.add(milestone);
 
     this._notificationsState.pushNotification(NotificationType.milestoneReached, MILESTONE_TEXTS[milestone].message());
+
+    if (this._unlockedMilestones.size >= MILESTONES.length) {
+      this._notificationsState.pushNotification(
+        NotificationType.allMilestonesReached,
+        msg('All milestones have been reached. Thank you for playing.'),
+        true,
+      );
+    }
 
     return true;
   }

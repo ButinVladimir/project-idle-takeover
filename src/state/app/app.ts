@@ -112,7 +112,7 @@ export class App implements IApp {
 
   exportSavefile(): void {
     const saveData = this.serializeState();
-    const savefileName = `cyberiada-savefile-${new Date().toLocaleString()}.txt`;
+    const savefileName = `project-idle-takeover-savefile-${new Date().toLocaleString()}.txt`;
 
     const file = new File([saveData], savefileName, { endings: 'transparent' });
 

@@ -1,7 +1,7 @@
 import { msg } from '@lit/localize';
 import { NotificationType } from '@shared/types';
 
-export const NOTIFICATION_TYPE_NAMES = {
+export const NOTIFICATION_TYPE_NAMES: Record<NotificationType, () => string> = {
   [NotificationType.storyEvent]: () => msg('Story event'),
   [NotificationType.gameVersionUpdated]: () => msg('Game version updated'),
   [NotificationType.milestoneReached]: () => msg('New milestone reached'),
@@ -12,4 +12,5 @@ export const NOTIFICATION_TYPE_NAMES = {
   [NotificationType.factionJoined]: () => msg('Faction joined'),
   [NotificationType.districtContested]: () => msg('District contested'),
   [NotificationType.districtCaptured]: () => msg('District captured'),
+  [NotificationType.allMilestonesReached]: () => msg('All milestones reached'),
 };

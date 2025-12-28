@@ -94,7 +94,7 @@ export class HotkeysDialog extends BaseComponent {
       buttonText = msg('Press key to assign');
       buttonVariant = 'primary';
     } else {
-      buttonText = this._controller.getKeyByHotkey(hotkey)?.toLocaleUpperCase() ?? msg('No button assigned');
+      buttonText = this._controller.getKeyByHotkey(hotkey)?.toLocaleUpperCase() ?? msg('No key assigned');
       buttonVariant = 'default';
     }
 

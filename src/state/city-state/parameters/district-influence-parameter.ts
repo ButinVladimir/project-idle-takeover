@@ -134,7 +134,9 @@ export class DistrictInfluenceParameter implements IDistrictInfluenceParameter {
 
       this._notificationsState.pushNotification(
         NotificationType.districtCaptured,
-        msg(str`District "${DISTRICT_NAMES[this._district.name]()}" has been captured. It's tier now can be increased`),
+        msg(
+          str`District "${DISTRICT_NAMES[this._district.name]()}" has been captured. It's tier now can be increased.`,
+        ),
       );
 
       this._scenarioState.storyEvents.visitEvents();

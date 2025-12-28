@@ -15,6 +15,6 @@ export const DISTRICT_TYPE_TEXTS: Record<
     title: () => msg('Corpo plaza'),
     overview: () =>
       msg(`Corpo plazas house offices of corporations from entire world.
-They can always provide a job but refuse to cooperate and share their secrets`),
+They can always provide a job but refuse to cooperate and share their secrets.`),
   },
 };

@@ -55,6 +55,7 @@ export class MainframeProcessesPanel extends BaseComponent {
 Topmost processes for non-autoscalable programs have more priority when cores are assigned to processes.
 After that, process for autoscalable program has remaining cores and RAM assigned.
 Only one process for autoscalable program can run at same time.
+It is possible to start more processes than cores allow them to run at same time.
 Process minimal completion time is limited.
 Processes can be rearranged by dragging them by their title.`)}
       </p>

@@ -37,9 +37,9 @@ export const GAME_ALERT_NAMES: Record<GameAlert, () => string> = {
   [SidejobAlert.sidejobCancel]: () => msg('Cancel an assigned sidejob'),
   [SidejobAlert.cancelAllSidejobs]: () => msg('Cancel all sidejobs'),
   [SidejobAlert.replaceSidejob]: () => msg('Replace an assigned sidejob'),
-  [ContractAlert.contractAssignmentRemove]: () => msg('Remove a contract assignments'),
+  [ContractAlert.contractAssignmentRemove]: () => msg('Remove a contract assignment'),
   [ContractAlert.removeAllContractAssignments]: () => msg('Remove all contract assignments'),
-  [ContractAlert.replaceContractAssignment]: () => msg('Replace a contract assignments'),
+  [ContractAlert.replaceContractAssignment]: () => msg('Replace a contract assignment'),
   [PrimaryActivityAlert.cancelPrimaryActivity]: () => msg('Cancel a primary activity'),
   [PrimaryActivityAlert.cancelAllPrimaryActivities]: () => msg('Cancel all primary activities'),
 };

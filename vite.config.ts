@@ -61,5 +61,5 @@ export default defineConfig({
       plugins: [],
     },
   },
-  base: '/cyberiada/',
+  base: '/project-idle-takeover/',
 });

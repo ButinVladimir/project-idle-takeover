@@ -2,6 +2,7 @@ import { html, nothing } from 'lit';
 import { localized } from '@lit/localize';
 import { customElement, queryAll } from 'lit/decorators.js';
 import { consume } from '@lit/context';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { BaseComponent } from '@shared/index';
 import { type IProgram } from '@state/mainframe-state';
 import { COMMON_TEXTS, PROGRAM_DESCRIPTION_TEXTS, PROGRAM_TEXTS } from '@texts/index';
@@ -24,6 +25,9 @@ export class ProgramDescriptionText extends BaseComponent {
 
   @queryAll('span[data-value]')
   private _valueEls!: NodeListOf<HTMLSpanElement>;
+
+  private _minCompletionTimeValueEl = createRef<HTMLSpanElement>();
+  private _maxCompletionTimeValueEl = createRef<HTMLSpanElement>();
 
   @consume({ context: programContext, subscribe: true })
   private _program?: IProgram;
@@ -87,9 +91,6 @@ export class ProgramDescriptionText extends BaseComponent {
     const formattedRam = formatter.formatNumberDecimal(this._program!.ram);
     const formattedCores = formatter.formatNumberDecimal(this._program!.cores);
 
-    const formattedMinTime = formatter.formatTimeShort(this._program!.calculateCompletionMinTime(1));
-    const formattedMaxTime = formatter.formatTimeShort(this._program!.calculateCompletionMaxTime(1));
-
     return html`
       <p>${PROGRAM_DESCRIPTION_TEXTS.requirementsSingle()}</p>
 
@@ -105,7 +106,10 @@ export class ProgramDescriptionText extends BaseComponent {
       <p>
         ${COMMON_TEXTS.parameterRow(
           COMMON_TEXTS.completionTime(),
-          PROGRAM_DESCRIPTION_TEXTS.minMaxInterval(formattedMinTime, formattedMaxTime),
+          PROGRAM_DESCRIPTION_TEXTS.minMaxInterval(
+            html`<span ${ref(this._minCompletionTimeValueEl)}></span>`,
+            html`<span ${ref(this._maxCompletionTimeValueEl)}></span>`,
+          ),
         )}
       </p>
     `;
@@ -129,6 +133,8 @@ export class ProgramDescriptionText extends BaseComponent {
     this._valueEls.forEach((valueEl) => {
       valueEl.textContent = this._renderer!.values[valueEl.dataset.value!];
     });
+
+    this.updateCompletionTime();
   };
 
   private updateRenderer(): void {
@@ -145,5 +151,24 @@ export class ProgramDescriptionText extends BaseComponent {
     };
 
     this._renderer = new rendererMap[this._program!.name](parameters);
+  }
+
+  private updateCompletionTime() {
+    if (!this._program) {
+      return;
+    }
+
+    const formatter = this._controller.formatter;
+
+    const formattedMinTime = formatter.formatTimeShort(this._program!.calculateCompletionMinTime(1));
+    const formattedMaxTime = formatter.formatTimeShort(this._program!.calculateCompletionMaxTime(1));
+
+    if (this._minCompletionTimeValueEl.value) {
+      this._minCompletionTimeValueEl.value.textContent = formattedMinTime;
+    }
+
+    if (this._maxCompletionTimeValueEl.value) {
+      this._maxCompletionTimeValueEl.value.textContent = formattedMaxTime;
+    }
   }
 }

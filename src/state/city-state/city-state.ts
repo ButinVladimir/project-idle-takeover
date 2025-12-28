@@ -326,7 +326,7 @@ export class CityState implements ICityState {
       this._notificationsState.pushNotification(
         NotificationType.districtContested,
         msg(
-          str`District "${DISTRICT_NAMES[nextDistrict.name]()}" is now contested. Clones can operate in this district`,
+          str`District "${DISTRICT_NAMES[nextDistrict.name]()}" has been unlocked and now is contested. Clones can operate in this district.`,
         ),
       );
     }

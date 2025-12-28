@@ -617,7 +617,7 @@
     },
     {
       "name": "ca-processes-list-item-description",
-      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_renderer` {`IDescriptionEffectRenderer | undefined`} - \n\n  * `_valueEls` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_process` - \n\n  * `renderAutoscalableRequirements` - \n\n  * `renderNormalRequirements` - \n\n  * `renderEffects` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`ProcessDescriptionTextController`} - ",
+      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_renderer` {`IDescriptionEffectRenderer | undefined`} - \n\n  * `_valueEls` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_completionTimeEl` {`Ref<HTMLSpanElement>`} - \n\n  * `_process` - \n\n  * `renderAutoscalableRequirements` - \n\n  * `renderNormalRequirements` - \n\n  * `renderEffects` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`ProcessDescriptionTextController`} - ",
       "attributes": []
     },
     {
@@ -667,7 +667,7 @@
     },
     {
       "name": "ca-start-process-dialog-description",
-      "description": "Attributes:\n\n  * `threads` {`number`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `threads` {`number`} - \n\n  * `_renderer` {`IDescriptionEffectRenderer | undefined`} - \n\n  * `_valueEls` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_diffEls` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_program` - \n\n  * `_existingProcess` - \n\n  * `renderAutoscalableRequirements` - \n\n  * `renderNormalRequirements` - \n\n  * `renderEffects` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`ProcessDiffTextController`} - ",
+      "description": "Attributes:\n\n  * `threads` {`number`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `threads` {`number`} - \n\n  * `_renderer` {`IDescriptionEffectRenderer | undefined`} - \n\n  * `_valueEls` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_diffEls` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_minCompletionTimeValueEl` {`Ref<HTMLSpanElement>`} - \n\n  * `_maxCompletionTimeValueEl` {`Ref<HTMLSpanElement>`} - \n\n  * `_minCompletionTimeDiffEl` {`Ref<HTMLSpanElement>`} - \n\n  * `_maxCompletionTimeDiffEl` {`Ref<HTMLSpanElement>`} - \n\n  * `_program` - \n\n  * `_existingProcess` - \n\n  * `renderAutoscalableRequirements` - \n\n  * `renderNormalRequirements` - \n\n  * `renderEffects` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`ProcessDiffTextController`} - ",
       "attributes": [
         {
           "name": "threads",
@@ -692,7 +692,7 @@
     },
     {
       "name": "ca-owned-programs-list-item-description",
-      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_renderer` {`IDescriptionEffectRenderer | undefined`} - \n\n  * `_valueEls` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_program` - \n\n  * `renderAutoscalableRequirements` - \n\n  * `renderNormalRequirements` - \n\n  * `renderEffects` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`ProgramDescriptionTextController`} - ",
+      "description": "Properties:\n\n  * `styles` {`CSSResult`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_renderer` {`IDescriptionEffectRenderer | undefined`} - \n\n  * `_valueEls` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_minCompletionTimeValueEl` {`Ref<HTMLSpanElement>`} - \n\n  * `_maxCompletionTimeValueEl` {`Ref<HTMLSpanElement>`} - \n\n  * `_program` - \n\n  * `renderAutoscalableRequirements` - \n\n  * `renderNormalRequirements` - \n\n  * `renderEffects` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`ProgramDescriptionTextController`} - ",
       "attributes": []
     },
     {
@@ -734,7 +734,7 @@
     },
     {
       "name": "ca-purchase-program-dialog-description",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_program` - \n\n  * `_ownedProgram` - \n\n  * `_renderer` {`IDescriptionEffectRenderer | undefined`} - \n\n  * `_valueEls` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_diffEls` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_costElRef` {`Ref<HTMLSpanElement>`} - \n\n  * `renderAutoscalableRequirements` - \n\n  * `renderNormalRequirements` - \n\n  * `renderEffects` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`ProgramDiffTextController`} - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_program` - \n\n  * `_ownedProgram` - \n\n  * `_renderer` {`IDescriptionEffectRenderer | undefined`} - \n\n  * `_valueEls` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_diffEls` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_costElRef` {`Ref<HTMLSpanElement>`} - \n\n  * `_minCompletionTimeValueEl` {`Ref<HTMLSpanElement>`} - \n\n  * `_maxCompletionTimeValueEl` {`Ref<HTMLSpanElement>`} - \n\n  * `_minCompletionTimeDiffEl` {`Ref<HTMLSpanElement>`} - \n\n  * `_maxCompletionTimeDiffEl` {`Ref<HTMLSpanElement>`} - \n\n  * `renderAutoscalableRequirements` - \n\n  * `renderNormalRequirements` - \n\n  * `renderEffects` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` {`ProgramDiffTextController`} - ",
       "attributes": []
     },
     {

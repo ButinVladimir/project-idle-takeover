@@ -180,7 +180,7 @@ export class ContractAssignmentsList extends BaseComponent {
     this.dispatchEvent(
       new ConfirmationAlertOpenEvent(
         ContractAlert.removeAllContractAssignments,
-        msg('Are you sure want to remove all contract assignments? All related inactive activities will be cancelled.'),
+        msg('Are you sure want to remove all contract assignments? All related activities will be cancelled.'),
         this.handleRemoveAllContractAssignments,
       ),
     );

@@ -1,6 +1,7 @@
 import { html, nothing } from 'lit';
 import { localized } from '@lit/localize';
 import { customElement, queryAll } from 'lit/decorators.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { consume } from '@lit/context';
 import { BaseComponent } from '@shared/index';
 import { COMMON_TEXTS, PROGRAM_DESCRIPTION_TEXTS, PROGRAM_TEXTS } from '@texts/index';
@@ -24,6 +25,8 @@ export class ProcessDescriptionText extends BaseComponent {
 
   @queryAll('span[data-value]')
   private _valueEls!: NodeListOf<HTMLSpanElement>;
+
+  private _completionTimeEl = createRef<HTMLSpanElement>();
 
   @consume({ context: processContext, subscribe: true })
   private _process?: IProcess;
@@ -84,25 +87,9 @@ export class ProcessDescriptionText extends BaseComponent {
   private renderNormalRequirements = () => {
     const formatter = this._controller.formatter;
 
-    const completionDelta = this._process!.program.calculateCompletionDelta(
-      this._process!.threads,
-      this._process!.usedCores,
-      1,
-    );
-
     const formattedThreads = formatter.formatNumberDecimal(this._process!.threads);
     const formattedRam = formatter.formatNumberDecimal(this._process!.program.ram * this._process!.threads);
     const formattedCores = formatter.formatNumberDecimal(this._process!.program.cores * this._process!.threads);
-
-    let completionTimeLabel: string;
-
-    if (completionDelta > 0) {
-      completionTimeLabel = formatter.formatTimeShort(
-        this._process!.program.calculateCompletionTime(this._process!.threads, this._process!.usedCores),
-      );
-    } else {
-      completionTimeLabel = PROGRAM_DESCRIPTION_TEXTS.never();
-    }
 
     return html`
       <p>${PROGRAM_DESCRIPTION_TEXTS.requirementsProcess(formattedThreads)}</p>
@@ -116,7 +103,9 @@ export class ProcessDescriptionText extends BaseComponent {
         )}
       </p>
 
-      <p>${COMMON_TEXTS.parameterRow(COMMON_TEXTS.completionTime(), completionTimeLabel)}</p>
+      <p>
+        ${COMMON_TEXTS.parameterRow(COMMON_TEXTS.completionTime(), html`<span ${ref(this._completionTimeEl)}></span>`)}
+      </p>
     `;
   };
 
@@ -138,6 +127,8 @@ export class ProcessDescriptionText extends BaseComponent {
     this._valueEls.forEach((valueEl) => {
       valueEl.textContent = this._renderer!.values[valueEl.dataset.value!];
     });
+
+    this.updateCompletionTime();
   };
 
   private updateRenderer(): void {
@@ -153,5 +144,33 @@ export class ProcessDescriptionText extends BaseComponent {
     };
 
     this._renderer = new rendererMap[this._process!.program.name](parameters);
+  }
+
+  private updateCompletionTime() {
+    if (!this._process) {
+      return;
+    }
+
+    const formatter = this._controller.formatter;
+
+    const completionDelta = this._process!.program.calculateCompletionDelta(
+      this._process!.threads,
+      this._process!.usedCores,
+      1,
+    );
+
+    let completionTimeLabel: string;
+
+    if (completionDelta > 0) {
+      completionTimeLabel = formatter.formatTimeShort(
+        this._process!.program.calculateCompletionTime(this._process!.threads, this._process!.usedCores),
+      );
+    } else {
+      completionTimeLabel = PROGRAM_DESCRIPTION_TEXTS.never();
+    }
+
+    if (this._completionTimeEl.value) {
+      this._completionTimeEl.value.textContent = completionTimeLabel;
+    }
   }
 }

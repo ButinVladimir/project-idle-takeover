@@ -86,7 +86,7 @@ How big is this part depends on running processes and available synchronization.
     hint: () => msg('Faction influence and progress to next tier are now visible'),
     message: () =>
       msg(`Faction influence and progress to next tier are now visible.
-The higher district tier is, the better rewards are from performing actions within it.`),
+The higher district tier is, the better rewards are from performing activity within it.`),
   },
   [Milestone.unlockedFactions]: {
     title: () => msg('Unlocked factions'),
@@ -97,7 +97,7 @@ Joining a faction gives access to it's loaned designs and contracts.`),
   },
   [Milestone.unlockedPrimaryActivity]: {
     title: () => msg('Unlocked primary actvity and contracts'),
-    hint: () => msg('Primary and contracts are now available'),
+    hint: () => msg('Primary activity and contracts are now available'),
     message: () =>
       msg(`Primary activity and contracts are now available.
 Primary activity can increase certain parameters, like faction influence and notoriety points, and provide substantial rewards.`),

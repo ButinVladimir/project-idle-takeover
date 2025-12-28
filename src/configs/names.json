@@ -1,6 +1,23 @@
 {
   "$schema": "./schemas/names.json",
-  "clones": ["John", "Jack", "Ivan", "Vasily", "Petar", "Miloš"],
+  "clones": [
+    "John",
+    "Jack",
+    "Tom",
+    "Jim",
+    "Bill",
+    "Steven",
+    "Ivan",
+    "Vasily",
+    "Dmitry",
+    "Alexey",
+    "Sergey",
+    "Petar",
+    "Miloš",
+    "Nenad",
+    "Nemanja",
+    "Miodrag"
+  ],
   "districts": [
     "Barajevo",
     "Čukarica",

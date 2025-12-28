@@ -3,10 +3,21 @@ import { msg } from '@lit/localize';
 export const CLONE_NAMES: Record<string, () => string> = {
   John: () => msg('John'),
   Jack: () => msg('Jack'),
+  Tom: () => msg('Tom'),
+  Jim: () => msg('Jim'),
+  Bill: () => msg('Bill'),
+  Steven: () => msg('Steven'),
   Ivan: () => msg('Ivan'),
   Vasily: () => msg('Vasily'),
+  Dmitry: () => msg('Dmitry'),
+  Alexey: () => msg('Alexey'),
+  Sergey: () => msg('Sergey'),
   Petar: () => msg('Petar'),
   Miloš: () => msg('Miloš'),
+  Nenad: () => msg('Nenad'),
+  Nemanja: () => msg('Nemanja'),
+  Miodrag: () => msg('Miodrag'),
+  Nikola: () => msg('Nikola'),
 };
 
 export const DISTRICT_NAMES: Record<string, () => string> = {
