@@ -2,7 +2,7 @@
   "$schema": "./schemas/constants.json",
   "startingValues": {
     "scenario": "tutorial",
-    "accumulatedTime": 1000000000
+    "accumulatedTime": 0
   },
   "defaultSettings": {
     "messageLogSize": 30,
