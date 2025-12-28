@@ -57,7 +57,7 @@ export class ContractActivityValidator implements IContractActivityValidator {
     const requiredValue = contract.getAttributeRequirement(attribute);
 
     return contract.assignedClones.reduce(
-      (sum, clone) => (clone.getTotalAttributeValue(attribute) > requiredValue ? sum + 1 : 0),
+      (sum, clone) => (clone.getTotalAttributeValue(attribute) >= requiredValue ? sum + 1 : sum),
       0,
     );
   }
@@ -66,7 +66,7 @@ export class ContractActivityValidator implements IContractActivityValidator {
     const requiredValue = contract.getSkillRequirement(skill);
 
     return contract.assignedClones.reduce(
-      (sum, clone) => (clone.getTotalSkillValue(skill) > requiredValue ? sum + 1 : 0),
+      (sum, clone) => (clone.getTotalSkillValue(skill) >= requiredValue ? sum + 1 : sum),
       0,
     );
   }

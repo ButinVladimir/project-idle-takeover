@@ -39,9 +39,9 @@ export class ShareServerProgram extends BaseProgram {
 
     return (
       passedTime *
+      multiplier *
       Math.pow(
-        multiplier *
-          this.calculateCommonModifier() *
+        this.calculateCommonOuterModifier() *
           calculateTierLinear(this.level, this.tier, programData.money.main) *
           calculateLinear(usedRam, programData.money.ram) *
           calculateLinear(threads, programData.money.cores),
@@ -60,9 +60,9 @@ export class ShareServerProgram extends BaseProgram {
 
     return (
       passedTime *
+      multiplier *
       Math.pow(
-        multiplier *
-          this.calculateCommonModifier() *
+        this.calculateCommonOuterModifier() *
           calculateTierLinear(this.level, this.tier, programData.developmentPoints.main) *
           calculateLinear(usedRam, programData.developmentPoints.ram) *
           calculateLinear(threads, programData.developmentPoints.cores),
@@ -71,7 +71,7 @@ export class ShareServerProgram extends BaseProgram {
     );
   }
 
-  private calculateCommonModifier(): number {
+  private calculateCommonOuterModifier(): number {
     const hardwareMultiplier = calculateLinear(
       this.mainframeState.hardware.performance.totalLevel,
       this.scenarioState.currentValues.mainframeSoftware.performanceBoost,

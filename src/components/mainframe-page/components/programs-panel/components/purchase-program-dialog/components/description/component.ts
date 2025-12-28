@@ -9,6 +9,7 @@ import {
   getHighlightValueClass,
   diffFormatterParameters,
   getHighlightDifferenceClassMap,
+  getHighlightDifferenceClass,
 } from '@shared/index';
 import { COMMON_TEXTS, PROGRAM_DESCRIPTION_TEXTS, PROGRAM_TEXTS } from '@texts/index';
 import { rendererMap } from './description-effect-renderers';
@@ -41,6 +42,11 @@ export class PurchaseProgramDialogDescription extends BaseComponent {
   private _diffEls!: NodeListOf<HTMLSpanElement>;
 
   private _costElRef = createRef<HTMLSpanElement>();
+
+  private _minCompletionTimeValueEl = createRef<HTMLSpanElement>();
+  private _maxCompletionTimeValueEl = createRef<HTMLSpanElement>();
+  private _minCompletionTimeDiffEl = createRef<HTMLSpanElement>();
+  private _maxCompletionTimeDiffEl = createRef<HTMLSpanElement>();
 
   constructor() {
     super();
@@ -102,30 +108,12 @@ export class PurchaseProgramDialogDescription extends BaseComponent {
 
     const coresDiff = this._ownedProgram ? this._program!.cores - this._ownedProgram.cores : this._program!.cores;
 
-    const minTime = this._program!.calculateCompletionMinTime(1);
-    const minTimeDiff = this._ownedProgram ? minTime - this._ownedProgram.calculateCompletionMinTime(1) : minTime;
-    const maxTime = this._program!.calculateCompletionMaxTime(1);
-    const maxTimeDiff = this._ownedProgram ? maxTime - this._ownedProgram.calculateCompletionMaxTime(1) : maxTime;
-
     const formattedRam = formatter.formatNumberDecimal(this._program!.ram);
     const formattedCores = formatter.formatNumberDecimal(this._program!.cores);
 
     const coresDiffClass = getHighlightDifferenceClassMap(coresDiff);
     const coresDiffEl = html`<span class=${coresDiffClass}
       >${formatter.formatNumberDecimal(coresDiff, diffFormatterParameters)}</span
-    >`;
-
-    const formattedMinTime = formatter.formatTimeShort(minTime);
-    const formattedMaxTime = formatter.formatTimeShort(maxTime);
-
-    const minTimeDiffClass = getHighlightDifferenceClassMap(-minTimeDiff);
-    const minTimeDiffEl = html`<span class=${minTimeDiffClass}
-      >${formatter.formatTimeShort(minTimeDiff, diffFormatterParameters)}</span
-    >`;
-
-    const maxTimeDiffClass = getHighlightDifferenceClassMap(-maxTimeDiff);
-    const maxTimeDiffEl = html`<span class=${maxTimeDiffClass}
-      >${formatter.formatTimeShort(maxTimeDiff, diffFormatterParameters)}</span
     >`;
 
     return html`
@@ -144,10 +132,10 @@ export class PurchaseProgramDialogDescription extends BaseComponent {
         ${COMMON_TEXTS.parameterRow(
           COMMON_TEXTS.completionTime(),
           PROGRAM_DESCRIPTION_TEXTS.minMaxIntervalDiff(
-            formattedMinTime,
-            formattedMaxTime,
-            minTimeDiffEl,
-            maxTimeDiffEl,
+            html`<span ${ref(this._minCompletionTimeValueEl)}></span>`,
+            html`<span ${ref(this._maxCompletionTimeValueEl)}></span>`,
+            html`<span ${ref(this._minCompletionTimeDiffEl)}></span>`,
+            html`<span ${ref(this._maxCompletionTimeDiffEl)}></span>`,
           ),
         )}
       </p>
@@ -181,6 +169,8 @@ export class PurchaseProgramDialogDescription extends BaseComponent {
       diffEl.textContent = value;
       diffEl.className = className;
     });
+
+    this.updateCompletionTime();
   };
 
   private renderCost() {
@@ -213,5 +203,45 @@ export class PurchaseProgramDialogDescription extends BaseComponent {
     };
 
     this._renderer = new rendererMap[this._program!.name](parameters);
+  }
+
+  private updateCompletionTime() {
+    if (!this._program) {
+      return;
+    }
+
+    const formatter = this._controller.formatter;
+
+    const minTime = this._program!.calculateCompletionMinTime(1);
+    const minTimeDiff = this._ownedProgram ? minTime - this._ownedProgram.calculateCompletionMinTime(1) : minTime;
+    const maxTime = this._program!.calculateCompletionMaxTime(1);
+    const maxTimeDiff = this._ownedProgram ? maxTime - this._ownedProgram.calculateCompletionMaxTime(1) : maxTime;
+
+    const formattedMinTime = formatter.formatTimeShort(minTime);
+    const formattedMaxTime = formatter.formatTimeShort(maxTime);
+
+    const minTimeDiffClass = getHighlightDifferenceClass(-minTimeDiff);
+    const minTimeDiffLabel = formatter.formatTimeShort(minTimeDiff, diffFormatterParameters);
+
+    const maxTimeDiffClass = getHighlightDifferenceClass(-maxTimeDiff);
+    const maxTimeDiffLabel = formatter.formatTimeShort(maxTimeDiff, diffFormatterParameters);
+
+    if (this._minCompletionTimeValueEl.value) {
+      this._minCompletionTimeValueEl.value.textContent = formattedMinTime;
+    }
+
+    if (this._maxCompletionTimeValueEl.value) {
+      this._maxCompletionTimeValueEl.value.textContent = formattedMaxTime;
+    }
+
+    if (this._minCompletionTimeDiffEl.value) {
+      this._minCompletionTimeDiffEl.value.textContent = minTimeDiffLabel;
+      this._minCompletionTimeDiffEl.value.className = minTimeDiffClass;
+    }
+
+    if (this._maxCompletionTimeDiffEl.value) {
+      this._maxCompletionTimeDiffEl.value.textContent = maxTimeDiffLabel;
+      this._maxCompletionTimeDiffEl.value.className = maxTimeDiffClass;
+    }
   }
 }

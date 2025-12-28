@@ -21,12 +21,14 @@ export class InformationCollectorProgram extends BaseProgram {
     const programData = typedPrograms[this.name];
     const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.connectivity;
 
-    return Math.pow(
+    return (
       multiplier *
+      threads *
+      Math.pow(
         this.globalState.rewards.multiplierByProgram *
-        threads *
-        calculateTierLinear(this.level, this.tier, programData.connectivity),
-      exponent,
+          calculateTierLinear(this.level, this.tier, programData.connectivity),
+        exponent,
+      )
     );
   }
 }

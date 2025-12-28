@@ -146,8 +146,16 @@ export class CityState implements ICityState {
   async deserialize(serializedState: ICitySerializedState): Promise<void> {
     this.clearDistricts();
 
+    if (this._scenarioState.currentValues.map.width !== serializedState.layout.length) {
+      throw new Error(`Map width doesn't match scenario`);
+    }
+
     this._layout = [];
     for (let x = 0; x < this._scenarioState.currentValues.map.width; x++) {
+      if (this._scenarioState.currentValues.map.height !== serializedState.layout[x].length) {
+        throw new Error(`Map height doesn't match scenario`);
+      }
+
       const row: number[] = [];
 
       for (let y = 0; y < this._scenarioState.currentValues.map.height; y++) {
@@ -318,7 +326,7 @@ export class CityState implements ICityState {
       this._notificationsState.pushNotification(
         NotificationType.districtContested,
         msg(
-          str`District "${DISTRICT_NAMES[nextDistrict.name]()}" is now contested. Clones can operate in this district`,
+          str`District "${DISTRICT_NAMES[nextDistrict.name]()}" has been unlocked and now is contested. Clones can operate in this district.`,
         ),
       );
     }

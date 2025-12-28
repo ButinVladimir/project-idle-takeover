@@ -1,9 +1,12 @@
 import { FactionPlaystyle } from '@state/faction-state';
-import { BaseController } from '@shared/index';
+import { BaseController, Milestone } from '@shared/index';
 
 export class CityDistrictPageController extends BaseController {
   isContractsTabUnlocked(): boolean {
-    return this.factionState.currentFactionValues.playstyle !== FactionPlaystyle.selectFaction;
+    return (
+      this.unlockState.milestones.isMilestoneReached(Milestone.unlockedPrimaryActivity) &&
+      this.factionState.currentFactionValues.playstyle !== FactionPlaystyle.selectFaction
+    );
   }
 
   getDistrictState(districtIndex: number) {

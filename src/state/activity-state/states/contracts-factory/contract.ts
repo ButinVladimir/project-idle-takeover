@@ -1,4 +1,12 @@
-import { Attribute, Skill, calculatePower, ATTRIBUTES, SKILLS, DistrictTypeRewardParameter } from '@shared/index';
+import {
+  Attribute,
+  Skill,
+  calculatePower,
+  ATTRIBUTES,
+  SKILLS,
+  DistrictTypeRewardParameter,
+  calculateLinear,
+} from '@shared/index';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IGlobalState } from '@state/global-state';
@@ -99,8 +107,9 @@ export class Contract implements IContract {
     }
 
     return (
+      1 +
       calculatePower(this._globalState.threat.level, this.contractTemplate.rewardModifiers.attributes[attribute]) *
-      this.getAttributeSum(attribute)
+        this.getAttributeSum(attribute)
     );
   }
 
@@ -110,8 +119,9 @@ export class Contract implements IContract {
     }
 
     return (
+      1 +
       calculatePower(this._globalState.threat.level, this.contractTemplate.rewardModifiers.skills[skill]) *
-      this.getSkillSum(skill)
+        this.getSkillSum(skill)
     );
   }
 
@@ -136,13 +146,10 @@ export class Contract implements IContract {
     const rewardsModifier = this._district.parameters.rewards.totalMultiplier;
     const districtTypeModifier = this._district.template.parameters[parameter];
 
-    const baseDelta = Math.pow(
-      rewardsModifier *
-        cloneParametersModifier *
-        calculatePower(this._globalState.threat.level, contractModifier) *
-        calculatePower(this._district.parameters.influence.tier, districtTypeModifier.progression),
-      districtTypeModifier.exponent,
-    );
+    const baseDelta =
+      calculatePower(this._globalState.threat.level, contractModifier) *
+      calculateLinear(this._district.parameters.influence.tier, districtTypeModifier.progression) *
+      Math.pow(rewardsModifier * cloneParametersModifier, districtTypeModifier.exponent);
 
     switch (parameter) {
       case DistrictTypeRewardParameter.money:

@@ -72,6 +72,7 @@ export const GAME_ALERT_GROUPS = {
 
 export const FORCE_NOTIFICATION_TYPES: Set<NotificationType> = new Set<NotificationType>([
   NotificationType.gameVersionUpdated,
+  NotificationType.allMilestonesReached,
 ]);
 
 export const NOTIFICATION_TYPES: NotificationType[] = Object.values(NotificationType).filter(

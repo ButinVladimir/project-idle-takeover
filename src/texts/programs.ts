@@ -86,9 +86,9 @@ export const PROGRAM_DESCRIPTION_TEXTS = {
   allAvailable: (value: any) => msg(str`${value} + All available`),
   instant: () => msg('Instant'),
   never: () => msg('Never'),
-  minMaxInterval: (minValue: string, maxValue: string) => msg(str`${minValue} \u2014 ${maxValue}`),
-  minMaxIntervalDiff: (minValue: string, maxValue: string, minValueDiff: any, maxValueDiff: any) =>
-    msg(html`${minValue} — ${maxValue} (${minValueDiff} — ${maxValueDiff})`),
+  minMaxInterval: (minValueEl: any, maxValueEl: any) => msg(html`${minValueEl} — ${maxValueEl}`),
+  minMaxIntervalDiff: (minValueEl: any, maxValueEl: any, minValueDiffEl: any, maxValueDiffEl: any) =>
+    msg(html`${minValueEl} — ${maxValueEl} (${minValueDiffEl} — ${maxValueDiffEl})`),
   parameterCompletionValues: (value: any, minAvgValue: any, maxAvgValue: any) =>
     msg(html`${value} per completion (${minAvgValue} — ${maxAvgValue} per second)`),
   parameterCompletionDiffs: (

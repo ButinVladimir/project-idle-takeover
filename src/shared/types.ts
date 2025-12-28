@@ -169,6 +169,7 @@ export enum NotificationType {
   factionJoined = 'factionJoined',
   districtContested = 'districtContested',
   districtCaptured = 'districtCaptured',
+  allMilestonesReached = 'allMilestonesReached',
 }
 
 export enum LongNumberFormat {

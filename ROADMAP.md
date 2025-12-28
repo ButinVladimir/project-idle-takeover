@@ -1,6 +1,6 @@
 # Description
 
-Cyberiada is an idle cyberpunk-themed management game inspired by Bitburner. In this game player control mainframe and team of up to 10 members by giving them various orders to perform. Company can travel between cities, representing different scenarios, which have different conditions and unique rewards.
+Project: Idle Takeover is an idle cyberpunk-themed management game inspired by Bitburner. In this game player control mainframe and team of up to 10 members by giving them various orders to perform. Company can travel between cities, representing different scenarios, which have different conditions and unique rewards.
 
 # Terms
 
@@ -490,7 +490,7 @@ Increased base level of training for each attribute and skill
 
 Quality oriented, all basic combat options. Some variant with high intellect.
 
-### Immortal corps
+### Knights of Stahlmann
 
 #### Items
 
@@ -499,25 +499,27 @@ Combat oriented augmentations
 
 #### Favors
 
-Increased base level of augmentations
+Clones start with basic augmentation
+Augmentations are cheaper
 
 #### Mercenaries
 
 Quality oriented, all basic combat options. Some variant with high endurance.
 
-### Jackals
+### The collective
 
-#### Iteams
+#### Items
 
-Claw - very powerful vibroknife
+Peer reviewer, exp boosts, other than that basic stuff
 
 #### Favors
 
-Makes threat levels available immediately without grinding
+Starting mainframe hardware
+Mainframe hardware are cheaper
 
 #### Mercenaries
 
-Quality oriented, all basic combat options. Some variant with high agility.
+Improved version of basic clones
 
 # Other names
 

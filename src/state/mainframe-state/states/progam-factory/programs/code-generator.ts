@@ -21,12 +21,13 @@ export class CodeGeneratorProgram extends BaseProgram {
     const programData = typedPrograms[this.name];
     const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.codeBase;
 
-    return Math.pow(
+    return (
       multiplier *
-        this.globalState.rewards.multiplierByProgram *
-        threads *
-        calculateTierLinear(this.level, this.tier, programData.codeBase),
-      exponent,
+      threads *
+      Math.pow(
+        this.globalState.rewards.multiplierByProgram * calculateTierLinear(this.level, this.tier, programData.codeBase),
+        exponent,
+      )
     );
   }
 }

@@ -39,6 +39,12 @@ const styles = [
       }
     }
 
+    .notification {
+      padding: var(--sl-spacing-3x-large);
+      text-align: center;
+      border-bottom: var(--ca-border);
+    }
+
     .list {
       width: 100%;
       display: flex;

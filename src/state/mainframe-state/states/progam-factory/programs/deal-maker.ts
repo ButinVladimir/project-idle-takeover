@@ -21,12 +21,13 @@ export class DealMakerProgram extends BaseProgram {
     const programData = typedPrograms[this.name];
     const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.rewards;
 
-    return Math.pow(
+    return (
       multiplier *
-        this.globalState.rewards.multiplierByProgram *
-        threads *
-        calculateTierLinear(this.level, this.tier, programData.rewards),
-      exponent,
+      threads *
+      Math.pow(
+        this.globalState.rewards.multiplierByProgram * calculateTierLinear(this.level, this.tier, programData.rewards),
+        exponent,
+      )
     );
   }
 }

@@ -56,7 +56,7 @@ export class CityDistrictOverviewPanelValues extends BaseComponent {
 
         <sl-tooltip>
           <span slot="content"
-            >${msg(`Difficulty indicates how long it takes to capture district or uograde it to the next tier.`)}</span
+            >${msg(`Difficulty indicates how long it takes to capture district or upgrade it to the next tier.`)}</span
           >
 
           <sl-icon name=${HINT_ICON}></sl-icon>

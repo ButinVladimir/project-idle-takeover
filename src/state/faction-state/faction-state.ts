@@ -73,7 +73,7 @@ export class FactionState implements IFactionState {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getFactionLoanTier(faction: string) {
-    return 7;
+    return 0;
   }
 
   listAvailableFactions(): string[] {

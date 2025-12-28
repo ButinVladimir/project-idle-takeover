@@ -1,15 +1,15 @@
-import { IExponent, RewardParameterWithBase, DistrictTypeRewardParameter } from '@shared/index';
+import { IExponent, RewardParameterWithBase, DistrictTypeRewardParameter, ILinear } from '@shared/index';
 
 export interface IDistrictTypeTemplate {
   activityRequirementModifier: number;
   primaryActivityTimeMultipliers: {
     contractGenerationTime: number;
   };
-  synchronization: IExponent;
+  synchronization: ILinear;
   parameters: Record<
     DistrictTypeRewardParameter,
     {
-      progression: IExponent;
+      progression: ILinear;
       exponent: number;
     }
   >;

@@ -31,15 +31,15 @@
   "wsa": {
     "playstyle": "captureCity",
     "loanedItems": {
-      "programs": ["predictiveComputator", "contractAutostarter"],
-      "cloneTemplates": []
+      "programs": [],
+      "cloneTemplates": ["fixer", "bouncer", "gunner"]
     },
     "specialItems": {
       "programs": [],
       "cloneTemplates": []
     },
     "activities": {
-      "contracts": ["guarding"]
+      "contracts": ["security", "backroomDeal"]
     }
   }
 }

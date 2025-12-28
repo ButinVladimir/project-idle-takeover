@@ -1,11 +1,13 @@
 import { html, nothing } from 'lit';
 import { msg, localized } from '@lit/localize';
 import { customElement, property, queryAll } from 'lit/decorators.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { consume } from '@lit/context';
 import { type IProcess, type IProgram } from '@state/mainframe-state';
 import {
   BaseComponent,
   diffFormatterParameters,
+  getHighlightDifferenceClass,
   getHighlightDifferenceClassMap,
   getHighlightValueClassMap,
 } from '@shared/index';
@@ -38,6 +40,11 @@ export class StartProcessDialogDescription extends BaseComponent {
 
   @queryAll('span[data-diff]')
   private _diffEls!: NodeListOf<HTMLSpanElement>;
+
+  private _minCompletionTimeValueEl = createRef<HTMLSpanElement>();
+  private _maxCompletionTimeValueEl = createRef<HTMLSpanElement>();
+  private _minCompletionTimeDiffEl = createRef<HTMLSpanElement>();
+  private _maxCompletionTimeDiffEl = createRef<HTMLSpanElement>();
 
   @consume({ context: programContext, subscribe: true })
   private _program?: IProgram;
@@ -133,29 +140,6 @@ export class StartProcessDialogDescription extends BaseComponent {
       >${formatter.formatNumberDecimal(coresDiff, diffFormatterParameters)}</span
     >`;
 
-    const minTime = this._program!.calculateCompletionMinTime(this.threads);
-    const maxTime = this._program!.calculateCompletionMaxTime(this.threads);
-
-    let minTimeDiff = 0;
-    let maxTimeDiff = 0;
-
-    if (currentThreads > 0) {
-      minTimeDiff = minTime - this._program!.calculateCompletionMinTime(currentThreads);
-      maxTimeDiff = maxTime - this._program!.calculateCompletionMaxTime(currentThreads);
-    }
-
-    const formattedMinTime = formatter.formatTimeShort(minTime);
-    const formattedMaxTime = formatter.formatTimeShort(maxTime);
-
-    const minTimeDiffClass = getHighlightDifferenceClassMap(-minTimeDiff);
-    const minTimeDiffEl = html`<span class=${minTimeDiffClass}
-      >${formatter.formatTimeShort(minTimeDiff, diffFormatterParameters)}</span
-    >`;
-    const maxTimeDiffClass = getHighlightDifferenceClassMap(-maxTimeDiff);
-    const maxTimeDiffEl = html`<span class=${maxTimeDiffClass}
-      >${formatter.formatTimeShort(maxTimeDiff, diffFormatterParameters)}</span
-    >`;
-
     return html`
       <p>${PROGRAM_DESCRIPTION_TEXTS.requirementsDiff(formattedThreads, threadsDiffEl)}</p>
 
@@ -172,10 +156,10 @@ export class StartProcessDialogDescription extends BaseComponent {
         ${COMMON_TEXTS.parameterRow(
           COMMON_TEXTS.completionTime(),
           PROGRAM_DESCRIPTION_TEXTS.minMaxIntervalDiff(
-            formattedMinTime,
-            formattedMaxTime,
-            minTimeDiffEl,
-            maxTimeDiffEl,
+            html`<span ${ref(this._minCompletionTimeValueEl)}></span>`,
+            html`<span ${ref(this._maxCompletionTimeValueEl)}></span>`,
+            html`<span ${ref(this._minCompletionTimeDiffEl)}></span>`,
+            html`<span ${ref(this._maxCompletionTimeDiffEl)}></span>`,
           ),
         )}
       </p>
@@ -207,6 +191,8 @@ export class StartProcessDialogDescription extends BaseComponent {
       diffEl.className = className;
       diffEl.textContent = value;
     });
+
+    this.updateCompletionTime();
   };
 
   private updateRenderer(): void {
@@ -227,5 +213,52 @@ export class StartProcessDialogDescription extends BaseComponent {
     };
 
     this._renderer = new rendererMap[this._program!.name](parameters);
+  }
+
+  private updateCompletionTime() {
+    if (!this._program) {
+      return;
+    }
+
+    const currentThreads = this._existingProcess ? this._existingProcess.threads : 0;
+    const formatter = this._controller.formatter;
+
+    const minTime = this._program!.calculateCompletionMinTime(this.threads);
+    const maxTime = this._program!.calculateCompletionMaxTime(this.threads);
+
+    let minTimeDiff = 0;
+    let maxTimeDiff = 0;
+
+    if (currentThreads > 0) {
+      minTimeDiff = minTime - this._program!.calculateCompletionMinTime(currentThreads);
+      maxTimeDiff = maxTime - this._program!.calculateCompletionMaxTime(currentThreads);
+    }
+
+    const formattedMinTime = formatter.formatTimeShort(minTime);
+    const formattedMaxTime = formatter.formatTimeShort(maxTime);
+
+    const minTimeDiffClass = getHighlightDifferenceClass(-minTimeDiff);
+    const minTimeDiffLabel = formatter.formatTimeShort(minTimeDiff, diffFormatterParameters);
+
+    const maxTimeDiffClass = getHighlightDifferenceClass(-maxTimeDiff);
+    const maxTimeDiffLabel = formatter.formatTimeShort(maxTimeDiff, diffFormatterParameters);
+
+    if (this._minCompletionTimeValueEl.value) {
+      this._minCompletionTimeValueEl.value.textContent = formattedMinTime;
+    }
+
+    if (this._maxCompletionTimeValueEl.value) {
+      this._maxCompletionTimeValueEl.value.textContent = formattedMaxTime;
+    }
+
+    if (this._minCompletionTimeDiffEl.value) {
+      this._minCompletionTimeDiffEl.value.textContent = minTimeDiffLabel;
+      this._minCompletionTimeDiffEl.value.className = minTimeDiffClass;
+    }
+
+    if (this._maxCompletionTimeDiffEl.value) {
+      this._maxCompletionTimeDiffEl.value.textContent = maxTimeDiffLabel;
+      this._maxCompletionTimeDiffEl.value.className = maxTimeDiffClass;
+    }
   }
 }

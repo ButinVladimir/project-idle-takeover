@@ -1,47 +1,71 @@
 {
   "$schema": "./schemas/contracts.json",
-  "guarding": {
+  "security": {
     "requirements": {
-      "baseCompletionTime": 10000,
+      "baseCompletionTime": 12e3,
       "teamSize": { "min": 1, "max": 3 },
       "connectivity": {
-        "amount": { "multiplier": 1, "base": 2 },
+        "amount": { "multiplier": 6e8, "base": 1.2 },
         "threat": { "multiplier": 1, "base": 1 }
       },
       "attributes": {
-        "strength": { "teamSize": 1, "multiplier": 1, "base": 1 },
-        "endurance": { "teamSize": 1, "multiplier": 1, "base": 1 },
-        "agility": { "teamSize": 1, "multiplier": 1, "base": 1 },
-        "perception": { "teamSize": 1, "multiplier": 1, "base": 1 },
-        "intellect": { "teamSize": 1, "multiplier": 1, "base": 1 },
-        "charisma": { "teamSize": 1, "multiplier": 1, "base": 1 }
+        "endurance": { "teamSize": 1, "multiplier": 20, "base": 1 },
+        "perception": { "teamSize": 1, "multiplier": 20, "base": 1 }
       },
       "skills": {
-        "closeCombat": { "teamSize": 1, "multiplier": 1, "base": 1 },
-        "rangedCombat": { "teamSize": 1, "multiplier": 1, "base": 1 },
-        "engineering": { "teamSize": 1, "multiplier": 1, "base": 1 },
-        "hacking": { "teamSize": 1, "multiplier": 1, "base": 1 },
-        "stealth": { "teamSize": 1, "multiplier": 1, "base": 1 },
-        "diplomacy": { "teamSize": 1, "multiplier": 1, "base": 1 }
+        "rangedCombat": { "teamSize": 1, "multiplier": 30, "base": 1 }
       }
     },
     "rewardModifiers": {
       "attributes": {
-        "rangedCombat": { "multiplier": 0.1, "base": 1 }
+        "endurance": { "multiplier": 5e-3, "base": 1 },
+        "perception": { "multiplier": 5e-3, "base": 1 }
       },
       "skills": {
-        "closeCombat": { "multiplier": 0.1, "base": 1 }
+        "rangedCombat": { "multiplier": 1e-2, "base": 1 },
+        "diplomacy": { "multiplier": 1e-3, "base": 1 }
       }
     },
     "rewards": {
-      "experience": { "multiplier": 100000, "base": 1 },
-      "money": { "multiplier": 100000, "base": 1 },
-      "developmentPoints": { "multiplier": 100000, "base": 1 },
-      "influence": { "multiplier": 100000, "base": 1 },
-      "connectivity": { "multiplier": 100000, "base": 1 },
-      "rewards": { "multiplier": 100000, "base": 1 },
-      "codeBase": { "multiplier": 100000, "base": 1 },
-      "computationalBase": { "multiplier": 100000, "base": 1 }
+      "experience": { "multiplier": 24e5, "base": 1 },
+      "money": { "multiplier": 30e5, "base": 1 },
+      "developmentPoints": { "multiplier": 24e5, "base": 1 },
+      "influence": { "multiplier": 12e5, "base": 1 }
+    }
+  },
+  "backroomDeal": {
+    "requirements": {
+      "baseCompletionTime": 6e4,
+      "teamSize": { "min": 1, "max": 2 },
+      "connectivity": {
+        "amount": { "multiplier": 6e9, "base": 1.35 },
+        "threat": { "multiplier": 1, "base": 1 }
+      },
+      "attributes": {
+        "perception": { "teamSize": 1, "multiplier": 20, "base": 1 },
+        "charisma": { "teamSize": 2, "multiplier": 20, "base": 1 },
+        "intellect": { "teamSize": 2, "multiplier": 20, "base": 1 }
+      },
+      "skills": {
+        "diplomacy": { "teamSize": 2, "multiplier": 50, "base": 1 }
+      }
+    },
+    "rewardModifiers": {
+      "attributes": {
+        "perception": { "multiplier": 5e-3, "base": 1 },
+        "charisma": { "multiplier": 1e-2, "base": 1 },
+        "intellect": { "multiplier": 1e-2, "base": 1 }
+      },
+      "skills": {
+        "diplomacy": { "multiplier": 2e-2, "base": 1 }
+      }
+    },
+    "rewards": {
+      "experience": { "multiplier": 72e5, "base": 1 },
+      "money": { "multiplier": 90e5, "base": 1 },
+      "developmentPoints": { "multiplier": 72e5, "base": 1 },
+      "influence": { "multiplier": 54e5, "base": 1 },
+      "rewards": { "multiplier": 36e5, "base": 1 }
     }
   }
 }

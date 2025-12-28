@@ -1,4 +1,12 @@
-import { Attribute, Skill, calculatePower, ATTRIBUTES, SKILLS, DistrictTypeRewardParameter } from '@shared/index';
+import {
+  Attribute,
+  Skill,
+  calculatePower,
+  ATTRIBUTES,
+  SKILLS,
+  DistrictTypeRewardParameter,
+  calculateLinear,
+} from '@shared/index';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IGlobalState } from '@state/global-state';
@@ -71,8 +79,9 @@ export class Sidejob implements ISidejob {
     }
 
     return (
+      1 +
       calculatePower(this._globalState.threat.level, this.sidejobTemplate.rewardModifiers.attributes[attribute]) *
-      this._assignedClone.getTotalAttributeValue(attribute)
+        this._assignedClone.getTotalAttributeValue(attribute)
     );
   }
 
@@ -82,8 +91,9 @@ export class Sidejob implements ISidejob {
     }
 
     return (
+      1 +
       calculatePower(this._globalState.threat.level, this.sidejobTemplate.rewardModifiers.skills[skill]) *
-      this._assignedClone.getTotalSkillValue(skill)
+        this._assignedClone.getTotalSkillValue(skill)
     );
   }
 
@@ -108,13 +118,10 @@ export class Sidejob implements ISidejob {
     const rewardsModifier = this._district.parameters.rewards.totalMultiplier;
     const districtTypeModifier = this._district.template.parameters[parameter];
 
-    const baseDelta = Math.pow(
-      rewardsModifier *
-        cloneParametersModifier *
-        calculatePower(this._globalState.threat.level, sidejobModifier) *
-        calculatePower(this._district.parameters.influence.tier, districtTypeModifier.progression),
-      districtTypeModifier.exponent,
-    );
+    const baseDelta =
+      calculatePower(this._globalState.threat.level, sidejobModifier) *
+      calculateLinear(this._district.parameters.influence.tier, districtTypeModifier.progression) *
+      Math.pow(rewardsModifier * cloneParametersModifier, districtTypeModifier.exponent);
 
     switch (parameter) {
       case DistrictTypeRewardParameter.money:

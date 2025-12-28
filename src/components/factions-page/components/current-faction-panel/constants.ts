@@ -10,7 +10,7 @@ export const FACTION_PLAYSTYLE_TEXT: Record<FactionPlaystyle, { title: () => str
     title: () => msg('Capture the city'),
     description: () =>
       msg(`Capture city districts and increase disticts tiers to earn faction reputation.
-Threat can be raised only by story events.`),
+Threat level can be raised only by story events.`),
   },
   [FactionPlaystyle.raiseThreat]: {
     title: () => msg('Raise the threat level'),
