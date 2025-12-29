@@ -2,7 +2,7 @@ import { ProgramName } from '@state/mainframe-state/states/progam-factory/types'
 
 export interface ISerializedProcess {
   programName: ProgramName;
-  isActive: boolean;
+  enabled: boolean;
   threads: number;
   currentCompletionPoints: number;
 }

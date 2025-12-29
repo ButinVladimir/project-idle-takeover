@@ -4,7 +4,7 @@ import { consume } from '@lit/context';
 import { customElement } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ATTRIBUTE_TEXTS, COMMON_TEXTS, SKILL_TEXTS } from '@texts/index';
-import { type ISidejob } from '@state/company-state';
+import { type ISidejob } from '@state/activity-state';
 import {
   BaseComponent,
   Attribute,
@@ -75,6 +75,11 @@ export class AssignCloneSidejobDialogRewardsMultipliers extends BaseComponent {
 
   private renderRewardsMultplierAttribute = (attribute: Attribute) => {
     const value = this._sidejob!.getAttributeModifier(attribute);
+
+    if (value <= 1) {
+      return nothing;
+    }
+
     const existingValue = this._existingSidejob?.getAttributeModifier(attribute) ?? 0;
     const diff = value - existingValue;
 
@@ -94,6 +99,11 @@ export class AssignCloneSidejobDialogRewardsMultipliers extends BaseComponent {
 
   private renderRewardsMultplierSkill = (skill: Skill) => {
     const value = this._sidejob!.getSkillModifier(skill);
+
+    if (value === 1) {
+      return nothing;
+    }
+
     const existingValue = this._existingSidejob?.getSkillModifier(skill) ?? 0;
     const diff = value - existingValue;
 

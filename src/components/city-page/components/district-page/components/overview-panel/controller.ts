@@ -1,7 +1,7 @@
-import { BaseController, Feature } from '@shared/index';
+import { BaseController, DistrictTypeRewardParameter } from '@shared/index';
 
 export class CityDistrictOverviewPanelController extends BaseController {
-  isDistrictTiersUnlocked(): boolean {
-    return this.globalState.unlockedFeatures.isFeatureUnlocked(Feature.districtTiers);
+  isInfluenceAvailable(): boolean {
+    return this.unlockState.milestones.isRewardParameterUnlocked(DistrictTypeRewardParameter.influence);
   }
 }

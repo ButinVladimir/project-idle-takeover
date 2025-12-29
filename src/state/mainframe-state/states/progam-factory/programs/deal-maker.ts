@@ -1,7 +1,7 @@
-import programs from '@configs/programs.json';
-import { calculateTierPower } from '@shared/helpers';
+import { DistrictTypeRewardParameter, calculateTierLinear } from '@shared/index';
 import { MultiplierProgramName } from '../types';
 import { BaseProgram } from './base-program';
+import { typedPrograms } from '../constants';
 
 export class DealMakerProgram extends BaseProgram {
   public readonly name = MultiplierProgramName.dealMaker;
@@ -10,17 +10,24 @@ export class DealMakerProgram extends BaseProgram {
   handlePerformanceUpdate(): void {}
 
   perform(threads: number): void {
-    this.globalState.multipliers.rewards.increasePointsByProgram(this.calculateDelta(threads));
+    this.globalState.rewards.increasePointsByProgram(this.calculateDelta(threads));
   }
 
   calculateDelta(threads: number): number {
-    const programData = programs[this.name];
+    if (!this.unlockState.milestones.isRewardParameterUnlocked(DistrictTypeRewardParameter.rewards)) {
+      return 0;
+    }
+
+    const programData = typedPrograms[this.name];
+    const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.rewards;
 
     return (
-      this.globalState.scenario.currentValues.programMultipliers.rewards.pointsMultiplier *
-      this.globalState.multipliers.rewards.totalMultiplier *
+      multiplier *
       threads *
-      calculateTierPower(this.level, this.tier, programData.rewards)
+      Math.pow(
+        this.globalState.rewards.multiplierByProgram * calculateTierLinear(this.level, this.tier, programData.rewards),
+        exponent,
+      )
     );
   }
 }

@@ -47,7 +47,9 @@ export class MainframeHardwarePanel extends BaseComponent {
       <p class="hint">
         ${msg(`Press either Ctrl or Shift to buy 10 levels. Press both Ctrl and Shift to buy 100 levels.
 Hardware autoupgrade priority can be changed by dragging it by the title.
-Upgrades on top have higher priority.`)}
+Upgrades on top have higher priority.
+Hardware upgrade level cannot be above development level.
+`)}
       </p>
 
       <div class="buttons-block">
@@ -61,14 +63,10 @@ Upgrades on top have higher priority.`)}
   }
 
   private renderParameter = (parameter: IMainframeHardwareParameter) => {
-    const maxIncrease = this.getMaxIncrease();
+    const increase = this.calculateIncrease();
 
     return html`
-      <ca-mainframe-hardware-panel-article
-        type=${parameter.type}
-        max-increase=${maxIncrease}
-        data-drag-id=${parameter.type}
-      >
+      <ca-mainframe-hardware-panel-article type=${parameter.type} increase=${increase} data-drag-id=${parameter.type}>
       </ca-mainframe-hardware-panel-article>
     `;
   };
@@ -78,18 +76,18 @@ Upgrades on top have higher priority.`)}
     this._ctrlPressed = event.ctrlKey;
   };
 
-  private getMaxIncrease(): number {
-    let maxIncrease = 1;
+  private calculateIncrease(): number {
+    let increase = 1;
 
     if (this._shiftPressed) {
-      maxIncrease *= 10;
+      increase *= 10;
     }
 
     if (this._ctrlPressed) {
-      maxIncrease *= 10;
+      increase *= 10;
     }
 
-    return maxIncrease;
+    return increase;
   }
 
   private handleMoveElement = (event: SortableElementMovedEvent) => {

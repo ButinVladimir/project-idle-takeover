@@ -1,9 +1,9 @@
-import programs from '@configs/programs.json';
 import { type IStateUIConnector } from '@state/state-ui-connector';
-import { type IFormatter, calculatePower } from '@shared/index';
+import { type IFormatter, calculateLinear } from '@shared/index';
 import { type IGlobalState } from '@state/global-state';
-import { type IMainframeState } from '@state/mainframe-state';
-import { Feature } from '@shared/types';
+import { typedPrograms, type IMainframeState } from '@state/mainframe-state';
+import { type IScenarioState } from '@state/scenario-state';
+import { type IUnlockState } from '@state/unlock-state';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { ProgramName } from '../types';
@@ -19,8 +19,14 @@ export abstract class BaseProgram implements IProgram {
   @lazyInject(TYPES.GlobalState)
   protected globalState!: IGlobalState;
 
+  @lazyInject(TYPES.ScenarioState)
+  protected scenarioState!: IScenarioState;
+
   @lazyInject(TYPES.MainframeState)
   protected mainframeState!: IMainframeState;
+
+  @lazyInject(TYPES.UnlockState)
+  protected unlockState!: IUnlockState;
 
   @lazyInject(TYPES.Formatter)
   protected formatter!: IFormatter;
@@ -49,9 +55,7 @@ export abstract class BaseProgram implements IProgram {
   }
 
   get completionPoints() {
-    const programData = programs[this.name];
-
-    return calculatePower(this.globalState.development.level - this.level, programData.completionPoints);
+    return typedPrograms[this.name].completionPoints;
   }
 
   get autoUpgradeEnabled() {
@@ -65,15 +69,15 @@ export abstract class BaseProgram implements IProgram {
   abstract get isAutoscalable(): boolean;
 
   get ram(): number {
-    return programs[this.name].ram;
+    return typedPrograms[this.name].ram;
   }
 
   get cores() {
     return this.tier + 1;
   }
 
-  get unlockFeatures() {
-    return programs[this.name].requiredFeatures as Feature[];
+  get requiredMilestones() {
+    return typedPrograms[this.name].requiredMilestones;
   }
 
   abstract handlePerformanceUpdate(): void;
@@ -85,14 +89,22 @@ export abstract class BaseProgram implements IProgram {
     this._level = level;
 
     this.handlePerformanceUpdate();
-    this.mainframeState.processes.requestUpdateProcesses();
+    this.mainframeState.processes.requestUpdateRunningProcesses();
   }
 
   calculateCompletionDelta(threads: number, usedCores: number, passedTime: number): number {
-    const currentSpeed = usedCores * this.mainframeState.processes.processCompletionSpeed.totalMultiplier;
+    if (usedCores === 0) {
+      return 0;
+    }
+
+    const programData = typedPrograms[this.name];
+
+    const currentSpeed =
+      this.globalState.processCompletionSpeed.totalMultiplier *
+      calculateLinear(this.level, programData.levelSpeedBoost) *
+      calculateLinear(usedCores - 1, programData.coreSpeedBoost);
     const allowedSpeed =
-      (threads * this.completionPoints) /
-      this.globalState.scenario.currentValues.mainframeSoftware.minProcessCompletionTime;
+      (threads * this.completionPoints) / this.scenarioState.currentValues.mainframeSoftware.minProcessCompletionTime;
 
     return passedTime * Math.min(currentSpeed, allowedSpeed);
   }

@@ -1,4 +1,4 @@
-import { IClone } from '@state/company-state';
+import { IClone } from '@state/clones-state';
 import { CloneListItemDialog } from '../type';
 
 export class OpenCloneListItemDialogEvent extends Event {

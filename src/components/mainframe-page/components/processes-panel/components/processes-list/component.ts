@@ -2,10 +2,7 @@ import { html } from 'lit';
 import { localized, msg } from '@lit/localize';
 import { customElement } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import {
-  ConfirmationAlertOpenEvent,
-  ConfirmationAlertSubmitEvent,
-} from '@components/game-screen/components/confirmation-alert/events';
+import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { IProcess, ProgramName } from '@state/mainframe-state';
 import { BaseComponent, ProgramAlert, DELETE_VALUES, ENTITY_ACTIVE_VALUES } from '@shared/index';
 import { SortableElementMovedEvent } from '@components/shared/sortable-list/events/sortable-element-moved';
@@ -25,18 +22,6 @@ export class ProcessesList extends BaseComponent {
     super();
 
     this._controller = new ProcessesListController(this);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    document.addEventListener(ConfirmationAlertSubmitEvent.type, this.handleConfirmDeleteAllProcessesDialog);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-
-    document.removeEventListener(ConfirmationAlertSubmitEvent.type, this.handleConfirmDeleteAllProcessesDialog);
   }
 
   protected renderDesktop() {
@@ -149,7 +134,7 @@ export class ProcessesList extends BaseComponent {
   };
 
   private checkSomeProcessesActive(): boolean {
-    return this._controller.listProcesses().some((process) => process.isActive);
+    return this._controller.listProcesses().some((process) => process.enabled);
   }
 
   private handleToggleAllProcesses = () => {
@@ -163,17 +148,12 @@ export class ProcessesList extends BaseComponent {
       new ConfirmationAlertOpenEvent(
         ProgramAlert.deleteAllProcesses,
         msg('Are you sure want to delete all processes? Their progress will be lost.'),
+        this.handleDeleteAllProcesses,
       ),
     );
   };
 
-  private handleConfirmDeleteAllProcessesDialog = (event: Event) => {
-    const convertedEvent = event as ConfirmationAlertSubmitEvent;
-
-    if (convertedEvent.gameAlert !== ProgramAlert.deleteAllProcesses) {
-      return;
-    }
-
+  private handleDeleteAllProcesses = () => {
     this._controller.deleteAllProcesses();
   };
 

@@ -1,12 +1,11 @@
-import { Feature } from '@shared/types';
-import { BaseController } from '@shared/base-controller';
+import { BaseController, Milestone } from '@shared/index';
 
 export class MainframePageController extends BaseController {
   isMainframeHardwareUnlocked(): boolean {
-    return this.globalState.unlockedFeatures.isFeatureUnlocked(Feature.mainframeHardware);
+    return this.unlockState.milestones.isMilestoneReached(Milestone.unlockedMainframeHardware);
   }
 
   isMainframeProgramsUnlocked(): boolean {
-    return this.globalState.unlockedFeatures.isFeatureUnlocked(Feature.mainframePrograms);
+    return this.unlockState.milestones.isMilestoneReached(Milestone.unlockedMainframePrograms);
   }
 }

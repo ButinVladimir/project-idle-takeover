@@ -3,15 +3,12 @@ import { localized, msg, str } from '@lit/localize';
 import { provide } from '@lit/context';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import {
-  ConfirmationAlertOpenEvent,
-  ConfirmationAlertSubmitEvent,
-} from '@components/game-screen/components/confirmation-alert/events';
-import { BaseComponent, SidejobAlert, DELETE_VALUES, DESCRIPTION_ICONS } from '@shared/index';
+import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
+import { BaseComponent, SidejobAlert, DELETE_VALUES, DESCRIPTION_ICONS, ENTITY_ACTIVE_VALUES } from '@shared/index';
 import { COMMON_TEXTS, DISTRICT_NAMES, SIDEJOB_TEXTS } from '@texts/index';
+import { type ISidejobActivity } from '@state/activity-state';
 import { SidejobsListItemController } from './controller';
-import { sidejobContext } from './contexts';
-import { type ISidejob } from '@state/company-state';
+import { sidejobActivityContext } from './contexts';
 import styles from './styles';
 
 @localized()
@@ -20,10 +17,10 @@ export class SidejobsListItem extends BaseComponent {
   static styles = styles;
 
   @property({
-    attribute: 'sidejob-id',
+    attribute: 'activity-id',
     type: String,
   })
-  sidejobId!: string;
+  activityId!: string;
 
   @state()
   _descriptionVisible = false;
@@ -32,25 +29,13 @@ export class SidejobsListItem extends BaseComponent {
 
   private _controller: SidejobsListItemController;
 
-  @provide({ context: sidejobContext })
-  private _sidejob?: ISidejob;
+  @provide({ context: sidejobActivityContext })
+  private _activity?: ISidejobActivity;
 
   constructor() {
     super();
 
     this._controller = new SidejobsListItemController(this);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    document.addEventListener(ConfirmationAlertSubmitEvent.type, this.handleConfirmCancelSidejobDialog);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-
-    document.removeEventListener(ConfirmationAlertSubmitEvent.type, this.handleConfirmCancelSidejobDialog);
   }
 
   performUpdate() {
@@ -60,11 +45,11 @@ export class SidejobsListItem extends BaseComponent {
   }
 
   protected renderDesktop() {
-    if (!this._sidejob) {
+    if (!this._activity) {
       return nothing;
     }
 
-    const sidejobTitle = SIDEJOB_TEXTS[this._sidejob.sidejobName].title();
+    const sidejobTitle = SIDEJOB_TEXTS[this._activity.sidejob.sidejobName].title();
 
     const descriptionButtonName = this._descriptionVisible ? DESCRIPTION_ICONS.expanded : DESCRIPTION_ICONS.hidden;
     const descriptionButtonLabel = this._descriptionVisible
@@ -75,8 +60,11 @@ export class SidejobsListItem extends BaseComponent {
       visible: this._descriptionVisible,
     });
 
-    const districtName = DISTRICT_NAMES[this._sidejob.district.name]();
-    const cloneName = this._sidejob.assignedClone!.name;
+    const districtName = DISTRICT_NAMES[this._activity.sidejob.district.name]();
+    const cloneName = this._activity.sidejob.assignedClone.name;
+
+    const toggleIcon = this._activity.enabled ? ENTITY_ACTIVE_VALUES.icon.active : ENTITY_ACTIVE_VALUES.icon.stopped;
+    const toggleLabel = this._activity.enabled ? msg('Disable sidejob') : msg('Enable sidejob');
 
     const cancelSidejobLabel = msg('Cancel sidejob');
 
@@ -107,7 +95,16 @@ export class SidejobsListItem extends BaseComponent {
 
         <div>${cloneName}</div>
 
+        <div><ca-sidejobs-list-item-status></ca-sidejobs-list-item-status></div>
+
         <div class="buttons">
+          <sl-tooltip>
+            <span slot="content"> ${toggleLabel} </span>
+
+            <sl-icon-button name=${toggleIcon} label=${toggleLabel} @click=${this.handleToggleSidejob}>
+            </sl-icon-button>
+          </sl-tooltip>
+
           <sl-tooltip>
             <span slot="content"> ${cancelSidejobLabel} </span>
 
@@ -125,11 +122,11 @@ export class SidejobsListItem extends BaseComponent {
   }
 
   protected renderMobile() {
-    if (!this._sidejob) {
+    if (!this._activity) {
       return nothing;
     }
 
-    const sidejobTitle = SIDEJOB_TEXTS[this._sidejob.sidejobName].title();
+    const sidejobTitle = SIDEJOB_TEXTS[this._activity.sidejob.sidejobName].title();
 
     const descriptionButtonName = this._descriptionVisible ? DESCRIPTION_ICONS.expanded : DESCRIPTION_ICONS.hidden;
     const descriptionButtonLabel = this._descriptionVisible
@@ -140,11 +137,21 @@ export class SidejobsListItem extends BaseComponent {
       visible: this._descriptionVisible,
     });
 
-    const districtName = DISTRICT_NAMES[this._sidejob.district.name]();
-    const cloneName = this._sidejob.assignedClone!.name;
+    const districtName = DISTRICT_NAMES[this._activity.sidejob.district.name]();
+    const cloneName = this._activity.sidejob.assignedClone.name;
 
-    const districtNameFull = COMMON_TEXTS.parameterValue(msg('District'), districtName);
-    const cloneNameFull = COMMON_TEXTS.parameterValue(msg('Assigned clone'), cloneName);
+    const districtNameFull = COMMON_TEXTS.parameterRow(msg('District'), districtName);
+    const cloneNameFull = COMMON_TEXTS.parameterRow(msg('Assigned clone'), cloneName);
+    const statusFull = COMMON_TEXTS.parameterRow(
+      msg('Status'),
+      html`<ca-sidejobs-list-item-status></ca-sidejobs-list-item-status>`,
+    );
+
+    const toggleIcon = this._activity.enabled ? ENTITY_ACTIVE_VALUES.icon.active : ENTITY_ACTIVE_VALUES.icon.stopped;
+    const toggleLabel = this._activity.enabled ? msg('Disable sidejob') : msg('Enable sidejob');
+    const toggleVariant = this._activity.enabled
+      ? ENTITY_ACTIVE_VALUES.buttonVariant.active
+      : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
 
     const cancelSidejobLabel = msg('Cancel sidejob');
 
@@ -175,7 +182,15 @@ export class SidejobsListItem extends BaseComponent {
 
         <div>${cloneNameFull}</div>
 
+        <div>${statusFull}</div>
+
         <div class="buttons">
+          <sl-button variant=${toggleVariant} size="medium" @click=${this.handleToggleSidejob}>
+            <sl-icon slot="prefix" name=${toggleIcon}></sl-icon>
+
+            ${toggleLabel}
+          </sl-button>
+
           <sl-button variant=${DELETE_VALUES.buttonVariant} size="medium" @click=${this.handleOpenCancelSidejobDialog}>
             <sl-icon slot="prefix" name=${DELETE_VALUES.icon}> </sl-icon>
 
@@ -187,10 +202,10 @@ export class SidejobsListItem extends BaseComponent {
   }
 
   private updateContext() {
-    if (this.sidejobId) {
-      this._sidejob = this._controller.getSidejobById(this.sidejobId);
+    if (this.activityId) {
+      this._activity = this._controller.getActivityById(this.activityId);
     } else {
-      this._sidejob = undefined;
+      this._activity = undefined;
     }
   }
 
@@ -199,9 +214,9 @@ export class SidejobsListItem extends BaseComponent {
   };
 
   private handleOpenCancelSidejobDialog = () => {
-    const sidejobName = SIDEJOB_TEXTS[this._sidejob!.sidejobName].title();
-    const districtName = DISTRICT_NAMES[this._sidejob!.district.name]();
-    const cloneName = this._sidejob!.assignedClone!.name;
+    const sidejobName = SIDEJOB_TEXTS[this._activity!.sidejob.sidejobName].title();
+    const districtName = DISTRICT_NAMES[this._activity!.sidejob.district.name]();
+    const cloneName = this._activity!.sidejob.assignedClone.name;
 
     this.dispatchEvent(
       new ConfirmationAlertOpenEvent(
@@ -209,18 +224,16 @@ export class SidejobsListItem extends BaseComponent {
         msg(
           str`Are you sure want to cancel sidejob "${sidejobName}" in district "${districtName}" assigned to clone "${cloneName}"?`,
         ),
-        this.sidejobId,
+        this.handleCancelSidejob,
       ),
     );
   };
 
-  private handleConfirmCancelSidejobDialog = (event: Event) => {
-    const convertedEvent = event as ConfirmationAlertSubmitEvent;
+  private handleToggleSidejob = () => {
+    this._controller.toggleSidejob();
+  };
 
-    if (convertedEvent.gameAlert !== SidejobAlert.sidejobCancel || convertedEvent.gameAlertKey !== this.sidejobId) {
-      return;
-    }
-
-    this._controller.cancelSidejobById(this.sidejobId);
+  private handleCancelSidejob = () => {
+    this._controller.cancelActivityById(this.activityId);
   };
 }

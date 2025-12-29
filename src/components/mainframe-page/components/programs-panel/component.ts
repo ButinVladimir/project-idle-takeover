@@ -16,7 +16,9 @@ export class MainframeProgramsPanel extends BaseComponent {
     return html`
       <p class="hint">
         ${msg(`Program autoupgrade priority can be changed by dragging it by the title.
-Programs on top have higher priority. Autoupgrade for programs won't change their tier but will attempt to increase level.`)}
+Programs on top have higher priority.
+Autoupgrade for programs won't change their tier but will attempt to increase level.
+Program level cannot be above development level.`)}
       </p>
 
       <sl-button variant="primary" size="medium" @click=${this.handlePurchaseProgramDialogOpen}>
@@ -26,7 +28,7 @@ Programs on top have higher priority. Autoupgrade for programs won't change thei
       <ca-owned-programs-list></ca-owned-programs-list>
 
       <ca-purchase-program-dialog
-        ?is-open=${this._isPurchaseProgramDialogOpen}
+        ?open=${this._isPurchaseProgramDialogOpen}
         @purchase-program-dialog-close=${this.handlePurchaseProgramDialogClose}
       >
       </ca-purchase-program-dialog>

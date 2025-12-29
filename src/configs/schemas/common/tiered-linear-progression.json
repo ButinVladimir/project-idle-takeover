@@ -1,0 +1,16 @@
+{
+  "$id": "common/tiered-linear-progression.json",
+  "allOf": [
+    { "$ref": "./linear-progression.json" },
+    {
+      "type": "object",
+      "properties": {
+        "baseTier": {
+          "type": "number",
+          "description": "Base for tier multiplier"
+        }
+      },
+      "required": ["baseTier"]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 import { AppStage } from '@state/app/types';
 
 export class AppRootController extends BaseController {

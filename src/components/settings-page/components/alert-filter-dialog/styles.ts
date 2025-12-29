@@ -33,6 +33,10 @@ const styles = [
         grid-template-rows: auto;
       }
 
+      sl-checkbox.group-checkbox {
+        margin-bottom: var(--sl-spacing-small);
+      }
+
       &.mobile div.events-container {
         grid-template-columns: auto;
       }

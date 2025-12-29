@@ -5,9 +5,9 @@ export class ConfirmationAlertOpenEvent extends Event {
 
   readonly gameAlert: GameAlert;
   readonly message: string;
-  readonly gameAlertKey?: string;
+  readonly callback: () => any;
 
-  constructor(gameAlert: GameAlert, message: string, gameAlertKey?: string) {
+  constructor(gameAlert: GameAlert, message: string, callback: () => any) {
     super(ConfirmationAlertOpenEvent.type, {
       bubbles: true,
       composed: true,
@@ -15,6 +15,6 @@ export class ConfirmationAlertOpenEvent extends Event {
 
     this.gameAlert = gameAlert;
     this.message = message;
-    this.gameAlertKey = gameAlertKey;
+    this.callback = callback;
   }
 }

@@ -28,10 +28,10 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
   type!: MainframeHardwareParameterType;
 
   @property({
-    attribute: 'max-increase',
+    attribute: 'increase',
     type: Number,
   })
-  maxIncrease!: number;
+  increase!: number;
 
   private _controller: MainframeHardwarePanelArticleController;
 
@@ -78,15 +78,13 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
       ? COMMON_TEXTS.disableAutoupgrade()
       : COMMON_TEXTS.enableAutoupgrade();
 
-    const increase = this.calculateIncrease();
-
     return html`
       <form id="hardware-panel-article-${this.type}" @submit=${this.handleSubmit}>
         <div class="title-row">
           <h4 class="title" draggable="true" @dragstart=${this.handleDragStart}>
             <sl-icon id="drag-icon" name="grip-vertical"> </sl-icon>
 
-            ${COMMON_TEXTS.parameterValue(MAINFRAME_HARDWARE_TEXTS[this.type].title(), formatter.formatLevel(level))}
+            ${COMMON_TEXTS.parameterRow(MAINFRAME_HARDWARE_TEXTS[this.type].title(), formatter.formatLevel(level))}
 
             <sl-tooltip>
               <span slot="content"> ${autoupgradeLabel} </span>
@@ -103,7 +101,7 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
         </div>
 
         <p class="cost">
-          ${COMMON_TEXTS.parameterValue(COMMON_TEXTS.cost(), html`<span ${ref(this._costElRef)}></span>`)}
+          ${COMMON_TEXTS.parameterRow(COMMON_TEXTS.cost(), html`<span ${ref(this._costElRef)}></span>`)}
         </p>
 
         <p class="hint">${MAINFRAME_HARDWARE_TEXTS[this.type].hint()}</p>
@@ -111,7 +109,7 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
         <div class="button-container">
           <ca-mainframe-hardware-panel-article-buttons
             ${ref(this._buttonsRef)}
-            increase=${increase}
+            increase=${this.calculateAdjustedIncrease()}
             @buy-hardware=${this.handleSubmit}
             @buy-max-hardware=${this.handleBuyMax}
           >
@@ -128,21 +126,14 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
   private handleSubmit = (event: Event) => {
     event.preventDefault();
 
-    const increase = this.calculateIncrease();
-    this._parameter?.purchase(increase);
+    this._parameter?.purchase(this.calculateAdjustedIncrease());
   };
 
   private handleBuyMax = () => {
-    this._parameter?.purchaseMax();
-  };
-
-  private calculateIncrease(): number {
-    if (!this._parameter) {
-      return 1;
+    if (this._parameter) {
+      this._controller.purchaseMaxParameter(this._parameter.type);
     }
-
-    return Math.max(Math.min(this.maxIncrease, this._controller.developmentLevel - this._parameter.level), 1);
-  }
+  };
 
   private handleToggleAutoUpgrade = () => {
     if (!this._parameter) {
@@ -158,12 +149,17 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
     }
   };
 
+  private calculateAdjustedIncrease(): number {
+    return Math.max(1, Math.min(this._controller.developmentLevel - this._parameter!.level, this.increase));
+  }
+
   handlePartialUpdate = () => {
     if (!this._costElRef.value || !this._parameter) {
       return;
     }
 
-    const cost = this._parameter.getIncreaseCost(this.calculateIncrease());
+    const adjustedIncrease = this.calculateAdjustedIncrease();
+    const cost = this._parameter.calculateIncreaseCost(adjustedIncrease);
     const money = this._controller.money;
 
     const formattedCost = this._controller.formatter.formatNumberFloat(cost);
@@ -174,9 +170,8 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
 
     if (this._buttonsRef.value) {
       const value = this._buttonsRef.value;
-      const increase = this.calculateIncrease();
 
-      value.disabled = !this._parameter.checkCanPurchase(increase);
+      value.disabled = !this._parameter.checkCanPurchase(adjustedIncrease);
       value.disabledBuyAll = !this._parameter.checkCanPurchase(1);
     }
   };

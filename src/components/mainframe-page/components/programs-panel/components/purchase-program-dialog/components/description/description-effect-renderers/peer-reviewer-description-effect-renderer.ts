@@ -4,9 +4,17 @@ import { RewardParameter, IFormatter, diffFormatterParameters, getHighlightDiffe
 import { COMMON_TEXTS, PROGRAM_DESCRIPTION_TEXTS, REWARD_PARAMETER_NAMES } from '@texts/index';
 import { IDescriptionParameters, IDescriptionEffectRenderer } from '../interfaces';
 
+const VALUES = {
+  experienceShareMultiplier: 'experienceShareMultiplier',
+};
+
 export class PeerReviewerDescriptionEffectRenderer implements IDescriptionEffectRenderer {
-  public readonly values = {};
-  public readonly diffs = {};
+  public readonly values = {
+    [VALUES.experienceShareMultiplier]: '',
+  };
+  public readonly diffs = {
+    [VALUES.experienceShareMultiplier]: { value: '', className: '' },
+  };
 
   private _program: PeerReviewerProgram;
 
@@ -27,25 +35,28 @@ export class PeerReviewerDescriptionEffectRenderer implements IDescriptionEffect
   }
 
   public renderEffect = () => {
+    return html`<p>
+      ${COMMON_TEXTS.parameterRow(
+        REWARD_PARAMETER_NAMES[RewardParameter.experienceShareMultiplier](),
+        PROGRAM_DESCRIPTION_TEXTS.upToDiff(
+          html`<span data-value=${VALUES.experienceShareMultiplier}></span>`,
+          html`<span data-diff=${VALUES.experienceShareMultiplier}></span>`,
+        ),
+      )}
+    </p>`;
+  };
+
+  public recalculateValues(): void {
     const value = this._program.calculateExperienceShareMultiplier(this._cores, this._ram);
     const valueDiff = this._ownedProgram
       ? value - this._ownedProgram.calculateExperienceShareMultiplier(this._cores, this._ram)
       : value;
 
     const formattedValue = this._formatter.formatNumberFloat(value);
+    const formattedDiff = this._formatter.formatNumberFloat(valueDiff, diffFormatterParameters);
 
-    const valueDiffClass = getHighlightDifferenceClass(valueDiff);
-    const valueDiffEl = html`<span class=${valueDiffClass}
-      >${this._formatter.formatNumberFloat(valueDiff, diffFormatterParameters)}</span
-    >`;
-
-    return html`<p>
-      ${COMMON_TEXTS.parameterValue(
-        REWARD_PARAMETER_NAMES[RewardParameter.sharedExperienceMultiplier](),
-        PROGRAM_DESCRIPTION_TEXTS.upToDiff(formattedValue, valueDiffEl),
-      )}
-    </p>`;
-  };
-
-  public recalculateValues(): void {}
+    this.values[VALUES.experienceShareMultiplier] = formattedValue;
+    this.diffs[VALUES.experienceShareMultiplier].className = getHighlightDifferenceClass(valueDiff);
+    this.diffs[VALUES.experienceShareMultiplier].value = formattedDiff;
+  }
 }

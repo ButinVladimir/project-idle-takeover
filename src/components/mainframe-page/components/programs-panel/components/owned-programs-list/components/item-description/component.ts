@@ -2,21 +2,11 @@ import { html, nothing } from 'lit';
 import { localized } from '@lit/localize';
 import { customElement, queryAll } from 'lit/decorators.js';
 import { consume } from '@lit/context';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { BaseComponent } from '@shared/index';
-import { OtherProgramName, MultiplierProgramName, type IProgram, AutobuyerProgramName } from '@state/mainframe-state';
+import { type IProgram } from '@state/mainframe-state';
 import { COMMON_TEXTS, PROGRAM_DESCRIPTION_TEXTS, PROGRAM_TEXTS } from '@texts/index';
-import {
-  CodeGeneratorDescriptionEffectRenderer,
-  MainframeHardwareAutobuyerDescriptionEffectRenderer,
-  PredictiveComputatorDescriptionEffectRenderer,
-  ShareServerDescriptionEffectRenderer,
-  MainframeProgramsAutobuyerDescriptionEffectRenderer,
-  CircuitDesignerDescriptionEffectRenderer,
-  InformationCollectorDescriptionEffectRenderer,
-  DealMakerDescriptionEffectRenderer,
-  CloneLevelAutoupgraderDescriptionEffectRenderer,
-  PeerReviewerDescriptionEffectRenderer,
-} from './description-effect-renderers';
+import { rendererMap } from './description-effect-renderers';
 import { IDescriptionEffectRenderer, IDescriptionParameters } from './interfaces';
 import { ProgramDescriptionTextController } from './controller';
 import { programContext } from '../item/contexts';
@@ -35,6 +25,9 @@ export class ProgramDescriptionText extends BaseComponent {
 
   @queryAll('span[data-value]')
   private _valueEls!: NodeListOf<HTMLSpanElement>;
+
+  private _minCompletionTimeValueEl = createRef<HTMLSpanElement>();
+  private _maxCompletionTimeValueEl = createRef<HTMLSpanElement>();
 
   @consume({ context: programContext, subscribe: true })
   private _program?: IProgram;
@@ -80,19 +73,15 @@ export class ProgramDescriptionText extends BaseComponent {
       <p>${PROGRAM_DESCRIPTION_TEXTS.requirementsAutoscalable()}</p>
 
       <p>
-        ${COMMON_TEXTS.parameterValue(
+        ${COMMON_TEXTS.parameterRow(
           PROGRAM_DESCRIPTION_TEXTS.ram(),
           PROGRAM_DESCRIPTION_TEXTS.allAvailable(this._program!.ram),
         )}
       </p>
 
-      <p>
-        ${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.cores(), PROGRAM_DESCRIPTION_TEXTS.allAvailable(1))}
-      </p>
+      <p>${COMMON_TEXTS.parameterRow(PROGRAM_DESCRIPTION_TEXTS.cores(), PROGRAM_DESCRIPTION_TEXTS.allAvailable(1))}</p>
 
-      <p>
-        ${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.completionTime(), PROGRAM_DESCRIPTION_TEXTS.instant())}
-      </p>
+      <p>${COMMON_TEXTS.parameterRow(COMMON_TEXTS.completionTime(), PROGRAM_DESCRIPTION_TEXTS.instant())}</p>
     `;
   };
 
@@ -102,25 +91,25 @@ export class ProgramDescriptionText extends BaseComponent {
     const formattedRam = formatter.formatNumberDecimal(this._program!.ram);
     const formattedCores = formatter.formatNumberDecimal(this._program!.cores);
 
-    const formattedMinTime = formatter.formatTimeShort(this._program!.calculateCompletionMinTime(1));
-    const formattedMaxTime = formatter.formatTimeShort(this._program!.calculateCompletionMaxTime(1));
-
     return html`
       <p>${PROGRAM_DESCRIPTION_TEXTS.requirementsSingle()}</p>
 
-      <p>${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.ram(), formattedRam)}</p>
+      <p>${COMMON_TEXTS.parameterRow(PROGRAM_DESCRIPTION_TEXTS.ram(), formattedRam)}</p>
 
       <p>
-        ${COMMON_TEXTS.parameterValue(
+        ${COMMON_TEXTS.parameterRow(
           PROGRAM_DESCRIPTION_TEXTS.cores(),
           PROGRAM_DESCRIPTION_TEXTS.upToValue(formattedCores),
         )}
       </p>
 
       <p>
-        ${COMMON_TEXTS.parameterValue(
-          PROGRAM_DESCRIPTION_TEXTS.completionTime(),
-          PROGRAM_DESCRIPTION_TEXTS.minMaxInterval(formattedMinTime, formattedMaxTime),
+        ${COMMON_TEXTS.parameterRow(
+          COMMON_TEXTS.completionTime(),
+          PROGRAM_DESCRIPTION_TEXTS.minMaxInterval(
+            html`<span ${ref(this._minCompletionTimeValueEl)}></span>`,
+            html`<span ${ref(this._maxCompletionTimeValueEl)}></span>`,
+          ),
         )}
       </p>
     `;
@@ -144,6 +133,8 @@ export class ProgramDescriptionText extends BaseComponent {
     this._valueEls.forEach((valueEl) => {
       valueEl.textContent = this._renderer!.values[valueEl.dataset.value!];
     });
+
+    this.updateCompletionTime();
   };
 
   private updateRenderer(): void {
@@ -159,49 +150,25 @@ export class ProgramDescriptionText extends BaseComponent {
       ram: this._controller.ram,
     };
 
-    switch (this._program!.name) {
-      case MultiplierProgramName.codeGenerator:
-        this._renderer = new CodeGeneratorDescriptionEffectRenderer(parameters);
-        break;
+    this._renderer = new rendererMap[this._program!.name](parameters);
+  }
 
-      case MultiplierProgramName.circuitDesigner:
-        this._renderer = new CircuitDesignerDescriptionEffectRenderer(parameters);
-        break;
+  private updateCompletionTime() {
+    if (!this._program) {
+      return;
+    }
 
-      case MultiplierProgramName.dealMaker:
-        this._renderer = new DealMakerDescriptionEffectRenderer(parameters);
-        break;
+    const formatter = this._controller.formatter;
 
-      case MultiplierProgramName.informationCollector:
-        this._renderer = new InformationCollectorDescriptionEffectRenderer(parameters);
-        break;
+    const formattedMinTime = formatter.formatTimeShort(this._program!.calculateCompletionMinTime(1));
+    const formattedMaxTime = formatter.formatTimeShort(this._program!.calculateCompletionMaxTime(1));
 
-      case AutobuyerProgramName.mainframeHardwareAutobuyer:
-        this._renderer = new MainframeHardwareAutobuyerDescriptionEffectRenderer(parameters);
-        break;
+    if (this._minCompletionTimeValueEl.value) {
+      this._minCompletionTimeValueEl.value.textContent = formattedMinTime;
+    }
 
-      case AutobuyerProgramName.mainframeProgramsAutobuyer:
-        this._renderer = new MainframeProgramsAutobuyerDescriptionEffectRenderer(parameters);
-        break;
-
-      case AutobuyerProgramName.cloneLevelAutoupgrader:
-        this._renderer = new CloneLevelAutoupgraderDescriptionEffectRenderer(parameters);
-        break;
-
-      case OtherProgramName.shareServer:
-        this._renderer = new ShareServerDescriptionEffectRenderer(parameters);
-        break;
-
-      case OtherProgramName.predictiveComputator:
-        this._renderer = new PredictiveComputatorDescriptionEffectRenderer(parameters);
-        break;
-
-      case OtherProgramName.peerReviewer:
-        this._renderer = new PeerReviewerDescriptionEffectRenderer(parameters);
-        break;
-
-      default:
-        this._renderer = undefined;
+    if (this._maxCompletionTimeValueEl.value) {
+      this._maxCompletionTimeValueEl.value.textContent = formattedMaxTime;
     }
   }
 }

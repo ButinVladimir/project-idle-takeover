@@ -1,4 +1,4 @@
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 import { IMainframeHardwareParameter, MainframeHardwareParameterType } from '@state/mainframe-state';
 
 export class MainframeHardwarePanelArticleController extends BaseController {
@@ -8,6 +8,10 @@ export class MainframeHardwarePanelArticleController extends BaseController {
 
   get developmentLevel() {
     return this.globalState.development.level;
+  }
+
+  purchaseMaxParameter(parameterType: MainframeHardwareParameterType) {
+    this.mainframeState.hardware.upgrader.upgradeMaxParameter(parameterType);
   }
 
   getParameter(type: MainframeHardwareParameterType): IMainframeHardwareParameter {

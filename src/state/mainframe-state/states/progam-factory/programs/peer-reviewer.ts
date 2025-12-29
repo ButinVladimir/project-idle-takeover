@@ -1,36 +1,37 @@
-import programs from '@configs/programs.json';
-import { calculateTierLinear } from '@shared/helpers';
-import { decorators } from '@state/container';
-import { TYPES } from '@state/types';
-import { type ICompanyState } from '@state/company-state';
+import { calculateLinear, calculateTierLinear, DistrictTypeRewardParameter } from '@shared/index';
 import { OtherProgramName } from '../types';
 import { BaseProgram } from './base-program';
-
-const { lazyInject } = decorators;
+import { typedPrograms } from '../constants';
 
 export class PeerReviewerProgram extends BaseProgram {
   public readonly name = OtherProgramName.peerReviewer;
   public readonly isAutoscalable = true;
 
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
-
-  handlePerformanceUpdate(): void {
-    this._companyState.clones.experienceShare.recalculateMultipliers();
-  }
+  handlePerformanceUpdate(): void {}
 
   perform(): void {}
 
   calculateExperienceShareMultiplier(threads: number, usedRam: number): number {
-    const programData = programs[this.name];
+    if (!this.unlockState.milestones.isRewardParameterUnlocked(DistrictTypeRewardParameter.experienceShareMultiplier)) {
+      return 0;
+    }
+
+    const programData = typedPrograms[this.name];
+    const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.experienceShareMultiplier;
 
     return (
       1 +
-      Math.pow(threads * usedRam, programData.autoscalableResourcesPower) *
-        calculateTierLinear(this.level, this.tier, programData.experienceModifier) *
+      multiplier *
         Math.pow(
-          this.globalState.scenario.currentValues.mainframeSoftware.performanceBoost,
-          this.mainframeState.hardware.performance.totalLevel,
+          this.globalState.rewards.multiplierByProgram *
+            calculateTierLinear(this.level, this.tier, programData.cloneExperience.main) *
+            calculateLinear(
+              this.mainframeState.hardware.performance.totalLevel,
+              this.scenarioState.currentValues.mainframeSoftware.performanceBoost,
+            ) *
+            calculateLinear(usedRam, programData.cloneExperience.ram) *
+            calculateLinear(threads, programData.cloneExperience.cores),
+          exponent,
         )
     );
   }

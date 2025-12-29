@@ -1,5 +1,5 @@
-import { BaseController } from '@shared/base-controller';
-import { ProgramName } from '@state/mainframe-state/states/progam-factory/types';
+import { BaseController } from '@shared/index';
+import { ProgramName } from '@state/mainframe-state';
 
 export class ProgramDiffTextController extends BaseController {
   get money(): number {
@@ -15,6 +15,6 @@ export class ProgramDiffTextController extends BaseController {
   }
 
   getProgramCost(programName: ProgramName, tier: number, level: number): number {
-    return this.mainframeState.programs.getProgramCost(programName, tier, level);
+    return this.mainframeState.programs.calculateProgramCost(programName, tier, level);
   }
 }

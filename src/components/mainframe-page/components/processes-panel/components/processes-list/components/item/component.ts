@@ -3,10 +3,7 @@ import { localized, msg, str } from '@lit/localize';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { provide } from '@lit/context';
-import {
-  ConfirmationAlertOpenEvent,
-  ConfirmationAlertSubmitEvent,
-} from '@components/game-screen/components/confirmation-alert/events';
+import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { BaseComponent, DELETE_VALUES, DESCRIPTION_ICONS, ENTITY_ACTIVE_VALUES, ProgramAlert } from '@shared/index';
 import { type ProgramName, type IProcess } from '@state/mainframe-state';
 import { COMMON_TEXTS, PROGRAM_TEXTS } from '@texts/index';
@@ -41,18 +38,6 @@ export class ProcessesListItem extends BaseComponent {
     this._controller = new ProcessesListItemController(this);
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-
-    document.addEventListener(ConfirmationAlertSubmitEvent.type, this.handleConfirmDeleteProcessDialog);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-
-    document.removeEventListener(ConfirmationAlertSubmitEvent.type, this.handleConfirmDeleteProcessDialog);
-  }
-
   performUpdate() {
     this.updateContext();
 
@@ -83,8 +68,8 @@ export class ProcessesListItem extends BaseComponent {
       ? msg('Autoscalable')
       : `${formattedUsedCores} / ${formattedMaxCores}`;
 
-    const toggleIcon = this._process.isActive ? ENTITY_ACTIVE_VALUES.icon.active : ENTITY_ACTIVE_VALUES.icon.stopped;
-    const toggleLabel = this._process.isActive ? msg('Disable process') : msg('Enable process');
+    const toggleIcon = this._process.enabled ? ENTITY_ACTIVE_VALUES.icon.active : ENTITY_ACTIVE_VALUES.icon.stopped;
+    const toggleLabel = this._process.enabled ? msg('Disable process') : msg('Enable process');
 
     const deleteProcessLabel = msg('Delete process');
 
@@ -165,11 +150,11 @@ export class ProcessesListItem extends BaseComponent {
     const formattedMaxCores = formatter.formatNumberDecimal(this._process.maxCores);
     const coresFull = this._process.program.isAutoscalable
       ? msg('Autoscalable')
-      : COMMON_TEXTS.parameterValue(msg('Uses cores'), `${formattedUsedCores} / ${formattedMaxCores}`);
+      : COMMON_TEXTS.parameterRow(msg('Uses cores'), `${formattedUsedCores} / ${formattedMaxCores}`);
 
-    const toggleIcon = this._process.isActive ? ENTITY_ACTIVE_VALUES.icon.active : ENTITY_ACTIVE_VALUES.icon.stopped;
-    const toggleLabel = this._process.isActive ? msg('Disable process') : msg('Enable process');
-    const toggleVariant = this._process.isActive
+    const toggleIcon = this._process.enabled ? ENTITY_ACTIVE_VALUES.icon.active : ENTITY_ACTIVE_VALUES.icon.stopped;
+    const toggleLabel = this._process.enabled ? msg('Disable process') : msg('Enable process');
+    const toggleVariant = this._process.enabled
       ? ENTITY_ACTIVE_VALUES.buttonVariant.active
       : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
 
@@ -246,18 +231,12 @@ export class ProcessesListItem extends BaseComponent {
       new ConfirmationAlertOpenEvent(
         ProgramAlert.processDelete,
         msg(str`Are you sure want to delete process for program "${programTitle}"? It's progress will be lost.`),
-        this.programName,
+        this.handleDeleteProcess,
       ),
     );
   };
 
-  private handleConfirmDeleteProcessDialog = (event: Event) => {
-    const convertedEvent = event as ConfirmationAlertSubmitEvent;
-
-    if (convertedEvent.gameAlert !== ProgramAlert.processDelete || convertedEvent.gameAlertKey !== this.programName) {
-      return;
-    }
-
+  private handleDeleteProcess = () => {
     this._controller.deleteProcessByName(this.programName);
   };
 

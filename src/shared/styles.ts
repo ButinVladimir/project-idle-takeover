@@ -1,4 +1,5 @@
 import { css } from 'lit';
+import { ActivityUIActivityStatus } from './types';
 
 export const LAYOUT_WIDTH_THRESHOLDS = {
   TABLET: 768,
@@ -185,9 +186,6 @@ export const attributesSkillsTablesStyle = css`
   div.attributes-skills-tables {
     width: 100%;
     display: flex;
-    color: var(--ca-hint-color);
-    font-size: var(--ca-hint-font-size);
-    line-height: var(--ca-hint-line-height);
 
     h5.title {
       margin: 0;
@@ -233,6 +231,10 @@ export const highlightedValuesStyle = css`
   .danger {
     color: var(--ca-danger-color);
   }
+
+  .warning {
+    color: var(--ca-warning-color);
+  }
 `;
 
 export const dialogButtonsStyle = css`
@@ -273,3 +275,24 @@ export const formStyle = css`
     display: contents;
   }
 `;
+
+export const ACTIVITY_UI_ACTIVITY_VALUES = {
+  [ActivityUIActivityStatus.active]: {
+    class: 'success',
+    icon: 'play-fill',
+  },
+  [ActivityUIActivityStatus.valid]: {
+    class: 'success',
+    icon: 'check-lg',
+  },
+  [ActivityUIActivityStatus.notAvailable]: {
+    class: 'warning',
+    icon: 'exclamation-lg',
+  },
+  [ActivityUIActivityStatus.invalid]: {
+    class: 'danger',
+    icon: 'x-lg',
+  },
+};
+
+export const START_ACTIVITY_ICON = 'arrow-clockwise';

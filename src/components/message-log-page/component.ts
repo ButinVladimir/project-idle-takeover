@@ -1,10 +1,7 @@
 import { html } from 'lit';
 import { localized, msg } from '@lit/localize';
 import { customElement } from 'lit/decorators.js';
-import {
-  ConfirmationAlertOpenEvent,
-  ConfirmationAlertSubmitEvent,
-} from '@components/game-screen/components/confirmation-alert/events';
+import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { DELETE_VALUES, GameStateAlert, BaseComponent } from '@shared/index';
 import { MessageLogBarController } from './controller';
 import styles from './styles';
@@ -20,18 +17,6 @@ export class MessageLogPage extends BaseComponent {
     super();
 
     this._controller = new MessageLogBarController(this);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    document.addEventListener(ConfirmationAlertSubmitEvent.type, this.handleConfirmClearMessagesDialog);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-
-    document.removeEventListener(ConfirmationAlertSubmitEvent.type, this.handleConfirmClearMessagesDialog);
   }
 
   protected renderDesktop() {
@@ -59,17 +44,15 @@ export class MessageLogPage extends BaseComponent {
 
   private handleOpenClearMessagesDialog = () => {
     this.dispatchEvent(
-      new ConfirmationAlertOpenEvent(GameStateAlert.clearMessages, msg('Are you sure want to clear log messages?')),
+      new ConfirmationAlertOpenEvent(
+        GameStateAlert.clearMessages,
+        msg('Are you sure want to clear log messages?'),
+        this.handleClearMessagesLog,
+      ),
     );
   };
 
-  private handleConfirmClearMessagesDialog = (event: Event) => {
-    const convertedEvent = event as ConfirmationAlertSubmitEvent;
-
-    if (convertedEvent.gameAlert !== GameStateAlert.clearMessages) {
-      return;
-    }
-
+  private handleClearMessagesLog = () => {
     this._controller.clearMessages();
   };
 }

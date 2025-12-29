@@ -3,7 +3,7 @@ import type { IStateUIConnector } from '@state/state-ui-connector';
 import type { ISettingsState } from '@state/settings-state';
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
-import { NotificationType } from '@shared/index';
+import { FORCE_NOTIFICATION_TYPES, NotificationType } from '@shared/index';
 import { INotificationsState, INotification } from './interfaces';
 
 const { lazyInject } = decorators;
@@ -24,8 +24,8 @@ export class NotificationsState implements INotificationsState {
     this._stateUiConnector.registerEventEmitter(this, ['_notifications']);
   }
 
-  pushNotification(notificationType: NotificationType, message: string, force?: boolean) {
-    if (!force && !this._settingsState.isNotificationTypeEnabled(notificationType)) {
+  pushNotification(notificationType: NotificationType, message: string) {
+    if (!this.isNotificationTypeEnabled(notificationType)) {
       return;
     }
 
@@ -39,7 +39,7 @@ export class NotificationsState implements INotificationsState {
     while (this.hasUnreadNotifications()) {
       const notification = this._notifications[0];
 
-      if (this._settingsState.isNotificationTypeEnabled(notification.notificationType)) {
+      if (this.isNotificationTypeEnabled(notification.notificationType)) {
         return notification;
       }
 
@@ -65,5 +65,12 @@ export class NotificationsState implements INotificationsState {
 
   clearNotifications() {
     this._notifications.length = 0;
+  }
+
+  private isNotificationTypeEnabled(notificationType: NotificationType): boolean {
+    return (
+      FORCE_NOTIFICATION_TYPES.has(notificationType) ||
+      this._settingsState.notificationTypes.isNotificationTypeEnabled(notificationType)
+    );
   }
 }

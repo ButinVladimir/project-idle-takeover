@@ -5,26 +5,22 @@ import type {
   IMainframeHardwareAutomationState,
   IMainframeProgramsAutomationState,
   ICloneLevelAutomationState,
+  IContractsAutomationState,
 } from './states';
 
 @injectable()
 export class AutomationState implements IAutomationState {
-  private _mainframeHardwareAutomationState: IMainframeHardwareAutomationState;
-  private _mainframeProgramsAutomationState: IMainframeProgramsAutomationState;
-  private _cloneLevelAutomationState: ICloneLevelAutomationState;
+  @inject(TYPES.MainframeHardwareAutomationState)
+  private _mainframeHardwareAutomationState!: IMainframeHardwareAutomationState;
 
-  constructor(
-    @inject(TYPES.MainframeHardwareAutomationState)
-    _mainframeHardwareAutomationState: IMainframeHardwareAutomationState,
-    @inject(TYPES.MainframeProgramsAutomationState)
-    _mainframeProgramsAutomationState: IMainframeProgramsAutomationState,
-    @inject(TYPES.CloneLevelAutomationState)
-    _cloneLevelAutomationState: ICloneLevelAutomationState,
-  ) {
-    this._mainframeHardwareAutomationState = _mainframeHardwareAutomationState;
-    this._mainframeProgramsAutomationState = _mainframeProgramsAutomationState;
-    this._cloneLevelAutomationState = _cloneLevelAutomationState;
-  }
+  @inject(TYPES.MainframeProgramsAutomationState)
+  private _mainframeProgramsAutomationState!: IMainframeProgramsAutomationState;
+
+  @inject(TYPES.CloneLevelAutomationState)
+  private _cloneLevelAutomationState!: ICloneLevelAutomationState;
+
+  @inject(TYPES.ContractsAutomationState)
+  private _contractsAutomationState!: IContractsAutomationState;
 
   get mainframeHardware() {
     return this._mainframeHardwareAutomationState;
@@ -38,16 +34,22 @@ export class AutomationState implements IAutomationState {
     return this._cloneLevelAutomationState;
   }
 
+  get contracts() {
+    return this._contractsAutomationState;
+  }
+
   async startNewState(): Promise<void> {
     await this._mainframeHardwareAutomationState.startNewState();
     await this._mainframeProgramsAutomationState.startNewState();
     await this._cloneLevelAutomationState.startNewState();
+    await this._contractsAutomationState.startNewState();
   }
 
   async deserialize(serializedState: IAutomationSerializedState): Promise<void> {
     await this._mainframeHardwareAutomationState.deserialize(serializedState.mainframeHardware);
     await this._mainframeProgramsAutomationState.deserialize(serializedState.mainframePrograms);
     await this._cloneLevelAutomationState.deserialize(serializedState.cloneLevel);
+    await this._contractsAutomationState.deserialize(serializedState.contracts);
   }
 
   serialize(): IAutomationSerializedState {
@@ -55,6 +57,7 @@ export class AutomationState implements IAutomationState {
       mainframeHardware: this._mainframeHardwareAutomationState.serialize(),
       mainframePrograms: this._mainframeProgramsAutomationState.serialize(),
       cloneLevel: this._cloneLevelAutomationState.serialize(),
+      contracts: this._contractsAutomationState.serialize(),
     };
   }
 }

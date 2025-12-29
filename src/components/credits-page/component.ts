@@ -11,11 +11,11 @@ export class CreditsPage extends BaseComponent {
 
   protected renderDesktop() {
     return html`
-      <h3 class="title">Cyberiada v${CURRENT_VERSION}</h3>
+      <h3 class="title">Project: Idle Takeover v${CURRENT_VERSION}</h3>
 
       <div class="server-links">
         <a target="_blank" href="https://discord.gg/CmsTxU2EMw">Discord</a>
-        <a target="_blank" href="https://github.com/ButinVladimir/cyberiada">GitHub</a>
+        <a target="_blank" href="https://github.com/ButinVladimir/project-idle-takeover">GitHub</a>
       </div>
 
       <div class="contributors">

@@ -5,15 +5,17 @@ import {
   type IFormatter,
   calculateGeometricProgressionSum,
   IExponent,
-  Feature,
+  Milestone,
   PurchaseType,
-  binarySearchDecimal,
+  reverseGeometricProgressionSum,
 } from '@shared/index';
 import { decorators } from '@state/container';
+import { type IScenarioState } from '@state/scenario-state';
+import { type IUnlockState } from '@state/unlock-state';
+import { TYPES } from '@state/types';
 import { IMainframeHardwareParameter, IMainframeHardwareParameterSerializedState } from './interfaces';
 import { MainframeHardwareParameterType } from './types';
 import { type IMainframeState } from '../../interfaces';
-import { TYPES } from '@/state/types';
 
 const { lazyInject } = decorators;
 
@@ -26,6 +28,12 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
 
   @lazyInject(TYPES.GlobalState)
   protected globalState!: IGlobalState;
+
+  @lazyInject(TYPES.ScenarioState)
+  protected scenarioState!: IScenarioState;
+
+  @lazyInject(TYPES.UnlockState)
+  protected unlockState!: IUnlockState;
 
   @lazyInject(TYPES.MessageLogState)
   protected messageLogState!: IMessageLogState;
@@ -65,9 +73,11 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
 
   protected abstract get priceExp(): IExponent;
 
-  protected abstract postPurchaseMessge(): void;
+  protected abstract handlePostUpgrade(): void;
 
-  getIncreaseCost(increase: number): number {
+  protected abstract postPurchaseMessage(): void;
+
+  calculateIncreaseCost(increase: number): number {
     const exp = this.priceExp;
 
     return (
@@ -77,26 +87,28 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
     );
   }
 
+  calculateIncreaseFromMoney(money: number): number {
+    const exp = this.priceExp;
+
+    const availableMoney =
+      money * this.globalState.multipliers.computationalBase.totalMultiplier +
+      calculateGeometricProgressionSum(this.level - 1, exp.multiplier, exp.base);
+
+    const maxLevel = reverseGeometricProgressionSum(availableMoney, exp.multiplier, exp.base);
+
+    const increase = Math.min(maxLevel, this.globalState.development.level) - this._level;
+
+    return increase;
+  }
+
   purchase(increase: number): boolean {
     if (!this.checkCanPurchase(increase)) {
       return false;
     }
 
-    const cost = this.getIncreaseCost(increase);
+    const cost = this.calculateIncreaseCost(increase);
 
     return this.globalState.money.purchase(cost, PurchaseType.mainframeHardware, this.handlePurchaseIncrease(increase));
-  }
-
-  purchaseMax(): boolean {
-    const maxIncrease = this.globalState.development.level - this.level;
-
-    if (maxIncrease <= 0) {
-      return false;
-    }
-
-    const increase = binarySearchDecimal(0, maxIncrease, this.checkCanPurchase);
-
-    return this.purchase(increase);
   }
 
   checkCanPurchase = (increase: number): boolean => {
@@ -104,17 +116,15 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
       return false;
     }
 
-    if (!this.globalState.unlockedFeatures.isFeatureUnlocked(Feature.mainframeHardware)) {
+    if (!this.unlockState.milestones.isMilestoneReached(Milestone.unlockedMainframeHardware)) {
       return false;
     }
 
-    const maxIncrease = this.globalState.development.level - this.level;
-
-    if (increase > maxIncrease) {
+    if (this._level + increase > this.globalState.development.level) {
       return false;
     }
 
-    const cost = this.getIncreaseCost(increase);
+    const cost = this.calculateIncreaseCost(increase);
 
     return cost <= this.globalState.money.money;
   };
@@ -122,11 +132,15 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
   async startNewState(): Promise<void> {
     this._autoUpgradeEnabled = true;
     this._level = 0;
+
+    this.handlePostUpgrade();
   }
 
   async deserialize(serializedState: IMainframeHardwareParameterSerializedState): Promise<void> {
     this._level = serializedState.level;
     this._autoUpgradeEnabled = serializedState.autoUpgradeEnabled;
+
+    this.handlePostUpgrade();
   }
 
   serialize(): IMainframeHardwareParameterSerializedState {
@@ -138,9 +152,8 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
 
   private handlePurchaseIncrease = (increase: number) => () => {
     this._level += increase;
-    this.postPurchaseMessge();
 
-    this.mainframeState.processes.requestUpdateProcesses();
-    this.mainframeState.processes.requestUpdatePerformance();
+    this.postPurchaseMessage();
+    this.handlePostUpgrade();
   };
 }

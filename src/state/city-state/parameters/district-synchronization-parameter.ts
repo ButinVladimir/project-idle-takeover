@@ -1,6 +1,6 @@
-import { calculatePower } from '@shared/helpers';
+import { calculateLinear } from '@shared/index';
 import { decorators } from '@state/container';
-import { type IStateUIConnector } from '@state/state-ui-connector/interfaces';
+import { type IStateUIConnector } from '@state/state-ui-connector';
 import { TYPES } from '@state/types';
 import { IDistrictState, IDistrictSynchronizationParameter } from '../interfaces';
 
@@ -28,7 +28,7 @@ export class DistrictSynchronizationParameter implements IDistrictSynchronizatio
     const districtTypeData = this._district.template;
 
     this._value = Math.ceil(
-      calculatePower(this._district.parameters.tier.tier, districtTypeData.parameters.synchronization),
+      calculateLinear(this._district.parameters.influence.tier, districtTypeData.synchronization),
     );
   }
 

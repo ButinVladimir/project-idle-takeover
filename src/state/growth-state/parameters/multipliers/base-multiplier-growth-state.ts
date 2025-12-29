@@ -3,7 +3,7 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { ProgramName, IProcess, type IMainframeState } from '@state/mainframe-state';
 import { type ICityState } from '@state/city-state';
-import { ISidejob, type ICompanyState } from '@state/company-state';
+import { IPrimaryActivity, ISidejobActivity, type IActivityState } from '@state/activity-state';
 import { IMultiplierGrowthState } from '../../interfaces/parameters/multiplier-growth-state';
 
 const { lazyInject } = decorators;
@@ -16,8 +16,8 @@ export abstract class BaseMultiplierGrowthState implements IMultiplierGrowthStat
   @lazyInject(TYPES.CityState)
   private _cityState!: ICityState;
 
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
 
   private _recalculated: boolean;
   protected _growthByProgram: number;
@@ -66,7 +66,7 @@ export abstract class BaseMultiplierGrowthState implements IMultiplierGrowthStat
     const process = mainframeProcessesState.getProcessByName(this.getProgramName());
     this._growthByProgram = 0;
 
-    if (process?.isActive) {
+    if (process?.enabled) {
       this._growthByProgram = this.getGrowthByProgram(process);
     }
   }
@@ -77,17 +77,25 @@ export abstract class BaseMultiplierGrowthState implements IMultiplierGrowthStat
     }
 
     this.updateGrowthBySidejobs();
+    this.updateGrowthByPrimaryActivity();
   }
 
   private updateGrowthBySidejobs(): void {
-    for (const sidejob of this._companyState.sidejobs.listSidejobs()) {
-      if (!sidejob.isActive) {
-        continue;
-      }
+    for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
+      const districtIndex = sidejobActivity.sidejob.district.index;
 
-      let currentGrow = this._growthByDistrict.get(sidejob.district.index) ?? 0;
-      currentGrow += this.getGrowthBySidejob(sidejob);
-      this._growthByDistrict.set(sidejob.district.index, currentGrow);
+      let currentGrow = this._growthByDistrict.get(districtIndex) ?? 0;
+      currentGrow += this.getGrowthBySidejobActivity(sidejobActivity);
+      this._growthByDistrict.set(districtIndex, currentGrow);
+    }
+  }
+
+  private updateGrowthByPrimaryActivity(): void {
+    for (const primaryActivity of this._activityState.primaryActivityQueue.listActivities()) {
+      const districtIndex = primaryActivity.district.index;
+      let currentGrowth = this._growthByDistrict.get(districtIndex) ?? 0;
+      currentGrowth += this.getGrowthByPrimaryActivity(primaryActivity);
+      this._growthByDistrict.set(districtIndex, currentGrowth);
     }
   }
 
@@ -95,5 +103,7 @@ export abstract class BaseMultiplierGrowthState implements IMultiplierGrowthStat
 
   protected abstract getGrowthByProgram(process: IProcess): number;
 
-  protected abstract getGrowthBySidejob(sidejob: ISidejob): number;
+  protected abstract getGrowthBySidejobActivity(sidejobActivity: ISidejobActivity): number;
+
+  protected abstract getGrowthByPrimaryActivity(primaryActivity: IPrimaryActivity): number;
 }

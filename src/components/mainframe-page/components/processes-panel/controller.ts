@@ -1,4 +1,4 @@
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 
 export class ProcessesPanelController extends BaseController {
   get availableCores(): number {

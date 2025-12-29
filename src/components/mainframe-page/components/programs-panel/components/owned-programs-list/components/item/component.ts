@@ -142,9 +142,9 @@ export class OwnedProgramsListItem extends BaseComponent {
           </div>
         </div>
 
-        <div>${COMMON_TEXTS.parameterValue(COMMON_TEXTS.tier(), formattedTier)}</div>
+        <div>${COMMON_TEXTS.parameterRow(COMMON_TEXTS.tier(), formattedTier)}</div>
 
-        <div>${COMMON_TEXTS.parameterValue(COMMON_TEXTS.level(), formattedLevel)}</div>
+        <div>${COMMON_TEXTS.parameterRow(COMMON_TEXTS.level(), formattedLevel)}</div>
 
         <ca-owned-programs-list-item-buttons></ca-owned-programs-list-item-buttons>
       </div>

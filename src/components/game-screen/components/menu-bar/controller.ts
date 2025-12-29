@@ -1,8 +1,7 @@
-import { BaseController } from '@shared/base-controller';
-import { Feature } from '@shared/types';
+import { BaseController, Milestone } from '@shared/index';
 
 export class MenuBarController extends BaseController {
-  isFeatureUnlocked(feature: Feature): boolean {
-    return this.globalState.unlockedFeatures.isFeatureUnlocked(feature);
+  isMilestoneUnlocked(milestone: Milestone): boolean {
+    return this.unlockState.milestones.isMilestoneReached(milestone);
   }
 }

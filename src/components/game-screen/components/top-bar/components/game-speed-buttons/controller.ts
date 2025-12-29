@@ -1,6 +1,5 @@
-import { Hotkey } from '@/shared';
-import { BaseController } from '@shared/base-controller';
-import { GameSpeed } from '@state/global-state/types';
+import { Hotkey, BaseController } from '@shared/index';
+import { GameSpeed } from '@state/global-state';
 
 export class GameSpeedButtonsController extends BaseController {
   get gameSpeed(): GameSpeed {

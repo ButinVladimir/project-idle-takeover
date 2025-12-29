@@ -3,27 +3,31 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IMainframeState, InformationCollectorProgram, MultiplierProgramName } from '@state/mainframe-state';
 import { type ICityState } from '@state/city-state';
-import { type ICompanyState } from '@state/company-state';
+import { type IActivityState } from '@state/activity-state';
+import { type IGlobalState } from '@state/global-state';
+import { DistrictTypeRewardParameter } from '@shared/index';
 import { IConnectivityGrowthState } from '../interfaces';
-import { calculatePower } from '@/shared';
 
 const { lazyInject } = decorators;
 
 @injectable()
 export class ConnectivityGrowthState implements IConnectivityGrowthState {
+  @lazyInject(TYPES.GlobalState)
+  private _globalState!: IGlobalState;
+
   @lazyInject(TYPES.MainframeState)
   private _mainframeState!: IMainframeState;
 
   @lazyInject(TYPES.CityState)
   private _cityState!: ICityState;
 
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
 
   private _recalculated: boolean;
-  protected _baseGrowthByProgram: number;
-  protected _baseGrowthByDistrict: Map<number, number>;
-  protected _totalGrowthByDistrict: Map<number, number>;
+  private _baseGrowthByProgram: number;
+  private _baseGrowthByDistrict: Map<number, number>;
+  private _totalGrowthByDistrict: Map<number, number>;
 
   constructor() {
     this._recalculated = false;
@@ -76,7 +80,7 @@ export class ConnectivityGrowthState implements IConnectivityGrowthState {
 
     const process = this._mainframeState.processes.getProcessByName(MultiplierProgramName.informationCollector);
 
-    if (process?.isActive) {
+    if (process?.enabled) {
       const program = process.program as InformationCollectorProgram;
       this._baseGrowthByProgram = program.calculateDelta(process.threads) / process.calculateCompletionTime();
     }
@@ -88,32 +92,35 @@ export class ConnectivityGrowthState implements IConnectivityGrowthState {
     }
 
     this.updateGrowthBySidejobs();
+    this.updateGrowthByPrimaryActivity();
   }
 
   private updateGrowthBySidejobs(): void {
-    for (const sidejob of this._companyState.sidejobs.listSidejobs()) {
-      if (!sidejob.isActive) {
-        continue;
-      }
+    for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
+      const districtIndex = sidejobActivity.sidejob.district.index;
+      let currentGrow = this._baseGrowthByDistrict.get(districtIndex) ?? 0;
+      currentGrow += sidejobActivity.getParameterGrowth(DistrictTypeRewardParameter.connectivity);
+      this._baseGrowthByDistrict.set(districtIndex, currentGrow);
+    }
+  }
 
-      let currentGrow = this._baseGrowthByDistrict.get(sidejob.district.index)!;
-      currentGrow += sidejob.calculateConnectivityDelta(1);
-      this._baseGrowthByDistrict.set(sidejob.district.index, currentGrow);
+  private updateGrowthByPrimaryActivity(): void {
+    for (const primaryActivity of this._activityState.primaryActivityQueue.listActivities()) {
+      const districtIndex = primaryActivity.district.index;
+      let currentGrow = this._baseGrowthByDistrict.get(districtIndex) ?? 0;
+      currentGrow += primaryActivity.getParameterGrowth(DistrictTypeRewardParameter.connectivity);
+      this._baseGrowthByDistrict.set(districtIndex, currentGrow);
     }
   }
 
   private updateTotalGrowth(): void {
     for (let districtIndex = 0; districtIndex < this._cityState.districtsCount; districtIndex++) {
       const district = this._cityState.getDistrictState(districtIndex);
-      const totalGrowthByProgram =
-        this._baseGrowthByProgram *
-        calculatePower(
-          district.parameters.tier.tier,
-          district.template.parameters.connectivity.programPointsMultiplier,
-        );
-      const baseGrowthByDistrict = this._baseGrowthByDistrict.get(districtIndex) ?? 0;
 
-      this._totalGrowthByDistrict.set(districtIndex, totalGrowthByProgram + baseGrowthByDistrict);
+      const nextTotalValue =
+        (1 + this._globalState.connectivity.pointsByProgram + this._baseGrowthByProgram) *
+        (1 + district.parameters.connectivity.points + (this._baseGrowthByDistrict.get(districtIndex) ?? 0));
+      this._totalGrowthByDistrict.set(districtIndex, nextTotalValue - district.parameters.connectivity.totalValue);
     }
   }
 }

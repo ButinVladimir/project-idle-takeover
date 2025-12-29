@@ -1,19 +1,20 @@
-import { IPoint } from '@shared/interfaces/point';
-import { DistrictType, Faction } from '@shared/types';
-import { IDistrictSerializedState } from './serialized-states/district-serialized-state';
+import { IPoint } from '@shared/index';
+import { IDistrictSerializedState } from './serialized-states';
 import { DistrictUnlockState } from '../types';
-import { IDistrictParameters } from './district-parameters';
+import { IDistrictParameters } from './parameters';
 import { IDistrictTypeTemplate } from './district-type-template';
+import { IDistrictCountersState } from './counters';
 
 export interface IDistrictState {
   index: number;
   template: IDistrictTypeTemplate;
   name: string;
   startingPoint: IPoint;
-  districtType: DistrictType;
+  districtType: string;
   state: DistrictUnlockState;
-  faction: Faction;
+  faction: string;
   parameters: IDistrictParameters;
+  counters: IDistrictCountersState;
   recalculate(): void;
   serialize(): IDistrictSerializedState;
   removeAllEventListeners(): void;

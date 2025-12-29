@@ -6,16 +6,16 @@ import { classMap } from 'lit/directives/class-map.js';
 import SlCheckbox from '@shoelace-style/shoelace/dist/components/checkbox/checkbox.component.js';
 import {
   BaseComponent,
-  CLONE_ALERTS,
-  GAME_STATE_ALERTS,
-  PROGRAM_ALERTS,
-  SIDEJOB_ALERTS,
   GameAlert,
+  GameAlertGroup,
+  GAME_ALERT_GROUPS,
+  TOGGLE_DETAILS_VALUES,
+  GAME_ALERT_GROUP_LIST,
 } from '@shared/index';
 import { COMMON_TEXTS } from '@texts/index';
 import { AlertFilterDialogCloseEvent } from './events';
 import { AlertFilterDialogController } from './controller';
-import { ALERT_NAMES } from './constants';
+import { GAME_ALERT_GROUP_NAMES, GAME_ALERT_NAMES } from './constants';
 import styles from './styles';
 
 @localized()
@@ -28,10 +28,10 @@ export class AlertFilterDialog extends BaseComponent {
   private _controller: AlertFilterDialogController;
 
   @property({
-    attribute: 'is-open',
+    attribute: 'open',
     type: Boolean,
   })
-  isOpen = false;
+  open = false;
 
   constructor() {
     super();
@@ -54,42 +54,55 @@ export class AlertFilterDialog extends BaseComponent {
       mobile: !desktop,
     });
 
+    const someAlertsEnabled = this._controller.checkSomeAlertsEnabled();
+    const toggleAllButtonText = someAlertsEnabled ? msg('Disable all alerts') : msg('Enable all alerts');
+    const toggleAllButtonVariant = someAlertsEnabled
+      ? TOGGLE_DETAILS_VALUES.buttonVariant.enabled
+      : TOGGLE_DETAILS_VALUES.buttonVariant.disabled;
+
     return html`
       <form id="alert-filter-dialog" @submit=${this.handleSubmit}>
-        <sl-dialog ?open=${this.isOpen} @sl-request-close=${this.handleClose}>
+        <sl-dialog ?open=${this.open} @sl-request-close=${this.handleClose}>
           <h4 slot="label" class="title">${msg('Alert filter')}</h4>
 
           <div class=${bodyClasses}>
             <p class="hint">${msg('Enable alerts in filter to make them visible when event happens')}</p>
 
-            <div class="events-container">
-              ${repeat(GAME_STATE_ALERTS, (gameAlert) => gameAlert, this.renderGameAlertCheckbox)}
+            <div>
+              <sl-button variant=${toggleAllButtonVariant} size="medium" @click=${this.handleToggleAll}>
+                ${toggleAllButtonText}
+              </sl-button>
             </div>
 
-            <sl-divider></sl-divider>
-
-            <div class="events-container">
-              ${repeat(PROGRAM_ALERTS, (event) => event, this.renderGameAlertCheckbox)}
-            </div>
-
-            <sl-divider></sl-divider>
-
-            <div class="events-container">${repeat(CLONE_ALERTS, (event) => event, this.renderGameAlertCheckbox)}</div>
-
-            <sl-divider></sl-divider>
-
-            <div class="events-container">
-              ${repeat(SIDEJOB_ALERTS, (event) => event, this.renderGameAlertCheckbox)}
-            </div>
+            ${repeat(GAME_ALERT_GROUP_LIST, this.renderGroup)}
           </div>
 
-          <sl-button slot="footer" size="medium" variant="default" outline @click=${this.handleClose}>
+          <sl-button slot="footer" size="medium" variant="default" @click=${this.handleClose}>
             ${COMMON_TEXTS.close()}
           </sl-button>
         </sl-dialog>
       </form>
     `;
   }
+
+  private renderGroup = (group: GameAlertGroup) => {
+    return html`
+      <sl-divider></sl-divider>
+
+      <sl-checkbox
+        class="group-checkbox"
+        size="medium"
+        name="event"
+        value=${group}
+        ?checked=${this._controller.checkGroupHasEnabledAlerts(group)}
+        @sl-change=${this.handleToggleGroup}
+      >
+        ${GAME_ALERT_GROUP_NAMES[group]()}
+      </sl-checkbox>
+
+      <div class="events-container">${repeat(GAME_ALERT_GROUPS[group], this.renderGameAlertCheckbox)}</div>
+    `;
+  };
 
   private renderGameAlertCheckbox = (gameAlert: GameAlert): TemplateResult => {
     return html`
@@ -100,7 +113,7 @@ export class AlertFilterDialog extends BaseComponent {
         ?checked=${this._controller.isAlertEnabled(gameAlert)}
         @sl-change=${this.handleToggleAlert}
       >
-        ${ALERT_NAMES[gameAlert]()}
+        ${GAME_ALERT_NAMES[gameAlert]()}
       </sl-checkbox>
     `;
   };
@@ -111,8 +124,22 @@ export class AlertFilterDialog extends BaseComponent {
 
   private handleToggleAlert = (event: Event) => {
     const target = event.target as SlCheckbox;
+    const value = target.value as GameAlert;
 
-    this._controller.toggleAlertFilterEvent(target.value as GameAlert, target.checked);
+    this._controller.toggleAlert(value, target.checked);
+  };
+
+  private handleToggleGroup = (event: Event) => {
+    const target = event.target as SlCheckbox;
+    const group = target.value as GameAlertGroup;
+
+    const groupHasEnabledEvents = this._controller.checkGroupHasEnabledAlerts(group);
+    this._controller.toggleGroup(group, !groupHasEnabledEvents);
+  };
+
+  private handleToggleAll = () => {
+    const areAllEventsEnabled = this._controller.checkSomeAlertsEnabled();
+    this._controller.toggleAllAlerts(!areAllEventsEnabled);
   };
 
   private handleSubmit = (event: Event) => {

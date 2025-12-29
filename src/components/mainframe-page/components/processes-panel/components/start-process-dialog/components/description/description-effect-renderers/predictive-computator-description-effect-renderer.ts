@@ -4,8 +4,14 @@ import { RewardParameter, IFormatter } from '@shared/index';
 import { COMMON_TEXTS, PROGRAM_DESCRIPTION_TEXTS, REWARD_PARAMETER_NAMES } from '@texts/index';
 import { IDescriptionParameters, IDescriptionEffectRenderer } from '../interfaces';
 
+const VALUES = {
+  processCompletionSpeed: 'process-completion-speed',
+};
+
 export class PredictiveComputatorDescriptionEffectRenderer implements IDescriptionEffectRenderer {
-  public readonly values = {};
+  public readonly values = {
+    [VALUES.processCompletionSpeed]: '',
+  };
   public readonly diffs = {};
 
   private _program: PredictiveComputatorProgram;
@@ -24,17 +30,19 @@ export class PredictiveComputatorDescriptionEffectRenderer implements IDescripti
   }
 
   public renderEffect = () => {
-    const formattedValue = this._formatter.formatNumberFloat(
-      this._program.calculateProcessCompletionSpeedMultiplier(this._cores, this._ram),
-    );
-
     return html`<p>
-      ${COMMON_TEXTS.parameterValue(
-        REWARD_PARAMETER_NAMES[RewardParameter.processCompletionSpeedMultiplier](),
-        PROGRAM_DESCRIPTION_TEXTS.upToValue(formattedValue),
+      ${COMMON_TEXTS.parameterRow(
+        REWARD_PARAMETER_NAMES[RewardParameter.processCompletionSpeed](),
+        PROGRAM_DESCRIPTION_TEXTS.upToValue(html`<span data-value=${VALUES.processCompletionSpeed}></span>`),
       )}
     </p>`;
   };
 
-  public recalculateValues(): void {}
+  public recalculateValues(): void {
+    const formattedValue = this._formatter.formatNumberFloat(
+      this._program.calculateProcessCompletionSpeedMultiplier(this._cores, this._ram),
+    );
+
+    this.values[VALUES.processCompletionSpeed] = formattedValue;
+  }
 }

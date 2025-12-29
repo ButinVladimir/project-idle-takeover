@@ -1,11 +1,25 @@
-import { injectable } from 'inversify';
-import scenarios from '@configs/scenarios.json';
-import type { IGlobalState } from '@state/global-state/interfaces/global-state';
-import type { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
-import { IMapGeneratorResult } from '@workers/map-generator/interfaces';
+import { msg, str } from '@lit/localize';
+import { inject, injectable } from 'inversify';
+import { type IStateUIConnector } from '@state/state-ui-connector';
+import { StoryGoalState, type IScenarioState } from '@state/scenario-state';
+import { type IFactionState } from '@state/faction-state';
+import { type IGlobalState } from '@state/global-state';
+import { type INotificationsState } from '@state/notifications-state';
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
-import { ICityState, ICitySerializedState, IDistrictState, IDistrictSerializedState } from './interfaces';
+import { MapSpecialEvent, NotificationType } from '@shared/index';
+import { DISTRICT_NAMES } from '@texts/index';
+import {
+  ICityState,
+  ICitySerializedState,
+  IDistrictState,
+  IDistrictSerializedState,
+  type IMapLayoutGenerator,
+  type IDistrictInfoGenerator,
+  IDistrictConnectionGraphGeneratorResult,
+  type IDistrictConnectionGraphGenerator,
+  type IDistrictFactionsGenerator,
+} from './interfaces';
 import { DistrictState } from './district-state';
 import { DistrictUnlockState } from './types';
 
@@ -13,8 +27,29 @@ const { lazyInject } = decorators;
 
 @injectable()
 export class CityState implements ICityState {
+  @inject(TYPES.NotificationsState)
+  private _notificationsState!: INotificationsState;
+
+  @inject(TYPES.MapLayoutGenerator)
+  private _mapLayoutGenerator!: IMapLayoutGenerator;
+
+  @inject(TYPES.DistrictInfoGenerator)
+  private _districtInfoGenerator!: IDistrictInfoGenerator;
+
+  @inject(TYPES.DistrictConnectionGraphGenerator)
+  private _districtConnectionGraphGenerator!: IDistrictConnectionGraphGenerator;
+
+  @inject(TYPES.DistrictFactionsGenerator)
+  private _districtFactionsGenerator!: IDistrictFactionsGenerator;
+
+  @lazyInject(TYPES.ScenarioState)
+  private _scenarioState!: IScenarioState;
+
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
+
+  @lazyInject(TYPES.FactionState)
+  private _factionState!: IFactionState;
 
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
@@ -22,6 +57,7 @@ export class CityState implements ICityState {
   private _layout: number[][];
   private _districts: Map<number, IDistrictState>;
   private _availableDistricts: IDistrictState[];
+  private _districtConnections!: IDistrictConnectionGraphGeneratorResult;
 
   constructor() {
     this._layout = [];
@@ -32,7 +68,7 @@ export class CityState implements ICityState {
   }
 
   get districtsCount() {
-    return this._globalState.scenario.currentValues.map.districts.length;
+    return this._scenarioState.currentValues.map.districts.length;
   }
 
   getLayout(): number[][] {
@@ -40,11 +76,39 @@ export class CityState implements ICityState {
   }
 
   getDistrictState(districtIndex: number): IDistrictState {
-    if (!this._districts.has(districtIndex)) {
-      throw new Error(`Missing district ${districtIndex}`);
+    if (!this.checkDistrictIndex(districtIndex)) {
+      throw new Error(`Invalid district index ${districtIndex}`);
     }
 
     return this._districts.get(districtIndex)!;
+  }
+
+  getDistrictSize(districtIndex: number): number {
+    if (!this.checkDistrictIndex(districtIndex)) {
+      throw new Error(`Invalid district index ${districtIndex}`);
+    }
+
+    return this._districtConnections.districtSizes.get(districtIndex)!;
+  }
+
+  getCapturedDistrictsCount(): number {
+    let count = 0;
+
+    for (const district of this._districts.values()) {
+      if (district.state === DistrictUnlockState.captured) {
+        count++;
+      }
+    }
+
+    return count;
+  }
+
+  getDistrictConnections(districtIndex: number): Set<number> {
+    if (!this.checkDistrictIndex(districtIndex)) {
+      throw new Error(`Invalid district index ${districtIndex}`);
+    }
+
+    return this._districtConnections.connections.get(districtIndex)!;
   }
 
   listAvailableDistricts(): IDistrictState[] {
@@ -57,6 +121,23 @@ export class CityState implements ICityState {
     }
   }
 
+  updateDistrictsStateAfterJoiningFaction() {
+    for (const district of this._districts.values()) {
+      if (district.faction === this._factionState.currentFaction && district.state === DistrictUnlockState.locked) {
+        district.state = DistrictUnlockState.contested;
+      }
+    }
+
+    this.recalculateDistrictsState();
+  }
+
+  recalculateDistrictsState() {
+    this.updateUnlockedDistricts();
+    this.updateAvailableDistrictsList();
+
+    this._globalState.synchronization.recalculate();
+  }
+
   async startNewState(): Promise<void> {
     await this.generateMap();
     this.recalculate();
@@ -65,11 +146,19 @@ export class CityState implements ICityState {
   async deserialize(serializedState: ICitySerializedState): Promise<void> {
     this.clearDistricts();
 
+    if (this._scenarioState.currentValues.map.width !== serializedState.layout.length) {
+      throw new Error(`Map width doesn't match scenario`);
+    }
+
     this._layout = [];
-    for (let x = 0; x < this._globalState.scenario.currentValues.map.width; x++) {
+    for (let x = 0; x < this._scenarioState.currentValues.map.width; x++) {
+      if (this._scenarioState.currentValues.map.height !== serializedState.layout[x].length) {
+        throw new Error(`Map height doesn't match scenario`);
+      }
+
       const row: number[] = [];
 
-      for (let y = 0; y < this._globalState.scenario.currentValues.map.height; y++) {
+      for (let y = 0; y < this._scenarioState.currentValues.map.height; y++) {
         row.push(serializedState.layout[x][y]);
       }
 
@@ -83,7 +172,9 @@ export class CityState implements ICityState {
       this._districts.set(parsedDistrictIndex, districtState);
     });
 
-    this.updateAvailableDistricts();
+    this._districtConnections = await this._districtConnectionGraphGenerator.generate();
+
+    this.recalculateDistrictsState();
   }
 
   serialize(): ICitySerializedState {
@@ -100,53 +191,62 @@ export class CityState implements ICityState {
     };
   }
 
-  private generateMap(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const worker = new Worker(new URL('@workers/map-generator/index.js', import.meta.url), { type: 'module' });
-
-      worker.addEventListener('message', (event: MessageEvent<IMapGeneratorResult>) => {
-        this._globalState.random.y = event.data.randomShift;
-
-        this._layout = event.data.layout;
-
-        this.clearDistricts();
-
-        for (const [districtIndex, district] of Object.entries(event.data.districts)) {
-          const parsedDistrictIndex = parseInt(districtIndex);
-          const districtState = DistrictState.createByMapGenerator(parsedDistrictIndex, district);
-
-          districtState.state =
-            parsedDistrictIndex === scenarios[this._globalState.scenario.scenario].map.startingDistrict
-              ? DistrictUnlockState.contested
-              : DistrictUnlockState.locked;
-
-          this._districts.set(parsedDistrictIndex, districtState);
-        }
-
-        this.updateAvailableDistricts();
-
-        worker.terminate();
-
-        resolve();
-      });
-
-      worker.addEventListener('error', (event: ErrorEvent) => {
-        reject(event.error);
-      });
-
-      worker.addEventListener('messageerror', () => {
-        reject('Unable to parse map generator message');
-      });
-
-      worker.postMessage({
-        scenario: this._globalState.scenario.scenario,
-        randomSeed: this._globalState.random.seed,
-        randomShift: this._globalState.random.y,
-      });
-    });
+  private checkDistrictIndex(districtIndex: number): boolean {
+    return districtIndex >= 0 && districtIndex < this._scenarioState.currentValues.map.districts.length;
   }
 
-  private updateAvailableDistricts() {
+  private async generateMap(): Promise<void> {
+    const mapLayoutGeneratorResult = await this._mapLayoutGenerator.generate();
+    this._layout = mapLayoutGeneratorResult.layout;
+
+    const districtInfoGeneratorResult = await this._districtInfoGenerator.generate();
+
+    this._districtConnections = await this._districtConnectionGraphGenerator.generate();
+
+    const districtFactionGeneratorResult = await this._districtFactionsGenerator.generate(districtInfoGeneratorResult);
+
+    this.clearDistricts();
+
+    const mapValues = this._scenarioState.currentValues.map;
+    const startingDistrict = mapValues.startingDistrict;
+
+    for (
+      let districtIndex = 0;
+      districtIndex < this._scenarioState.currentValues.map.districts.length;
+      districtIndex++
+    ) {
+      const startingPoint = mapLayoutGeneratorResult.districts.get(districtIndex)!.startingPoint;
+      const districtInfo = districtInfoGeneratorResult.districts.get(districtIndex)!;
+      const faction = this._factionState.getFactionByIndex(
+        districtFactionGeneratorResult.districts.get(districtIndex)!,
+      );
+
+      const isUnlocked = startingDistrict === districtIndex;
+
+      const district = DistrictState.createByMapGenerator({
+        index: districtIndex,
+        startingPoint,
+        faction,
+        isUnlocked,
+        ...districtInfo,
+      });
+
+      this._districts.set(districtIndex, district);
+    }
+
+    this.recalculateDistrictsState();
+  }
+
+  private updateUnlockedDistricts() {
+    const unlockedDistrictsCount = this.calculateUnlockedDistrictsCount();
+    const maxUnlockedDistrictsCount = this.calculateMaxUnlockedDistrictsCount();
+
+    for (let districtsCount = unlockedDistrictsCount; districtsCount < maxUnlockedDistrictsCount; districtsCount++) {
+      this.unlockNextDistrict();
+    }
+  }
+
+  private updateAvailableDistrictsList() {
     this._availableDistricts.length = 0;
 
     this._districts.forEach((district) => {
@@ -163,5 +263,72 @@ export class CityState implements ICityState {
 
     this._availableDistricts.length = 0;
     this._districts.clear();
+  }
+
+  private calculateUnlockedDistrictsCount(): number {
+    let count = 0;
+
+    for (const district of this._districts.values()) {
+      if (district.state !== DistrictUnlockState.locked) {
+        count++;
+      }
+    }
+
+    return count;
+  }
+
+  private calculateMaxUnlockedDistrictsCount(): number {
+    const goals = this._scenarioState.storyEvents.listGoals();
+    let count = 0;
+
+    for (const goal of goals) {
+      if (goal.state !== StoryGoalState.passed) {
+        continue;
+      }
+
+      if (goal.specialEvents?.includes(MapSpecialEvent.districtUnlocked)) {
+        count++;
+      }
+    }
+
+    return count;
+  }
+
+  private unlockNextDistrict() {
+    let nextDistrictIndex = -1;
+    let nextDistrictDifficulty = 0;
+
+    for (const districtSource of this._districts.values()) {
+      if (districtSource.state === DistrictUnlockState.locked) {
+        continue;
+      }
+
+      for (const districtDestIndex of this._districtConnections.connections.get(districtSource.index)!.values()) {
+        const districtDest = this._districts.get(districtDestIndex)!;
+
+        if (districtDest.state !== DistrictUnlockState.locked) {
+          continue;
+        }
+
+        const influence = districtDest.parameters.influence;
+        const difficulty = influence.getTierRequirements(influence.tier);
+
+        if (nextDistrictIndex === -1 || difficulty < nextDistrictDifficulty) {
+          nextDistrictIndex = districtDestIndex;
+          nextDistrictDifficulty = difficulty;
+        }
+      }
+    }
+
+    if (nextDistrictIndex !== -1) {
+      const nextDistrict = this._districts.get(nextDistrictIndex)!;
+      nextDistrict.state = DistrictUnlockState.contested;
+      this._notificationsState.pushNotification(
+        NotificationType.districtContested,
+        msg(
+          str`District "${DISTRICT_NAMES[nextDistrict.name]()}" has been unlocked and now is contested. Clones can operate in this district.`,
+        ),
+      );
+    }
   }
 }

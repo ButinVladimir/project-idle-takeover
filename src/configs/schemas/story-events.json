@@ -1,0 +1,118 @@
+{
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "description": "Story event",
+    "properties": {
+      "requirements": {
+        "type": "object",
+        "description": "Requirements for story event",
+        "properties": {
+          "level": {
+            "type": "number",
+            "description": "Required development level",
+            "minimum": 0
+          },
+          "faction": {
+            "type": "string",
+            "description": "Required faction",
+            "minLength": 1
+          },
+          "capturedDistrictsCount": {
+            "type": "number",
+            "description": "Required amount of captured districts",
+            "minimum": 0
+          }
+        }
+      },
+      "messages": {
+        "type": "array",
+        "description": "Story event messages",
+        "minItems": 1,
+        "items": {
+          "type": "string",
+          "description": "Message key",
+          "minLength": 1
+        }
+      },
+      "milestones": {
+        "type": "array",
+        "description": "Story event milestones",
+        "minItems": 1,
+        "items": {
+          "$ref": "./common/milestone.json",
+          "description": "Milestone"
+        }
+      },
+      "rewardDesigns": {
+        "type": "object",
+        "description": "Story event rewarded designs",
+        "properties": {
+          "programs": {
+            "type": "array",
+            "description": "Rewarded programs",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "./common/program-name.json",
+              "description": "Program"
+            }
+          },
+          "cloneTemplates": {
+            "type": "array",
+            "description": "Rewarded clone templates",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "description": "Clone template",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "unlockActivities": {
+        "type": "object",
+        "description": "Story event unlocked activities",
+        "properties": {
+          "sidejobs": {
+            "type": "array",
+            "description": "Unlocked sidejobs",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "description": "Unlocked sidejob",
+              "minLength": 1
+            }
+          },
+          "contracts": {
+            "type": "array",
+            "description": "Unlocked sidejobs",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "description": "Unlocked sidejob",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "specialEvents": {
+        "type": "array",
+        "description": "Story event special events",
+        "minItems": 1,
+        "items": {
+          "type": "string",
+          "description": "Special event",
+          "enum": ["factionsAvailable", "districtUnlocked"]
+        }
+      }
+    },
+    "required": ["requirements"]
+  }
+}

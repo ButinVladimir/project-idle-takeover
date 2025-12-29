@@ -8,9 +8,8 @@ import SlInput from '@shoelace-style/shoelace/dist/components/input/input.compon
 import clamp from 'lodash/clamp';
 import { provide } from '@lit/context';
 import { BaseComponent } from '@shared/index';
-import { CloneTemplateName } from '@state/company-state/states/clone-factory/types';
 import { COMMON_TEXTS, CLONE_TEMPLATE_TEXTS } from '@texts/index';
-import { type IClone } from '@state/company-state';
+import { type IClone } from '@state/clones-state';
 import { PurchaseCloneDialogCloseEvent } from './events';
 import { PurchaseCloneDialogController } from './controller';
 import { temporaryCloneContext } from './contexts';
@@ -37,16 +36,16 @@ export class PurchaseCloneDialog extends BaseComponent {
   private _levelInputRef = createRef<SlInput>();
 
   @property({
-    attribute: 'is-open',
+    attribute: 'open',
     type: Boolean,
   })
-  isOpen = false;
+  open = false;
 
   @state()
   private _name = '';
 
   @state()
-  private _cloneTemplateName?: CloneTemplateName = undefined;
+  private _cloneTemplateName?: string = undefined;
 
   @state()
   private _tier = 0;
@@ -78,13 +77,13 @@ export class PurchaseCloneDialog extends BaseComponent {
   updated(_changedProperties: Map<string, any>) {
     super.updated(_changedProperties);
 
-    if (_changedProperties.has('isOpen')) {
+    if (_changedProperties.has('open')) {
       this._name = '';
       this._cloneTemplateName = undefined;
       this._tier = 0;
       this._level = this._controller.developmentLevel;
 
-      if (this.isOpen) {
+      if (this.open) {
         this._name = this._controller.generateName();
       }
     }
@@ -99,8 +98,6 @@ export class PurchaseCloneDialog extends BaseComponent {
   }
 
   private renderContent(desktop: boolean) {
-    const { developmentLevel } = this._controller;
-
     const inputsContainerClasses = classMap({
       'inputs-container': true,
       mobile: !desktop,
@@ -109,15 +106,15 @@ export class PurchaseCloneDialog extends BaseComponent {
 
     return html`
       <form id="purchase-clone-form" @submit=${this.handleSubmit}>
-        <sl-dialog ?open=${this.isOpen} @sl-request-close=${this.handleClose}>
+        <sl-dialog ?open=${this.open} @sl-request-close=${this.handleClose}>
           <h4 slot="label" class="title">${msg('Purchase clone')}</h4>
 
           <div class="body">
             <p class="hint">
               ${msg(`Select clone name, template, tier and level to purchase it.
-Level cannot be above current development level.
-Tier is limited depending on gained favors.
-Synchronization is earned by capturing districts and gaining certain favors.`)}
+Tier is limited depending on design and loaned items tier.
+Clone level cannot be above development level.
+Synchronization is earned by unlocking districts, raising their tier and by gaining certain favors.`)}
             </p>
 
             <div class=${inputsContainerClasses}>
@@ -170,7 +167,6 @@ Synchronization is earned by capturing districts and gaining certain favors.`)}
                 type="number"
                 inputmode="decimal"
                 min="1"
-                max=${developmentLevel + 1}
                 step="1"
                 @sl-change=${this.handleLevelChange}
               >
@@ -203,7 +199,7 @@ Synchronization is earned by capturing districts and gaining certain favors.`)}
     }
   };
 
-  private renderCloneTemplateOption = (cloneTemplate: CloneTemplateName) => {
+  private renderCloneTemplateOption = (cloneTemplate: string) => {
     return html`<sl-option value=${cloneTemplate}> ${CLONE_TEMPLATE_TEXTS[cloneTemplate].title()} </sl-option>`;
   };
 
@@ -239,7 +235,7 @@ Synchronization is earned by capturing districts and gaining certain favors.`)}
       return;
     }
 
-    const cloneTemplateName = this._cloneTemplateInputRef.value.value as CloneTemplateName;
+    const cloneTemplateName = this._cloneTemplateInputRef.value.value as string;
     this._cloneTemplateName = cloneTemplateName;
   };
 

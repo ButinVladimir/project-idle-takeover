@@ -1,14 +1,12 @@
 import { msg, str } from '@lit/localize';
-import { Attribute, ItemCategory, RewardParameter, Skill } from '@shared/types';
+import { Attribute, DistrictTypeRewardParameter, ItemCategory, RewardParameter, Skill } from '@shared/types';
 import { html } from 'lit';
 
 export const COMMON_TEXTS = {
   notEnoughMoney: () => msg('Not enough money'),
   willBeAvailableIn: (timeElement: any) => msg(html`Will be available in ${timeElement}`),
   higherDevelopmentLevelRequired: () => msg('Higher development level required'),
-  buyIncrease: (increase: string) => msg(str`Buy x${increase}`),
   buyMax: () => msg('Buy max'),
-  buyMaxAllUpgrades: () => msg('Buy all upgrades'),
   enableAutoupgrade: () => msg('Enable autoupgrade'),
   disableAutoupgrade: () => msg('Disable autoupgrade'),
   enableAutoupgradeAll: () => msg('Enable autoupgrade for all'),
@@ -19,6 +17,8 @@ export const COMMON_TEXTS = {
   hideDetails: () => msg('Hide details'),
   upgrade: () => msg('Upgrade'),
   upgradeAll: () => msg('Upgrade all'),
+  upgradeToLevel: (valueElement: any) => msg(html`Upgrade to level ${valueElement}`),
+  upgradeIncrease: (increase: string) => msg(str`Upgrade x${increase}`),
   level: () => msg('Level'),
   tier: () => msg('Tier'),
   cancel: () => msg('Cancel'),
@@ -35,10 +35,17 @@ export const COMMON_TEXTS = {
   synchronization: () => msg('Synchronization'),
   experienceMultiplier: () => msg('Experience multiplier'),
   faction: () => msg('Faction'),
-  parameterValue: (parameterName: string, valueElement: any) => msg(html`${parameterName}: ${valueElement}`),
+  parameterRow: (parameterName: string, valueElement: any) => msg(html`${parameterName}: ${valueElement}`),
+  parameterDiff: (valueElement: any, diffElement: any) => msg(html`${valueElement} (${diffElement})`),
   parameterSpeed: (value: any) => msg(html`${value} per second`),
   parameterSpeedDiff: (valueElement: any, diffElement: any) => msg(html`${valueElement} (${diffElement}) per second`),
-  hotkey: (hotkey?: string) => msg(str`Hotkey: ${hotkey?.toUpperCase()}`),
+  parameterCompletion: (valueElement: any) => msg(html`${valueElement} per completion`),
+  parameterCompletionSpeed: (valueElement: any, speedElement: any) =>
+    msg(html`${valueElement} per completion (${speedElement} per second)`),
+  parameterCompletionSpeedDiff: (valueElement: any, diffElement: any, speedElement: any, speedDiffElement: any) =>
+    msg(html`${valueElement} (${diffElement}) per completion (${speedElement} per second) (${speedDiffElement})`),
+  hotkey: (hotkey?: string) => msg(str`Hotkey: ${hotkey?.toLocaleUpperCase() ?? ''}`),
+  completionTime: () => msg('Completion time'),
 };
 
 export const CATEGORY_TEXTS: Record<ItemCategory, () => string> = {
@@ -64,16 +71,16 @@ export const SKILL_TEXTS: Record<Skill, () => string> = {
   stealth: () => msg('Stealth'),
 };
 
-export const REWARD_PARAMETER_NAMES = {
+export const REWARD_PARAMETER_NAMES: Record<DistrictTypeRewardParameter | RewardParameter, () => string> = {
   [RewardParameter.money]: () => msg('Money'),
   [RewardParameter.developmentPoints]: () => msg('Development points'),
   [RewardParameter.experience]: () => msg('Experience'),
-  [RewardParameter.districtTierPoints]: () => msg('District tier points'),
+  [RewardParameter.influence]: () => msg('Faction influence'),
   [RewardParameter.connectivity]: () => msg('Connectivity points'),
   [RewardParameter.codeBase]: () => msg('Code base points'),
   [RewardParameter.computationalBase]: () => msg('Computational base points'),
   [RewardParameter.rewards]: () => msg('Rewards points'),
-  [RewardParameter.processCompletionSpeedMultiplier]: () => msg('Process completion speed multiplier'),
+  [RewardParameter.processCompletionSpeed]: () => msg('Process completion speed multiplier'),
   [RewardParameter.actions]: () => msg('Actions'),
-  [RewardParameter.sharedExperienceMultiplier]: () => msg('Shared experience multiplier'),
+  [RewardParameter.experienceShareMultiplier]: () => msg('Shared experience multiplier'),
 };

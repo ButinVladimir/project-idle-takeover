@@ -1,19 +1,19 @@
-import { IClone } from '@state/company-state/states/clone-factory/interfaces/clone';
-import { BaseController } from '@shared/base-controller';
+import { IClone } from '@state/clones-state';
+import { BaseController } from '@shared/index';
 
 export class RenameCloneDialogController extends BaseController {
   private _clone?: IClone;
 
   getCloneById(id: string): IClone | undefined {
     if (this._clone?.id !== id) {
-      this._clone = this.companyState.clones.getCloneById(id);
+      this._clone = this.clonesState.ownedClones.getCloneById(id);
     }
 
     return this._clone;
   }
 
   renameCloneById(id: string, newName: string) {
-    const clone = this.companyState.clones.getCloneById(id);
+    const clone = this.clonesState.ownedClones.getCloneById(id);
 
     if (clone) {
       clone.name = newName;
@@ -21,6 +21,6 @@ export class RenameCloneDialogController extends BaseController {
   }
 
   generateName(): string {
-    return this.companyState.clones.generateCloneName();
+    return this.clonesState.ownedClones.generateCloneName();
   }
 }

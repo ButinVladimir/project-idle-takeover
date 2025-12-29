@@ -1,26 +1,22 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
-import { GameAlert, Language, LongNumberFormat, MessageEvent, Theme, NotificationType } from '@shared/types';
-import {
-  CITY_EVENTS,
-  CLONE_ALERTS,
-  CLONE_EVENTS,
-  GAME_STATE_ALERTS,
-  GAME_STATE_EVENTS,
-  NOTIFICATION_TYPES,
-  PROGRAM_ALERTS,
-  PROGRAM_EVENTS,
-  SIDEJOB_ALERTS,
-  SIDEJOB_EVENTS,
-} from '@shared/constants';
-import type { IApp } from '@state/app/interfaces/app';
-import { TYPES } from '@state/types';
-import themes from '@configs/themes.json';
-import constants from '@configs/constants.json';
-import { type IFormatter } from '@shared/interfaces/formatter';
+import { type IStateUIConnector } from '@state/state-ui-connector';
 import { getLocale, setLocale } from '@/configure-localization';
-import { ISettingsState, ISettingsSerializedState } from './interfaces';
+import { Language, LongNumberFormat, Theme, type IFormatter, typedConstants } from '@shared/index';
+import type { IApp } from '@state/app';
+import { TYPES } from '@state/types';
+import {
+  ISettingsState,
+  ISettingsSerializedState,
+  ISettingsMessageEvents,
+  ISettingsGameAlerts,
+  ISettingsNotificationTypes,
+} from './interfaces';
 import { SettingsHotkeys } from './settings-hotkeys';
+import { SettingsMessageEvents } from './settings-message-events';
+import { SettingsGameAlerts } from './settings-game-alerts';
+import { SettingsNotificationTypes } from './settings-notification-types';
+import { typedThemes } from './constants';
 
 const { lazyInject } = decorators;
 
@@ -32,6 +28,9 @@ export class SettingsState implements ISettingsState {
   @lazyInject(TYPES.Formatter)
   private _formatter!: IFormatter;
 
+  @lazyInject(TYPES.StateUIConnector)
+  private _stateUiConnector!: IStateUIConnector;
+
   private _language: Language;
   private _theme: Theme;
   private _messageLogSize: number;
@@ -42,28 +41,39 @@ export class SettingsState implements ISettingsState {
   private _fastSpeedMultiplier: number;
   private _maxUpdatesPerTick: number;
   private _longNumberFormat: LongNumberFormat;
-  private _mapCellSize: number;
-  private _enabledMessageEvents: Set<MessageEvent>;
-  private _enabledGameAlerts: Set<GameAlert>;
-  private _enabledNotificationTypes: Set<NotificationType>;
+  private _messageEvents: ISettingsMessageEvents;
+  private _gameAlerts: ISettingsGameAlerts;
+  private _notificationTypes: ISettingsNotificationTypes;
   private _hotkeys: SettingsHotkeys;
 
   constructor() {
     this._language = getLocale() as Language;
     this._theme = Theme.light;
-    this._messageLogSize = constants.defaultSettings.messageLogSize;
-    this._toastDuration = constants.defaultSettings.toastDuration;
-    this._updateInterval = constants.defaultSettings.updateInterval;
-    this._autosaveEnabledOnHide = constants.defaultSettings.autosaveEnabledOnHide;
-    this._autosaveInterval = constants.defaultSettings.autosaveInterval;
-    this._fastSpeedMultiplier = constants.defaultSettings.fastSpeedMultiplier;
-    this._maxUpdatesPerTick = constants.defaultSettings.maxUpdatesPerTick;
-    this._longNumberFormat = constants.defaultSettings.longNumberFormat as LongNumberFormat;
-    this._mapCellSize = constants.defaultSettings.mapSize;
-    this._enabledMessageEvents = new Set<MessageEvent>();
-    this._enabledGameAlerts = new Set<GameAlert>();
-    this._enabledNotificationTypes = new Set<NotificationType>();
+    this._messageLogSize = typedConstants.defaultSettings.messageLogSize;
+    this._toastDuration = typedConstants.defaultSettings.toastDuration;
+    this._updateInterval = typedConstants.defaultSettings.updateInterval;
+    this._autosaveEnabledOnHide = typedConstants.defaultSettings.autosaveEnabledOnHide;
+    this._autosaveInterval = typedConstants.defaultSettings.autosaveInterval;
+    this._fastSpeedMultiplier = typedConstants.defaultSettings.fastSpeedMultiplier;
+    this._maxUpdatesPerTick = typedConstants.defaultSettings.maxUpdatesPerTick;
+    this._longNumberFormat = typedConstants.defaultSettings.longNumberFormat;
+    this._messageEvents = new SettingsMessageEvents();
+    this._gameAlerts = new SettingsGameAlerts();
+    this._notificationTypes = new SettingsNotificationTypes();
     this._hotkeys = new SettingsHotkeys();
+
+    this._stateUiConnector.registerEventEmitter(this, [
+      '_language',
+      '_theme',
+      '_messageLogSize',
+      '_toastDuration',
+      '_updateInterval',
+      '_autosaveEnabledOnHide',
+      '_autosaveInterval',
+      '_fastSpeedMultiplier',
+      '_maxUpdatesPerTick',
+      '_longNumberFormat',
+    ]);
   }
 
   get language() {
@@ -106,24 +116,20 @@ export class SettingsState implements ISettingsState {
     return this._longNumberFormat;
   }
 
-  get mapCellSize() {
-    return this._mapCellSize;
+  get messageEvents() {
+    return this._messageEvents;
+  }
+
+  get gameAlerts() {
+    return this._gameAlerts;
+  }
+
+  get notificationTypes() {
+    return this._notificationTypes;
   }
 
   get hotkeys() {
     return this._hotkeys;
-  }
-
-  isMessageEventEnabled(event: MessageEvent): boolean {
-    return this._enabledMessageEvents.has(event);
-  }
-
-  isGameAlertEnabled(gameAlert: GameAlert): boolean {
-    return this._enabledGameAlerts.has(gameAlert);
-  }
-
-  isNotificationTypeEnabled(notificationType: NotificationType): boolean {
-    return this._enabledNotificationTypes.has(notificationType);
   }
 
   async setLanguage(language: Language): Promise<void> {
@@ -138,7 +144,7 @@ export class SettingsState implements ISettingsState {
   setTheme(theme: Theme) {
     this._theme = theme;
 
-    document.body.className = themes[theme].classes;
+    document.body.className = typedThemes[theme].classes;
   }
 
   setMessageLogSize(messageLogSize: number) {
@@ -176,49 +182,25 @@ export class SettingsState implements ISettingsState {
     this._longNumberFormat = longNumberFormat;
   }
 
-  setMapCellSize(mapCellSize: number) {
-    this._mapCellSize = mapCellSize;
-  }
-
-  toggleMessageEvent(event: MessageEvent, enabled: boolean) {
-    if (enabled) {
-      this._enabledMessageEvents.add(event);
-    } else {
-      this._enabledMessageEvents.delete(event);
-    }
-  }
-
-  toggleGameAlert(gameAlert: GameAlert, enabled: boolean) {
-    if (enabled) {
-      this._enabledGameAlerts.add(gameAlert);
-    } else {
-      this._enabledGameAlerts.delete(gameAlert);
-    }
-  }
-
-  toggleNotificationType(notificationType: NotificationType, enabled: boolean) {
-    if (enabled) {
-      this._enabledNotificationTypes.add(notificationType);
-    } else {
-      this._enabledNotificationTypes.delete(notificationType);
-    }
+  async restoreDefaultSettings(): Promise<void> {
+    await this.setLanguage(getLocale() as Language);
+    this.setTheme(window.matchMedia('(prefers-color-scheme:dark)').matches ? Theme.dark : Theme.light);
+    this.setMessageLogSize(typedConstants.defaultSettings.messageLogSize);
+    this.setToastDuration(typedConstants.defaultSettings.toastDuration);
+    this.setUpdateInterval(typedConstants.defaultSettings.updateInterval);
+    this.setAutosaveEnabledOnHide(typedConstants.defaultSettings.autosaveEnabledOnHide);
+    this.setAutosaveInterval(typedConstants.defaultSettings.autosaveInterval);
+    this.setFastSpeedMultiplier(typedConstants.defaultSettings.fastSpeedMultiplier);
+    this.setMaxUpdatesPerTick(typedConstants.defaultSettings.maxUpdatesPerTick);
+    this.setLongNumberFormat(typedConstants.defaultSettings.longNumberFormat);
+    await this._messageEvents.startNewState();
+    await this._gameAlerts.startNewState();
+    await this._notificationTypes.startNewState();
+    await this._hotkeys.startNewState();
   }
 
   async startNewState(): Promise<void> {
-    await this.setLanguage(getLocale() as Language);
-    this.setTheme(window.matchMedia('(prefers-color-scheme:dark)').matches ? Theme.dark : Theme.light);
-    this.setMessageLogSize(constants.defaultSettings.messageLogSize);
-    this.setToastDuration(constants.defaultSettings.toastDuration);
-    this.setUpdateInterval(constants.defaultSettings.updateInterval);
-    this.setAutosaveEnabledOnHide(constants.defaultSettings.autosaveEnabledOnHide);
-    this.setAutosaveInterval(constants.defaultSettings.autosaveInterval);
-    this.setFastSpeedMultiplier(constants.defaultSettings.fastSpeedMultiplier);
-    this.setMaxUpdatesPerTick(constants.defaultSettings.maxUpdatesPerTick);
-    this.setLongNumberFormat(constants.defaultSettings.longNumberFormat as LongNumberFormat);
-    this.setMapCellSize(constants.defaultSettings.mapSize);
-    this.deserializeMessageEvents(this.getAllMessageEvents());
-    this.deserializeGameAlerts(this.getAllGameAlerts());
-    this.deserializeNotificationTypes(this.getAllNotificationTypes());
+    await this.restoreDefaultSettings();
   }
 
   async deserialize(serializedState: ISettingsSerializedState): Promise<void> {
@@ -232,10 +214,10 @@ export class SettingsState implements ISettingsState {
     this.setFastSpeedMultiplier(serializedState.fastSpeedMultiplier);
     this.setMaxUpdatesPerTick(serializedState.maxUpdatesPerTick);
     this.setLongNumberFormat(serializedState.longNumberFormat);
-    this.setMapCellSize(serializedState.mapCellSize);
-    this.deserializeMessageEvents(serializedState.enabledMessageEvents);
-    this.deserializeGameAlerts(serializedState.enabledGameAlerts);
-    this.deserializeNotificationTypes(serializedState.enabledNotificationTypes);
+    await this._messageEvents.deserialize(serializedState.enabledMessageEvents);
+    await this._gameAlerts.deserialize(serializedState.enabledGameAlerts);
+    await this._notificationTypes.deserialize(serializedState.enabledNotificationTypes);
+    await this._hotkeys.deserialize(serializedState.hotkeys);
   }
 
   serialize(): ISettingsSerializedState {
@@ -250,49 +232,10 @@ export class SettingsState implements ISettingsState {
       fastSpeedMultiplier: this.fastSpeedMultiplier,
       maxUpdatesPerTick: this.maxUpdatesPerTick,
       longNumberFormat: this.longNumberFormat,
-      mapCellSize: this.mapCellSize,
-      enabledMessageEvents: this.serializeMessageEvents(),
-      enabledGameAlerts: this.serializeGameAlerts(),
-      enabledNotificationTypes: this.serializeNotificationTypes(),
+      enabledMessageEvents: this._messageEvents.serialize(),
+      enabledGameAlerts: this._gameAlerts.serialize(),
+      enabledNotificationTypes: this._notificationTypes.serialize(),
+      hotkeys: this._hotkeys.serialize(),
     };
-  }
-
-  private serializeMessageEvents(): MessageEvent[] {
-    return Array.from(this._enabledMessageEvents.values());
-  }
-
-  private deserializeMessageEvents(events: MessageEvent[]) {
-    this._enabledMessageEvents.clear();
-    events.forEach((event) => this._enabledMessageEvents.add(event));
-  }
-
-  private serializeGameAlerts(): GameAlert[] {
-    return Array.from(this._enabledGameAlerts.values());
-  }
-
-  private deserializeGameAlerts(gameAlerts: GameAlert[]) {
-    this._enabledGameAlerts.clear();
-    gameAlerts.forEach((gameAlert) => this._enabledGameAlerts.add(gameAlert));
-  }
-
-  private serializeNotificationTypes(): NotificationType[] {
-    return Array.from(this._enabledNotificationTypes.values());
-  }
-
-  private deserializeNotificationTypes(notificationTypes: NotificationType[]) {
-    this._enabledNotificationTypes.clear();
-    notificationTypes.forEach((notificationType) => this._enabledNotificationTypes.add(notificationType));
-  }
-
-  private getAllMessageEvents(): MessageEvent[] {
-    return [...GAME_STATE_EVENTS, ...PROGRAM_EVENTS, ...CLONE_EVENTS, ...CITY_EVENTS, ...SIDEJOB_EVENTS];
-  }
-
-  private getAllGameAlerts(): GameAlert[] {
-    return [...GAME_STATE_ALERTS, ...PROGRAM_ALERTS, ...CLONE_ALERTS, ...SIDEJOB_ALERTS];
-  }
-
-  private getAllNotificationTypes(): NotificationType[] {
-    return NOTIFICATION_TYPES;
   }
 }

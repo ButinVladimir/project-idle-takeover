@@ -1,13 +1,13 @@
-import { IClone } from '@state/company-state';
+import { IClone } from '@state/clones-state';
 import { BaseController, Hotkey } from '@shared/index';
 
 export class ClonesListUpgradeButtonsController extends BaseController {
   checkCanUpgradeMaxAllLevels(): boolean {
-    return this.companyState.clones.listClones().some(this.checkCanUpgradeMaxLevel);
+    return this.clonesState.ownedClones.listClones().some(this.checkCanUpgradeMaxLevel);
   }
 
   upgradeMaxAllLevels() {
-    this.companyState.clones.upgradeMaxAllLevels();
+    this.clonesState.ownedClones.levelUpgrader.upgradeMaxAllClones();
   }
 
   getUpgradeLevelHotkey(): string | undefined {
@@ -19,15 +19,13 @@ export class ClonesListUpgradeButtonsController extends BaseController {
       return false;
     }
 
-    if (
-      !this.globalState.availableItems.cloneTemplates.isItemAvailable(clone.templateName, clone.tier, clone.level + 1)
-    ) {
+    if (!this.unlockState.items.cloneTemplates.isItemAvailable(clone.templateName, clone.tier, clone.level + 1)) {
       return false;
     }
 
     return (
       this.globalState.money.money >=
-      this.companyState.clones.getCloneCost(clone.templateName, clone.tier, clone.level + 1)
+      this.clonesState.ownedClones.calculateCloneCost(clone.templateName, clone.tier, clone.level + 1)
     );
   };
 }

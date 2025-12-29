@@ -3,8 +3,9 @@ import {
   IDevelopmentGrowthState,
   IMoneyGrowthState,
   IConnectivityGrowthState,
-  IDistrictTierPointsGrowthState,
+  IInfluenceGrowthState,
   IExperienceGrowthState,
+  IRewardsGrowthState,
 } from './parameters';
 
 export interface IGrowthState {
@@ -12,7 +13,8 @@ export interface IGrowthState {
   development: IDevelopmentGrowthState;
   multipliers: IMultipliersGrowthState;
   connectivity: IConnectivityGrowthState;
-  districtTierPoints: IDistrictTierPointsGrowthState;
+  rewards: IRewardsGrowthState;
+  influence: IInfluenceGrowthState;
   experience: IExperienceGrowthState;
   resetValues(): void;
   clearValues(): void;

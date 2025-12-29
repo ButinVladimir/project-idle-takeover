@@ -15,7 +15,7 @@ export class OwnedProgramsListButtonsController extends BaseController {
   }
 
   upgradeMaxAllPrograms() {
-    this.mainframeState.programs.upgradeMaxAllPrograms();
+    this.mainframeState.programs.upgrader.upgradeMaxAllPrograms();
   }
 
   getHotkey(): string | undefined {
@@ -27,13 +27,13 @@ export class OwnedProgramsListButtonsController extends BaseController {
       return false;
     }
 
-    if (!this.globalState.availableItems.programs.isItemAvailable(program.name, program.tier, program.level + 1)) {
+    if (!this.unlockState.items.programs.isItemAvailable(program.name, program.tier, program.level + 1)) {
       return false;
     }
 
     return (
       this.globalState.money.money >=
-      this.mainframeState.programs.getProgramCost(program.name, program.tier, program.level + 1)
+      this.mainframeState.programs.calculateProgramCost(program.name, program.tier, program.level + 1)
     );
   };
 }

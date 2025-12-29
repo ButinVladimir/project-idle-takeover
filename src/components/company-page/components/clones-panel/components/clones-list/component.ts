@@ -3,13 +3,10 @@ import { localized, msg } from '@lit/localize';
 import { customElement } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { SortableElementMovedEvent } from '@components/shared/sortable-list/events/sortable-element-moved';
-import {
-  ConfirmationAlertOpenEvent,
-  ConfirmationAlertSubmitEvent,
-} from '@components/game-screen/components/confirmation-alert/events';
+import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { COMMON_TEXTS } from '@texts/index';
 import { BaseComponent, CloneAlert, AUTOUPGRADE_VALUES, DELETE_VALUES } from '@shared/index';
-import { IClone } from '@state/company-state/states/clone-factory/interfaces/clone';
+import { IClone } from '@state/clones-state';
 import { ClonesListController } from './controller';
 import { CLONE_LIST_ITEMS_GAP } from './constants';
 import styles from './styles';
@@ -25,18 +22,6 @@ export class ClonesList extends BaseComponent {
     super();
 
     this._controller = new ClonesListController(this);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    document.addEventListener(ConfirmationAlertSubmitEvent.type, this.handleConfirmDeleteAllClonesDialog);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-
-    document.removeEventListener(ConfirmationAlertSubmitEvent.type, this.handleConfirmDeleteAllClonesDialog);
   }
 
   protected renderDesktop() {
@@ -110,17 +95,12 @@ export class ClonesList extends BaseComponent {
       new ConfirmationAlertOpenEvent(
         CloneAlert.deleteAllClones,
         msg('Are you sure want to delete all clones? Their progress will be lost and their actions will be cancelled.'),
+        this.handleDeleteAllClones,
       ),
     );
   };
 
-  private handleConfirmDeleteAllClonesDialog = (event: Event) => {
-    const convertedEvent = event as ConfirmationAlertSubmitEvent;
-
-    if (convertedEvent.gameAlert !== CloneAlert.deleteAllClones) {
-      return;
-    }
-
+  private handleDeleteAllClones = () => {
     this._controller.deleteAllClones();
   };
 }

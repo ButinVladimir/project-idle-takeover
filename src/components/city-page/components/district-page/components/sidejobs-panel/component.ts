@@ -2,7 +2,6 @@ import { html, nothing } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { localized, msg } from '@lit/localize';
 import { BaseComponent } from '@shared/index';
-import { SidejobName } from '@state/company-state';
 import { repeat } from 'lit/directives/repeat.js';
 import { CityDistrictSidejobsPanelController } from './controller';
 import styles from './styles';
@@ -35,7 +34,7 @@ export class CityDistrictSidejobsPanel extends BaseComponent {
 
     return html`
       <p class="hint">
-        ${msg(`Increase district connectivity and unlock more feature make more sidejobs available.
+        ${msg(`Increase district connectivity to make sidejobs available.
 Clones could be assigned to sidejobs on company page under sidejobs tab.`)}
       </p>
 
@@ -59,11 +58,11 @@ Clones could be assigned to sidejobs on company page under sidejobs tab.`)}
     return html` <div class="notification">${msg("You don't have any sidejobs available")}</div> `;
   };
 
-  private renderList = (sidejobs: SidejobName[]) => {
+  private renderList = (sidejobs: string[]) => {
     return html` ${repeat(sidejobs, (sidejob) => sidejob, this.renderSidejob)}`;
   };
 
-  private renderSidejob = (sidejobName: SidejobName) => {
+  private renderSidejob = (sidejobName: string) => {
     return html`
       <ca-city-district-sidejobs-list-item sidejob-name=${sidejobName}> </ca-city-district-sidejobs-list-item>
     `;

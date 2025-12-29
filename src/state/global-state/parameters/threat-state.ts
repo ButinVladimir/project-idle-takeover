@@ -1,5 +1,7 @@
+import { injectable } from 'inversify';
 import { IThreatSerializedState, IThreatState } from '../interfaces';
 
+@injectable()
 export class ThreatState implements IThreatState {
   private _notoriety: number;
   private _level: number;

@@ -170,14 +170,14 @@ export class StateUIConnector implements IStateUIConnector {
     const eventKey = this.registerEvent(eventEmitter, propertyKey);
 
     const proxy = new Proxy(eventEmitter[propertyKey], {
-      get(target, p, receiver) {
+      get(target, p) {
         if (ARRAY_MODIFYING_METHODS.has(p)) {
           _stateUIConnector.enqueueEvent(eventKey);
         }
 
         _stateUIConnector.connectEvent(eventKey);
 
-        const propertyValue = Reflect.get(target, p, receiver);
+        const propertyValue = Reflect.get(target, p);
 
         if (propertyValue instanceof Function) {
           return propertyValue.bind(target);
@@ -201,14 +201,14 @@ export class StateUIConnector implements IStateUIConnector {
     const eventKey = this.registerEvent(eventEmitter, propertyKey);
 
     const proxy = new Proxy(eventEmitter[propertyKey], {
-      get(target, p, receiver) {
+      get(target, p) {
         if (MAP_MODIFYING_METHODS.has(p)) {
           _stateUIConnector.enqueueEvent(eventKey);
         }
 
         _stateUIConnector.connectEvent(eventKey);
 
-        const propertyValue = Reflect.get(target, p, receiver);
+        const propertyValue = Reflect.get(target, p);
 
         if (propertyValue instanceof Function) {
           return propertyValue.bind(target);
@@ -227,14 +227,14 @@ export class StateUIConnector implements IStateUIConnector {
     const eventKey = this.registerEvent(eventEmitter, propertyKey);
 
     const proxy = new Proxy(eventEmitter[propertyKey], {
-      get(target, p, receiver) {
+      get(target, p) {
         if (SET_MODIFYING_METHODS.has(p)) {
           _stateUIConnector.enqueueEvent(eventKey);
         }
 
         _stateUIConnector.connectEvent(eventKey);
 
-        const propertyValue = Reflect.get(target, p, receiver);
+        const propertyValue = Reflect.get(target, p);
 
         if (propertyValue instanceof Function) {
           return propertyValue.bind(target);

@@ -1,25 +1,42 @@
 import { msg } from '@lit/localize';
-import { SidejobName } from '@state/company-state';
 
-export const SIDEJOB_TEXTS = {
-  [SidejobName.oddjob]: {
+export const SIDEJOB_TEXTS: Record<
+  string,
+  {
+    title: () => string;
+    overview: () => string;
+  }
+> = {
+  oddjob: {
     title: () => msg('Oddjob'),
-    overview: () => msg(`Performing random jobs not requiring high qualification.`),
+    overview: () => msg(`Perform random jobs not requiring high qualification.`),
   },
-  [SidejobName.infoBroker]: {
+  infoBroker: {
     title: () => msg('Information broker'),
-    overview: () => msg('Finding and delivering useful information for various parties.'),
+    overview: () => msg('Find and deliver useful information for various parties.'),
   },
-  [SidejobName.freelanceProgrammer]: {
+  freelanceProgrammer: {
     title: () => msg('Freelance programmer'),
-    overview: () => msg('Writing and maintaining various programs.'),
+    overview: () => msg('Write and maintain various programs.'),
   },
-  [SidejobName.computerRepairer]: {
+  computerRepairer: {
     title: () => msg('Computer repairer'),
-    overview: () => msg('Repairing various electronics.'),
+    overview: () => msg('Repair various electronics.'),
   },
-  [SidejobName.mediator]: {
+  mediator: {
     title: () => msg('Mediator'),
-    overview: () => msg('Finding compromises between various parties with profit for yourself.'),
+    overview: () => msg('Find compromises between various parties with profit for yourself.'),
+  },
+  mainframeRelay: {
+    title: () => msg('Mainframe relay'),
+    overview: () =>
+      msg(`Act as mainframe relay to speed up process completion speed. 
+Stacks additively within same district and multiplicatively between different districts.`),
+  },
+  feedAnalyzer: {
+    title: () => msg('Feed analyzer'),
+    overview: () =>
+      msg(`Analyze feed from other clones to improve shared experience. 
+Stacks additively within same district and multiplicatively between different districts.`),
   },
 };

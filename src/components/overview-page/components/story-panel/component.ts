@@ -1,11 +1,12 @@
 import { html } from 'lit';
-import { localized, msg } from '@lit/localize';
+import { localized } from '@lit/localize';
 import { customElement, state } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.component.js';
 import { BaseComponent } from '@shared/index';
-import { IStoryGoal, STORY_GOAL_STATES, StoryGoalState } from '@state/global-state';
+import { STORY_GOAL_STATES, StoryGoalState } from '@state/global-state';
+import { IStoryGoal } from '@state/scenario-state';
 import { OverviewStoryPanelController } from './controller';
 import { KEYS_SEPARATOR } from '../../constants';
 import { STORY_GOAL_STATE_FILTER_TITLES } from './constants';
@@ -58,8 +59,6 @@ export class OverviewStoryPanel extends BaseComponent {
           hoist
           @sl-change=${this.handleStateFilterChange}
         >
-          <span class="input-label" slot="label"> ${msg('Event state filter')} </span>
-
           <sl-option value="all"> ${STORY_GOAL_STATE_FILTER_TITLES['all']()}</sl-option>
           ${STORY_GOAL_STATES.map(
             (state) => html`<sl-option value=${state}> ${STORY_GOAL_STATE_FILTER_TITLES[state]()}</sl-option>`,
@@ -80,15 +79,27 @@ export class OverviewStoryPanel extends BaseComponent {
   };
 
   private renderGoal = (goal: IStoryGoal) => {
-    const messages = goal.messages ? goal.messages.join(KEYS_SEPARATOR) : undefined;
-    const unlockFeatures = goal.unlockFeatures ? goal.unlockFeatures.join(KEYS_SEPARATOR) : undefined;
+    const messages = this.joinMessages(goal.messages);
+    const specialEvents = this.joinMessages(goal.specialEvents);
+    const milestones = this.joinMessages(goal.milestones);
+    const programs = this.joinMessages(goal.rewardDesigns?.programs);
+    const cloneTemplates = this.joinMessages(goal.rewardDesigns?.cloneTemplates);
+    const sidejobs = this.joinMessages(goal.unlockActivities?.sidejobs);
+    const contracts = this.joinMessages(goal.unlockActivities?.contracts);
 
     return html`
       <ca-overview-story-goal
-        level=${ifDefined(goal.level)}
+        name=${goal.name}
+        level=${ifDefined(goal.requirements.level)}
+        faction=${ifDefined(goal.requirements.faction)}
+        captured-districts-count=${ifDefined(goal.requirements.capturedDistrictsCount)}
         messages=${ifDefined(messages)}
-        unlock-features=${ifDefined(unlockFeatures)}
-        state=${goal.state}
+        special-events=${ifDefined(specialEvents)}
+        milestones=${ifDefined(milestones)}
+        programs=${ifDefined(programs)}
+        clone-templates=${ifDefined(cloneTemplates)}
+        sidejobs=${ifDefined(sidejobs)}
+        contracts=${ifDefined(contracts)}
       ></ca-overview-story-goal>
     `;
   };
@@ -101,4 +112,12 @@ export class OverviewStoryPanel extends BaseComponent {
     const stateFilterValue = this._stateFilterInputRef.value.value as StoryGoalState | 'all';
     this._stateFilter = stateFilterValue;
   };
+
+  private joinMessages(messages: string[] | undefined): string | undefined {
+    if (!messages) {
+      return undefined;
+    }
+
+    return messages.join(KEYS_SEPARATOR);
+  }
 }

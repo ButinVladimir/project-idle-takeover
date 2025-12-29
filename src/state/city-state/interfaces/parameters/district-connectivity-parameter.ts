@@ -1,4 +1,4 @@
-import { IDistrictConnectivitySerializedParameter } from '../serialized-states/district-connectivity-serialized-parameter';
+import { IDistrictConnectivitySerializedParameter } from '../serialized-states/parameters/district-connectivity-serialized-parameter';
 
 export interface IDistrictConnectivityParameter {
   points: number;

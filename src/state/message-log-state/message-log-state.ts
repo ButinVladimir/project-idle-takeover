@@ -33,7 +33,7 @@ export class MessageLogState implements IMessageLogState {
   }
 
   postMessage(event: MessageEvent, messageText: string, postToast = true) {
-    if (!this._settingsState.isMessageEventEnabled(event)) {
+    if (!this._settingsState.messageEvents.isEventEnabled(event)) {
       return;
     }
 

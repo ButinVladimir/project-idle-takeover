@@ -1,12 +1,11 @@
-import { BaseController } from '@shared/base-controller';
-import { GameAlert } from '@shared/types';
+import { BaseController, GameAlert } from '@shared/index';
 
 export class ConfirmationAlertController extends BaseController {
   isGameAlertEnabled(gameAlert: GameAlert): boolean {
-    return this.settingsState.isGameAlertEnabled(gameAlert);
+    return this.settingsState.gameAlerts.isAlertEnabled(gameAlert);
   }
 
   toggleGameAlert(gameAlert: GameAlert, enabled: boolean) {
-    this.settingsState.toggleGameAlert(gameAlert, enabled);
+    this.settingsState.gameAlerts.toggleAlert(gameAlert, enabled);
   }
 }

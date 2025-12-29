@@ -3,12 +3,9 @@ import { provide } from '@lit/context';
 import { localized, msg, str } from '@lit/localize';
 import { customElement, property, state } from 'lit/decorators.js';
 import { COMMON_TEXTS } from '@texts/common';
-import {
-  ConfirmationAlertOpenEvent,
-  ConfirmationAlertSubmitEvent,
-} from '@components/game-screen/components/confirmation-alert/events';
+import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { CLONE_TEMPLATE_TEXTS } from '@texts/clone-templates';
-import { type IClone } from '@state/company-state';
+import { type IClone } from '@state/clones-state';
 import { BaseComponent, CloneAlert, AUTOUPGRADE_VALUES } from '@shared/index';
 import { ClonesListItemController } from './controller';
 import { OpenCloneListItemDialogEvent } from '../../../../events/open-clone-list-item-dialog';
@@ -46,14 +43,12 @@ export class ClonesListItem extends BaseComponent {
   connectedCallback() {
     super.connectedCallback();
 
-    document.addEventListener(ConfirmationAlertSubmitEvent.type, this.handleConfirmDeleteCloneDialog);
     document.addEventListener('click', this.handleHideMenu);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    document.removeEventListener(ConfirmationAlertSubmitEvent.type, this.handleConfirmDeleteCloneDialog);
     document.removeEventListener('click', this.handleHideMenu);
   }
 
@@ -196,18 +191,12 @@ export class ClonesListItem extends BaseComponent {
         msg(
           str`Are you sure want to delete clone "${clone.name}"? Their progress will be lost and their actions will be cancelled.`,
         ),
-        clone.id,
+        this.handleDeleteClone,
       ),
     );
   };
 
-  private handleConfirmDeleteCloneDialog = (event: Event) => {
-    const convertedEvent = event as ConfirmationAlertSubmitEvent;
-
-    if (convertedEvent.gameAlert !== CloneAlert.cloneDelete || convertedEvent.gameAlertKey !== this.cloneId) {
-      return;
-    }
-
+  private handleDeleteClone = () => {
     this._controller.deleteCloneById(this.cloneId);
   };
 

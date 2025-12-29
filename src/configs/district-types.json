@@ -1,69 +1,66 @@
 {
+  "$schema": "./schemas/district-types.json",
   "residential": {
-    "captureDifficulty": { "multiplier": 1, "base": 1 },
+    "activityRequirementModifier": 1,
+    "primaryActivityTimeMultipliers": {
+      "contractGenerationTime": 5
+    },
+    "synchronization": { "base": 0, "multiplier": 0.1 },
     "parameters": {
-      "experience": { "multiplier": 1, "base": 1.5 },
-      "money": { "multiplier": 1, "base": 1.5 },
-      "developmentPoints": { "multiplier": 1, "base": 1.5 },
-      "districtTierPoints": {
-        "requirements": { "multiplier": 10000000, "base": 10 },
-        "pointsMultiplier": { "multiplier": 1, "base": 1 }
+      "experience": { "progression": { "base": 1e-3, "multiplier": 3e-4 }, "exponent": 1 },
+      "money": { "progression": { "base": 1e-3, "multiplier": 3e-4 }, "exponent": 1 },
+      "developmentPoints": { "progression": { "base": 1e-3, "multiplier": 3e-4 }, "exponent": 1 },
+      "influence": {
+        "progression": { "base": 1e-3, "multiplier": 0 },
+        "exponent": 1
       },
-      "synchronization": { "multiplier": 10, "base": 1.1 },
-      "connectivity": {
-        "pointsMultiplier": { "multiplier": 1, "base": 1.5 },
-        "programPointsMultiplier": { "multiplier": 1, "base": 1.1 }
-      },
-      "codeBase": {
-        "pointsMultiplier": { "multiplier": 1, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.99 },
-        "logBase": 2
-      },
-      "computationalBase": {
-        "pointsMultiplier": { "multiplier": 1, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.99 },
-        "logBase": 2
-      },
-      "rewards": {
-        "pointsMultiplier": { "multiplier": 1, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.99 },
-        "logBase": 2
-      }
+      "connectivity": { "progression": { "base": 1e-3, "multiplier": 3e-4 }, "exponent": 0.5 },
+      "codeBase": { "progression": { "base": 1e-3, "multiplier": 3e-4 }, "exponent": 1 },
+      "computationalBase": { "progression": { "base": 1e-3, "multiplier": 3e-4 }, "exponent": 1 },
+      "rewards": { "progression": { "base": 1e-3, "multiplier": 3e-4 }, "exponent": 1 },
+      "processCompletionSpeed": { "progression": { "base": 1, "multiplier": 0.1 }, "exponent": 0.1 },
+      "experienceShareMultiplier": { "progression": { "base": 1, "multiplier": 0.1 }, "exponent": 0.3 }
+    },
+    "requirements": {
+      "influence": { "multiplier": 60, "base": 1.35 }
+    },
+    "multiplierParameterBases": {
+      "codeBase": 19.17463031,
+      "computationalBase": 19.17463031,
+      "rewards": 19.17463031
     }
   },
-  "corpoDistrict": {
-    "captureDifficulty": { "multiplier": 2, "base": 1.01 },
+  "corpoPlaza": {
+    "activityRequirementModifier": 1.5,
+    "primaryActivityTimeMultipliers": {
+      "contractGenerationTime": 5
+    },
+    "synchronization": {
+      "base": 0,
+      "multiplier": 0.2
+    },
     "parameters": {
-      "experience": { "multiplier": 1, "base": 1.1 },
-      "money": { "multiplier": 10, "base": 1.1 },
-      "developmentPoints": { "multiplier": 5, "base": 1.1 },
-      "districtTierPoints": {
-        "requirements": { "multiplier": 60000, "base": 1.5 },
-        "pointsMultiplier": { "multiplier": 1, "base": 1 }
+      "experience": { "progression": { "base": 2e-3, "multiplier": 45e-5 }, "exponent": 1 },
+      "money": { "progression": { "base": 2e-3, "multiplier": 45e-5 }, "exponent": 1 },
+      "developmentPoints": { "progression": { "base": 2e-3, "multiplier": 45e-5 }, "exponent": 1 },
+      "influence": {
+        "progression": { "base": 1e-3, "multiplier": 0 },
+        "exponent": 1
       },
-      "synchronization": {
-        "multiplier": 30,
-        "base": 1.1
-      },
-      "connectivity": {
-        "pointsMultiplier": { "multiplier": 5, "base": 1.5 },
-        "programPointsMultiplier": { "multiplier": 5, "base": 1.5 }
-      },
-      "codeBase": {
-        "pointsMultiplier": { "multiplier": 5, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.9 },
-        "logBase": 20
-      },
-      "computationalBase": {
-        "pointsMultiplier": { "multiplier": 5, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.9 },
-        "logBase": 20
-      },
-      "rewards": {
-        "pointsMultiplier": { "multiplier": 3, "base": 1.5 },
-        "pointsToSoftCap": { "multiplier": 86400, "base": 0.9 },
-        "logBase": 20
-      }
+      "connectivity": { "progression": { "base": 3e-3, "multiplier": 9e-4 }, "exponent": 1 },
+      "codeBase": { "progression": { "base": 1e-3, "multiplier": 45e-5 }, "exponent": 1 },
+      "computationalBase": { "progression": { "base": 1e-3, "multiplier": 45e-5 }, "exponent": 1 },
+      "rewards": { "progression": { "base": 1e-3, "multiplier": 45e-5 }, "exponent": 1 },
+      "processCompletionSpeed": { "progression": { "multiplier": 1, "base": 0.1 }, "exponent": 0.1 },
+      "experienceShareMultiplier": { "progression": { "multiplier": 1, "base": 0.1 }, "exponent": 0.3 }
+    },
+    "requirements": {
+      "influence": { "multiplier": 120, "base": 1.5 }
+    },
+    "multiplierParameterBases": {
+      "codeBase": 4.378884597,
+      "computationalBase": 4.378884597,
+      "rewards": 4.378884597
     }
   }
 }

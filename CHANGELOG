@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.3.0 (2025-12-29)
+
+- Game was renamed to Project: Idle Takeover from Cyberiada
+- Configs validation has been added
+- Hotkeys can be now changed
+- Updated UI
+- Reworked story progression
+- Contracts and primary activity are available
+- Factions are available
+- Items were reworked
+- New and changed parameters:
+- - Faction influence, replaced district tier points, used to unlock and improve districts
+- - Rewards now separate for each district. They now affect process completion speed and shared experience.
+- Formulas for parameters were changed
+- New programs:
+- - Predictive computator, to increase process completion speed
+- - Contract autostarter, to start contracts automatically
+- New sidejobs:
+- - Mainframe relay, to speed up process completion speed
+- - Feed analyzer, to improve clones shared experience
+- New contracts:
+- - Security, basic contract
+- - Backroom deal, WSA specific upgrade to gain reward
+
 ## 0.2.1 (2025-07-26)
 
 - Fixed various issues

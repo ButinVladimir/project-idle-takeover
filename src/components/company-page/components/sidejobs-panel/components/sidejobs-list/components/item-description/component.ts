@@ -1,13 +1,19 @@
 import { html, nothing } from 'lit';
-import { localized } from '@lit/localize';
+import { localized, msg } from '@lit/localize';
 import { consume } from '@lit/context';
 import { customElement, queryAll } from 'lit/decorators.js';
-import { BaseComponent, Feature, MS_IN_SECOND, RewardParameter } from '@shared/index';
-import { type ISidejob } from '@state/company-state';
+import {
+  BaseComponent,
+  DISTRICT_TYPE_REWARD_PARAMETER_UI_VALUES,
+  DISTRICT_TYPE_REWARD_PARAMETERS,
+  DistrictTypeRewardParameter,
+} from '@shared/index';
+import { type ISidejobActivity } from '@state/activity-state';
 import { COMMON_TEXTS, REWARD_PARAMETER_NAMES, SIDEJOB_TEXTS } from '@texts/index';
 import { SidejobsListItemDescriptionController } from './controller';
-import { sidejobContext } from '../item/contexts';
+import { sidejobActivityContext } from '../item/contexts';
 import styles from './styles';
+import { calculateSidejobParameterValue } from '../../../../helpers';
 
 @localized()
 @customElement('ca-sidejobs-list-item-description')
@@ -21,22 +27,12 @@ export class SidejobsListItemDescription extends BaseComponent {
   @queryAll(`span[data-value]`)
   private _rewardValueElements!: NodeListOf<HTMLSpanElement>;
 
-  @consume({ context: sidejobContext, subscribe: true })
-  private _sidejob?: ISidejob;
+  @consume({ context: sidejobActivityContext, subscribe: true })
+  private _activity?: ISidejobActivity;
 
-  private _rewardValues: Record<RewardParameter, number> = {
-    [RewardParameter.money]: 0,
-    [RewardParameter.developmentPoints]: 0,
-    [RewardParameter.experience]: 0,
-    [RewardParameter.districtTierPoints]: 0,
-    [RewardParameter.connectivity]: 0,
-    [RewardParameter.codeBase]: 0,
-    [RewardParameter.computationalBase]: 0,
-    [RewardParameter.rewards]: 0,
-    [RewardParameter.processCompletionSpeedMultiplier]: 0,
-    [RewardParameter.actions]: 0,
-    [RewardParameter.sharedExperienceMultiplier]: 0,
-  };
+  private _rewardValues: Record<DistrictTypeRewardParameter, number> = Object.fromEntries(
+    DISTRICT_TYPE_REWARD_PARAMETERS.map((parameter) => [parameter, 0]),
+  ) as Record<DistrictTypeRewardParameter, number>;
 
   constructor() {
     super();
@@ -45,106 +41,50 @@ export class SidejobsListItemDescription extends BaseComponent {
   }
 
   protected renderDesktop() {
-    if (!this._sidejob) {
+    if (!this._activity) {
       return nothing;
     }
 
     return html`
-      <p class="overview">${SIDEJOB_TEXTS[this._sidejob.sidejobName].overview()}</p>
+      <p class="overview">${SIDEJOB_TEXTS[this._activity.sidejob.sidejobName].overview()}</p>
 
-      ${this.renderParameter(RewardParameter.money, true)}
-      ${this.renderParameter(RewardParameter.developmentPoints, true)}
-      ${this.renderParameter(RewardParameter.experience, true)}
-      ${this.renderParameter(
-        RewardParameter.districtTierPoints,
-        this._controller.isFeatureUnlocked(Feature.districtTiers),
-      )}
-      ${this.renderParameter(RewardParameter.connectivity, this._controller.isFeatureUnlocked(Feature.connectivity))}
-      ${this.renderParameter(RewardParameter.codeBase, this._controller.isFeatureUnlocked(Feature.codeBase))}
-      ${this.renderParameter(
-        RewardParameter.computationalBase,
-        this._controller.isFeatureUnlocked(Feature.computationalBase),
-      )}
-      ${this.renderParameter(RewardParameter.rewards, this._controller.isFeatureUnlocked(Feature.rewards))}
+      <p class="text">${msg('Rewards')}</p>
+
+      ${DISTRICT_TYPE_REWARD_PARAMETERS.map((parameter) => this.renderParameter(parameter))}
     `;
   }
 
-  private renderParameter = (parameter: RewardParameter, isUnlocked: boolean) => {
-    if (!isUnlocked) {
+  private renderParameter = (parameter: DistrictTypeRewardParameter) => {
+    const parameterValues = DISTRICT_TYPE_REWARD_PARAMETER_UI_VALUES[parameter];
+
+    if (!this._activity!.sidejob.getParameterVisibility(parameter)) {
       return nothing;
     }
 
     const parameterName = REWARD_PARAMETER_NAMES[parameter]();
     const valueElement = html`<span data-value=${parameter}></span>`;
 
-    return html`<p class="text">
-      ${COMMON_TEXTS.parameterValue(parameterName, COMMON_TEXTS.parameterSpeed(valueElement))}
-    </p>`;
+    const parameterText = parameterValues.isSpeed ? COMMON_TEXTS.parameterSpeed(valueElement) : valueElement;
+
+    return html`<p class="text">${COMMON_TEXTS.parameterRow(parameterName, parameterText)}</p>`;
   };
 
   handlePartialUpdate = () => {
-    this.updateMoney();
-    this.updateDevelopmentPoints();
-    this.updateExperience();
-    this.updateDistrictTierPoints();
-    this.updateConnectivity();
-    this.updateCodeBase();
-    this.updateComputationalBase();
-    this.updateRewards();
+    if (!this._activity) {
+      return;
+    }
+
+    DISTRICT_TYPE_REWARD_PARAMETERS.forEach(this.updateParameter);
 
     this._rewardValueElements.forEach(this.updateValueElement);
   };
 
-  private updateMoney() {
-    const value = this._sidejob!.calculateMoneyDelta(MS_IN_SECOND);
-
-    this._rewardValues[RewardParameter.money] = value;
-  }
-
-  private updateDevelopmentPoints() {
-    const value = this._sidejob!.calculateDevelopmentPointsDelta(MS_IN_SECOND);
-
-    this._rewardValues[RewardParameter.developmentPoints] = value;
-  }
-
-  private updateExperience() {
-    const value = this._sidejob!.calculateExperienceDelta(MS_IN_SECOND);
-
-    this._rewardValues[RewardParameter.experience] = value;
-  }
-
-  private updateDistrictTierPoints() {
-    const value = this._sidejob!.calculateDistrictTierPointsDelta(MS_IN_SECOND);
-
-    this._rewardValues[RewardParameter.districtTierPoints] = value;
-  }
-
-  private updateConnectivity() {
-    const value = this._sidejob!.calculateConnectivityDelta(MS_IN_SECOND);
-
-    this._rewardValues[RewardParameter.connectivity] = value;
-  }
-
-  private updateCodeBase() {
-    const value = this._sidejob!.calculateCodeBaseDelta(MS_IN_SECOND);
-
-    this._rewardValues[RewardParameter.codeBase] = value;
-  }
-
-  private updateComputationalBase() {
-    const value = this._sidejob!.calculateComputationalBaseDelta(MS_IN_SECOND);
-
-    this._rewardValues[RewardParameter.computationalBase] = value;
-  }
-
-  private updateRewards() {
-    const value = this._sidejob!.calculateRewardsDelta(MS_IN_SECOND);
-
-    this._rewardValues[RewardParameter.rewards] = value;
-  }
+  private updateParameter = (parameter: DistrictTypeRewardParameter) => {
+    this._rewardValues[parameter] = calculateSidejobParameterValue(this._activity!.sidejob, parameter);
+  };
 
   private updateValueElement = (element: HTMLSpanElement) => {
-    const parameter = element.dataset.value as RewardParameter;
+    const parameter = element.dataset.value as DistrictTypeRewardParameter;
     const value = this._rewardValues[parameter];
 
     element.textContent = this._controller.formatter.formatNumberFloat(value);

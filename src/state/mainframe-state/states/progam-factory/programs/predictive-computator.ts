@@ -1,28 +1,37 @@
-import programs from '@configs/programs.json';
-import { calculateTierLinear } from '@shared/helpers';
+import { calculateLinear, calculateTierLinear, DistrictTypeRewardParameter } from '@shared/index';
 import { OtherProgramName } from '../types';
 import { BaseProgram } from './base-program';
+import { typedPrograms } from '../constants';
 
 export class PredictiveComputatorProgram extends BaseProgram {
   public readonly name = OtherProgramName.predictiveComputator;
   public readonly isAutoscalable = true;
 
-  handlePerformanceUpdate(): void {
-    this.mainframeState.processes.processCompletionSpeed.requestMultipliersRecalculation();
-  }
+  handlePerformanceUpdate(): void {}
 
   perform(): void {}
 
   calculateProcessCompletionSpeedMultiplier(threads: number, usedRam: number): number {
-    const programData = programs[this.name];
+    if (!this.unlockState.milestones.isRewardParameterUnlocked(DistrictTypeRewardParameter.processCompletionSpeed)) {
+      return 0;
+    }
+
+    const programData = typedPrograms[this.name];
+    const { multiplier, exponent } = this.scenarioState.currentValues.programMultipliers.processCompletionSpeed;
 
     return (
       1 +
-      Math.pow(threads * usedRam, programData.autoscalableResourcesPower) *
-        calculateTierLinear(this.level, this.tier, programData.speedModifier) *
+      multiplier *
         Math.pow(
-          this.globalState.scenario.currentValues.mainframeSoftware.performanceBoost,
-          this.mainframeState.hardware.performance.totalLevel,
+          this.globalState.rewards.multiplierByProgram *
+            calculateTierLinear(this.level, this.tier, programData.programCompletionSpeed.main) *
+            calculateLinear(
+              this.mainframeState.hardware.performance.totalLevel,
+              this.scenarioState.currentValues.mainframeSoftware.performanceBoost,
+            ) *
+            calculateLinear(usedRam, programData.programCompletionSpeed.ram) *
+            calculateLinear(threads, programData.programCompletionSpeed.cores),
+          exponent,
         )
     );
   }

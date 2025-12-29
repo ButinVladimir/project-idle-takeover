@@ -1,6 +1,4 @@
-import { Language, LongNumberFormat, Theme } from '@shared/types';
-import { BaseController } from '@shared/base-controller';
-import { MS_IN_SECOND } from '@shared/constants';
+import { BaseController, MS_IN_SECOND, Language, LongNumberFormat, Theme } from '@shared/index';
 
 export class SettingsFormController extends BaseController {
   get language(): Language {

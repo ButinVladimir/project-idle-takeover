@@ -2,9 +2,9 @@ import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IMainframeState, OtherProgramName, ShareServerProgram } from '@state/mainframe-state';
-import { type ICompanyState } from '@state/company-state';
-import { INCOME_SOURCES, IncomeSource } from '@shared/index';
-import { IDevelopmentGrowthState } from '../interfaces/parameters/development-growth-state';
+import { type IActivityState } from '@state/activity-state';
+import { DistrictTypeRewardParameter, INCOME_SOURCES, IncomeSource } from '@shared/index';
+import { IDevelopmentGrowthState } from '../interfaces';
 
 const { lazyInject } = decorators;
 
@@ -13,8 +13,8 @@ export class DevelopmentGrowthState implements IDevelopmentGrowthState {
   @lazyInject(TYPES.MainframeState)
   private _mainframeState!: IMainframeState;
 
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
 
   private _recalculated: boolean;
   private _totalGrowth: number;
@@ -51,6 +51,7 @@ export class DevelopmentGrowthState implements IDevelopmentGrowthState {
 
     this.updateGrowthByProgram();
     this.updateGrowthBySidejobs();
+    this.updateGrowthByPrimaryActivity();
     this.updateTotalGrowth();
   }
 
@@ -60,7 +61,7 @@ export class DevelopmentGrowthState implements IDevelopmentGrowthState {
     const shareServerProcess = mainframeProcessesState.getProcessByName(OtherProgramName.shareServer);
     let incomeByProgram = 0;
 
-    if (shareServerProcess?.isActive) {
+    if (shareServerProcess?.enabled) {
       incomeByProgram = (shareServerProcess.program as ShareServerProgram).calculateDevelopmentPointsDelta(
         shareServerProcess.usedCores,
         shareServerProcess.totalRam,
@@ -74,15 +75,20 @@ export class DevelopmentGrowthState implements IDevelopmentGrowthState {
   private updateGrowthBySidejobs() {
     let incomeBySidejobs = 0;
 
-    for (const sidejob of this._companyState.sidejobs.listSidejobs()) {
-      if (!sidejob.isActive) {
-        continue;
-      }
-
-      incomeBySidejobs += sidejob.calculateDevelopmentPointsDelta(1);
+    for (const sidejobActivity of this._activityState.sidejobsActivity.listActivities()) {
+      incomeBySidejobs += sidejobActivity.getParameterGrowth(DistrictTypeRewardParameter.developmentPoints);
     }
 
     this._growth.set(IncomeSource.sidejob, incomeBySidejobs);
+  }
+
+  private updateGrowthByPrimaryActivity(): void {
+    let incomeByPrimaryActivity = 0;
+
+    for (const primaryActivity of this._activityState.primaryActivityQueue.listActivities()) {
+      incomeByPrimaryActivity += primaryActivity.getParameterGrowth(DistrictTypeRewardParameter.developmentPoints);
+    }
+    this._growth.set(IncomeSource.primaryActivity, incomeByPrimaryActivity);
   }
 
   private updateTotalGrowth() {

@@ -1,4 +1,4 @@
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 
 export class MenuBarValuesController extends BaseController {
   get accumulatedTime(): number {

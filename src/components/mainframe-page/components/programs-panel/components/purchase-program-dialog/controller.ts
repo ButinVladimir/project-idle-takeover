@@ -1,4 +1,4 @@
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 import { IProgram, ProgramName } from '@state/mainframe-state';
 
 export class PurchaseProgramDialogController extends BaseController {
@@ -46,11 +46,11 @@ export class PurchaseProgramDialogController extends BaseController {
   }
 
   getHighestAvailableTier(programName: ProgramName): number {
-    return this.globalState.availableItems.programs.getItemHighestAvailableTier(programName);
+    return this.unlockState.items.programs.getItemHighestAvailableTier(programName);
   }
 
   listAvailablePrograms(): ProgramName[] {
-    return this.globalState.availableItems.programs.listAvailableItems();
+    return this.unlockState.items.programs.listAvailableItems();
   }
 
   purchaseProgram(name: ProgramName, tier: number, level: number): boolean {
@@ -58,11 +58,11 @@ export class PurchaseProgramDialogController extends BaseController {
   }
 
   getProgramCost(programName: ProgramName, tier: number, level: number): number {
-    return this.mainframeState.programs.getProgramCost(programName, tier, level);
+    return this.mainframeState.programs.calculateProgramCost(programName, tier, level);
   }
 
   isProgramAvailable(programName: ProgramName, tier: number, level: number): boolean {
-    return this.globalState.availableItems.programs.isItemAvailable(programName, tier, level);
+    return this.unlockState.items.programs.isItemAvailable(programName, tier, level);
   }
 
   private deleteSelectedProgram() {
