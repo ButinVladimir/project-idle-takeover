@@ -36,7 +36,7 @@
   "backroomDeal": {
     "requirements": {
       "baseCompletionTime": 6e4,
-      "teamSize": { "min": 1, "max": 2 },
+      "teamSize": { "min": 2, "max": 2 },
       "connectivity": {
         "amount": { "multiplier": 6e9, "base": 1.35 },
         "threat": { "multiplier": 1, "base": 1 }

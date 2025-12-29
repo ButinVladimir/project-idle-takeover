@@ -206,6 +206,7 @@ export enum Milestone {
   unlockedInfluence = 'unlockedInfluence',
   unlockedFactions = 'unlockedFactions',
   unlockedPrimaryActivity = 'unlockedPrimaryActivity',
+  reachedEndOfTheGame = 'reachedEndOfTheGame',
 }
 
 export type PointsMultiplierType = 'codeBase' | 'computationalBase';

@@ -8,6 +8,16 @@ Project: Idle Takeover is currenly under development. It has roadmap available b
 
 Discord for discussions and feedback is available here: https://discord.gg/CmsTxU2EMw
 
+## Troubleshooting
+
+### High memory usage
+
+Disabling popup messages on settings page by setting duration to 0 can reduce memory usage.
+
+### CPU spikes after setting tab active
+
+After tab is active again, game tries to perform frame updates which didn't happened when tab was inactive. Amount of updates is on settings page, reduce it in case high CPU usage. This parameter is also used by fast forwarding, which runs game at highest speed possible.
+
 ## Local development and contribution
 
 Currently, game doesn't have development page but it can be ran locally. To start development server, install dependencies first by running this command:

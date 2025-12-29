@@ -282,8 +282,8 @@
   <source>Select one of owned programs to start process for it.
 If you already have process for same program, old process will be replaced with new one.
 Threads allow to run multiple instances of same program at same time, but additional threads require additional memory.</source>
-  <target>Выберите одну из имеющихся программ, чтобы начать процесс для неё.
-Если у тебя уже есть процесс для выбранной программы, старый процесс будет заменен на новый.
+  <target state="translated">Выберите одну из имеющихся программ, чтобы начать процесс для неё.
+Если у вас уже есть процесс для выбранной программы, старый процесс будет заменен на новый.
 Потоки позволяют выполняться нескольким экземплярам программы одновременно, но дополнительные потоки требует больше памяти.</target>
 </trans-unit>
 <trans-unit id="s8b60bf2db1580306">
@@ -510,7 +510,7 @@ Generates rewards points and improves all rewards.</source>
 </trans-unit>
 <trans-unit id="s39e7b3967f5ac0a0">
   <source>You don't have any owned programs</source>
-  <target>У тебя нет имеющихся програм</target>
+  <target state="translated">У вас нет имеющихся програм</target>
 </trans-unit>
 <trans-unit id="s7122c5e0297ca6fe">
   <source>Game started</source>
@@ -2771,7 +2771,7 @@ You cannot switch factions until transfer.</source>
 <trans-unit id="s8ed536861a697e45">
   <source>Join a faction to get access to it's loaned items and contracts. 
 Joined faction cannot be switched until transfer.</source>
-  <target state="translated">Присоединитесь к фракции, чтобы получить доступ к ее предметам и контрактом.
+  <target state="translated">Присоединитесь к фракции, чтобы получить доступ к ее предметам и контрактам.
 Присоединенную фракцию нельзя поменять до трансфера.</target>
 </trans-unit>
 <trans-unit id="sf85e7067f7787d59">
@@ -2911,6 +2911,18 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
 Threat level can be raised only by story events.</source>
   <target state="translated">Захватите районы города и увеличивайте их ранги для зарабатывания репутации фракции.
 Уровень угрозы может быть увеличен только в событиях истории.</target>
+</trans-unit>
+<trans-unit id="sa2c4e3a4b0e16cc3">
+  <source>Reached the end of the game</source>
+  <target state="translated">Достигнут конец игры</target>
+</trans-unit>
+<trans-unit id="sc14697a113ffe9b6">
+  <source>The end of the game was reached</source>
+  <target state="translated">Конец игры достигнут</target>
+</trans-unit>
+<trans-unit id="s6add3eb4fbd9ed48">
+  <source>The end of the game was reached.</source>
+  <target state="translated">Конец игры достигнут.</target>
 </trans-unit>
 </body>
 </file>

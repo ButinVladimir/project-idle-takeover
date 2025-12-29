@@ -102,4 +102,10 @@ Joining a faction gives access to it's loaned designs and contracts.`),
       msg(`Primary activity and contracts are now available.
 Primary activity can increase certain parameters, like faction influence and notoriety points, and provide substantial rewards.`),
   },
+  [Milestone.reachedEndOfTheGame]: {
+    title: () => msg('Reached the end of the game'),
+    hint: () => msg('The end of the game was reached'),
+    message: () =>
+      msg(`The end of the game was reached.`),
+  },
 };

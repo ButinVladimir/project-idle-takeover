@@ -198,6 +198,7 @@
       "capturedDistrictsCount": 10,
       "faction": "wsa"
     },
+    "milestones": ["reachedEndOfTheGame"],
     "rewardDesigns": {
       "programs": ["contractAutostarter"]
     }
