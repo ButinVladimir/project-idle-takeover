@@ -3,7 +3,7 @@ import { ISerializedProcess } from './serialized-process';
 
 export interface IProcess {
   program: IProgram;
-  isActive: boolean;
+  enabled: boolean;
   threads: number;
   usedCores: number;
   maxCores: number;
@@ -12,7 +12,7 @@ export interface IProcess {
   totalRam: number;
   calculateCompletionDelta(passedTime: number): number;
   calculateCompletionTime(): number;
-  toggleActive(active: boolean): void;
+  toggleEnabled(active: boolean): void;
   increaseCompletion(delta: number): void;
   resetCompletion(): void;
   update(threads: number): void;

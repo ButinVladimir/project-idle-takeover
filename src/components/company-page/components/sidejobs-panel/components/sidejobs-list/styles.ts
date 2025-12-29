@@ -35,7 +35,7 @@ const styles = css`
     }
 
     &.desktop {
-      grid-template-columns: 2fr 1fr 1fr auto;
+      grid-template-columns: 2fr 1fr 1fr 1fr auto;
       grid-template-rows: auto;
       padding: var(--sl-spacing-small);
 

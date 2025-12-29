@@ -10,13 +10,16 @@ export class EventsFilterPanel extends BaseComponent {
   static styles = styles;
 
   @state()
-  private _isMessageFilterOpen = false;
+  private _messageFilterOpen = false;
 
   @state()
-  private _isAlertFilterOpen = false;
+  private _alertFilterOpen = false;
 
   @state()
-  private _isNotificationTypeFilterOpen = false;
+  private _notificationTypeFilterOpen = false;
+
+  @state()
+  private _hotkeysDialogOpen = false;
 
   protected renderDesktop() {
     return html`
@@ -35,49 +38,65 @@ export class EventsFilterPanel extends BaseComponent {
           <sl-icon slot="prefix" name="exclamation-circle"></sl-icon>
           ${msg('Notification type filter')}
         </sl-button>
+
+        <sl-button variant="default" size="medium" @click=${this.handleHotkeysDialogOpen}>
+          <sl-icon slot="prefix" name="keyboard"></sl-icon>
+          ${msg('Hotkeys')}
+        </sl-button>
       </div>
 
       <ca-message-filter-dialog
-        ?is-open=${this._isMessageFilterOpen}
+        ?open=${this._messageFilterOpen}
         @message-filter-dialog-close=${this.handleMessageFilterDialogClose}
       >
       </ca-message-filter-dialog>
 
       <ca-alert-filter-dialog
-        ?is-open=${this._isAlertFilterOpen}
+        ?open=${this._alertFilterOpen}
         @alert-filter-dialog-close=${this.handleAlertFilterDialogClose}
       >
       </ca-alert-filter-dialog>
 
       <ca-notification-type-filter-dialog
-        ?is-open=${this._isNotificationTypeFilterOpen}
+        ?open=${this._notificationTypeFilterOpen}
         @notification-type-filter-dialog-close=${this.handleNotificationTypeFilterDialogClose}
       >
       </ca-notification-type-filter-dialog>
+
+      <ca-hotkeys-dialog ?open=${this._hotkeysDialogOpen} @hotkeys-dialog-close=${this.handleHotkeysDialogClose}>
+      </ca-hotkeys-dialog>
     `;
   }
 
   private handleMessageFilterDialogOpen = () => {
-    this._isMessageFilterOpen = true;
+    this._messageFilterOpen = true;
   };
 
   private handleMessageFilterDialogClose = () => {
-    this._isMessageFilterOpen = false;
+    this._messageFilterOpen = false;
   };
 
   private handleAlertFilterDialogOpen = () => {
-    this._isAlertFilterOpen = true;
+    this._alertFilterOpen = true;
   };
 
   private handleAlertFilterDialogClose = () => {
-    this._isAlertFilterOpen = false;
+    this._alertFilterOpen = false;
   };
 
   private handleNotificationTypeFilterDialogOpen = () => {
-    this._isNotificationTypeFilterOpen = true;
+    this._notificationTypeFilterOpen = true;
   };
 
   private handleNotificationTypeFilterDialogClose = () => {
-    this._isNotificationTypeFilterOpen = false;
+    this._notificationTypeFilterOpen = false;
+  };
+
+  private handleHotkeysDialogOpen = () => {
+    this._hotkeysDialogOpen = true;
+  };
+
+  private handleHotkeysDialogClose = () => {
+    this._hotkeysDialogOpen = false;
   };
 }

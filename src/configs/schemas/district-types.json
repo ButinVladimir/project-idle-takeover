@@ -1,0 +1,147 @@
+{
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "activityRequirementModifier": {
+        "type": "number",
+        "description": "District type activity requirement modifier"
+      },
+      "primaryActivityTimeMultipliers": {
+        "type": "object",
+        "description": "District type primary action time multipliers",
+        "properties": {
+          "contractGenerationTime": {
+            "type": "number",
+            "description": "Contract generation time multiplier"
+          }
+        },
+        "required": ["contractGenerationTime"]
+      },
+      "synchronization": {
+        "$ref": "./common/linear-progression.json",
+        "description": "District type synchronization modifier (linear)"
+      },
+      "parameters": {
+        "type": "object",
+        "description": "District type parameters",
+        "properties": {
+          "experience": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "District type experience modifier (linear)"
+          },
+          "money": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "District type money modifier (linear)"
+          },
+          "developmentPoints": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "District type development points modifier (linear)"
+          },
+          "influence": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "District type faction influence modifier (linear)"
+          },
+          "connectivity": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "District type connectivity modifier (linear)"
+          },
+          "codeBase": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "District type code base modifier (linear)"
+          },
+          "computationalBase": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "District type computational base modifier (linear)"
+          },
+          "rewards": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "District type rewards modifier (linear)"
+          },
+          "processCompletionSpeed": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "District type process completion speed modifier (linear)"
+          },
+          "experienceShareMultiplier": {
+            "$ref": "#/$defs/multiplierParameter",
+            "description": "District type experience share multiplier modifier (linear)"
+          }
+        },
+        "required": [
+          "experience",
+          "money",
+          "developmentPoints",
+          "influence",
+          "connectivity",
+          "codeBase",
+          "computationalBase",
+          "rewards",
+          "processCompletionSpeed",
+          "experienceShareMultiplier"
+        ]
+      },
+      "requirements": {
+        "type": "object",
+        "description": "District type requirements",
+        "properties": {
+          "influence": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "District type faction influence requirements for the next tier (geometric)"
+          }
+        },
+        "required": ["influence"]
+      },
+      "multiplierParameterBases": {
+        "type": "object",
+        "description": "District type multiplier parameters bases",
+        "properties": {
+          "codeBase": {
+            "$ref": "#/$defs/multiplierParameterBase",
+            "description": "District type code base value"
+          },
+          "computationalBase": {
+            "$ref": "#/$defs/multiplierParameterBase",
+            "description": "District type computational base value"
+          },
+          "rewards": {
+            "$ref": "#/$defs/multiplierParameterBase",
+            "description": "District type rewards value"
+          }
+        },
+        "required": ["codeBase", "computationalBase", "rewards"]
+      }
+    },
+    "required": [
+      "activityRequirementModifier",
+      "synchronization",
+      "parameters",
+      "requirements",
+      "multiplierParameterBases"
+    ]
+  },
+  "$defs": {
+    "multiplierParameter": {
+      "type": "object",
+      "properties": {
+        "progression": {
+          "$ref": "./common/linear-progression.json",
+          "description": "Parameter progression (linear)"
+        },
+        "exponent": {
+          "type": "number",
+          "description": "Parameter exponent"
+        }
+      },
+      "required": ["progression", "exponent"]
+    },
+    "multiplierParameterBase": {
+      "type": "number",
+      "description": "Logarithmic base"
+    }
+  }
+}

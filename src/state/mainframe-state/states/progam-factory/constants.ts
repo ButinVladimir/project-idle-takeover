@@ -1,3 +1,4 @@
-export const PROGRAMS_UI_EVENTS = {
-  PROGRAM_UPGRADED: Symbol('PROGRAM_UPGRADED'),
-};
+import programs from '@configs/programs.json';
+import { IPrograms } from './interfaces';
+
+export const typedPrograms = programs as IPrograms;

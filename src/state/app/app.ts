@@ -11,32 +11,33 @@ import { GameStateEvent } from '@shared/types';
 import { IApp } from './interfaces';
 import { LOCAL_STORAGE_KEY, REFRESH_UI_TIME } from './constants';
 import { AppStage } from './types';
+import { decorators } from '../container';
+
+const { lazyInject } = decorators;
 
 @injectable()
 export class App implements IApp {
-  private _appState: IAppState;
-  private _settingsState: ISettingsState;
-  private _messageLogState: IMessageLogState;
+  @inject(TYPES.AppState)
+  private _appState!: IAppState;
+
+  @inject(TYPES.SettingsState)
+  private _settingsState!: ISettingsState;
+
+  @inject(TYPES.MessageLogState)
+  private _messageLogState!: IMessageLogState;
+
+  @lazyInject(TYPES.StateUIConnector)
+  private _stateUIConnector!: IStateUIConnector;
+
   private _appStage: AppStage;
   private _updateTimer?: NodeJS.Timeout;
   private _autosaveTimer?: NodeJS.Timeout;
-  private _stateUIConnector: IStateUIConnector;
-
   private _uiVisible: boolean;
 
-  constructor(
-    @inject(TYPES.AppState) _appState: IAppState,
-    @inject(TYPES.SettingsState) _settingsState: ISettingsState,
-    @inject(TYPES.MessageLogState) _messageLogState: IMessageLogState,
-    @inject(TYPES.StateUIConnector) _stateUiConnector: IStateUIConnector,
-  ) {
-    this._appState = _appState;
-    this._settingsState = _settingsState;
-    this._messageLogState = _messageLogState;
+  constructor() {
     this._appStage = AppStage.loading;
     this._updateTimer = undefined;
     this._autosaveTimer = undefined;
-    this._stateUIConnector = _stateUiConnector;
     this._uiVisible = true;
 
     this._stateUIConnector.registerEventEmitter(this, ['_appStage']);
@@ -111,7 +112,7 @@ export class App implements IApp {
 
   exportSavefile(): void {
     const saveData = this.serializeState();
-    const savefileName = `cyberiada-savefile-${new Date().toLocaleString()}.txt`;
+    const savefileName = `project-idle-takeover-savefile-${new Date().toLocaleString()}.txt`;
 
     const file = new File([saveData], savefileName, { endings: 'transparent' });
 

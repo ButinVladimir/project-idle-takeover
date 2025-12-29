@@ -1,4 +1,4 @@
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 
 export class CityMapHighlightedDistrictController extends BaseController {
   get layout() {
@@ -6,11 +6,11 @@ export class CityMapHighlightedDistrictController extends BaseController {
   }
 
   get mapWidth() {
-    return this.globalState.scenario.currentValues.map.width;
+    return this.scenarioState.currentValues.map.width;
   }
 
   get mapHeight() {
-    return this.globalState.scenario.currentValues.map.height;
+    return this.scenarioState.currentValues.map.height;
   }
 
   get theme() {

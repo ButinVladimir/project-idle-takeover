@@ -1,5 +1,5 @@
 import { Theme } from '@shared/types';
-import { DistrictUnlockState } from '@state/city-state';
+import { DistrictUnlockState } from '@state/city-state/types';
 import { MapStyles } from './interfaces';
 
 export const CELL_SIZE = 10;

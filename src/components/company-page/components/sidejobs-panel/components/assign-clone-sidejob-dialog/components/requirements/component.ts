@@ -4,18 +4,11 @@ import { consume } from '@lit/context';
 import { customElement } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ATTRIBUTE_TEXTS, COMMON_TEXTS, SKILL_TEXTS } from '@texts/index';
-import { type ISidejob } from '@state/company-state';
-import {
-  BaseComponent,
-  Attribute,
-  ATTRIBUTES,
-  BaseController,
-  getHighlightValueClassMap,
-  Skill,
-  SKILLS,
-} from '@shared/index';
+import { type ISidejob } from '@state/activity-state';
+import { BaseComponent, Attribute, ATTRIBUTES, getHighlightValueClassMap, Skill, SKILLS } from '@shared/index';
 import { temporarySidejobContext } from '../../contexts';
 import styles from './styles';
+import { AssignCloneSidejobDialogRequirementsController } from './controller';
 
 @localized()
 @customElement('ca-assign-clone-sidejob-dialog-requirements')
@@ -24,7 +17,7 @@ export class AssignCloneSidejobDialogRequirements extends BaseComponent {
 
   hasMobileRender = true;
 
-  private _controller: BaseController;
+  private _controller: AssignCloneSidejobDialogRequirementsController;
 
   @consume({ context: temporarySidejobContext, subscribe: true })
   private _sidejob?: ISidejob;
@@ -32,7 +25,7 @@ export class AssignCloneSidejobDialogRequirements extends BaseComponent {
   constructor() {
     super();
 
-    this._controller = new BaseController(this);
+    this._controller = new AssignCloneSidejobDialogRequirementsController(this);
   }
 
   protected renderDesktop() {
@@ -70,15 +63,20 @@ export class AssignCloneSidejobDialogRequirements extends BaseComponent {
   }
 
   private renderRequirementAttribute = (attribute: Attribute) => {
-    const availableValue = this._sidejob?.assignedClone?.getTotalAttributeValue(attribute) ?? 0;
     const requiredValue = this._sidejob!.getAttributeRequirement(attribute);
+
+    if (requiredValue <= 0) {
+      return nothing;
+    }
+
+    const availableValue = this._sidejob?.assignedClone?.getTotalAttributeValue(attribute) ?? 0;
 
     const formatter = this._controller.formatter;
 
     const formattedAvailableValue = formatter.formatNumberDecimal(availableValue);
     const formattedRequiredValue = formatter.formatNumberDecimal(requiredValue);
 
-    const valid = availableValue >= requiredValue;
+    const valid = this._controller.validateAttribute(this._sidejob!, attribute);
 
     const classes = getHighlightValueClassMap(valid);
 
@@ -89,15 +87,20 @@ export class AssignCloneSidejobDialogRequirements extends BaseComponent {
   };
 
   private renderRequirementSkill = (skill: Skill) => {
-    const availableValue = this._sidejob?.assignedClone?.getTotalSkillValue(skill) ?? 0;
     const requiredValue = this._sidejob!.getSkillRequirement(skill);
+
+    if (requiredValue <= 0) {
+      return nothing;
+    }
+
+    const availableValue = this._sidejob?.assignedClone?.getTotalSkillValue(skill) ?? 0;
 
     const formatter = this._controller.formatter;
 
     const formattedAvailableValue = formatter.formatNumberDecimal(availableValue);
     const formattedRequiredValue = formatter.formatNumberDecimal(requiredValue);
 
-    const valid = availableValue >= requiredValue;
+    const valid = this._controller.validateSkill(this._sidejob!, skill);
 
     const classes = getHighlightValueClassMap(valid);
 

@@ -46,7 +46,7 @@ export class StatisticsConnectivity extends BaseComponent {
 
   private renderDistrict = (districtState: IDistrictState) => {
     return html`
-      <div>${STATISTIC_PAGE_TEXTS.byDistrict(districtState.name)}</div>
+      <div>${STATISTIC_PAGE_TEXTS.inDistrict(districtState.name)}</div>
       <div data-district=${districtState.index}></div>
     `;
   };

@@ -1,0 +1,18 @@
+{
+  "$id": "common/program-name.json",
+  "type": "string",
+  "description": "Program name",
+  "enum": [
+    "shareServer",
+    "predictiveComputator",
+    "peerReviewer",
+    "codeGenerator",
+    "circuitDesigner",
+    "informationCollector",
+    "dealMaker",
+    "mainframeHardwareAutobuyer",
+    "mainframeProgramsAutobuyer",
+    "cloneLevelAutoupgrader",
+    "contractAutostarter"
+  ]
+}

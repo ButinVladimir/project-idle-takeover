@@ -37,6 +37,7 @@ export class ClonesListUpgradeButtons extends BaseComponent {
             ${ref(this._upgradeLevelMaxButton)}
             disabled
             variant=${UPGRADE_MAX_VALUES.buttonVariant}
+            size="medium"
             @click=${this.handleUpgradeMaxAllLevels}
           >
             <sl-icon slot="prefix" name=${UPGRADE_MAX_VALUES.icon}></sl-icon>

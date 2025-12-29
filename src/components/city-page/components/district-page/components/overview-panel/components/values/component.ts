@@ -3,7 +3,7 @@ import { consume } from '@lit/context';
 import { customElement } from 'lit/decorators.js';
 import { localized, msg } from '@lit/localize';
 import { BaseComponent, HINT_ICON } from '@shared/index';
-import { COMMON_TEXTS, DISTRICT_TYPE_TEXTS } from '@texts/index';
+import { COMMON_TEXTS, DISTRICT_TYPE_TEXTS, FACTION_TEXTS } from '@texts/index';
 import { DISTRICT_STATE_TEXTS } from '../../../../../../constants';
 import { CityDistrictOverviewPanelValuesController } from './controller';
 import { districtIndexContext } from '../../../../contexts';
@@ -35,11 +35,14 @@ export class CityDistrictOverviewPanelValues extends BaseComponent {
 
     const districtState = this._controller.getDistrictState(this._districtIndex);
 
-    const formattedTier = formatter.formatTier(districtState.parameters.tier.tier);
+    const formattedTier = formatter.formatTier(districtState.parameters.influence.tier);
+    const formattedDifficulty = formatter.formatNumberFloat(
+      districtState.parameters.influence.getTierRequirements(districtState.parameters.influence.tier),
+    );
 
     return html`
       <p class="text">
-        ${COMMON_TEXTS.parameterValue(msg('District type'), DISTRICT_TYPE_TEXTS[districtState.districtType].title())}
+        ${COMMON_TEXTS.parameterRow(msg('District type'), DISTRICT_TYPE_TEXTS[districtState.districtType].title())}
 
         <sl-tooltip>
           <span slot="content">${DISTRICT_TYPE_TEXTS[districtState.districtType].overview()}</span>
@@ -48,10 +51,22 @@ export class CityDistrictOverviewPanelValues extends BaseComponent {
         </sl-tooltip>
       </p>
 
-      ${this._controller.isDistrictTiersUnlocked()
+      <p class="text">
+        ${COMMON_TEXTS.parameterRow(msg('Difficulty'), formattedDifficulty)}
+
+        <sl-tooltip>
+          <span slot="content"
+            >${msg(`Difficulty indicates how long it takes to capture district or upgrade it to the next tier.`)}</span
+          >
+
+          <sl-icon name=${HINT_ICON}></sl-icon>
+        </sl-tooltip>
+      </p>
+
+      ${this._controller.isInfluenceUnlocked()
         ? html`
             <p class="text">
-              ${COMMON_TEXTS.parameterValue(COMMON_TEXTS.tier(), formattedTier)}
+              ${COMMON_TEXTS.parameterRow(COMMON_TEXTS.tier(), formattedTier)}
 
               <sl-tooltip>
                 <span slot="content">${DISTRICT_TIER_HINT()}</span>
@@ -61,9 +76,22 @@ export class CityDistrictOverviewPanelValues extends BaseComponent {
             </p>
           `
         : nothing}
+      ${this._controller.areFactionsUnlocked()
+        ? html`
+            <p class="text">
+              ${COMMON_TEXTS.parameterRow(COMMON_TEXTS.faction(), FACTION_TEXTS[districtState.faction].title())}
+
+              <sl-tooltip>
+                <span slot="content">${FACTION_TEXTS[districtState.faction].overview()}</span>
+
+                <sl-icon name=${HINT_ICON}></sl-icon>
+              </sl-tooltip>
+            </p>
+          `
+        : nothing}
 
       <p class="text">
-        ${COMMON_TEXTS.parameterValue(msg('State'), DISTRICT_STATE_TEXTS[districtState.state].title())}
+        ${COMMON_TEXTS.parameterRow(msg('State'), DISTRICT_STATE_TEXTS[districtState.state].title())}
 
         <sl-tooltip>
           <span slot="content">${DISTRICT_STATE_TEXTS[districtState.state].hint()}</span>

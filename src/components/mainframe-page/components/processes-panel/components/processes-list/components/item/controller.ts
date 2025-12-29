@@ -1,6 +1,5 @@
-import { BaseController } from '@shared/base-controller';
-import { IProcess } from '@state/mainframe-state/states/mainframe-processes-state/interfaces/process';
-import { ProgramName } from '@state/mainframe-state/states/progam-factory/types';
+import { BaseController } from '@shared/index';
+import { IProcess, ProgramName } from '@state/mainframe-state';
 
 export class ProcessesListItemController extends BaseController {
   private _process?: IProcess;
@@ -14,7 +13,7 @@ export class ProcessesListItemController extends BaseController {
   }
 
   toggleProcess(): void {
-    this._process?.toggleActive(!this._process.isActive);
+    this._process?.toggleEnabled(!this._process.enabled);
   }
 
   deleteProcessByName(programName: ProgramName): void {

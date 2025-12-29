@@ -20,8 +20,6 @@ export class StatisticsMultiplierPointsGrowthController extends BaseController {
         return this.growthState.multipliers.computationalBase;
       case 'codeBase':
         return this.growthState.multipliers.codeBase;
-      case 'rewards':
-        return this.growthState.multipliers.rewards;
     }
   }
 }

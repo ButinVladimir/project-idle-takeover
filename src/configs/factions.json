@@ -1,23 +1,45 @@
 {
+  "$schema": "./schemas/factions.json",
   "neutral": {
-    "programs": [
-      "shareServer",
-      "predictiveComputator",
-      "codeGenerator",
-      "circuitDesigner",
-      "informationCollector",
-      "dealMaker",
-      "mainframeHardwareAutobuyer",
-      "mainframeProgramsAutobuyer",
-      "cloneLevelAutoupgrader",
-      "peerReviewer"
-    ],
-    "cloneTemplates": ["anthrodrone"],
-    "sidejobs": ["oddjob", "infoBroker", "freelanceProgrammer", "computerRepairer", "mediator"]
+    "playstyle": "selectFaction",
+    "loanedItems": {
+      "programs": [],
+      "cloneTemplates": []
+    },
+    "specialItems": {
+      "programs": [],
+      "cloneTemplates": []
+    },
+    "activities": {
+      "contracts": []
+    }
+  },
+  "scavs": {
+    "playstyle": "raiseThreat",
+    "loanedItems": {
+      "programs": [],
+      "cloneTemplates": []
+    },
+    "specialItems": {
+      "programs": [],
+      "cloneTemplates": []
+    },
+    "activities": {
+      "contracts": []
+    }
   },
   "wsa": {
-    "programs": [],
-    "cloneTemplates": [],
-    "sidejobs": []
+    "playstyle": "captureCity",
+    "loanedItems": {
+      "programs": [],
+      "cloneTemplates": ["fixer", "bouncer", "gunner"]
+    },
+    "specialItems": {
+      "programs": [],
+      "cloneTemplates": []
+    },
+    "activities": {
+      "contracts": ["security", "backroomDeal"]
+    }
   }
 }

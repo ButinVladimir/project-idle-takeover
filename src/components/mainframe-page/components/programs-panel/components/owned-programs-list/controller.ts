@@ -1,6 +1,5 @@
-import { BaseController } from '@shared/base-controller';
-import { IProgram } from '@state/mainframe-state/states/progam-factory/interfaces/program';
-import { ProgramName } from '@state/mainframe-state/states/progam-factory/types';
+import { BaseController } from '@shared/index';
+import { IProgram, ProgramName } from '@state/mainframe-state';
 
 export class OwnedProgramsListController extends BaseController {
   listOwnedPrograms(): IProgram[] {
@@ -13,6 +12,6 @@ export class OwnedProgramsListController extends BaseController {
   }
 
   upgradeMaxAllPrograms() {
-    this.mainframeState.programs.upgradeMaxAllPrograms();
+    this.mainframeState.programs.upgrader.upgradeMaxAllPrograms();
   }
 }

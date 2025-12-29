@@ -1,6 +1,10 @@
-import { BaseController } from '@/shared';
+import { BaseController } from '@shared/index';
 
 export class ClonesListItemExperienceController extends BaseController {
+  get developmentLevel() {
+    return this.globalState.development.level;
+  }
+
   getCloneExperienceGrowth(cloneId: string): number {
     return this.growthState.experience.getGrowthByClone(cloneId);
   }

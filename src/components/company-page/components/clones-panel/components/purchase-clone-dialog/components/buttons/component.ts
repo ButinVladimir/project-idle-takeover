@@ -6,7 +6,7 @@ import { consume } from '@lit/context';
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
 import { BaseComponent } from '@shared/index';
 import { COMMON_TEXTS } from '@texts/index';
-import { type IClone } from '@state/company-state';
+import { type IClone } from '@state/clones-state';
 import { PurchaseCloneDialogButtonsController } from './controller';
 import { CancelEvent, PurchaseCloneEvent } from './events';
 import { temporaryCloneContext } from '../../contexts';
@@ -49,9 +49,7 @@ export class PurchaseCloneDialogButtons extends BaseComponent {
       ${this.renderWarnings()}
 
       <div class="buttons">
-        <sl-button size="medium" variant="default" outline @click=${this.handleCancel}>
-          ${COMMON_TEXTS.close()}
-        </sl-button>
+        <sl-button size="medium" variant="default" @click=${this.handleCancel}> ${COMMON_TEXTS.close()} </sl-button>
 
         <sl-button
           ${ref(this._purchaseButtonRef)}

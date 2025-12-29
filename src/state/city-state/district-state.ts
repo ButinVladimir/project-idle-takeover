@@ -1,19 +1,19 @@
-import districtTypes from '@configs/district-types.json';
-import { IMapGeneratorDistrictResult } from '@workers/map-generator/interfaces';
-import type { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
-import { IPoint } from '@shared/interfaces';
-import { DistrictType, Faction } from '@shared/types';
+import { type IStateUIConnector } from '@state/state-ui-connector';
+import { IPoint } from '@shared/index';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import {
   IDistrictState,
   IDistrictSerializedState,
   IDistrictParameters,
-  IDistrictTypeTemplate,
   IDistrictArguments,
+  IMapGeneratorDistrict,
+  IDistrictCountersState,
 } from './interfaces';
 import { DistrictUnlockState } from './types';
-import { DistrictParameters } from './district-parameters';
+import { DistrictParameters } from './parameters';
+import { DistrictCountersState } from './counters';
+import { typedDistrictTypes } from './constants';
 
 const { lazyInject } = decorators;
 
@@ -24,14 +24,13 @@ export class DistrictState implements IDistrictState {
   private _index: number;
   private _name: string;
   private _startingPoint: IPoint;
-  private _districtType: DistrictType;
+  private _districtType: string;
   private _faction;
   private _state: DistrictUnlockState;
   private _parameters: IDistrictParameters;
+  private _counters: IDistrictCountersState;
 
-  private _template: IDistrictTypeTemplate;
-
-  private constructor(args: IDistrictArguments) {
+  constructor(args: IDistrictArguments) {
     this._index = args.index;
     this._name = args.name;
     this._startingPoint = args.startingPoint;
@@ -39,20 +38,22 @@ export class DistrictState implements IDistrictState {
     this._faction = args.faction;
     this._state = args.state;
     this._parameters = new DistrictParameters(this);
-
-    this._template = districtTypes[this._districtType] as IDistrictTypeTemplate;
+    this._counters = new DistrictCountersState(this);
 
     this._stateUiConnector.registerEventEmitter(this, []);
   }
 
-  static createByMapGenerator(index: number, mapGeneratorDistrictResult: IMapGeneratorDistrictResult): IDistrictState {
+  static createByMapGenerator(districtInfo: IMapGeneratorDistrict): IDistrictState {
     const districtState = new DistrictState({
-      ...mapGeneratorDistrictResult,
-      index,
-      state: DistrictUnlockState.locked,
+      districtType: districtInfo.districtType,
+      faction: districtInfo.faction,
+      index: districtInfo.index,
+      name: districtInfo.name,
+      startingPoint: districtInfo.startingPoint,
+      state: districtInfo.isUnlocked ? DistrictUnlockState.contested : DistrictUnlockState.locked,
     });
 
-    districtState._parameters.tier.setTier(mapGeneratorDistrictResult.tier);
+    districtState._parameters.influence.tier = districtInfo.tier;
 
     return districtState;
   }
@@ -64,6 +65,7 @@ export class DistrictState implements IDistrictState {
     });
 
     districtState._parameters.deserialize(serializedState.parameters);
+    districtState._counters.deserialize(serializedState.counters);
 
     return districtState;
   }
@@ -73,7 +75,7 @@ export class DistrictState implements IDistrictState {
   }
 
   get template() {
-    return this._template;
+    return typedDistrictTypes[this._districtType];
   }
 
   get name(): string {
@@ -84,11 +86,11 @@ export class DistrictState implements IDistrictState {
     return this._startingPoint;
   }
 
-  get districtType(): DistrictType {
+  get districtType(): string {
     return this._districtType;
   }
 
-  get faction(): Faction {
+  get faction(): string {
     return this._faction;
   }
 
@@ -104,8 +106,13 @@ export class DistrictState implements IDistrictState {
     return this._parameters;
   }
 
+  get counters() {
+    return this._counters;
+  }
+
   recalculate() {
     this._parameters.recalculate();
+    this._counters.processTick();
   }
 
   serialize(): IDistrictSerializedState {
@@ -116,10 +123,12 @@ export class DistrictState implements IDistrictState {
       faction: this._faction,
       state: this._state,
       parameters: this._parameters.serialize(),
+      counters: this._counters.serialize(),
     };
   }
 
   removeAllEventListeners(): void {
     this._parameters.removeAllEventListeners();
+    this._counters.removeAllEventListeners();
   }
 }

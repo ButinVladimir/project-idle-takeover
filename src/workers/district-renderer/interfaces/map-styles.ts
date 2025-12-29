@@ -1,4 +1,4 @@
-import { DistrictUnlockState } from '@state/city-state';
+import { DistrictUnlockState } from '@state/city-state/types';
 
 export interface IDistrictStyles {
   borderColor: string;

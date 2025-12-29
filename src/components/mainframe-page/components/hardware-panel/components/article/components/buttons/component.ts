@@ -45,6 +45,7 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
   private _buyButtonRef = createRef<SlButton>();
   private _buyMaxButtonRef = createRef<SlButton>();
   private _availableTimeRef = createRef<HTMLSpanElement>();
+  private _upgradeLevelRef = createRef<HTMLSpanElement>();
 
   @consume({ context: mainframeHardwareParameterContext, subscribe: true })
   private _parameter?: IMainframeHardwareParameter;
@@ -70,6 +71,7 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
 
     const formattedIncrease = this._controller.formatter.formatNumberDecimal(this.increase);
     const hotkey = this._controller.getHotkey(this._parameter.type);
+    const levelEl = html`<span ${ref(this._upgradeLevelRef)}></span>`;
 
     return html`
       <div class="buttons">
@@ -84,7 +86,7 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
             size="medium"
             @click=${this.handleBuyMax}
           >
-            ${COMMON_TEXTS.buyMax()}
+            ${COMMON_TEXTS.upgradeToLevel(levelEl)}
           </sl-button>
         </sl-tooltip>
 
@@ -96,7 +98,7 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
           size="medium"
           @click=${this.handlePurchase}
         >
-          ${COMMON_TEXTS.buyIncrease(formattedIncrease)}
+          ${COMMON_TEXTS.upgradeIncrease(formattedIncrease)}
         </sl-button>
       </div>
 
@@ -119,11 +121,11 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
   };
 
   private selectWarning(): MainframeHardwarePanelArticleWarning | undefined {
-    if (this._controller.developmentLevel === this._parameter!.level) {
+    if (this._parameter!.level + this.increase > this._controller.developmentLevel) {
       return MainframeHardwarePanelArticleWarning.higherDevelopmentLevelRequired;
     }
 
-    const cost = this._parameter!.getIncreaseCost(this.increase);
+    const cost = this._parameter!.calculateIncreaseCost(this.increase);
     const moneyGrowth = this._controller.moneyGrowth;
     const moneyDiff = cost - this._controller.money;
 
@@ -143,7 +145,7 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
       return;
     }
 
-    const cost = this._parameter!.getIncreaseCost(this.increase);
+    const cost = this._parameter!.calculateIncreaseCost(this.increase);
     const moneyGrowth = this._controller.moneyGrowth;
     const moneyDiff = cost - this._controller.money;
 
@@ -153,6 +155,19 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
       const formattedTime = this._controller.formatter.formatTimeLong(moneyDiff / moneyGrowth);
       this._availableTimeRef.value.textContent = formattedTime;
     }
+  }
+
+  private updateUpgradeLevel(): void {
+    if (!this._upgradeLevelRef.value) {
+      return;
+    }
+
+    const increase = Math.max(this._parameter!.calculateIncreaseFromMoney(this._controller.money), 1);
+    const level = this._parameter!.level + increase;
+
+    const formattedLevel = this._controller.formatter.formatLevel(level);
+
+    this._upgradeLevelRef.value.textContent = formattedLevel;
   }
 
   private handlePurchase = () => {
@@ -178,5 +193,6 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
     });
 
     this.updateAvailabilityTimer();
+    this.updateUpgradeLevel();
   };
 }

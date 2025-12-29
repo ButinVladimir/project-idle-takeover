@@ -2,10 +2,7 @@ import { html, TemplateResult } from 'lit';
 import { localized, msg } from '@lit/localize';
 import { customElement } from 'lit/decorators.js';
 import { GameSpeed } from '@state/global-state';
-import {
-  ConfirmationAlertOpenEvent,
-  ConfirmationAlertSubmitEvent,
-} from '@components/game-screen/components/confirmation-alert/events';
+import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { BaseComponent, GameStateAlert } from '@shared/index';
 import { COMMON_TEXTS } from '@texts/index';
 import { GameSpeedButtonsController } from './controller';
@@ -24,18 +21,6 @@ export class GameSpeedButtons extends BaseComponent {
     super();
 
     this._controller = new GameSpeedButtonsController(this);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    document.addEventListener(ConfirmationAlertSubmitEvent.type, this.handleConfirmFastForwardDialog);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-
-    document.removeEventListener(ConfirmationAlertSubmitEvent.type, this.handleConfirmFastForwardDialog);
   }
 
   protected renderDesktop() {
@@ -93,17 +78,15 @@ export class GameSpeedButtons extends BaseComponent {
 
   private handleOpenFastForwardDialog = () => {
     this.dispatchEvent(
-      new ConfirmationAlertOpenEvent(GameStateAlert.fastForward, msg('Are you sure want to spend accumulated time?')),
+      new ConfirmationAlertOpenEvent(
+        GameStateAlert.fastForward,
+        msg('Are you sure want to spend accumulated time?'),
+        this.handleFastForward,
+      ),
     );
   };
 
-  private handleConfirmFastForwardDialog = (event: Event) => {
-    const convertedEvent = event as ConfirmationAlertSubmitEvent;
-
-    if (convertedEvent.gameAlert !== GameStateAlert.fastForward) {
-      return;
-    }
-
+  private handleFastForward = () => {
     this._controller.fastForward();
   };
 }

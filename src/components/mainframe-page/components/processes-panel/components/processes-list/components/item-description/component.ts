@@ -1,25 +1,15 @@
 import { html, nothing } from 'lit';
 import { localized } from '@lit/localize';
 import { customElement, queryAll } from 'lit/decorators.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { consume } from '@lit/context';
 import { BaseComponent } from '@shared/index';
 import { COMMON_TEXTS, PROGRAM_DESCRIPTION_TEXTS, PROGRAM_TEXTS } from '@texts/index';
-import { type IProcess, OtherProgramName, MultiplierProgramName, AutobuyerProgramName } from '@state/mainframe-state';
-import {
-  CodeGeneratorDescriptionEffectRenderer,
-  CircuitDesignerDescriptionEffectRenderer,
-  InformationCollectorDescriptionEffectRenderer,
-  DealMakerDescriptionEffectRenderer,
-  MainframeHardwareAutobuyerDescriptionEffectRenderer,
-  PredictiveComputatorDescriptionEffectRenderer,
-  ShareServerDescriptionEffectRenderer,
-  MainframeProgramsAutobuyerDescriptionEffectRenderer,
-  CloneLevelAutoupgraderDescriptionEffectRenderer,
-} from './description-effect-renderers';
+import { type IProcess } from '@state/mainframe-state';
+import { rendererMap } from './description-effect-renderers';
 import { IDescriptionEffectRenderer, IDescriptionParameters } from './interfaces';
 import { ProcessDescriptionTextController } from './controller';
 import { processContext } from '../item/contexts';
-import { PeerReviewerDescriptionEffectRenderer } from './description-effect-renderers/peer-reviewer-description-effect-renderer';
 import styles from './styles';
 
 @localized()
@@ -35,6 +25,8 @@ export class ProcessDescriptionText extends BaseComponent {
 
   @queryAll('span[data-value]')
   private _valueEls!: NodeListOf<HTMLSpanElement>;
+
+  private _completionTimeEl = createRef<HTMLSpanElement>();
 
   @consume({ context: processContext, subscribe: true })
   private _process?: IProcess;
@@ -80,58 +72,40 @@ export class ProcessDescriptionText extends BaseComponent {
       <p>${PROGRAM_DESCRIPTION_TEXTS.requirementsAutoscalable()}</p>
 
       <p>
-        ${COMMON_TEXTS.parameterValue(
+        ${COMMON_TEXTS.parameterRow(
           PROGRAM_DESCRIPTION_TEXTS.ram(),
           PROGRAM_DESCRIPTION_TEXTS.allAvailable(this._process!.program.ram),
         )}
       </p>
 
-      <p>
-        ${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.cores(), PROGRAM_DESCRIPTION_TEXTS.allAvailable(1))}
-      </p>
+      <p>${COMMON_TEXTS.parameterRow(PROGRAM_DESCRIPTION_TEXTS.cores(), PROGRAM_DESCRIPTION_TEXTS.allAvailable(1))}</p>
 
-      <p>
-        ${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.completionTime(), PROGRAM_DESCRIPTION_TEXTS.instant())}
-      </p>
+      <p>${COMMON_TEXTS.parameterRow(COMMON_TEXTS.completionTime(), PROGRAM_DESCRIPTION_TEXTS.instant())}</p>
     `;
   };
 
   private renderNormalRequirements = () => {
     const formatter = this._controller.formatter;
 
-    const completionDelta = this._process!.program.calculateCompletionDelta(
-      this._process!.threads,
-      this._process!.usedCores,
-      1,
-    );
-
     const formattedThreads = formatter.formatNumberDecimal(this._process!.threads);
     const formattedRam = formatter.formatNumberDecimal(this._process!.program.ram * this._process!.threads);
     const formattedCores = formatter.formatNumberDecimal(this._process!.program.cores * this._process!.threads);
 
-    let completionTimeLabel: string;
-
-    if (completionDelta > 0) {
-      completionTimeLabel = formatter.formatTimeShort(
-        this._process!.program.calculateCompletionTime(this._process!.threads, this._process!.usedCores),
-      );
-    } else {
-      completionTimeLabel = PROGRAM_DESCRIPTION_TEXTS.never();
-    }
-
     return html`
       <p>${PROGRAM_DESCRIPTION_TEXTS.requirementsProcess(formattedThreads)}</p>
 
-      <p>${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.ram(), formattedRam)}</p>
+      <p>${COMMON_TEXTS.parameterRow(PROGRAM_DESCRIPTION_TEXTS.ram(), formattedRam)}</p>
 
       <p>
-        ${COMMON_TEXTS.parameterValue(
+        ${COMMON_TEXTS.parameterRow(
           PROGRAM_DESCRIPTION_TEXTS.cores(),
           PROGRAM_DESCRIPTION_TEXTS.upToValue(formattedCores),
         )}
       </p>
 
-      <p>${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.completionTime(), completionTimeLabel)}</p>
+      <p>
+        ${COMMON_TEXTS.parameterRow(COMMON_TEXTS.completionTime(), html`<span ${ref(this._completionTimeEl)}></span>`)}
+      </p>
     `;
   };
 
@@ -153,6 +127,8 @@ export class ProcessDescriptionText extends BaseComponent {
     this._valueEls.forEach((valueEl) => {
       valueEl.textContent = this._renderer!.values[valueEl.dataset.value!];
     });
+
+    this.updateCompletionTime();
   };
 
   private updateRenderer(): void {
@@ -167,49 +143,34 @@ export class ProcessDescriptionText extends BaseComponent {
       process: this._process!,
     };
 
-    switch (this._process!.program.name) {
-      case MultiplierProgramName.codeGenerator:
-        this._renderer = new CodeGeneratorDescriptionEffectRenderer(parameters);
-        break;
+    this._renderer = new rendererMap[this._process!.program.name](parameters);
+  }
 
-      case MultiplierProgramName.circuitDesigner:
-        this._renderer = new CircuitDesignerDescriptionEffectRenderer(parameters);
-        break;
+  private updateCompletionTime() {
+    if (!this._process) {
+      return;
+    }
 
-      case MultiplierProgramName.dealMaker:
-        this._renderer = new DealMakerDescriptionEffectRenderer(parameters);
-        break;
+    const formatter = this._controller.formatter;
 
-      case MultiplierProgramName.informationCollector:
-        this._renderer = new InformationCollectorDescriptionEffectRenderer(parameters);
-        break;
+    const completionDelta = this._process!.program.calculateCompletionDelta(
+      this._process!.threads,
+      this._process!.usedCores,
+      1,
+    );
 
-      case AutobuyerProgramName.mainframeHardwareAutobuyer:
-        this._renderer = new MainframeHardwareAutobuyerDescriptionEffectRenderer(parameters);
-        break;
+    let completionTimeLabel: string;
 
-      case AutobuyerProgramName.mainframeProgramsAutobuyer:
-        this._renderer = new MainframeProgramsAutobuyerDescriptionEffectRenderer(parameters);
-        break;
+    if (completionDelta > 0) {
+      completionTimeLabel = formatter.formatTimeShort(
+        this._process!.program.calculateCompletionTime(this._process!.threads, this._process!.usedCores),
+      );
+    } else {
+      completionTimeLabel = PROGRAM_DESCRIPTION_TEXTS.never();
+    }
 
-      case AutobuyerProgramName.cloneLevelAutoupgrader:
-        this._renderer = new CloneLevelAutoupgraderDescriptionEffectRenderer(parameters);
-        break;
-
-      case OtherProgramName.shareServer:
-        this._renderer = new ShareServerDescriptionEffectRenderer(parameters);
-        break;
-
-      case OtherProgramName.predictiveComputator:
-        this._renderer = new PredictiveComputatorDescriptionEffectRenderer(parameters);
-        break;
-
-      case OtherProgramName.peerReviewer:
-        this._renderer = new PeerReviewerDescriptionEffectRenderer(parameters);
-        break;
-
-      default:
-        this._renderer = undefined;
+    if (this._completionTimeEl.value) {
+      this._completionTimeEl.value.textContent = completionTimeLabel;
     }
   }
 }

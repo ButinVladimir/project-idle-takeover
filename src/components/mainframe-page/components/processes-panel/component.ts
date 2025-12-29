@@ -55,6 +55,7 @@ export class MainframeProcessesPanel extends BaseComponent {
 Topmost processes for non-autoscalable programs have more priority when cores are assigned to processes.
 After that, process for autoscalable program has remaining cores and RAM assigned.
 Only one process for autoscalable program can run at same time.
+It is possible to start more processes than cores allow them to run at same time.
 Process minimal completion time is limited.
 Processes can be rearranged by dragging them by their title.`)}
       </p>
@@ -65,18 +66,18 @@ Processes can be rearranged by dragging them by their title.`)}
         </sl-button>
 
         <div class="ram">
-          ${COMMON_TEXTS.parameterValue(msg('Available RAM'), `${formattedAvailableRam} / ${formattedMaxRam}`)}
+          ${COMMON_TEXTS.parameterRow(msg('Available RAM'), `${formattedAvailableRam} / ${formattedMaxRam}`)}
         </div>
 
         <div class="cores">
-          ${COMMON_TEXTS.parameterValue(msg('Available cores'), `${formattedAvailableCores} / ${formattedMaxCores}`)}
+          ${COMMON_TEXTS.parameterRow(msg('Available cores'), `${formattedAvailableCores} / ${formattedMaxCores}`)}
         </div>
       </div>
 
       <ca-processes-list></ca-processes-list>
 
       <ca-start-process-dialog
-        ?is-open=${this._isStartProcessDialogOpen}
+        ?open=${this._isStartProcessDialogOpen}
         @start-process-dialog-close=${this.handleStartProcessDialogClose}
       >
       </ca-start-process-dialog>

@@ -1,5 +1,9 @@
 {
-  "startingScenario": "tutorial",
+  "$schema": "./schemas/constants.json",
+  "startingValues": {
+    "scenario": "tutorial",
+    "accumulatedTime": 0
+  },
   "defaultSettings": {
     "messageLogSize": 30,
     "toastDuration": 5000,
@@ -9,11 +13,12 @@
     "fastSpeedMultiplier": 5,
     "maxUpdatesPerTick": 1000,
     "longNumberFormat": "short",
-    "mapSize": 3,
     "hotkeys": {
       "pause": "q",
       "playNormalSpeed": "w",
       "playFastSpeed": "e",
+      "saveGame": "t",
+      "addContractAssignments": "u",
       "upgradeMainframeHardware": "a",
       "upgradeMainframePerformance": "s",
       "upgradeMainframeRam": "d",
@@ -22,74 +27,22 @@
       "upgradeClonesLevel": "z"
     }
   },
-  "defaultScenarioSettings": {
-    "map": {
-      "width": 100,
-      "height": 100,
-      "districts": []
-    },
-    "startingMoney": 0,
-    "startingDevelopmentLevel": 0,
-    "startingAccumulatedTime": 0,
-    "startingSynchronization": 0,
-    "baseSharedExperienceMultiplier": 1,
-    "mainframeHardware": {
-      "basePerformanceLevel": 0,
-      "baseCoresLevel": 1,
-      "baseRamLevel": 1,
-      "performancePrice": { "multiplier": 50, "base": 1.3 },
-      "ramPrice": { "multiplier": 500, "base": 1.3 },
-      "coresPrice": { "multiplier": 10000, "base": 5 }
-    },
-    "mainframeSoftware": {
-      "performanceBoost": 1.01,
-      "startingPrograms": ["shareServer"],
-      "minProcessCompletionTime": 1000
-    },
-    "developmentLevelRequirements": { "multiplier": 30, "base": 1.5 },
-    "programMultipliers": {
-      "money": {
-        "pointsMultiplier": 1
-      },
-      "developmentPoints": {
-        "pointsMultiplier": 1
-      },
-      "codeBase": {
-        "pointsMultiplier": 1,
-        "pointsToSoftCap": 288,
-        "logBase": 2
-      },
-      "computationalBase": {
-        "pointsMultiplier": 1,
-        "pointsToSoftCap": 288,
-        "logBase": 2
-      },
-      "connectivity": {
-        "pointsMultiplier": 1
-      },
-      "rewards": {
-        "pointsMultiplier": 1,
-        "pointsToSoftCap": 288,
-        "logBase": 2
-      }
-    },
-    "storyEvents": []
-  },
   "defaultAutomationSettings": {
     "mainframeHardwareAutobuyer": {
-      "moneyShare": 10,
+      "moneyShare": 100,
       "priority": ["performance", "ram", "cores"]
     },
     "mainframeProgramsAutobuyer": {
-      "moneyShare": 10
+      "moneyShare": 100
     },
     "cloneLevelAutoupgrader": {
-      "moneyShare": 10
+      "moneyShare": 100
     }
   },
   "menuUnlockRequirements": {
-    "city": "companyManagement",
-    "company": "companyManagement",
-    "automation": "automation"
+    "city": "unlockedCompanyManagement",
+    "company": "unlockedCompanyManagement",
+    "automation": "unlockedAutomation",
+    "factions": "unlockedFactions"
   }
 }

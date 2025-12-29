@@ -1,81 +1,115 @@
 {
+  "$schema": "./schemas/programs.json",
   "shareServer": {
     "ram": 1,
-    "completionPoints": { "multiplier": 0, "base": 1 },
-    "cost": { "multiplier": 30, "base": 1.1, "baseTier": 10000 },
-    "requiredFeatures": [],
-    "autoscalableResourcesPower": 0.9,
-    "money": { "base": 0.001, "multiplier": 0.001, "baseTier": 100 },
-    "developmentPoints": { "base": 0.001, "multiplier": 0.001, "baseTier": 100 }
+    "completionPoints": 0,
+    "levelSpeedBoost": { "base": 1, "multiplier": 0 },
+    "coreSpeedBoost": { "base": 1, "multiplier": 0 },
+    "cost": { "multiplier": 3e1, "base": 1.2, "baseTier": 1 },
+    "requiredMilestones": [],
+    "money": {
+      "main": { "base": 1, "multiplier": 1, "baseTier": 1 },
+      "ram": { "base": 0, "multiplier": 1 },
+      "cores": { "base": 0, "multiplier": 1 }
+    },
+    "developmentPoints": {
+      "main": { "base": 1, "multiplier": 1, "baseTier": 1 },
+      "ram": { "base": 0, "multiplier": 1 },
+      "cores": { "base": 0, "multiplier": 1 }
+    }
   },
   "predictiveComputator": {
     "ram": 1,
-    "completionPoints": { "multiplier": 0, "base": 1 },
-    "cost": { "multiplier": 10000000, "base": 1.25, "baseTier": 4000000000 },
-    "requiredFeatures": [],
-    "autoscalableResourcesPower": 0.5,
-    "speedModifier": {
-      "base": 0.001,
-      "multiplier": 0.001,
-      "baseTier": 1.2
+    "completionPoints": 0,
+    "levelSpeedBoost": { "base": 1, "multiplier": 0 },
+    "coreSpeedBoost": { "base": 1, "multiplier": 0 },
+    "cost": { "multiplier": 1e6, "base": 1.2, "baseTier": 1 },
+    "requiredMilestones": [],
+    "programCompletionSpeed": {
+      "main": { "base": 1, "multiplier": 0.01, "baseTier": 1 },
+      "ram": { "base": 0.875, "multiplier": 0.125 },
+      "cores": { "base": 0.75, "multiplier": 0.25 }
     }
   },
   "peerReviewer": {
     "ram": 1,
-    "completionPoints": { "multiplier": 0, "base": 1 },
-    "cost": { "multiplier": 10000000, "base": 1.25, "baseTier": 4000000000 },
-    "requiredFeatures": ["experienceShare"],
-    "autoscalableResourcesPower": 0.5,
-    "experienceModifier": {
-      "base": 0.001,
-      "multiplier": 0.001,
-      "baseTier": 1.2
+    "completionPoints": 0,
+    "levelSpeedBoost": { "base": 1, "multiplier": 0 },
+    "coreSpeedBoost": { "base": 1, "multiplier": 0 },
+    "cost": { "multiplier": 1e6, "base": 1.2, "baseTier": 1 },
+    "requiredMilestones": ["unlockedExperienceShare"],
+    "cloneExperience": {
+      "main": { "base": 1, "multiplier": 0.1, "baseTier": 1 },
+      "ram": { "base": 0.75, "multiplier": 0.25 },
+      "cores": { "base": 0.5, "multiplier": 0.5 }
     }
   },
   "codeGenerator": {
     "ram": 10,
-    "completionPoints": { "multiplier": 300000, "base": 1 },
-    "cost": { "multiplier": 500000, "base": 1.3, "baseTier": 200000000000 },
-    "requiredFeatures": ["codeBase"],
-    "codeBase": { "multiplier": 1, "base": 1.1, "baseTier": 15000 }
+    "completionPoints": 15e4,
+    "levelSpeedBoost": { "base": 1, "multiplier": 0 },
+    "coreSpeedBoost": { "base": 1, "multiplier": 0.25 },
+    "cost": { "multiplier": 5e5, "base": 1.35, "baseTier": 1 },
+    "requiredMilestones": ["unlockedCodeBase"],
+    "codeBase": { "base": 15e4, "multiplier": 3e4, "baseTier": 1000 }
   },
   "circuitDesigner": {
     "ram": 10,
-    "completionPoints": { "multiplier": 300000, "base": 1 },
-    "cost": { "multiplier": 500000, "base": 1.3, "baseTier": 200000000000 },
-    "requiredFeatures": ["computationalBase"],
-    "computationalBase": { "multiplier": 1, "base": 1.1, "baseTier": 15000 }
+    "completionPoints": 15e4,
+    "levelSpeedBoost": { "base": 1, "multiplier": 0 },
+    "coreSpeedBoost": { "base": 1, "multiplier": 0.25 },
+    "cost": { "multiplier": 5e5, "base": 1.35, "baseTier": 1 },
+    "requiredMilestones": ["unlockedComputationalBase"],
+    "computationalBase": { "base": 15e4, "multiplier": 3e4, "baseTier": 1 }
   },
   "informationCollector": {
-    "ram": 5,
-    "completionPoints": { "multiplier": 300000, "base": 1 },
-    "cost": { "multiplier": 20000, "base": 1.15, "baseTier": 1000000 },
-    "requiredFeatures": ["connectivity"],
-    "connectivity": { "multiplier": 1, "base": 1.1, "baseTier": 15000 }
+    "ram": 1,
+    "completionPoints": 15e4,
+    "levelSpeedBoost": { "base": 1, "multiplier": 0 },
+    "coreSpeedBoost": { "base": 1, "multiplier": 0.25 },
+    "cost": { "multiplier": 1e3, "base": 1.35, "baseTier": 1 },
+    "requiredMilestones": ["unlockedConnectivity"],
+    "connectivity": { "base": 15e4, "multiplier": 3e4, "baseTier": 1 }
   },
   "dealMaker": {
-    "ram": 20,
-    "completionPoints": { "multiplier": 300000, "base": 1 },
-    "cost": { "multiplier": 1000000, "base": 1.3, "baseTier": 200000000000 },
-    "requiredFeatures": ["rewards"],
-    "rewards": { "multiplier": 1, "base": 1.1, "baseTier": 15000 }
+    "ram": 10,
+    "completionPoints": 15e4,
+    "levelSpeedBoost": { "base": 1, "multiplier": 0 },
+    "coreSpeedBoost": { "base": 1, "multiplier": 0.25 },
+    "cost": { "multiplier": 1e5, "base": 1.35, "baseTier": 1 },
+    "requiredMilestones": ["unlockedRewards"],
+    "rewards": { "base": 15e4, "multiplier": 3e4, "baseTier": 1 }
   },
   "mainframeHardwareAutobuyer": {
-    "ram": 3,
-    "completionPoints": { "multiplier": 900000, "base": 1.01 },
-    "cost": { "multiplier": 5000000, "base": 1.2, "baseTier": 10000000 },
-    "requiredFeatures": ["automation", "automationMainframeHardware"]
+    "ram": 15,
+    "completionPoints": 1e6,
+    "levelSpeedBoost": { "base": 1, "multiplier": 0.05 },
+    "coreSpeedBoost": { "base": 1, "multiplier": 0.5 },
+    "cost": { "multiplier": 1e6, "base": 1.5, "baseTier": 1 },
+    "requiredMilestones": ["unlockedAutomation", "unlockedAutomationMainframeHardware"]
   },
   "mainframeProgramsAutobuyer": {
-    "ram": 5,
-    "completionPoints": { "multiplier": 1800000, "base": 1.01 },
-    "cost": { "multiplier": 10000000, "base": 1.2, "baseTier": 10000000 },
-    "requiredFeatures": ["automation", "automationMainframePrograms"]
+    "ram": 15,
+    "completionPoints": 1e6,
+    "levelSpeedBoost": { "base": 1, "multiplier": 0.05 },
+    "coreSpeedBoost": { "base": 1, "multiplier": 0.5 },
+    "cost": { "multiplier": 1e6, "base": 1.5, "baseTier": 1 },
+    "requiredMilestones": ["unlockedAutomation", "unlockedAutomationMainframePrograms"]
   },
   "cloneLevelAutoupgrader": {
+    "ram": 10,
+    "completionPoints": 1e6,
+    "levelSpeedBoost": { "base": 1, "multiplier": 0.05 },
+    "coreSpeedBoost": { "base": 1, "multiplier": 0.5 },
+    "cost": { "multiplier": 1e6, "base": 1.5, "baseTier": 1 },
+    "requiredMilestones": ["unlockedAutomation", "unlockedCompanyManagement"]
+  },
+  "contractAutostarter": {
     "ram": 5,
-    "completionPoints": { "multiplier": 900000, "base": 1.01 },
-    "cost": { "multiplier": 10000, "base": 1.2, "baseTier": 10000000 },
-    "requiredFeatures": ["automation", "companyManagement"]
+    "completionPoints": 1e6,
+    "levelSpeedBoost": { "base": 1, "multiplier": 0.05 },
+    "coreSpeedBoost": { "base": 1, "multiplier": 0.5 },
+    "cost": { "multiplier": 1e6, "base": 1.5, "baseTier": 1 },
+    "requiredMilestones": ["unlockedAutomation", "unlockedPrimaryActivity"]
   }
 }

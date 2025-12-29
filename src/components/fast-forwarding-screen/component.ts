@@ -26,6 +26,18 @@ export class FastForwardingScreen extends BaseComponent {
     this._controller = new FastForwardingScreenController(this);
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+
+    document.addEventListener('keydown', this.hanldeKeyDown);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    document.removeEventListener('keydown', this.hanldeKeyDown);
+  }
+
   protected renderDesktop() {
     const timerEl = html`<span ${ref(this._timerElRef)}></span>`;
 
@@ -62,6 +74,12 @@ export class FastForwardingScreen extends BaseComponent {
 
     if (this._timerElRef.value) {
       this._timerElRef.value.textContent = this._controller.formatter.formatTimeLong(accumulatedTime);
+    }
+  };
+
+  private hanldeKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      this._controller.stopFastForwarding();
     }
   };
 }

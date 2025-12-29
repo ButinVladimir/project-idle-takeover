@@ -1,0 +1,16 @@
+{
+  "$id": "common/tiered-geometric-progression.json",
+  "allOf": [
+    { "$ref": "./geometric-progression.json" },
+    {
+      "type": "object",
+      "properties": {
+        "baseTier": {
+          "type": "number",
+          "description": "Base for tier multiplier"
+        }
+      },
+      "required": ["baseTier"]
+    }
+  ]
+}

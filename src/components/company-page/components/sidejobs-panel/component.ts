@@ -32,7 +32,7 @@ export class CompanySidejobsPanel extends BaseComponent {
       <ca-sidejobs-list></ca-sidejobs-list>
 
       <ca-assign-clone-sidejob-dialog
-        ?is-open=${this._assignCloneDialogOpened}
+        ?open=${this._assignCloneDialogOpened}
         @assign-clone-sidejob-dialog-close=${this.handleAssignCloneSidejobDialogClose}
       >
       </ca-assign-clone-sidejob-dialog>

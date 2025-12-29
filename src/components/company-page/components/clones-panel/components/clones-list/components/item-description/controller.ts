@@ -1,8 +1,8 @@
-import { IClone } from '@state/company-state/states/clone-factory/interfaces/clone';
-import { BaseController } from '@shared/base-controller';
+import { IClone } from '@state/clones-state';
+import { BaseController } from '@shared/index';
 
 export class ClonesListItemDescriptionController extends BaseController {
   getCloneSynchronization(clone: IClone): number {
-    return this.companyState.clones.getCloneSynchronization(clone.templateName, clone.tier);
+    return this.clonesState.ownedClones.calculateCloneSynchronization(clone.templateName, clone.tier);
   }
 }

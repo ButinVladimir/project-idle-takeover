@@ -1,5 +1,5 @@
 export * from './base-multiplier-program-description-effect-renderer';
-export * from './base-autobuyer-program-description-effect-renderer';
+export * from './base-automation-program-description-effect-renderer';
 export * from './share-server-description-effect-renderer';
 export * from './code-generator-description-effect-renderer';
 export * from './circuit-designer-description-effect-renderer';
@@ -10,3 +10,5 @@ export * from './mainframe-hardware-autobuyer-description-effect-renderer';
 export * from './mainframe-programs-autobuyer-description-effect-renderer';
 export * from './clone-level-autoupgrader-description-effect-renderer';
 export * from './peer-reviewer-description-effect-renderer';
+export * from './contract-autostarter-description-effect-renderer';
+export * from './renderer-map';

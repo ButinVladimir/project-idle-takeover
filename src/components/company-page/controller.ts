@@ -1,8 +1,7 @@
-import { Feature } from '@shared/types';
-import { BaseController } from '@shared/base-controller';
+import { BaseController, Milestone } from '@shared/index';
 
 export class CompanyPageController extends BaseController {
-  isCompanyManagementUnlocked(): boolean {
-    return this.globalState.unlockedFeatures.isFeatureUnlocked(Feature.companyManagement);
+  isPrimaryActivityUnlocked(): boolean {
+    return this.unlockState.milestones.isMilestoneReached(Milestone.unlockedPrimaryActivity);
   }
 }

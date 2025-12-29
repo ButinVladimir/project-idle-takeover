@@ -1,4 +1,40 @@
 {
-  "clones": ["John", "Jack", "Ivan", "Vasily", "Petar", "Miloš"],
-  "districts": ["Banjica", "Autokomanda", "Zvezdara", "Mirievo", "Voždovac"]
+  "$schema": "./schemas/names.json",
+  "clones": [
+    "John",
+    "Jack",
+    "Tom",
+    "Jim",
+    "Bill",
+    "Steven",
+    "Ivan",
+    "Vasily",
+    "Dmitry",
+    "Alexey",
+    "Sergey",
+    "Petar",
+    "Miloš",
+    "Nenad",
+    "Nemanja",
+    "Miodrag"
+  ],
+  "districts": [
+    "Barajevo",
+    "Čukarica",
+    "Grocka",
+    "Lazarevac",
+    "Mladenovac",
+    "Novi Beograd",
+    "Obrenovac",
+    "Palilula",
+    "Rakovica",
+    "Savski Venac",
+    "Sopot",
+    "Stari Grad",
+    "Surčin",
+    "Voždovac",
+    "Vračar",
+    "Zemun",
+    "Zvezdara"
+  ]
 }

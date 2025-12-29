@@ -49,9 +49,7 @@ export class PurchaseProgramDialogButtons extends BaseComponent {
       ${this.renderWarnings()}
 
       <div class="buttons">
-        <sl-button size="medium" variant="default" outline @click=${this.handleCancel}>
-          ${COMMON_TEXTS.close()}
-        </sl-button>
+        <sl-button size="medium" variant="default" @click=${this.handleCancel}> ${COMMON_TEXTS.close()} </sl-button>
 
         <sl-button size="medium" variant="primary" ?disabled=${this.disabled} @click=${this.handlePurchase}>
           ${COMMON_TEXTS.purchase()}

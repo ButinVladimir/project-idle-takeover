@@ -1,6 +1,6 @@
 # Description
 
-Cyberiada is an idle cyberpunk-themed management game inspired by Bitburner. In this game player control mainframe and team of up to 10 members by giving them various orders to perform. Company can travel between cities, representing different scenarios, which have different conditions and unique rewards.
+Project: Idle Takeover is an idle cyberpunk-themed management game inspired by Bitburner. In this game player control mainframe and team of up to 10 members by giving them various orders to perform. Company can travel between cities, representing different scenarios, which have different conditions and unique rewards.
 
 # Terms
 
@@ -16,13 +16,13 @@ Development points are main resource in the game. It show how much progress is d
 
 Development level shows how developed player is. Higher development levels allow purchasing items with higher level and unlocks new sidejobs and contracts. Development level increases after reaching certain development points thresholds. Most cities have upper limit on development level. After relocating development level is reset. Each city has it's own development level factors.
 
-## Favors
+## Reputation
 
-Favors are faction-specific currency. Favors are earned by completing operations, capturing more districts, by increasing development level, by hacking or can be bought by money. Favors can be spent on purchasing faction designs, negating prestige effects, decreasing prices or using faction specific perks.
+Reputation is faction-specific currency. Reputation is earned by completing contracts and operations. Reputation can be spent on favors, such as purchasing faction designs or faction specific perks.
 
-## Qualities and difficulties
+## Tiers and difficulties
 
-Various objects have different quality or difficulty. It's marked as number from I to VII.
+Various objects have different tier. It's marked as roman number, like I or IV.
 
 ## Company
 
@@ -32,9 +32,33 @@ Moving to another city will result in losing current company but certain favors 
 
 ## Company member
 
-Each company member has their own set of attributes, skills, equipment and augmentations. Certain actions can incapacitate them. Depending on quality, company members have different starting equipment, augmentations, attributes and skills. Attributes, skills and equipment of newhires depend on level which is capped by current development level. Each district may unlock new company member template as reward for capturing it.
+Each company member has their own set of attributes, skills, equipment and augmentations. Certain actions can incapacitate them. Depending on tier, company members have different starting attributes and skills. Attributes and skills of newhires depend on level which is capped by current development level. Each district may loan new company member template as reward for capturing it.
 
-Company members to be hired are generated depending on templates. There are templates for each faction and for neutral.
+Company members to be hired are generated from templates. There are templates for each faction and for neutral.
+
+## Connectivity
+
+Connectivity points unlock sidejobs and increase contract generation chances.
+
+## Rewards points
+
+Rewards points increase all rewards for all sorts of actions, with few exceptions, such as completion speed for programs or contracts.
+
+## Code base points
+
+Code base points decrease program cost.
+
+## Computational base points
+
+Computational base points decrease mainframe hardware cost.
+
+## Tech base points
+
+Tech base points decrease equipment cost.
+
+## Augmentation base points
+
+Augmentation base points decrease augmentation cost.
 
 ## Stats
 
@@ -44,13 +68,13 @@ Each company member has their own level. Level requirements do not depend on cur
 
 ### Experience
 
-To get new levels, company members must reach certain thresholds of experience. Experience gain can be increased by increasing intellect and using certain items.
+To get new levels, company members must reach certain thresholds of experience. Experience gain can be increased by increasing intellect.
 
 ### HP
 
-HP indicates how much damage can company member take. When HP reaches 0 or lower, company member is incapacitated and all actions related to them are cancelled. Incapacitated company members have to be paid to be restored manually or by program. After restoration, member shock is maxed out.
+HP indicates how much damage can company member take. When HP reaches 0 or lower, company member is incapacitated, won't be able to do anything in combat and won't receive experience from it.
 
-Can be increased by certain items and endurance. After finished each combat contract or operation, HP is restored immediately.
+Can be increased by certain items. After finished each combat contract or operation, HP is restored gradually until it's full.
 
 ### Damage
 
@@ -80,17 +104,13 @@ This parameter affects how it's likely to make a hit. It depends on equipment, a
 
 This parameter affects how it's likely to dodge the attack. Can be increased by stealth and agility.
 
-### Regeneration
-
-This parameters affects how fast company member HP will regenerate.
-
 ### Experience bonus
 
-This parameter affects how fast company member gets experience.
+This parameter affects how fast company member gets experience. Depends on intellet.
 
-### Initiative
+### Attack rate
 
-This parameter affects how soon company member can have their turn in combat.
+This parameter affects how fast clone can attack.
 
 ## Attributes
 
@@ -116,7 +136,7 @@ Intellect affects how much experience company member gets after completing order
 
 ### Charisma
 
-Charisma affects sidejobs to generate more connections.
+Charisma affects sidejobs to generate more rewards.
 
 ## Skills
 
@@ -146,58 +166,48 @@ Diplomacy gives additional money and respect bonuses and gives discount to hirin
 
 ## Training programs
 
-Training programs are alternative to leveling mercenary. It allows to buy skills and attributes. It's max level is capped, depending on development level and program quality. There are training programs for each skill and attribute, attribute programs are unlocked initially, skill programs has to be earned as reward from capturing districts.
+Training programs are alternative to leveling clone. It allows to buy skills and attributes. It's max level is capped, depending on development level. There are training programs for each skill and attribute, attribute programs are unlocked initially, skill programs has to be earned as reward from capturing districts. Each level of training program gives as much as clone level. Clone in training should have tier lower or equal to that of a program.
 
 ## Equipment
 
-Each company member has three different equipment slots: weapon, armor and utility. Weapon equipment deals damage, armor provides defense and utility gives buffs or debuffs. Each equipment item has level and quality. Higher the level or quality, higher the requirements and stats. Equipment can be changed only between contracts. Equipment can be bought from weapon shop. Capturing districts can unlock more equipment types.
-
-Equipped items will be lost after moving to another city unless specific favors are earned.
+Each company member has three different equipment slots: weapon, armor and utility. Weapon equipment deals damage, armor provides defense and utility gives buffs or debuffs. Each equipment item has level and tier. Higher the level or tier, higher the requirements and stats. Equipment can be changed only between contracts. Equipment can be bought from weapon shop. Capturing districts can unlock more equipment types.
 
 Unlocked in specific city after joining certain faction.
 
 ## Augmentations
 
-Augmentations are another way to buff company members. Like equipment, each augmentation has level and quality, which affect requirements and stats. Augmentation is not free, each augmentation costs money.
+Augmentations are another way to buff company members. Like equipment, each augmentation has level and tier, which affect requirements and stats. Augmentation is not free, each augmentation costs money and uses 1 augmenation slot of a clone.
 
-Each company member has following augmentations slots:
-
-- Skin
-- Nerve system
-- Eyes
-- Head
-- Torso
-- Arms
-- Legs
-
-Augmentations are not affected by moving to another city.
+Amount of augmentations slots for each clone depends on it's non-augmented endurance. Training programs should help with it. At least 1 slot is always available.
 
 Unlocked in specific city after joining certain faction.
 
 ## Designs
 
-Designs allow creating programs and equipment without relying on faction and . Level of resulting item is capped by development level. Quality can be selected. Getting designs for same item increases max quality with what item can be crafted. Designs can be bought by favors or captured by hacking or in operations.
+Designs allow creating programs and equipment without relying on faction. Level of resulting item is capped by development level. Tier can be selected. Getting designs for same item increases max tier with what item can be crafted. Designs can be bought by reputation or captured by hacking or in operations.
 
 ## City
 
 Each city is described as rectangular map, composed of cells. City is divided into districts. Each district can reward player with additional item to buy. In addition, each district has it's own set of multipliers, depending on district template and scenario multipliers. Some districts may contrain player or faction HQs.
 
-Each city district has it's own set of contract counters. In addition, each district has connection, computational base and tech base points which provide bonuses and discounts in this district.
+Each city district has it's own set of contract counters. In addition, each district has connectivitiy, computational base and tech base points which provide bonuses and discounts in this district.
 
 ### Districts
 
-Each district has it's own set of multipliers. These multipliers increase chance of getting contract, increase reputation and money rewards, decrease cost of buying items and mercenaries. These multipliers can be increased by specific actions and are retained. However, spending more on these multipliers will result in diminishing returns.
+Each district has it's own set of multipliers. These multipliers increase chance of getting contract, increase reputation and money rewards, decrease cost of buying items. These multipliers can be increased by specific actions and are retained. However, spending more on these multipliers will result in diminishing returns.
+
+Districts have tiers, which can be increased. District tier affects money rewards, connectivity, rewards, tech base, augmentation base, code base and computational base points. During map generation, district with higher tier will require more faction power to be assigned.
 
 Player can use contracts and bonuses from district without capturing it if district contains player HQ or belongs to the player selected faction. Initial amount of points in district is 0 which means that there will be no discounts. Player can increase points for selected district.
-Each 10 minutes new batch of contracts will be generated, maximum 1 contract for each district, contract type and quality.
+Each 15 minutes new batch of contracts will be generated, maximum 1 contract for each district and contract type.
 
 After generating city, for each district will be assigned faction for combat. If it's same as player faction, neutral faction will be used.
 
-Each district has reward for capturing it for player selected faction. This rewards can unlock new equipment, company hires, training programs, etc.
+Each district has reward for capturing it for player selected faction. This rewards can unlock new equipment, clone templates, training programs, etc.
 
 ### Factions
 
-Each city has it's own set factions that try to claim city for themself. Player can join one faction if development level requirements are met. Once faction is joined, player cannot leave it unless they relocate. Player also can go rogue if it's unlocked and they're not in faction. Going rogue will prevent player from joining factions. All neutral districts will be available immediately, but other districts cannot be conquered. It will enable certain operations against all other factions.
+Each city has it's own set factions that try to claim city for themself. Player can join one faction if development level requirements are met. Once faction is joined, player cannot leave it unless they transfer. Player also can go rogue if it's unlocked and they're not in faction. Going rogue will prevent player from joining factions. All neutral districts will be available immediately, but other districts cannot be conquered. It will enable certain operations against all other factions.
 
 Each factions has it's own starting power level, affecting initial distribution of districts.
 
@@ -209,47 +219,41 @@ Each faction has it's own set of requirement modifiers, affecting operations and
 
 Turf war allows factions capture districts depending on current faction power level. Capturing opposing faction HQ unlocks operations to raid it.
 
-Capturing districts allows company to perform activities here and will affect speed of changing power level.
+Capturing districts allows company to perform activities here.
 
-Requirements to capture will increase with each owned distict. Player can assist their selected faction by increase it's power level.
+Requirements to capture will increase with each owned district. Player can assist their selected faction by increase it's power level.
 
-When map is generated, district are split between neutral forces and factions. After joining faction, player will start increasing it's power level by performing actions.
+When map is generated, district are split between neutral forces and factions. After joining faction, player will start increasing it's power level by completing contracts and operations.
 
-## Relocation
+## Transfer
 
-Relocation is the prestige. After relocating, almost everything will be lost. Relocating will update highest level for scenario, potentially increasing rewards in subsequent re-runs.
-
-Programs are not affected by relocation.
+Transfer is the prestige. After transfering, almost everything will be lost. Transfering will update highest level for scenario, potentially increasing rewards in subsequent re-runs and add reputation for joined faciton.
 
 ## Orders
 
-Company member can be assigned two types of orders: completable orders are will yield result after finishing them and side jobs will yield as member works on it, possibly with side effects. Completable orders will be finished first, if there is no completables, company member will work on their side job. Only one side job and one completable is available for each company member. Assigning new side job/completable will result in cancelling previous one.
+Company member can be assigned two types of orders: main orders are will yield result after finishing them and sidejobs will yield as member works on it, possibly with side effects. Main orders will be finished first, if there is no main orders, company member will work on their sidejob. Only one sidejob is available for each company member. Assigning new sidejob/main order will result in cancelling previous one. Main orders can be queued, however for each type of main order for each district only one team is allowed.
 
-Contracts and operations are capped for each district, contracts have separated caps for various types and qualities. Amount of actions available depends on type, district and faction multipliers.
+Contracts are soft capped by connectivity (each new contract requires increasing connectivity to appear), operations are hardcapped by 1. Amount of actions available depends on type, district and faction multipliers.
 
-### Side jobs
+### Sidejobs
 
-Side jobs are basic orders. There are no limits on available side jobs for any district. Player can assign one company member to perform it. Some side jobs can increase certain points, such as connections for better rewards and discounts for hiring mercenaries and getting new contracts, tech base for better discounts on augmentations and equipment, connection base for discount on mainframe hardware and programs.
+Sidejobs are basic orders. There are no limits on available sidejobs for any district. Player can assign one company member to perform it. Some sidejobs can increase certain points, such as connectivity for better rewards and discounts for hiring mercenaries and getting new contracts, tech base for better discounts on augmentations and equipment.
 
-Side jobs don't have time limit, always depend on one performer, have lowest requirements and will give rewards immediately, without time walling. They may have useful side effects. On other hand, side jobs have weakest multipliers. They are useful mostly in the beginning of game and as a support.
-
-Quality increases requirements and gains. Each quality also has it's own required minimal development level.
+Sidejobs don't have time limit, always depend on one performer, have lowest requirements and will give rewards immediately, without time walling. They may have useful side effects. On other hand, sidejobs have weakest multipliers. They are useful mostly in the beginning of game and as a support.
 
 ### Contracts
 
-Main way to gain resources. Each district has it's own set of counters for each contract type of each quality. Each 10 minutes districts can receive new random contracts. If district has contract available, player can assign multiple company members to perform it.
+Main way to gain resources. Each district has it's own set of counters for each contract type of each quality. Each 15 minutes districts can receive new random contracts. If district has contract available, player can assign multiple company members to perform it.
 
-Unlike side jobs, contracts require some time. Contracts are unlocked after joining faction in starting city and can be done only after joining faction. Each faction has it's own set of contracts and multipliers for contracts.
+Unlike sidejobs, contracts require some time. Contracts are unlocked after joining faction in starting city and can be done only after joining faction. Each faction has it's own set of contracts and multipliers for contracts.
 
-Quality increases requirements and gains.
-
-Each 10 minutes each district may have receive new contracts.
+Each 15 minutes each district may have receive new contracts.
 
 ### Operations
 
 Operations are issued to you by joined faction and can affect global state. Player can get operation at random points. After that, player can assemble a team to perform the work. Operations work like contracts, but once operation objective is done, they cannot be retried. Operations are unlocked in specific cities. Operations can have enemy factions assigned.
 
-Quality increases gains and requirements. Total amount of operations available at same time for same district is capped. Some actions can make operations disappear. Faction and, if assigned, enemy faction will apply both their respective multipliers to requirements. Operations usually can be done in multiple ways. Operation diffuculty scales with development level.
+Total amount of operations available at same time for same district is capped. Some actions can make operations disappear. Faction and, if assigned, enemy faction will apply both their respective multipliers to requirements. Operations usually can be done in multiple ways. Operation diffuculty scales with development level.
 
 Operations allow feats such as:
 
@@ -285,7 +289,7 @@ Reduces regeneration and defense.
 
 ### Healing
 
-If company member has medkit, they can heal themselves during ther turn. Medkit will give fixed amount of HP depending on quality.
+If company member has medkit, they can heal themselves during ther turn. Medkit will give fixed amount of HP depending on tier.
 
 ### Shield
 
@@ -301,11 +305,15 @@ Mainframe is used to run processes for owned programs. Mainframe has three param
 
 Only one program of each type can be owned at any time. Purchasing or writing new one will replace old one. Mainframe is available from the beginning of the game.
 
+Computational base for each district and for programs will affect mainframe hardware discount.
+
 ## Programs
 
-Programs allow to perform some actions automatically without player input. Program must be bought, program level and quality can be selected. Program level is capped by development level. Higher quality leads to higher requirements. Computational base for each district and for programs will affect mainframe products discount.
+Programs allow to perform some actions automatically without player input. Program must be bought, program level and tier can be selected. Program level is capped by development level. Amount of cores assignable to process depends on program tier.
 
-Only few programs are available initially. Player starts with program and design to share mainframe to get some money and development points.
+Code base for each district and for programs will affect mainframe programs discount.
+
+Only share server program is available initially. Player starts with program and design to share mainframe to get some money and development points.
 
 To prevent wasting resources, special program can be purchased/made to generate money depending on unused RAM/cores.
 
@@ -313,15 +321,20 @@ Examples of programs:
 
 - Share server, for passive money generation. Will use unused RAM and cores. Mainframe level will increase rewards.
 - Predictive computator, for passive increase of other processes speed. Will use unused RAM and cores. Cannot be ran at same time with share server.
-- Field assistant, for increasing speed of fininsh active jobs and increasing rewards for side jobs.
-- Code generator, for generating computational base points.
+- Field assistant, for increasing speed of performing active contracts.
+- Code generator, for generating code base points.
+- Circuit designer, for generating computational base points.
 - Info searching programs, for generating connectivity points.
+- Deal maker, for generating rewards points.
 - Automatic action assignment, to assign contracts and operations, it will act as looping queue.
+- Mainframe autobuyers.
+- Clone level autoupgrader.
+- Peer reviewer, to increase shared experience between clones.
 - Hacking programs.
 
 ## Hacking
 
-Hacking is done only by mainframe. Each district has it's own server(s), hacking it will yield money and, possibly, designs (only for enemy factions, first time only, similar to operations). Faction servers cannot be hacked until faction is joined. Each hacked server can also provide additional cores and RAM to mainframe.
+Hacking is done only by mainframe. Each district has it's own server(s), hacking it will yield money and, possibly, designs (only for enemy factions and if player has gone rogue, first time only, similar to operations). Faction servers cannot be hacked until faction is joined. Each hacked server can also provide additional performance, cores and RAM levels to mainframe.
 
 Hacking requires filling completion scale and avoid filling alert scale while hacking is active.
 
@@ -332,11 +345,10 @@ Hacking is unavailable initially, unlocking it requires finishing respect milest
 ## Cities
 
 Cities have upper limit on development level unless noted. Each city also has different starting of power level sum, divided by factions, allowing them to have some territory during map generation. Each city save highest achieved development level, speeding up the progress on subsequent runs.
-Each city has it's own rewards for neutral faction.
 
 ### Starting city
 
-Starting city has only one faction - **Global security agency**. Player begins here after starting the game. Has small size and designed to learn how to use basic mechanics.
+Starting city has only one faction - **World security agency**. Player begins here after starting the game. Has small size and designed to learn how to use basic mechanics.
 
 Has following unlocks:
 
@@ -344,45 +356,112 @@ Has following unlocks:
 - Sidejobs
 - Contracts
 - Factions
-- Relocation
+- Transfer
+- Connectivity - unlocks sidejobs and increases chances to generate contracts
+- Rewards points - will increase rewards for programs and clone orders
+- **World security agency** as random faction.
+
+### Hardmode
+
+There are variations of this scenario for each faction. 2-3 staring factions, including 1 specific faction. Others are random. Depending on amount districts captured, will increase tiers for loaned items of specific faction.
 
 ### Proving grounds
 
-Proving grounds has 4 random factions and a lot of regions. Unlike most other cities, Proving grounds has no cap on development level.
+Proving grounds has 4 random factions and a lot of regions. Unlike most other cities, Proving grounds has no cap on development level. Unlocked late in the game.
 
 ### Science city
 
-Science city has two factions: **Gamma security** and **Steelmen**. It has large number of training facilities.
-
-Completing science city will reward player with unlocking factions. Maximum 6 levels are available.
-
-### Slums
-
-Slums has three-four factions - **Jackals** and **Militia**. Size is medium. Designed to be a tutorial .
+Science city has two factions: **Security team Gamma** and **Immortal corps**. Size is medium.
 
 Has following unlocks:
 
-- Wanted level and crimes. Wanted level can increase base level of all side jobs and orders, making them harder but more profitable. Wanted level is affected by notoriety points, which are increased by crimes. Wanted level must be changed manually. Potentially, decreasing wanted level will remove notoriety points?
-- Combat
+- Augmentations
+- Training programs
+- Augmentantion base points, to decrease augmentation cost
+
+### Slums
+
+Slums has two factions - **Jackals** and **Militants**. Size is medium.
+
+Has following unlocks:
+
+- Threat level and crimes. Threat level increases tiers of all sidejobs, contracts and operations, making them harder but giving more development and experience. Wanted level is affected by notoriety points, which are increased by crimes. Wanted level must be changed manually and cannot be decreased.
+- Combat. Happens automatically for certain contracts. Requires equipment.
+- Tech base points - reduces equipment cost.
 
 ### Android city
 
-Android city has multiple factions. Size is medium.
+Android city has multiple factions - **Exalted** and **Hermes**. Size is medium.
 
 Has following unlocks:
 
 - Mainframe automation
 - Hacking
+- Experience sharing
+- Speeding up program completion
+- Code base points, to decrease programs cost
+- Computational base points, to decrease mainframe hardware cost
+
+### Corpo city
+
+Corpo city has multiple factions, includes **Unnamed corporation**. Size is large.
+
+Has following unlocks:
+
+- Operations
 
 ### Combat zone
 
-Combat zone is hard level, with 3-4 random or criminal factions. Completing development levels here unlocks retaining acquired programs, equipment, company members etc and starting with better equipment unlocked.
+Combat zone is hard level, with 3-4 random factions. Unlocks going rogue after denying invitations for some time.
 
 ## Districts
 
+### Residential
+
+Balanced district, without any upsides or downsides. Fast to develop, but doesn't give much.
+
+### Corpo district
+
+Slightly increased all rewards except reward points. Harder to develop.
+
+### Slums
+
+Lower rewards, but give more experience, connectivity. Easier to develop.
+
+### Rich district
+
+Noticeably higher rewards, but low everything else. Connectivity is heavily nerfed. Easier to develop.
+
+### Industrial district
+
+High mainframe hardware and tech base point gains, low everything else.
+
+### Scientific district
+
+High augmentation point gains, lower everything else.
+
+### Nerve center
+
+High code base point gains, lower everything else.
+
 ## Factions
 
-### Vigil
+### WSA
+
+#### Items
+
+Corrector - silenced SMG, with greater armor penetration.
+Social butterfly - increases charisma and diplomacy at cost of endurance
+
+#### Favors
+
+WSA can increase base level of clones.
+
+#### Mercenaries
+
+Numbers oriented, all basic options should be available. Plus diplomat and spy variants.
+
+### Militants
 
 #### Items
 
@@ -390,8 +469,67 @@ Shield
 
 #### Favors
 
-Vigil can increase level of all new defensive equipment without increasing requirements.
+Militants can increase base level for every type of equipment.
 
 #### Mercenaries
 
-Defense oriented, with ranged weapons
+Defense oriented, with ranged weapons.
+
+### Security team Gamma
+
+#### Items
+
+All training programs
+Gauss rifle?
+
+#### Favors
+
+Increased base level of training for each attribute and skill
+
+#### Mercenaries
+
+Quality oriented, all basic combat options. Some variant with high intellect.
+
+### Knights of Stahlmann
+
+#### Items
+
+All sorts of basic augmentations
+Combat oriented augmentations
+
+#### Favors
+
+Clones start with basic augmentation
+Augmentations are cheaper
+
+#### Mercenaries
+
+Quality oriented, all basic combat options. Some variant with high endurance.
+
+### The collective
+
+#### Items
+
+Peer reviewer, exp boosts, other than that basic stuff
+
+#### Favors
+
+Starting mainframe hardware
+Mainframe hardware are cheaper
+
+#### Mercenaries
+
+Improved version of basic clones
+
+# Other names
+
+Cyberiada title is already taken by novel _Cyberiad_ by Stanislaw Lem, so name has to be changed at some point. Variants are:
+
+- Escaping the boundaries
+- Fragile alliances
+- A spark in the circuit
+- Survival subroutine
+- Digital anomaly
+- Digital journey
+- Project Idle Takeover
+- The Idle Takeover Project

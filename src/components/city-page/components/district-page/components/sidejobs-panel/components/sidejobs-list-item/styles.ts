@@ -1,9 +1,8 @@
 import { css } from 'lit';
-import { dragIconStyle, hintIconStyle } from '@shared/index';
+import { hintIconStyle } from '@shared/index';
 
 const styles = [
   hintIconStyle,
-  dragIconStyle,
   css`
     .host-content {
       width: 100%;

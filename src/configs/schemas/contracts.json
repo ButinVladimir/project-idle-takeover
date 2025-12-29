@@ -1,0 +1,238 @@
+{
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "requirements": {
+        "type": "object",
+        "description": "Contract requirements",
+        "properties": {
+          "baseCompletionTime": {
+            "type": "number",
+            "description": "Base completion time"
+          },
+          "teamSize": {
+            "type": "object",
+            "description": "Team size",
+            "properties": {
+              "min": {
+                "type": "integer",
+                "description": "Minimal required team size"
+              },
+              "max": {
+                "type": "integer",
+                "description": "Maximal required team size"
+              }
+            }
+          },
+          "connectivity": {
+            "type": "object",
+            "description": "Contract connectivity requirements",
+            "properties": {
+              "amount": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "Contract connectivity amount requirements (geometric)"
+              },
+              "threat": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "Contract connectivity threat requirements (geometric)"
+              }
+            },
+            "required": ["amount", "threat"]
+          },
+          "attributes": {
+            "type": "object",
+            "description": "Contract attributes requirements",
+            "properties": {
+              "strength": {
+                "$ref": "#/$defs/requirement",
+                "description": "Contract strength requirement (geometric)"
+              },
+              "endurance": {
+                "$ref": "#/$defs/requirement",
+                "description": "Contract endurance requirement (geometric)"
+              },
+              "agility": {
+                "$ref": "#/$defs/requirement",
+                "description": "Contract agility requirement (geometric)"
+              },
+              "perception": {
+                "$ref": "#/$defs/requirement",
+                "description": "Contract perception requirement (geometric)"
+              },
+              "intellect": {
+                "$ref": "#/$defs/requirement",
+                "description": "Contract intellect requirement (geometric)"
+              },
+              "charisma": {
+                "$ref": "#/$defs/requirement",
+                "description": "Contract charisma requirement (geometric)"
+              }
+            }
+          },
+          "skills": {
+            "type": "object",
+            "description": "Contract skills requirements",
+            "properties": {
+              "closeCombat": {
+                "$ref": "#/$defs/requirement",
+                "description": "Contract close combat requirement (geometric)"
+              },
+              "rangedCombat": {
+                "$ref": "#/$defs/requirement",
+                "description": "Contract ranged combat requirement (geometric)"
+              },
+              "engineering": {
+                "$ref": "#/$defs/requirement",
+                "description": "Contract engineering requirement (geometric)"
+              },
+              "hacking": {
+                "$ref": "#/$defs/requirement",
+                "description": "Contract hacking requirement (geometric)"
+              },
+              "stealth": {
+                "$ref": "#/$defs/requirement",
+                "description": "Contract stealth requirement (geometric)"
+              },
+              "diplomacy": {
+                "$ref": "#/$defs/requirement",
+                "description": "Contract diplomacy requirement (geometric)"
+              }
+            }
+          }
+        },
+        "required": ["baseCompletionTime", "teamSize", "connectivity", "attributes", "skills"]
+      },
+      "rewardModifiers": {
+        "type": "object",
+        "description": "Contract reward modifiers",
+        "properties": {
+          "attributes": {
+            "type": "object",
+            "description": "Contract attributes reward modifiers",
+            "properties": {
+              "strength": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "Contract strength reward modifier (geometric)"
+              },
+              "endurance": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "Contract endurance reward modifier (geometric)"
+              },
+              "agility": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "Contract agility reward modifier (geometric)"
+              },
+              "perception": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "Contract perception reward modifier (geometric)"
+              },
+              "intellect": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "Contract intellect reward modifier (geometric)"
+              },
+              "charisma": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "Contract charisma reward modifier (geometric)"
+              }
+            }
+          },
+          "skills": {
+            "type": "object",
+            "description": "Contract skills reward modifiers",
+            "properties": {
+              "closeCombat": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "Contract close combat reward modifier (geometric)"
+              },
+              "rangedCombat": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "Contract ranged combat reward modifier (geometric)"
+              },
+              "engineering": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "Contract engineering reward modifier (geometric)"
+              },
+              "hacking": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "Contract hacking reward modifier (geometric)"
+              },
+              "stealth": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "Contract stealth reward modifier (geometric)"
+              },
+              "diplomacy": {
+                "$ref": "./common/geometric-progression.json",
+                "description": "Contract diplomacy reward modifier (geometric)"
+              }
+            }
+          }
+        },
+        "required": ["attributes", "skills"]
+      },
+      "rewards": {
+        "type": "object",
+        "description": "Contract rewards",
+        "properties": {
+          "experience": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "Contract experience reward (linear)"
+          },
+          "money": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "Contract money reward (geometric)"
+          },
+          "developmentPoints": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "Contract development points reward (geometric)"
+          },
+          "influence": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "Contract faction influence points reward (geometric)"
+          },
+          "connectivity": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "Contract connectivity points reward (geometric)"
+          },
+          "codeBase": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "Contract code base points reward (geometric)"
+          },
+          "computationalBase": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "Contract computational base points reward (geometric)"
+          },
+          "rewards": {
+            "$ref": "./common/geometric-progression.json",
+            "description": "Contract rewards points reward (geometric)"
+          }
+        }
+      }
+    },
+    "required": ["requirements", "rewardModifiers", "rewards"]
+  },
+  "$defs": {
+    "requirement": {
+      "type": "object",
+      "properties": {
+        "teamSize": {
+          "type": "number",
+          "description": "Minimal required team size"
+        },
+        "multiplier": {
+          "type": "number",
+          "description": "Requirement threat multiplier"
+        },
+        "base": {
+          "type": "number",
+          "description": "Requirement threat base"
+        }
+      }
+    }
+  }
+}

@@ -8,14 +8,12 @@ export const DISTRICT_STATE_TEXTS = {
   },
   [DistrictUnlockState.contested]: {
     title: () => msg('Contested'),
-    hint: () => msg('Contested districts are available for work.'),
+    hint: () => msg('Contested districts are available for clones work.'),
   },
   [DistrictUnlockState.captured]: {
     title: () => msg('Captured'),
     hint: () =>
-      msg(`Captured districts are available for work.
-For each captured district you may be loaned a random item.
-After making district captured, one more distict will become contested.
-`),
+      msg(`Captured districts are available for clones work.
+Their tier can be increased.`),
   },
 };

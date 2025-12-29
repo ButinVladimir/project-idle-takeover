@@ -1,18 +1,18 @@
 import { html, nothing } from 'lit';
 import { localized } from '@lit/localize';
 import { customElement } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { consume } from '@lit/context';
 import { ATTRIBUTE_TEXTS, COMMON_TEXTS, SKILL_TEXTS } from '@texts/index';
 import { Attribute, Skill, ATTRIBUTES, SKILLS, BaseComponent } from '@shared/index';
-import { type IClone } from '@state/company-state';
+import { type IClone } from '@state/clones-state';
 import { ClonesListItemDescriptionController } from './controller';
 import { cloneContext } from '../item/contexts';
 import styles from './styles';
-import { classMap } from 'lit/directives/class-map.js';
 
 @localized()
 @customElement('ca-clones-list-item-description')
-export class ClonesListItemAttributes extends BaseComponent {
+export class ClonesListItemDescription extends BaseComponent {
   static styles = styles;
 
   protected hasMobileRender = true;
@@ -55,8 +55,8 @@ export class ClonesListItemAttributes extends BaseComponent {
     });
 
     return html`
-      <div>${COMMON_TEXTS.parameterValue(COMMON_TEXTS.synchronization(), formattedSynchronization)}</div>
-      <div>${COMMON_TEXTS.parameterValue(COMMON_TEXTS.experienceMultiplier(), formattedExperienceMultiplier)}</div>
+      <div>${COMMON_TEXTS.parameterRow(COMMON_TEXTS.synchronization(), formattedSynchronization)}</div>
+      <div>${COMMON_TEXTS.parameterRow(COMMON_TEXTS.experienceMultiplier(), formattedExperienceMultiplier)}</div>
 
       <div class=${attributesSkillsTablesClasses}>
         <div>

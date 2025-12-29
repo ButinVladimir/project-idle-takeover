@@ -1,20 +1,17 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
-import type { IGrowthState } from '@state/growth-state/interfaces/growth-state';
+import { type IGrowthState } from '@state/growth-state';
 import { TYPES } from '@state/types';
-import { type ICityState, IDistrictMultipliers } from '@state/city-state';
-import { IDistrictMultiplierParameter } from '@state/city-state/interfaces/parameters/district-multiplier-parameter';
-import type { IGlobalState } from '../../interfaces/global-state';
-import { IMultiplierState } from '../../interfaces/parameters/multiplier-state';
-import { IMultiplierSerializedState } from '../../interfaces/serialized-states/multiplier-serialized-state';
-import { IMultiplierScenarioParameters } from '../../interfaces/multiplier-scenario-parameters';
+import { type ICityState, IDistrictMultipliers, IDistrictMultiplierParameter } from '@state/city-state';
+import { type IScenarioState } from '@state/scenario-state';
+import { IMultiplierState, IMultiplierSerializedState } from '../../interfaces';
 
 const { lazyInject } = decorators;
 
 @injectable()
 export abstract class BaseMultiplierState implements IMultiplierState {
-  @lazyInject(TYPES.GlobalState)
-  protected globalState!: IGlobalState;
+  @lazyInject(TYPES.ScenarioState)
+  protected scenarioState!: IScenarioState;
 
   @lazyInject(TYPES.GrowthState)
   protected growthState!: IGrowthState;
@@ -72,10 +69,9 @@ export abstract class BaseMultiplierState implements IMultiplierState {
   }
 
   private updateMultiplierByProgram() {
-    const parameters = this.getMultiplierParameters();
+    const base = this.getBase();
 
-    this._multiplierByProgram =
-      1 + Math.log(1 + this._pointsByProgram / parameters.pointsToSoftCap) / Math.log(parameters.logBase);
+    this._multiplierByProgram = 1 + Math.log(1 + this._pointsByProgram) / Math.log(base);
   }
 
   private updateTotalMultiplier() {
@@ -92,7 +88,7 @@ export abstract class BaseMultiplierState implements IMultiplierState {
     });
   }
 
-  protected abstract getMultiplierParameters(): IMultiplierScenarioParameters;
+  protected abstract getBase(): number;
 
   protected abstract getDistrictMultiplierParameter(
     districtMultipliers: IDistrictMultipliers,

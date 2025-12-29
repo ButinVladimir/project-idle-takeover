@@ -3,26 +3,16 @@ import { localized } from '@lit/localize';
 import { customElement, queryAll } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { consume } from '@lit/context';
-import { type IProgram, OtherProgramName, MultiplierProgramName, AutobuyerProgramName } from '@state/mainframe-state';
+import { type IProgram } from '@state/mainframe-state';
 import {
   BaseComponent,
   getHighlightValueClass,
   diffFormatterParameters,
   getHighlightDifferenceClassMap,
+  getHighlightDifferenceClass,
 } from '@shared/index';
 import { COMMON_TEXTS, PROGRAM_DESCRIPTION_TEXTS, PROGRAM_TEXTS } from '@texts/index';
-import {
-  CodeGeneratorDescriptionEffectRenderer,
-  CircuitDesignerDescriptionEffectRenderer,
-  DealMakerDescriptionEffectRenderer,
-  InformationCollectorDescriptionEffectRenderer,
-  MainframeHardwareAutobuyerDescriptionEffectRenderer,
-  PredictiveComputatorDescriptionEffectRenderer,
-  ShareServerDescriptionEffectRenderer,
-  MainframeProgramsAutobuyerDescriptionEffectRenderer,
-  CloneLevelAutoupgraderDescriptionEffectRenderer,
-  PeerReviewerDescriptionEffectRenderer,
-} from './description-effect-renderers';
+import { rendererMap } from './description-effect-renderers';
 import { IDescriptionEffectRenderer, IDescriptionParameters } from './interfaces';
 import { ProgramDiffTextController } from './controller';
 import { existingProgramContext, temporaryProgramContext } from '../../contexts';
@@ -53,6 +43,11 @@ export class PurchaseProgramDialogDescription extends BaseComponent {
 
   private _costElRef = createRef<HTMLSpanElement>();
 
+  private _minCompletionTimeValueEl = createRef<HTMLSpanElement>();
+  private _maxCompletionTimeValueEl = createRef<HTMLSpanElement>();
+  private _minCompletionTimeDiffEl = createRef<HTMLSpanElement>();
+  private _maxCompletionTimeDiffEl = createRef<HTMLSpanElement>();
+
   constructor() {
     super();
 
@@ -77,9 +72,7 @@ export class PurchaseProgramDialogDescription extends BaseComponent {
 
       <p class="line-break"></p>
 
-      <p class="text">
-        ${COMMON_TEXTS.parameterValue(COMMON_TEXTS.cost(), html`<span ${ref(this._costElRef)}></span>`)}
-      </p>
+      <p class="text">${COMMON_TEXTS.parameterRow(COMMON_TEXTS.cost(), html`<span ${ref(this._costElRef)}></span>`)}</p>
 
       <p class="line-break"></p>
 
@@ -98,19 +91,15 @@ export class PurchaseProgramDialogDescription extends BaseComponent {
       <p>${PROGRAM_DESCRIPTION_TEXTS.requirementsAutoscalable()}</p>
 
       <p>
-        ${COMMON_TEXTS.parameterValue(
+        ${COMMON_TEXTS.parameterRow(
           PROGRAM_DESCRIPTION_TEXTS.ram(),
           PROGRAM_DESCRIPTION_TEXTS.allAvailable(this._program!.ram),
         )}
       </p>
 
-      <p>
-        ${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.cores(), PROGRAM_DESCRIPTION_TEXTS.allAvailable(1))}
-      </p>
+      <p>${COMMON_TEXTS.parameterRow(PROGRAM_DESCRIPTION_TEXTS.cores(), PROGRAM_DESCRIPTION_TEXTS.allAvailable(1))}</p>
 
-      <p>
-        ${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.completionTime(), PROGRAM_DESCRIPTION_TEXTS.instant())}
-      </p>
+      <p>${COMMON_TEXTS.parameterRow(COMMON_TEXTS.completionTime(), PROGRAM_DESCRIPTION_TEXTS.instant())}</p>
     `;
   };
 
@@ -118,11 +107,6 @@ export class PurchaseProgramDialogDescription extends BaseComponent {
     const formatter = this._controller.formatter;
 
     const coresDiff = this._ownedProgram ? this._program!.cores - this._ownedProgram.cores : this._program!.cores;
-
-    const minTime = this._program!.calculateCompletionMinTime(1);
-    const minTimeDiff = this._ownedProgram ? minTime - this._ownedProgram.calculateCompletionMinTime(1) : minTime;
-    const maxTime = this._program!.calculateCompletionMaxTime(1);
-    const maxTimeDiff = this._ownedProgram ? maxTime - this._ownedProgram.calculateCompletionMaxTime(1) : maxTime;
 
     const formattedRam = formatter.formatNumberDecimal(this._program!.ram);
     const formattedCores = formatter.formatNumberDecimal(this._program!.cores);
@@ -132,39 +116,26 @@ export class PurchaseProgramDialogDescription extends BaseComponent {
       >${formatter.formatNumberDecimal(coresDiff, diffFormatterParameters)}</span
     >`;
 
-    const formattedMinTime = formatter.formatTimeShort(minTime);
-    const formattedMaxTime = formatter.formatTimeShort(maxTime);
-
-    const minTimeDiffClass = getHighlightDifferenceClassMap(-minTimeDiff);
-    const minTimeDiffEl = html`<span class=${minTimeDiffClass}
-      >${formatter.formatTimeShort(minTimeDiff, diffFormatterParameters)}</span
-    >`;
-
-    const maxTimeDiffClass = getHighlightDifferenceClassMap(-maxTimeDiff);
-    const maxTimeDiffEl = html`<span class=${maxTimeDiffClass}
-      >${formatter.formatTimeShort(maxTimeDiff, diffFormatterParameters)}</span
-    >`;
-
     return html`
       <p>${PROGRAM_DESCRIPTION_TEXTS.requirementsSingle()}</p>
 
-      <p>${COMMON_TEXTS.parameterValue(PROGRAM_DESCRIPTION_TEXTS.ram(), formattedRam)}</p>
+      <p>${COMMON_TEXTS.parameterRow(PROGRAM_DESCRIPTION_TEXTS.ram(), formattedRam)}</p>
 
       <p>
-        ${COMMON_TEXTS.parameterValue(
+        ${COMMON_TEXTS.parameterRow(
           PROGRAM_DESCRIPTION_TEXTS.cores(),
           PROGRAM_DESCRIPTION_TEXTS.upToDiff(formattedCores, coresDiffEl),
         )}
       </p>
 
       <p>
-        ${COMMON_TEXTS.parameterValue(
-          PROGRAM_DESCRIPTION_TEXTS.completionTime(),
+        ${COMMON_TEXTS.parameterRow(
+          COMMON_TEXTS.completionTime(),
           PROGRAM_DESCRIPTION_TEXTS.minMaxIntervalDiff(
-            formattedMinTime,
-            formattedMaxTime,
-            minTimeDiffEl,
-            maxTimeDiffEl,
+            html`<span ${ref(this._minCompletionTimeValueEl)}></span>`,
+            html`<span ${ref(this._maxCompletionTimeValueEl)}></span>`,
+            html`<span ${ref(this._minCompletionTimeDiffEl)}></span>`,
+            html`<span ${ref(this._maxCompletionTimeDiffEl)}></span>`,
           ),
         )}
       </p>
@@ -198,6 +169,8 @@ export class PurchaseProgramDialogDescription extends BaseComponent {
       diffEl.textContent = value;
       diffEl.className = className;
     });
+
+    this.updateCompletionTime();
   };
 
   private renderCost() {
@@ -229,49 +202,46 @@ export class PurchaseProgramDialogDescription extends BaseComponent {
       ram: this._controller.ram,
     };
 
-    switch (this._program!.name) {
-      case MultiplierProgramName.codeGenerator:
-        this._renderer = new CodeGeneratorDescriptionEffectRenderer(parameters);
-        break;
+    this._renderer = new rendererMap[this._program!.name](parameters);
+  }
 
-      case MultiplierProgramName.circuitDesigner:
-        this._renderer = new CircuitDesignerDescriptionEffectRenderer(parameters);
-        break;
+  private updateCompletionTime() {
+    if (!this._program) {
+      return;
+    }
 
-      case MultiplierProgramName.dealMaker:
-        this._renderer = new DealMakerDescriptionEffectRenderer(parameters);
-        break;
+    const formatter = this._controller.formatter;
 
-      case MultiplierProgramName.informationCollector:
-        this._renderer = new InformationCollectorDescriptionEffectRenderer(parameters);
-        break;
+    const minTime = this._program!.calculateCompletionMinTime(1);
+    const minTimeDiff = this._ownedProgram ? minTime - this._ownedProgram.calculateCompletionMinTime(1) : minTime;
+    const maxTime = this._program!.calculateCompletionMaxTime(1);
+    const maxTimeDiff = this._ownedProgram ? maxTime - this._ownedProgram.calculateCompletionMaxTime(1) : maxTime;
 
-      case AutobuyerProgramName.mainframeHardwareAutobuyer:
-        this._renderer = new MainframeHardwareAutobuyerDescriptionEffectRenderer(parameters);
-        break;
+    const formattedMinTime = formatter.formatTimeShort(minTime);
+    const formattedMaxTime = formatter.formatTimeShort(maxTime);
 
-      case AutobuyerProgramName.mainframeProgramsAutobuyer:
-        this._renderer = new MainframeProgramsAutobuyerDescriptionEffectRenderer(parameters);
-        break;
+    const minTimeDiffClass = getHighlightDifferenceClass(-minTimeDiff);
+    const minTimeDiffLabel = formatter.formatTimeShort(minTimeDiff, diffFormatterParameters);
 
-      case AutobuyerProgramName.cloneLevelAutoupgrader:
-        this._renderer = new CloneLevelAutoupgraderDescriptionEffectRenderer(parameters);
-        break;
+    const maxTimeDiffClass = getHighlightDifferenceClass(-maxTimeDiff);
+    const maxTimeDiffLabel = formatter.formatTimeShort(maxTimeDiff, diffFormatterParameters);
 
-      case OtherProgramName.shareServer:
-        this._renderer = new ShareServerDescriptionEffectRenderer(parameters);
-        break;
+    if (this._minCompletionTimeValueEl.value) {
+      this._minCompletionTimeValueEl.value.textContent = formattedMinTime;
+    }
 
-      case OtherProgramName.predictiveComputator:
-        this._renderer = new PredictiveComputatorDescriptionEffectRenderer(parameters);
-        break;
+    if (this._maxCompletionTimeValueEl.value) {
+      this._maxCompletionTimeValueEl.value.textContent = formattedMaxTime;
+    }
 
-      case OtherProgramName.peerReviewer:
-        this._renderer = new PeerReviewerDescriptionEffectRenderer(parameters);
-        break;
+    if (this._minCompletionTimeDiffEl.value) {
+      this._minCompletionTimeDiffEl.value.textContent = minTimeDiffLabel;
+      this._minCompletionTimeDiffEl.value.className = minTimeDiffClass;
+    }
 
-      default:
-        this._renderer = undefined;
+    if (this._maxCompletionTimeDiffEl.value) {
+      this._maxCompletionTimeDiffEl.value.textContent = maxTimeDiffLabel;
+      this._maxCompletionTimeDiffEl.value.className = maxTimeDiffClass;
     }
   }
 }

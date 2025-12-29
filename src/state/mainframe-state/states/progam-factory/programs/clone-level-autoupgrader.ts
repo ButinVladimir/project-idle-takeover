@@ -1,60 +1,27 @@
-import { binarySearchDecimal } from '@shared/index';
-import { type IAutomationState } from '@state/automation-state';
-import { IClone, type ICompanyState } from '@state/company-state';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
-import { AutobuyerProgramName } from '../types';
+import { type IClonesState } from '@state/clones-state';
+import { AutomationProgram } from '../types';
 import { BaseProgram } from './base-program';
 
 const { lazyInject } = decorators;
 
 export class CloneLevelAutoupgraderProgram extends BaseProgram {
-  public readonly name = AutobuyerProgramName.cloneLevelAutoupgrader;
+  public readonly name = AutomationProgram.cloneLevelAutoupgrader;
   public readonly isAutoscalable = false;
 
-  @lazyInject(TYPES.AutomationState)
-  private _automationState!: IAutomationState;
-
-  @lazyInject(TYPES.CompanyState)
-  private _companyState!: ICompanyState;
+  @lazyInject(TYPES.ClonesState)
+  private _clonesState!: IClonesState;
 
   handlePerformanceUpdate(): void {}
 
   perform(threads: number): void {
-    let actionsLeft = threads;
-    let availableMoney = (this.globalState.money.money * this._automationState.cloneLevel.moneyShare) / 100;
+    const actionsLeft = this.calculateActionCount(threads);
 
-    for (const clone of this._companyState.clones.listClones()) {
-      if (actionsLeft === 0) {
-        break;
-      }
-
-      if (!clone.autoUpgradeEnabled) {
-        continue;
-      }
-
-      const checkParameter = this.makeCheckParameterFunction(clone, availableMoney);
-
-      const newLevel = binarySearchDecimal(clone.level, this.globalState.development.level, checkParameter);
-
-      if (newLevel > clone.level) {
-        const cost = this._companyState.clones.getCloneCost(clone.templateName, clone.tier, newLevel);
-
-        if (clone.purchaseLevelUpgrade(newLevel)) {
-          availableMoney -= cost;
-          actionsLeft--;
-        }
-      }
-    }
+    this._clonesState.ownedClones.levelUpgrader.autoupgrade(actionsLeft);
   }
 
-  private makeCheckParameterFunction = (clone: IClone, availableMoney: number) => (level: number) => {
-    if (!this.globalState.availableItems.cloneTemplates.isItemAvailable(clone.templateName, clone.tier, level)) {
-      return false;
-    }
-
-    const cost = this._companyState.clones.getCloneCost(clone.templateName, clone.tier, level);
-
-    return cost <= availableMoney;
-  };
+  calculateActionCount(threads: number): number {
+    return (1 + this.tier) * threads;
+  }
 }

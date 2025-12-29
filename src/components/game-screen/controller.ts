@@ -5,13 +5,13 @@ export class GameScreenController extends BaseController {
   hostConnected() {
     super.hostConnected();
 
-    document.addEventListener('keypress', this.handleKeyPress);
+    document.addEventListener('keydown', this.handleKeyDown);
   }
 
   hostDisconnected() {
     super.hostDisconnected();
 
-    document.removeEventListener('keypress', this.handleKeyPress);
+    document.removeEventListener('keydown', this.handleKeyDown);
   }
 
   private pause() {
@@ -27,41 +27,49 @@ export class GameScreenController extends BaseController {
   }
 
   private upgradeMainframeHardware() {
-    this.mainframeState.hardware.purchaseMax();
+    this.mainframeState.hardware.upgrader.upgradeMaxAllParameters();
   }
 
   private upgradeMainframePerformance() {
-    this.mainframeState.hardware.performance.purchaseMax();
+    this.mainframeState.hardware.upgrader.upgradeMaxParameter('performance');
   }
 
   private upgradeMainframeRam() {
-    this.mainframeState.hardware.ram.purchaseMax();
+    this.mainframeState.hardware.upgrader.upgradeMaxParameter('ram');
   }
 
   private upgradeMainframeCores() {
-    this.mainframeState.hardware.cores.purchaseMax();
+    this.mainframeState.hardware.upgrader.upgradeMaxParameter('cores');
   }
 
   private upgradeMainframePrograms() {
-    this.mainframeState.programs.upgradeMaxAllPrograms();
+    this.mainframeState.programs.upgrader.upgradeMaxAllPrograms();
   }
 
   private upgradeClonesLevel() {
-    this.companyState.clones.upgradeMaxAllLevels();
+    this.clonesState.ownedClones.levelUpgrader.upgradeMaxAllClones();
   }
 
   private getHotkeyByKey(key: string): Hotkey | undefined {
     return this.settingsState.hotkeys.getHotkeyByKey(key);
   }
 
-  private handleKeyPress = (event: KeyboardEvent) => {
+  private saveGame() {
+    this.app.saveGame();
+  }
+
+  private startContracts() {
+    this.automationState.contracts.starter.startAllAssignments();
+  }
+
+  private handleKeyDown = (event: KeyboardEvent) => {
     const target = event.composedPath()[0];
 
     if (target instanceof HTMLInputElement) {
       return;
     }
 
-    const key = event.key.toLowerCase();
+    const key = event.key;
     const hotkey = this.getHotkeyByKey(key);
 
     if (!hotkey) {
@@ -77,6 +85,12 @@ export class GameScreenController extends BaseController {
         break;
       case Hotkey.playFastSpeed:
         this.playFast();
+        break;
+      case Hotkey.saveGame:
+        this.saveGame();
+        break;
+      case Hotkey.addContractAssignments:
+        this.startContracts();
         break;
       case Hotkey.upgradeMainframeHardware:
         this.upgradeMainframeHardware();

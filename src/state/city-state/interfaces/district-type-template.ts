@@ -1,23 +1,20 @@
-import { IExponent } from '@shared/index';
-import { IDistrictTypeMultiplierParameters } from './district-type-multiplier-parameters';
+import { IExponent, RewardParameterWithBase, DistrictTypeRewardParameter, ILinear } from '@shared/index';
 
 export interface IDistrictTypeTemplate {
-  captureDifficulty: IExponent;
-  parameters: {
-    experience: IExponent;
-    money: IExponent;
-    developmentPoints: IExponent;
-    districtTierPoints: {
-      requirements: IExponent;
-      pointsMultiplier: IExponent;
-    };
-    synchronization: IExponent;
-    connectivity: {
-      pointsMultiplier: IExponent;
-      programPointsMultiplier: IExponent;
-    };
-    codeBase: IDistrictTypeMultiplierParameters;
-    computationalBase: IDistrictTypeMultiplierParameters;
-    rewards: IDistrictTypeMultiplierParameters;
+  activityRequirementModifier: number;
+  primaryActivityTimeMultipliers: {
+    contractGenerationTime: number;
   };
+  synchronization: ILinear;
+  parameters: Record<
+    DistrictTypeRewardParameter,
+    {
+      progression: ILinear;
+      exponent: number;
+    }
+  >;
+  requirements: {
+    influence: IExponent;
+  };
+  multiplierParameterBases: Record<RewardParameterWithBase, number>;
 }

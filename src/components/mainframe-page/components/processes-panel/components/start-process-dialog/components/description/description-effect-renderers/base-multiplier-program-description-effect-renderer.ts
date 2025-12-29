@@ -50,7 +50,7 @@ export abstract class BaseMultiplierDescriptionEffectRenderer implements IDescri
 
   public renderEffect = () => {
     return html` <p>
-      ${COMMON_TEXTS.parameterValue(
+      ${COMMON_TEXTS.parameterRow(
         REWARD_PARAMETER_NAMES[this.parameterName](),
         PROGRAM_DESCRIPTION_TEXTS.parameterCompletionDiffs(
           html`<span data-value=${VALUES.value}></span>`,

@@ -1,9 +1,8 @@
 import { css } from 'lit';
-import { highlightedValuesStyle, hintStyle } from '@shared/index';
+import { highlightedValuesStyle } from '@shared/index';
 
 const styles = [
   highlightedValuesStyle,
-  hintStyle,
   css`
     :host {
       display: flex;

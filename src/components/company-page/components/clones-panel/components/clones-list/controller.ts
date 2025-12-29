@@ -1,21 +1,21 @@
-import { IClone } from '@state/company-state/states/clone-factory/interfaces/clone';
-import { BaseController } from '@shared/base-controller';
+import { IClone } from '@state/clones-state';
+import { BaseController } from '@shared/index';
 
 export class ClonesListController extends BaseController {
   listClones(): IClone[] {
-    return this.companyState.clones.listClones();
+    return this.clonesState.ownedClones.listClones();
   }
 
   toggleAutoupgrade(active: boolean) {
-    this.companyState.clones.toggleAllClonesAutoupgrade(active);
+    this.clonesState.ownedClones.toggleAllClonesAutoupgrade(active);
   }
 
   moveClone(cloneId: string, newPosition: number) {
-    this.companyState.clones.moveClone(cloneId, newPosition);
+    this.clonesState.ownedClones.moveClone(cloneId, newPosition);
     this.host.requestUpdate();
   }
 
   deleteAllClones() {
-    this.companyState.clones.deleteAllClones();
+    this.clonesState.ownedClones.deleteAllClones();
   }
 }

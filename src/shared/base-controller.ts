@@ -1,15 +1,19 @@
 import { ReactiveController, ReactiveControllerHost } from 'lit';
-import { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
-import { IAppState } from '@state/app-state/interfaces/app-state';
-import { IGlobalState } from '@state/global-state/interfaces/global-state';
-import { ISettingsState } from '@state/settings-state/interfaces/settings-state';
-import { ICityState } from '@state/city-state/interfaces/city-state';
-import { IMessageLogState } from '@state/message-log-state/interfaces/message-log-state';
-import { IMainframeState } from '@state/mainframe-state/interfaces/mainframe-state';
-import { INotificationsState } from '@state/notifications-state/interfaces/notifications-state';
-import { IGrowthState } from '@state/growth-state/interfaces/growth-state';
-import { IAutomationState } from '@state/automation-state/interfaces/automation-state';
-import { ICompanyState } from '@state/company-state/interfaces/company-state';
+import { IStateUIConnector } from '@state/state-ui-connector';
+import { IAppState } from '@state/app-state';
+import { IGlobalState } from '@state/global-state';
+import { ISettingsState } from '@state/settings-state';
+import { ICityState } from '@state/city-state';
+import { IMessageLogState } from '@state/message-log-state';
+import { IMainframeState } from '@state/mainframe-state';
+import { INotificationsState } from '@state/notifications-state';
+import { IGrowthState } from '@state/growth-state';
+import { IAutomationState } from '@state/automation-state';
+import { IClonesState } from '@state/clones-state';
+import { IActivityState } from '@state/activity-state';
+import { IScenarioState } from '@state/scenario-state';
+import { IUnlockState } from '@state/unlock-state';
+import { IFactionState } from '@state/faction-state';
 import { container } from '@state/container';
 import { TYPES } from '@state/types';
 import { IApp } from '@state/app';
@@ -60,6 +64,18 @@ export class BaseController<T extends ReactiveControllerHost & HTMLElement = Rea
     return BaseController.getContainerValue(TYPES.AppState);
   }
 
+  protected get scenarioState(): IScenarioState {
+    return BaseController.getContainerValue(TYPES.ScenarioState);
+  }
+
+  protected get factionState(): IFactionState {
+    return BaseController.getContainerValue(TYPES.FactionState);
+  }
+
+  protected get unlockState(): IUnlockState {
+    return BaseController.getContainerValue(TYPES.UnlockState);
+  }
+
   protected get globalState(): IGlobalState {
     return BaseController.getContainerValue(TYPES.GlobalState);
   }
@@ -92,7 +108,11 @@ export class BaseController<T extends ReactiveControllerHost & HTMLElement = Rea
     return BaseController.getContainerValue(TYPES.AutomationState);
   }
 
-  protected get companyState(): ICompanyState {
-    return BaseController.getContainerValue(TYPES.CompanyState);
+  protected get clonesState(): IClonesState {
+    return BaseController.getContainerValue(TYPES.ClonesState);
+  }
+
+  protected get activityState(): IActivityState {
+    return BaseController.getContainerValue(TYPES.ActivityState);
   }
 }

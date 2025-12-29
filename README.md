@@ -1,12 +1,22 @@
-# Cyberiada
+# Project: Idle Takeover
 
 ## About
 
-Cybariada is an idle management game, heavily inspired by [Bitburner](https://github.com/bitburner-official/bitburner-src), in which player controls AI on mainframe and group of clones to collect intel. Player visits different cities, which cover different scenarios, and by working for various factions unlocks new features. Mainframe provides various support buffs, performs hacking and automates gameplay while clones perform sidejobs, contracts and operations.
+Project: Idle Takeover is an idle management game, heavily inspired by [Bitburner](https://github.com/bitburner-official/bitburner-src), in which player controls AI on mainframe and group of clones to collect intel. Player visits different cities, which cover different scenarios, and by working for various factions unlocks new features. Mainframe provides various support buffs, performs hacking and automates gameplay while clones perform sidejobs, contracts and operations.
 
-Cyberiada is currenly under development. It has roadmap available but info here may be outdated.
+Project: Idle Takeover is currenly under development. It has roadmap available but info here may be outdated.
 
 Discord for discussions and feedback is available here: https://discord.gg/CmsTxU2EMw
+
+## Troubleshooting
+
+### High memory usage
+
+Disabling popup messages on settings page by setting duration to 0 can reduce memory usage.
+
+### CPU spikes after setting tab active
+
+After tab is active again, game tries to perform frame updates which didn't happened when tab was inactive. Amount of updates is on settings page, reduce it in case high CPU usage. This parameter is also used by fast forwarding, which runs game at highest speed possible.
 
 ## Local development and contribution
 

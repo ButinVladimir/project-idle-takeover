@@ -47,6 +47,10 @@ export default defineConfig({
         replacement: path.resolve(__dirname, './src/texts'),
       },
       {
+        find: '@validators',
+        replacement: path.resolve(__dirname, './src/validators'),
+      },
+      {
         find: /\/assets\/icons\/(.+)/,
         replacement: `${iconsPath}/$1`,
       },
@@ -57,5 +61,5 @@ export default defineConfig({
       plugins: [],
     },
   },
-  base: '/cyberiada/',
+  base: '/project-idle-takeover/',
 });

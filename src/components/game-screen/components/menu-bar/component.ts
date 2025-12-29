@@ -1,9 +1,6 @@
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import constants from '@configs/constants.json';
-import { BaseComponent } from '@shared/base-component';
-import { OVERVIEW_MENU_ITEMS, MISC_MENU_ITEMS } from '@shared/constants';
-import { Feature } from '@shared/types';
+import { BaseComponent, OVERVIEW_MENU_ITEMS, MISC_MENU_ITEMS, typedConstants } from '@shared/index';
 import { MenuBarController } from './controller';
 import styles from './styles';
 
@@ -41,10 +38,10 @@ export class MenuBar extends BaseComponent {
   }
 
   private renderMenuItem = (menuItem: string) => {
-    const requirements = constants.menuUnlockRequirements as Record<string, Feature>;
-    const feature = requirements[menuItem] as Feature | undefined;
+    const requirements = typedConstants.menuUnlockRequirements;
+    const milestone = requirements[menuItem];
 
-    if (feature && !this._controller.isFeatureUnlocked(feature)) {
+    if (milestone && !this._controller.isMilestoneUnlocked(milestone)) {
       return nothing;
     }
 

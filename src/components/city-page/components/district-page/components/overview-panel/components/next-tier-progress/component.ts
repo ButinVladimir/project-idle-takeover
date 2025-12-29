@@ -5,6 +5,7 @@ import { customElement } from 'lit/decorators.js';
 import { consume } from '@lit/context';
 import SlProgressBar from '@shoelace-style/shoelace/dist/components/progress-bar/progress-bar.component.js';
 import { BaseComponent, calculateLevelProgressPercentage } from '@shared/index';
+import { DistrictUnlockState } from '@state/city-state';
 import { CityDistrictOverviewPanelNextTierProgressController } from './controller';
 import { districtIndexContext } from '../../../../contexts';
 import styles from './styles';
@@ -36,13 +37,23 @@ export class CityDistrictOverviewPanelNextTierProgress extends BaseComponent {
       return nothing;
     }
 
+    const state = this._controller.getDistrictState(this._districtIndex);
+
+    if (state === DistrictUnlockState.locked) {
+      return nothing;
+    }
+
     return html`
-      <div class="title">${msg('Next district tier progress')}</div>
+      <div class="title">
+        ${state === DistrictUnlockState.captured ? msg('Next district tier progress') : msg('Capture progress')}
+      </div>
 
       <sl-progress-bar ${ref(this._progressBarRef)}> </sl-progress-bar>
 
       <p ${ref(this._hintRef)} class="progress-bar-hint">
-        ${msg(html`Next district tier will be reached in ${html`<span ${ref(this._timerRef)}></span>`}`)}
+        ${state === DistrictUnlockState.captured
+          ? msg(html`Next district tier will be reached in ${html`<span ${ref(this._timerRef)}></span>`}`)
+          : msg(html`District will be captured in ${html`<span ${ref(this._timerRef)}></span>`}`)}
       </p>
     `;
   }
@@ -53,7 +64,7 @@ export class CityDistrictOverviewPanelNextTierProgress extends BaseComponent {
     }
 
     const formatter = this._controller.formatter;
-    const currentPoints = this._controller.getDistrictTierPoints(this._districtIndex);
+    const currentPoints = this._controller.getDistrictInfluencePoints(this._districtIndex);
     const nexTierRequirements = this._controller.getNextTierRequirements(this._districtIndex);
 
     if (this._progressBarRef.value) {
@@ -66,7 +77,7 @@ export class CityDistrictOverviewPanelNextTierProgress extends BaseComponent {
       this._progressBarRef.value.value = nextDevelopmentLevelProgressBarValue;
     }
 
-    const developmentGrowth = this._controller.getDistrictTierGrowth(this._districtIndex);
+    const developmentGrowth = this._controller.getDistrictInfluenceGrowth(this._districtIndex);
 
     if (this._hintRef.value) {
       if (developmentGrowth > 0) {

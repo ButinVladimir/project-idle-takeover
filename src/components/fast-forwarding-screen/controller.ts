@@ -1,4 +1,4 @@
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 
 export class FastForwardingScreenController extends BaseController {
   get accumulatedTime(): number {

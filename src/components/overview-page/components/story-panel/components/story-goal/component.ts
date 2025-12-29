@@ -1,16 +1,23 @@
 import { html, nothing } from 'lit';
 import { localized, msg, str } from '@lit/localize';
 import { customElement, property } from 'lit/decorators.js';
-import { BaseComponent, capitalizeFirstLetter, Feature, BaseController } from '@shared/index';
-import { StoryGoalState } from '@state/global-state';
-import { UNLOCKED_FEATURE_TEXTS, STORY_MESSAGES } from '@texts/index';
+import { BaseComponent, capitalizeFirstLetter, Milestone, MapSpecialEvent } from '@shared/index';
+import { ProgramName } from '@state/mainframe-state';
+import { MILESTONE_TEXTS, STORY_MESSAGES, SPECIAL_EVENTS_MESSAGES, FACTION_TEXTS } from '@texts/index';
 import { KEYS_SEPARATOR } from '../../../../constants';
 import styles from './styles';
+import { OverviewStoryGoalController } from './controller';
 
 @localized()
 @customElement('ca-overview-story-goal')
-export class OverviewStoryPanel extends BaseComponent {
+export class OverviewStoryGoal extends BaseComponent {
   static styles = styles;
+
+  @property({
+    attribute: 'name',
+    type: String,
+  })
+  name!: string;
 
   @property({
     attribute: 'level',
@@ -19,34 +26,72 @@ export class OverviewStoryPanel extends BaseComponent {
   level?: number;
 
   @property({
+    attribute: 'faction',
+    type: String,
+  })
+  faction?: string;
+
+  @property({
+    attribute: 'captured-districts-count',
+    type: Number,
+  })
+  capturedDistrictsCount?: number;
+
+  @property({
     attribute: 'messages',
     type: String,
   })
   messages?: string;
 
   @property({
-    attribute: 'unlock-features',
+    attribute: 'special-events',
     type: String,
   })
-  unlockFeatures?: string;
+  specialEvents?: string;
 
   @property({
-    attribute: 'state',
+    attribute: 'milestones',
     type: String,
   })
-  state!: StoryGoalState;
+  milestones?: string;
 
-  private _controller: BaseController;
+  @property({
+    attribute: 'programs',
+    type: String,
+  })
+  programs?: string;
+
+  @property({
+    attribute: 'clone-templates',
+    type: String,
+  })
+  cloneTemplates?: string;
+
+  @property({
+    attribute: 'sidejobs',
+    type: String,
+  })
+  sidejobs?: string;
+
+  @property({
+    attribute: 'contracts',
+    type: String,
+  })
+  contracts?: string;
+
+  private _controller: OverviewStoryGoalController;
 
   constructor() {
     super();
 
-    this._controller = new BaseController(this);
+    this._controller = new OverviewStoryGoalController(this);
   }
 
   protected renderDesktop() {
+    const disabled = !this._controller.isStoryEventUnlocked(this.name);
+
     return html`
-      <sl-details ?disabled=${this.state !== StoryGoalState.passed}>
+      <sl-details ?disabled=${disabled}>
         <h4 class="title" slot="summary">${this.renderSummary()}</h4>
 
         <article>${this.renderDetails()}</article>
@@ -60,7 +105,17 @@ export class OverviewStoryPanel extends BaseComponent {
     if (this.level !== undefined) {
       const formattedLevel = this._controller.formatter.formatLevel(this.level);
 
-      requirements.push(msg(str`development level ${formattedLevel}`));
+      requirements.push(msg(str`reached development level ${formattedLevel}`));
+    }
+
+    if (this.faction !== undefined) {
+      requirements.push(msg(str`joined ${FACTION_TEXTS[this.faction].title()}`));
+    }
+
+    if (this.capturedDistrictsCount !== undefined) {
+      const formattedCount = this._controller.formatter.formatNumberDecimal(this.capturedDistrictsCount);
+
+      requirements.push(msg(str`${formattedCount} captured districts`));
     }
 
     const result = capitalizeFirstLetter(requirements.join(', '));
@@ -69,24 +124,88 @@ export class OverviewStoryPanel extends BaseComponent {
   };
 
   private renderDetails = () => {
-    if (this.state !== StoryGoalState.passed) {
+    if (!this._controller.isStoryEventUnlocked(this.name)) {
       return nothing;
     }
 
-    const result = [];
-
-    if (this.messages) {
-      result.push(...this.messages.split(KEYS_SEPARATOR).map((message) => html`<p>${STORY_MESSAGES[message]()}</p>`));
-    }
-
-    if (this.unlockFeatures) {
-      result.push(
-        ...this.unlockFeatures
-          .split(KEYS_SEPARATOR)
-          .map((feature) => html`<p>${UNLOCKED_FEATURE_TEXTS[feature as Feature].message()}</p>`),
-      );
-    }
+    const result = [
+      ...this.renderMessages(),
+      ...this.renderMilestones(),
+      ...this.renderSpecialEvents(),
+      ...this.renderPrograms(),
+      ...this.renderCloneTemplates(),
+      ...this.renderSidejobs(),
+      ...this.renderContracts(),
+    ];
 
     return result;
+  };
+
+  private renderMessages = () => {
+    if (!this.messages) {
+      return [];
+    }
+
+    return this.messages.split(KEYS_SEPARATOR).map((message) => html`<p>${STORY_MESSAGES[message]()}</p>`);
+  };
+
+  private renderMilestones = () => {
+    if (!this.milestones) {
+      return [];
+    }
+
+    return this.milestones
+      .split(KEYS_SEPARATOR)
+      .map((milestone) => html`<p>${MILESTONE_TEXTS[milestone as Milestone].message()}</p>`);
+  };
+
+  private renderSpecialEvents = () => {
+    if (!this.specialEvents) {
+      return [];
+    }
+
+    return this.specialEvents
+      .split(KEYS_SEPARATOR)
+      .map((specialEvent) => html`<p>${SPECIAL_EVENTS_MESSAGES[specialEvent as MapSpecialEvent]()}</p>`);
+  };
+
+  private renderPrograms = () => {
+    if (!this.programs) {
+      return [];
+    }
+
+    return this.programs
+      .split(KEYS_SEPARATOR)
+      .map((programName) => html`<p>${this._controller.makeProgramUnlockMessage(programName as ProgramName)}</p>`);
+  };
+
+  private renderCloneTemplates = () => {
+    if (!this.cloneTemplates) {
+      return [];
+    }
+
+    return this.cloneTemplates
+      .split(KEYS_SEPARATOR)
+      .map((cloneTemplateName) => html`<p>${this._controller.makeCloneTemplateUnlockMessage(cloneTemplateName)}</p>`);
+  };
+
+  private renderSidejobs = () => {
+    if (!this.sidejobs) {
+      return [];
+    }
+
+    return this.sidejobs
+      .split(KEYS_SEPARATOR)
+      .map((sidejobName) => html`<p>${this._controller.makeSidejobUnlockMessage(sidejobName)}</p>`);
+  };
+
+  private renderContracts = () => {
+    if (!this.contracts) {
+      return [];
+    }
+
+    return this.contracts
+      .split(KEYS_SEPARATOR)
+      .map((contractName) => html`<p>${this._controller.makeContractUnlockMessage(contractName)}</p>`);
   };
 }

@@ -1,2 +1,2 @@
 import './development-level-progress';
-import './unlocked-features-progress';
+import './reached-milestones-progress';

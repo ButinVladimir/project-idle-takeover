@@ -1,5 +1,5 @@
-import { BaseController } from '@shared/base-controller';
-import { IMessage } from '@state/message-log-state/interfaces/message';
+import { BaseController } from '@shared/index';
+import { IMessage } from '@state/message-log-state';
 
 export class ToastsController extends BaseController {
   getToasts(): IMessage[] {

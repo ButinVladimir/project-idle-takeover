@@ -1,9 +1,10 @@
 import { html } from 'lit';
-import { msg } from '@lit/localize';
+import { localized, msg } from '@lit/localize';
 import { customElement } from 'lit/decorators.js';
 import { BaseComponent } from '@shared/index';
 import styles from './styles';
 
+@localized()
 @customElement('ca-settings-page')
 export class SettingsPage extends BaseComponent {
   static styles = styles;

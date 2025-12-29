@@ -1,13 +1,12 @@
-import { SidejobName } from '@state/company-state';
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 
 export class CityDistrictSidejobsListItemUnlockProgressController extends BaseController {
   getCurrentConnectivity(districtIndex: number) {
     return this.cityState.getDistrictState(districtIndex).parameters.connectivity.totalValue;
   }
 
-  getRequiredConnectivity(sidejobName: SidejobName) {
-    return this.companyState.sidejobs.getConnectivityRequirement(sidejobName);
+  getRequiredConnectivity(sidejobName: string) {
+    return this.activityState.sidejobActivityValidator.getConnectivityRequirement(sidejobName);
   }
 
   getConnectivityGrowth(districtIndex: number) {

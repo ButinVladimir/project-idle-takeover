@@ -1,15 +1,20 @@
 import { msg } from '@lit/localize';
-import { DistrictType } from '@shared/types';
 
-export const DISTRICT_TYPE_TEXTS = {
-  [DistrictType.residential]: {
+export const DISTRICT_TYPE_TEXTS: Record<
+  string,
+  {
+    title: () => string;
+    overview: () => string;
+  }
+> = {
+  residential: {
     title: () => msg('Residential district'),
     overview: () => msg(`Relatively silent arrays of houses. Residential districts don't have a lot of opportunities.`),
   },
-  [DistrictType.corpoDistrict]: {
-    title: () => msg('Corpo district'),
+  corpoPlaza: {
+    title: () => msg('Corpo plaza'),
     overview: () =>
-      msg(`Corpo districts house offices of corporations from entire world.
-It's a good place to make a raid to get a new tech or find a quick job.`),
+      msg(`Corpo plazas house offices of corporations from entire world.
+They can always provide a job but refuse to cooperate and share their secrets.`),
   },
 };

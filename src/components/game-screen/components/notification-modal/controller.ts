@@ -1,5 +1,5 @@
-import { BaseController } from '@shared/base-controller';
-import { INotification } from '@state/notifications-state/interfaces/notitification';
+import { BaseController } from '@shared/index';
+import { INotification } from '@state/notifications-state';
 
 export class NotificationModalController extends BaseController {
   hasUnreadNotifications(): boolean {
@@ -23,7 +23,7 @@ export class NotificationModalController extends BaseController {
     const notification = this.getUnreadNotification();
 
     if (notification) {
-      this.settingsState.toggleNotificationType(notification.notificationType, enabled);
+      this.settingsState.notificationTypes.toggleNotificationType(notification.notificationType, enabled);
       this.notificationsState.popUnreadNotification();
       this.host.requestUpdate();
     }

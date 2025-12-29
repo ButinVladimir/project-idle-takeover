@@ -1,3 +1,12 @@
-import { BaseAutobuyerProgramDescriptionEffectRenderer } from './base-autobuyer-program-description-effect-renderer';
+import { MainframeProgramsAutobuyerProgram } from '@state/mainframe-state';
+import { BaseAutomationProgramDescriptionEffectRenderer } from './base-automation-program-description-effect-renderer';
 
-export class MainframeProgramsAutobuyerDescriptionEffectRenderer extends BaseAutobuyerProgramDescriptionEffectRenderer {}
+export class MainframeProgramsAutobuyerDescriptionEffectRenderer extends BaseAutomationProgramDescriptionEffectRenderer {
+  protected getActionCount(): number {
+    return (this.program as MainframeProgramsAutobuyerProgram).calculateActionCount(this.threads);
+  }
+
+  protected getCurrentActionCount(): number {
+    return (this.program as MainframeProgramsAutobuyerProgram).calculateActionCount(this.currentThreads);
+  }
+}

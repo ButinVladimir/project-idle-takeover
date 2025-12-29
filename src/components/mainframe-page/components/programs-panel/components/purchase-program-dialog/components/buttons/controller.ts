@@ -1,4 +1,4 @@
-import { BaseController } from '@shared/base-controller';
+import { BaseController } from '@shared/index';
 import { ProgramName } from '@state/mainframe-state';
 
 export class PurchaseProgramDialogButtonsController extends BaseController {
@@ -11,10 +11,6 @@ export class PurchaseProgramDialogButtonsController extends BaseController {
   }
 
   getProgramCost(programName: ProgramName, tier: number, level: number): number {
-    return this.mainframeState.programs.getProgramCost(programName, tier, level);
-  }
-
-  isProgramAvailable(programName: ProgramName, tier: number, level: number): boolean {
-    return this.globalState.availableItems.programs.isItemAvailable(programName, tier, level);
+    return this.mainframeState.programs.calculateProgramCost(programName, tier, level);
   }
 }

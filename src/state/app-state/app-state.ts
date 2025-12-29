@@ -1,13 +1,17 @@
 import { inject, injectable } from 'inversify';
 import { msg } from '@lit/localize';
-import type { INotificationsState } from '@state/notifications-state/interfaces/notifications-state';
-import type { ISettingsState } from '@state/settings-state/interfaces/settings-state';
-import type { ICityState } from '@state/city-state/interfaces/city-state';
-import type { IMainframeState } from '@state/mainframe-state/interfaces/mainframe-state';
-import type { IGlobalState } from '@state/global-state/interfaces/global-state';
-import type { IAutomationState } from '@state/automation-state/interfaces/automation-state';
-import type { IGrowthState } from '@state/growth-state/interfaces/growth-state';
-import type { ICompanyState } from '@state/company-state/interfaces/company-state';
+import { type INotificationsState } from '@state/notifications-state';
+import { type ISettingsState } from '@state/settings-state';
+import { type ICityState } from '@state/city-state';
+import { type IMainframeState } from '@state/mainframe-state';
+import { type IGlobalState } from '@state/global-state';
+import { type IAutomationState } from '@state/automation-state';
+import { type IGrowthState } from '@state/growth-state';
+import { type IClonesState } from '@state/clones-state';
+import { type IActivityState } from '@state/activity-state';
+import { type IFactionState } from '@state/faction-state';
+import { type IScenarioState } from '@state/scenario-state';
+import { type IUnlockState } from '@state/unlock-state';
 import { GameSpeed } from '@state/global-state/types';
 import { TYPES } from '@state/types';
 import { NotificationType } from '@shared/types';
@@ -17,35 +21,41 @@ import { Migrator } from './migrator';
 
 @injectable()
 export class AppState implements IAppState {
-  private _notificationsState: INotificationsState;
-  private _globalState: IGlobalState;
-  private _growthState: IGrowthState;
-  private _settingsState: ISettingsState;
-  private _cityState: ICityState;
-  private _mainframeState: IMainframeState;
-  private _automationState: IAutomationState;
-  private _companyState: ICompanyState;
+  @inject(TYPES.NotificationsState)
+  private _notificationsState!: INotificationsState;
 
-  constructor(
-    @inject(TYPES.NotificationsState) _notificationsState: INotificationsState,
-    @inject(TYPES.GlobalState) _globalState: IGlobalState,
-    @inject(TYPES.GrowthState) _growthState: IGrowthState,
-    @inject(TYPES.SettingsState) _settingsState: ISettingsState,
-    @inject(TYPES.CityState) _cityState: ICityState,
-    @inject(TYPES.MainframeState) _mainframeState: IMainframeState,
-    @inject(TYPES.AutomationState)
-    _automationState: IAutomationState,
-    @inject(TYPES.CompanyState) _companyState: ICompanyState,
-  ) {
-    this._notificationsState = _notificationsState;
-    this._globalState = _globalState;
-    this._growthState = _growthState;
-    this._settingsState = _settingsState;
-    this._cityState = _cityState;
-    this._mainframeState = _mainframeState;
-    this._automationState = _automationState;
-    this._companyState = _companyState;
-  }
+  @inject(TYPES.ScenarioState)
+  private _scenarioState!: IScenarioState;
+
+  @inject(TYPES.FactionState)
+  private _factionState!: IFactionState;
+
+  @inject(TYPES.UnlockState)
+  private _unlockState!: IUnlockState;
+
+  @inject(TYPES.GlobalState)
+  private _globalState!: IGlobalState;
+
+  @inject(TYPES.GrowthState)
+  private _growthState!: IGrowthState;
+
+  @inject(TYPES.SettingsState)
+  private _settingsState!: ISettingsState;
+
+  @inject(TYPES.CityState)
+  private _cityState!: ICityState;
+
+  @inject(TYPES.MainframeState)
+  private _mainframeState!: IMainframeState;
+
+  @inject(TYPES.AutomationState)
+  private _automationState!: IAutomationState;
+
+  @inject(TYPES.ClonesState)
+  private _clonesState!: IClonesState;
+
+  @inject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
 
   updateState() {
     if (this._globalState.gameSpeed === GameSpeed.paused) {
@@ -85,24 +95,34 @@ export class AppState implements IAppState {
   async startNewState(): Promise<void> {
     await this._settingsState.startNewState();
     await this._globalState.startNewState();
+    await this._scenarioState.startNewState();
+    await this._factionState.startNewState();
+    await this._unlockState.startNewState();
+    await this._clonesState.startNewState();
     await this._cityState.startNewState();
     await this._mainframeState.startNewState();
     await this._automationState.startNewState();
-    await this._companyState.startNewState();
+    await this._activityState.startNewState();
 
     this._globalState.recalculate();
     this._growthState.clearValues();
+
+    this._scenarioState.storyEvents.visitEvents();
   }
 
   serialize(): ISerializedState {
     const saveState: ISerializedState = {
       gameVersion: CURRENT_VERSION,
+      scenario: this._scenarioState.serialize(),
+      faction: this._factionState.serialize(),
+      unlock: this._unlockState.serialize(),
       global: this._globalState.serialize(),
       settings: this._settingsState.serialize(),
+      clones: this._clonesState.serialize(),
       city: this._cityState.serialize(),
       mainframe: this._mainframeState.serialize(),
       automation: this._automationState.serialize(),
-      company: this._companyState.serialize(),
+      activity: this._activityState.serialize(),
     };
 
     return saveState;
@@ -115,8 +135,7 @@ export class AppState implements IAppState {
     if (migrator.hasMigrated) {
       this._notificationsState.pushNotification(
         NotificationType.gameVersionUpdated,
-        msg('Game version has been updated'),
-        true,
+        msg('Game version has been updated.'),
       );
     }
 
@@ -127,10 +146,14 @@ export class AppState implements IAppState {
 
     await this._settingsState.deserialize(migratedSaveData.settings);
     await this._globalState.deserialize(migratedSaveData.global);
+    await this._scenarioState.deserialize(migratedSaveData.scenario);
+    await this._factionState.deserialize(migratedSaveData.faction);
+    await this._unlockState.deserialize(migratedSaveData.unlock);
+    await this._clonesState.deserialize(migratedSaveData.clones);
     await this._cityState.deserialize(migratedSaveData.city);
     await this._mainframeState.deserialize(migratedSaveData.mainframe);
     await this._automationState.deserialize(migratedSaveData.automation);
-    await this._companyState.deserialize(migratedSaveData.company);
+    await this._activityState.deserialize(migratedSaveData.activity);
 
     this._globalState.recalculate();
     this._growthState.clearValues();
@@ -149,8 +172,9 @@ export class AppState implements IAppState {
   }
 
   private processSingleTick = () => {
+    this._activityState.processTick();
     this._mainframeState.processes.processTick();
-    this._companyState.processTick();
+    this._clonesState.recalculate();
     this._globalState.makeNextTick();
     this._cityState.recalculate();
     this._globalState.recalculate();
