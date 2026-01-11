@@ -3,6 +3,7 @@ import { localized, msg, str } from '@lit/localize';
 import { provide } from '@lit/context';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { repeat } from 'lit/directives/repeat.js';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import {
   BaseComponent,
@@ -17,7 +18,6 @@ import { type IContractAssignment } from '@state/automation-state';
 import { ContractAssignmentsListItemController } from './controller';
 import { contractAssignmentActivityContext } from './contexts';
 import styles from './styles';
-import { repeat } from 'lit/directives/repeat.js';
 
 @localized()
 @customElement('ca-contract-assignments-list-item')

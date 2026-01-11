@@ -81,7 +81,7 @@ export class ContractsAutomationState implements IContractsAutomationState {
       contractAssignment = this.makeContractAssignment({
         id: uuid(),
         contract: parameters.contract,
-        active: true,
+        enabled: true,
       });
 
       this._contractAssignmentsList.push(contractAssignment);
@@ -225,7 +225,7 @@ export class ContractsAutomationState implements IContractsAutomationState {
     return new ContractAssignment({
       id: serializedState.id,
       contract: this._activityState.contractsFactory.makeContract(serializedState.contract),
-      enabled: serializedState.active,
+      enabled: serializedState.enabled,
     });
   }
 }

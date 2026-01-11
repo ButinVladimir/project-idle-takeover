@@ -22,10 +22,7 @@ export class StatisticsMoneyExpenses extends BaseComponent {
 
   protected renderDesktop() {
     const formatter = this._controller.formatter;
-    const moneyTotal = PURCHASE_TYPES.reduce(
-      (sum, purchaseType) => sum + this._controller.getMoneyExpenses(purchaseType),
-      0,
-    );
+    const moneyTotal = this.getTotalExpenses();
 
     return html`
       <sl-details>
@@ -39,6 +36,16 @@ export class StatisticsMoneyExpenses extends BaseComponent {
         </div>
       </sl-details>
     `;
+  }
+
+  private getTotalExpenses() {
+    let sum = 0;
+
+    for (const purchaseType of PURCHASE_TYPES) {
+      sum += this._controller.getMoneyExpenses(purchaseType);
+    }
+
+    return sum;
   }
 
   private renderExpenseArticle = (purchaseType: PurchaseType) => {

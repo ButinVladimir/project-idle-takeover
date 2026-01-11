@@ -55,20 +55,28 @@ export class ContractActivityValidator implements IContractActivityValidator {
 
   getAttributeValidTeamSize(contract: IContract, attribute: Attribute): number {
     const requiredValue = contract.getAttributeRequirement(attribute);
+    let sum = 0;
 
-    return contract.assignedClones.reduce(
-      (sum, clone) => (clone.getTotalAttributeValue(attribute) >= requiredValue ? sum + 1 : sum),
-      0,
-    );
+    for (const clone of contract.assignedClones) {
+      if (clone.getTotalAttributeValue(attribute) >= requiredValue) {
+        sum++;
+      }
+    }
+
+    return sum;
   }
 
   getSkillValidTeamSize(contract: IContract, skill: Skill): number {
     const requiredValue = contract.getSkillRequirement(skill);
+    let sum = 0;
 
-    return contract.assignedClones.reduce(
-      (sum, clone) => (clone.getTotalSkillValue(skill) >= requiredValue ? sum + 1 : sum),
-      0,
-    );
+    for (const clone of contract.assignedClones) {
+      if (clone.getTotalSkillValue(skill) >= requiredValue) {
+        sum++;
+      }
+    }
+
+    return sum;
   }
 
   private checkRequirements(contract: IContract): boolean {
