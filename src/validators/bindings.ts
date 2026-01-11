@@ -47,136 +47,136 @@ validatorContainer
   .bind<IMainValidatorFacade>(VALIDATOR_TYPES.MainValidatorFacade)
   .to(MainValidatorFacade)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IValidatorFacade>(VALIDATOR_TYPES.ProgramValidatorFacade)
   .to(ProgramValidatorFacade)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IProgramValidator>(VALIDATOR_TYPES.ProgramValidator)
   .to(ProgramValidator)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IValidatorFacade>(VALIDATOR_TYPES.NameValidatorFacade)
   .to(NameValidatorFacade)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<INameValidator>(VALIDATOR_TYPES.NameValidator)
   .to(NameValidator)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IValidatorFacade>(VALIDATOR_TYPES.ThemeValidatorFacade)
   .to(ThemeValidatorFacade)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IThemeValidator>(VALIDATOR_TYPES.ThemeValidator)
   .to(ThemeValidator)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IValidatorFacade>(VALIDATOR_TYPES.CloneTemplateValidatorFacade)
   .to(CloneTemplateValidatorFacade)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<ICloneTemplateValidator>(VALIDATOR_TYPES.CloneTemplateValidator)
   .to(CloneTemplateValidator)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IValidatorFacade>(VALIDATOR_TYPES.SidejobValidatorFacade)
   .to(SidejobValidatorFacade)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<ISidejobValidator>(VALIDATOR_TYPES.SidejobValidator)
   .to(SidejobValidator)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IValidatorFacade>(VALIDATOR_TYPES.ContractValidatorFacade)
   .to(ContractValidatorFacade)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IContractValidator>(VALIDATOR_TYPES.ContractValidator)
   .to(ContractValidator)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IValidatorFacade>(VALIDATOR_TYPES.DistrictTypeValidatorFacade)
   .to(DistrictTypeValidatorFacade)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IDistrictTypeValidator>(VALIDATOR_TYPES.DistrictTypeValidator)
   .to(DistrictTypeValidator)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IValidatorFacade>(VALIDATOR_TYPES.FactionValidatorFacade)
   .to(FactionValidatorFacade)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IFactionValidator>(VALIDATOR_TYPES.FactionValidator)
   .to(FactionValidator)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IValidatorFacade>(VALIDATOR_TYPES.ConstantsValidatorFacade)
   .to(ConstantsValidatorFacade)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IConstantsValidator>(VALIDATOR_TYPES.ConstantsValidator)
   .to(ConstantsValidator)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IValidatorFacade>(VALIDATOR_TYPES.StoryEventsValidatorFacade)
   .to(StoryEventsValidatorFacade)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IStoryEventsValidator>(VALIDATOR_TYPES.StoryEventsValidator)
   .to(StoryEventsValidator)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IValidatorFacade>(VALIDATOR_TYPES.ScenariosValidatorFacade)
   .to(ScenariosValidatorFacade)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();
 
 validatorContainer
   .bind<IScenariosValidator>(VALIDATOR_TYPES.ScenariosValidator)
   .to(ScenariosValidator)
   .inSingletonScope()
-  .whenTargetIsDefault();
+  .whenDefault();

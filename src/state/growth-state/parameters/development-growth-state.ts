@@ -92,6 +92,10 @@ export class DevelopmentGrowthState implements IDevelopmentGrowthState {
   }
 
   private updateTotalGrowth() {
-    this._totalGrowth = INCOME_SOURCES.reduce((sum, incomeSource) => sum + this.getGrowth(incomeSource), 0);
+    this._totalGrowth = 0;
+
+    for (const incomeSource of INCOME_SOURCES) {
+      this._totalGrowth += this.getGrowth(incomeSource);
+    }
   }
 }

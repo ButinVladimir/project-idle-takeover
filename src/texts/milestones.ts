@@ -105,7 +105,6 @@ Primary activity can increase certain parameters, like faction influence and not
   [Milestone.reachedEndOfTheGame]: {
     title: () => msg('Reached the end of the game'),
     hint: () => msg('The end of the game was reached'),
-    message: () =>
-      msg(`The end of the game was reached.`),
+    message: () => msg(`The end of the game was reached.`),
   },
 };

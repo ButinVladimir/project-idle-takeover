@@ -156,9 +156,8 @@ export class PrimaryActivityQueue implements IPrimaryActivityQueue {
 
       if (performanceResult === PrimaryActivityPerformResult.reward) {
         this.rewardActivity(activity);
+        this._activityState.requestReassignment();
       }
-
-      this._activityState.requestReassignment();
     }
   }
 

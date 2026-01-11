@@ -46,7 +46,7 @@ export class ContractAssignment implements IContractAssignment {
     return {
       id: this._id,
       contract: this._contract.serialize(),
-      active: this._enabled,
+      enabled: this._enabled,
     };
   }
 

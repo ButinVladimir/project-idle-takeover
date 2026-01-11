@@ -12,9 +12,9 @@ import { IAvailableCategoryItemsState, IAvailableCategoryItemsSerializedState, t
 const { lazyInject } = decorators;
 
 @injectable()
-export abstract class BaseAvailableCategoryItemsState<Key extends string = string>
-  implements IAvailableCategoryItemsState<Key>
-{
+export abstract class BaseAvailableCategoryItemsState<
+  Key extends string = string,
+> implements IAvailableCategoryItemsState<Key> {
   @lazyInject(TYPES.StateUIConnector)
   protected _stateUiConnector!: IStateUIConnector;
 

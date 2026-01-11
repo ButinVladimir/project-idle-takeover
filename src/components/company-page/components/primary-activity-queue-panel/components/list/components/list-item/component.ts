@@ -84,7 +84,7 @@ export class PrimaryActivityQueueListItem extends BaseComponent {
               class="menu-button"
               label=${cancelActivityLabel}
               name=${DELETE_VALUES.icon}
-              @click=${this.handleOpenDeleteCloneDialog}
+              @click=${this.handleCancelActivityDialog}
             ></sl-icon-button>
           </sl-tooltip>
         </div>
@@ -112,7 +112,7 @@ export class PrimaryActivityQueueListItem extends BaseComponent {
     }
   }
 
-  private handleOpenDeleteCloneDialog = () => {
+  private handleCancelActivityDialog = () => {
     if (!this._activity) {
       return;
     }

@@ -189,10 +189,22 @@ export class Contract implements IContract {
   }
 
   private getAttributeSum(attribute: Attribute): number {
-    return this._assignedClones.reduce((sum, clone) => sum + clone.getTotalAttributeValue(attribute), 0);
+    let sum = 0;
+
+    for (const clone of this._assignedClones) {
+      sum += clone.getTotalAttributeValue(attribute);
+    }
+
+    return sum;
   }
 
   private getSkillSum(skill: Skill): number {
-    return this._assignedClones.reduce((sum, clone) => sum + clone.getTotalSkillValue(skill), 0);
+    let sum = 0;
+
+    for (const clone of this._assignedClones) {
+      sum += clone.getTotalSkillValue(skill);
+    }
+
+    return sum;
   }
 }
