@@ -7,8 +7,8 @@ const styles = [
     .host-content {
       width: 100%;
       display: flex;
-      gap: var(--sl-spacing-small);
-      padding: var(--sl-spacing-small);
+      gap: var(--ca-table-column-gap);
+      padding: var(--ca-table-column-gap);
       box-sizing: border-box;
 
       p.title {

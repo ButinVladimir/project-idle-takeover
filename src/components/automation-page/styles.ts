@@ -17,8 +17,8 @@ export const autobuyerStyles = [
       border: var(--ca-border);
       border-radius: var(--sl-border-radius-small);
       display: grid;
-      row-gap: var(--sl-spacing-small);
-      column-gap: var(--sl-spacing-small);
+      row-gap: var(--ca-panel-description-gap);
+      column-gap: var(--ca-panel-column-gap);
 
       & h4.title {
         grid-area: title;
@@ -70,10 +70,6 @@ const automationPageStyles = [
   css`
     :host {
       display: block;
-    }
-
-    h3.title {
-      margin-bottom: var(--sl-spacing-2x-small);
     }
   `,
 ];

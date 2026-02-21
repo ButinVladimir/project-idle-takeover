@@ -23,7 +23,7 @@ const styles = [
 
       div.buttons {
         display: flex;
-        gap: var(--sl-spacing-medium);
+        gap: var(--ca-panel-buttons-gap);
       }
 
       &.mobile {

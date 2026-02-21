@@ -21,8 +21,7 @@ const styles = css`
     display: flex;
     align-items: stretch;
     flex-direction: column;
-    gap: var(--sl-spacing-2x-large);
-    padding-top: var(--sl-spacing-large);
+    gap: var(--ca-section-gap);
   }
 `;
 

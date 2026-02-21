@@ -8,8 +8,8 @@ const styles = [
 
     .host-content {
       display: grid;
-      gap: var(--sl-spacing-small);
-      padding: var(--sl-spacing-small);
+      gap: var(---ca-table-column-gap);
+      padding: var(--ca-table-column-gap);
       box-sizing: border-box;
       border-bottom: var(--ca-border);
 
@@ -28,7 +28,7 @@ const styles = [
 
         &.visible {
           height: auto;
-          padding-top: var(--sl-spacing-medium);
+          padding-top: var(--ca-table-paragraph-gap);
         }
       }
 
@@ -36,7 +36,7 @@ const styles = [
         display: flex;
         align-items: center;
         flex-direction: row;
-        gap: var(--sl-spacing-small);
+        gap: var(--ca-table-buttons-gap);
       }
 
       &.desktop {

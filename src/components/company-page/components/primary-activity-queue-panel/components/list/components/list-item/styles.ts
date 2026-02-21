@@ -43,7 +43,7 @@ const styles = [
       }
 
       .description {
-        margin-top: var(--sl-spacing-small);
+        margin-top: var(--ca-panel-description-gap);
       }
     }
   `,

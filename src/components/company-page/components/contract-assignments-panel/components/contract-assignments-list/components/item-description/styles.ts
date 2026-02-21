@@ -13,11 +13,11 @@ const styles = [
 
     p.overview {
       margin-top: 0;
-      margin-bottom: var(--sl-spacing-small);
+      margin-bottom: var(--ca-table-paragraph-gap);
     }
 
     p.rewards {
-      margin-top: var(--sl-spacing-small);
+      margin-top: var(--ca-table-paragraph-gap);
       margin-bottom: 0;
     }
 

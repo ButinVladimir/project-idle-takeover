@@ -9,7 +9,7 @@ const styles = css`
     display: flex;
     align-items: center;
     flex-direction: row;
-    gap: var(--sl-spacing-small);
+    gap: var(--ca-table-buttons-gap);
 
     &.desktop {
       justify-content: flex-end;

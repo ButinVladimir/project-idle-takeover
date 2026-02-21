@@ -11,6 +11,7 @@ export const pageTitleStyle = css`
     font-size: var(--sl-font-size-2x-large);
     font-weight: var(--sl-font-weight-bold);
     margin-top: 0;
+    margin-bottom: var(--ca-page-title-gap);
     line-height: var(--sl-line-height-denser);
   }
 `;
@@ -251,7 +252,7 @@ export const dialogButtonsStyle = css`
   div.buttons {
     display: flex;
     justify-content: flex-end;
-    gap: var(--sl-spacing-medium);
+    gap: var(--ca-modal-buttons-gap);
   }
 `;
 

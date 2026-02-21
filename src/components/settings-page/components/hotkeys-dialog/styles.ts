@@ -29,23 +29,23 @@ const styles = [
 
     p.hint {
       margin-top: 0;
-      margin-bottom: var(--sl-spacing-small);
+      margin-bottom: var(--ca-modal-section-gap);
     }
 
     div.buttons-container {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--sl-spacing-medium);
+      gap: var(--ca-modal-buttons-gap);
     }
 
     div.hotkey-table {
       display: grid;
       grid-template-columns: 1fr auto;
       grid-template-rows: auto;
-      column-gap: var(--sl-spacing-3x-small);
-      row-gap: var(--sl-spacing-small);
+      column-gap: var(--ca-input-column-gap);
+      row-gap: var(--ca-input-row-gap);
       align-items: center;
-      margin-bottom: var(--sl-spacing-medium);
+      margin-bottom: var(--ca-modal-section-gap);
 
       div.hotkey-button-container {
         justify-self: flex-end;
@@ -53,7 +53,7 @@ const styles = [
     }
 
     sl-divider {
-      --spacing: var(--sl-spacing-medium);
+      --spacing: var(--ca-modal-section-gap);
     }
   `,
 ];

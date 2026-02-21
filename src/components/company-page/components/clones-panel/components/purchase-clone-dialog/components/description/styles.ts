@@ -14,7 +14,7 @@ const styles = [
 
     p.overview {
       margin-top: 0;
-      margin-bottom: var(--sl-spacing-medium);
+      margin-bottom: var(--ca-paragraph-gap);
     }
 
     p.text {
@@ -22,7 +22,7 @@ const styles = [
     }
 
     .attributes-skills-tables {
-      margin-top: var(--sl-spacing-medium);
+      margin-top: var(--ca-paragraph-gap);
     }
   `,
 ];

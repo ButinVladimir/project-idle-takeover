@@ -12,7 +12,7 @@ const styles = css`
 
   .header {
     display: grid;
-    gap: var(--sl-spacing-small);
+    gap: var(--ca-table-column-gap);
     align-items: center;
     border-bottom: var(--ca-border);
 
@@ -21,13 +21,13 @@ const styles = css`
       flex-wrap: wrap;
       align-items: center;
       flex-direction: row;
-      gap: var(--sl-spacing-small);
+      gap: var(--ca-table-buttons-gap);
     }
 
     &.mobile {
       grid-template-columns: auto;
       grid-template-rows: auto;
-      padding: var(--sl-spacing-medium) 0;
+      padding: var(--ca-table-column-gap) 0;
 
       .buttons {
         justify-content: flex-start;
@@ -37,7 +37,7 @@ const styles = css`
     &.desktop {
       grid-template-columns: 2fr 1fr 1fr 1fr auto;
       grid-template-rows: auto;
-      padding: var(--sl-spacing-small);
+      padding: var(--ca-table-column-gap);
 
       .header-column {
         font-weight: var(--sl-font-weight-bold);

@@ -7,7 +7,7 @@ const styles = [
     :host {
       display: flex;
       align-items: stretch;
-      gap: var(--sl-spacing-medium);
+      gap: var(--ca-modal-paragraph-gap);
       flex-direction: column;
     }
 

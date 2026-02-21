@@ -12,7 +12,7 @@ const styles = [
     }
 
     p.description {
-      margin: 0 0 var(--sl-spacing-medium);
+      margin: 0 0 var(--ca-modal-paragraph-gap);
     }
 
     p.text {
@@ -20,7 +20,7 @@ const styles = [
     }
 
     sl-radio-group {
-      margin: var(--sl-spacing-medium) 0;
+      margin: var(--ca-modal-section-gap) 0;
     }
   `,
 ];

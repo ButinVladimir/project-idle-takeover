@@ -40,6 +40,25 @@ body {
   --ca-table-row-odd-color: var(--sl-color-neutral-50);
 
   --ca-dragged-color: var(--sl-color-primary-100);
+
+  --ca-page-title-gap: var(--sl-spacing-2x-small);
+  --ca-section-gap: var(--sl-spacing-large);
+  --ca-paragraph-gap: var(--sl-spacing-medium);
+  --ca-buttons-gap: var(--sl-spacing-medium);
+  --ca-panel-row-gap: var(--sl-spacing-medium);
+  --ca-panel-column-gap: var(--sl-spacing-large);
+  --ca-panel-description-gap: var(--sl-spacing-small);
+  --ca-panel-buttons-gap: var(--sl-spacing-medium);
+  --ca-table-row-gap: var(--sl-spacing-small);
+  --ca-table-column-gap: var(--sl-spacing-small);
+  --ca-table-buttons-gap: var(--sl-spacing-small);
+  --ca-table-paragraph-gap: var(--sl-spacing-small);
+  --ca-input-row-gap: var(--sl-spacing-medium);
+  --ca-input-column-gap: var(--sl-spacing-medium);
+  --ca-empty-notification-gap: var(--sl-spacing-3x-large);
+  --ca-modal-section-gap: var(--sl-spacing-medium);
+  --ca-modal-paragraph-gap: var(--sl-spacing-medium);
+  --ca-modal-buttons-gap: var(--sl-spacing-small);
 }
 
 .sl-theme-dark {

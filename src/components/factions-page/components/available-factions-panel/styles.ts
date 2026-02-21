@@ -10,7 +10,7 @@ const styles = [
 
     p.hint {
       margin-top: 0;
-      margin-bottom: var(--sl-spacing-large);
+      margin-bottom: var(--ca-section-gap);
     }
   `,
 ];

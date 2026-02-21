@@ -12,7 +12,7 @@ const styles = [
 
     p.hint {
       margin-top: 0;
-      margin-bottom: var(--sl-spacing-large);
+      margin-bottom: var(--ca-section-gap);
     }
 
     div.top-container {
@@ -47,7 +47,7 @@ const styles = [
     }
 
     ca-processes-list {
-      margin-top: var(--sl-spacing-large);
+      margin-top: var(--ca-section-gap);
     }
   `,
 ];

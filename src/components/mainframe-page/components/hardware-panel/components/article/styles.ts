@@ -25,8 +25,8 @@ const styles = [
       border-radius: var(--sl-border-radius-small);
       display: grid;
 
-      row-gap: var(--sl-spacing-small);
-      column-gap: var(--sl-spacing-small);
+      row-gap: var(--ca-panel-row-gap);
+      column-gap: var(--ca-panel-column-gap);
 
       div.button-container {
         grid-area: buttons;

@@ -28,13 +28,13 @@ const styles = [
 
       div.events-container {
         display: grid;
-        column-gap: var(--sl-spacing-3x-small);
-        row-gap: var(--sl-spacing-3x-small);
+        column-gap: var(--ca-input-column-gap);
+        row-gap: var(--ca-input-row-gap);
         grid-template-rows: auto;
       }
 
       sl-checkbox.group-checkbox {
-        margin-bottom: var(--sl-spacing-small);
+        margin-bottom: var(--ca-input-row-gap);
       }
 
       &.mobile div.events-container {
@@ -48,11 +48,11 @@ const styles = [
 
     p.hint {
       margin-top: 0;
-      margin-bottom: var(--sl-spacing-small);
+      margin-bottom: var(--ca-modal-section-gap);
     }
 
     sl-divider {
-      --spacing: var(--sl-spacing-medium);
+      --spacing: var(--ca-modal-section-gap);
     }
   `,
 ];

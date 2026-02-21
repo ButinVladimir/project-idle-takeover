@@ -11,7 +11,7 @@ const styles = css`
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: var(--sl-spacing-3x-small);
+    gap: var(--ca-table-row-gap);
   }
 
   p {

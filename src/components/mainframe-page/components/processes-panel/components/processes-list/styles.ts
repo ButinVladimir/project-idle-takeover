@@ -11,7 +11,7 @@ const styles = css`
   .header {
     display: grid;
     grid-template-rows: auto;
-    gap: var(--sl-spacing-small);
+    gap: var(--ca-table-column-gap);
     align-items: center;
     border-bottom: var(--ca-border);
 
@@ -23,12 +23,12 @@ const styles = css`
       display: flex;
       align-items: center;
       flex-direction: row;
-      gap: var(--sl-spacing-small);
+      gap: var(--ca-table-buttons-gap);
     }
 
     &.mobile {
       grid-template-columns: auto;
-      padding: var(--sl-spacing-medium) 0;
+      padding: var(--ca-table-column-gap) 0;
 
       .buttons {
         flex-wrap: wrap;
@@ -38,7 +38,7 @@ const styles = css`
 
     &.desktop {
       grid-template-columns: 3fr 1fr 2fr auto;
-      padding: var(--sl-spacing-small);
+      padding: var(--ca-table-column-gap);
 
       .buttons {
         justify-content: flex-end;
@@ -48,7 +48,7 @@ const styles = css`
   }
 
   .notification {
-    padding: var(--sl-spacing-3x-large);
+    padding: var(--ca-empty-notification-gap);
     text-align: center;
     border-bottom: var(--ca-border);
   }

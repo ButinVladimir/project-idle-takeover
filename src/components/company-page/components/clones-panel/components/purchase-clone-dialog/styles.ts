@@ -27,7 +27,6 @@ const styles = [
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: flex-end;
-      gap: var(--sl-spacing-small);
     }
 
     :host {
@@ -46,9 +45,9 @@ const styles = [
 
     div.inputs-container {
       display: grid;
-      column-gap: var(--sl-spacing-medium);
-      row-gap: var(--sl-spacing-medium);
-      margin-bottom: var(--sl-spacing-medium);
+      column-gap: var(--ca-input-column-gap);
+      row-gap: var(--ca-input-row-gap);
+      margin-bottom: var(--ca-modal-section-gap);
 
       &.mobile {
         grid-template-columns: auto;
@@ -63,7 +62,7 @@ const styles = [
 
     p.hint {
       margin-top: 0;
-      margin-bottom: var(--sl-spacing-medium);
+      margin-bottom: var(--ca-modal-section-gap);
     }
 
     div.footer {

@@ -11,8 +11,8 @@ const styles = [
 
     .host-content {
       display: grid;
-      gap: var(--sl-spacing-small);
-      padding: var(--sl-spacing-small);
+      gap: var(--ca-table-column-gap);
+      padding: var(--ca-table-column-gap);
       box-sizing: border-box;
 
       &.mobile {
@@ -46,7 +46,7 @@ const styles = [
 
       &.visible {
         height: auto;
-        padding-top: var(--sl-spacing-medium);
+        padding-top: var(--ca-table-column-gap);
       }
     }
   `,

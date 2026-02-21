@@ -39,7 +39,7 @@ const styles = [
 
     p.hint {
       margin-top: 0;
-      margin-bottom: var(--sl-spacing-medium);
+      margin-bottom: var(--ca-paragraph-gap);
     }
 
     div.footer {
@@ -50,13 +50,13 @@ const styles = [
     }
 
     p.warning {
-      margin-top: var(--sl-spacing-3x-small);
-      margin-bottom: 0;
+      margin: 0;
     }
+
     div.footer div.buttons {
       display: flex;
       justify-content: flex-end;
-      gap: var(--sl-spacing-medium);
+      gap: var(--ca-modal-buttons-gap);
     }
   `,
 ];

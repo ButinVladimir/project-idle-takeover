@@ -54,7 +54,7 @@ const styles = [
       }
 
       ca-clones-list-item-description {
-        margin-top: var(--sl-spacing-small);
+        margin-top: var(--ca-panel-row-gap);
       }
     }
 

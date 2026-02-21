@@ -6,7 +6,7 @@ const styles = [
   css`
     :host {
       display: block;
-      margin-top: var(--sl-spacing-medium);
+      margin-top: var(--ca-modal-section-gap);
       margin-bottom: 0;
     }
 

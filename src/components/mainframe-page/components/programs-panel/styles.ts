@@ -8,7 +8,7 @@ const styles = [
       display: flex;
       align-items: flex-start;
       flex-direction: column;
-      gap: var(--sl-spacing-large);
+      gap: var(--ca-section-gap);
     }
 
     p.hint {

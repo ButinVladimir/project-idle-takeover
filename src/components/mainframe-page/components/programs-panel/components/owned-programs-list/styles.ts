@@ -12,7 +12,7 @@ const styles = css`
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto;
-    gap: var(--sl-spacing-small);
+    gap: var(--ca-table-column-gap);
     align-items: center;
     border-bottom: var(--ca-border);
 
@@ -22,17 +22,17 @@ const styles = css`
 
     &.desktop {
       grid-template-columns: 2fr 1fr 1fr auto;
-      padding: var(--sl-spacing-small);
+      padding: var(--ca-table-column-gap);
     }
 
     &.mobile {
       grid-template-columns: auto;
-      padding: var(--sl-spacing-medium) 0;
+      padding: var(--ca-table-column-gap) 0;
     }
   }
 
   .notification {
-    padding: var(--sl-spacing-3x-large);
+    padding: var(--ca-empty-notification-gap);
     text-align: center;
     border-bottom: var(--ca-border);
   }

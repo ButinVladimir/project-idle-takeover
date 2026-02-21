@@ -1,8 +1,6 @@
 import { css } from 'lit';
-import { pageTitleStyle } from '@shared/index';
 
 const cityDistrictPageStyles = [
-  pageTitleStyle,
   css`
     :host {
       display: flex;
@@ -11,15 +9,11 @@ const cityDistrictPageStyles = [
       position: relative;
     }
 
-    h3.title {
-      margin-bottom: 0;
-    }
-
     div.title {
       display: flex;
       align-items: center;
       margin-top: calc(-1 * var(--sl-spacing-2x-small));
-      margin-bottom: var(--sl-spacing-2x-small);
+      margin-bottom: var(--ca-page-title-gap);
     }
 
     sl-icon-button.go-back-btn {

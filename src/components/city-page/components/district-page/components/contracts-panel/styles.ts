@@ -11,15 +11,15 @@ const styles = [
 
     p.hint {
       margin-top: 0;
-      margin-bottom: var(--sl-spacing-large);
+      margin-bottom: var(--ca-section-gap);
     }
 
     .header {
       display: flex;
-      gap: var(--sl-spacing-small);
+      gap: var(--ca-table-column-gap);
       align-items: center;
       border-bottom: var(--ca-border);
-      padding: var(--sl-spacing-small);
+      padding: var(--ca-table-column-gap);
 
       .header-column {
         display: block;
@@ -40,7 +40,7 @@ const styles = [
     }
 
     .notification {
-      padding: var(--sl-spacing-3x-large);
+      padding: var(--ca-empty-notification-gap);
       text-align: center;
       border-bottom: var(--ca-border);
     }

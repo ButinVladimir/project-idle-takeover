@@ -92,6 +92,7 @@ export class CityMap extends BaseComponent {
       district-state=${district.state}
       ?selected=${false}
       size=${this._size}
+      theme=${this._controller.theme}
     ></ca-city-map-district>`;
   };
 
@@ -109,6 +110,7 @@ export class CityMap extends BaseComponent {
       district-state=${district.state}
       ?selected=${true}
       size=${this._size}
+      theme=${this._controller.theme}
     ></ca-city-map-district>`;
   };
 

@@ -29,13 +29,13 @@ const styles = [
 
     p.hint {
       margin-top: 0;
-      margin-bottom: var(--sl-spacing-small);
+      margin-bottom: var(--ca-modal-section-gap);
     }
 
     div.events-container {
       display: grid;
-      column-gap: var(--sl-spacing-3x-small);
-      row-gap: var(--sl-spacing-3x-small);
+      column-gap: var(--ca-input-column-gap);
+      row-gap: var(--ca-input-row-gap);
       grid-template-rows: auto;
 
       &.mobile {
@@ -48,7 +48,7 @@ const styles = [
     }
 
     sl-divider {
-      --spacing: var(--sl-spacing-medium);
+      --spacing: var(--ca-modal-section-gap);
     }
   `,
 ];
