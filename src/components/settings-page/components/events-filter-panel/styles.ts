@@ -10,7 +10,7 @@ const styles = css`
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: var(--ca-buttons-gap);
+    gap: var(--ca-section-buttons-gap);
   }
 `;
 

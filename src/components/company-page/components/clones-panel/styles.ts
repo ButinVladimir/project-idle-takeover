@@ -26,13 +26,13 @@ const styles = [
       &.mobile div.top-container {
         flex-direction: column;
         align-items: flex-start;
-        gap: var(--ca-panel-row-gap);
+        gap: var(--ca-section-buttons-gap);
       }
 
       &.desktop div.top-container {
         flex-direction: row;
         align-items: center;
-        gap: var(--ca-panel-column-gap);
+        gap: var(--ca-section-text-gap);
       }
     }
   `,

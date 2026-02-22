@@ -8,7 +8,7 @@ const styles = [
 
     .host-content {
       display: grid;
-      gap: var(---ca-table-column-gap);
+      gap: var(--ca-table-column-gap);
       padding: var(--ca-table-column-gap);
       box-sizing: border-box;
       border-bottom: var(--ca-border);

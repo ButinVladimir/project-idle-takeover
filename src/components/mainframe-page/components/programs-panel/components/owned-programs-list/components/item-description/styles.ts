@@ -11,7 +11,7 @@ const styles = css`
   }
 
   p.line-break {
-    height: var(--sl-spacing-medium);
+    height: var(--ca-table-paragraph-gap);
   }
 `;
 

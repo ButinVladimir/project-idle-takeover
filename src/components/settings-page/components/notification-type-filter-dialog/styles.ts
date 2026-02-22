@@ -34,8 +34,8 @@ const styles = [
 
     div.events-container {
       display: grid;
-      column-gap: var(--ca-input-column-gap);
-      row-gap: var(--ca-input-row-gap);
+      column-gap: var(--ca-checkbox-list-column-gap);
+      row-gap: var(--ca-checkbox-list-row-gap);
       grid-template-rows: auto;
 
       &.mobile {

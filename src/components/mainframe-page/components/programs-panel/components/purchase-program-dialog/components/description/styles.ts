@@ -15,7 +15,7 @@ const styles = [
     }
 
     p.line-break {
-      height: var(--sl-spacing-medium);
+      height: var(--ca-modal-paragraph-gap);
     }
   `,
 ];

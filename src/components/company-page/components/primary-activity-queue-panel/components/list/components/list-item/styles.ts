@@ -43,7 +43,7 @@ const styles = [
       }
 
       .description {
-        margin-top: var(--ca-panel-description-gap);
+        margin-top: var(--ca-table-paragraph-gap);
       }
     }
   `,

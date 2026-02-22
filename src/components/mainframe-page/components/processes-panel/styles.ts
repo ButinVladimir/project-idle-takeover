@@ -24,13 +24,13 @@ const styles = [
           'ram'
           'cores'
           'start-process';
-        gap: var(--sl-spacing-medium);
+        gap: var(--ca-section-buttons-gap);
       }
 
       &.desktop {
         grid-template-areas: 'start-process ram cores';
         align-items: center;
-        gap: var(--sl-spacing-3x-large);
+        gap: var(--ca-section-text-gap);
       }
     }
 

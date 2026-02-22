@@ -6,7 +6,7 @@ const automationPageAutobuyersPanelStyles = css`
     display: flex;
     align-items: stretch;
     flex-direction: column;
-    gap: var(--ca-section-gap);
+    gap: var(--ca-panel-row-gap);
   }
 `;
 

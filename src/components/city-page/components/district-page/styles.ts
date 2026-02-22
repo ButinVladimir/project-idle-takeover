@@ -1,12 +1,18 @@
 import { css } from 'lit';
+import { pageTitleStyle } from '@shared/styles';
 
 const cityDistrictPageStyles = [
+  pageTitleStyle,
   css`
     :host {
       display: flex;
       flex-direction: column;
       align-items: stretch;
       position: relative;
+    }
+
+    h3.title {
+      margin: 0;
     }
 
     div.title {

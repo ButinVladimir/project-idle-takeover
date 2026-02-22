@@ -39,7 +39,7 @@ const styles = [
 
     p.hint {
       margin-top: 0;
-      margin-bottom: var(--ca-paragraph-gap);
+      margin-bottom: var(--ca-modal-paragraph-gap);
     }
 
     div.footer {

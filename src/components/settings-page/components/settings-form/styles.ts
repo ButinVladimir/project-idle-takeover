@@ -28,13 +28,13 @@ const styles = [
       margin-bottom: var(--ca-section-gap);
 
       &.mobile {
-        row-gap: var(--ca-table-row-gap);
+        row-gap: var(--ca-input-row-gap);
         grid-template-columns: 1fr;
       }
 
       &.desktop {
-        row-gap: var(--ca-table-row-gap);
-        column-gap: var(--ca-table-column-gap);
+        row-gap: var(--ca-input-row-gap);
+        column-gap: var(--ca-input-column-gap);
         grid-template-columns: repeat(2, 1fr);
       }
     }

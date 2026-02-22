@@ -82,7 +82,7 @@ const styles = [
       flex-direction: column;
       align-items: stretch;
       justify-content: center;
-      gap: var(--ca-section-gap);
+      gap: var(--ca-panel-row-gap);
     }
   `,
 ];

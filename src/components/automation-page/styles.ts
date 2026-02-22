@@ -17,8 +17,8 @@ export const autobuyerStyles = [
       border: var(--ca-border);
       border-radius: var(--sl-border-radius-small);
       display: grid;
-      row-gap: var(--ca-panel-description-gap);
-      column-gap: var(--ca-panel-column-gap);
+      row-gap: var(--sl-spacing-small);
+      column-gap: var(--sl-spacing-large);
 
       & h4.title {
         grid-area: title;

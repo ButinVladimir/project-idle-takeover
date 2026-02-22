@@ -20,7 +20,7 @@ const styles = [
     }
 
     sl-radio-group {
-      margin: var(--ca-modal-section-gap) 0;
+      margin: var(--ca-modal-section-gap) 0 var(--ca-modal-paragraph-gap);
     }
   `,
 ];

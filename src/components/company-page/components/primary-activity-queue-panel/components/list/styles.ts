@@ -27,7 +27,7 @@ const styles = css`
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
-    gap: var(--ca-table-row-gap);
+    gap: var(--ca-panel-row-gap);
   }
 `;
 
