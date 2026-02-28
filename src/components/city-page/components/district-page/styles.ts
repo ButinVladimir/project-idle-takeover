@@ -1,5 +1,5 @@
 import { css } from 'lit';
-import { pageTitleStyle } from '@shared/index';
+import { pageTitleStyle } from '@shared/styles';
 
 const cityDistrictPageStyles = [
   pageTitleStyle,
@@ -12,14 +12,14 @@ const cityDistrictPageStyles = [
     }
 
     h3.title {
-      margin-bottom: 0;
+      margin: 0;
     }
 
     div.title {
       display: flex;
       align-items: center;
       margin-top: calc(-1 * var(--sl-spacing-2x-small));
-      margin-bottom: var(--sl-spacing-2x-small);
+      margin-bottom: var(--ca-page-title-gap);
     }
 
     sl-icon-button.go-back-btn {

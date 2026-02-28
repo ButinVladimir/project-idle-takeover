@@ -12,8 +12,4 @@ export class CityMapHighlightedDistrictController extends BaseController {
   get mapHeight() {
     return this.scenarioState.currentValues.map.height;
   }
-
-  get theme() {
-    return this.settingsState.theme;
-  }
 }

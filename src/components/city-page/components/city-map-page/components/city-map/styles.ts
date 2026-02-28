@@ -8,7 +8,7 @@ const cityMapStyles = css`
 
   .host-content {
     display: flex;
-    gap: var(--sl-spacing-medium);
+    gap: var(--ca-section-gap);
     width: 100%;
 
     div.content {

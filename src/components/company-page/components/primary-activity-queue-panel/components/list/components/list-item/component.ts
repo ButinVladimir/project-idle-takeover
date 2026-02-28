@@ -81,7 +81,7 @@ export class PrimaryActivityQueueListItem extends BaseComponent {
             <span slot="content">${cancelActivityLabel}</span>
 
             <sl-icon-button
-              class="menu-button"
+              class="delete-button"
               label=${cancelActivityLabel}
               name=${DELETE_VALUES.icon}
               @click=${this.handleCancelActivityDialog}

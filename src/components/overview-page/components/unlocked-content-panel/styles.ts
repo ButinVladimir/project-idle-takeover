@@ -16,8 +16,8 @@ export const unlockedItemsCategoryStyles = [
 
     .content-table {
       display: grid;
-      column-gap: var(--sl-spacing-small);
-      row-gap: var(--sl-spacing-3x-small);
+      column-gap: var(--ca-table-column-gap);
+      row-gap: var(--ca-table-row-gap);
       grid-template-columns: 1fr auto;
       grid-template-rows: auto;
 
@@ -46,7 +46,7 @@ export const unlockedContentStyles = [
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      gap: var(--sl-spacing-3x-small);
+      gap: var(--ca-table-row-gap);
     }
   `,
 ];
@@ -60,11 +60,11 @@ const styles = [
 
     p.hint {
       margin-top: 0;
-      margin-bottom: var(--sl-spacing-large);
+      margin-bottom: var(--ca-section-gap);
     }
 
     div.item-type-filter-container {
-      margin-bottom: var(--sl-spacing-2x-large);
+      margin-bottom: var(--ca-section-gap);
 
       &.mobile {
         width: 100%;
@@ -82,7 +82,7 @@ const styles = [
       flex-direction: column;
       align-items: stretch;
       justify-content: center;
-      gap: var(--sl-spacing-large);
+      gap: var(--ca-panel-row-gap);
     }
   `,
 ];

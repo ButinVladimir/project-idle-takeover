@@ -41,53 +41,55 @@ export class ContractAssignmentsList extends BaseComponent {
     const startHotkey = this._controller.getStartHotkey();
 
     return html`
-      <div class="header desktop">
-        <div class="header-column">${msg('Contract')}</div>
-        <div class="header-column">${msg('District')}</div>
-        <div class="header-column">${msg('Assigned clones')}</div>
-        <div class="header-column">${msg('Status')}</div>
-        <div class="buttons">
-          <sl-tooltip>
-            <div class="tooltip-content" slot="content">
-              <p>${startLabel}</p>
-              <p>${COMMON_TEXTS.hotkey(startHotkey)}</p>
-            </div>
+      <div class="items-list">
+        <div class="header desktop">
+          <div class="header-column">${msg('Contract')}</div>
+          <div class="header-column">${msg('District')}</div>
+          <div class="header-column">${msg('Assigned clones')}</div>
+          <div class="header-column">${msg('Status')}</div>
+          <div class="buttons">
+            <sl-tooltip>
+              <div class="tooltip-content" slot="content">
+                <p>${startLabel}</p>
+                <p>${COMMON_TEXTS.hotkey(startHotkey)}</p>
+              </div>
 
-            <sl-icon-button
-              ?disabled=${!canStartContractAssignments}
-              name=${START_ACTIVITY_ICON}
-              label=${startLabel}
-              @click=${this.handleStartAllContractAssignments}
-            >
-            </sl-icon-button>
-          </sl-tooltip>
+              <sl-icon-button
+                ?disabled=${!canStartContractAssignments}
+                name=${START_ACTIVITY_ICON}
+                label=${startLabel}
+                @click=${this.handleStartAllContractAssignments}
+              >
+              </sl-icon-button>
+            </sl-tooltip>
 
-          <sl-tooltip>
-            <span slot="content"> ${toggleContractAssignmentsLabel} </span>
+            <sl-tooltip>
+              <span slot="content"> ${toggleContractAssignmentsLabel} </span>
 
-            <sl-icon-button
-              name=${toggleContractAssignmentsIcon}
-              label=${toggleContractAssignmentsLabel}
-              @click=${this.handleToggleAllContractAssignments}
-            >
-            </sl-icon-button>
-          </sl-tooltip>
+              <sl-icon-button
+                name=${toggleContractAssignmentsIcon}
+                label=${toggleContractAssignmentsLabel}
+                @click=${this.handleToggleAllContractAssignments}
+              >
+              </sl-icon-button>
+            </sl-tooltip>
 
-          <sl-tooltip>
-            <span slot="content"> ${removeAllContractAssignments} </span>
+            <sl-tooltip>
+              <span slot="content"> ${removeAllContractAssignments} </span>
 
-            <sl-icon-button
-              id="delete-btn"
-              name=${DELETE_VALUES.icon}
-              label=${removeAllContractAssignments}
-              @click=${this.handleOpenRemoveAllContractAssignmentsDialog}
-            >
-            </sl-icon-button>
-          </sl-tooltip>
+              <sl-icon-button
+                id="delete-btn"
+                name=${DELETE_VALUES.icon}
+                label=${removeAllContractAssignments}
+                @click=${this.handleOpenRemoveAllContractAssignmentsDialog}
+              >
+              </sl-icon-button>
+            </sl-tooltip>
+          </div>
         </div>
-      </div>
 
-      ${this.renderContractAssignmentsList()}
+        ${this.renderContractAssignmentsList()}
+      </div>
     `;
   }
 
@@ -111,45 +113,47 @@ export class ContractAssignmentsList extends BaseComponent {
     const startHotkey = this._controller.getStartHotkey();
 
     return html`
-      <div class="header mobile">
-        <div class="buttons">
-          <sl-tooltip>
-            <span slot="content">${COMMON_TEXTS.hotkey(startHotkey)} </span>
+      <div class="items-list">
+        <div class="header mobile">
+          <div class="buttons">
+            <sl-tooltip>
+              <span slot="content">${COMMON_TEXTS.hotkey(startHotkey)} </span>
+
+              <sl-button
+                ?disabled=${!canStartContractAssignments}
+                variant=${startVariant}
+                size="medium"
+                @click=${this.handleStartAllContractAssignments}
+              >
+                <sl-icon slot="prefix" name=${START_ACTIVITY_ICON}></sl-icon>
+
+                ${startLabel}
+              </sl-button>
+            </sl-tooltip>
 
             <sl-button
-              ?disabled=${!canStartContractAssignments}
-              variant=${startVariant}
+              variant=${toggleContractAssignmentsVariant}
               size="medium"
-              @click=${this.handleStartAllContractAssignments}
+              @click=${this.handleToggleAllContractAssignments}
             >
-              <sl-icon slot="prefix" name=${START_ACTIVITY_ICON}></sl-icon>
+              <sl-icon slot="prefix" name=${toggleContractAssignmentsIcon}></sl-icon>
 
-              ${startLabel}
+              ${toggleContractAssignmentsLabel}
             </sl-button>
-          </sl-tooltip>
 
-          <sl-button
-            variant=${toggleContractAssignmentsVariant}
-            size="medium"
-            @click=${this.handleToggleAllContractAssignments}
-          >
-            <sl-icon slot="prefix" name=${toggleContractAssignmentsIcon}></sl-icon>
-
-            ${toggleContractAssignmentsLabel}
-          </sl-button>
-
-          <sl-button
-            variant=${DELETE_VALUES.buttonVariant}
-            size="medium"
-            @click=${this.handleOpenRemoveAllContractAssignmentsDialog}
-          >
-            <sl-icon slot="prefix" name=${DELETE_VALUES.icon}> </sl-icon>
-            ${msg('Remove all contract assignments')}
-          </sl-button>
+            <sl-button
+              variant=${DELETE_VALUES.buttonVariant}
+              size="medium"
+              @click=${this.handleOpenRemoveAllContractAssignmentsDialog}
+            >
+              <sl-icon slot="prefix" name=${DELETE_VALUES.icon}> </sl-icon>
+              ${msg('Remove all contract assignments')}
+            </sl-button>
+          </div>
         </div>
-      </div>
 
-      ${this.renderContractAssignmentsList()}
+        ${this.renderContractAssignmentsList()}
+      </div>
     `;
   }
 
@@ -158,7 +162,7 @@ export class ContractAssignmentsList extends BaseComponent {
 
     return assignments.length > 0
       ? html`
-          <ca-sortable-list @sortable-element-moved=${this.handleMoveContractAssignment}>
+          <ca-sortable-list class="list" @sortable-element-moved=${this.handleMoveContractAssignment}>
             ${repeat(assignments, (contractAssignment) => contractAssignment.id, this.renderContractAssignment)}
           </ca-sortable-list>
         `
@@ -171,6 +175,7 @@ export class ContractAssignmentsList extends BaseComponent {
 
   private renderContractAssignment = (contractAssignment: IContractAssignment) => {
     return html`<ca-contract-assignments-list-item
+      class="list-item"
       assignment-id=${contractAssignment.id}
       data-drag-id=${contractAssignment.id}
     ></ca-contract-assignments-list-item>`;

@@ -33,38 +33,40 @@ export class SidejobsList extends BaseComponent {
     const cancelAllSidejobs = msg('Cancel all sidejobs');
 
     return html`
-      <div class="header desktop">
-        <div class="header-column">${msg('Sidejob')}</div>
-        <div class="header-column">${msg('District')}</div>
-        <div class="header-column">${msg('Assigned clone')}</div>
-        <div class="header-column">${msg('Status')}</div>
-        <div class="buttons">
-          <sl-tooltip>
-            <span slot="content"> ${toggleActivitiesLabel} </span>
+      <div class="items-list">
+        <div class="header desktop">
+          <div class="header-column">${msg('Sidejob')}</div>
+          <div class="header-column">${msg('District')}</div>
+          <div class="header-column">${msg('Assigned clone')}</div>
+          <div class="header-column">${msg('Status')}</div>
+          <div class="buttons">
+            <sl-tooltip>
+              <span slot="content"> ${toggleActivitiesLabel} </span>
 
-            <sl-icon-button
-              name=${toggleActivitiesIcon}
-              label=${toggleActivitiesLabel}
-              @click=${this.handleToggleAllActivities}
-            >
-            </sl-icon-button>
-          </sl-tooltip>
+              <sl-icon-button
+                name=${toggleActivitiesIcon}
+                label=${toggleActivitiesLabel}
+                @click=${this.handleToggleAllActivities}
+              >
+              </sl-icon-button>
+            </sl-tooltip>
 
-          <sl-tooltip>
-            <span slot="content"> ${cancelAllSidejobs} </span>
+            <sl-tooltip>
+              <span slot="content"> ${cancelAllSidejobs} </span>
 
-            <sl-icon-button
-              id="delete-btn"
-              name=${DELETE_VALUES.icon}
-              label=${cancelAllSidejobs}
-              @click=${this.handleOpenCancelAllSidejobsDialog}
-            >
-            </sl-icon-button>
-          </sl-tooltip>
+              <sl-icon-button
+                id="delete-btn"
+                name=${DELETE_VALUES.icon}
+                label=${cancelAllSidejobs}
+                @click=${this.handleOpenCancelAllSidejobsDialog}
+              >
+              </sl-icon-button>
+            </sl-tooltip>
+          </div>
         </div>
-      </div>
 
-      ${this.renderSidejobsList()}
+        ${this.renderSidejobsList()}
+      </div>
     `;
   }
 
@@ -79,26 +81,28 @@ export class SidejobsList extends BaseComponent {
       : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
 
     return html`
-      <div class="header mobile">
-        <div class="buttons">
-          <sl-button variant=${toggleActivitiesVariant} size="medium" @click=${this.handleToggleAllActivities}>
-            <sl-icon slot="prefix" name=${toggleActivitiesIcon}></sl-icon>
+      <div class="items-list">
+        <div class="header mobile">
+          <div class="buttons">
+            <sl-button variant=${toggleActivitiesVariant} size="medium" @click=${this.handleToggleAllActivities}>
+              <sl-icon slot="prefix" name=${toggleActivitiesIcon}></sl-icon>
 
-            ${toggleActivitiesLabel}
-          </sl-button>
+              ${toggleActivitiesLabel}
+            </sl-button>
 
-          <sl-button
-            variant=${DELETE_VALUES.buttonVariant}
-            size="medium"
-            @click=${this.handleOpenCancelAllSidejobsDialog}
-          >
-            <sl-icon slot="prefix" name=${DELETE_VALUES.icon}> </sl-icon>
-            ${msg('Cancel all sidejobs')}
-          </sl-button>
+            <sl-button
+              variant=${DELETE_VALUES.buttonVariant}
+              size="medium"
+              @click=${this.handleOpenCancelAllSidejobsDialog}
+            >
+              <sl-icon slot="prefix" name=${DELETE_VALUES.icon}> </sl-icon>
+              ${msg('Cancel all sidejobs')}
+            </sl-button>
+          </div>
         </div>
-      </div>
 
-      ${this.renderSidejobsList()}
+        ${this.renderSidejobsList()}
+      </div>
     `;
   }
 
@@ -106,7 +110,9 @@ export class SidejobsList extends BaseComponent {
     const activities = this._controller.listActivities();
 
     return activities.length > 0
-      ? html`${repeat(activities, (sidejobActivity) => sidejobActivity.id, this.renderSidejob)}`
+      ? html` <div class="list">
+          ${repeat(activities, (sidejobActivity) => sidejobActivity.id, this.renderSidejob)}
+        </div>`
       : this.renderEmptyListNotification();
   };
 
@@ -115,7 +121,7 @@ export class SidejobsList extends BaseComponent {
   };
 
   private renderSidejob = (activity: ISidejobActivity) => {
-    return html`<ca-sidejobs-list-item activity-id=${activity.id}></ca-sidejobs-list-item>`;
+    return html`<ca-sidejobs-list-item class="list-item" activity-id=${activity.id}></ca-sidejobs-list-item>`;
   };
 
   private handleOpenCancelAllSidejobsDialog = () => {

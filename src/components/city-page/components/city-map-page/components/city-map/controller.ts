@@ -22,6 +22,10 @@ export class CityMapController extends BaseController {
     return this.cityState.districtsCount;
   }
 
+  get theme() {
+    return this.settingsState.theme;
+  }
+
   getDistrict(districtIndex: number): IDistrictState {
     return this.cityState.getDistrictState(districtIndex);
   }

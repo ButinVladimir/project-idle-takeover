@@ -40,7 +40,7 @@ export class ClonesListItemExperience extends BaseComponent {
     }
 
     return html`
-      <div class="title">${msg('Next level progress')}</div>
+      <h5 class="progress-bar-title">${msg('Next level progress')}</h5>
       <sl-progress-bar ${ref(this._progressBarRef)}></sl-progress-bar>
 
       <p ${ref(this._timerHintRef)} class="progress-bar-hint">

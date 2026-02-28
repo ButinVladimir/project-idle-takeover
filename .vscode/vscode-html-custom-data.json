@@ -59,7 +59,7 @@
     },
     {
       "name": "ca-city-map-district",
-      "description": "Attributes:\n\n  * `run-id` {`string`} - \n\n  * `district-num` {`number`} - \n\n  * `district-state` - \n\n  * `selected` {`boolean`} - \n\n  * `size` {`number`} - \n\nProperties:\n\n  * `styles` - \n\n  * `_districtRendererWorker` {`Worker`} - \n\n  * `runId` {`string`} - \n\n  * `districtNum` {`number`} - \n\n  * `districtState` - \n\n  * `selected` {`boolean`} - \n\n  * `size` {`number`} - \n\n  * `_canvasRef` - \n\n  * `_districtBlob` {`Blob | undefined`} - \n\n  * `fullRenderCanvas` - \n\n  * `renderCanvas` - \n\n  * `handleWorkerResponse` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `run-id` {`string`} - \n\n  * `district-num` {`number`} - \n\n  * `district-state` - \n\n  * `selected` {`boolean`} - \n\n  * `theme` - \n\n  * `size` {`number`} - \n\nProperties:\n\n  * `styles` - \n\n  * `_districtRendererWorker` {`Worker`} - \n\n  * `runId` {`string`} - \n\n  * `districtNum` {`number`} - \n\n  * `districtState` - \n\n  * `selected` {`boolean`} - \n\n  * `theme` - \n\n  * `size` {`number`} - \n\n  * `_canvasRef` - \n\n  * `_districtBlob` {`Blob | undefined`} - \n\n  * `fullRenderCanvas` - \n\n  * `renderCanvas` - \n\n  * `handleWorkerResponse` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "run-id",
@@ -77,6 +77,10 @@
           "name": "selected",
           "description": "`selected` {`boolean`} - \n\nProperty: selected\n\nDefault: false",
           "valueSet": "v"
+        },
+        {
+          "name": "theme",
+          "description": "`theme` - \n\nProperty: theme"
         },
         {
           "name": "size",
@@ -292,7 +296,7 @@
     },
     {
       "name": "ca-contract-assignments-list",
-      "description": "Properties:\n\n  * `styles` - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderContractAssignmentsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderContractAssignment` - \n\n  * `handleOpenRemoveAllContractAssignmentsDialog` - \n\n  * `handleStartAllContractAssignments` - \n\n  * `handleRemoveAllContractAssignments` - \n\n  * `handleMoveContractAssignment` - \n\n  * `handleToggleAllContractAssignments` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderContractAssignmentsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderContractAssignment` - \n\n  * `handleOpenRemoveAllContractAssignmentsDialog` - \n\n  * `handleStartAllContractAssignments` - \n\n  * `handleRemoveAllContractAssignments` - \n\n  * `handleMoveContractAssignment` - \n\n  * `handleToggleAllContractAssignments` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
@@ -411,7 +415,7 @@
     },
     {
       "name": "ca-sidejobs-list",
-      "description": "Properties:\n\n  * `styles` - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderSidejobsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderSidejob` - \n\n  * `handleOpenCancelAllSidejobsDialog` - \n\n  * `handleCancelAllSidejobs` - \n\n  * `handleToggleAllActivities` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderSidejobsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderSidejob` - \n\n  * `handleOpenCancelAllSidejobsDialog` - \n\n  * `handleCancelAllSidejobs` - \n\n  * `handleToggleAllActivities` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
@@ -426,7 +430,7 @@
     },
     {
       "name": "ca-sidejobs-list-item",
-      "description": "Attributes:\n\n  * `activity-id` {`string`} - \n\nProperties:\n\n  * `styles` {`CSSResult[]`} - \n\n  * `activityId` {`string`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_activity` - \n\n  * `handleToggleDescription` - \n\n  * `handleOpenCancelSidejobDialog` - \n\n  * `handleToggleSidejob` - \n\n  * `handleCancelSidejob` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `activity-id` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `activityId` {`string`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_activity` - \n\n  * `handleToggleDescription` - \n\n  * `handleOpenCancelSidejobDialog` - \n\n  * `handleToggleSidejob` - \n\n  * `handleCancelSidejob` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "activity-id",
@@ -612,7 +616,7 @@
     },
     {
       "name": "ca-processes-list",
-      "description": "Properties:\n\n  * `styles` - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderProcess` - \n\n  * `handleToggleAllProcesses` - \n\n  * `handleOpenDeleteAllProcessesDialog` - \n\n  * `handleDeleteAllProcesses` - \n\n  * `handleMoveProcess` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderProcess` - \n\n  * `handleToggleAllProcesses` - \n\n  * `handleOpenDeleteAllProcessesDialog` - \n\n  * `handleDeleteAllProcesses` - \n\n  * `handleMoveProcess` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
@@ -682,7 +686,7 @@
     },
     {
       "name": "ca-owned-programs-list",
-      "description": "Properties:\n\n  * `styles` - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderProgram` - \n\n  * `handleMoveProgram` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderProgram` - \n\n  * `handleMoveProgram` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {

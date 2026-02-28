@@ -12,8 +12,8 @@ const styles = css`
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    padding: var(--sl-spacing-medium) 0;
-    gap: var(--sl-spacing-small);
+    padding: var(--ca-section-gap) 0;
+    gap: var(--ca-section-buttons-gap);
 
     &.with-border {
       border-bottom: var(--ca-border);
@@ -21,13 +21,14 @@ const styles = css`
   }
 
   .notification {
-    padding: var(--sl-spacing-3x-large);
+    padding: var(--ca-empty-notification-gap);
     text-align: center;
     border-top: var(--ca-border);
     border-bottom: var(--ca-border);
   }
 
   ca-sortable-list {
+    margin-top: var(--ca-section-gap);
     width: 100%;
 
     &::part(list) {
@@ -36,7 +37,7 @@ const styles = css`
       flex-direction: column;
       align-items: stretch;
       justify-content: center;
-      gap: var(--sl-spacing-medium);
+      gap: var(--ca-panel-row-gap);
     }
   }
 `;

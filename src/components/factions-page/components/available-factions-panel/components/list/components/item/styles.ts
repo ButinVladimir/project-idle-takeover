@@ -13,7 +13,7 @@ const styles = [
       grid-template-columns: auto;
       grid-template-rows: auto;
       border-bottom: var(--ca-border);
-      gap: var(--sl-spacing-small);
+      gap: var(--ca-table-column-gap);
       align-items: center;
 
       .header-column {
@@ -26,12 +26,12 @@ const styles = [
 
       &.desktop {
         grid-template-columns: 1fr auto;
-        padding: var(--sl-spacing-small);
+        padding: var(--ca-table-column-gap);
       }
 
       &.mobile {
         grid-template-columns: auto;
-        padding: var(--sl-spacing-medium) 0;
+        padding: var(--ca-table-column-gap) 0;
       }
     }
   `,

@@ -1,6 +1,6 @@
 import { progressBlockStyle } from '../../styles';
-import { progressBarHintStyle } from '@shared/styles';
+import { progressBarTitleStyle, progressBarHintStyle } from '@shared/styles';
 
-const styles = [progressBlockStyle, progressBarHintStyle];
+const styles = [progressBlockStyle, progressBarTitleStyle, progressBarHintStyle];
 
 export default styles;

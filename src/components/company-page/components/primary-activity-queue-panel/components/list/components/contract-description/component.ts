@@ -43,7 +43,7 @@ export class PrimaryActivityQueueListItemContractDescription extends BaseCompone
     }
 
     return html`
-      <div class="title">${msg('Completion progress')}</div>
+      <h5 class="progress-bar-title">${msg('Completion progress')}</h5>
       <sl-progress-bar ${ref(this._progressBarRef)}></sl-progress-bar>
 
       <p class="progress-bar-hint visible">

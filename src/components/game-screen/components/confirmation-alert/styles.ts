@@ -1,9 +1,10 @@
 import { css } from 'lit';
-import { smallModalStyle, modalBodyScrollStyle } from '@shared/index';
+import { smallModalStyle, modalBodyScrollStyle, formStyle } from '@shared/index';
 
 const styles = [
   smallModalStyle,
   modalBodyScrollStyle,
+  formStyle,
   css`
     :host {
       display: contents;

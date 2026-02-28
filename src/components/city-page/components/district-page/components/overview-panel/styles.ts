@@ -5,7 +5,7 @@ const cityDistrictPageOverviewPanelStyles = css`
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: var(--sl-spacing-2x-large);
+    gap: var(--ca-section-gap);
   }
 `;
 

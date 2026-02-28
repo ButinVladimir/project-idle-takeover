@@ -64,7 +64,7 @@ export class ContractAssignmentListItem extends BaseComponent {
       ? COMMON_TEXTS.hideDescription()
       : COMMON_TEXTS.showDescription();
     const descriptionClasses = classMap({
-      'contract-assignment-description': true,
+      description: true,
       visible: this._descriptionVisible,
     });
 
@@ -83,9 +83,9 @@ export class ContractAssignmentListItem extends BaseComponent {
     const removeContractAssignmentLabel = msg('Remove contract assignment');
 
     return html`
-      <div class="host-content desktop">
+      <div class="items-list-item desktop">
         <div class="contract-assignment">
-          <div class="contract-title" draggable="true" @dragstart=${this.handleDragStart}>
+          <div class="title" draggable="true" @dragstart=${this.handleDragStart}>
             <sl-icon name="grip-vertical"> </sl-icon>
 
             ${contractTitle}
@@ -167,7 +167,7 @@ export class ContractAssignmentListItem extends BaseComponent {
       ? COMMON_TEXTS.hideDescription()
       : COMMON_TEXTS.showDescription();
     const descriptionClasses = classMap({
-      'contract-assignment-description': true,
+      description: true,
       visible: this._descriptionVisible,
     });
 
@@ -200,9 +200,9 @@ export class ContractAssignmentListItem extends BaseComponent {
     const removeContractAssignmentLabel = msg('Remove contract assignment');
 
     return html`
-      <div class="host-content mobile">
+      <div class="items-list-item mobile">
         <div class="contract-assignment">
-          <div class="contract-title" draggable="true" @dragstart=${this.handleDragStart}>
+          <div class="title" draggable="true" @dragstart=${this.handleDragStart}>
             <sl-icon name="grip-vertical"> </sl-icon>
 
             ${contractTitle}

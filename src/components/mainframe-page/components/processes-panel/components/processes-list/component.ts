@@ -35,43 +35,45 @@ export class ProcessesList extends BaseComponent {
     const processes = this._controller.listProcesses();
 
     return html`
-      <div class="header desktop">
-        <div class="header-column">${msg('Program')}</div>
-        <div class="header-column">${msg('Cores')}</div>
-        <div class="header-column">${msg('Progress')}</div>
-        <div class="buttons">
-          <sl-tooltip>
-            <span slot="content"> ${toggleProcessesLabel} </span>
+      <div class="items-list">
+        <div class="header desktop">
+          <div class="header-column">${msg('Program')}</div>
+          <div class="header-column">${msg('Cores')}</div>
+          <div class="header-column">${msg('Progress')}</div>
+          <div class="buttons">
+            <sl-tooltip>
+              <span slot="content"> ${toggleProcessesLabel} </span>
 
-            <sl-icon-button
-              name=${toggleProcessesIcon}
-              label=${toggleProcessesLabel}
-              @click=${this.handleToggleAllProcesses}
-            >
-            </sl-icon-button>
-          </sl-tooltip>
+              <sl-icon-button
+                name=${toggleProcessesIcon}
+                label=${toggleProcessesLabel}
+                @click=${this.handleToggleAllProcesses}
+              >
+              </sl-icon-button>
+            </sl-tooltip>
 
-          <sl-tooltip>
-            <span slot="content"> ${deleteAllProcessLabel} </span>
+            <sl-tooltip>
+              <span slot="content"> ${deleteAllProcessLabel} </span>
 
-            <sl-icon-button
-              id="delete-btn"
-              name=${DELETE_VALUES.icon}
-              label=${deleteAllProcessLabel}
-              @click=${this.handleOpenDeleteAllProcessesDialog}
-            >
-            </sl-icon-button>
-          </sl-tooltip>
+              <sl-icon-button
+                id="delete-btn"
+                name=${DELETE_VALUES.icon}
+                label=${deleteAllProcessLabel}
+                @click=${this.handleOpenDeleteAllProcessesDialog}
+              >
+              </sl-icon-button>
+            </sl-tooltip>
+          </div>
         </div>
-      </div>
 
-      ${processes.length > 0
-        ? html`
-            <ca-sortable-list @sortable-element-moved=${this.handleMoveProcess}>
-              ${repeat(processes, (process) => process.program.name, this.renderProcess)}
-            </ca-sortable-list>
-          `
-        : this.renderEmptyListNotification()}
+        ${processes.length > 0
+          ? html`
+              <ca-sortable-list class="list" @sortable-element-moved=${this.handleMoveProcess}>
+                ${repeat(processes, (process) => process.program.name, this.renderProcess)}
+              </ca-sortable-list>
+            `
+          : this.renderEmptyListNotification()}
+      </div>
     `;
   }
 
@@ -89,46 +91,48 @@ export class ProcessesList extends BaseComponent {
     const processes = this._controller.listProcesses();
 
     return html`
-      <div class="header mobile">
-        <div class="buttons">
-          <sl-button variant=${toggleProcessesVariant} size="medium" @click=${this.handleToggleAllProcesses}>
-            <sl-icon slot="prefix" name=${toggleProcessesIcon}></sl-icon>
+      <div class="items-list">
+        <div class="header mobile">
+          <div class="buttons">
+            <sl-button variant=${toggleProcessesVariant} size="medium" @click=${this.handleToggleAllProcesses}>
+              <sl-icon slot="prefix" name=${toggleProcessesIcon}></sl-icon>
 
-            ${toggleProcessesLabel}
-          </sl-button>
+              ${toggleProcessesLabel}
+            </sl-button>
 
-          <sl-button
-            variant=${DELETE_VALUES.buttonVariant}
-            size="medium"
-            @click=${this.handleOpenDeleteAllProcessesDialog}
-          >
-            <sl-icon slot="prefix" name=${DELETE_VALUES.icon}> </sl-icon>
-            ${deleteAllProcessLabel}
-          </sl-button>
+            <sl-button
+              variant=${DELETE_VALUES.buttonVariant}
+              size="medium"
+              @click=${this.handleOpenDeleteAllProcessesDialog}
+            >
+              <sl-icon slot="prefix" name=${DELETE_VALUES.icon}> </sl-icon>
+              ${deleteAllProcessLabel}
+            </sl-button>
+          </div>
         </div>
-      </div>
 
-      ${processes.length > 0
-        ? html`
-            <ca-sortable-list @sortable-element-moved=${this.handleMoveProcess}>
-              ${repeat(processes, (process) => process.program.name, this.renderProcess)}
-            </ca-sortable-list>
-          `
-        : this.renderEmptyListNotification()}
+        ${processes.length > 0
+          ? html`
+              <ca-sortable-list class="list" @sortable-element-moved=${this.handleMoveProcess}>
+                ${repeat(processes, (process) => process.program.name, this.renderProcess)}
+              </ca-sortable-list>
+            `
+          : this.renderEmptyListNotification()}
+      </div>
     `;
   }
 
   private renderEmptyListNotification = () => {
-    return html`
-      <div class="notification">
-        <td colspan="4">${msg("You don't have any processes")}</td>
-      </div>
-    `;
+    return html` <div class="notification">${msg("You don't have any processes")}</div> `;
   };
 
   private renderProcess = (process: IProcess) => {
     return html`
-      <ca-processes-list-item program-name=${process.program.name} data-drag-id=${process.program.name}>
+      <ca-processes-list-item
+        class="list-item"
+        program-name=${process.program.name}
+        data-drag-id=${process.program.name}
+      >
       </ca-processes-list-item>
     `;
   };

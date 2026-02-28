@@ -1,40 +1,23 @@
 import { css } from 'lit';
-import { hintStyle, sectionTitleStyle, mediumModalStyle, modalBodyScrollStyle, formStyle } from '@shared/index';
+import { hintStyle, sectionTitleStyle, mediumModalStyle, formStyle, modalStyle } from '@shared/index';
 
 const styles = [
   hintStyle,
   sectionTitleStyle,
   mediumModalStyle,
-  modalBodyScrollStyle,
+  modalStyle,
   formStyle,
   css`
-    :host {
-      display: contents;
-    }
-
-    sl-dialog::part(body) {
-      padding-top: 0;
-      padding-bottom: 0;
-    }
-
-    h4.title {
-      margin: 0;
-    }
-
     div.body {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-
       div.events-container {
         display: grid;
-        column-gap: var(--sl-spacing-3x-small);
-        row-gap: var(--sl-spacing-3x-small);
+        column-gap: var(--ca-checkbox-list-column-gap);
+        row-gap: var(--ca-checkbox-list-row-gap);
         grid-template-rows: auto;
       }
 
       sl-checkbox.group-checkbox {
-        margin-bottom: var(--sl-spacing-small);
+        margin-bottom: var(--ca-checkbox-list-group-gap);
       }
 
       &.mobile div.events-container {
@@ -46,13 +29,8 @@ const styles = [
       }
     }
 
-    p.hint {
-      margin-top: 0;
-      margin-bottom: var(--sl-spacing-small);
-    }
-
     sl-divider {
-      --spacing: var(--sl-spacing-medium);
+      --spacing: 0;
     }
   `,
 ];

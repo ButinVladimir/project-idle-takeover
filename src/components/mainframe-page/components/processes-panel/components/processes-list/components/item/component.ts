@@ -58,7 +58,7 @@ export class ProcessesListItem extends BaseComponent {
       ? COMMON_TEXTS.hideDescription()
       : COMMON_TEXTS.showDescription();
     const descriptionClasses = classMap({
-      'program-description': true,
+      description: true,
       visible: this._descriptionVisible,
     });
 
@@ -74,9 +74,9 @@ export class ProcessesListItem extends BaseComponent {
     const deleteProcessLabel = msg('Delete process');
 
     return html`
-      <div class="host-content desktop">
+      <div class="items-list-item desktop">
         <div class="program">
-          <div class="program-title" draggable="true" @dragstart=${this.handleDragStart}>
+          <div class="title" draggable="true" @dragstart=${this.handleDragStart}>
             <sl-icon name="grip-vertical"> </sl-icon>
 
             ${programTitle}
@@ -142,7 +142,7 @@ export class ProcessesListItem extends BaseComponent {
       ? COMMON_TEXTS.hideDescription()
       : COMMON_TEXTS.showDescription();
     const descriptionClasses = classMap({
-      'program-description': true,
+      description: true,
       visible: this._descriptionVisible,
     });
 
@@ -161,9 +161,9 @@ export class ProcessesListItem extends BaseComponent {
     const deleteProcessLabel = msg('Delete process');
 
     return html`
-      <div class="host-content mobile">
+      <div class="items-list-item mobile">
         <div class="program">
-          <div class="program-title" draggable="true" @dragstart=${this.handleDragStart}>
+          <div class="title" draggable="true" @dragstart=${this.handleDragStart}>
             <sl-icon name="grip-vertical"> </sl-icon>
 
             ${programTitle}

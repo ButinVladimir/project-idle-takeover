@@ -1,1 +1,1 @@
-export const GAP = 20;
+export const GAP = 12;

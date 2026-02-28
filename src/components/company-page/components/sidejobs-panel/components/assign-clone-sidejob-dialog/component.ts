@@ -153,9 +153,9 @@ Clone can be assigned only to one sidejob.`)}
                 ${this._controller.listClones().map(this.renderCloneOption)}
               </sl-select>
             </div>
-          </div>
 
-          <ca-assign-clone-sidejob-dialog-description></ca-assign-clone-sidejob-dialog-description>
+            <ca-assign-clone-sidejob-dialog-description></ca-assign-clone-sidejob-dialog-description>
+          </div>
 
           <ca-assign-clone-sidejob-dialog-buttons
             ${ref(this._buttonsRef)}
