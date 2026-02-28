@@ -1,8 +1,9 @@
 import { css } from 'lit';
-import { hintStyle } from '@shared/index';
+import { hintStyle, itemsListStyle } from '@shared/index';
 
 const styles = [
   hintStyle,
+  itemsListStyle,
   css`
     :host {
       display: block;
@@ -14,42 +15,8 @@ const styles = [
       margin-bottom: var(--ca-section-gap);
     }
 
-    .header {
-      display: flex;
-      gap: var(--ca-table-column-gap);
-      align-items: center;
-      border-bottom: var(--ca-border);
-      padding: var(--ca-table-column-gap);
-
-      .header-column {
-        display: block;
-        font-weight: var(--sl-font-weight-bold);
-
-        &.column-sidejob {
-          flex: 1;
-        }
-
-        &.column-progress {
-          flex: 2;
-        }
-      }
-    }
-
-    .list {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: center;
-      border-top: var(--ca-border);
-
-      ca-city-district-sidejobs-list-item {
-        border-bottom: var(--ca-border);
-
-        &:nth-child(2n) {
-          background-color: var(--ca-table-row-odd-color);
-        }
-      }
+    .items-list .header.desktop {
+      grid-template-columns: 1fr 2fr;
     }
   `,
 ];

@@ -1,86 +1,25 @@
 import { css } from 'lit';
+import { itemsListStyle } from '@shared/index';
 
-const styles = css`
-  :host {
-    width: 100%;
-    align-self: stretch;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    border-top: var(--ca-border);
-  }
-
-  .header {
-    display: grid;
-    gap: var(--ca-table-column-gap);
-    align-items: center;
-    border-bottom: var(--ca-border);
-
-    .buttons {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      flex-direction: row;
-      gap: var(--ca-table-buttons-gap);
+const styles = [
+  itemsListStyle,
+  css`
+    :host {
+      display: contents;
     }
 
-    &.mobile {
-      grid-template-columns: auto;
-      grid-template-rows: auto;
-      padding: var(--ca-table-column-gap) 0;
-
-      .buttons {
-        justify-content: flex-start;
-      }
-    }
-
-    &.desktop {
+    .items-list .header.desktop {
       grid-template-columns: 2fr 1fr 1fr 1fr auto;
-      grid-template-rows: auto;
-      padding: var(--sl-spacing-small);
 
-      .header-column {
-        font-weight: var(--sl-font-weight-bold);
+      .tooltip-content p {
+        margin: 0;
       }
 
-      .buttons {
-        justify-content: flex-end;
-        font-size: var(--sl-font-size-large);
+      #delete-btn::part(base):hover {
+        color: var(--ca-danger-color);
       }
     }
-  }
-
-  .tooltip-content p {
-    margin: 0;
-  }
-
-  .notification {
-    padding: var(--ca-empty-notification-gap);
-    text-align: center;
-    border-bottom: var(--ca-border);
-  }
-
-  ca-sortable-list {
-    width: 100%;
-
-    &::part(list) {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: center;
-    }
-
-    ca-contract-assignments-list-item {
-      &:nth-child(2n + 1) {
-        background-color: var(--ca-table-row-odd-color);
-      }
-
-      &.dragged {
-        background-color: var(--ca-dragged-color);
-      }
-    }
-  }
-`;
+  `,
+];
 
 export default styles;

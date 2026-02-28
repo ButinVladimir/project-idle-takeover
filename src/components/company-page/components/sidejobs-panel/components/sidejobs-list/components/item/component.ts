@@ -56,7 +56,7 @@ export class SidejobsListItem extends BaseComponent {
       ? COMMON_TEXTS.hideDescription()
       : COMMON_TEXTS.showDescription();
     const descriptionClasses = classMap({
-      'sidejob-description': true,
+      description: true,
       visible: this._descriptionVisible,
     });
 
@@ -69,9 +69,9 @@ export class SidejobsListItem extends BaseComponent {
     const cancelSidejobLabel = msg('Cancel sidejob');
 
     return html`
-      <div class="host-content desktop">
+      <div class="items-list-item desktop">
         <div class="sidejob">
-          <div class="sidejob-title">
+          <div class="title">
             ${sidejobTitle}
 
             <sl-tooltip>
@@ -133,7 +133,7 @@ export class SidejobsListItem extends BaseComponent {
       ? COMMON_TEXTS.hideDescription()
       : COMMON_TEXTS.showDescription();
     const descriptionClasses = classMap({
-      'sidejob-description': true,
+      description: true,
       visible: this._descriptionVisible,
     });
 
@@ -156,9 +156,9 @@ export class SidejobsListItem extends BaseComponent {
     const cancelSidejobLabel = msg('Cancel sidejob');
 
     return html`
-      <div class="host-content mobile">
+      <div class="items-list-item mobile">
         <div class="sidejob">
-          <div class="sidejob-title">
+          <div class="title">
             ${sidejobTitle}
 
             <sl-tooltip>

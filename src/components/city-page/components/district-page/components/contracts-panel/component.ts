@@ -29,7 +29,7 @@ export class CityDistrictContractsPanel extends BaseComponent {
     return this.renderContent(true);
   }
 
-  private renderContent = (showHeader: boolean) => {
+  private renderContent = (desktop: boolean) => {
     const contracts = this._controller.getAvailableContracts();
 
     return html`
@@ -38,8 +38,8 @@ export class CityDistrictContractsPanel extends BaseComponent {
 Teams of clones could be assigned to contracts on company page under contracts tab.`)}
       </p>
 
-      <div class="list">
-        ${showHeader ? this.renderHeader() : nothing}
+      <div class="items-list">
+        ${desktop ? this.renderHeader() : nothing}
         ${contracts.length > 0 ? this.renderList(contracts) : this.renderEmptyListNotification()}
       </div>
     `;
@@ -47,10 +47,10 @@ Teams of clones could be assigned to contracts on company page under contracts t
 
   private renderHeader = () => {
     return html`
-      <div class="header">
-        <div class="header-column column-contract">${msg('Contract')}</div>
-        <div class="header-column column-available">${msg('Available')}</div>
-        <div class="header-column column-generation">${msg('Generation progress')}</div>
+      <div class="header desktop">
+        <div class="header-column">${msg('Contract')}</div>
+        <div class="header-column">${msg('Available')}</div>
+        <div class="header-column">${msg('Generation progress')}</div>
       </div>
     `;
   };
@@ -60,12 +60,15 @@ Teams of clones could be assigned to contracts on company page under contracts t
   };
 
   private renderList = (contracts: string[]) => {
-    return html` ${repeat(contracts, (contract) => contract, this.renderContract)}`;
+    return html`<div class="list">${repeat(contracts, (contract) => contract, this.renderContract)}</div>`;
   };
 
   private renderContract = (contractName: string) => {
     return html`
-      <ca-city-district-contracts-list-item contract-name=${contractName}></ca-city-district-contracts-list-item>
+      <ca-city-district-contracts-list-item
+        class="list-item"
+        contract-name=${contractName}
+      ></ca-city-district-contracts-list-item>
     `;
   };
 }

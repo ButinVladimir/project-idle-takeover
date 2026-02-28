@@ -1,7 +1,5 @@
 import { pageTitleStyle } from '@shared/styles';
 
-const styles = [
-  pageTitleStyle,
-];
+const styles = [pageTitleStyle];
 
 export default styles;

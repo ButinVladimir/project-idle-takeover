@@ -39,7 +39,7 @@ export class CityDistrictContractListItem extends BaseComponent {
       return nothing;
     }
 
-    return html`<div class="host-content mobile">
+    return html`<div class="items-list-item mobile">
       ${this.renderDescription()} ${this.renderAvailable(true)} ${this.renderGenerationProgress()}
     </div>`;
   }
@@ -49,23 +49,21 @@ export class CityDistrictContractListItem extends BaseComponent {
       return nothing;
     }
 
-    return html`<div class="host-content desktop">
+    return html`<div class="items-list-item desktop">
       ${this.renderDescription()} ${this.renderAvailable(false)} ${this.renderGenerationProgress()}
     </div>`;
   }
 
   private renderDescription = () => {
     return html`<div class="contract">
-      <div class="description">
-        <p class="title">
-          ${CONTRACT_TEXTS[this.contractName].title()}
+      <div class="title">
+        ${CONTRACT_TEXTS[this.contractName].title()}
 
-          <sl-tooltip>
-            <span slot="content">${CONTRACT_TEXTS[this.contractName].overview()}</span>
+        <sl-tooltip>
+          <span slot="content">${CONTRACT_TEXTS[this.contractName].overview()}</span>
 
-            <sl-icon name=${HINT_ICON}></sl-icon>
-          </sl-tooltip>
-        </p>
+          <sl-icon name=${HINT_ICON}></sl-icon>
+        </sl-tooltip>
       </div>
     </div> `;
   };

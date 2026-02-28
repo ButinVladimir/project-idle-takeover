@@ -17,6 +17,7 @@ const styles = [
 
     div.top-container {
       display: grid;
+      margin-bottom: var(--ca-section-gap);
 
       &.mobile {
         align-items: flex-start;
@@ -32,22 +33,18 @@ const styles = [
         align-items: center;
         gap: var(--ca-section-text-gap);
       }
-    }
 
-    .start-process {
-      grid-area: start-process;
-    }
+      .start-process {
+        grid-area: start-process;
+      }
 
-    .cores {
-      grid-area: cores;
-    }
+      .cores {
+        grid-area: cores;
+      }
 
-    .ram {
-      grid-area: ram;
-    }
-
-    ca-processes-list {
-      margin-top: var(--ca-section-gap);
+      .ram {
+        grid-area: ram;
+      }
     }
   `,
 ];

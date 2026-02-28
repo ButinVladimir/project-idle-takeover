@@ -22,7 +22,7 @@ const styles = [
     }
 
     .attributes-skills-tables {
-      margin-top: var(--ca-modal-section-gap);
+      margin-top: var(--ca-modal-paragraph-gap);
     }
   `,
 ];

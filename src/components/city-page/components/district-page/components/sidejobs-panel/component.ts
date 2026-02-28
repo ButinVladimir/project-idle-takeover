@@ -29,7 +29,7 @@ export class CityDistrictSidejobsPanel extends BaseComponent {
     return this.renderContent(true);
   }
 
-  private renderContent = (showHeader: boolean) => {
+  private renderContent = (desktop: boolean) => {
     const sidejobs = this._controller.getAvailableSidejobs();
 
     return html`
@@ -38,8 +38,8 @@ export class CityDistrictSidejobsPanel extends BaseComponent {
 Clones could be assigned to sidejobs on company page under sidejobs tab.`)}
       </p>
 
-      <div class="list">
-        ${showHeader ? this.renderHeader() : nothing}
+      <div class="items-list">
+        ${desktop ? this.renderHeader() : nothing}
         ${sidejobs.length > 0 ? this.renderList(sidejobs) : this.renderEmptyListNotification()}
       </div>
     `;
@@ -47,9 +47,9 @@ Clones could be assigned to sidejobs on company page under sidejobs tab.`)}
 
   private renderHeader = () => {
     return html`
-      <div class="header">
-        <div class="header-column column-sidejob">${msg('Sidejob')}</div>
-        <div class="header-column column-progress">${msg('Unlock progress')}</div>
+      <div class="header desktop">
+        <div class="header-column">${msg('Sidejob')}</div>
+        <div class="header-column">${msg('Unlock progress')}</div>
       </div>
     `;
   };
@@ -59,12 +59,13 @@ Clones could be assigned to sidejobs on company page under sidejobs tab.`)}
   };
 
   private renderList = (sidejobs: string[]) => {
-    return html` ${repeat(sidejobs, (sidejob) => sidejob, this.renderSidejob)}`;
+    return html`<div class="list">${repeat(sidejobs, (sidejob) => sidejob, this.renderSidejob)}</div>`;
   };
 
   private renderSidejob = (sidejobName: string) => {
     return html`
-      <ca-city-district-sidejobs-list-item sidejob-name=${sidejobName}> </ca-city-district-sidejobs-list-item>
+      <ca-city-district-sidejobs-list-item class="list-item" sidejob-name=${sidejobName}>
+      </ca-city-district-sidejobs-list-item>
     `;
   };
 }

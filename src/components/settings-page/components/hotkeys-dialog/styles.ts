@@ -1,37 +1,13 @@
 import { css } from 'lit';
-import { hintStyle, sectionTitleStyle, modalBodyScrollStyle, formStyle, smallModalStyle } from '@shared/index';
+import { hintStyle, sectionTitleStyle, formStyle, smallModalStyle, modalStyle } from '@shared/index';
 
 const styles = [
   hintStyle,
   sectionTitleStyle,
   smallModalStyle,
-  modalBodyScrollStyle,
+  modalStyle,
   formStyle,
   css`
-    :host {
-      display: contents;
-    }
-
-    sl-dialog::part(body) {
-      padding-top: 0;
-      padding-bottom: 0;
-    }
-
-    h4.title {
-      margin: 0;
-    }
-
-    div.body {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    p.hint {
-      margin-top: 0;
-      margin-bottom: var(--ca-modal-section-gap);
-    }
-
     div.buttons-container {
       display: flex;
       flex-wrap: wrap;
@@ -53,7 +29,7 @@ const styles = [
     }
 
     sl-divider {
-      --spacing: var(--ca-modal-section-gap);
+      --spacing: 0;
     }
   `,
 ];

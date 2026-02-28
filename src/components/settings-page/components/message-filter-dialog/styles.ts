@@ -1,31 +1,14 @@
 import { css } from 'lit';
-import { hintStyle, sectionTitleStyle, mediumModalStyle, modalBodyScrollStyle, formStyle } from '@shared/index';
+import { hintStyle, sectionTitleStyle, mediumModalStyle, formStyle, modalStyle } from '@shared/index';
 
 const styles = [
   hintStyle,
   sectionTitleStyle,
   mediumModalStyle,
-  modalBodyScrollStyle,
+  modalStyle,
   formStyle,
   css`
-    :host {
-      display: contents;
-    }
-
-    sl-dialog::part(body) {
-      padding-top: 0;
-      padding-bottom: 0;
-    }
-
-    h4.title {
-      margin: 0;
-    }
-
     div.body {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-
       div.events-container {
         display: grid;
         column-gap: var(--ca-checkbox-list-column-gap);
@@ -46,13 +29,8 @@ const styles = [
       }
     }
 
-    p.hint {
-      margin-top: 0;
-      margin-bottom: var(--ca-modal-section-gap);
-    }
-
     sl-divider {
-      --spacing: var(--ca-modal-section-gap);
+      --spacing: 0;
     }
   `,
 ];

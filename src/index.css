@@ -27,12 +27,12 @@ body {
   --ca-hint-font-size: var(--sl-font-size-small);
   --ca-hint-line-height: var(--sl-line-height-small);
 
-  --ca-warning-color: var(--sl-color-warning-600);
+  --ca-warning-color: var(--sl-color-warning-500);
   --ca-warning-font-size: var(--sl-font-size-small);
   --ca-warning-line-height: var(--sl-line-height-small);
 
-  --ca-danger-color: var(--sl-color-danger-600);
-  --ca-success-color: var(--sl-color-success-600);
+  --ca-danger-color: var(--sl-color-danger-500);
+  --ca-success-color: var(--sl-color-success-500);
 
   --ca-border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
 

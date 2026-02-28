@@ -29,7 +29,7 @@ export class OverviewDevelopmentLevelProgress extends BaseComponent {
   protected renderDesktop() {
     return html`
       <div class="block">
-        <div class="title">${msg('Next development level progress')}</div>
+        <h5 class="progress-bar-title">${msg('Next development level progress')}</h5>
 
         <sl-progress-bar ${ref(this._progressBarRef)}> </sl-progress-bar>
 

@@ -89,18 +89,20 @@ export class AlertFilterDialog extends BaseComponent {
     return html`
       <sl-divider></sl-divider>
 
-      <sl-checkbox
-        class="group-checkbox"
-        size="medium"
-        name="event"
-        value=${group}
-        ?checked=${this._controller.checkGroupHasEnabledAlerts(group)}
-        @sl-change=${this.handleToggleGroup}
-      >
-        ${GAME_ALERT_GROUP_NAMES[group]()}
-      </sl-checkbox>
+      <div>
+        <sl-checkbox
+          class="group-checkbox"
+          size="medium"
+          name="event"
+          value=${group}
+          ?checked=${this._controller.checkGroupHasEnabledAlerts(group)}
+          @sl-change=${this.handleToggleGroup}
+        >
+          ${GAME_ALERT_GROUP_NAMES[group]()}
+        </sl-checkbox>
 
-      <div class="events-container">${repeat(GAME_ALERT_GROUPS[group], this.renderGameAlertCheckbox)}</div>
+        <div class="events-container">${repeat(GAME_ALERT_GROUPS[group], this.renderGameAlertCheckbox)}</div>
+      </div>
     `;
   };
 
