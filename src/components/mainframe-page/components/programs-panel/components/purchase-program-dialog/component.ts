@@ -62,6 +62,12 @@ export class PurchaseProgramDialog extends BaseComponent {
     this._controller = new PurchaseProgramDialogController(this);
   }
 
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    this._program?.removeAllEventListeners();
+  }
+
   performUpdate() {
     this.updateContext();
 
@@ -153,6 +159,7 @@ If you already have program with same name, old one will be replaced with new on
           <ca-purchase-program-dialog-buttons
             ${ref(this._buttonsRef)}
             slot="footer"
+            @restore-values=${this.handleRestoreValues}
             @buy-program=${this.handleSubmit}
             @cancel=${this.handleClose}
           >
@@ -163,8 +170,14 @@ If you already have program with same name, old one will be replaced with new on
   }
 
   private updateContext() {
+    this._program?.removeAllEventListeners();
+
     if (this._programName) {
-      this._program = this._controller.getSelectedProgram(this._programName, this._tier, this._level);
+      this._program = this._controller.makeProgram({
+        name: this._programName,
+        level: this._level,
+        tier: this._tier,
+      });
       this._existingProgram = this._controller.getOwnedProgram(this._programName);
     } else {
       this._program = undefined;
@@ -219,6 +232,15 @@ If you already have program with same name, old one will be replaced with new on
     this._level = level;
     this._levelInputRef.value.valueAsNumber = level + 1;
   };
+
+  private handleRestoreValues = (event: Event) => {
+    event.preventDefault();
+
+    if (this._existingProgram) {
+      this._level = this._existingProgram.level;
+      this._tier = this._existingProgram.tier;
+    }
+  }
 
   private handleSubmit = (event: Event) => {
     event.preventDefault();

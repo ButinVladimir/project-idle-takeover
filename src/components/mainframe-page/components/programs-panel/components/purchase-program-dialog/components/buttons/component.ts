@@ -7,7 +7,7 @@ import { BaseComponent } from '@shared/index';
 import { COMMON_TEXTS } from '@texts/index';
 import { type IProgram } from '@state/mainframe-state';
 import { PurchaseProgramDialogButtonsController } from './controller';
-import { BuyProgramEvent, CancelEvent } from './events';
+import { BuyProgramEvent, CancelEvent, RestoreValuesEvent } from './events';
 import { PurchaseProgramDialogWarning } from './types';
 import { existingProgramContext, temporaryProgramContext } from '../../contexts';
 import styles from './styles';
@@ -50,6 +50,8 @@ export class PurchaseProgramDialogButtons extends BaseComponent {
 
       <div class="buttons">
         <sl-button size="medium" variant="default" @click=${this.handleCancel}> ${COMMON_TEXTS.close()} </sl-button>
+
+        <sl-button size="medium" variant="default" ?disabled=${!this._ownedProgram} @click=${this.handleRestoreValues}> ${COMMON_TEXTS.restoreValues()} </sl-button>
 
         <sl-button size="medium" variant="primary" ?disabled=${this.disabled} @click=${this.handlePurchase}>
           ${COMMON_TEXTS.purchase()}
@@ -139,6 +141,10 @@ export class PurchaseProgramDialogButtons extends BaseComponent {
 
   private handleCancel = () => {
     this.dispatchEvent(new CancelEvent());
+  };
+
+  private handleRestoreValues = () => {
+    this.dispatchEvent(new RestoreValuesEvent());
   };
 
   private handlePurchase = () => {

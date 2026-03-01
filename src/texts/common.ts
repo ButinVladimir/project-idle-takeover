@@ -24,6 +24,7 @@ export const COMMON_TEXTS = {
   cancel: () => msg('Cancel'),
   continue: () => msg('Continue'),
   close: () => msg('Close'),
+  restoreValues: () => msg('Restore values'),
   purchase: () => msg('Purchase'),
   menu: () => msg('Menu'),
   requirements: () => msg('Requirements'),
