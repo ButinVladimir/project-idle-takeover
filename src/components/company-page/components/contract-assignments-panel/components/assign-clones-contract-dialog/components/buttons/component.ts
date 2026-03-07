@@ -7,7 +7,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { COMMON_TEXTS, CONTRACT_TEXTS, DISTRICT_NAMES, CONTRACT_VALIDATION_TEXTS } from '@texts/index';
 import { type IContract, ContractValidationResult } from '@state/activity-state';
 import { AssignClonesContractDialogButtonsController } from './controller';
-import { AssignClonesEvent, CancelEvent } from './events';
+import { AssignClonesEvent, CancelEvent, RestoreValuesEvent } from './events';
 import { existingContractContext, temporaryContractContext } from '../../contexts';
 import { AssignClonesContractDialogFormWarning, AssignClonesContractDialogWarning } from './types';
 import styles from './styles';
@@ -43,6 +43,15 @@ export class AssignClonesContractDialogButtons extends BaseComponent {
 
       <div class="buttons">
         <sl-button size="medium" variant="default" @click=${this.handleCancel}> ${COMMON_TEXTS.close()} </sl-button>
+
+        <sl-button
+          size="medium"
+          variant="default"
+          ?disabled=${!this._existingContract}
+          @click=${this.handleRestoreValues}
+        >
+          ${COMMON_TEXTS.restoreValues()}
+        </sl-button>
 
         <sl-button size="medium" variant="primary" ?disabled=${this.disabled} @click=${this.handleAssignClones}>
           ${msg('Assign clones')}
@@ -109,6 +118,10 @@ export class AssignClonesContractDialogButtons extends BaseComponent {
 
   private handleCancel = () => {
     this.dispatchEvent(new CancelEvent());
+  };
+
+  private handleRestoreValues = () => {
+    this.dispatchEvent(new RestoreValuesEvent());
   };
 
   private handleAssignClones = () => {

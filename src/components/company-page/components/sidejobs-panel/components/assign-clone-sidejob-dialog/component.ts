@@ -63,19 +63,7 @@ export class AssignCloneSidejobDialog extends BaseComponent {
   }
 
   performUpdate() {
-    if (this._sidejobName !== undefined && this._districtIndex !== undefined && this._cloneId !== undefined) {
-      const sidejob = this._controller.getSidejob({
-        assignedCloneId: this._cloneId,
-        districtIndex: this._districtIndex,
-        sidejobName: this._sidejobName,
-      });
-
-      this._sidejob = sidejob;
-    } else {
-      this._sidejob = undefined;
-    }
-
-    this._existingSidejob = this._controller.getExistingSidejobByClone(this._cloneId);
+    this.updateContext();
 
     super.performUpdate();
   }
@@ -161,6 +149,7 @@ Clone can be assigned only to one sidejob.`)}
             ${ref(this._buttonsRef)}
             slot="footer"
             @assign-clone=${this.handleSubmit}
+            @restore-values=${this.handleRestoreValues}
             @cancel=${this.handleClose}
           ></ca-assign-clone-sidejob-dialog-buttons>
         </sl-dialog>
@@ -179,6 +168,24 @@ Clone can be assigned only to one sidejob.`)}
   private renderSidejobName = (sidejobName: string) => {
     return html` <sl-option value=${sidejobName}> ${SIDEJOB_TEXTS[sidejobName].title()} </sl-option>`;
   };
+
+  private updateContext() {
+    if (this._sidejobName !== undefined && this._districtIndex !== undefined && this._cloneId !== undefined) {
+      const sidejob = this._controller.makeSidejob({
+        assignedCloneId: this._cloneId,
+        districtIndex: this._districtIndex,
+        sidejobName: this._sidejobName,
+      });
+
+      this._sidejob = sidejob;
+    } else {
+      this._sidejob = undefined;
+    }
+
+    if (this._cloneId) {
+      this._existingSidejob = this._controller.getExistingSidejobByClone(this._cloneId);
+    }
+  }
 
   private handleClose = () => {
     this.dispatchEvent(new AssignCloneSidejobDialogCloseEvent());
@@ -209,6 +216,15 @@ Clone can be assigned only to one sidejob.`)}
 
     const districtIndex = parseInt(this._districtIndexInputRef.value.value as string);
     this._districtIndex = districtIndex;
+  };
+
+  private handleRestoreValues = (event: Event) => {
+    event.preventDefault();
+
+    if (this._existingSidejob) {
+      this._sidejobName = this._existingSidejob.sidejobName;
+      this._districtIndex = this._existingSidejob.district.index;
+    }
   };
 
   private handleSubmit = (event: Event) => {

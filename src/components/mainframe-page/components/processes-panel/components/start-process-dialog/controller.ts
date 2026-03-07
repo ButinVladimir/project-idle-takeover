@@ -2,8 +2,6 @@ import { BaseController } from '@shared/index';
 import { IProgram, ProgramName, IProcess } from '@state/mainframe-state';
 
 export class StartProcessDialogController extends BaseController {
-  private _program?: IProgram;
-
   getAvailableRamForProgram(programName?: ProgramName): number {
     if (programName) {
       return this.mainframeState.processes.getAvailableRamForProgram(programName);
@@ -16,10 +14,8 @@ export class StartProcessDialogController extends BaseController {
     return this.mainframeState.programs.listOwnedPrograms();
   }
 
-  getProgram(name: ProgramName): IProgram | undefined {
-    this._program = this.mainframeState.programs.getOwnedProgramByName(name)!;
-
-    return this._program;
+  getOwnedProgram(name: ProgramName): IProgram | undefined {
+    return this.mainframeState.programs.getOwnedProgramByName(name)!;
   }
 
   getRunningScalableProgram(): IProcess | undefined {

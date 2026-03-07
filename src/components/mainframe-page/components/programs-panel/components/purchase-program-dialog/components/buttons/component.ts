@@ -51,7 +51,9 @@ export class PurchaseProgramDialogButtons extends BaseComponent {
       <div class="buttons">
         <sl-button size="medium" variant="default" @click=${this.handleCancel}> ${COMMON_TEXTS.close()} </sl-button>
 
-        <sl-button size="medium" variant="default" ?disabled=${!this._ownedProgram} @click=${this.handleRestoreValues}> ${COMMON_TEXTS.restoreValues()} </sl-button>
+        <sl-button size="medium" variant="default" ?disabled=${!this._ownedProgram} @click=${this.handleRestoreValues}>
+          ${COMMON_TEXTS.restoreValues()}
+        </sl-button>
 
         <sl-button size="medium" variant="primary" ?disabled=${this.disabled} @click=${this.handlePurchase}>
           ${COMMON_TEXTS.purchase()}

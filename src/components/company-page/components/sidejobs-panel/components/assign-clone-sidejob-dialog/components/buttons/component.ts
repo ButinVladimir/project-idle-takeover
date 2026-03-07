@@ -7,7 +7,7 @@ import { BaseComponent } from '@shared/index';
 import { COMMON_TEXTS, DISTRICT_NAMES, SIDEJOB_TEXTS, SIDEJOB_VALIDATION_TEXTS } from '@texts/index';
 import { SidejobValidationResult, type ISidejob } from '@state/activity-state';
 import { AssignCloneSidejobDialogButtonsController } from './controller';
-import { AssignCloneEvent, CancelEvent } from './events';
+import { AssignCloneEvent, CancelEvent, RestoreValuesEvent } from './events';
 import { existingSidejobContext, temporarySidejobContext } from '../../contexts';
 import { AssignCloneSidejobDialogFormWarning, AssignCloneSidejobDialogWarning } from './types';
 import styles from './styles';
@@ -50,6 +50,15 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
 
       <div class="buttons">
         <sl-button size="medium" variant="default" @click=${this.handleCancel}> ${COMMON_TEXTS.close()} </sl-button>
+
+        <sl-button
+          size="medium"
+          variant="default"
+          ?disabled=${!this._existingSidejob}
+          @click=${this.handleRestoreValues}
+        >
+          ${COMMON_TEXTS.restoreValues()}
+        </sl-button>
 
         <sl-button size="medium" variant="primary" ?disabled=${this.disabled} @click=${this.handleAssignClone}>
           ${msg('Assign clone')}
@@ -155,6 +164,10 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
 
   private handleCancel = () => {
     this.dispatchEvent(new CancelEvent());
+  };
+
+  private handleRestoreValues = () => {
+    this.dispatchEvent(new RestoreValuesEvent());
   };
 
   private handleAssignClone = () => {

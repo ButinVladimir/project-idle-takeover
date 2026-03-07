@@ -7,7 +7,7 @@ import { BaseComponent } from '@shared/index';
 import { type IProcess, type IProgram } from '@state/mainframe-state';
 import { COMMON_TEXTS, PROGRAM_TEXTS } from '@texts/index';
 import { StartProcessDialogButtonsController } from './controller';
-import { StartProcessEvent, CancelEvent } from './events';
+import { StartProcessEvent, CancelEvent, RestoreValuesEvent } from './events';
 import { existingProcessContext, programContext } from '../../contexts';
 import styles from './styles';
 
@@ -56,11 +56,17 @@ export class StartProcessDialogButtons extends BaseComponent {
       visible: !!warning,
     });
 
+    const canRestoreValues = this._existingProcess && !this._existingProcess.program.isAutoscalable;
+
     return html`
       <p class=${warningClasses}>${warning}</p>
 
       <div class="buttons">
         <sl-button size="medium" variant="default" @click=${this.handleCancel}> ${COMMON_TEXTS.close()} </sl-button>
+
+        <sl-button size="medium" variant="default" ?disabled=${!canRestoreValues} @click=${this.handleRestoreValues}>
+          ${COMMON_TEXTS.restoreValues()}
+        </sl-button>
 
         <sl-button size="medium" variant="primary" ?disabled=${this.disabled} @click=${this.handleStart}>
           ${msg('Start process')}
@@ -110,6 +116,10 @@ export class StartProcessDialogButtons extends BaseComponent {
 
   private handleCancel = () => {
     this.dispatchEvent(new CancelEvent());
+  };
+
+  private handleRestoreValues = () => {
+    this.dispatchEvent(new RestoreValuesEvent());
   };
 
   private handleStart = () => {

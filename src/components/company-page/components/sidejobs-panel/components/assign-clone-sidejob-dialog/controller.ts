@@ -16,7 +16,7 @@ export class AssignCloneSidejobDialogController extends BaseController {
     return this.cityState.listAvailableDistricts();
   }
 
-  getSidejob(args: ISerializedSidejob): ISidejob {
+  makeSidejob(args: ISerializedSidejob): ISidejob {
     return this.activityState.sidejobsFactory.makeSidejob(args);
   }
 

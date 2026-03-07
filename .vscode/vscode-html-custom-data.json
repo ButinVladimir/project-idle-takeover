@@ -254,7 +254,7 @@
     },
     {
       "name": "ca-assign-clones-contract-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_clonesIdInputRef` - \n\n  * `_districtIndexInputRef` - \n\n  * `_contractNameInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_cloneIds` {`string[]`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `_contractName` {`string | undefined`} - \n\n  * `_contract` - \n\n  * `_existingContract` - \n\n  * `renderCloneOption` - \n\n  * `renderDistrictOption` - \n\n  * `renderContractName` - \n\n  * `handleClose` - \n\n  * `handleCloneIdsChange` - \n\n  * `handleContractNameChange` - \n\n  * `handleDistrictIndexChange` - \n\n  * `handleSubmit` - \n\n  * `handleAssignClones` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_clonesIdInputRef` - \n\n  * `_districtIndexInputRef` - \n\n  * `_contractNameInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_cloneIds` {`string[]`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `_contractName` {`string | undefined`} - \n\n  * `_contract` - \n\n  * `_existingContract` - \n\n  * `renderCloneOption` - \n\n  * `renderDistrictOption` - \n\n  * `renderContractName` - \n\n  * `handleClose` - \n\n  * `handleCloneIdsChange` - \n\n  * `handleContractNameChange` - \n\n  * `handleDistrictIndexChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleAssignClones` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "open",
@@ -265,7 +265,7 @@
     },
     {
       "name": "ca-assign-clones-contract-dialog-buttons",
-      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_contract` - \n\n  * `_existingContract` - \n\n  * `renderWarning` - \n\n  * `buildAlreadySelectedWarning` - \n\n  * `handleCancel` - \n\n  * `handleAssignClones` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_contract` - \n\n  * `_existingContract` - \n\n  * `renderWarning` - \n\n  * `buildAlreadySelectedWarning` - \n\n  * `handleCancel` - \n\n  * `handleRestoreValues` - \n\n  * `handleAssignClones` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "disabled",
@@ -373,7 +373,7 @@
     },
     {
       "name": "ca-assign-clone-sidejob-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneIdInputRef` - \n\n  * `_districtIndexInputRef` - \n\n  * `_sidejobNameInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_cloneId` {`string | undefined`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `_sidejobName` {`string | undefined`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_buttonsRef` - \n\n  * `renderCloneOption` - \n\n  * `renderDistrictOption` - \n\n  * `renderSidejobName` - \n\n  * `handleClose` - \n\n  * `handleCloneIdChange` - \n\n  * `handleSidejobNameChange` - \n\n  * `handleDistrictIndexChange` - \n\n  * `handleSubmit` - \n\n  * `handleAssignClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneIdInputRef` - \n\n  * `_districtIndexInputRef` - \n\n  * `_sidejobNameInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_cloneId` {`string | undefined`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `_sidejobName` {`string | undefined`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_buttonsRef` - \n\n  * `renderCloneOption` - \n\n  * `renderDistrictOption` - \n\n  * `renderSidejobName` - \n\n  * `handleClose` - \n\n  * `handleCloneIdChange` - \n\n  * `handleSidejobNameChange` - \n\n  * `handleDistrictIndexChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleAssignClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "open",
@@ -384,7 +384,7 @@
     },
     {
       "name": "ca-assign-clone-sidejob-dialog-buttons",
-      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_availableTimeRef` - \n\n  * `handlePartialUpdate` - \n\n  * `renderWarnings` - \n\n  * `renderAlreadySelectedWarning` - \n\n  * `handleCancel` - \n\n  * `handleAssignClone` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_availableTimeRef` - \n\n  * `handlePartialUpdate` - \n\n  * `renderWarnings` - \n\n  * `renderAlreadySelectedWarning` - \n\n  * `handleCancel` - \n\n  * `handleRestoreValues` - \n\n  * `handleAssignClone` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "disabled",
@@ -641,7 +641,7 @@
     },
     {
       "name": "ca-start-process-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_programInputRef` - \n\n  * `_threadsInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_programName` - \n\n  * `_threads` {`number`} - \n\n  * `_program` - \n\n  * `_existingProcess` - \n\n  * `handleClose` - \n\n  * `handleProgramChange` - \n\n  * `handleThreadsChange` - \n\n  * `handleSubmit` - \n\n  * `handleStartProcess` - \n\n  * `formatProgramSelectItem` - \n\n  * `calculateMaxThreads` - \n\n  * `checkAvailability` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_programInputRef` - \n\n  * `_threadsInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_programName` - \n\n  * `_threads` {`number`} - \n\n  * `_ownedProgram` - \n\n  * `_existingProcess` - \n\n  * `handleClose` - \n\n  * `handleProgramChange` - \n\n  * `handleThreadsChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleStartProcess` - \n\n  * `formatProgramSelectItem` - \n\n  * `calculateMaxThreads` - \n\n  * `checkAvailability` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "open",
@@ -652,7 +652,7 @@
     },
     {
       "name": "ca-start-process-dialog-buttons",
-      "description": "Attributes:\n\n  * `threads` {`number`} - \n\n  * `max-threads` {`number`} - \n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `threads` {`number`} - \n\n  * `maxThreads` {`number`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_program` - \n\n  * `_existingProcess` - \n\n  * `handleCancel` - \n\n  * `handleStart` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `threads` {`number`} - \n\n  * `max-threads` {`number`} - \n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `threads` {`number`} - \n\n  * `maxThreads` {`number`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_program` - \n\n  * `_existingProcess` - \n\n  * `handleCancel` - \n\n  * `handleRestoreValues` - \n\n  * `handleStart` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "threads",
@@ -716,7 +716,7 @@
     },
     {
       "name": "ca-purchase-program-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_programInputRef` - \n\n  * `_tierInputRef` - \n\n  * `_levelInputRef` - \n\n  * `_buttonsRef` - \n\n  * `open` {`boolean`} - \n\n  * `_programName` - \n\n  * `_tier` {`number`} - \n\n  * `_level` {`number`} - \n\n  * `_program` - \n\n  * `_existingProgram` - \n\n  * `renderProgramOption` - \n\n  * `renderTierOptions` - \n\n  * `handleClose` - \n\n  * `handleProgramChange` - \n\n  * `handleTierChange` - \n\n  * `handleLevelChange` - \n\n  * `handleSubmit` - \n\n  * `handlePurchaseProgram` - \n\n  * `checkAvailability` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_programInputRef` - \n\n  * `_tierInputRef` - \n\n  * `_levelInputRef` - \n\n  * `_buttonsRef` - \n\n  * `open` {`boolean`} - \n\n  * `_programName` - \n\n  * `_tier` {`number`} - \n\n  * `_level` {`number`} - \n\n  * `_program` - \n\n  * `_existingProgram` - \n\n  * `renderProgramOption` - \n\n  * `renderTierOptions` - \n\n  * `handleClose` - \n\n  * `handleProgramChange` - \n\n  * `handleTierChange` - \n\n  * `handleLevelChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handlePurchaseProgram` - \n\n  * `checkAvailability` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "open",
@@ -727,7 +727,7 @@
     },
     {
       "name": "ca-purchase-program-dialog-buttons",
-      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_program` - \n\n  * `_ownedProgram` - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_availableTimeRef` - \n\n  * `handlePartialUpdate` - \n\n  * `renderWarnings` - \n\n  * `renderOtherWarnings` - \n\n  * `handleCancel` - \n\n  * `handlePurchase` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_program` - \n\n  * `_ownedProgram` - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_availableTimeRef` - \n\n  * `handlePartialUpdate` - \n\n  * `renderWarnings` - \n\n  * `renderOtherWarnings` - \n\n  * `handleCancel` - \n\n  * `handleRestoreValues` - \n\n  * `handlePurchase` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "disabled",

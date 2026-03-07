@@ -240,7 +240,7 @@ If you already have program with same name, old one will be replaced with new on
       this._level = this._existingProgram.level;
       this._tier = this._existingProgram.tier;
     }
-  }
+  };
 
   private handleSubmit = (event: Event) => {
     event.preventDefault();
