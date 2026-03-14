@@ -3,12 +3,12 @@ import { customElement, property, queryAll } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { consume } from '@lit/context';
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
-import { type IMainframeHardwareParameter } from '@state/mainframe-state';
+import { MainframeHardwareValidationResult, type IMainframeHardwareParameter } from '@state/mainframe-state';
 import { BaseComponent } from '@shared/index';
-import { COMMON_TEXTS } from '@texts/index';
+import { COMMON_TEXTS, MAINFRAME_HARDWARE_VALIDATION_TEXTS } from '@texts/index';
 import { MainframeHardwarePanelArticleButtonsController } from './controller';
 import { BuyHardwareEvent, BuyMaxHardwareEvent } from './events';
-import { MainframeHardwarePanelArticleWarning } from './types';
+import { MainframeHardwarePanelArticleWarning, MainframeHardwareWarning } from './types';
 import { mainframeHardwareParameterContext } from '../../contexts';
 import styles from './styles';
 
@@ -108,11 +108,17 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
 
   private renderWarnings = () => {
     return html`
-      <p class="warning" data-warning=${MainframeHardwarePanelArticleWarning.higherDevelopmentLevelRequired}>
-        ${COMMON_TEXTS.higherDevelopmentLevelRequired()}
+      <p class="warning" data-warning=${MainframeHardwareValidationResult.hardwareLocked}>
+        ${MAINFRAME_HARDWARE_VALIDATION_TEXTS.hardwareLocked()}
       </p>
-      <p class="warning" data-warning=${MainframeHardwarePanelArticleWarning.notEnoughMoney}>
-        ${COMMON_TEXTS.notEnoughMoney()}
+      <p class="warning" data-warning=${MainframeHardwareValidationResult.increaseInvalid}>
+        ${MAINFRAME_HARDWARE_VALIDATION_TEXTS.increaseInvalid()}
+      </p>
+      <p class="warning" data-warning=${MainframeHardwareValidationResult.higherDevelopmentLevelRequired}>
+        ${MAINFRAME_HARDWARE_VALIDATION_TEXTS.higherDevelopmentLevelRequired()}
+      </p>
+      <p class="warning" data-warning=${MainframeHardwareValidationResult.notEnoughMoney}>
+        ${MAINFRAME_HARDWARE_VALIDATION_TEXTS.notEnoughMoney()}
       </p>
       <p class="warning" data-warning=${MainframeHardwarePanelArticleWarning.willBeAvailableIn}>
         ${COMMON_TEXTS.willBeAvailableIn(html`<span ${ref(this._availableTimeRef)}></span>`)}
@@ -120,24 +126,24 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
     `;
   };
 
-  private selectWarning(): MainframeHardwarePanelArticleWarning | undefined {
-    if (this._parameter!.level + this.increase > this._controller.developmentLevel) {
-      return MainframeHardwarePanelArticleWarning.higherDevelopmentLevelRequired;
-    }
+  private selectWarning(): MainframeHardwareWarning {
+    const validationResult = this._controller.validate(this._parameter!.type, this.increase);
 
-    const cost = this._parameter!.calculateIncreaseCost(this.increase);
-    const moneyGrowth = this._controller.moneyGrowth;
-    const moneyDiff = cost - this._controller.money;
+    if (validationResult === MainframeHardwareValidationResult.notEnoughMoney) {
+      const cost = this._controller.calculateIncreaseCost(this._parameter!.type, this.increase);
+      const moneyGrowth = this._controller.moneyGrowth;
+      const moneyDiff = cost - this._controller.money;
 
-    if (moneyDiff > 0) {
-      if (moneyGrowth <= 0) {
-        return MainframeHardwarePanelArticleWarning.notEnoughMoney;
+      if (moneyDiff > 0) {
+        if (moneyGrowth <= 0) {
+          return MainframeHardwareValidationResult.notEnoughMoney;
+        }
+
+        return MainframeHardwarePanelArticleWarning.willBeAvailableIn;
       }
-
-      return MainframeHardwarePanelArticleWarning.willBeAvailableIn;
     }
 
-    return undefined;
+    return validationResult;
   }
 
   private updateAvailabilityTimer(): void {
@@ -145,7 +151,7 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
       return;
     }
 
-    const cost = this._parameter!.calculateIncreaseCost(this.increase);
+    const cost = this._controller.calculateIncreaseCost(this._parameter!.type, this.increase);
     const moneyGrowth = this._controller.moneyGrowth;
     const moneyDiff = cost - this._controller.money;
 
@@ -162,7 +168,7 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
       return;
     }
 
-    const increase = Math.max(this._parameter!.calculateIncreaseFromMoney(this._controller.money), 1);
+    const increase = Math.max(this._controller.calculateIncreaseFromMoney(this._parameter!.type), 1);
     const level = this._parameter!.level + increase;
 
     const formattedLevel = this._controller.formatter.formatLevel(level);

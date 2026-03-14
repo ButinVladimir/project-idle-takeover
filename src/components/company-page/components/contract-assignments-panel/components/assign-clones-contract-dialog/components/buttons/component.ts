@@ -79,7 +79,8 @@ export class AssignClonesContractDialogButtons extends BaseComponent {
     let warningText = '';
 
     switch (warning) {
-      case ContractValidationResult.activityLocked:
+      case ContractValidationResult.primaryActivityLocked:
+      case ContractValidationResult.contractNotAvailable:
       case ContractValidationResult.districtLocked:
       case ContractValidationResult.notEnoughClones:
       case ContractValidationResult.tooManyClones:

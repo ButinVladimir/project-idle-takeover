@@ -1,5 +1,6 @@
 export enum SidejobValidationResult {
-  activityLocked = 'activityLocked',
+  companyLocked = 'companyLocked',
+  sidejobNotAvailable = 'sidejobNotAvailable',
   districtLocked = 'districtLocked',
   notEnoughConnectivity = 'notEnoughConnectivity',
   requirementsNotMet = 'requirementsNotMet',

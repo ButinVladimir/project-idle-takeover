@@ -1,5 +1,5 @@
 import { BaseController } from '@shared/index';
-import { IProgram } from '@state/mainframe-state';
+import { IProgram, ProgramValidationResult } from '@state/mainframe-state';
 
 export class OwnedProgramsListItemButtonsController extends BaseController {
   calculateUpgradeLevel(program: IProgram) {
@@ -7,7 +7,7 @@ export class OwnedProgramsListItemButtonsController extends BaseController {
       return 0;
     }
 
-    return this.mainframeState.programs.calculateLevelFromMoney(
+    return this.mainframeState.programs.upgrader.calculateLevelFromMoney(
       program.name,
       program.tier,
       this.globalState.money.money,
@@ -20,8 +20,8 @@ export class OwnedProgramsListItemButtonsController extends BaseController {
     }
 
     return (
-      this.globalState.money.money >=
-      this.mainframeState.programs.calculateProgramCost(program.name, program.tier, program.level + 1)
+      this.mainframeState.programs.validator.validateProgram(program.name, program.tier, program.level + 1) ===
+      ProgramValidationResult.valid
     );
   }
 

@@ -3,7 +3,7 @@ import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IGlobalState } from '@state/global-state';
 import { type IUnlockState } from '@state/unlock-state';
-import { Attribute, ATTRIBUTES, calculatePower, Skill, SKILLS } from '@shared/index';
+import { Attribute, ATTRIBUTES, calculatePower, Milestone, Skill, SKILLS } from '@shared/index';
 import { DistrictUnlockState } from '@state/city-state';
 import { ISidejob, typedSidejobs } from '../sidejobs-factory';
 import { ISidejobActivityValidator } from './interfaces';
@@ -24,8 +24,12 @@ export class SidejobActivityValidator implements ISidejobActivityValidator {
   }
 
   validate(sidejob: ISidejob): SidejobValidationResult {
+    if (!this._unlockState.milestones.isMilestoneReached(Milestone.unlockedCompanyManagement)) {
+      return SidejobValidationResult.companyLocked;
+    }
+
     if (!this._unlockState.activities.sidejobs.isActivityAvailable(sidejob.sidejobName)) {
-      return SidejobValidationResult.activityLocked;
+      return SidejobValidationResult.sidejobNotAvailable;
     }
 
     if (sidejob.district.state === DistrictUnlockState.locked) {

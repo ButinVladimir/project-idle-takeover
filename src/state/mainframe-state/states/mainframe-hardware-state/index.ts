@@ -6,3 +6,4 @@ export * from './mainframe-hardware-parameter';
 export * from './mainframe-hardware-performance';
 export * from './mainframe-hardware-ram';
 export * from './mainframe-hardware-cores';
+export * from './mainframe-hardware-validator';

@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
-import { Milestone } from '@shared/index';
+import { calculateGeometricProgressionSum, Milestone, reverseGeometricProgressionSum } from '@shared/index';
 import { type IGlobalState } from '@state/global-state';
 import { type IAutomationState } from '@state/automation-state';
 import { type IUnlockState } from '@state/unlock-state';
@@ -64,6 +64,21 @@ export class MainframeHardwareUpgrader implements IMainframeHardwareUpgrader {
     this.performUpgradeAll();
   }
 
+  calculateIncreaseFromMoney(parameterType: MainframeHardwareParameterType, money: number): number {
+    const parameter = this.getParameterByType(parameterType);
+    const exp = parameter.priceExp;
+
+    const availableMoney =
+      money * this._globalState.multipliers.computationalBase.totalMultiplier +
+      calculateGeometricProgressionSum(parameter.level - 1, exp.multiplier, exp.base);
+
+    const maxLevel = reverseGeometricProgressionSum(availableMoney, exp.multiplier, exp.base);
+
+    const increase = Math.min(maxLevel, this._globalState.development.level) - parameter.level;
+
+    return increase;
+  }
+
   private checkUpgradeAvailable() {
     return this._unlockState.milestones.isMilestoneReached(Milestone.unlockedMainframeHardware);
   }
@@ -94,10 +109,13 @@ export class MainframeHardwareUpgrader implements IMainframeHardwareUpgrader {
   }
 
   private performUpgradeParameter(parameter: IMainframeHardwareParameter) {
-    const increase = Math.min(parameter.calculateIncreaseFromMoney(this._availableMoney), this._availableActions);
+    const increase = Math.min(
+      this.calculateIncreaseFromMoney(parameter.type, this._availableMoney),
+      this._availableActions,
+    );
 
     if (increase > 0) {
-      const cost = parameter.calculateIncreaseCost(increase);
+      const cost = this._mainframeState.hardware.validator.calculateIncreaseCost(parameter.type, increase);
 
       if (parameter.purchase(increase)) {
         this._availableMoney -= cost;

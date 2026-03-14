@@ -1,5 +1,5 @@
 import { BaseController } from '@shared/index';
-import { IProgram, ProgramName } from '@state/mainframe-state';
+import { IProgram, ProgramName, ProgramValidationResult } from '@state/mainframe-state';
 import { IProgramParameters } from './types';
 
 export class PurchaseProgramDialogController extends BaseController {
@@ -36,15 +36,11 @@ export class PurchaseProgramDialogController extends BaseController {
     return this.unlockState.items.programs.listAvailableItems();
   }
 
+  validateProgram(name: ProgramName, tier: number, level: number): boolean {
+    return this.mainframeState.programs.validator.validateProgram(name, tier, level) === ProgramValidationResult.valid;
+  }
+
   purchaseProgram(name: ProgramName, tier: number, level: number): boolean {
     return this.mainframeState.programs.purchaseProgram(name, tier, level);
-  }
-
-  getProgramCost(programName: ProgramName, tier: number, level: number): number {
-    return this.mainframeState.programs.calculateProgramCost(programName, tier, level);
-  }
-
-  isProgramAvailable(programName: ProgramName, tier: number, level: number): boolean {
-    return this.unlockState.items.programs.isItemAvailable(programName, tier, level);
   }
 }

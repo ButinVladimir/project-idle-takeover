@@ -12,10 +12,10 @@ import {
 } from '@shared/index';
 import { IClone } from '@state/clones-state';
 import { IDistrictState } from '@state/city-state';
+import { CONTRACT_TEXTS, CONTRACT_VALIDATION_TEXTS, DISTRICT_NAMES } from '@texts/index';
 import { IContractActivity, ISerializedContractActivity } from '../interfaces';
 import { PrimaryActivity } from '../primary-activity';
 import { PrimaryActivityPerformResult, PrimaryActivityState } from '../types';
-import { CONTRACT_TEXTS, CONTRACT_VALIDATION_TEXTS, DISTRICT_NAMES } from '@/texts';
 import { ContractValidationResult } from '../../contract-activity-validator';
 
 const { lazyInject } = decorators;

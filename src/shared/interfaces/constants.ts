@@ -1,4 +1,4 @@
-import { MainframeHardwareParameterType } from '@state/mainframe-state/states/mainframe-hardware-state/types';
+import { MainframeHardwareParameterType } from '@state/mainframe-state';
 import { Milestone, Hotkey, LongNumberFormat } from '../types';
 
 export interface IConstants {

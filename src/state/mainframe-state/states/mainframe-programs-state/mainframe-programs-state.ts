@@ -6,24 +6,17 @@ import { type IGlobalState } from '@state/global-state';
 import { type IMessageLogState } from '@state/message-log-state';
 import { type IMainframeState } from '@state/mainframe-state/interfaces/mainframe-state';
 import { type IScenarioState } from '@state/scenario-state';
-import { type IUnlockState } from '@state/unlock-state';
 import { TYPES } from '@state/types';
-import {
-  type IFormatter,
-  Milestone,
-  ProgramsEvent,
-  PurchaseType,
-  calculateTierPower,
-  reverseTierPower,
-  moveElementInArray,
-} from '@shared/index';
+import { type IFormatter, ProgramsEvent, PurchaseType, moveElementInArray } from '@shared/index';
 import { PROGRAM_TEXTS } from '@texts/index';
 import {
   IMainframeProgramsState,
   IMainframeProgramsSerializedState,
   type IMainframeProgramsUpgrader,
+  type IMainframeProgramsValidator,
 } from './interfaces';
-import { ProgramName, IMakeProgramParameters, IProgram, typedPrograms } from '../progam-factory';
+import { ProgramName, IMakeProgramParameters, IProgram } from '../progam-factory';
+import { ProgramValidationResult } from './types';
 
 const { lazyInject } = decorators;
 
@@ -41,9 +34,6 @@ export class MainframeProgramsState implements IMainframeProgramsState {
   @lazyInject(TYPES.ScenarioState)
   private _scenarioState!: IScenarioState;
 
-  @lazyInject(TYPES.UnlockState)
-  private _unlockState!: IUnlockState;
-
   @lazyInject(TYPES.MessageLogState)
   private _messageLogState!: IMessageLogState;
 
@@ -52,6 +42,9 @@ export class MainframeProgramsState implements IMainframeProgramsState {
 
   @inject(TYPES.MainframeProgramsUpgrader)
   private _upgrader!: IMainframeProgramsUpgrader;
+
+  @inject(TYPES.MainframeProgramsValidator)
+  private _validator!: IMainframeProgramsValidator;
 
   private _programsList: IProgram[];
   private _ownedPrograms: Map<ProgramName, IProgram>;
@@ -67,30 +60,16 @@ export class MainframeProgramsState implements IMainframeProgramsState {
     return this._upgrader;
   }
 
-  calculateProgramCost(name: ProgramName, tier: number, level: number): number {
-    const programData = typedPrograms[name];
-
-    return calculateTierPower(level, tier, programData.cost) / this._globalState.multipliers.codeBase.totalMultiplier;
-  }
-
-  calculateLevelFromMoney(name: ProgramName, tier: number, money: number): number {
-    const programData = typedPrograms[name];
-
-    const availableMoney = money * this._globalState.multipliers.codeBase.totalMultiplier;
-
-    return Math.min(reverseTierPower(availableMoney, tier, programData.cost), this._globalState.development.level);
+  get validator() {
+    return this._validator;
   }
 
   purchaseProgram(name: ProgramName, tier: number, level: number): boolean {
-    if (!this._unlockState.milestones.isMilestoneReached(Milestone.unlockedMainframePrograms)) {
+    if (this._validator.validateProgram(name, tier, level) !== ProgramValidationResult.valid) {
       return false;
     }
 
-    if (!this._unlockState.items.programs.isItemAvailable(name, tier, level)) {
-      return false;
-    }
-
-    const cost = this.calculateProgramCost(name, tier, level);
+    const cost = this._validator.calculateProgramCost(name, tier, level);
 
     const bought = this._globalState.money.purchase(
       cost,

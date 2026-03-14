@@ -61,6 +61,10 @@ export abstract class BaseAvailableCategoryItemsState<
   }
 
   isItemAvailable(itemName: Key, tier: number, level: number): boolean {
+    if (Number.isNaN(tier) || Number.isNaN(level)) {
+      return false;
+    }
+
     if (!(this._loanedItems.has(itemName) || this._designsTierMap.has(itemName))) {
       return false;
     }

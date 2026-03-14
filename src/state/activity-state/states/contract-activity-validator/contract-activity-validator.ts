@@ -2,7 +2,7 @@ import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
 import { type IUnlockState } from '@state/unlock-state';
-import { Attribute, ATTRIBUTES, Skill, SKILLS } from '@shared/index';
+import { Attribute, ATTRIBUTES, Milestone, Skill, SKILLS } from '@shared/index';
 import { DistrictUnlockState } from '@state/city-state';
 import { IContractActivityValidator } from './interfaces';
 import { ContractValidationResult } from './types';
@@ -16,8 +16,12 @@ export class ContractActivityValidator implements IContractActivityValidator {
   private _unlockState!: IUnlockState;
 
   validate(contract: IContract): ContractValidationResult {
+    if (!this._unlockState.milestones.isMilestoneReached(Milestone.unlockedPrimaryActivity)) {
+      return ContractValidationResult.primaryActivityLocked;
+    }
+
     if (!this._unlockState.activities.contracts.isActivityAvailable(contract.contractName)) {
-      return ContractValidationResult.activityLocked;
+      return ContractValidationResult.contractNotAvailable;
     }
 
     if (contract.district.state === DistrictUnlockState.locked) {

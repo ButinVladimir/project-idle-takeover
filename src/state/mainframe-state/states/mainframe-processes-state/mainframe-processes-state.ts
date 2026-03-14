@@ -1,4 +1,4 @@
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
 import type { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
@@ -14,15 +14,20 @@ import { ProgramName } from '../progam-factory/types';
 import {
   IMainframeProcessesSerializedState,
   IMainframeProcessesState,
+  type IMainframeProcessesValidator,
   IProcess,
   ISerializedProcess,
 } from './interfaces';
 import { Process } from './process';
+import { ProcessValidationResult } from './types';
 
 const { lazyInject } = decorators;
 
 @injectable()
 export class MainframeProcessesState implements IMainframeProcessesState {
+  @inject(TYPES.MainframeProcessesValidator)
+  private _validator!: IMainframeProcessesValidator;
+
   @lazyInject(TYPES.MainframeState)
   private _mainframeState!: IMainframeState;
 
@@ -62,6 +67,10 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     ]);
   }
 
+  get validator() {
+    return this._validator;
+  }
+
   get availableCores() {
     return this._availableCores;
   }
@@ -83,27 +92,14 @@ export class MainframeProcessesState implements IMainframeProcessesState {
   }
 
   addProcess(programName: ProgramName, threads: number): boolean {
-    const program = this._mainframeState.programs.getOwnedProgramByName(programName);
-    if (!program) {
+    if (this._validator.validateProcess(programName, threads) !== ProcessValidationResult.valid) {
       return false;
     }
 
-    if (!program.isAutoscalable && threads <= 0) {
-      throw new Error('Invalid amount of threads for process');
-    }
-
+    const program = this._mainframeState.programs.getOwnedProgramByName(programName)!;
     const threadCount = program.isAutoscalable ? 0 : threads;
 
     const existingProcess = this.getProcessByName(programName);
-    const availableRam = this.getAvailableRamForProgram(programName);
-
-    if (!program.isAutoscalable && availableRam < program.ram * threads) {
-      return false;
-    }
-
-    if (program.isAutoscalable && availableRam === 0) {
-      return false;
-    }
 
     if (program.isAutoscalable && !existingProcess) {
       this.deleteAutoscalableProcesses();
@@ -209,7 +205,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     this._availableRam = this._mainframeState.hardware.ram.totalLevel;
 
     for (const process of this._processesList) {
-      this._availableRam -= process.program.isAutoscalable ? process.program.ram : process.totalRam;
+      this._availableRam -= process.program.isAutoscalable ? process.program.ram : process.usedRam;
     }
   }
 
@@ -221,7 +217,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     if (this._runningScalableProcess?.enabled) {
       this._runningScalableProcess.program.perform(
         this._runningScalableProcess.usedCores,
-        this._runningScalableProcess.totalRam,
+        this._runningScalableProcess.usedRam,
       );
     }
 
@@ -231,7 +227,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
       process.increaseCompletion(process.calculateCompletionDelta(this._settingsState.updateInterval));
 
       if (process.currentCompletionPoints >= process.maxCompletionPoints) {
-        process.program.perform(process.threads, process.totalRam);
+        process.program.perform(process.threads, process.usedRam);
         hasFinishedProcesses = true;
       }
     }
@@ -252,29 +248,6 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     moveElementInArray(this._processesList, oldPosition, newPosition);
 
     this.requestUpdateRunningProcesses();
-  }
-
-  getAvailableRamForProgram(programName: ProgramName): number {
-    const program = this._mainframeState.programs.getOwnedProgramByName(programName);
-    if (!program) {
-      return 0;
-    }
-
-    let result = this.availableRam;
-
-    if (program.isAutoscalable && this._runningScalableProcess) {
-      result += this._runningScalableProcess.program.ram;
-    }
-
-    if (!program.isAutoscalable) {
-      const existingProcess = this.getProcessByName(programName);
-
-      if (existingProcess) {
-        result += existingProcess.totalRam;
-      }
-    }
-
-    return result;
   }
 
   async startNewState(): Promise<void> {

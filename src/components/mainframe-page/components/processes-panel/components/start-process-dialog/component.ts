@@ -87,7 +87,7 @@ export class StartProcessDialog extends BaseComponent {
       mobile: !desktop,
     });
 
-    const buttonsDisabled = !this.checkAvailability();
+    const buttonsDisabled = !this.validate();
 
     return html`
       <form id="start-process-dialog" @submit=${this.handleSubmit}>
@@ -196,7 +196,7 @@ Threads allow to run multiple instances of same program at same time, but additi
   private handleSubmit = (event: Event) => {
     event.preventDefault();
 
-    if (!this.checkAvailability()) {
+    if (!this.validate()) {
       return;
     }
 
@@ -281,17 +281,11 @@ Threads allow to run multiple instances of same program at same time, but additi
     return 0;
   };
 
-  private checkAvailability = (): boolean => {
+  private validate = (): boolean => {
     if (!this._programName || !this._ownedProgram) {
       return false;
     }
 
-    const maxThreads = this.calculateMaxThreads();
-
-    if (!this._ownedProgram.isAutoscalable) {
-      return this._threads > 0 && this._threads <= maxThreads;
-    }
-
-    return maxThreads > 0;
+    return this._controller.validateProcess(this._programName, this._threads);
   };
 }

@@ -17,12 +17,9 @@ export class PeerReviewerDescriptionEffectRenderer implements IDescriptionEffect
 
   private _formatter: IFormatter;
 
-  private _availableRam: number;
-
   constructor(parameters: IDescriptionParameters) {
     this._process = parameters.process;
     this._formatter = parameters.formatter;
-    this._availableRam = parameters.availableRam;
   }
 
   public renderEffect = () => {
@@ -39,7 +36,7 @@ export class PeerReviewerDescriptionEffectRenderer implements IDescriptionEffect
     const program = this._process.program as PeerReviewerProgram;
 
     const formattedValue = this._formatter.formatNumberFloat(
-      program.calculateExperienceShareMultiplier(usedCores, this._availableRam),
+      program.calculateExperienceShareMultiplier(usedCores, this._process.usedRam),
     );
 
     this.values[VALUES.experienceShareMultiplier] = formattedValue;

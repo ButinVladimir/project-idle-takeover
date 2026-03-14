@@ -289,13 +289,7 @@ If you already have program with same name, old one will be replaced with new on
       return false;
     }
 
-    const { money } = this._controller;
-
-    const cost = this._controller.getProgramCost(this._program.name, this._program.tier, this._program.level);
-
-    return (
-      cost <= money && this._controller.isProgramAvailable(this._program.name, this._program.tier, this._program.level)
-    );
+    return this._controller.validateProgram(this._program.name, this._program.tier, this._program.level);
   };
 
   handlePartialUpdate = () => {

@@ -100,6 +100,12 @@ import {
   MainframeHardwarePerformance,
   MainframeHardwareRam,
   MainframeHardwareCores,
+  IMainframeProgramsValidator,
+  MainframeProgramsValidator,
+  IMainframeHardwareValidator,
+  MainframeHardwareValidator,
+  IMainframeProcessesValidator,
+  MainframeProcessesValidator,
 } from '@state/mainframe-state';
 import {
   IMainframeHardwareAutomationState,
@@ -347,6 +353,24 @@ container
 container
   .bind<IMainframeProgramsUpgrader>(TYPES.MainframeProgramsUpgrader)
   .to(MainframeProgramsUpgrader)
+  .inSingletonScope()
+  .whenDefault();
+
+container
+  .bind<IMainframeProgramsValidator>(TYPES.MainframeProgramsValidator)
+  .to(MainframeProgramsValidator)
+  .inSingletonScope()
+  .whenDefault();
+
+container
+  .bind<IMainframeHardwareValidator>(TYPES.MainframeHardwareValidator)
+  .to(MainframeHardwareValidator)
+  .inSingletonScope()
+  .whenDefault();
+
+container
+  .bind<IMainframeProcessesValidator>(TYPES.MainframeProcessesValidator)
+  .to(MainframeProcessesValidator)
   .inSingletonScope()
   .whenDefault();
 

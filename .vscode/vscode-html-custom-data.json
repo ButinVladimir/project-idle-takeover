@@ -641,7 +641,7 @@
     },
     {
       "name": "ca-start-process-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_programInputRef` - \n\n  * `_threadsInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_programName` - \n\n  * `_threads` {`number`} - \n\n  * `_ownedProgram` - \n\n  * `_existingProcess` - \n\n  * `handleClose` - \n\n  * `handleProgramChange` - \n\n  * `handleThreadsChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleStartProcess` - \n\n  * `formatProgramSelectItem` - \n\n  * `calculateMaxThreads` - \n\n  * `checkAvailability` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_programInputRef` - \n\n  * `_threadsInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_programName` - \n\n  * `_threads` {`number`} - \n\n  * `_ownedProgram` - \n\n  * `_existingProcess` - \n\n  * `handleClose` - \n\n  * `handleProgramChange` - \n\n  * `handleThreadsChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleStartProcess` - \n\n  * `formatProgramSelectItem` - \n\n  * `calculateMaxThreads` - \n\n  * `validate` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "open",
@@ -727,7 +727,7 @@
     },
     {
       "name": "ca-purchase-program-dialog-buttons",
-      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_program` - \n\n  * `_ownedProgram` - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_availableTimeRef` - \n\n  * `handlePartialUpdate` - \n\n  * `renderWarnings` - \n\n  * `renderOtherWarnings` - \n\n  * `handleCancel` - \n\n  * `handleRestoreValues` - \n\n  * `handlePurchase` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_program` - \n\n  * `_ownedProgram` - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_availableTimeRef` - \n\n  * `handlePartialUpdate` - \n\n  * `renderWarnings` - \n\n  * `renderAlreadyPurchasedWarning` - \n\n  * `handleCancel` - \n\n  * `handleRestoreValues` - \n\n  * `handlePurchase` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "disabled",

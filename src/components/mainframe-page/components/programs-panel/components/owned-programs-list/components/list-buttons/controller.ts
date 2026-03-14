@@ -1,5 +1,5 @@
 import { BaseController, Hotkey } from '@shared/index';
-import { IProgram } from '@state/mainframe-state';
+import { IProgram, ProgramValidationResult } from '@state/mainframe-state';
 
 export class OwnedProgramsListButtonsController extends BaseController {
   listOwnedPrograms(): IProgram[] {
@@ -27,13 +27,9 @@ export class OwnedProgramsListButtonsController extends BaseController {
       return false;
     }
 
-    if (!this.unlockState.items.programs.isItemAvailable(program.name, program.tier, program.level + 1)) {
-      return false;
-    }
-
     return (
-      this.globalState.money.money >=
-      this.mainframeState.programs.calculateProgramCost(program.name, program.tier, program.level + 1)
+      this.mainframeState.programs.validator.validateProgram(program.name, program.tier, program.level + 1) ===
+      ProgramValidationResult.valid
     );
   };
 }

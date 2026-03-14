@@ -68,7 +68,7 @@ export class ProcessCompletionSpeedState implements IProcessCompletionSpeedState
 
       multiplierByProgram = predictiveComputatorProgram.calculateProcessCompletionSpeedMultiplier(
         predictiveComputatorProcess.usedCores,
-        predictiveComputatorProcess.totalRam,
+        predictiveComputatorProcess.usedRam,
       );
     }
 

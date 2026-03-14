@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property, queryAll } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { msg, localized, str } from '@lit/localize';
@@ -83,8 +83,11 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
 
   private renderWarnings = () => {
     return html`
-      <p class="warning" data-warning=${SidejobValidationResult.activityLocked}>
-        ${SIDEJOB_VALIDATION_TEXTS[SidejobValidationResult.activityLocked]()}
+      <p class="warning" data-warning=${SidejobValidationResult.companyLocked}>
+        ${SIDEJOB_VALIDATION_TEXTS[SidejobValidationResult.companyLocked]()}
+      </p>
+      <p class="warning" data-warning=${SidejobValidationResult.sidejobNotAvailable}>
+        ${SIDEJOB_VALIDATION_TEXTS[SidejobValidationResult.sidejobNotAvailable]()}
       </p>
       <p class="warning" data-warning=${SidejobValidationResult.districtLocked}>
         ${SIDEJOB_VALIDATION_TEXTS[SidejobValidationResult.districtLocked]()}
@@ -116,6 +119,8 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
         </p>
       `;
     }
+
+    return nothing;
   };
 
   private selectWarning(): AssignCloneSidejobDialogWarning {

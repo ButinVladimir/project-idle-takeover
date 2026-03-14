@@ -1,4 +1,4 @@
-import { IPrimaryActivity } from '@/state/activity-state';
+import { IPrimaryActivity } from '@state/activity-state';
 import { BaseController } from '@shared/index';
 import { IContractAssignment } from '@state/automation-state';
 

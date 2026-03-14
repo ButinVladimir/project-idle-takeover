@@ -1,5 +1,7 @@
+import { MainframeHardwareValidationResult } from '@state/mainframe-state';
+
 export enum MainframeHardwarePanelArticleWarning {
-  higherDevelopmentLevelRequired = 'higherDevelopmentLevelRequired',
-  notEnoughMoney = 'notEnoughMoney',
   willBeAvailableIn = 'willBeAvailableIn',
 }
+
+export type MainframeHardwareWarning = MainframeHardwarePanelArticleWarning | MainframeHardwareValidationResult;

@@ -139,7 +139,6 @@ export class ProcessDescriptionText extends BaseComponent {
 
     const parameters: IDescriptionParameters = {
       formatter: this._controller.formatter,
-      availableRam: this._controller.getAvailableRamForProgram(this._process.program.name),
       process: this._process!,
     };
 

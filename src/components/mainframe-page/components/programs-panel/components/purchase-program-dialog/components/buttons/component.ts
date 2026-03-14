@@ -4,11 +4,11 @@ import { customElement, property, queryAll } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { consume } from '@lit/context';
 import { BaseComponent } from '@shared/index';
-import { COMMON_TEXTS } from '@texts/index';
-import { type IProgram } from '@state/mainframe-state';
+import { COMMON_TEXTS, PROGRAM_VALIDATION_TEXTS } from '@texts/index';
+import { ProgramValidationResult, type IProgram } from '@state/mainframe-state';
 import { PurchaseProgramDialogButtonsController } from './controller';
 import { BuyProgramEvent, CancelEvent, RestoreValuesEvent } from './events';
-import { PurchaseProgramDialogWarning } from './types';
+import { PurchaseProgramDialogFormWarning, PurchaseProgramDialogWarning } from './types';
 import { existingProgramContext, temporaryProgramContext } from '../../contexts';
 import styles from './styles';
 
@@ -77,51 +77,70 @@ export class PurchaseProgramDialogButtons extends BaseComponent {
 
   private renderWarnings = () => {
     return html`
-      <p class="warning" data-warning=${PurchaseProgramDialogWarning.notEnoughMoney}>
-        ${COMMON_TEXTS.notEnoughMoney()}
+      <p class="warning" data-warning=${PurchaseProgramDialogFormWarning.notSelected}>${msg('Select program')}</p>
+      <p class="warning" data-warning=${ProgramValidationResult.programsLocked}>
+        ${PROGRAM_VALIDATION_TEXTS.programsLocked()}
       </p>
-      <p class="warning" data-warning=${PurchaseProgramDialogWarning.willBeAvailableIn}>
+      <p class="warning" data-warning=${ProgramValidationResult.programNotAvailable}>
+        ${PROGRAM_VALIDATION_TEXTS.programNotAvailable()}
+      </p>
+      <p class="warning" data-warning=${ProgramValidationResult.notEnoughMoney}>
+        ${PROGRAM_VALIDATION_TEXTS.notEnoughMoney()}
+      </p>
+      <p class="warning" data-warning=${PurchaseProgramDialogFormWarning.willBeAvailableIn}>
         ${COMMON_TEXTS.willBeAvailableIn(html`<span ${ref(this._availableTimeRef)}></span>`)}
       </p>
-      <p class="warning" data-warning=${PurchaseProgramDialogWarning.other}>${this.renderOtherWarnings()}</p>
+      ${this.renderAlreadyPurchasedWarning()}
     `;
   };
 
-  private renderOtherWarnings = () => {
-    if (!this._program) {
-      return html`${msg('Select program')}`;
+  private renderAlreadyPurchasedWarning = () => {
+    if (!this._ownedProgram) {
+      return nothing;
     }
 
-    if (this._ownedProgram) {
-      const formatter = this._controller.formatter;
+    const formatter = this._controller.formatter;
 
-      const formattedTier = formatter.formatTier(this._ownedProgram.tier);
-      const formattedLevel = formatter.formatLevel(this._ownedProgram.level);
+    const formattedTier = formatter.formatTier(this._ownedProgram!.tier);
+    const formattedLevel = formatter.formatLevel(this._ownedProgram!.level);
 
-      return html` ${msg(str`Program is already bought with tier ${formattedTier} and level ${formattedLevel}`)} `;
-    }
-
-    return nothing;
+    return html`
+      <p class="warning" data-warning=${PurchaseProgramDialogFormWarning.alreadyPurchased}>
+        ${msg(str`Program is already bought with tier ${formattedTier} and level ${formattedLevel}`)}
+      </p>
+    `;
   };
 
-  private selectWarning(): PurchaseProgramDialogWarning | undefined {
+  private selectWarning(): PurchaseProgramDialogWarning {
     if (!this._program) {
-      return PurchaseProgramDialogWarning.other;
+      return PurchaseProgramDialogFormWarning.notSelected;
     }
 
-    const cost = this._controller.getProgramCost(this._program.name, this._program.tier, this._program.level);
-    const moneyGrowth = this._controller.moneyGrowth;
-    const moneyDiff = cost - this._controller.money;
+    const validationResult = this._controller.validateProgram(
+      this._program.name,
+      this._program.tier,
+      this._program.level,
+    );
 
-    if (moneyDiff > 0) {
-      if (moneyGrowth <= 0) {
-        return PurchaseProgramDialogWarning.notEnoughMoney;
+    if (validationResult === ProgramValidationResult.notEnoughMoney) {
+      const cost = this._controller.getProgramCost(this._program.name, this._program.tier, this._program.level);
+      const moneyGrowth = this._controller.moneyGrowth;
+      const moneyDiff = cost - this._controller.money;
+
+      if (moneyDiff > 0) {
+        if (moneyGrowth <= 0) {
+          return ProgramValidationResult.notEnoughMoney;
+        }
+
+        return PurchaseProgramDialogFormWarning.willBeAvailableIn;
       }
-
-      return PurchaseProgramDialogWarning.willBeAvailableIn;
     }
 
-    return PurchaseProgramDialogWarning.other;
+    if (validationResult === ProgramValidationResult.valid && this._ownedProgram) {
+      return PurchaseProgramDialogFormWarning.alreadyPurchased;
+    }
+
+    return validationResult;
   }
 
   private updateAvailabilityTimer(): void {
