@@ -36,6 +36,6 @@ export class AssignClonesContractDialogController extends BaseController {
   }
 
   validateContract(contract: IContract): ContractValidationResult {
-    return this.activityState.contractActivityValidator.validate(contract);
+    return this.activityState.contractActivityValidator.validateContract(contract);
   }
 }

@@ -23,7 +23,7 @@ export class SidejobActivityValidator implements ISidejobActivityValidator {
     return calculatePower(this._globalState.threat.level, typedSidejobs[sidejobName].requirements.connectivity);
   }
 
-  validate(sidejob: ISidejob): SidejobValidationResult {
+  validateSidejob(sidejob: ISidejob): SidejobValidationResult {
     if (!this._unlockState.milestones.isMilestoneReached(Milestone.unlockedCompanyManagement)) {
       return SidejobValidationResult.companyLocked;
     }

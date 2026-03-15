@@ -7,7 +7,7 @@ export class ClonesListItemButtonsController extends BaseController {
       return 0;
     }
 
-    return this.clonesState.ownedClones.calculateCloneLevelFromMoney(
+    return this.clonesState.ownedClones.levelUpgrader.calculateCloneLevelFromMoney(
       clone.templateName,
       clone.tier,
       this.globalState.money.money,
@@ -21,7 +21,7 @@ export class ClonesListItemButtonsController extends BaseController {
 
     return (
       this.globalState.money.money >=
-      this.clonesState.ownedClones.calculateCloneCost(clone.templateName, clone.tier, clone.level + 1)
+      this.clonesState.ownedClones.validator.calculateCloneCost(clone.templateName, clone.tier, clone.level + 1)
     );
   }
 

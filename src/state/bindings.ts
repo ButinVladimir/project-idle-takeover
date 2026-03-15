@@ -132,6 +132,8 @@ import {
   ClonesState,
   IOwnedClonesLevelUpgrader,
   OwnedClonesLevelUpgrader,
+  IOwnedClonesValidator,
+  OwnedClonesValidator,
 } from '@state/clones-state';
 import {
   IActivityState,
@@ -441,6 +443,12 @@ container.bind<IOwnedClonesState>(TYPES.OwnedClonesState).to(OwnedClonesState).i
 container
   .bind<IOwnedClonesLevelUpgrader>(TYPES.OwnedClonesLevelUpgrader)
   .to(OwnedClonesLevelUpgrader)
+  .inSingletonScope()
+  .whenDefault();
+
+container
+  .bind<IOwnedClonesValidator>(TYPES.OwnedClonesValidator)
+  .to(OwnedClonesValidator)
   .inSingletonScope()
   .whenDefault();
 

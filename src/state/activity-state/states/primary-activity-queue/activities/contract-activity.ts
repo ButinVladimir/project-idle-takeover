@@ -134,7 +134,9 @@ export class ContractActivity extends PrimaryActivity implements IContractActivi
       return false;
     }
 
-    const validationResult = this._activityState.contractActivityValidator.validate(this._contractAssignment.contract);
+    const validationResult = this._activityState.contractActivityValidator.validateContract(
+      this._contractAssignment.contract,
+    );
 
     if (validationResult !== ContractValidationResult.valid) {
       this.state = PrimaryActivityState.toBeRemoved;

@@ -75,5 +75,6 @@ export const TYPES = {
   ExperienceShareState: Symbol('ExperienceShareState'),
   ProcessCompletionSpeedState: Symbol('ProcessCompletionSpeedState'),
   OwnedClonesLevelUpgrader: Symbol('OwnedClonesLevelUpgrader'),
+  OwnedClonesValidator: Symbol('OwnedClonesValidator'),
   Formatter: Symbol('Formatter'),
 };

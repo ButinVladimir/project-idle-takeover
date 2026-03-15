@@ -15,7 +15,7 @@ export class ContractActivityValidator implements IContractActivityValidator {
   @lazyInject(TYPES.UnlockState)
   private _unlockState!: IUnlockState;
 
-  validate(contract: IContract): ContractValidationResult {
+  validateContract(contract: IContract): ContractValidationResult {
     if (!this._unlockState.milestones.isMilestoneReached(Milestone.unlockedPrimaryActivity)) {
       return ContractValidationResult.primaryActivityLocked;
     }

@@ -245,7 +245,7 @@ If you already have program with same name, old one will be replaced with new on
   private handleSubmit = (event: Event) => {
     event.preventDefault();
 
-    if (!this.checkAvailability()) {
+    if (!this.validate()) {
       return;
     }
 
@@ -284,7 +284,7 @@ If you already have program with same name, old one will be replaced with new on
     }
   };
 
-  private checkAvailability = (): boolean => {
+  private validate = (): boolean => {
     if (!this._program || !this._programName) {
       return false;
     }
@@ -294,7 +294,7 @@ If you already have program with same name, old one will be replaced with new on
 
   handlePartialUpdate = () => {
     if (this._buttonsRef.value) {
-      this._buttonsRef.value.disabled = !this.checkAvailability();
+      this._buttonsRef.value.disabled = !this.validate();
     }
   };
 }

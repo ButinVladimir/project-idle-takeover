@@ -64,12 +64,14 @@ export class PurchaseCloneDialog extends BaseComponent {
     this._controller = new PurchaseCloneDialogController(this);
   }
 
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    this._clone?.removeAllEventListeners();
+  }
+
   performUpdate() {
-    if (this._cloneTemplateName !== undefined) {
-      this._clone = this._controller.getClone(this._name, this._cloneTemplateName, this._tier, this._level);
-    } else {
-      this._clone = undefined;
-    }
+    this.updateContext();
 
     super.performUpdate();
   }
@@ -195,7 +197,7 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
 
   handlePartialUpdate = () => {
     if (this._buttonsRef.value) {
-      this._buttonsRef.value.disabled = !this.checkSubmitAvailability();
+      this._buttonsRef.value.disabled = !this.validate();
     }
   };
 
@@ -217,6 +219,16 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
 
     return result;
   };
+
+  private updateContext() {
+    this._clone?.removeAllEventListeners();
+
+    if (this._cloneTemplateName !== undefined) {
+      this._clone = this._controller.getClone(this._name, this._cloneTemplateName, this._tier, this._level);
+    } else {
+      this._clone = undefined;
+    }
+  }
 
   private handleClose = () => {
     this.dispatchEvent(new PurchaseCloneDialogCloseEvent());
@@ -261,7 +273,7 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
   private handleSubmit = (event: Event) => {
     event.preventDefault();
 
-    if (!this.checkSubmitAvailability()) {
+    if (!this.validate()) {
       return;
     }
 
@@ -281,27 +293,11 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
     this._name = this._controller.generateName();
   };
 
-  private checkSubmitAvailability(): boolean {
+  private validate(): boolean {
     if (!this._clone) {
       return false;
     }
 
-    const { money } = this._controller;
-
-    const cost = this._controller.getCloneCost(this._clone.templateName, this._clone.tier, this._clone.level);
-    const synchronization = this._controller.getCloneSynchronization(this._clone.templateName, this._clone.tier);
-    const cloneAvailable = this._controller.isCloneAvailable(
-      this._clone.templateName,
-      this._clone.tier,
-      this._clone.level,
-    );
-
-    return !!(
-      this._clone &&
-      this._clone.name &&
-      cloneAvailable &&
-      synchronization <= this._controller.availableSynchronization &&
-      cost <= money
-    );
+    return this._controller.validateClone(this._clone);
   }
 }

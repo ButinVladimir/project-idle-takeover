@@ -4,6 +4,7 @@ import { SidejobValidationResult } from '@state/activity-state/states/sidejob-ac
 import { ContractValidationResult } from '@state/activity-state/states/contract-activity-validator/types';
 import { MainframeHardwareValidationResult } from '@state/mainframe-state/states/mainframe-hardware-state/types';
 import { ProcessValidationResult } from '@state/mainframe-state/states/mainframe-processes-state/types';
+import { CloneValidationResult } from '@/state/clones-state/states/owned-clones-state/types';
 import { COMMON_TEXTS } from './common';
 
 export const SIDEJOB_VALIDATION_TEXTS: Record<SidejobValidationResult, () => string> = {
@@ -45,4 +46,13 @@ export const PROCESS_VALIDATION_TEXTS: Record<ProcessValidationResult, () => str
   [ProcessValidationResult.threadsInvalid]: () => msg('Invalid amount of threads'),
   [ProcessValidationResult.notEnoughRam]: () => msg('Not enough RAM'),
   [ProcessValidationResult.valid]: () => msg('Process is valid'),
+};
+
+export const CLONE_VALIDATION_TEXTS: Record<CloneValidationResult, () => string> = {
+  [CloneValidationResult.companyLocked]: () => msg('Company is locked'),
+  [CloneValidationResult.cloneNotAvailable]: () => msg('Clone is not available'),
+  [CloneValidationResult.nameEmpty]: () => msg('Enter clone name'),
+  [CloneValidationResult.notEnoughMoney]: COMMON_TEXTS.notEnoughMoney,
+  [CloneValidationResult.notEnoughSynchronization]: () => msg('Not enough synchronization'),
+  [CloneValidationResult.valid]: () => msg('Clone is valid'),
 };

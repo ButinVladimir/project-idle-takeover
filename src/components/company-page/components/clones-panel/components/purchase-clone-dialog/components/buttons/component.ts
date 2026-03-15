@@ -1,16 +1,16 @@
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { customElement, property, queryAll } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { msg, localized } from '@lit/localize';
 import { consume } from '@lit/context';
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
 import { BaseComponent } from '@shared/index';
-import { COMMON_TEXTS } from '@texts/index';
-import { type IClone } from '@state/clones-state';
+import { CLONE_VALIDATION_TEXTS, COMMON_TEXTS } from '@texts/index';
+import { CloneValidationResult, type IClone } from '@state/clones-state';
 import { PurchaseCloneDialogButtonsController } from './controller';
 import { CancelEvent, PurchaseCloneEvent } from './events';
 import { temporaryCloneContext } from '../../contexts';
-import { PurchaseCloneDialogWarning } from './types';
+import { PurchaseCloneDialogFormWarning, PurchaseCloneDialogWarning } from './types';
 import styles from './styles';
 
 @localized()
@@ -79,49 +79,50 @@ export class PurchaseCloneDialogButtons extends BaseComponent {
 
   private renderWarnings = () => {
     return html`
-      <p class="warning" data-warning=${PurchaseCloneDialogWarning.notEnoughMoney}>${COMMON_TEXTS.notEnoughMoney()}</p>
-      <p class="warning" data-warning=${PurchaseCloneDialogWarning.willBeAvailableIn}>
+      <p class="warning" data-warning=${PurchaseCloneDialogFormWarning.cloneTemplateNotSelected}>
+        ${msg('Select clone template name')}
+      </p>
+      <p class="warning" data-warning=${CloneValidationResult.cloneNotAvailable}>
+        ${CLONE_VALIDATION_TEXTS.cloneNotAvailable()}
+      </p>
+      <p class="warning" data-warning=${CloneValidationResult.companyLocked}>
+        ${CLONE_VALIDATION_TEXTS.companyLocked()}
+      </p>
+      <p class="warning" data-warning=${CloneValidationResult.nameEmpty}>${CLONE_VALIDATION_TEXTS.nameEmpty()}</p>
+      <p class="warning" data-warning=${CloneValidationResult.notEnoughMoney}>
+        ${CLONE_VALIDATION_TEXTS.notEnoughMoney()}
+      </p>
+      <p class="warning" data-warning=${CloneValidationResult.notEnoughSynchronization}>
+        ${CLONE_VALIDATION_TEXTS.notEnoughSynchronization()}
+      </p>
+      <p class="warning" data-warning=${PurchaseCloneDialogFormWarning.willBeAvailableIn}>
         ${COMMON_TEXTS.willBeAvailableIn(html`<span ${ref(this._availableTimeRef)}></span>`)}
       </p>
-      <p class="warning" data-warning=${PurchaseCloneDialogWarning.other}>${this.renderOtherWarnings()}</p>
     `;
   };
 
-  private renderOtherWarnings = () => {
+  private selectWarning(): PurchaseCloneDialogWarning {
     if (!this._clone) {
-      return msg('Select clone template name');
+      return PurchaseCloneDialogFormWarning.cloneTemplateNotSelected;
     }
 
-    if (!this._clone.name) {
-      return msg('Enter clone name');
-    }
+    const validationResult = this._controller.validateClone(this._clone);
 
-    const synchronization = this._controller.getCloneSynchronization(this._clone.templateName, this._clone.tier);
-    if (synchronization > this._controller.availableSynchronization) {
-      return msg('Not enough synchronization');
-    }
+    if (validationResult === CloneValidationResult.notEnoughMoney) {
+      const cost = this._controller.getCloneCost(this._clone.templateName, this._clone.tier, this._clone.level);
+      const moneyGrowth = this._controller.moneyGrowth;
+      const moneyDiff = cost - this._controller.money;
 
-    return nothing;
-  };
+      if (moneyDiff > 0) {
+        if (moneyGrowth <= 0) {
+          return CloneValidationResult.notEnoughMoney;
+        }
 
-  private selectWarning(): PurchaseCloneDialogWarning | undefined {
-    if (!this._clone) {
-      return PurchaseCloneDialogWarning.other;
-    }
-
-    const cost = this._controller.getCloneCost(this._clone.templateName, this._clone.tier, this._clone.level);
-    const moneyGrowth = this._controller.moneyGrowth;
-    const moneyDiff = cost - this._controller.money;
-
-    if (moneyDiff > 0) {
-      if (moneyGrowth <= 0) {
-        return PurchaseCloneDialogWarning.notEnoughMoney;
+        return PurchaseCloneDialogFormWarning.willBeAvailableIn;
       }
-
-      return PurchaseCloneDialogWarning.willBeAvailableIn;
     }
 
-    return PurchaseCloneDialogWarning.other;
+    return validationResult;
   }
 
   private updateAvailabilityTimer(): void {

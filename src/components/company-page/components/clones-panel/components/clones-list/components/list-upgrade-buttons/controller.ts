@@ -25,7 +25,7 @@ export class ClonesListUpgradeButtonsController extends BaseController {
 
     return (
       this.globalState.money.money >=
-      this.clonesState.ownedClones.calculateCloneCost(clone.templateName, clone.tier, clone.level + 1)
+      this.clonesState.ownedClones.validator.calculateCloneCost(clone.templateName, clone.tier, clone.level + 1)
     );
   };
 }

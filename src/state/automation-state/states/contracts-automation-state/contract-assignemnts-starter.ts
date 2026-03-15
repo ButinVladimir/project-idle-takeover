@@ -26,7 +26,7 @@ export class ContractAssignmentsStarter implements IContractAssignmentsStarter {
       contractAssignment.contract.district.counters.contracts.getAvailableAmount(
         contractAssignment.contract.contractName,
       ) > 0 &&
-      this._activityState.contractActivityValidator.validate(contractAssignment.contract) ===
+      this._activityState.contractActivityValidator.validateContract(contractAssignment.contract) ===
         ContractValidationResult.valid
     );
   }

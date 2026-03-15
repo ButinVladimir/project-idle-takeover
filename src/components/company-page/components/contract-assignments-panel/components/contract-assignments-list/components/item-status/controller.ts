@@ -8,7 +8,7 @@ export class ContractAssignmentsListItemStatusController extends BaseController 
   }
 
   validateContractAssignment(contractAssignment: IContractAssignment) {
-    return this.activityState.contractActivityValidator.validate(contractAssignment.contract);
+    return this.activityState.contractActivityValidator.validateContract(contractAssignment.contract);
   }
 
   getAvailableCounters(contractAssignment: IContractAssignment): number {

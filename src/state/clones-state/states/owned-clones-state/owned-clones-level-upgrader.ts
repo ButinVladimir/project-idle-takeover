@@ -1,13 +1,13 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
-import { Milestone, PurchaseType } from '@shared/index';
+import { Milestone, PurchaseType, reverseTierPower } from '@shared/index';
 import { type IGlobalState } from '@state/global-state';
 import { type IAutomationState } from '@state/automation-state';
 import { type IUnlockState } from '@state/unlock-state';
 import { IOwnedClonesLevelUpgrader } from './interfaces';
 import { type IClonesState } from '../../interfaces';
-import { IClone } from '../clone-factory';
+import { IClone, typedCloneTemplates } from '../clone-factory';
 
 const { lazyInject } = decorators;
 
@@ -68,6 +68,13 @@ export class OwnedClonesLevelUpgrader implements IOwnedClonesLevelUpgrader {
     this.performUpgradeAll();
   }
 
+  calculateCloneLevelFromMoney(templateName: string, tier: number, money: number): number {
+    return Math.min(
+      reverseTierPower(money, tier, typedCloneTemplates[templateName].cost),
+      this._globalState.development.level,
+    );
+  }
+
   private checkUpgradeAvailable() {
     return this._unlockState.milestones.isMilestoneReached(Milestone.unlockedCompanyManagement);
   }
@@ -89,12 +96,12 @@ export class OwnedClonesLevelUpgrader implements IOwnedClonesLevelUpgrader {
   private performUpgradeClone(clone: IClone) {
     const oldLevel = clone.level;
     const newLevel = Math.min(
-      this._clonesState.ownedClones.calculateCloneLevelFromMoney(clone.templateName, clone.tier, this._availableMoney),
+      this.calculateCloneLevelFromMoney(clone.templateName, clone.tier, this._availableMoney),
       clone.level + this._availableActions,
     );
 
     if (newLevel > oldLevel) {
-      const cost = this._clonesState.ownedClones.calculateCloneCost(clone.templateName, clone.tier, newLevel);
+      const cost = this._clonesState.ownedClones.validator.calculateCloneCost(clone.templateName, clone.tier, newLevel);
 
       if (this.purchaseCloneUpgrade(clone, newLevel)) {
         this._availableMoney -= cost;
@@ -104,7 +111,7 @@ export class OwnedClonesLevelUpgrader implements IOwnedClonesLevelUpgrader {
   }
 
   private purchaseCloneUpgrade(clone: IClone, newLevel: number) {
-    const cost = this._clonesState.ownedClones.calculateCloneCost(clone.templateName, clone.tier, newLevel);
+    const cost = this._clonesState.ownedClones.validator.calculateCloneCost(clone.templateName, clone.tier, newLevel);
 
     return this._globalState.money.purchase(cost, PurchaseType.clones, () => {
       clone.upgradeLevel(newLevel);

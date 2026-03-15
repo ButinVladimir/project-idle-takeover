@@ -63,7 +63,7 @@ export class SidejobsActivityState implements ISidejobsActivityState {
       enabled: true,
     });
 
-    if (this._sidejobActivityValidator.validate(activity.sidejob) !== SidejobValidationResult.valid) {
+    if (this._sidejobActivityValidator.validateSidejob(activity.sidejob) !== SidejobValidationResult.valid) {
       activity.removeAllEventListeners();
       return false;
     }

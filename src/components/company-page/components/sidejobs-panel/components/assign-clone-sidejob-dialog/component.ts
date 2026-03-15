@@ -8,7 +8,7 @@ import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.com
 import { BaseComponent, SidejobAlert } from '@shared/index';
 import { IDistrictState } from '@state/city-state';
 import { SIDEJOB_TEXTS, DISTRICT_NAMES } from '@texts/index';
-import { SidejobValidationResult, type ISidejob } from '@state/activity-state';
+import { type ISidejob } from '@state/activity-state';
 import { IClone } from '@state/clones-state';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { AssignCloneSidejobDialogCloseEvent } from './events';
@@ -274,6 +274,6 @@ Clone can be assigned only to one sidejob.`)}
       return false;
     }
 
-    return !!(this._sidejob && this._controller.validateSidejob(this._sidejob) === SidejobValidationResult.valid);
+    return !!(this._sidejob && this._controller.validateSidejob(this._sidejob));
   }
 }
