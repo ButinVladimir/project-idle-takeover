@@ -100,6 +100,12 @@ import {
   MainframeHardwarePerformance,
   MainframeHardwareRam,
   MainframeHardwareCores,
+  IMainframeProgramsValidator,
+  MainframeProgramsValidator,
+  IMainframeHardwareValidator,
+  MainframeHardwareValidator,
+  IMainframeProcessesValidator,
+  MainframeProcessesValidator,
 } from '@state/mainframe-state';
 import {
   IMainframeHardwareAutomationState,
@@ -126,6 +132,8 @@ import {
   ClonesState,
   IOwnedClonesLevelUpgrader,
   OwnedClonesLevelUpgrader,
+  IOwnedClonesValidator,
+  OwnedClonesValidator,
 } from '@state/clones-state';
 import {
   IActivityState,
@@ -351,6 +359,24 @@ container
   .whenDefault();
 
 container
+  .bind<IMainframeProgramsValidator>(TYPES.MainframeProgramsValidator)
+  .to(MainframeProgramsValidator)
+  .inSingletonScope()
+  .whenDefault();
+
+container
+  .bind<IMainframeHardwareValidator>(TYPES.MainframeHardwareValidator)
+  .to(MainframeHardwareValidator)
+  .inSingletonScope()
+  .whenDefault();
+
+container
+  .bind<IMainframeProcessesValidator>(TYPES.MainframeProcessesValidator)
+  .to(MainframeProcessesValidator)
+  .inSingletonScope()
+  .whenDefault();
+
+container
   .bind<IMainframeHardwareUpgrader>(TYPES.MainframeHardwareUpgrader)
   .to(MainframeHardwareUpgrader)
   .inSingletonScope()
@@ -417,6 +443,12 @@ container.bind<IOwnedClonesState>(TYPES.OwnedClonesState).to(OwnedClonesState).i
 container
   .bind<IOwnedClonesLevelUpgrader>(TYPES.OwnedClonesLevelUpgrader)
   .to(OwnedClonesLevelUpgrader)
+  .inSingletonScope()
+  .whenDefault();
+
+container
+  .bind<IOwnedClonesValidator>(TYPES.OwnedClonesValidator)
+  .to(OwnedClonesValidator)
   .inSingletonScope()
   .whenDefault();
 

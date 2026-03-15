@@ -13,7 +13,7 @@ export class ProcessDiffTextController extends BaseController {
   }
 
   getAvailableRamForProgram(programName: ProgramName): number {
-    return this.mainframeState.processes.getAvailableRamForProgram(programName);
+    return this.mainframeState.processes.validator.calculateAvailableRamForProgram(programName);
   }
 
   getProgram(name: ProgramName): IProgram | undefined {

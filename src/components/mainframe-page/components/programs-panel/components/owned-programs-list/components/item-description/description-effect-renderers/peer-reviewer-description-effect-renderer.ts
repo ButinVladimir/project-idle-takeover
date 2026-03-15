@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { PeerReviewerProgram } from '@state/mainframe-state/states';
+import { PeerReviewerProgram } from '@state/mainframe-state';
 import { IFormatter, RewardParameter } from '@shared/index';
 import { COMMON_TEXTS, PROGRAM_DESCRIPTION_TEXTS, REWARD_PARAMETER_NAMES } from '@texts/index';
 import { IDescriptionParameters, IDescriptionEffectRenderer } from '../interfaces';

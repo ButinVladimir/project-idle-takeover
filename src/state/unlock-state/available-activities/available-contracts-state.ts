@@ -2,16 +2,12 @@ import { injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
-import { Milestone, NotificationType } from '@shared/index';
+import { NotificationType } from '@shared/index';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type INotificationsState } from '@state/notifications-state';
 import { type IFactionState } from '@state/faction-state';
 import { CONTRACT_TEXTS } from '@texts/index';
-import {
-  IAvailableCategoryActivitiesSerializedState,
-  IAvailableCategoryActivitiesState,
-  type IUnlockState,
-} from '../interfaces';
+import { IAvailableCategoryActivitiesSerializedState, IAvailableCategoryActivitiesState } from '../interfaces';
 
 const { lazyInject } = decorators;
 
@@ -19,9 +15,6 @@ const { lazyInject } = decorators;
 export class AvailableContractsState implements IAvailableCategoryActivitiesState {
   @lazyInject(TYPES.FactionState)
   private _factionState!: IFactionState;
-
-  @lazyInject(TYPES.UnlockState)
-  private _unlockState!: IUnlockState;
 
   @lazyInject(TYPES.StateUIConnector)
   private _stateUiConnector!: IStateUIConnector;
@@ -59,7 +52,6 @@ export class AvailableContractsState implements IAvailableCategoryActivitiesStat
 
   isActivityAvailable(contract: string): boolean {
     return (
-      this._unlockState.milestones.isMilestoneReached(Milestone.unlockedPrimaryActivity) &&
       this.isActivityUnlocked(contract) &&
       this._factionState.currentFactionValues.activities.contracts.includes(contract)
     );

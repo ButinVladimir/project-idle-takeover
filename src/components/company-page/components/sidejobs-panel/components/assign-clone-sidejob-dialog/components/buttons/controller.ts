@@ -15,6 +15,6 @@ export class AssignCloneSidejobDialogButtonsController extends BaseController {
   }
 
   validateSidejob(sidejob: ISidejob): SidejobValidationResult {
-    return this.activityState.sidejobActivityValidator.validate(sidejob);
+    return this.activityState.sidejobActivityValidator.validateSidejob(sidejob);
   }
 }

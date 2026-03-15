@@ -6,17 +6,12 @@ import { decorators } from '@state/container';
 import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type IGlobalState } from '@state/global-state';
 import { type IMessageLogState } from '@state/message-log-state';
-import { type IUnlockState } from '@state/unlock-state';
 import { TYPES } from '@state/types';
 import {
   ClonesEvent,
-  Milestone,
   PurchaseType,
-  calculateTierMultiplier,
-  calculateTierPower,
   moveElementInArray,
   removeElementsFromArray,
-  reverseTierPower,
   type IFormatter,
   typedNames,
 } from '@shared/index';
@@ -29,9 +24,11 @@ import {
   type IOwnedClonesLevelUpgrader,
   IOwnedClonesSerializedState,
   IOwnedClonesState,
+  type IOwnedClonesValidator,
   IPurchaseCloneArgs,
 } from './interfaces';
-import { IMakeCloneParameters, typedCloneTemplates } from '../clone-factory';
+import { IMakeCloneParameters } from '../clone-factory';
+import { CloneValidationResult } from './types';
 
 const { lazyInject } = decorators;
 
@@ -52,9 +49,6 @@ export class OwnedClonesState implements IOwnedClonesState {
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
 
-  @lazyInject(TYPES.UnlockState)
-  private _unlockState!: IUnlockState;
-
   @lazyInject(TYPES.MessageLogState)
   private _messageLogState!: IMessageLogState;
 
@@ -63,6 +57,9 @@ export class OwnedClonesState implements IOwnedClonesState {
 
   @inject(TYPES.OwnedClonesLevelUpgrader)
   private _levelUpgrader!: IOwnedClonesLevelUpgrader;
+
+  @inject(TYPES.OwnedClonesValidator)
+  private _validator!: IOwnedClonesValidator;
 
   private _clonesList: IClone[];
   private _clonesMap: Map<string, IClone>;
@@ -78,6 +75,10 @@ export class OwnedClonesState implements IOwnedClonesState {
     return this._levelUpgrader;
   }
 
+  get validator() {
+    return this._validator;
+  }
+
   listClones(): IClone[] {
     return this._clonesList;
   }
@@ -86,47 +87,13 @@ export class OwnedClonesState implements IOwnedClonesState {
     return this._clonesMap.get(id);
   }
 
-  calculateCloneCost(templateName: string, tier: number, level: number): number {
-    return calculateTierPower(level, tier, typedCloneTemplates[templateName].cost);
-  }
-
-  calculateCloneLevelFromMoney(templateName: string, tier: number, money: number): number {
-    return Math.min(
-      reverseTierPower(money, tier, typedCloneTemplates[templateName].cost),
-      this._globalState.development.level,
-    );
-  }
-
-  calculateCloneSynchronization(templateName: string, tier: number): number {
-    const template = typedCloneTemplates[templateName];
-
-    return Math.ceil(
-      template.synchronization.multiplier * calculateTierMultiplier(tier, template.synchronization.baseTier),
-    );
-  }
-
-  purchaseClone(args: IPurchaseCloneArgs): boolean {
-    if (!this._unlockState.milestones.isMilestoneReached(Milestone.unlockedCompanyManagement)) {
+  purchaseClone(cloneArgs: IPurchaseCloneArgs): boolean {
+    if (this._validator.validateClone(cloneArgs) !== CloneValidationResult.valid) {
       return false;
     }
+    const cost = this._validator.calculateCloneCost(cloneArgs.templateName, cloneArgs.tier, cloneArgs.level);
 
-    if (!this._unlockState.items.cloneTemplates.isItemAvailable(args.templateName, args.tier, args.level)) {
-      return false;
-    }
-
-    if (!args.name) {
-      return false;
-    }
-
-    const synchronization = this.calculateCloneSynchronization(args.templateName, args.tier);
-
-    if (synchronization > this._globalState.synchronization.availableValue) {
-      return false;
-    }
-
-    const cost = this.calculateCloneCost(args.templateName, args.tier, args.level);
-
-    const bought = this._globalState.money.purchase(cost, PurchaseType.clones, this.handlePurhaseClone(args));
+    const bought = this._globalState.money.purchase(cost, PurchaseType.clones, this.handlePurhaseClone(cloneArgs));
 
     return bought;
   }

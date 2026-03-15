@@ -1,15 +1,8 @@
 import { BaseController } from '@shared/index';
-import { IProgram, ProgramName } from '@state/mainframe-state';
+import { IProgram, ProgramName, ProgramValidationResult } from '@state/mainframe-state';
+import { IProgramParameters } from './types';
 
 export class PurchaseProgramDialogController extends BaseController {
-  private _selectedProgram?: IProgram;
-
-  hostDisconnected() {
-    super.hostDisconnected();
-
-    this.deleteSelectedProgram();
-  }
-
   get developmentLevel(): number {
     return this.globalState.development.level;
   }
@@ -22,23 +15,13 @@ export class PurchaseProgramDialogController extends BaseController {
     return this.growthState.money.totalGrowth;
   }
 
-  getSelectedProgram(name: ProgramName, tier: number, level: number): IProgram {
-    if (
-      this._selectedProgram?.name !== name ||
-      this._selectedProgram.level !== level ||
-      this._selectedProgram.tier !== tier
-    ) {
-      this.deleteSelectedProgram();
-
-      this._selectedProgram = this.mainframeState.programFactory.makeProgram({
-        name,
-        level,
-        tier,
-        autoUpgradeEnabled: true,
-      });
-    }
-
-    return this._selectedProgram;
+  makeProgram(parameters: IProgramParameters): IProgram {
+    return this.mainframeState.programFactory.makeProgram({
+      name: parameters.name,
+      level: parameters.level,
+      tier: parameters.tier,
+      autoUpgradeEnabled: true,
+    });
   }
 
   getOwnedProgram(name: ProgramName): IProgram | undefined {
@@ -53,21 +36,11 @@ export class PurchaseProgramDialogController extends BaseController {
     return this.unlockState.items.programs.listAvailableItems();
   }
 
+  validateProgram(name: ProgramName, tier: number, level: number): boolean {
+    return this.mainframeState.programs.validator.validateProgram(name, tier, level) === ProgramValidationResult.valid;
+  }
+
   purchaseProgram(name: ProgramName, tier: number, level: number): boolean {
     return this.mainframeState.programs.purchaseProgram(name, tier, level);
-  }
-
-  getProgramCost(programName: ProgramName, tier: number, level: number): number {
-    return this.mainframeState.programs.calculateProgramCost(programName, tier, level);
-  }
-
-  isProgramAvailable(programName: ProgramName, tier: number, level: number): boolean {
-    return this.unlockState.items.programs.isItemAvailable(programName, tier, level);
-  }
-
-  private deleteSelectedProgram() {
-    if (this._selectedProgram) {
-      this._selectedProgram.removeAllEventListeners();
-    }
   }
 }

@@ -9,7 +9,7 @@ export interface IProcess {
   maxCores: number;
   currentCompletionPoints: number;
   maxCompletionPoints: number;
-  totalRam: number;
+  usedRam: number;
   calculateCompletionDelta(passedTime: number): number;
   calculateCompletionTime(): number;
   toggleEnabled(active: boolean): void;

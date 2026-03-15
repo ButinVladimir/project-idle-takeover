@@ -64,7 +64,7 @@ export class DevelopmentGrowthState implements IDevelopmentGrowthState {
     if (shareServerProcess?.enabled) {
       incomeByProgram = (shareServerProcess.program as ShareServerProgram).calculateDevelopmentPointsDelta(
         shareServerProcess.usedCores,
-        shareServerProcess.totalRam,
+        shareServerProcess.usedRam,
         1,
       );
     }

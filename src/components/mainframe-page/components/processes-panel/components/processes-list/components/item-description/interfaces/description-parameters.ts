@@ -1,8 +1,7 @@
-import { IFormatter } from '@shared/interfaces/formatter';
-import { IProcess } from '@state/mainframe-state/states/mainframe-processes-state/interfaces/process';
+import { IFormatter } from '@shared/index';
+import { IProcess } from '@state/mainframe-state';
 
 export interface IDescriptionParameters {
   formatter: IFormatter;
-  availableRam: number;
   process: IProcess;
 }

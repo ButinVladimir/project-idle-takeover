@@ -19,12 +19,9 @@ export class ShareServerDescriptionEffectRenderer implements IDescriptionEffectR
 
   private _formatter: IFormatter;
 
-  private _availableRam: number;
-
   constructor(parameters: IDescriptionParameters) {
     this._process = parameters.process;
     this._formatter = parameters.formatter;
-    this._availableRam = parameters.availableRam;
   }
 
   public renderEffect = () => {
@@ -48,8 +45,8 @@ export class ShareServerDescriptionEffectRenderer implements IDescriptionEffectR
     const { usedCores } = this._process;
     const program = this._process.program as ShareServerProgram;
 
-    const money = program.calculateMoneyDelta(usedCores, this._availableRam, MS_IN_SECOND);
-    const developmentPoints = program.calculateDevelopmentPointsDelta(usedCores, this._availableRam, MS_IN_SECOND);
+    const money = program.calculateMoneyDelta(usedCores, this._process.usedRam, MS_IN_SECOND);
+    const developmentPoints = program.calculateDevelopmentPointsDelta(usedCores, this._process.usedRam, MS_IN_SECOND);
 
     this.values[VALUES.money] = this._formatter.formatNumberFloat(money);
     this.values[VALUES.developmentPoints] = this._formatter.formatNumberFloat(developmentPoints);

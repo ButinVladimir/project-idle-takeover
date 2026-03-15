@@ -1,4 +1,4 @@
-import { DistrictTypeRewardParameter } from '@/shared';
+import { DistrictTypeRewardParameter } from '@shared/index';
 import { ISidejob } from '../../sidejobs-factory';
 import { ISerializedSidejobActivity } from './serialized-sidejob-activity';
 

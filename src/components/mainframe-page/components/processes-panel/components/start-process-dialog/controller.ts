@@ -1,12 +1,10 @@
 import { BaseController } from '@shared/index';
-import { IProgram, ProgramName, IProcess } from '@state/mainframe-state';
+import { IProgram, ProgramName, IProcess, ProcessValidationResult } from '@state/mainframe-state';
 
 export class StartProcessDialogController extends BaseController {
-  private _program?: IProgram;
-
   getAvailableRamForProgram(programName?: ProgramName): number {
     if (programName) {
-      return this.mainframeState.processes.getAvailableRamForProgram(programName);
+      return this.mainframeState.processes.validator.calculateAvailableRamForProgram(programName);
     }
 
     return this.mainframeState.processes.availableRam;
@@ -16,10 +14,8 @@ export class StartProcessDialogController extends BaseController {
     return this.mainframeState.programs.listOwnedPrograms();
   }
 
-  getProgram(name: ProgramName): IProgram | undefined {
-    this._program = this.mainframeState.programs.getOwnedProgramByName(name)!;
-
-    return this._program;
+  getOwnedProgram(name: ProgramName): IProgram | undefined {
+    return this.mainframeState.programs.getOwnedProgramByName(name)!;
   }
 
   getRunningScalableProgram(): IProcess | undefined {
@@ -32,5 +28,9 @@ export class StartProcessDialogController extends BaseController {
 
   startProcess(name: ProgramName, threads: number): boolean {
     return this.mainframeState.processes.addProcess(name, threads);
+  }
+
+  validateProcess(name: ProgramName, threads: number): boolean {
+    return this.mainframeState.processes.validator.validateProcess(name, threads) === ProcessValidationResult.valid;
   }
 }

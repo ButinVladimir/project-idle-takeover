@@ -1,4 +1,4 @@
-import { IFactionValues } from '@/state/faction-state';
+import { IFactionValues } from '@state/faction-state';
 import { BaseController } from '@shared/index';
 
 export class FactionsCurrentFactionPanelController extends BaseController {

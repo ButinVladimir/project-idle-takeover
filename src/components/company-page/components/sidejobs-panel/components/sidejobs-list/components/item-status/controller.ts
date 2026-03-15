@@ -3,6 +3,6 @@ import { BaseController } from '@shared/index';
 
 export class SidejobsListItemStatusController extends BaseController {
   validateSidejob(sidejobActivity: ISidejobActivity) {
-    return this.activityState.sidejobActivityValidator.validate(sidejobActivity.sidejob);
+    return this.activityState.sidejobActivityValidator.validateSidejob(sidejobActivity.sidejob);
   }
 }

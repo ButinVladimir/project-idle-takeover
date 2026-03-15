@@ -143,7 +143,7 @@ export class ActivityState implements IActivityState {
 
       if (
         sidejobActivity.enabled &&
-        this._sidejobActivityValidator.validate(sidejobActivity.sidejob) &&
+        this._sidejobActivityValidator.validateSidejob(sidejobActivity.sidejob) &&
         !this._assignedClones.has(assignedClone)
       ) {
         sidejobActivity.active = true;

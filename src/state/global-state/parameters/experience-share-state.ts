@@ -105,7 +105,7 @@ export class ExperienceShareState implements IExperienceShareState {
     if (peerReviewerProcess?.enabled) {
       programMultiplier = (peerReviewerProcess.program as PeerReviewerProgram).calculateExperienceShareMultiplier(
         peerReviewerProcess.usedCores,
-        peerReviewerProcess.totalRam,
+        peerReviewerProcess.usedRam,
       );
     }
 

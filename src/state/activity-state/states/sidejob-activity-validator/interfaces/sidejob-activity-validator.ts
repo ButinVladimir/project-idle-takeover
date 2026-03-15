@@ -4,7 +4,7 @@ import { SidejobValidationResult } from '../types';
 
 export interface ISidejobActivityValidator {
   getConnectivityRequirement(sidejobName: string): number;
-  validate(sidejob: ISidejob): SidejobValidationResult;
+  validateSidejob(sidejob: ISidejob): SidejobValidationResult;
   validateAttribute(sidejob: ISidejob, attribute: Attribute): boolean;
   validateSkill(sidejob: ISidejob, skill: Skill): boolean;
 }

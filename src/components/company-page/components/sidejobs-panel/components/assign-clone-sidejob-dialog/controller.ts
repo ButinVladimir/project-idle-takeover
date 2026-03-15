@@ -16,7 +16,7 @@ export class AssignCloneSidejobDialogController extends BaseController {
     return this.cityState.listAvailableDistricts();
   }
 
-  getSidejob(args: ISerializedSidejob): ISidejob {
+  makeSidejob(args: ISerializedSidejob): ISidejob {
     return this.activityState.sidejobsFactory.makeSidejob(args);
   }
 
@@ -32,7 +32,7 @@ export class AssignCloneSidejobDialogController extends BaseController {
     this.activityState.sidejobsActivity.assignSidejob(args);
   }
 
-  validateSidejob(sidejob: ISidejob): SidejobValidationResult {
-    return this.activityState.sidejobActivityValidator.validate(sidejob);
+  validateSidejob(sidejob: ISidejob): boolean {
+    return this.activityState.sidejobActivityValidator.validateSidejob(sidejob) === SidejobValidationResult.valid;
   }
 }

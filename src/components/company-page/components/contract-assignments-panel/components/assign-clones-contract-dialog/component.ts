@@ -59,22 +59,7 @@ export class AssignClonesContractDialog extends BaseComponent {
   }
 
   performUpdate() {
-    if (this._contractName !== undefined && this._districtIndex !== undefined) {
-      const contract = this._controller.getContract({
-        assignedCloneIds: this._cloneIds,
-        districtIndex: this._districtIndex,
-        contractName: this._contractName,
-      });
-
-      this._contract = contract;
-    } else {
-      this._contract = undefined;
-    }
-
-    this._existingContract =
-      this._districtIndex !== undefined && this._contractName !== undefined
-        ? this._controller.getExistingContractByDistrictAndContract(this._districtIndex, this._contractName)
-        : undefined;
+    this.updateContext();
 
     super.performUpdate();
   }
@@ -164,6 +149,7 @@ Only one team of clones can be assigned per district and contract.`)}
             ?disabled=${!contractValid}
             slot="footer"
             @assign-clones=${this.handleSubmit}
+            @restore-values=${this.handleRestoreValues}
             @cancel=${this.handleClose}
           ></ca-assign-clones-contract-dialog-buttons>
         </sl-dialog>
@@ -182,6 +168,25 @@ Only one team of clones can be assigned per district and contract.`)}
   private renderContractName = (contractName: string) => {
     return html` <sl-option value=${contractName}> ${CONTRACT_TEXTS[contractName].title()} </sl-option>`;
   };
+
+  private updateContext() {
+    if (this._contractName !== undefined && this._districtIndex !== undefined) {
+      const contract = this._controller.makeContract({
+        assignedCloneIds: this._cloneIds,
+        districtIndex: this._districtIndex,
+        contractName: this._contractName,
+      });
+
+      this._contract = contract;
+      this._existingContract = this._controller.getExistingContractByDistrictAndContract(
+        this._districtIndex,
+        this._contractName,
+      );
+    } else {
+      this._contract = undefined;
+      this._existingContract = undefined;
+    }
+  }
 
   private handleClose = () => {
     this.dispatchEvent(new AssignClonesContractDialogCloseEvent());
@@ -212,6 +217,14 @@ Only one team of clones can be assigned per district and contract.`)}
 
     const districtIndex = parseInt(this._districtIndexInputRef.value.value as string);
     this._districtIndex = districtIndex;
+  };
+
+  private handleRestoreValues = (event: Event) => {
+    event.preventDefault();
+
+    if (this._existingContract) {
+      this._cloneIds = this._existingContract.assignedClones.map((clone) => clone.id);
+    }
   };
 
   private handleSubmit = (event: Event) => {

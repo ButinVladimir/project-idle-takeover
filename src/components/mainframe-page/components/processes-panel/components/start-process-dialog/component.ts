@@ -42,7 +42,7 @@ export class StartProcessDialog extends BaseComponent {
   private _threads = 1;
 
   @provide({ context: programContext })
-  private _program?: IProgram;
+  private _ownedProgram?: IProgram;
 
   @provide({ context: existingProcessContext })
   private _existingProcess?: IProcess;
@@ -79,7 +79,7 @@ export class StartProcessDialog extends BaseComponent {
   private renderContent(desktop: boolean) {
     const maxThreads = this.calculateMaxThreads();
 
-    const threadsInputDisabled = !(this._program && !this._program.isAutoscalable);
+    const threadsInputDisabled = !(this._ownedProgram && !this._ownedProgram.isAutoscalable);
 
     const inputsContainerClasses = classMap({
       'inputs-container': true,
@@ -87,7 +87,7 @@ export class StartProcessDialog extends BaseComponent {
       mobile: !desktop,
     });
 
-    const buttonsDisabled = !this.checkAvailability();
+    const buttonsDisabled = !this.validate();
 
     return html`
       <form id="start-process-dialog" @submit=${this.handleSubmit}>
@@ -142,6 +142,7 @@ Threads allow to run multiple instances of same program at same time, but additi
             threads=${this._threads}
             max-threads=${this.calculateMaxThreads()}
             @start-process=${this.handleSubmit}
+            @restore-values=${this.handleRestoreValues}
             @cancel=${this.handleClose}
           >
           </ca-start-process-dialog-buttons>
@@ -152,10 +153,10 @@ Threads allow to run multiple instances of same program at same time, but additi
 
   private updateContext() {
     if (this._programName) {
-      this._program = this._controller.getProgram(this._programName);
+      this._ownedProgram = this._controller.getOwnedProgram(this._programName);
       this._existingProcess = this._controller.getProcessByName(this._programName);
     } else {
-      this._program = undefined;
+      this._ownedProgram = undefined;
       this._existingProcess = undefined;
     }
   }
@@ -184,14 +185,22 @@ Threads allow to run multiple instances of same program at same time, but additi
     this._threadsInputRef.value.valueAsNumber = threads;
   };
 
+  private handleRestoreValues = (event: Event) => {
+    event.preventDefault();
+
+    if (this._existingProcess && !this._existingProcess.program.isAutoscalable) {
+      this._threads = this._existingProcess.threads;
+    }
+  };
+
   private handleSubmit = (event: Event) => {
     event.preventDefault();
 
-    if (!this.checkAvailability()) {
+    if (!this.validate()) {
       return;
     }
 
-    const programIsAutoscalable = this._program!.isAutoscalable;
+    const programIsAutoscalable = this._ownedProgram!.isAutoscalable;
     const runningScalableProgram = this._controller.getRunningScalableProgram();
 
     const formatter = this._controller.formatter;
@@ -261,8 +270,8 @@ Threads allow to run multiple instances of same program at same time, but additi
 
     const availableRam = this._controller.getAvailableRamForProgram(this._programName);
 
-    if (this._program && !this._program.isAutoscalable) {
-      return Math.max(Math.floor(availableRam / this._program.ram), 0);
+    if (this._ownedProgram && !this._ownedProgram.isAutoscalable) {
+      return Math.max(Math.floor(availableRam / this._ownedProgram.ram), 0);
     }
 
     if (availableRam > 0) {
@@ -272,17 +281,11 @@ Threads allow to run multiple instances of same program at same time, but additi
     return 0;
   };
 
-  private checkAvailability = (): boolean => {
-    if (!this._programName || !this._program) {
+  private validate = (): boolean => {
+    if (!this._programName || !this._ownedProgram) {
       return false;
     }
 
-    const maxThreads = this.calculateMaxThreads();
-
-    if (!this._program.isAutoscalable) {
-      return this._threads > 0 && this._threads <= maxThreads;
-    }
-
-    return maxThreads > 0;
+    return this._controller.validateProcess(this._programName, this._threads);
   };
 }

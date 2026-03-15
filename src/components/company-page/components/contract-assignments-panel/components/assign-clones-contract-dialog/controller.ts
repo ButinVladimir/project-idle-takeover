@@ -16,7 +16,7 @@ export class AssignClonesContractDialogController extends BaseController {
     return this.cityState.listAvailableDistricts();
   }
 
-  getContract(args: ISerializedContract): IContract {
+  makeContract(args: ISerializedContract): IContract {
     return this.activityState.contractsFactory.makeContract(args);
   }
 
@@ -36,6 +36,6 @@ export class AssignClonesContractDialogController extends BaseController {
   }
 
   validateContract(contract: IContract): ContractValidationResult {
-    return this.activityState.contractActivityValidator.validate(contract);
+    return this.activityState.contractActivityValidator.validateContract(contract);
   }
 }

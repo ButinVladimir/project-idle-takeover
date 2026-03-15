@@ -1,20 +1,13 @@
 import type { IStateUIConnector } from '@state/state-ui-connector';
 import type { IGlobalState } from '@state/global-state';
 import type { IMessageLogState } from '@state/message-log-state';
-import {
-  type IFormatter,
-  calculateGeometricProgressionSum,
-  IExponent,
-  Milestone,
-  PurchaseType,
-  reverseGeometricProgressionSum,
-} from '@shared/index';
+import { type IFormatter, IExponent, PurchaseType } from '@shared/index';
 import { decorators } from '@state/container';
 import { type IScenarioState } from '@state/scenario-state';
 import { type IUnlockState } from '@state/unlock-state';
 import { TYPES } from '@state/types';
 import { IMainframeHardwareParameter, IMainframeHardwareParameterSerializedState } from './interfaces';
-import { MainframeHardwareParameterType } from './types';
+import { MainframeHardwareParameterType, MainframeHardwareValidationResult } from './types';
 import { type IMainframeState } from '../../interfaces';
 
 const { lazyInject } = decorators;
@@ -71,63 +64,24 @@ export abstract class MainframeHardwareParameter implements IMainframeHardwarePa
 
   abstract get type(): MainframeHardwareParameterType;
 
-  protected abstract get priceExp(): IExponent;
+  abstract get priceExp(): IExponent;
 
   protected abstract handlePostUpgrade(): void;
 
   protected abstract postPurchaseMessage(): void;
 
-  calculateIncreaseCost(increase: number): number {
-    const exp = this.priceExp;
-
-    return (
-      (calculateGeometricProgressionSum(this.level + increase - 1, exp.multiplier, exp.base) -
-        calculateGeometricProgressionSum(this.level - 1, exp.multiplier, exp.base)) /
-      this.globalState.multipliers.computationalBase.totalMultiplier
-    );
-  }
-
-  calculateIncreaseFromMoney(money: number): number {
-    const exp = this.priceExp;
-
-    const availableMoney =
-      money * this.globalState.multipliers.computationalBase.totalMultiplier +
-      calculateGeometricProgressionSum(this.level - 1, exp.multiplier, exp.base);
-
-    const maxLevel = reverseGeometricProgressionSum(availableMoney, exp.multiplier, exp.base);
-
-    const increase = Math.min(maxLevel, this.globalState.development.level) - this._level;
-
-    return increase;
-  }
-
   purchase(increase: number): boolean {
-    if (!this.checkCanPurchase(increase)) {
+    if (
+      this.mainframeState.hardware.validator.validateHardware(this.type, increase) !==
+      MainframeHardwareValidationResult.valid
+    ) {
       return false;
     }
 
-    const cost = this.calculateIncreaseCost(increase);
+    const cost = this.mainframeState.hardware.validator.calculateIncreaseCost(this.type, increase);
 
     return this.globalState.money.purchase(cost, PurchaseType.mainframeHardware, this.handlePurchaseIncrease(increase));
   }
-
-  checkCanPurchase = (increase: number): boolean => {
-    if (increase <= 0) {
-      return false;
-    }
-
-    if (!this.unlockState.milestones.isMilestoneReached(Milestone.unlockedMainframeHardware)) {
-      return false;
-    }
-
-    if (this._level + increase > this.globalState.development.level) {
-      return false;
-    }
-
-    const cost = this.calculateIncreaseCost(increase);
-
-    return cost <= this.globalState.money.money;
-  };
 
   async startNewState(): Promise<void> {
     this._autoUpgradeEnabled = true;

@@ -159,7 +159,7 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
     }
 
     const adjustedIncrease = this.calculateAdjustedIncrease();
-    const cost = this._parameter.calculateIncreaseCost(adjustedIncrease);
+    const cost = this._controller.calculateIncreaseCost(this._parameter!.type, adjustedIncrease);
     const money = this._controller.money;
 
     const formattedCost = this._controller.formatter.formatNumberFloat(cost);
@@ -171,8 +171,8 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
     if (this._buttonsRef.value) {
       const value = this._buttonsRef.value;
 
-      value.disabled = !this._parameter.checkCanPurchase(adjustedIncrease);
-      value.disabledBuyAll = !this._parameter.checkCanPurchase(1);
+      value.disabled = !this._controller.validate(this._parameter!.type, adjustedIncrease);
+      value.disabledBuyAll = !this._controller.validate(this._parameter!.type, 1);
     }
   };
 }
