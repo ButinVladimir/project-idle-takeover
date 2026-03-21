@@ -1,12 +1,13 @@
 import { html } from 'lit';
 import { localized } from '@lit/localize';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { ref, createRef } from 'lit/directives/ref.js';
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
-import { BaseComponent, AUTOUPGRADE_VALUES, UPGRADE_MAX_VALUES } from '@shared/index';
+import { BaseComponent, AUTOUPGRADE_VALUES, UPGRADE_MAX_VALUES, FILTER_VALUES } from '@shared/index';
 import { COMMON_TEXTS } from '@texts/common';
 import { OwnedProgramsListButtonsController } from './controller';
 import styles from './styles';
+import { ToggleProgramsFilterEvent } from './events';
 
 @localized()
 @customElement('ca-owned-programs-list-buttons')
@@ -15,6 +16,12 @@ export class OwnedProgramsListButtons extends BaseComponent {
 
   hasPartialUpdate = true;
   protected hasMobileRender = true;
+
+  @property({
+    attribute: 'filter-enabled',
+    type: Boolean,
+  })
+  public filterEnabled = false;
 
   private _controller: OwnedProgramsListButtonsController;
 
@@ -27,6 +34,9 @@ export class OwnedProgramsListButtons extends BaseComponent {
   }
 
   protected renderDesktop() {
+    const filterIcon = this.filterEnabled ? FILTER_VALUES.icon.enabled : FILTER_VALUES.icon.disabled;
+    const filterLabel = this.filterEnabled ? COMMON_TEXTS.disableFilter() : COMMON_TEXTS.enableFilter();
+
     const isAutoupgradeActive = this.checkSomeProgramsAutoupgradeActive();
 
     const autoupgradeIcon = isAutoupgradeActive ? AUTOUPGRADE_VALUES.icon.enabled : AUTOUPGRADE_VALUES.icon.disabled;
@@ -40,6 +50,12 @@ export class OwnedProgramsListButtons extends BaseComponent {
 
     return html`
       <div class="buttons desktop">
+        <sl-tooltip>
+          <span slot="content"> ${filterLabel} </span>
+
+          <sl-icon-button name=${filterIcon} label=${filterLabel} @click=${this.handleToggleFilter}> </sl-icon-button>
+        </sl-tooltip>
+
         <sl-tooltip>
           <div class="tooltip-content" slot="content">
             <p>${upgradeAllProgramsLabel}</p>
@@ -67,6 +83,12 @@ export class OwnedProgramsListButtons extends BaseComponent {
   }
 
   protected renderMobile() {
+    const filterIcon = this.filterEnabled ? FILTER_VALUES.icon.enabled : FILTER_VALUES.icon.disabled;
+    const filterLabel = this.filterEnabled ? COMMON_TEXTS.disableFilter() : COMMON_TEXTS.enableFilter();
+    const filterVariant = this.filterEnabled
+      ? FILTER_VALUES.buttonVariant.enabled
+      : FILTER_VALUES.buttonVariant.disabled;
+
     const isAutoupgradeActive = this.checkSomeProgramsAutoupgradeActive();
 
     const autoupgradeIcon = isAutoupgradeActive ? AUTOUPGRADE_VALUES.icon.enabled : AUTOUPGRADE_VALUES.icon.disabled;
@@ -83,6 +105,12 @@ export class OwnedProgramsListButtons extends BaseComponent {
 
     return html`
       <div class="buttons mobile">
+        <sl-button variant=${filterVariant} size="medium" @click=${this.handleToggleFilter}>
+          <sl-icon slot="prefix" name=${filterIcon}> </sl-icon>
+
+          ${filterLabel}
+        </sl-button>
+
         <sl-tooltip>
           <span slot="content">${COMMON_TEXTS.hotkey(hotkey)}</span>
 
@@ -122,6 +150,10 @@ export class OwnedProgramsListButtons extends BaseComponent {
 
   private handleUpgradeMaxAllPrograms = () => {
     this._controller.upgradeMaxAllPrograms();
+  };
+
+  private handleToggleFilter = () => {
+    this.dispatchEvent(new ToggleProgramsFilterEvent(!this.filterEnabled));
   };
 
   handlePartialUpdate = () => {

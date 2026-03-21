@@ -205,6 +205,26 @@ export const UPGRADE_MAX_VALUES: {
   buttonVariant: 'default',
 };
 
+export const FILTER_VALUES: {
+  icon: {
+    enabled: string;
+    disabled: string;
+  };
+  buttonVariant: {
+    enabled: 'neutral';
+    disabled: 'default';
+  };
+} = {
+  icon: {
+    enabled: 'funnel-fill',
+    disabled: 'funnel',
+  },
+  buttonVariant: {
+    enabled: 'neutral',
+    disabled: 'default',
+  },
+};
+
 export const dragIconStyle = css`
   sl-icon[name='grip-vertical'] {
     position: relative;
@@ -483,6 +503,7 @@ export const itemsListItemStyle = css`
       align-items: center;
 
       .buttons {
+        width: 132px;
         justify-content: flex-end;
         font-size: var(--sl-font-size-large);
       }
@@ -490,7 +511,7 @@ export const itemsListItemStyle = css`
 
     &.mobile {
       grid-template-columns: auto;
-      grid-template-rows: repeat(1fr);
+      grid-template-rows: auto;
 
       .buttons {
         flex-wrap: wrap;

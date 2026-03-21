@@ -16,6 +16,12 @@ export class SortableList extends BaseComponent {
   })
   gap = 0;
 
+  @property({
+    attribute: 'drag-enabled',
+    type: Boolean,
+  })
+  public dragEnabled = true;
+
   private _listRef = createRef<HTMLDivElement>();
 
   private _draggedElement?: HTMLElement;
@@ -52,6 +58,10 @@ export class SortableList extends BaseComponent {
   };
 
   private handleDragStart = (event: DragEvent) => {
+    if (!this.dragEnabled) {
+      return;
+    }
+
     if (event.dataTransfer) {
       event.dataTransfer.effectAllowed = 'move';
       event.dataTransfer.dropEffect = 'move';
@@ -63,6 +73,10 @@ export class SortableList extends BaseComponent {
   };
 
   private handleDragOver = (event: DragEvent) => {
+    if (!this.dragEnabled) {
+      return;
+    }
+
     if (!this._listBoundingRect && this._listRef.value) {
       this._listBoundingRect = this._listRef.value.getBoundingClientRect();
     }
@@ -174,6 +188,10 @@ export class SortableList extends BaseComponent {
   }
 
   private handleDragEnd = () => {
+    if (!this.dragEnabled) {
+      return;
+    }
+
     if (this._draggedElement) {
       this._draggedElement.classList.remove('dragged');
     }

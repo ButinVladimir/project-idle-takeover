@@ -4,7 +4,10 @@ export class MainframeHardwarePanelButtonsController extends BaseController {
   checkCanPurchaseMax(): boolean {
     return this.mainframeState.hardware
       .listParameters()
-      .some((parameter) => parameter.autoUpgradeEnabled && parameter.checkCanPurchase(1));
+      .some(
+        (parameter) =>
+          parameter.autoUpgradeEnabled && this.mainframeState.hardware.validator.validateHardware(parameter.type, 1),
+      );
   }
 
   purchaseMax() {

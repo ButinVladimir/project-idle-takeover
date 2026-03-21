@@ -47,6 +47,9 @@ export const COMMON_TEXTS = {
     msg(html`${valueElement} (${diffElement}) per completion (${speedElement} per second) (${speedDiffElement})`),
   hotkey: (hotkey?: string) => msg(str`Hotkey: ${hotkey?.toLocaleUpperCase() ?? ''}`),
   completionTime: () => msg('Completion time'),
+  enableFilter: () => msg('Enable filter'),
+  disableFilter: () => msg('Disable filter'),
+  resetFilter: () => msg('Reset filter'),
 };
 
 export const CATEGORY_TEXTS: Record<ItemCategory, () => string> = {

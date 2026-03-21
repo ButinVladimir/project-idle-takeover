@@ -60,6 +60,7 @@ body {
   --ca-modal-section-gap: var(--sl-spacing-medium);
   --ca-modal-paragraph-gap: var(--sl-spacing-small);
   --ca-modal-buttons-gap: var(--sl-spacing-small);
+  --ca-filter-gap: var(--sl-spacing-medium);
 }
 
 .sl-theme-dark {

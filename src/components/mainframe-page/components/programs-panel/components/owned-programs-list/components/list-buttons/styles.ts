@@ -12,6 +12,7 @@ const styles = css`
     gap: var(--ca-table-buttons-gap);
 
     &.desktop {
+      width: 132px;
       justify-content: flex-end;
       font-size: var(--sl-font-size-large);
     }

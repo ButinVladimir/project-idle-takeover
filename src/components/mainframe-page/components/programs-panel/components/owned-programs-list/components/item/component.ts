@@ -23,6 +23,12 @@ export class OwnedProgramsListItem extends BaseComponent {
   })
   programName!: ProgramName;
 
+  @property({
+    attribute: 'drag-enabled',
+    type: Boolean,
+  })
+  dragEnabled!: boolean;
+
   @state()
   _descriptionVisible = false;
 
@@ -66,10 +72,8 @@ export class OwnedProgramsListItem extends BaseComponent {
     return html`
       <div class="items-list-item desktop">
         <div class="program">
-          <div class="title" draggable="true" @dragstart=${this.handleDragStart}>
-            <sl-icon name="grip-vertical"> </sl-icon>
-
-            ${programTitle}
+          <div class="title" draggable=${this.dragEnabled ? 'true' : 'false'} @dragstart=${this.handleDragStart}>
+            ${this.dragEnabled ? html`<sl-icon name="grip-vertical"> </sl-icon>` : nothing} ${programTitle}
 
             <sl-tooltip>
               <span slot="content">${descriptionButtonLabel}</span>
