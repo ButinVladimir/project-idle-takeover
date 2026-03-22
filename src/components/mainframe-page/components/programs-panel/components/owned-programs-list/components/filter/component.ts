@@ -3,10 +3,15 @@ import { localized, msg } from '@lit/localize';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ref, createRef } from 'lit/directives/ref.js';
-import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.component.js';
-import { BaseComponent, AUTOUPGRADE_VALUES, UPGRADE_MAX_VALUES, FILTER_VALUES } from '@shared/index';
-import { COMMON_TEXTS } from '@texts/common';
+import {
+  BaseComponent,
+  LevelFilterValue,
+  AutoupgradeFilterValue,
+  LEVEL_FILTER_VALUES,
+  AUTOUPGRADE_FILTER_VALUES,
+} from '@shared/index';
+import { AUTOUPGRADE_FILTER_TEXTS, COMMON_TEXTS, LEVEL_FILTER_TEXTS } from '@texts/common';
 import { PROGRAM_TEXTS } from '@texts/index';
 import { consume } from '@lit/context';
 import { ProgramName } from '@state/mainframe-state';
@@ -36,6 +41,9 @@ export class OwnedProgramsListFilter extends BaseComponent {
 
   private _programsInputRef = createRef<SlSelect>();
   private _tiersInputRef = createRef<SlSelect>();
+  private _maxTierInputRef = createRef<SlSelect>();
+  private _maxLevelInputRef = createRef<SlSelect>();
+  private _autoupgradeInputRef = createRef<SlSelect>();
 
   constructor() {
     super();
@@ -69,6 +77,7 @@ export class OwnedProgramsListFilter extends BaseComponent {
         <sl-select
           ${ref(this._programsInputRef)}
           name="programs"
+          hoist
           multiple
           clearable
           value=${this._filterState.programs.join(' ')}
@@ -82,6 +91,7 @@ export class OwnedProgramsListFilter extends BaseComponent {
         <sl-select
           ${ref(this._tiersInputRef)}
           name="tiers"
+          hoist
           multiple
           clearable
           value=${this._filterState.tiers.join(' ')}
@@ -90,6 +100,44 @@ export class OwnedProgramsListFilter extends BaseComponent {
           <span class="input-label" slot="label"> ${msg('Tiers')} </span>
 
           ${this.renderTierOptions()}
+        </sl-select>
+      </div>
+
+      <div class="filter-row">
+        <sl-select
+          ${ref(this._maxTierInputRef)}
+          name="max-tier"
+          hoist
+          value=${this._filterState.maxTier}
+          @sl-change=${this.handleMaxTierChange}
+        >
+          <span class="input-label" slot="label"> ${COMMON_TEXTS.maxTier()} </span>
+
+          ${this.renderLevelFilterOptions()}
+        </sl-select>
+
+        <sl-select
+          ${ref(this._maxLevelInputRef)}
+          name="max-level"
+          hoist
+          value=${this._filterState.maxLevel}
+          @sl-change=${this.handleMaxLevelChange}
+        >
+          <span class="input-label" slot="label"> ${COMMON_TEXTS.maxLevel()} </span>
+
+          ${this.renderLevelFilterOptions()}
+        </sl-select>
+
+        <sl-select
+          ${ref(this._autoupgradeInputRef)}
+          name="autoupgrade"
+          hoist
+          value=${this._filterState.autoupgrade}
+          @sl-change=${this.handleAutoupgradeChange}
+        >
+          <span class="input-label" slot="label"> ${COMMON_TEXTS.autoupgrade()} </span>
+
+          ${this.renderAutoupgradeFilterOptions()}
         </sl-select>
       </div>
     </div>`;
@@ -119,11 +167,26 @@ export class OwnedProgramsListFilter extends BaseComponent {
     return tiersArray.map((tier) => html`<sl-option value=${tier}>${formatter.formatTier(tier)}</sl-option>`);
   };
 
+  private renderLevelFilterOptions = () => {
+    return LEVEL_FILTER_VALUES.map(
+      (value) => html`<sl-option value=${value}>${LEVEL_FILTER_TEXTS[value]()}</sl-option>`,
+    );
+  };
+
+  private renderAutoupgradeFilterOptions = () => {
+    return AUTOUPGRADE_FILTER_VALUES.map(
+      (value) => html`<sl-option value=${value}>${AUTOUPGRADE_FILTER_TEXTS[value]()}</sl-option>`,
+    );
+  };
+
   private handleReset = () => {
     this.dispatchEvent(
       new ProgramsFilterStateChangedEvent({
         programs: [],
         tiers: [],
+        maxTier: LevelFilterValue.all,
+        maxLevel: LevelFilterValue.all,
+        autoupgrade: AutoupgradeFilterValue.all,
       }),
     );
   };
@@ -154,6 +217,51 @@ export class OwnedProgramsListFilter extends BaseComponent {
       new ProgramsFilterStateChangedEvent({
         ...this._filterState,
         tiers: mappedTiers,
+      }),
+    );
+  };
+
+  private handleMaxTierChange = () => {
+    if (!this._maxTierInputRef.value || !this._filterState) {
+      return;
+    }
+
+    const value = this._maxTierInputRef.value.value as LevelFilterValue;
+
+    this.dispatchEvent(
+      new ProgramsFilterStateChangedEvent({
+        ...this._filterState,
+        maxTier: value,
+      }),
+    );
+  };
+
+  private handleMaxLevelChange = () => {
+    if (!this._maxLevelInputRef.value || !this._filterState) {
+      return;
+    }
+
+    const value = this._maxLevelInputRef.value.value as LevelFilterValue;
+
+    this.dispatchEvent(
+      new ProgramsFilterStateChangedEvent({
+        ...this._filterState,
+        maxLevel: value,
+      }),
+    );
+  };
+
+  private handleAutoupgradeChange = () => {
+    if (!this._autoupgradeInputRef.value || !this._filterState) {
+      return;
+    }
+
+    const value = this._autoupgradeInputRef.value.value as AutoupgradeFilterValue;
+
+    this.dispatchEvent(
+      new ProgramsFilterStateChangedEvent({
+        ...this._filterState,
+        autoupgrade: value,
       }),
     );
   };

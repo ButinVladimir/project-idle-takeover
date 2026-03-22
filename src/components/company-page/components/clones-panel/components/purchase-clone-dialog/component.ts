@@ -70,12 +70,6 @@ export class PurchaseCloneDialog extends BaseComponent {
     this._clone?.removeAllEventListeners();
   }
 
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
-  }
-
   updated(_changedProperties: Map<string, any>) {
     super.updated(_changedProperties);
 
@@ -220,7 +214,7 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
     return result;
   };
 
-  private updateContext() {
+  protected updateContext() {
     this._clone?.removeAllEventListeners();
 
     if (this._cloneTemplateName !== undefined) {

@@ -46,12 +46,6 @@ export class ContractAssignmentListItem extends BaseComponent {
     this._controller = new ContractAssignmentsListItemController(this);
   }
 
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
-  }
-
   protected renderDesktop() {
     if (!this._contractAssignment) {
       return nothing;
@@ -262,7 +256,7 @@ export class ContractAssignmentListItem extends BaseComponent {
     `;
   }
 
-  private updateContext() {
+  protected updateContext() {
     if (this.assignmentId) {
       this._contractAssignment = this._controller.getContractAssignmentById(this.assignmentId);
     } else {

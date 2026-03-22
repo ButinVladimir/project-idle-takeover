@@ -38,12 +38,6 @@ export class SidejobsListItem extends BaseComponent {
     this._controller = new SidejobsListItemController(this);
   }
 
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
-  }
-
   protected renderDesktop() {
     if (!this._activity) {
       return nothing;
@@ -201,7 +195,7 @@ export class SidejobsListItem extends BaseComponent {
     `;
   }
 
-  private updateContext() {
+  protected updateContext() {
     if (this.activityId) {
       this._activity = this._controller.getActivityById(this.activityId);
     } else {

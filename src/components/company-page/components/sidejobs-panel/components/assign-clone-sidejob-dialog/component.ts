@@ -62,12 +62,6 @@ export class AssignCloneSidejobDialog extends BaseComponent {
     this._controller = new AssignCloneSidejobDialogController(this);
   }
 
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
-  }
-
   updated(_changedProperties: PropertyValues) {
     super.updated(_changedProperties);
 
@@ -169,7 +163,7 @@ Clone can be assigned only to one sidejob.`)}
     return html` <sl-option value=${sidejobName}> ${SIDEJOB_TEXTS[sidejobName].title()} </sl-option>`;
   };
 
-  private updateContext() {
+  protected updateContext() {
     if (this._sidejobName !== undefined && this._districtIndex !== undefined && this._cloneId !== undefined) {
       const sidejob = this._controller.makeSidejob({
         assignedCloneId: this._cloneId,

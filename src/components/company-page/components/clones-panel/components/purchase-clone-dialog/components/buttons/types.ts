@@ -1,4 +1,4 @@
-import { CloneValidationResult } from '@/state/clones-state';
+import { CloneValidationResult } from '@state/clones-state';
 
 export enum PurchaseCloneDialogFormWarning {
   cloneTemplateNotSelected = 'cloneTemplateNotSelected',

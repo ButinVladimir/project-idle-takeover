@@ -36,12 +36,6 @@ export class PrimaryActivityQueueListItem extends BaseComponent {
     this._controller = new PrimaryActivityQueueListItemController(this);
   }
 
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
-  }
-
   protected renderDesktop() {
     if (!this._activity) {
       return nothing;
@@ -104,7 +98,7 @@ export class PrimaryActivityQueueListItem extends BaseComponent {
     `;
   }
 
-  private updateContext() {
+  protected updateContext() {
     if (this.activityId) {
       this._activity = this._controller.getPrimaryActivityById(this.activityId);
     } else {

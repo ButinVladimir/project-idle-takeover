@@ -53,12 +53,6 @@ export class StartProcessDialog extends BaseComponent {
     this._controller = new StartProcessDialogController(this);
   }
 
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
-  }
-
   updated(_changedProperties: Map<string, any>) {
     super.updated(_changedProperties);
 
@@ -151,7 +145,7 @@ Threads allow to run multiple instances of same program at same time, but additi
     `;
   }
 
-  private updateContext() {
+  protected updateContext() {
     if (this._programName) {
       this._ownedProgram = this._controller.getOwnedProgram(this._programName);
       this._existingProcess = this._controller.getProcessByName(this._programName);

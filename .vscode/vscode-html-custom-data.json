@@ -686,12 +686,12 @@
     },
     {
       "name": "ca-owned-programs-list",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_filterEnabled` {`boolean`} - \n\n  * `_programsFilterState` {`IProgramsFilterState`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderProgram` - \n\n  * `handleMoveProgram` - \n\n  * `handleToggleFilter` - \n\n  * `handleChangeFilterState` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_filterEnabled` {`boolean`} - \n\n  * `_programsFilterState` {`IProgramsFilterState`} - \n\n  * `_programsList` {`IProgram[]`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderProgram` - \n\n  * `handleMoveProgram` - \n\n  * `handleToggleFilter` - \n\n  * `handleChangeFilterState` - \n\n  * `filterProgram` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
       "name": "ca-owned-programs-list-filter",
-      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_filterState` {`IProgramsFilterState | undefined`} - \n\n  * `_programsInputRef` - \n\n  * `_tiersInputRef` - \n\n  * `renderProgramNameOptions` - \n\n  * `renderTierOptions` - \n\n  * `handleReset` - \n\n  * `handleProgramsChange` - \n\n  * `handleTiersChange` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_filterState` {`IProgramsFilterState | undefined`} - \n\n  * `_programsInputRef` - \n\n  * `_tiersInputRef` - \n\n  * `_maxTierInputRef` - \n\n  * `_maxLevelInputRef` - \n\n  * `_autoupgradeInputRef` - \n\n  * `renderProgramNameOptions` - \n\n  * `renderTierOptions` - \n\n  * `renderLevelFilterOptions` - \n\n  * `renderAutoupgradeFilterOptions` - \n\n  * `handleReset` - \n\n  * `handleProgramsChange` - \n\n  * `handleTiersChange` - \n\n  * `handleMaxTierChange` - \n\n  * `handleMaxLevelChange` - \n\n  * `handleAutoupgradeChange` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "filter-enabled",
@@ -727,7 +727,7 @@
     },
     {
       "name": "ca-owned-programs-list-buttons",
-      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_upgradeMaxButton` - \n\n  * `handleToggleAutoupgrade` - \n\n  * `handleUpgradeMaxAllPrograms` - \n\n  * `handleToggleFilter` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_upgradeMaxButton` - \n\n  * `_programsList` {`IProgram[] | undefined`} - \n\n  * `handleToggleAutoupgrade` - \n\n  * `handleUpgradeMaxPrograms` - \n\n  * `handleToggleFilter` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "filter-enabled",

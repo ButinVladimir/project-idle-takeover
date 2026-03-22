@@ -28,8 +28,8 @@ export class ClonesList extends BaseComponent {
     const isAutoupgradeActive = this.checkSomeClonesAutoupgradeActive();
 
     const autoupgradeLabel = isAutoupgradeActive
-      ? COMMON_TEXTS.disableAutoupgradeAll()
-      : COMMON_TEXTS.enableAutoupgradeAll();
+      ? COMMON_TEXTS.disableAutoupgradeDisplayed()
+      : COMMON_TEXTS.enableAutoupgradeDisplayed();
     const autoupgradeIcon = isAutoupgradeActive ? AUTOUPGRADE_VALUES.icon.enabled : AUTOUPGRADE_VALUES.icon.disabled;
     const autoupgradeVariant = isAutoupgradeActive
       ? AUTOUPGRADE_VALUES.buttonVariant.enabled

@@ -58,12 +58,6 @@ export class AssignClonesContractDialog extends BaseComponent {
     this._controller = new AssignClonesContractDialogController(this);
   }
 
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
-  }
-
   updated(_changedProperties: PropertyValues) {
     super.updated(_changedProperties);
 
@@ -169,7 +163,7 @@ Only one team of clones can be assigned per district and contract.`)}
     return html` <sl-option value=${contractName}> ${CONTRACT_TEXTS[contractName].title()} </sl-option>`;
   };
 
-  private updateContext() {
+  protected updateContext() {
     if (this._contractName !== undefined && this._districtIndex !== undefined) {
       const contract = this._controller.makeContract({
         assignedCloneIds: this._cloneIds,

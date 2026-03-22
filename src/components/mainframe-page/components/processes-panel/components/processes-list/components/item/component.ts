@@ -38,12 +38,6 @@ export class ProcessesListItem extends BaseComponent {
     this._controller = new ProcessesListItemController(this);
   }
 
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
-  }
-
   protected renderDesktop() {
     if (!this._process) {
       return nothing;
@@ -208,7 +202,7 @@ export class ProcessesListItem extends BaseComponent {
     `;
   }
 
-  private updateContext() {
+  protected updateContext() {
     if (this.programName) {
       this._process = this._controller.getProcess(this.programName);
     } else {

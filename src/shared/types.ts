@@ -291,3 +291,15 @@ export enum ActivityUIActivityStatus {
   notAvailable = 'notAvailable',
   invalid = 'invalid',
 }
+
+export enum LevelFilterValue {
+  all = 'all',
+  maxed = 'maxed',
+  belowMax = 'belowMax',
+}
+
+export enum AutoupgradeFilterValue {
+  all = 'all',
+  enabled = 'enabled',
+  disabled = 'disabled',
+}

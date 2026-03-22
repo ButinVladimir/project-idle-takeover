@@ -1,5 +1,13 @@
 import { msg, str } from '@lit/localize';
-import { Attribute, DistrictTypeRewardParameter, ItemCategory, RewardParameter, Skill } from '@shared/types';
+import {
+  Attribute,
+  AutoupgradeFilterValue,
+  DistrictTypeRewardParameter,
+  ItemCategory,
+  LevelFilterValue,
+  RewardParameter,
+  Skill,
+} from '@shared/types';
 import { html } from 'lit';
 
 export const COMMON_TEXTS = {
@@ -7,16 +15,17 @@ export const COMMON_TEXTS = {
   willBeAvailableIn: (timeElement: any) => msg(html`Will be available in ${timeElement}`),
   higherDevelopmentLevelRequired: () => msg('Higher development level required'),
   buyMax: () => msg('Buy max'),
+  autoupgrade: () => msg('Autoupgrade'),
   enableAutoupgrade: () => msg('Enable autoupgrade'),
   disableAutoupgrade: () => msg('Disable autoupgrade'),
-  enableAutoupgradeAll: () => msg('Enable autoupgrade for all'),
-  disableAutoupgradeAll: () => msg('Disable autoupgrade for all'),
+  enableAutoupgradeDisplayed: () => msg('Enable autoupgrade for displayed items'),
+  disableAutoupgradeDisplayed: () => msg('Disable autoupgrade for displayed items'),
   showDescription: () => msg('Show description'),
   hideDescription: () => msg('Hide description'),
   showDetails: () => msg('Show details'),
   hideDetails: () => msg('Hide details'),
   upgrade: () => msg('Upgrade'),
-  upgradeAll: () => msg('Upgrade all'),
+  upgradeDisplayed: () => msg('Upgrade displayed items'),
   upgradeToLevel: (valueElement: any) => msg(html`Upgrade to level ${valueElement}`),
   upgradeIncrease: (increase: string) => msg(str`Upgrade x${increase}`),
   level: () => msg('Level'),
@@ -50,6 +59,8 @@ export const COMMON_TEXTS = {
   enableFilter: () => msg('Enable filter'),
   disableFilter: () => msg('Disable filter'),
   resetFilter: () => msg('Reset filter'),
+  maxTier: () => msg('Max tier'),
+  maxLevel: () => msg('Max level'),
 };
 
 export const CATEGORY_TEXTS: Record<ItemCategory, () => string> = {
@@ -87,4 +98,16 @@ export const REWARD_PARAMETER_NAMES: Record<DistrictTypeRewardParameter | Reward
   [RewardParameter.processCompletionSpeed]: () => msg('Process completion speed multiplier'),
   [RewardParameter.actions]: () => msg('Actions'),
   [RewardParameter.experienceShareMultiplier]: () => msg('Shared experience multiplier'),
+};
+
+export const LEVEL_FILTER_TEXTS: Record<LevelFilterValue, () => string> = {
+  [LevelFilterValue.all]: () => msg('Show everything'),
+  [LevelFilterValue.maxed]: () => msg('Only items with max value'),
+  [LevelFilterValue.belowMax]: () => msg('Only items with below max value'),
+};
+
+export const AUTOUPGRADE_FILTER_TEXTS: Record<AutoupgradeFilterValue, () => string> = {
+  [AutoupgradeFilterValue.all]: () => msg('Show everything'),
+  [AutoupgradeFilterValue.enabled]: () => msg('Only enabled'),
+  [AutoupgradeFilterValue.disabled]: () => msg('Only disabled'),
 };

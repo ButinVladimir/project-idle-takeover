@@ -38,7 +38,7 @@ export class MainframeHardwarePanelButtons extends BaseComponent {
           size="medium"
           @click=${this.handleBuyMax}
         >
-          ${COMMON_TEXTS.upgradeAll()}
+          ${COMMON_TEXTS.upgradeDisplayed()}
         </sl-button>
       </sl-tooltip>
     `;

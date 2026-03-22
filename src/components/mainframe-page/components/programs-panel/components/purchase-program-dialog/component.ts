@@ -68,12 +68,6 @@ export class PurchaseProgramDialog extends BaseComponent {
     this._program?.removeAllEventListeners();
   }
 
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
-  }
-
   updated(_changedProperties: Map<string, any>) {
     super.updated(_changedProperties);
 
@@ -169,7 +163,7 @@ If you already have program with same name, old one will be replaced with new on
     `;
   }
 
-  private updateContext() {
+  protected updateContext() {
     this._program?.removeAllEventListeners();
 
     if (this._programName) {

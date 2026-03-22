@@ -52,12 +52,6 @@ export class ClonesListItem extends BaseComponent {
     document.removeEventListener('click', this.handleHideMenu);
   }
 
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
-  }
-
   protected renderDesktop() {
     if (!this._clone) {
       return nothing;
@@ -144,7 +138,7 @@ export class ClonesListItem extends BaseComponent {
     `;
   }
 
-  private updateContext() {
+  protected updateContext() {
     if (this.cloneId) {
       this._clone = this._controller.getCloneById(this.cloneId);
     } else {

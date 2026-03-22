@@ -3,14 +3,20 @@ import { localized, msg } from '@lit/localize';
 import { customElement, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { provide } from '@lit/context';
-import { BaseComponent } from '@shared/index';
+import {
+  AutoupgradeFilterValue,
+  BaseComponent,
+  filterByAutoupgrade,
+  filterByMaxLevel,
+  LevelFilterValue,
+} from '@shared/index';
 import { IProgram, ProgramName } from '@state/mainframe-state';
 import { SortableElementMovedEvent } from '@components/shared/sortable-list/events/sortable-element-moved';
 import { COMMON_TEXTS } from '@texts/index';
 import { OwnedProgramsListController } from './controller';
 import styles from './styles';
 import { ToggleProgramsFilterEvent } from './components/list-buttons/events';
-import { programsFilterStateContext } from './contexts';
+import { programsFilterStateContext, programsListContext } from './contexts';
 import { type IProgramsFilterState } from './interfaces';
 import { ProgramsFilterStateChangedEvent } from './components/filter/events';
 
@@ -31,7 +37,13 @@ export class OwnedProgramsList extends BaseComponent {
   private _programsFilterState: IProgramsFilterState = {
     programs: [],
     tiers: [],
+    maxTier: LevelFilterValue.all,
+    maxLevel: LevelFilterValue.all,
+    autoupgrade: AutoupgradeFilterValue.all,
   };
+
+  @provide({ context: programsListContext })
+  private _programsList: IProgram[] = [];
 
   constructor() {
     super();
@@ -39,9 +51,17 @@ export class OwnedProgramsList extends BaseComponent {
     this._controller = new OwnedProgramsListController(this);
   }
 
-  protected renderDesktop() {
-    const ownedPrograms = this._controller.listOwnedPrograms();
+  connectedCallback() {
+    super.connectedCallback();
+  }
 
+  performUpdate() {
+    this.updateContext();
+
+    super.performUpdate();
+  }
+
+  protected renderDesktop() {
     return html`
       <div class="items-list">
         <ca-owned-programs-list-filter
@@ -59,14 +79,14 @@ export class OwnedProgramsList extends BaseComponent {
           ></ca-owned-programs-list-buttons>
         </div>
 
-        ${ownedPrograms.length > 0
+        ${this._programsList.length > 0
           ? html`
               <ca-sortable-list
                 class="list"
                 ?drag-enabled=${!this._filterEnabled}
                 @sortable-element-moved=${this.handleMoveProgram}
               >
-                ${repeat(ownedPrograms, (program) => program.name, this.renderProgram)}
+                ${repeat(this._programsList, (program) => program.name, this.renderProgram)}
               </ca-sortable-list>
             `
           : this.renderEmptyListNotification()}
@@ -75,10 +95,13 @@ export class OwnedProgramsList extends BaseComponent {
   }
 
   protected renderMobile() {
-    const ownedPrograms = this._controller.listOwnedPrograms();
-
     return html`
       <div class="items-list">
+        <ca-owned-programs-list-filter
+          ?filter-enabled=${this._filterEnabled}
+          @programs-filter-state-changed=${this.handleChangeFilterState}
+        ></ca-owned-programs-list-filter>
+
         <div class="header mobile">
           <ca-owned-programs-list-buttons
             ?filter-enabled=${this._filterEnabled}
@@ -86,19 +109,14 @@ export class OwnedProgramsList extends BaseComponent {
           ></ca-owned-programs-list-buttons>
         </div>
 
-        <ca-owned-programs-list-filter
-          ?filter-enabled=${this._filterEnabled}
-          @programs-filter-state-changed=${this.handleChangeFilterState}
-        ></ca-owned-programs-list-filter>
-
-        ${ownedPrograms.length > 0
+        ${this._programsList.length > 0
           ? html`
               <ca-sortable-list
                 class="list"
                 ?drag-enabled=${!this._filterEnabled}
                 @sortable-element-moved=${this.handleMoveProgram}
               >
-                ${repeat(ownedPrograms, (program) => program.name, this.renderProgram)}
+                ${repeat(this._programsList, (program) => program.name, this.renderProgram)}
               </ca-sortable-list>
             `
           : this.renderEmptyListNotification()}
@@ -107,7 +125,7 @@ export class OwnedProgramsList extends BaseComponent {
   }
 
   private renderEmptyListNotification = () => {
-    return html` <div class="notification">${msg("You don't have any owned programs")}</div> `;
+    return html` <div class="notification">${msg('Programs are not found')}</div> `;
   };
 
   private renderProgram = (program: IProgram) => {
@@ -132,5 +150,49 @@ export class OwnedProgramsList extends BaseComponent {
 
   private handleChangeFilterState = (event: ProgramsFilterStateChangedEvent) => {
     this._programsFilterState = event.state;
+  };
+
+  private updateContext(): void {
+    let programs = this._controller.listOwnedPrograms();
+
+    if (this._filterEnabled) {
+      programs = programs.filter(this.filterProgram);
+    }
+
+    this._programsList = programs;
+  }
+
+  private filterProgram = (program: IProgram): boolean => {
+    if (!this._filterEnabled) {
+      return true;
+    }
+
+    if (this._programsFilterState.programs.length > 0 && !this._programsFilterState.programs.includes(program.name)) {
+      return false;
+    }
+
+    if (this._programsFilterState.tiers.length > 0 && !this._programsFilterState.tiers.includes(program.tier)) {
+      return false;
+    }
+
+    if (
+      !filterByMaxLevel(
+        program.tier,
+        this._controller.getProgramHighestTier(program.name),
+        this._programsFilterState.maxTier,
+      )
+    ) {
+      return false;
+    }
+
+    if (!filterByMaxLevel(program.level, this._controller.developmentLevel, this._programsFilterState.maxLevel)) {
+      return false;
+    }
+
+    if (!filterByAutoupgrade(program.autoUpgradeEnabled, this._programsFilterState.autoupgrade)) {
+      return false;
+    }
+
+    return true;
   };
 }

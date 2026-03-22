@@ -1,6 +1,7 @@
 import clamp from 'lodash/clamp';
 import { IExponent, ILinear, ITierExponent, ITierLinear } from './interfaces/formulas';
 import { SCHEMA_PROPERTY } from './constants';
+import { AutoupgradeFilterValue, LevelFilterValue } from './types';
 
 export const calculatePower = (exponent: number, params: IExponent): number => {
   return params.multiplier * Math.pow(params.base, exponent);
@@ -123,4 +124,36 @@ export function calculateLevelProgressPercentage(
 
 export function typeConfigEntries<T>(data: Record<string, any>): Record<string, T> {
   return Object.fromEntries(Object.entries(data).filter(([key]) => key !== SCHEMA_PROPERTY));
+}
+
+export function filterByMaxLevel(value: number, maxValue: number, filter: LevelFilterValue): boolean {
+  if (filter === LevelFilterValue.all) {
+    return true;
+  }
+
+  if (filter === LevelFilterValue.maxed && value === maxValue) {
+    return true;
+  }
+
+  if (filter === LevelFilterValue.belowMax && value < maxValue) {
+    return true;
+  }
+
+  return false;
+}
+
+export function filterByAutoupgrade(value: boolean, filter: AutoupgradeFilterValue): boolean {
+  if (filter === AutoupgradeFilterValue.all) {
+    return true;
+  }
+
+  if (filter === AutoupgradeFilterValue.enabled && value) {
+    return true;
+  }
+
+  if (filter === AutoupgradeFilterValue.disabled && !value) {
+    return true;
+  }
+
+  return false;
 }

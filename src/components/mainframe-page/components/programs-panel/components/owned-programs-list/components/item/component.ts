@@ -43,12 +43,6 @@ export class OwnedProgramsListItem extends BaseComponent {
     this._controller = new OwnedProgramsListItemController(this);
   }
 
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
-  }
-
   protected renderDesktop() {
     if (!this._program) {
       return nothing;
@@ -124,10 +118,8 @@ export class OwnedProgramsListItem extends BaseComponent {
     return html`
       <div class="items-list-item mobile">
         <div class="program">
-          <div class="title" draggable="true" @dragstart=${this.handleDragStart}>
-            <sl-icon name="grip-vertical"> </sl-icon>
-
-            ${programTitle}
+          <div class="title" draggable=${this.dragEnabled ? 'true' : 'false'} @dragstart=${this.handleDragStart}>
+            ${this.dragEnabled ? html`<sl-icon name="grip-vertical"> </sl-icon>` : nothing} ${programTitle}
 
             <sl-tooltip>
               <span slot="content">${descriptionButtonLabel}</span>
@@ -155,7 +147,7 @@ export class OwnedProgramsListItem extends BaseComponent {
     `;
   }
 
-  private updateContext() {
+  protected updateContext() {
     if (this.programName) {
       this._program = this._controller.getProgram(this.programName);
     } else {
