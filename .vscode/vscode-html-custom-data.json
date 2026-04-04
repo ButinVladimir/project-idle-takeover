@@ -616,8 +616,19 @@
     },
     {
       "name": "ca-processes-list",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderProcess` - \n\n  * `handleToggleAllProcesses` - \n\n  * `handleOpenDeleteAllProcessesDialog` - \n\n  * `handleDeleteAllProcesses` - \n\n  * `handleMoveProcess` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_filterEnabled` {`boolean`} - \n\n  * `_processesFilterState` {`IProcessesFilterState`} - \n\n  * `_processesList` {`IProcess[]`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderProcess` - \n\n  * `handleToggleFilter` - \n\n  * `handleChangeFilterState` - \n\n  * `filterProcess` - \n\n  * `handleMoveProcess` - \n\n  * `_controller` - ",
       "attributes": []
+    },
+    {
+      "name": "ca-processes-list-filter",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_filterState` {`IProcessesFilterState | undefined`} - \n\n  * `_programsInputRef` - \n\n  * `_coresInputRef` - \n\n  * `_statusInputRef` - \n\n  * `renderProgramNameOptions` - \n\n  * `renderCoresOptions` - \n\n  * `renderStatusFilterOptions` - \n\n  * `handleReset` - \n\n  * `handleProgramsChange` - \n\n  * `handleCoresChange` - \n\n  * `handleStatusChange` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
+        }
+      ]
     },
     {
       "name": "ca-processes-list-item-description",
@@ -631,17 +642,33 @@
     },
     {
       "name": "ca-processes-list-item",
-      "description": "Attributes:\n\n  * `program-name` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `programName` - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `_process` - \n\n  * `handleToggleDescription` - \n\n  * `handleToggleProcess` - \n\n  * `handleOpenDeleteProcessDialog` - \n\n  * `handleDeleteProcess` - \n\n  * `handleDragStart` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `program-name` - \n\n  * `drag-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `programName` - \n\n  * `dragEnabled` {`boolean`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `_process` - \n\n  * `handleToggleDescription` - \n\n  * `handleToggleProcess` - \n\n  * `handleOpenDeleteProcessDialog` - \n\n  * `handleDeleteProcess` - \n\n  * `handleDragStart` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "program-name",
           "description": "`program-name` - \n\nProperty: programName"
+        },
+        {
+          "name": "drag-enabled",
+          "description": "`drag-enabled` {`boolean`} - \n\nProperty: dragEnabled",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-processes-list-buttons",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_processesList` {`IProcess[] | undefined`} - \n\n  * `handleToggleProcesses` - \n\n  * `handleOpenDeleteDisplayedProcessesDialog` - \n\n  * `handleDeleteDisplayedProcesses` - \n\n  * `handleToggleFilter` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
         }
       ]
     },
     {
       "name": "ca-start-process-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_programInputRef` - \n\n  * `_threadsInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_programName` - \n\n  * `_threads` {`number`} - \n\n  * `_ownedProgram` - \n\n  * `_existingProcess` - \n\n  * `handleClose` - \n\n  * `handleProgramChange` - \n\n  * `handleThreadsChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleStartProcess` - \n\n  * `formatProgramSelectItem` - \n\n  * `calculateMaxThreads` - \n\n  * `validate` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_programInputRef` - \n\n  * `_threadsInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_programName` - \n\n  * `_threads` {`number`} - \n\n  * `_ownedProgram` - \n\n  * `_existingProcess` - \n\n  * `handleClose` - \n\n  * `handleProgramChange` - \n\n  * `handleThreadsChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleStartProcess` - \n\n  * `renderProgramNameOptions` - \n\n  * `formatProgramSelectItem` - \n\n  * `calculateMaxThreads` - \n\n  * `validate` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "open",
@@ -727,7 +754,7 @@
     },
     {
       "name": "ca-owned-programs-list-buttons",
-      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_upgradeMaxButton` - \n\n  * `_programsList` {`IProgram[] | undefined`} - \n\n  * `handleToggleAutoupgrade` - \n\n  * `handleUpgradeMaxPrograms` - \n\n  * `handleToggleFilter` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_upgradeMaxButton` - \n\n  * `_programsList` {`IProgram[] | undefined`} - \n\n  * `handleToggleAutoupgrade` - \n\n  * `handleUpgradeMaxPrograms` - \n\n  * `handleToggleFilter` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "filter-enabled",
@@ -738,7 +765,7 @@
     },
     {
       "name": "ca-purchase-program-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_programInputRef` - \n\n  * `_tierInputRef` - \n\n  * `_levelInputRef` - \n\n  * `_buttonsRef` - \n\n  * `open` {`boolean`} - \n\n  * `_programName` - \n\n  * `_tier` {`number`} - \n\n  * `_level` {`number`} - \n\n  * `_program` - \n\n  * `_existingProgram` - \n\n  * `renderProgramOption` - \n\n  * `renderTierOptions` - \n\n  * `handleClose` - \n\n  * `handleProgramChange` - \n\n  * `handleTierChange` - \n\n  * `handleLevelChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handlePurchaseProgram` - \n\n  * `validate` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_programInputRef` - \n\n  * `_tierInputRef` - \n\n  * `_levelInputRef` - \n\n  * `_buttonsRef` - \n\n  * `open` {`boolean`} - \n\n  * `_programName` - \n\n  * `_tier` {`number`} - \n\n  * `_level` {`number`} - \n\n  * `_program` - \n\n  * `_existingProgram` - \n\n  * `renderProgramNameOptions` - \n\n  * `renderTierOptions` - \n\n  * `handleClose` - \n\n  * `handleProgramChange` - \n\n  * `handleTierChange` - \n\n  * `handleLevelChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handlePurchaseProgram` - \n\n  * `validate` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "open",

@@ -7,11 +7,13 @@ import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.com
 import {
   BaseComponent,
   LevelFilterValue,
-  AutoupgradeFilterValue,
+  StatusFilterValue,
   LEVEL_FILTER_VALUES,
-  AUTOUPGRADE_FILTER_VALUES,
+  STATUS_FILTER_VALUES,
+  compareOptions,
+  ISelectOption,
 } from '@shared/index';
-import { AUTOUPGRADE_FILTER_TEXTS, COMMON_TEXTS, LEVEL_FILTER_TEXTS } from '@texts/common';
+import { STATUS_FILTER_TEXTS, COMMON_TEXTS, LEVEL_FILTER_TEXTS } from '@texts/common';
 import { PROGRAM_TEXTS } from '@texts/index';
 import { consume } from '@lit/context';
 import { ProgramName } from '@state/mainframe-state';
@@ -145,10 +147,13 @@ export class OwnedProgramsListFilter extends BaseComponent {
 
   private renderProgramNameOptions = () => {
     const programs = this._controller.listOwnedPrograms();
+    const programOptions: ISelectOption[] = programs.map((program) => ({
+      name: PROGRAM_TEXTS[program.name].title(),
+      value: program.name,
+    }));
+    programOptions.sort(compareOptions);
 
-    return programs.map(
-      (program) => html`<sl-option value=${program.name}>${PROGRAM_TEXTS[program.name].title()}</sl-option>`,
-    );
+    return programOptions.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
 
   private renderTierOptions = () => {
@@ -174,8 +179,8 @@ export class OwnedProgramsListFilter extends BaseComponent {
   };
 
   private renderAutoupgradeFilterOptions = () => {
-    return AUTOUPGRADE_FILTER_VALUES.map(
-      (value) => html`<sl-option value=${value}>${AUTOUPGRADE_FILTER_TEXTS[value]()}</sl-option>`,
+    return STATUS_FILTER_VALUES.map(
+      (value) => html`<sl-option value=${value}>${STATUS_FILTER_TEXTS[value]()}</sl-option>`,
     );
   };
 
@@ -186,7 +191,7 @@ export class OwnedProgramsListFilter extends BaseComponent {
         tiers: [],
         maxTier: LevelFilterValue.all,
         maxLevel: LevelFilterValue.all,
-        autoupgrade: AutoupgradeFilterValue.all,
+        autoupgrade: StatusFilterValue.all,
       }),
     );
   };
@@ -256,7 +261,7 @@ export class OwnedProgramsListFilter extends BaseComponent {
       return;
     }
 
-    const value = this._autoupgradeInputRef.value.value as AutoupgradeFilterValue;
+    const value = this._autoupgradeInputRef.value.value as StatusFilterValue;
 
     this.dispatchEvent(
       new ProgramsFilterStateChangedEvent({

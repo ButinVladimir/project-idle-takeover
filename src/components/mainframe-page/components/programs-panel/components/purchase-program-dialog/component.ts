@@ -8,7 +8,7 @@ import SlInput from '@shoelace-style/shoelace/dist/components/input/input.compon
 import clamp from 'lodash/clamp';
 import { type ProgramName, type IProgram } from '@state/mainframe-state';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
-import { BaseComponent, ProgramAlert } from '@shared/index';
+import { BaseComponent, compareOptions, ISelectOption, ProgramAlert } from '@shared/index';
 import { PROGRAM_TEXTS, COMMON_TEXTS } from '@texts/index';
 import { PurchaseProgramDialogCloseEvent } from './events';
 import { PurchaseProgramDialogController } from './controller';
@@ -116,7 +116,7 @@ If you already have program with same name, old one will be replaced with new on
               >
                 <span class="input-label" slot="label"> ${msg('Program')} </span>
 
-                ${this._controller.listAvailablePrograms().map(this.renderProgramOption)}
+                ${this.renderProgramNameOptions()}
               </sl-select>
 
               <sl-select
@@ -179,8 +179,15 @@ If you already have program with same name, old one will be replaced with new on
     }
   }
 
-  private renderProgramOption = (program: ProgramName) => {
-    return html`<sl-option value=${program}> ${PROGRAM_TEXTS[program].title()} </sl-option>`;
+  private renderProgramNameOptions = () => {
+    const programs = this._controller.listAvailablePrograms();
+    const programOptions: ISelectOption[] = programs.map((programName) => ({
+      value: programName,
+      name: PROGRAM_TEXTS[programName].title(),
+    }));
+    programOptions.sort(compareOptions);
+
+    return programOptions.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
 
   private renderTierOptions = () => {

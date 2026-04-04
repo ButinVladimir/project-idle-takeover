@@ -2,10 +2,6 @@ import { BaseController, Hotkey } from '@shared/index';
 import { IProgram, ProgramName, ProgramValidationResult } from '@state/mainframe-state';
 
 export class OwnedProgramsListButtonsController extends BaseController {
-  listOwnedPrograms(): IProgram[] {
-    return this.mainframeState.programs.listOwnedPrograms();
-  }
-
   upgradeMaxPrograms(programNames: ProgramName[]) {
     this.mainframeState.programs.upgrader.upgradeMaxPrograms(programNames);
   }

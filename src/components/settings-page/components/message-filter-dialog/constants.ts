@@ -32,7 +32,7 @@ export const MESSAGE_EVENT_NAMES: Record<MessageEvent, () => string> = {
   [ProgramsEvent.programPurchased]: () => msg('Program purchased'),
   [ProgramsEvent.processStarted]: () => msg('Process started'),
   [ProgramsEvent.processDeleted]: () => msg('Process deleted'),
-  [ProgramsEvent.allProcessesDeleted]: () => msg('All processes deleted'),
+  [ProgramsEvent.displayedProcessesDeleted]: () => msg('Displayed processes deleted'),
   [ClonesEvent.clonePurchased]: () => msg('Clone purchased'),
   [ClonesEvent.cloneLevelUpgraded]: () => msg('Clone level upgraded'),
   [ClonesEvent.cloneDeleted]: () => msg('Clone deleted'),

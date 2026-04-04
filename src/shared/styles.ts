@@ -379,6 +379,30 @@ export const ACTIVITY_UI_ACTIVITY_VALUES = {
 
 export const START_ACTIVITY_ICON = 'arrow-clockwise';
 
+export const itemsListButtonsStyle = css`
+  .buttons {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: var(--ca-table-buttons-gap);
+
+    &.desktop {
+      width: 132px;
+      justify-content: flex-end;
+      font-size: var(--sl-font-size-large);
+    }
+
+    &.mobile {
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+
+    .tooltip-content p {
+      margin: 0;
+    }
+  }
+`;
+
 export const itemsListStyle = css`
   .items-list {
     width: 100%;
@@ -393,22 +417,10 @@ export const itemsListStyle = css`
       align-items: center;
       border-bottom: var(--ca-border);
 
-      .buttons {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        flex-direction: row;
-        gap: var(--ca-table-buttons-gap);
-      }
-
       &.mobile {
         grid-template-columns: auto;
         grid-template-rows: auto;
         padding: var(--ca-table-column-gap) 0;
-
-        .buttons {
-          justify-content: flex-start;
-        }
       }
 
       &.desktop {
@@ -418,11 +430,6 @@ export const itemsListStyle = css`
 
         .header-column {
           font-weight: var(--sl-font-weight-bold);
-        }
-
-        .buttons {
-          justify-content: flex-end;
-          font-size: var(--sl-font-size-large);
         }
       }
     }
@@ -516,6 +523,44 @@ export const itemsListItemStyle = css`
       .buttons {
         flex-wrap: wrap;
         justify-content: flex-start;
+      }
+    }
+  }
+`;
+
+export const itemsListFilterStyle = css`
+  .filter {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ca-input-row-gap);
+    align-items: stretch;
+    border-bottom: var(--ca-border);
+
+    .filter-row {
+      display: flex;
+    }
+
+    &.desktop {
+      padding: var(--ca-filter-gap) 0;
+
+      .filter-row {
+        flex-direction: row;
+        gap: var(--ca-input-column-gap);
+        align-items: stretch;
+        justify-content: space-between;
+
+        * {
+          flex: 1 0;
+        }
+      }
+    }
+
+    &.mobile {
+      padding: var(--ca-filter-gap) 0;
+
+      .filter-row {
+        flex-direction: column;
+        gap: var(--ca-input-row-gap);
       }
     }
   }

@@ -1,7 +1,8 @@
 import clamp from 'lodash/clamp';
 import { IExponent, ILinear, ITierExponent, ITierLinear } from './interfaces/formulas';
 import { SCHEMA_PROPERTY } from './constants';
-import { AutoupgradeFilterValue, LevelFilterValue } from './types';
+import { StatusFilterValue, LevelFilterValue } from './types';
+import { ISelectOption, ISelectTieredOption } from './interfaces';
 
 export const calculatePower = (exponent: number, params: IExponent): number => {
   return params.multiplier * Math.pow(params.base, exponent);
@@ -142,18 +143,30 @@ export function filterByMaxLevel(value: number, maxValue: number, filter: LevelF
   return false;
 }
 
-export function filterByAutoupgrade(value: boolean, filter: AutoupgradeFilterValue): boolean {
-  if (filter === AutoupgradeFilterValue.all) {
+export function filterByEnabled(value: boolean, filter: StatusFilterValue): boolean {
+  if (filter === StatusFilterValue.all) {
     return true;
   }
 
-  if (filter === AutoupgradeFilterValue.enabled && value) {
+  if (filter === StatusFilterValue.enabled && value) {
     return true;
   }
 
-  if (filter === AutoupgradeFilterValue.disabled && !value) {
+  if (filter === StatusFilterValue.disabled && !value) {
     return true;
   }
 
   return false;
+}
+
+export function compareOptions(optionA: ISelectOption, optionB: ISelectOption): number {
+  return optionA.name.localeCompare(optionB.name);
+}
+
+export function compareTieredOptions(optionA: ISelectTieredOption, optionB: ISelectTieredOption): number {
+  if (optionA.tier !== optionB.tier) {
+    return optionA.tier - optionB.tier;
+  }
+
+  return optionA.name.localeCompare(optionB.name);
 }

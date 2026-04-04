@@ -3,13 +3,7 @@ import { localized, msg } from '@lit/localize';
 import { customElement, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { provide } from '@lit/context';
-import {
-  AutoupgradeFilterValue,
-  BaseComponent,
-  filterByAutoupgrade,
-  filterByMaxLevel,
-  LevelFilterValue,
-} from '@shared/index';
+import { StatusFilterValue, BaseComponent, filterByEnabled, filterByMaxLevel, LevelFilterValue } from '@shared/index';
 import { IProgram, ProgramName } from '@state/mainframe-state';
 import { SortableElementMovedEvent } from '@components/shared/sortable-list/events/sortable-element-moved';
 import { COMMON_TEXTS } from '@texts/index';
@@ -39,7 +33,7 @@ export class OwnedProgramsList extends BaseComponent {
     tiers: [],
     maxTier: LevelFilterValue.all,
     maxLevel: LevelFilterValue.all,
-    autoupgrade: AutoupgradeFilterValue.all,
+    autoupgrade: StatusFilterValue.all,
   };
 
   @provide({ context: programsListContext })
@@ -49,16 +43,6 @@ export class OwnedProgramsList extends BaseComponent {
     super();
 
     this._controller = new OwnedProgramsListController(this);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-  }
-
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
   }
 
   protected renderDesktop() {
@@ -152,7 +136,7 @@ export class OwnedProgramsList extends BaseComponent {
     this._programsFilterState = event.state;
   };
 
-  private updateContext(): void {
+  protected updateContext(): void {
     let programs = this._controller.listOwnedPrograms();
 
     if (this._filterEnabled) {
@@ -189,7 +173,7 @@ export class OwnedProgramsList extends BaseComponent {
       return false;
     }
 
-    if (!filterByAutoupgrade(program.autoUpgradeEnabled, this._programsFilterState.autoupgrade)) {
+    if (!filterByEnabled(program.autoUpgradeEnabled, this._programsFilterState.autoupgrade)) {
       return false;
     }
 

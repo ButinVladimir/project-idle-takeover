@@ -32,7 +32,7 @@ import {
   PrimaryActivitiesEvent,
   PrimaryActivityAlert,
   LevelFilterValue,
-  AutoupgradeFilterValue,
+  StatusFilterValue,
 } from './types';
 import { INames, type IConstants } from './interfaces';
 
@@ -146,4 +146,4 @@ export const DISTRICT_TYPE_REWARD_PARAMETER_UI_VALUES: Record<
 export const ACTIVITY_UI_STATUSES = Object.values(ActivityUIActivityStatus);
 
 export const LEVEL_FILTER_VALUES = Object.values(LevelFilterValue);
-export const AUTOUPGRADE_FILTER_VALUES = Object.values(AutoupgradeFilterValue);
+export const STATUS_FILTER_VALUES = Object.values(StatusFilterValue);

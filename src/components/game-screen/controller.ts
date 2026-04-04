@@ -43,7 +43,9 @@ export class GameScreenController extends BaseController {
   }
 
   private upgradeMainframePrograms() {
-    this.mainframeState.programs.upgrader.upgradeMaxPrograms();
+    const allPrograms = this.mainframeState.programs.listOwnedPrograms().map((program) => program.name);
+
+    this.mainframeState.programs.upgrader.upgradeMaxPrograms(allPrograms);
   }
 
   private upgradeClonesLevel() {

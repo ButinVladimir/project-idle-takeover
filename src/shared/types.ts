@@ -47,7 +47,7 @@ export enum ProgramsEvent {
   programPurchased = 'programPurchased',
   processStarted = 'processStarted',
   processDeleted = 'processDeleted',
-  allProcessesDeleted = 'allProcessesDeleted',
+  displayedProcessesDeleted = 'displayedProcessesDeleted',
 }
 
 export enum ClonesEvent {
@@ -116,7 +116,7 @@ export enum ProgramAlert {
   purchaseProgramOverwrite = 'purchaseProgramOverwrite',
   processDelete = 'processDelete',
   processReplace = 'processReplace',
-  deleteAllProcesses = 'deleteAllProcesses',
+  deleteDisplayedProcesses = 'deleteDisplayedProcesses',
 }
 
 export enum CloneAlert {
@@ -298,7 +298,7 @@ export enum LevelFilterValue {
   belowMax = 'belowMax',
 }
 
-export enum AutoupgradeFilterValue {
+export enum StatusFilterValue {
   all = 'all',
   enabled = 'enabled',
   disabled = 'disabled',
