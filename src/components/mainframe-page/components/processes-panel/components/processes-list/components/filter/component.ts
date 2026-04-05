@@ -112,10 +112,10 @@ export class ProcessesListFilter extends BaseComponent {
   }
 
   private renderProgramNameOptions = () => {
-    const programs = this._controller.listOwnedPrograms();
-    const programOptions: ISelectOption[] = programs.map((program) => ({
-      name: PROGRAM_TEXTS[program.name].title(),
-      value: program.name,
+    const processes = this._controller.listProcesses();
+    const programOptions: ISelectOption[] = processes.map((process) => ({
+      name: PROGRAM_TEXTS[process.program.name].title(),
+      value: process.program.name,
     }));
     programOptions.sort(compareOptions);
 

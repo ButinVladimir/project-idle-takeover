@@ -44,6 +44,7 @@ body {
   --ca-page-title-gap: var(--sl-spacing-large);
   --ca-section-gap: var(--sl-spacing-large);
   --ca-paragraph-gap: var(--sl-spacing-medium);
+  --ca-section-padding: var(--sl-spacing-medium);
   --ca-section-buttons-gap: var(--sl-spacing-medium);
   --ca-section-text-gap: var(--sl-spacing-2x-large);
   --ca-panel-row-gap: var(--sl-spacing-small);
@@ -60,7 +61,6 @@ body {
   --ca-modal-section-gap: var(--sl-spacing-medium);
   --ca-modal-paragraph-gap: var(--sl-spacing-small);
   --ca-modal-buttons-gap: var(--sl-spacing-small);
-  --ca-filter-gap: var(--sl-spacing-medium);
 }
 
 .sl-theme-dark {

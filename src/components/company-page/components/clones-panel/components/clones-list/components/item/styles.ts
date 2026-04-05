@@ -27,8 +27,11 @@ const styles = [
       grid-template-rows: auto;
 
       h4.title {
-        cursor: grab;
         margin: 0;
+
+        &[draggable='true'] {
+          cursor: grab;
+        }
       }
 
       h4.name {

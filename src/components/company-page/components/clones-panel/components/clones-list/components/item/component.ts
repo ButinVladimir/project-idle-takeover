@@ -23,6 +23,12 @@ export class ClonesListItem extends BaseComponent {
   })
   public cloneId!: string;
 
+  @property({
+    attribute: 'drag-enabled',
+    type: Boolean,
+  })
+  dragEnabled!: boolean;
+
   private _controller: ClonesListItemController;
 
   @state()
@@ -72,10 +78,8 @@ export class ClonesListItem extends BaseComponent {
     return html`
       <sl-card>
         <div slot="header" class="header">
-          <h4 class="title name" draggable="true" @dragstart=${this.handleDragStart}>
-            <sl-icon id="drag-icon" name="grip-vertical"> </sl-icon>
-
-            ${this._clone.name}
+          <h4 class="title name" draggable=${this.dragEnabled ? 'true' : 'false'} @dragstart=${this.handleDragStart}>
+            ${this.dragEnabled ? html`<sl-icon name="grip-vertical"> </sl-icon>` : nothing} ${this._clone.name}
 
             <sl-tooltip>
               <span slot="content"> ${autoupgradeLabel} </span>

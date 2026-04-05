@@ -2,11 +2,14 @@ import { html } from 'lit';
 import { localized, msg } from '@lit/localize';
 import { customElement } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { consume } from '@lit/context';
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
 import { BaseComponent, UPGRADE_MAX_VALUES } from '@shared/index';
 import { COMMON_TEXTS } from '@texts/index';
 import { ClonesListUpgradeButtonsController } from './controller';
 import styles from './styles';
+import { clonesListContext } from '../../contexts';
+import { IClone } from '@state/clones-state';
 
 @localized()
 @customElement('ca-clones-list-upgrade-buttons')
@@ -18,6 +21,9 @@ export class ClonesListUpgradeButtons extends BaseComponent {
   private _controller: ClonesListUpgradeButtonsController;
 
   private _upgradeLevelMaxButton = createRef<SlButton>();
+
+  @consume({ context: clonesListContext, subscribe: true })
+  private _clonesList?: IClone[];
 
   constructor() {
     super();
@@ -38,24 +44,34 @@ export class ClonesListUpgradeButtons extends BaseComponent {
             disabled
             variant=${UPGRADE_MAX_VALUES.buttonVariant}
             size="medium"
-            @click=${this.handleUpgradeMaxAllLevels}
+            @click=${this.handleUpgradeMaxDisplayedLevels}
           >
             <sl-icon slot="prefix" name=${UPGRADE_MAX_VALUES.icon}></sl-icon>
 
-            ${msg('Upgrade all levels')}
+            ${msg('Upgrade displayed clones levels')}
           </sl-button>
         </sl-tooltip>
       </sl-button-group>
     `;
   }
 
-  private handleUpgradeMaxAllLevels = () => {
-    this._controller.upgradeMaxAllLevels();
+  private handleUpgradeMaxDisplayedLevels = () => {
+    const cloneIds = this.getCloneIds();
+
+    this._controller.upgradeMaxDisplayedLevels(cloneIds);
   };
+
+  private getCloneIds(): string[] {
+    if (!this._clonesList || this._clonesList.length === 0) {
+      return [];
+    }
+
+    return this._clonesList.map((clone) => clone.id);
+  }
 
   handlePartialUpdate = () => {
     if (this._upgradeLevelMaxButton.value) {
-      const buttonDisabled = !this._controller.checkCanUpgradeMaxAllLevels();
+      const buttonDisabled = !this._clonesList || !this._clonesList.some(this._controller.checkCanUpgradeMaxLevel);
 
       this._upgradeLevelMaxButton.value.disabled = buttonDisabled;
     }

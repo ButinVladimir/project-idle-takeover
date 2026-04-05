@@ -128,7 +128,7 @@ export class OwnedProgramsListButtons extends BaseComponent {
   }
 
   private checkSomeProcessesActive(): boolean {
-    if (!this._processesList) {
+    if (!this._processesList || this._processesList.length === 0) {
       return false;
     }
 

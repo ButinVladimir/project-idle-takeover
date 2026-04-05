@@ -165,8 +165,19 @@
     },
     {
       "name": "ca-clones-list",
-      "description": "Properties:\n\n  * `styles` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderClone` - \n\n  * `handleToggleAutoupgrade` - \n\n  * `handleMoveClone` - \n\n  * `handleOpenDeleteAllClonesDialog` - \n\n  * `handleDeleteAllClones` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` - \n\n  * `_filterEnabled` {`boolean`} - \n\n  * `_clonesFilterState` {`IClonesFilterState`} - \n\n  * `_clonesList` {`IClone[]`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderClone` - \n\n  * `handleToggleFilter` - \n\n  * `handleChangeFilterState` - \n\n  * `filterClone` - \n\n  * `handleMoveClone` - \n\n  * `_controller` - ",
       "attributes": []
+    },
+    {
+      "name": "ca-clones-list-filter",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_filterState` {`IClonesFilterState | undefined`} - \n\n  * `_clonesInputRef` - \n\n  * `_cloneTemplatesInputRef` - \n\n  * `_tiersInputRef` - \n\n  * `_maxTierInputRef` - \n\n  * `_maxLevelInputRef` - \n\n  * `_autoupgradeInputRef` - \n\n  * `renderCloneOptions` - \n\n  * `renderCloneTemplateOptions` - \n\n  * `renderTierOptions` - \n\n  * `renderLevelFilterOptions` - \n\n  * `renderAutoupgradeFilterOptions` - \n\n  * `handleReset` - \n\n  * `handleClonesChange` - \n\n  * `handleCloneTemplatesChange` - \n\n  * `handleTiersChange` - \n\n  * `handleMaxTierChange` - \n\n  * `handleMaxLevelChange` - \n\n  * `handleAutoupgradeChange` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
+        }
+      ]
     },
     {
       "name": "ca-clones-list-item-buttons",
@@ -191,22 +202,38 @@
     },
     {
       "name": "ca-clones-list-item",
-      "description": "Attributes:\n\n  * `clone-id` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `cloneId` {`string`} - \n\n  * `_menuVisible` {`boolean`} - \n\n  * `_detailsVisible` {`boolean`} - \n\n  * `_clone` - \n\n  * `handleToggleAutoUpgrade` - \n\n  * `handleDragStart` - \n\n  * `handleToggleMenu` - \n\n  * `handleHideMenu` - \n\n  * `handleOpenDeleteCloneDialog` - \n\n  * `handleDeleteClone` - \n\n  * `handleOpenRenameCloneDialog` - \n\n  * `handleToggleDetails` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `clone-id` {`string`} - \n\n  * `drag-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `cloneId` {`string`} - \n\n  * `dragEnabled` {`boolean`} - \n\n  * `_menuVisible` {`boolean`} - \n\n  * `_detailsVisible` {`boolean`} - \n\n  * `_clone` - \n\n  * `handleToggleAutoUpgrade` - \n\n  * `handleDragStart` - \n\n  * `handleToggleMenu` - \n\n  * `handleHideMenu` - \n\n  * `handleOpenDeleteCloneDialog` - \n\n  * `handleDeleteClone` - \n\n  * `handleOpenRenameCloneDialog` - \n\n  * `handleToggleDetails` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "clone-id",
           "description": "`clone-id` {`string`} - \n\nProperty: cloneId"
+        },
+        {
+          "name": "drag-enabled",
+          "description": "`drag-enabled` {`boolean`} - \n\nProperty: dragEnabled",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-clones-list-buttons",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_clonesList` {`IClone[] | undefined`} - \n\n  * `handleToggleAutoupgrade` - \n\n  * `handleOpenDeleteDisplayedClonesDialog` - \n\n  * `handleDeleteDisplayedClones` - \n\n  * `handleToggleFilter` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
         }
       ]
     },
     {
       "name": "ca-clones-list-upgrade-buttons",
-      "description": "Properties:\n\n  * `styles` - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_upgradeLevelMaxButton` - \n\n  * `handleUpgradeMaxAllLevels` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_upgradeLevelMaxButton` - \n\n  * `_clonesList` {`IClone[] | undefined`} - \n\n  * `handleUpgradeMaxDisplayedLevels` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
       "name": "ca-purchase-clone-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_nameInputRef` - \n\n  * `_cloneTemplateInputRef` - \n\n  * `_tierInputRef` - \n\n  * `_levelInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_name` {`string`} - \n\n  * `_cloneTemplateName` {`string | undefined`} - \n\n  * `_tier` {`number`} - \n\n  * `_level` {`number`} - \n\n  * `_clone` - \n\n  * `_buttonsRef` - \n\n  * `handlePartialUpdate` - \n\n  * `renderCloneTemplateOption` - \n\n  * `renderTierOptions` - \n\n  * `handleClose` - \n\n  * `handleNameChange` - \n\n  * `handleCloneTemplateChange` - \n\n  * `handleTierChange` - \n\n  * `handleLevelChange` - \n\n  * `handleSubmit` - \n\n  * `handleGenerateName` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_nameInputRef` - \n\n  * `_cloneTemplateInputRef` - \n\n  * `_tierInputRef` - \n\n  * `_levelInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_name` {`string`} - \n\n  * `_cloneTemplateName` {`string | undefined`} - \n\n  * `_tier` {`number`} - \n\n  * `_level` {`number`} - \n\n  * `_clone` - \n\n  * `_buttonsRef` - \n\n  * `handlePartialUpdate` - \n\n  * `renderCloneTemplateOptions` - \n\n  * `renderTierOptions` - \n\n  * `handleClose` - \n\n  * `handleNameChange` - \n\n  * `handleCloneTemplateChange` - \n\n  * `handleTierChange` - \n\n  * `handleLevelChange` - \n\n  * `handleSubmit` - \n\n  * `handleGenerateName` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "open",

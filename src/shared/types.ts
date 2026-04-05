@@ -54,7 +54,7 @@ export enum ClonesEvent {
   clonePurchased = 'clonePurchased',
   cloneLevelUpgraded = 'cloneLevelUpgraded',
   cloneDeleted = 'cloneDeleted',
-  allClonesDeleted = 'allClonesDeleted',
+  displayedClonesDeleted = 'displayedClonesDeleted',
   cloneLevelReached = 'cloneLevelReached',
   cloneRenamed = 'cloneRenamed',
 }
@@ -121,7 +121,7 @@ export enum ProgramAlert {
 
 export enum CloneAlert {
   cloneDelete = 'cloneDelete',
-  deleteAllClones = 'deleteAllClones',
+  deleteDisplayedClones = 'deleteDisplayedClones',
 }
 
 export enum SidejobAlert {

@@ -2,12 +2,12 @@ import { IClone } from '@state/clones-state';
 import { BaseController } from '@shared/index';
 
 export class ClonesListController extends BaseController {
-  listClones(): IClone[] {
-    return this.clonesState.ownedClones.listClones();
+  get developmentLevel() {
+    return this.globalState.development.level;
   }
 
-  toggleAutoupgrade(active: boolean) {
-    this.clonesState.ownedClones.toggleAllClonesAutoupgrade(active);
+  listClones(): IClone[] {
+    return this.clonesState.ownedClones.listClones();
   }
 
   moveClone(cloneId: string, newPosition: number) {
@@ -15,7 +15,7 @@ export class ClonesListController extends BaseController {
     this.host.requestUpdate();
   }
 
-  deleteAllClones() {
-    this.clonesState.ownedClones.deleteAllClones();
+  getCloneTempateHighestTier(cloneTemplate: string): number {
+    return this.unlockState.items.cloneTemplates.getItemHighestAvailableTier(cloneTemplate);
   }
 }

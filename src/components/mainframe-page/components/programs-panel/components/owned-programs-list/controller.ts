@@ -16,6 +16,6 @@ export class OwnedProgramsListController extends BaseController {
   }
 
   getProgramHighestTier(programName: ProgramName): number {
-    return this.unlockState.items.programs.getDesignTier(programName);
+    return this.unlockState.items.programs.getItemHighestAvailableTier(programName);
   }
 }

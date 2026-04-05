@@ -535,14 +535,13 @@ export const itemsListFilterStyle = css`
     gap: var(--ca-input-row-gap);
     align-items: stretch;
     border-bottom: var(--ca-border);
+    padding: var(--ca-section-padding) 0;
 
     .filter-row {
       display: flex;
     }
 
     &.desktop {
-      padding: var(--ca-filter-gap) 0;
-
       .filter-row {
         flex-direction: row;
         gap: var(--ca-input-column-gap);
@@ -556,8 +555,6 @@ export const itemsListFilterStyle = css`
     }
 
     &.mobile {
-      padding: var(--ca-filter-gap) 0;
-
       .filter-row {
         flex-direction: column;
         gap: var(--ca-input-row-gap);

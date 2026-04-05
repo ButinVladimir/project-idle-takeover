@@ -11,9 +11,8 @@ export interface IOwnedClonesState extends ISerializeable<IOwnedClonesSerialized
   listClones(): IClone[];
   getCloneById(id: string): IClone | undefined;
   purchaseClone(args: IPurchaseCloneArgs): boolean;
-  toggleAllClonesAutoupgrade(active: boolean): void;
   deleteClone(id: string): void;
-  deleteAllClones(): void;
+  deleteClones(ids: string[]): void;
   recalculateClones(): void;
   moveClone(id: string, newPosition: number): void;
   generateCloneName(): string;

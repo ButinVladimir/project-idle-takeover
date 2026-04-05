@@ -49,7 +49,7 @@ export class GameScreenController extends BaseController {
   }
 
   private upgradeClonesLevel() {
-    this.clonesState.ownedClones.levelUpgrader.upgradeMaxAllClones();
+    this.clonesState.ownedClones.levelUpgrader.upgradeMaxClones();
   }
 
   private getHotkeyByKey(key: string): Hotkey | undefined {

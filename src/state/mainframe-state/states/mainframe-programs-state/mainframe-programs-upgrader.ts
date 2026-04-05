@@ -34,16 +34,9 @@ export class MainframeProgramsUpgrader implements IMainframeProgramsUpgrader {
       return;
     }
 
-    const programsMap = new Map<ProgramName, IProgram>();
-    programNames.forEach((programName) => {
-      const program = this._mainframeState.programs.getOwnedProgramByName(programName);
-
-      if (program) {
-        programsMap.set(programName, program);
-      }
-    });
-
-    const programs = Array.from(programsMap.values());
+    const programs = programNames
+      .map((programName) => this._mainframeState.programs.getOwnedProgramByName(programName))
+      .filter((program) => program) as IProgram[];
 
     this._availableMoney = this._globalState.money.money;
     this._availableActions = Number.MAX_SAFE_INTEGER;
