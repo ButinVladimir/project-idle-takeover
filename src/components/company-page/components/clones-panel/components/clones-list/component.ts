@@ -3,7 +3,7 @@ import { localized, msg } from '@lit/localize';
 import { customElement, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { SortableElementMovedEvent } from '@components/shared/sortable-list/events/sortable-element-moved';
-import { BaseComponent, LevelFilterValue, StatusFilterValue, filterByMaxLevel, filterByEnabled } from '@shared/index';
+import { BaseComponent, LevelFilterValue, StateFilterValue, filterByMaxLevel, filterByState } from '@shared/index';
 import { IClone } from '@state/clones-state';
 import { ClonesListController } from './controller';
 import { CLONE_LIST_ITEMS_GAP } from './constants';
@@ -30,7 +30,7 @@ export class ClonesList extends BaseComponent {
     tiers: [],
     maxLevel: LevelFilterValue.all,
     maxTier: LevelFilterValue.all,
-    autoupgrade: StatusFilterValue.all,
+    autoupgrade: StateFilterValue.all,
   };
 
   @provide({ context: clonesListContext })
@@ -139,7 +139,7 @@ export class ClonesList extends BaseComponent {
       return false;
     }
 
-    if (!filterByEnabled(clone.autoUpgradeEnabled, this._clonesFilterState.autoupgrade)) {
+    if (!filterByState(clone.autoUpgradeEnabled, this._clonesFilterState.autoupgrade)) {
       return false;
     }
 

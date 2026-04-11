@@ -1,7 +1,7 @@
 import clamp from 'lodash/clamp';
 import { IExponent, ILinear, ITierExponent, ITierLinear } from './interfaces/formulas';
 import { SCHEMA_PROPERTY } from './constants';
-import { StatusFilterValue, LevelFilterValue } from './types';
+import { StateFilterValue, LevelFilterValue } from './types';
 import { ISelectOption, ISelectTieredOption } from './interfaces';
 
 export const calculatePower = (exponent: number, params: IExponent): number => {
@@ -143,16 +143,16 @@ export function filterByMaxLevel(value: number, maxValue: number, filter: LevelF
   return false;
 }
 
-export function filterByEnabled(value: boolean, filter: StatusFilterValue): boolean {
-  if (filter === StatusFilterValue.all) {
+export function filterByState(value: boolean, filter: StateFilterValue): boolean {
+  if (filter === StateFilterValue.all) {
     return true;
   }
 
-  if (filter === StatusFilterValue.enabled && value) {
+  if (filter === StateFilterValue.enabled && value) {
     return true;
   }
 
-  if (filter === StatusFilterValue.disabled && !value) {
+  if (filter === StateFilterValue.disabled && !value) {
     return true;
   }
 

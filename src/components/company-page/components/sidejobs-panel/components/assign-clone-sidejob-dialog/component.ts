@@ -5,11 +5,9 @@ import { createRef, ref } from 'lit/directives/ref.js';
 import { provide } from '@lit/context';
 import { classMap } from 'lit/directives/class-map.js';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.component.js';
-import { BaseComponent, SidejobAlert } from '@shared/index';
-import { IDistrictState } from '@state/city-state';
+import { BaseComponent, compareOptions, ISelectOption, SidejobAlert } from '@shared/index';
 import { SIDEJOB_TEXTS, DISTRICT_NAMES } from '@texts/index';
 import { type ISidejob } from '@state/activity-state';
-import { IClone } from '@state/clones-state';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { AssignCloneSidejobDialogCloseEvent } from './events';
 import { AssignCloneSidejobDialogController } from './controller';
@@ -94,7 +92,7 @@ export class AssignCloneSidejobDialog extends BaseComponent {
 
           <div class="body">
             <p class="hint">
-              ${msg(`Select clone, district and sidejob name to assign clone.
+              ${msg(`Select sidejob name, district and clone to assign clone.
 Clone can be assigned only to one sidejob.`)}
             </p>
 
@@ -108,7 +106,7 @@ Clone can be assigned only to one sidejob.`)}
               >
                 <span class="input-label" slot="label"> ${msg('Sidejob')} </span>
 
-                ${this._controller.listAvailableSidejobs().map(this.renderSidejobName)}
+                ${this.renderSidejobNameOptions()}
               </sl-select>
 
               <sl-select
@@ -120,7 +118,7 @@ Clone can be assigned only to one sidejob.`)}
               >
                 <span class="input-label" slot="label"> ${msg('District')} </span>
 
-                ${this._controller.listAvailableDistricts().map(this.renderDistrictOption)}
+                ${this.renderDistrictOptions()}
               </sl-select>
 
               <sl-select
@@ -132,7 +130,7 @@ Clone can be assigned only to one sidejob.`)}
               >
                 <span class="input-label" slot="label"> ${msg('Clone')} </span>
 
-                ${this._controller.listClones().map(this.renderCloneOption)}
+                ${this.renderCloneOptions()}
               </sl-select>
             </div>
 
@@ -151,16 +149,37 @@ Clone can be assigned only to one sidejob.`)}
     `;
   }
 
-  private renderCloneOption = (clone: IClone) => {
-    return html`<sl-option value=${clone.id}> ${clone.name} </sl-option>`;
+  private renderCloneOptions = () => {
+    const clones = this._controller.listClones();
+    const cloneOptions: ISelectOption[] = clones.map((clone) => ({
+      value: clone.id,
+      name: clone.name,
+    }));
+    cloneOptions.sort(compareOptions);
+
+    return cloneOptions.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
 
-  private renderDistrictOption = (districtState: IDistrictState) => {
-    return html`<sl-option value=${districtState.index}> ${DISTRICT_NAMES[districtState.name]()} </sl-option>`;
+  private renderDistrictOptions = () => {
+    const districts = this._controller.listAvailableDistricts();
+    const districtOptions: ISelectOption[] = districts.map((district) => ({
+      value: district.index.toString(),
+      name: DISTRICT_NAMES[district.name](),
+    }));
+    districtOptions.sort(compareOptions);
+
+    return districtOptions.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
 
-  private renderSidejobName = (sidejobName: string) => {
-    return html` <sl-option value=${sidejobName}> ${SIDEJOB_TEXTS[sidejobName].title()} </sl-option>`;
+  private renderSidejobNameOptions = () => {
+    const sidejobNames = this._controller.listAvailableSidejobs();
+    const sidejobNameOptions: ISelectOption[] = sidejobNames.map((sidejobName) => ({
+      value: sidejobName,
+      name: SIDEJOB_TEXTS[sidejobName].title(),
+    }));
+    sidejobNameOptions.sort(compareOptions);
+
+    return sidejobNameOptions.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
 
   protected updateContext() {

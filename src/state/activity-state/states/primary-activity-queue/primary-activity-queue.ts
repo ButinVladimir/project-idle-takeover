@@ -137,7 +137,7 @@ export class PrimaryActivityQueue implements IPrimaryActivityQueue {
     this._activityState.requestReassignment();
 
     this._messageLogState.postMessage(
-      PrimaryActivitiesEvent.allPrimaryActivitiesCancelled,
+      PrimaryActivitiesEvent.displayedPrimaryActivitiesCancelled,
       msg('All primary activities have been cancelled'),
     );
   }

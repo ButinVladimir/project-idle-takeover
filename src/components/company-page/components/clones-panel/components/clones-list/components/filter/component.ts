@@ -7,13 +7,13 @@ import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.com
 import {
   BaseComponent,
   LevelFilterValue,
-  StatusFilterValue,
+  StateFilterValue,
   LEVEL_FILTER_VALUES,
-  STATUS_FILTER_VALUES,
+  STATE_FILTER_VALUES,
   compareOptions,
   ISelectOption,
 } from '@shared/index';
-import { STATUS_FILTER_TEXTS, COMMON_TEXTS, LEVEL_FILTER_TEXTS } from '@texts/common';
+import { STATE_FILTER_TEXTS, COMMON_TEXTS, LEVEL_FILTER_TEXTS } from '@texts/common';
 import { CLONE_TEMPLATE_TEXTS } from '@texts/index';
 import { consume } from '@lit/context';
 import { ClonesFilterController } from './controller';
@@ -217,8 +217,8 @@ export class ClonesListFilter extends BaseComponent {
   };
 
   private renderAutoupgradeFilterOptions = () => {
-    return STATUS_FILTER_VALUES.map(
-      (value) => html`<sl-option value=${value}>${STATUS_FILTER_TEXTS[value]()}</sl-option>`,
+    return STATE_FILTER_VALUES.map(
+      (value) => html`<sl-option value=${value}>${STATE_FILTER_TEXTS[value]()}</sl-option>`,
     );
   };
 
@@ -230,7 +230,7 @@ export class ClonesListFilter extends BaseComponent {
         tiers: [],
         maxTier: LevelFilterValue.all,
         maxLevel: LevelFilterValue.all,
-        autoupgrade: StatusFilterValue.all,
+        autoupgrade: StateFilterValue.all,
       }),
     );
   };
@@ -314,7 +314,7 @@ export class ClonesListFilter extends BaseComponent {
       return;
     }
 
-    const value = this._autoupgradeInputRef.value.value as StatusFilterValue;
+    const value = this._autoupgradeInputRef.value.value as StateFilterValue;
 
     this.dispatchEvent(
       new ClonesFilterStateChangedEvent({

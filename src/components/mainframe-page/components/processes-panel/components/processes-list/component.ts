@@ -4,7 +4,7 @@ import { customElement, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { provide } from '@lit/context';
 import { IProcess, ProgramName } from '@state/mainframe-state';
-import { BaseComponent, StatusFilterValue, filterByEnabled } from '@shared/index';
+import { BaseComponent, StateFilterValue, filterByState } from '@shared/index';
 import { SortableElementMovedEvent } from '@components/shared/sortable-list/events/sortable-element-moved';
 import { ProcessesListController } from './controller';
 import styles from './styles';
@@ -31,7 +31,7 @@ export class ProcessesList extends BaseComponent {
   private _processesFilterState: IProcessesFilterState = {
     programs: [],
     cores: [],
-    status: StatusFilterValue.all,
+    state: StateFilterValue.all,
   };
 
   @provide({ context: processesListContext })
@@ -158,7 +158,7 @@ export class ProcessesList extends BaseComponent {
       return false;
     }
 
-    if (!filterByEnabled(process.enabled, this._processesFilterState.status)) {
+    if (!filterByState(process.enabled, this._processesFilterState.state)) {
       return false;
     }
 

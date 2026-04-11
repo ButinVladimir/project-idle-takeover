@@ -9,7 +9,6 @@ export interface ISidejobsActivityState extends ISerializeable<ISidejobsActivity
   getActivityById(sidejobId: string): ISidejobActivity | undefined;
   assignSidejob(sidejobParameters: ISerializedSidejob): boolean;
   cancelActivity(sidejobId: string): void;
-  cancelAllActivities(): void;
+  cancelActivities(sidejobIds: string[]): void;
   perform(): void;
-  toggleAllActivities(enabled: boolean): void;
 }

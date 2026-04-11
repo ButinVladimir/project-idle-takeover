@@ -33,7 +33,7 @@ export class PrimaryActivityQueueList extends BaseComponent {
         >
           <sl-icon slot="prefix" name=${DELETE_VALUES.icon}></sl-icon>
 
-          ${msg('Cancel all primary activities')}
+          ${msg('Cancel displayed primary activities')}
         </sl-button>
       </div>
 
@@ -58,8 +58,8 @@ export class PrimaryActivityQueueList extends BaseComponent {
   private handleOpenCancelAllPrimaryActivitiesDialog = () => {
     this.dispatchEvent(
       new ConfirmationAlertOpenEvent(
-        PrimaryActivityAlert.cancelAllPrimaryActivities,
-        msg('Are you sure want to cancel all primary activities? Their progress will be lost.'),
+        PrimaryActivityAlert.cancelDisplayedPrimaryActivities,
+        msg('Are you sure want to cancel displayed primary activities? Their progress will be lost.'),
         this.handleCancelAllPrimaryActivities,
       ),
     );

@@ -1,4 +1,4 @@
-import { LevelFilterValue, StatusFilterValue } from '@shared/index';
+import { LevelFilterValue, StateFilterValue } from '@shared/index';
 
 export interface IClonesFilterState {
   clones: string[];
@@ -6,5 +6,5 @@ export interface IClonesFilterState {
   tiers: number[];
   maxTier: LevelFilterValue;
   maxLevel: LevelFilterValue;
-  autoupgrade: StatusFilterValue;
+  autoupgrade: StateFilterValue;
 }

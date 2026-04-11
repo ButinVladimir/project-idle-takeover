@@ -241,11 +241,9 @@ export class OwnedClonesState implements IOwnedClonesState {
       removeElementsFromArray(this._clonesList, index, 1);
     }
 
-    if (clone) {
-      clone.removeAllEventListeners();
+    clone.removeAllEventListeners();
 
-      this._clonesMap.delete(clone.id);
-      this.deleteCloneRelatedObjects(clone);
-    }
+    this._clonesMap.delete(clone.id);
+    this.deleteCloneRelatedObjects(clone);
   }
 }

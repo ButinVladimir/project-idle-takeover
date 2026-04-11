@@ -4,8 +4,8 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ref, createRef } from 'lit/directives/ref.js';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.component.js';
-import { BaseComponent, StatusFilterValue, STATUS_FILTER_VALUES, ISelectOption, compareOptions } from '@shared/index';
-import { STATUS_FILTER_TEXTS, COMMON_TEXTS } from '@texts/common';
+import { BaseComponent, StateFilterValue, STATE_FILTER_VALUES, ISelectOption, compareOptions } from '@shared/index';
+import { STATE_FILTER_TEXTS, COMMON_TEXTS } from '@texts/common';
 import { PROGRAM_TEXTS } from '@texts/index';
 import { consume } from '@lit/context';
 import { ProgramName } from '@state/mainframe-state';
@@ -37,7 +37,7 @@ export class ProcessesListFilter extends BaseComponent {
 
   private _programsInputRef = createRef<SlSelect>();
   private _coresInputRef = createRef<SlSelect>();
-  private _statusInputRef = createRef<SlSelect>();
+  private _stateInputRef = createRef<SlSelect>();
 
   constructor() {
     super();
@@ -97,15 +97,15 @@ export class ProcessesListFilter extends BaseComponent {
         </sl-select>
 
         <sl-select
-          ${ref(this._statusInputRef)}
+          ${ref(this._stateInputRef)}
           name="autoupgrade"
           hoist
-          value=${this._filterState.status}
-          @sl-change=${this.handleStatusChange}
+          value=${this._filterState.state}
+          @sl-change=${this.handleStateChange}
         >
-          <span class="input-label" slot="label"> ${msg('Status')} </span>
+          <span class="input-label" slot="label"> ${msg('State')} </span>
 
-          ${this.renderStatusFilterOptions()}
+          ${this.renderStateFilterOptions()}
         </sl-select>
       </div>
     </div>`;
@@ -129,9 +129,9 @@ export class ProcessesListFilter extends BaseComponent {
     );
   };
 
-  private renderStatusFilterOptions = () => {
-    return STATUS_FILTER_VALUES.map(
-      (value) => html`<sl-option value=${value}>${STATUS_FILTER_TEXTS[value]()}</sl-option>`,
+  private renderStateFilterOptions = () => {
+    return STATE_FILTER_VALUES.map(
+      (value) => html`<sl-option value=${value}>${STATE_FILTER_TEXTS[value]()}</sl-option>`,
     );
   };
 
@@ -140,7 +140,7 @@ export class ProcessesListFilter extends BaseComponent {
       new ProcessesFilterStateChangedEvent({
         programs: [],
         cores: [],
-        status: StatusFilterValue.all,
+        state: StateFilterValue.all,
       }),
     );
   };
@@ -173,17 +173,17 @@ export class ProcessesListFilter extends BaseComponent {
     );
   };
 
-  private handleStatusChange = () => {
-    if (!this._statusInputRef.value || !this._filterState) {
+  private handleStateChange = () => {
+    if (!this._stateInputRef.value || !this._filterState) {
       return;
     }
 
-    const value = this._statusInputRef.value.value as StatusFilterValue;
+    const value = this._stateInputRef.value.value as StateFilterValue;
 
     this.dispatchEvent(
       new ProcessesFilterStateChangedEvent({
         ...this._filterState,
-        status: value,
+        state: value,
       }),
     );
   };

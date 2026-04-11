@@ -83,17 +83,9 @@ export class SidejobsActivityState implements ISidejobsActivityState {
 
   cancelActivity(sidejobId: string): void {
     const activity = this.getActivityById(sidejobId);
-    const index = this._activitiesList.findIndex((sidejob) => sidejob.id === sidejobId);
-
-    if (index >= 0) {
-      removeElementsFromArray(this._activitiesList, index, 1);
-    }
 
     if (activity) {
-      this.handleActivityCleanup(activity);
-
-      this._activityMap.delete(sidejobId);
-      this._activityCloneIdMap.delete(activity.sidejob.assignedClone.id);
+      this.handleCancelActivity(activity);
 
       this._messageLogState.postMessage(
         SidejobsEvent.sidejobCancelled,
@@ -106,10 +98,21 @@ export class SidejobsActivityState implements ISidejobsActivityState {
     this._activityState.requestReassignment();
   }
 
-  cancelAllActivities(): void {
-    this.clearActivities();
+  cancelActivities(sidejobIds: string[]): void {
+    for (const sidejobId of sidejobIds) {
+      const activity = this.getActivityById(sidejobId);
 
-    this._messageLogState.postMessage(SidejobsEvent.allSidejobsCancelled, msg('All sidejobs have been cancelled'));
+      if (activity) {
+        this.handleCancelActivity(activity);
+      }
+    }
+
+    this._messageLogState.postMessage(
+      SidejobsEvent.displayedSidejobsCancelled,
+      msg('Displayed sidejobs have been cancelled'),
+    );
+
+    this._activityState.requestReassignment();
   }
 
   perform(): void {
@@ -117,12 +120,6 @@ export class SidejobsActivityState implements ISidejobsActivityState {
       if (activity.active) {
         activity.perform();
       }
-    }
-  }
-
-  toggleAllActivities(enabled: boolean): void {
-    for (const activity of this._activitiesList) {
-      activity.toggleEnabled(enabled);
     }
   }
 
@@ -172,6 +169,19 @@ export class SidejobsActivityState implements ISidejobsActivityState {
     this._activityMap.clear();
 
     this._activityState.requestReassignment();
+  }
+
+  private handleCancelActivity(activity: ISidejobActivity) {
+    const index = this._activitiesList.findIndex((sidejob) => sidejob.id === activity.id);
+
+    if (index >= 0) {
+      removeElementsFromArray(this._activitiesList, index, 1);
+    }
+
+    this.handleActivityCleanup(activity);
+
+    this._activityMap.delete(activity.id);
+    this._activityCloneIdMap.delete(activity.sidejob.assignedClone.id);
   }
 
   private handleActivityCleanup(activity: ISidejobActivity) {

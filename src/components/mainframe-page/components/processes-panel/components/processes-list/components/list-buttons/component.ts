@@ -13,7 +13,7 @@ import { processesListContext } from '../../contexts';
 
 @localized()
 @customElement('ca-processes-list-buttons')
-export class OwnedProgramsListButtons extends BaseComponent {
+export class ProcessesListButtons extends BaseComponent {
   static styles = styles;
 
   protected hasMobileRender = true;

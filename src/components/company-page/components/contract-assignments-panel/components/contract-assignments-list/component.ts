@@ -26,15 +26,15 @@ export class ContractAssignmentsList extends BaseComponent {
   }
 
   protected renderDesktop() {
-    const removeAllContractAssignments = msg('Remove all contract assignments');
+    const removeAllContractAssignments = msg('Remove displayed contract assignments');
 
     const contractAssignmentsActive = this.checkSomeContractAssignmentsEnabled();
     const toggleContractAssignmentsIcon = contractAssignmentsActive
       ? ENTITY_ACTIVE_VALUES.icon.active
       : ENTITY_ACTIVE_VALUES.icon.stopped;
     const toggleContractAssignmentsLabel = contractAssignmentsActive
-      ? msg('Disable all contract assignments')
-      : msg('Enable all contract assignments');
+      ? msg('Disable displayed contract assignments')
+      : msg('Enable displayed contract assignments');
 
     const canStartContractAssignments = this._controller.checkCanStartAll();
     const startLabel = msg('Add all assigned contracts to the queue');
@@ -99,14 +99,14 @@ export class ContractAssignmentsList extends BaseComponent {
       ? ENTITY_ACTIVE_VALUES.icon.active
       : ENTITY_ACTIVE_VALUES.icon.stopped;
     const toggleContractAssignmentsLabel = contractAssignmentsActive
-      ? msg('Disable all contract assignments')
-      : msg('Enable all contract assignments');
+      ? msg('Disable displayed contract assignments')
+      : msg('Enable displayed contract assignments');
     const toggleContractAssignmentsVariant = contractAssignmentsActive
       ? ENTITY_ACTIVE_VALUES.buttonVariant.active
       : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
 
     const canStartContractAssignments = this._controller.checkCanStartAll();
-    const startLabel = msg('Add all assigned contracts to the queue');
+    const startLabel = msg('Add displayed assigned contracts to the queue');
     const startVariant = canStartContractAssignments
       ? ENTITY_ACTIVE_VALUES.buttonVariant.active
       : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
@@ -184,8 +184,8 @@ export class ContractAssignmentsList extends BaseComponent {
   private handleOpenRemoveAllContractAssignmentsDialog = () => {
     this.dispatchEvent(
       new ConfirmationAlertOpenEvent(
-        ContractAlert.removeAllContractAssignments,
-        msg('Are you sure want to remove all contract assignments? All related activities will be cancelled.'),
+        ContractAlert.removeDisplayedContractAssignments,
+        msg('Are you sure want to remove displayed contract assignments? All related activities will be cancelled.'),
         this.handleRemoveAllContractAssignments,
       ),
     );

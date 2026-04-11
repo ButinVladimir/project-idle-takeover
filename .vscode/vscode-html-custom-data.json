@@ -400,7 +400,7 @@
     },
     {
       "name": "ca-assign-clone-sidejob-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneIdInputRef` - \n\n  * `_districtIndexInputRef` - \n\n  * `_sidejobNameInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_cloneId` {`string | undefined`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `_sidejobName` {`string | undefined`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_buttonsRef` - \n\n  * `renderCloneOption` - \n\n  * `renderDistrictOption` - \n\n  * `renderSidejobName` - \n\n  * `handleClose` - \n\n  * `handleCloneIdChange` - \n\n  * `handleSidejobNameChange` - \n\n  * `handleDistrictIndexChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleAssignClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneIdInputRef` - \n\n  * `_districtIndexInputRef` - \n\n  * `_sidejobNameInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_cloneId` {`string | undefined`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `_sidejobName` {`string | undefined`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_buttonsRef` - \n\n  * `renderCloneOptions` - \n\n  * `renderDistrictOptions` - \n\n  * `renderSidejobNameOptions` - \n\n  * `handleClose` - \n\n  * `handleCloneIdChange` - \n\n  * `handleSidejobNameChange` - \n\n  * `handleDistrictIndexChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleAssignClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "open",
@@ -442,8 +442,19 @@
     },
     {
       "name": "ca-sidejobs-list",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderSidejobsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderSidejob` - \n\n  * `handleOpenCancelAllSidejobsDialog` - \n\n  * `handleCancelAllSidejobs` - \n\n  * `handleToggleAllActivities` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_filterEnabled` {`boolean`} - \n\n  * `_sidejobsFilterState` {`ISidejobsFilterState`} - \n\n  * `_sidejobsList` {`ISidejobActivity[]`} - \n\n  * `renderSidejobsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderSidejob` - \n\n  * `filterProcess` - \n\n  * `handleToggleFilter` - \n\n  * `handleChangeFilterState` - \n\n  * `_controller` - ",
       "attributes": []
+    },
+    {
+      "name": "ca-sidejobs-list-filter",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_filterState` {`ISidejobsFilterState | undefined`} - \n\n  * `_cloneIdsInputRef` - \n\n  * `_districtIndexesInputRef` - \n\n  * `_sidejobNamesInputRef` - \n\n  * `_statusInputRef` - \n\n  * `_enabledInputRef` - \n\n  * `renderCloneIdsOptions` - \n\n  * `renderDistrictIndexesOptions` - \n\n  * `renderSidejobNamesOptions` - \n\n  * `renderStatusFilterOptions` - \n\n  * `renderEnabledFilterOptions` - \n\n  * `handleReset` - \n\n  * `handleCloneIdsChange` - \n\n  * `handleDistrictIndexesChange` - \n\n  * `handleSidejobNamesChange` - \n\n  * `handleStatusChange` - \n\n  * `handleEnabledChange` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
+        }
+      ]
     },
     {
       "name": "ca-sidejobs-list-item-description",
@@ -462,6 +473,17 @@
         {
           "name": "activity-id",
           "description": "`activity-id` {`string`} - \n\nProperty: activityId"
+        }
+      ]
+    },
+    {
+      "name": "ca-sidejobs-list-buttons",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_sidejobsList` {`ISidejobActivity[] | undefined`} - \n\n  * `handleOpenCancelDisplayedSidejobsDialog` - \n\n  * `handleCancelDisplayedSidejobs` - \n\n  * `handleToggleDisplayedActivities` - \n\n  * `handleToggleFilter` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
         }
       ]
     },
@@ -648,7 +670,7 @@
     },
     {
       "name": "ca-processes-list-filter",
-      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_filterState` {`IProcessesFilterState | undefined`} - \n\n  * `_programsInputRef` - \n\n  * `_coresInputRef` - \n\n  * `_statusInputRef` - \n\n  * `renderProgramNameOptions` - \n\n  * `renderCoresOptions` - \n\n  * `renderStatusFilterOptions` - \n\n  * `handleReset` - \n\n  * `handleProgramsChange` - \n\n  * `handleCoresChange` - \n\n  * `handleStatusChange` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_filterState` {`IProcessesFilterState | undefined`} - \n\n  * `_programsInputRef` - \n\n  * `_coresInputRef` - \n\n  * `_stateInputRef` - \n\n  * `renderProgramNameOptions` - \n\n  * `renderCoresOptions` - \n\n  * `renderStateFilterOptions` - \n\n  * `handleReset` - \n\n  * `handleProgramsChange` - \n\n  * `handleCoresChange` - \n\n  * `handleStateChange` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "filter-enabled",

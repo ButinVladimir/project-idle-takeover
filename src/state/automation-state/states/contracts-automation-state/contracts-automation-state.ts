@@ -140,7 +140,7 @@ export class ContractsAutomationState implements IContractsAutomationState {
     this.clearAssignments();
 
     this._messageLogState.postMessage(
-      ContractsEvent.allContractAssignmentsRemoved,
+      ContractsEvent.displayedContractAssignmentsRemoved,
       msg('All contract assignments have been removed'),
     );
   }

@@ -3,7 +3,7 @@ import { localized, msg } from '@lit/localize';
 import { customElement, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { provide } from '@lit/context';
-import { StatusFilterValue, BaseComponent, filterByEnabled, filterByMaxLevel, LevelFilterValue } from '@shared/index';
+import { StateFilterValue, BaseComponent, filterByState, filterByMaxLevel, LevelFilterValue } from '@shared/index';
 import { IProgram, ProgramName } from '@state/mainframe-state';
 import { SortableElementMovedEvent } from '@components/shared/sortable-list/events/sortable-element-moved';
 import { COMMON_TEXTS } from '@texts/index';
@@ -33,7 +33,7 @@ export class OwnedProgramsList extends BaseComponent {
     tiers: [],
     maxTier: LevelFilterValue.all,
     maxLevel: LevelFilterValue.all,
-    autoupgrade: StatusFilterValue.all,
+    autoupgrade: StateFilterValue.all,
   };
 
   @provide({ context: programsListContext })
@@ -173,7 +173,7 @@ export class OwnedProgramsList extends BaseComponent {
       return false;
     }
 
-    if (!filterByEnabled(program.autoUpgradeEnabled, this._programsFilterState.autoupgrade)) {
+    if (!filterByState(program.autoUpgradeEnabled, this._programsFilterState.autoupgrade)) {
       return false;
     }
 

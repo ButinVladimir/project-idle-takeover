@@ -1,7 +1,7 @@
 import { msg, str } from '@lit/localize';
 import {
   Attribute,
-  StatusFilterValue,
+  StateFilterValue,
   DistrictTypeRewardParameter,
   ItemCategory,
   LevelFilterValue,
@@ -107,8 +107,8 @@ export const LEVEL_FILTER_TEXTS: Record<LevelFilterValue, () => string> = {
   [LevelFilterValue.belowMax]: () => msg('Only items with below max value'),
 };
 
-export const STATUS_FILTER_TEXTS: Record<StatusFilterValue, () => string> = {
-  [StatusFilterValue.all]: () => msg('Show everything'),
-  [StatusFilterValue.enabled]: () => msg('Only enabled'),
-  [StatusFilterValue.disabled]: () => msg('Only disabled'),
+export const STATE_FILTER_TEXTS: Record<StateFilterValue, () => string> = {
+  [StateFilterValue.all]: () => msg('Show everything'),
+  [StateFilterValue.enabled]: () => msg('Only enabled'),
+  [StateFilterValue.disabled]: () => msg('Only disabled'),
 };
