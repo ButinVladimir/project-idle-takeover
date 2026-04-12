@@ -91,7 +91,7 @@ export class SidejobsListItem extends BaseComponent {
 
         <div><ca-sidejobs-list-item-status></ca-sidejobs-list-item-status></div>
 
-        <div class="buttons">
+        <div class="buttons desktop buttons-3">
           <sl-tooltip>
             <span slot="content"> ${toggleLabel} </span>
 
@@ -178,7 +178,7 @@ export class SidejobsListItem extends BaseComponent {
 
         <div>${statusFull}</div>
 
-        <div class="buttons">
+        <div class="buttons mobile">
           <sl-button variant=${toggleVariant} size="medium" @click=${this.handleToggleSidejob}>
             <sl-icon slot="prefix" name=${toggleIcon}></sl-icon>
 

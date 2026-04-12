@@ -57,7 +57,7 @@ export class OwnedProgramsListButtons extends BaseComponent {
     const hotkey = this._controller.getHotkey();
 
     return html`
-      <div class="buttons desktop">
+      <div class="buttons desktop buttons-3">
         <sl-tooltip>
           <span slot="content"> ${filterLabel} </span>
 

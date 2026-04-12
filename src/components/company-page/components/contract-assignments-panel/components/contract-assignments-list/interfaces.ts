@@ -1,9 +1,9 @@
 import { StateFilterValue, ActivityStatusFilterValue } from '@shared/index';
 
-export interface ISidejobsFilterState {
+export interface IContractsFilterState {
   cloneIds: string[];
   districtIndexes: number[];
-  sidejobNames: string[];
+  contractNames: string[];
   state: ActivityStatusFilterValue;
   enabled: StateFilterValue;
 }

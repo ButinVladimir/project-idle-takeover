@@ -49,7 +49,7 @@ export class ProcessesListButtons extends BaseComponent {
     const deleteProcessesLabel = msg('Delete displayed processes');
 
     return html`
-      <div class="buttons desktop">
+      <div class="buttons desktop buttons-3">
         <sl-tooltip>
           <span slot="content"> ${filterLabel} </span>
 

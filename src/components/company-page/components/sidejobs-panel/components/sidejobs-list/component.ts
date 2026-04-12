@@ -3,13 +3,12 @@ import { localized, msg } from '@lit/localize';
 import { provide } from '@lit/context';
 import { customElement, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { BaseComponent, filterByState, StateFilterValue } from '@shared/index';
+import { ActivityStatusFilterValue, BaseComponent, filterByState, StateFilterValue } from '@shared/index';
 import { ISidejobActivity } from '@state/activity-state';
 import { SidejobsListController } from './controller';
 import styles from './styles';
 import { sidejobsFilterStateContext, sidejobsListContext } from './contexts';
 import { type ISidejobsFilterState } from './interfaces';
-import { SidejobStatusFilterValue } from './types';
 import { ToggleSidejobsFilterEvent } from './components/list-buttons/events';
 import { SidejobsFilterStateChangedEvent } from './components/filter/events';
 
@@ -30,7 +29,7 @@ export class SidejobsList extends BaseComponent {
     districtIndexes: [],
     sidejobNames: [],
     enabled: StateFilterValue.all,
-    status: SidejobStatusFilterValue.all,
+    state: ActivityStatusFilterValue.all,
   };
 
   @provide({ context: sidejobsListContext })
@@ -108,13 +107,13 @@ export class SidejobsList extends BaseComponent {
     let sidejobs = this._controller.listActivities();
 
     if (this._filterEnabled) {
-      sidejobs = sidejobs.filter(this.filterProcess);
+      sidejobs = sidejobs.filter(this.filterSidejob);
     }
 
     this._sidejobsList = sidejobs;
   }
 
-  private filterProcess = (sidejobActivity: ISidejobActivity): boolean => {
+  private filterSidejob = (sidejobActivity: ISidejobActivity): boolean => {
     if (!this._filterEnabled) {
       return true;
     }
@@ -152,15 +151,15 @@ export class SidejobsList extends BaseComponent {
   };
 
   private filterByStatus(sidejobActivity: ISidejobActivity): boolean {
-    if (this._sidejobsFilterState.status === SidejobStatusFilterValue.all) {
+    if (this._sidejobsFilterState.state === ActivityStatusFilterValue.all) {
       return true;
     }
 
-    if (this._sidejobsFilterState.status === SidejobStatusFilterValue.active && sidejobActivity.active) {
+    if (this._sidejobsFilterState.state === ActivityStatusFilterValue.active && sidejobActivity.active) {
       return true;
     }
 
-    if (this._sidejobsFilterState.status === SidejobStatusFilterValue.inactive && !sidejobActivity.active) {
+    if (this._sidejobsFilterState.state === ActivityStatusFilterValue.inactive && !sidejobActivity.active) {
       return true;
     }
 

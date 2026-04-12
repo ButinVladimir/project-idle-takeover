@@ -170,3 +170,7 @@ export function compareTieredOptions(optionA: ISelectTieredOption, optionB: ISel
 
   return optionA.name.localeCompare(optionB.name);
 }
+
+export function checkIntersection<T>(arrayA: T[], arrayB: T[]): boolean {
+  return arrayA.some((value) => arrayB.includes(value));
+}

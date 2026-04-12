@@ -106,19 +106,10 @@ export class ContractsAutomationState implements IContractsAutomationState {
   }
 
   removeContractAssignmentById(id: string): void {
-    const exisitingIndex = this.getContactAutomationIndexById(id);
-
-    if (exisitingIndex !== -1) {
-      removeElementsFromArray(this._contractAssignmentsList, exisitingIndex, 1);
-    }
-
     const contractAssignment = this.getContractAssignmentById(id);
 
     if (contractAssignment) {
-      this._contractAssignmentsIdMap.delete(id);
-      contractAssignment.removeAllEventListeners();
-
-      this._activityState.primaryActivityQueue.cancelActivitiesByAssignmentId(id);
+      this.handleRemoveContractAssignment(contractAssignment);
 
       this._messageLogState.postMessage(
         ContractsEvent.contractAssignmentRemoved,
@@ -129,19 +120,18 @@ export class ContractsAutomationState implements IContractsAutomationState {
     }
   }
 
-  removeAllContractAssignments(): void {
-    this._contractAssignmentsList.forEach((contractAssignment) => {
-      const activity = this._activityState.primaryActivityQueue.getActivityByAssignmentId(contractAssignment.id);
-      if (activity) {
-        this._activityState.primaryActivityQueue.cancelActivityById(activity.activityId);
-      }
-    });
+  removeContractAssignmentsByIds(ids: string[]): void {
+    for (const id of ids) {
+      const contractAssignment = this.getContractAssignmentById(id);
 
-    this.clearAssignments();
+      if (contractAssignment) {
+        this.handleRemoveContractAssignment(contractAssignment);
+      }
+    }
 
     this._messageLogState.postMessage(
       ContractsEvent.displayedContractAssignmentsRemoved,
-      msg('All contract assignments have been removed'),
+      msg('Displayed contract assignments have been removed'),
     );
   }
 
@@ -171,12 +161,6 @@ export class ContractsAutomationState implements IContractsAutomationState {
     if (currentPosition !== -1) {
       moveElementInArray(this._contractAssignmentsList, currentPosition, nextPosition);
     }
-  }
-
-  toggleAllContractAssignments(active: boolean): void {
-    this._contractAssignmentsList.forEach((contractAssignment) => {
-      contractAssignment.toggleEnabled(active);
-    });
   }
 
   async startNewState(): Promise<void> {
@@ -227,5 +211,18 @@ export class ContractsAutomationState implements IContractsAutomationState {
       contract: this._activityState.contractsFactory.makeContract(serializedState.contract),
       enabled: serializedState.enabled,
     });
+  }
+
+  private handleRemoveContractAssignment(contractAssignment: IContractAssignment) {
+    const exisitingIndex = this.getContactAutomationIndexById(contractAssignment.id);
+
+    if (exisitingIndex !== -1) {
+      removeElementsFromArray(this._contractAssignmentsList, exisitingIndex, 1);
+    }
+
+    this._contractAssignmentsIdMap.delete(contractAssignment.id);
+    contractAssignment.removeAllEventListeners();
+
+    this._activityState.primaryActivityQueue.cancelActivitiesByAssignmentId(contractAssignment.id);
   }
 }

@@ -387,9 +387,16 @@ export const itemsListButtonsStyle = css`
     gap: var(--ca-table-buttons-gap);
 
     &.desktop {
-      width: 132px;
       justify-content: flex-end;
       font-size: var(--sl-font-size-large);
+
+      &.buttons-3 {
+        width: 132px;
+      }
+
+      &.buttons-4 {
+        width: 180px;
+      }
     }
 
     &.mobile {
@@ -510,9 +517,16 @@ export const itemsListItemStyle = css`
       align-items: center;
 
       .buttons {
-        width: 132px;
         justify-content: flex-end;
         font-size: var(--sl-font-size-large);
+
+        &.buttons-3 {
+          width: 132px;
+        }
+
+        &.buttons-4 {
+          width: 180px;
+        }
       }
     }
 
@@ -559,6 +573,33 @@ export const itemsListFilterStyle = css`
         flex-direction: column;
         gap: var(--ca-input-row-gap);
       }
+    }
+  }
+`;
+
+export const itemsListItemButtonsStyle = css`
+  .buttons {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: var(--ca-table-buttons-gap);
+
+    &.desktop {
+      justify-content: flex-end;
+      font-size: var(--sl-font-size-large);
+
+      &.buttons-3 {
+        width: 132px;
+      }
+
+      &.buttons-4 {
+        width: 180px;
+      }
+    }
+
+    &.mobile {
+      flex-wrap: wrap;
+      justify-content: flex-start;
     }
   }
 `;

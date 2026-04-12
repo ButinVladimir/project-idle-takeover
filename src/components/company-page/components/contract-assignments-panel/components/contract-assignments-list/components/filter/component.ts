@@ -15,24 +15,24 @@ import {
   ActivityStatusFilterValue,
 } from '@shared/index';
 import { STATE_FILTER_TEXTS, COMMON_TEXTS } from '@texts/common';
-import { SIDEJOB_TEXTS } from '@texts/index';
+import { CONTRACT_TEXTS } from '@texts/index';
 import { IDistrictState } from '@state/city-state';
 import { IClone } from '@state/clones-state';
-import { SidejobsListFilterController } from './controller';
+import { ContractAssigmentsListFilterController } from './controller';
 import styles from './styles';
-import { sidejobsFilterStateContext } from '../../contexts';
-import { type ISidejobsFilterState } from '../../interfaces';
-import { SidejobsFilterStateChangedEvent } from './events';
-import { SIDEJOB_STATUS_FILTER_TEXTS } from './constants';
+import { contractsFilterStateContext } from '../../contexts';
+import { type IContractsFilterState } from '../../interfaces';
+import { ContractsFilterStateChangedEvent } from './events';
+import { CONTRACT_STATUS_FILTER_TEXTS } from './constants';
 
 @localized()
-@customElement('ca-sidejobs-list-filter')
-export class SidejobsListFilter extends BaseComponent {
+@customElement('ca-contact-assigments-list-filter')
+export class ContractAssignmentsListFilter extends BaseComponent {
   static styles = styles;
 
   protected hasMobileRender = true;
 
-  private _controller: SidejobsListFilterController;
+  private _controller: ContractAssigmentsListFilterController;
 
   @property({
     attribute: 'filter-enabled',
@@ -40,19 +40,19 @@ export class SidejobsListFilter extends BaseComponent {
   })
   public filterEnabled = false;
 
-  @consume({ context: sidejobsFilterStateContext, subscribe: true })
-  private _filterState?: ISidejobsFilterState;
+  @consume({ context: contractsFilterStateContext, subscribe: true })
+  private _filterState?: IContractsFilterState;
 
   private _cloneIdsInputRef = createRef<SlSelect>();
   private _districtIndexesInputRef = createRef<SlSelect>();
-  private _sidejobNamesInputRef = createRef<SlSelect>();
+  private _contractNamesInputRef = createRef<SlSelect>();
   private _statusInputRef = createRef<SlSelect>();
   private _enabledInputRef = createRef<SlSelect>();
 
   constructor() {
     super();
 
-    this._controller = new SidejobsListFilterController(this);
+    this._controller = new ContractAssigmentsListFilterController(this);
   }
 
   protected renderDesktop() {
@@ -79,15 +79,15 @@ export class SidejobsListFilter extends BaseComponent {
 
       <div class="filter-row">
         <sl-select
-          ${ref(this._sidejobNamesInputRef)}
-          name="sidejob-names"
+          ${ref(this._contractNamesInputRef)}
+          name="contract-names"
           hoist
           multiple
           clearable
-          value=${this._filterState.sidejobNames.join(' ')}
-          @sl-change=${this.handleSidejobNamesChange}
+          value=${this._filterState.contractNames.join(' ')}
+          @sl-change=${this.handleContractNamesChange}
         >
-          <span class="input-label" slot="label"> ${msg('Sidejobs')} </span>
+          <span class="input-label" slot="label"> ${msg('Contracts')} </span>
 
           ${this.renderSidejobNamesOptions()}
         </sl-select>
@@ -150,12 +150,14 @@ export class SidejobsListFilter extends BaseComponent {
   }
 
   private renderCloneIdsOptions = () => {
-    const sidejobs = this._controller.listSidejobs();
+    const contractAssignments = this._controller.listContractAssignments();
 
     const clones = new Set<IClone>();
 
-    sidejobs.forEach((sidejobActivity) => {
-      clones.add(sidejobActivity.sidejob.assignedClone);
+    contractAssignments.forEach((contractAssignment) => {
+      contractAssignment.contract.assignedClones.forEach((clone) => {
+        clones.add(clone);
+      });
     });
 
     const clonesArray = Array.from(clones.values());
@@ -169,12 +171,12 @@ export class SidejobsListFilter extends BaseComponent {
   };
 
   private renderDistrictIndexesOptions = () => {
-    const sidejobs = this._controller.listSidejobs();
+    const contractAssignments = this._controller.listContractAssignments();
 
     const districts = new Set<IDistrictState>();
 
-    sidejobs.forEach((sidejobActivity) => {
-      districts.add(sidejobActivity.sidejob.district);
+    contractAssignments.forEach((contractAssignment) => {
+      districts.add(contractAssignment.contract.district);
     });
 
     const districtsArray = Array.from(districts.values());
@@ -188,18 +190,18 @@ export class SidejobsListFilter extends BaseComponent {
   };
 
   private renderSidejobNamesOptions = () => {
-    const sidejobs = this._controller.listSidejobs();
+    const contractAssignments = this._controller.listContractAssignments();
 
-    const sidejobNames = new Set<string>();
+    const contractNames = new Set<string>();
 
-    sidejobs.forEach((sidejobActivity) => {
-      sidejobNames.add(sidejobActivity.sidejob.sidejobName);
+    contractAssignments.forEach((contractAssignment) => {
+      contractNames.add(contractAssignment.contract.contractName);
     });
 
-    const sidejobNamesArray = Array.from(sidejobNames.values());
-    const options: ISelectOption[] = sidejobNamesArray.map((sidejobName) => ({
-      name: SIDEJOB_TEXTS[sidejobName].title(),
-      value: sidejobName,
+    const sidejobNamesArray = Array.from(contractNames.values());
+    const options: ISelectOption[] = sidejobNamesArray.map((contractName) => ({
+      name: CONTRACT_TEXTS[contractName].title(),
+      value: contractName,
     }));
     options.sort(compareOptions);
 
@@ -208,7 +210,7 @@ export class SidejobsListFilter extends BaseComponent {
 
   private renderStatusFilterOptions = () => {
     return ACTIVITY_STATUS_FILTER_VALUES.map(
-      (value) => html`<sl-option value=${value}>${SIDEJOB_STATUS_FILTER_TEXTS[value]()}</sl-option>`,
+      (value) => html`<sl-option value=${value}>${CONTRACT_STATUS_FILTER_TEXTS[value]()}</sl-option>`,
     );
   };
 
@@ -220,10 +222,10 @@ export class SidejobsListFilter extends BaseComponent {
 
   private handleReset = () => {
     this.dispatchEvent(
-      new SidejobsFilterStateChangedEvent({
+      new ContractsFilterStateChangedEvent({
         cloneIds: [],
         districtIndexes: [],
-        sidejobNames: [],
+        contractNames: [],
         state: ActivityStatusFilterValue.all,
         enabled: StateFilterValue.all,
       }),
@@ -237,7 +239,7 @@ export class SidejobsListFilter extends BaseComponent {
 
     const cloneIds = this._cloneIdsInputRef.value.value as string[];
     this.dispatchEvent(
-      new SidejobsFilterStateChangedEvent({
+      new ContractsFilterStateChangedEvent({
         ...this._filterState,
         cloneIds,
       }),
@@ -253,23 +255,23 @@ export class SidejobsListFilter extends BaseComponent {
     const districtIndexes = districtIndexesString.map((str) => parseInt(str));
 
     this.dispatchEvent(
-      new SidejobsFilterStateChangedEvent({
+      new ContractsFilterStateChangedEvent({
         ...this._filterState,
         districtIndexes,
       }),
     );
   };
 
-  private handleSidejobNamesChange = () => {
-    if (!this._sidejobNamesInputRef.value || !this._filterState) {
+  private handleContractNamesChange = () => {
+    if (!this._contractNamesInputRef.value || !this._filterState) {
       return;
     }
 
-    const sidejobNames = this._sidejobNamesInputRef.value.value as string[];
+    const contractNames = this._contractNamesInputRef.value.value as string[];
     this.dispatchEvent(
-      new SidejobsFilterStateChangedEvent({
+      new ContractsFilterStateChangedEvent({
         ...this._filterState,
-        sidejobNames,
+        contractNames,
       }),
     );
   };
@@ -281,7 +283,7 @@ export class SidejobsListFilter extends BaseComponent {
 
     const status = this._statusInputRef.value.value as ActivityStatusFilterValue;
     this.dispatchEvent(
-      new SidejobsFilterStateChangedEvent({
+      new ContractsFilterStateChangedEvent({
         ...this._filterState,
         state: status,
       }),
@@ -295,7 +297,7 @@ export class SidejobsListFilter extends BaseComponent {
 
     const enabled = this._enabledInputRef.value.value as StateFilterValue;
     this.dispatchEvent(
-      new SidejobsFilterStateChangedEvent({
+      new ContractsFilterStateChangedEvent({
         ...this._filterState,
         enabled,
       }),

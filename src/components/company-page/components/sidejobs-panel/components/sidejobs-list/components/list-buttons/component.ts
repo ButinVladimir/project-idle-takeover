@@ -13,7 +13,7 @@ import { sidejobsListContext } from '../../contexts';
 
 @localized()
 @customElement('ca-sidejobs-list-buttons')
-export class OwnedProgramsListButtons extends BaseComponent {
+export class SidejobsListButtons extends BaseComponent {
   static styles = styles;
 
   protected hasMobileRender = true;
@@ -50,7 +50,7 @@ export class OwnedProgramsListButtons extends BaseComponent {
     const cancelAllSidejobs = msg('Cancel displayed sidejobs');
 
     return html`
-      <div class="buttons desktop">
+      <div class="buttons desktop buttons-3">
         <sl-tooltip>
           <span slot="content"> ${filterLabel} </span>
 

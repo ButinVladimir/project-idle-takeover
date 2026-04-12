@@ -303,3 +303,9 @@ export enum StateFilterValue {
   enabled = 'enabled',
   disabled = 'disabled',
 }
+
+export enum ActivityStatusFilterValue {
+  all = 'all',
+  active = 'active',
+  inactive = 'inactive',
+}

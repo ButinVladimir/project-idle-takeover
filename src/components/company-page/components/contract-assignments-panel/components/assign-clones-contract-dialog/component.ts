@@ -5,11 +5,9 @@ import { createRef, ref } from 'lit/directives/ref.js';
 import { provide } from '@lit/context';
 import { classMap } from 'lit/directives/class-map.js';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.component.js';
-import { BaseComponent, ContractAlert } from '@shared/index';
-import { IDistrictState } from '@state/city-state';
+import { BaseComponent, compareOptions, ContractAlert, ISelectOption } from '@shared/index';
 import { DISTRICT_NAMES, CONTRACT_TEXTS } from '@texts/index';
 import { type IContract, ContractValidationResult } from '@state/activity-state';
-import { IClone } from '@state/clones-state';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events/confirmation-alert-open';
 import { AssignClonesContractDialogCloseEvent } from './events';
 import { AssignClonesContractDialogController } from './controller';
@@ -106,7 +104,7 @@ Only one team of clones can be assigned per district and contract.`)}
               >
                 <span class="input-label" slot="label"> ${msg('Contract')} </span>
 
-                ${this._controller.listAvailableContracts().map(this.renderContractName)}
+                ${this.renderContractNameOptions()}
               </sl-select>
 
               <sl-select
@@ -118,7 +116,7 @@ Only one team of clones can be assigned per district and contract.`)}
               >
                 <span class="input-label" slot="label"> ${msg('District')} </span>
 
-                ${this._controller.listAvailableDistricts().map(this.renderDistrictOption)}
+                ${this.renderDistrictOptions()}
               </sl-select>
 
               <sl-select
@@ -132,7 +130,7 @@ Only one team of clones can be assigned per district and contract.`)}
               >
                 <span class="input-label" slot="label"> ${msg('Clones')} </span>
 
-                ${this._controller.listClones().map(this.renderCloneOption)}
+                ${this.renderCloneOptions()}
               </sl-select>
             </div>
 
@@ -151,16 +149,37 @@ Only one team of clones can be assigned per district and contract.`)}
     `;
   }
 
-  private renderCloneOption = (clone: IClone) => {
-    return html`<sl-option value=${clone.id}> ${clone.name} </sl-option>`;
+  private renderCloneOptions = () => {
+    const clones = this._controller.listClones();
+    const cloneOptions: ISelectOption[] = clones.map((clone) => ({
+      value: clone.id,
+      name: clone.name,
+    }));
+    cloneOptions.sort(compareOptions);
+
+    return cloneOptions.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
 
-  private renderDistrictOption = (districtState: IDistrictState) => {
-    return html`<sl-option value=${districtState.index}> ${DISTRICT_NAMES[districtState.name]()} </sl-option>`;
+  private renderDistrictOptions = () => {
+    const districts = this._controller.listAvailableDistricts();
+    const districtOptions: ISelectOption[] = districts.map((district) => ({
+      value: district.index.toString(),
+      name: DISTRICT_NAMES[district.name](),
+    }));
+    districtOptions.sort(compareOptions);
+
+    return districtOptions.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
 
-  private renderContractName = (contractName: string) => {
-    return html` <sl-option value=${contractName}> ${CONTRACT_TEXTS[contractName].title()} </sl-option>`;
+  private renderContractNameOptions = () => {
+    const contractNames = this._controller.listAvailableContracts();
+    const contractNameOptions: ISelectOption[] = contractNames.map((contractName) => ({
+      value: contractName,
+      name: CONTRACT_TEXTS[contractName].title(),
+    }));
+    contractNameOptions.sort(compareOptions);
+
+    return contractNameOptions.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
 
   protected updateContext() {

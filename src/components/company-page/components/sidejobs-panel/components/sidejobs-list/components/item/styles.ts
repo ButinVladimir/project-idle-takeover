@@ -1,8 +1,9 @@
 import { css } from 'lit';
-import { itemsListItemStyle } from '@shared/index';
+import { itemsListItemButtonsStyle, itemsListItemStyle } from '@shared/index';
 
 const styles = [
   itemsListItemStyle,
+  itemsListItemButtonsStyle,
   css`
     :host {
       display: block;
