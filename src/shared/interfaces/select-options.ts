@@ -1,10 +1,10 @@
-export interface ISelectOption {
+export interface ISelectOption<V = string> {
   name: string;
-  value: string;
+  value: V;
 }
 
-export interface ISelectTieredOption {
+export interface ISelectTieredOption<V = string> {
   name: string;
   tier: number;
-  value: string;
+  value: V;
 }

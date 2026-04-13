@@ -380,7 +380,7 @@
     },
     {
       "name": "ca-primary-activity-queue-list",
-      "description": "Properties:\n\n  * `styles` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderPrimaryActivity` - \n\n  * `handleOpenCancelAllPrimaryActivitiesDialog` - \n\n  * `handleCancelAllPrimaryActivities` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` - \n\n  * `_filterEnabled` {`boolean`} - \n\n  * `_primaryActivityFilterState` {`IPrimaryActivityFilterState`} - \n\n  * `_primaryActivityList` {`IPrimaryActivity[]`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderPrimaryActivity` - \n\n  * `handleToggleFilter` - \n\n  * `handleChangeFilterState` - \n\n  * `filterPrimaryActivity` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
@@ -390,6 +390,28 @@
         {
           "name": "details-visible",
           "description": "`details-visible` {`boolean`} - \n\nProperty: detailsVisible",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-primary-activity-list-filter",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_filterState` {`IPrimaryActivityFilterState | undefined`} - \n\n  * `_cloneIdsInputRef` - \n\n  * `_districtIndexesInputRef` - \n\n  * `_statusInputRef` - \n\n  * `renderCloneIdsOptions` - \n\n  * `renderDistrictIndexesOptions` - \n\n  * `renderStatusFilterOptions` - \n\n  * `handleReset` - \n\n  * `handleCloneIdsChange` - \n\n  * `handleDistrictIndexesChange` - \n\n  * `handleStatusChange` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-primary-activity-list-buttons",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_primaryActivityList` {`IPrimaryActivity[] | undefined`} - \n\n  * `handleOpenCancelAllPrimaryActivitiesDialog` - \n\n  * `handleCancelDisplayedPrimaryActivities` - \n\n  * `handleToggleFilter` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
           "valueSet": "v"
         }
       ]

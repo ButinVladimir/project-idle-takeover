@@ -6,7 +6,7 @@ import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/c
 import { AUTOUPGRADE_VALUES, BaseComponent, CloneAlert, DELETE_VALUES, FILTER_VALUES } from '@shared/index';
 import { COMMON_TEXTS } from '@texts/index';
 import { IClone } from '@state/clones-state';
-import { ClonesListUpgradeButtonsController } from './controller';
+import { ClonesListButtonsController } from './controller';
 import styles from './styles';
 import { clonesListContext } from '../../contexts';
 import { ToggleClonesFilterEvent } from './events';
@@ -22,7 +22,7 @@ export class ClonesListButtons extends BaseComponent {
   })
   public filterEnabled = false;
 
-  private _controller: ClonesListUpgradeButtonsController;
+  private _controller: ClonesListButtonsController;
 
   @consume({ context: clonesListContext, subscribe: true })
   private _clonesList?: IClone[];
@@ -30,7 +30,7 @@ export class ClonesListButtons extends BaseComponent {
   constructor() {
     super();
 
-    this._controller = new ClonesListUpgradeButtonsController(this);
+    this._controller = new ClonesListButtonsController(this);
   }
 
   protected renderDesktop() {

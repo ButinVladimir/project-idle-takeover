@@ -165,7 +165,7 @@ export function compareOptions(optionA: ISelectOption, optionB: ISelectOption): 
 
 export function compareTieredOptions(optionA: ISelectTieredOption, optionB: ISelectTieredOption): number {
   if (optionA.tier !== optionB.tier) {
-    return optionA.tier - optionB.tier;
+    return optionB.tier - optionA.tier;
   }
 
   return optionA.name.localeCompare(optionB.name);
