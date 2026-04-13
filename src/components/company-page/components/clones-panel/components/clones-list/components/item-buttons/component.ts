@@ -27,7 +27,7 @@ export class ClonesListItemButtons extends BaseComponent {
 
   private _controller: ClonesListItemButtonsController;
 
-  @consume({ context: cloneContext })
+  @consume({ context: cloneContext, subscribe: true })
   private _clone?: IClone;
 
   private _upgradeLevelMaxButton = createRef<SlButton>();

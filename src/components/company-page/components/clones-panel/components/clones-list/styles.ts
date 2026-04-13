@@ -8,11 +8,11 @@ const styles = css`
     border-top: var(--ca-border);
   }
 
-  .header-row {
+  .buttons-row {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    padding: var(--ca-section-gap) 0;
+    padding: var(--ca-section-padding) 0;
     gap: var(--ca-section-buttons-gap);
 
     &.with-border {
@@ -28,7 +28,7 @@ const styles = css`
   }
 
   ca-sortable-list {
-    margin-top: var(--ca-section-gap);
+    margin-top: var(--ca-panel-row-gap);
     width: 100%;
 
     &::part(list) {

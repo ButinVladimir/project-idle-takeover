@@ -48,12 +48,6 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
     this._controller = new MainframeHardwarePanelArticleController(this);
   }
 
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
-  }
-
   protected renderDesktop() {
     return html`<div class="host-content desktop">${this.renderContent()}</div>`;
   }
@@ -119,7 +113,7 @@ export class MainframeHardwarePanelArticle extends BaseComponent {
     `;
   };
 
-  private updateContext() {
+  protected updateContext() {
     this._parameter = this._controller.getParameter(this.type);
   }
 

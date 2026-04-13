@@ -43,6 +43,8 @@ export abstract class BaseComponent extends LitElement {
       this._stateUIConnector.startRendering(this);
     }
 
+    this.updateContext();
+
     super.performUpdate();
 
     if (this.isConnected) {
@@ -67,6 +69,8 @@ export abstract class BaseComponent extends LitElement {
   protected renderTablet(): any {}
 
   protected renderDesktop(): any {}
+
+  protected updateContext(): void {}
 
   handlePartialUpdate = () => {};
 }

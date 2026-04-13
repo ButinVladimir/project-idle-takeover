@@ -57,7 +57,7 @@ After that, process for autoscalable program has remaining cores and RAM assigne
 Only one process for autoscalable program can run at same time.
 It is possible to start more processes than cores allow them to run at same time.
 Process minimal completion time is limited.
-Processes can be rearranged by dragging them by their title.`)}
+Processes can be rearranged by dragging them by their title if filter is disabled.`)}
       </p>
 
       <div class=${topContainerClasses}>

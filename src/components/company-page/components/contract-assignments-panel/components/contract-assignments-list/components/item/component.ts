@@ -30,6 +30,12 @@ export class ContractAssignmentListItem extends BaseComponent {
   })
   assignmentId!: string;
 
+  @property({
+    attribute: 'drag-enabled',
+    type: Boolean,
+  })
+  dragEnabled!: boolean;
+
   @state()
   _descriptionVisible = false;
 
@@ -44,12 +50,6 @@ export class ContractAssignmentListItem extends BaseComponent {
     super();
 
     this._controller = new ContractAssignmentsListItemController(this);
-  }
-
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
   }
 
   protected renderDesktop() {
@@ -85,10 +85,8 @@ export class ContractAssignmentListItem extends BaseComponent {
     return html`
       <div class="items-list-item desktop">
         <div class="contract-assignment">
-          <div class="title" draggable="true" @dragstart=${this.handleDragStart}>
-            <sl-icon name="grip-vertical"> </sl-icon>
-
-            ${contractTitle}
+          <div class="title" draggable=${this.dragEnabled ? 'true' : 'false'} @dragstart=${this.handleDragStart}>
+            ${this.dragEnabled ? html`<sl-icon name="grip-vertical"> </sl-icon>` : nothing} ${contractTitle}
 
             <sl-tooltip>
               <span slot="content">${descriptionButtonLabel}</span>
@@ -119,7 +117,7 @@ export class ContractAssignmentListItem extends BaseComponent {
 
         <div><ca-contract-assignments-list-item-status></ca-contract-assignments-list-item-status></div>
 
-        <div class="buttons">
+        <div class="buttons desktop buttons-4">
           <sl-tooltip>
             <span slot="content"> ${startLabel} </span>
 
@@ -202,10 +200,8 @@ export class ContractAssignmentListItem extends BaseComponent {
     return html`
       <div class="items-list-item mobile">
         <div class="contract-assignment">
-          <div class="title" draggable="true" @dragstart=${this.handleDragStart}>
-            <sl-icon name="grip-vertical"> </sl-icon>
-
-            ${contractTitle}
+          <div class="title" draggable=${this.dragEnabled ? 'true' : 'false'} @dragstart=${this.handleDragStart}>
+            ${this.dragEnabled ? html`<sl-icon name="grip-vertical"> </sl-icon>` : nothing} ${contractTitle}
 
             <sl-tooltip>
               <span slot="content">${descriptionButtonLabel}</span>
@@ -230,7 +226,7 @@ export class ContractAssignmentListItem extends BaseComponent {
 
         <div>${statusFull}</div>
 
-        <div class="buttons">
+        <div class="buttons mobile">
           <sl-button
             ?disabled=${!canBeStarted}
             variant=${startVariant}
@@ -262,7 +258,7 @@ export class ContractAssignmentListItem extends BaseComponent {
     `;
   }
 
-  private updateContext() {
+  protected updateContext() {
     if (this.assignmentId) {
       this._contractAssignment = this._controller.getContractAssignmentById(this.assignmentId);
     } else {

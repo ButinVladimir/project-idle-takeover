@@ -1,6 +1,8 @@
 import clamp from 'lodash/clamp';
 import { IExponent, ILinear, ITierExponent, ITierLinear } from './interfaces/formulas';
 import { SCHEMA_PROPERTY } from './constants';
+import { StateFilterValue, LevelFilterValue } from './types';
+import { ISelectOption, ISelectTieredOption } from './interfaces';
 
 export const calculatePower = (exponent: number, params: IExponent): number => {
   return params.multiplier * Math.pow(params.base, exponent);
@@ -123,4 +125,52 @@ export function calculateLevelProgressPercentage(
 
 export function typeConfigEntries<T>(data: Record<string, any>): Record<string, T> {
   return Object.fromEntries(Object.entries(data).filter(([key]) => key !== SCHEMA_PROPERTY));
+}
+
+export function filterByMaxLevel(value: number, maxValue: number, filter: LevelFilterValue): boolean {
+  if (filter === LevelFilterValue.all) {
+    return true;
+  }
+
+  if (filter === LevelFilterValue.maxed && value === maxValue) {
+    return true;
+  }
+
+  if (filter === LevelFilterValue.belowMax && value < maxValue) {
+    return true;
+  }
+
+  return false;
+}
+
+export function filterByState(value: boolean, filter: StateFilterValue): boolean {
+  if (filter === StateFilterValue.all) {
+    return true;
+  }
+
+  if (filter === StateFilterValue.enabled && value) {
+    return true;
+  }
+
+  if (filter === StateFilterValue.disabled && !value) {
+    return true;
+  }
+
+  return false;
+}
+
+export function compareOptions(optionA: ISelectOption, optionB: ISelectOption): number {
+  return optionA.name.localeCompare(optionB.name);
+}
+
+export function compareTieredOptions(optionA: ISelectTieredOption, optionB: ISelectTieredOption): number {
+  if (optionA.tier !== optionB.tier) {
+    return optionB.tier - optionA.tier;
+  }
+
+  return optionA.name.localeCompare(optionB.name);
+}
+
+export function checkIntersection<T>(arrayA: T[], arrayB: T[]): boolean {
+  return arrayA.some((value) => arrayB.includes(value));
 }

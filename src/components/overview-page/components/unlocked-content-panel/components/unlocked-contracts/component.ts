@@ -1,7 +1,7 @@
 import { html } from 'lit';
 import { localized, msg } from '@lit/localize';
 import { customElement } from 'lit/decorators.js';
-import { BaseComponent, HINT_ICON } from '@shared/index';
+import { BaseComponent, compareOptions, HINT_ICON, ISelectOption } from '@shared/index';
 import { CONTRACT_TEXTS } from '@texts/index';
 import { OverviewUnlockedContractsController } from './controller';
 import { unlockedContentStyles } from '../../styles';
@@ -32,12 +32,18 @@ export class OverviewUnlockedContracts extends BaseComponent {
   private renderList = () => {
     const itemNames = this._controller.listUnlockedContracts();
 
-    return itemNames.map(this.renderListItem);
+    const itemsOptions: ISelectOption[] = itemNames.map((itemName) => ({
+      name: CONTRACT_TEXTS[itemName].title(),
+      value: itemName,
+    }));
+    itemsOptions.sort(compareOptions);
+
+    return itemsOptions.map(this.renderListItem);
   };
 
-  private renderListItem = (sidejobName: string) => {
-    const title = CONTRACT_TEXTS[sidejobName].title();
-    const overview = CONTRACT_TEXTS[sidejobName].overview();
+  private renderListItem = (option: ISelectOption) => {
+    const title = option.name;
+    const overview = CONTRACT_TEXTS[option.value].overview();
 
     return html`
       <span>

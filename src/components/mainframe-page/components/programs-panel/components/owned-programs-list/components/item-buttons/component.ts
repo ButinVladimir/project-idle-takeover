@@ -47,7 +47,7 @@ export class OwnedProgramsListItemButtons extends BaseComponent {
     const levelEl = html`<span ${ref(this._upgradeLevelRef)}></span>`;
 
     return html`
-      <div class="buttons desktop">
+      <div class="buttons buttons-3 desktop">
         <sl-tooltip>
           <span slot="content"> ${COMMON_TEXTS.upgradeToLevel(levelEl)} </span>
 

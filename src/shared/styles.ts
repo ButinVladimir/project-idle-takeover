@@ -205,6 +205,26 @@ export const UPGRADE_MAX_VALUES: {
   buttonVariant: 'default',
 };
 
+export const FILTER_VALUES: {
+  icon: {
+    enabled: string;
+    disabled: string;
+  };
+  buttonVariant: {
+    enabled: 'neutral';
+    disabled: 'default';
+  };
+} = {
+  icon: {
+    enabled: 'funnel-fill',
+    disabled: 'funnel',
+  },
+  buttonVariant: {
+    enabled: 'neutral',
+    disabled: 'default',
+  },
+};
+
 export const dragIconStyle = css`
   sl-icon[name='grip-vertical'] {
     position: relative;
@@ -359,6 +379,37 @@ export const ACTIVITY_UI_ACTIVITY_VALUES = {
 
 export const START_ACTIVITY_ICON = 'arrow-clockwise';
 
+export const itemsListButtonsStyle = css`
+  .buttons {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: var(--ca-table-buttons-gap);
+
+    &.desktop {
+      justify-content: flex-end;
+      font-size: var(--sl-font-size-large);
+
+      &.buttons-3 {
+        width: 132px;
+      }
+
+      &.buttons-4 {
+        width: 180px;
+      }
+    }
+
+    &.mobile {
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+
+    .tooltip-content p {
+      margin: 0;
+    }
+  }
+`;
+
 export const itemsListStyle = css`
   .items-list {
     width: 100%;
@@ -373,22 +424,10 @@ export const itemsListStyle = css`
       align-items: center;
       border-bottom: var(--ca-border);
 
-      .buttons {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        flex-direction: row;
-        gap: var(--ca-table-buttons-gap);
-      }
-
       &.mobile {
         grid-template-columns: auto;
         grid-template-rows: auto;
         padding: var(--ca-table-column-gap) 0;
-
-        .buttons {
-          justify-content: flex-start;
-        }
       }
 
       &.desktop {
@@ -398,11 +437,6 @@ export const itemsListStyle = css`
 
         .header-column {
           font-weight: var(--sl-font-weight-bold);
-        }
-
-        .buttons {
-          justify-content: flex-end;
-          font-size: var(--sl-font-size-large);
         }
       }
     }
@@ -485,17 +519,87 @@ export const itemsListItemStyle = css`
       .buttons {
         justify-content: flex-end;
         font-size: var(--sl-font-size-large);
+
+        &.buttons-3 {
+          width: 132px;
+        }
+
+        &.buttons-4 {
+          width: 180px;
+        }
       }
     }
 
     &.mobile {
       grid-template-columns: auto;
-      grid-template-rows: repeat(1fr);
+      grid-template-rows: auto;
 
       .buttons {
         flex-wrap: wrap;
         justify-content: flex-start;
       }
+    }
+  }
+`;
+
+export const itemsListFilterStyle = css`
+  .filter {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ca-input-row-gap);
+    align-items: stretch;
+    border-bottom: var(--ca-border);
+    padding: var(--ca-section-padding) 0;
+
+    .filter-row {
+      display: flex;
+    }
+
+    &.desktop {
+      .filter-row {
+        flex-direction: row;
+        gap: var(--ca-input-column-gap);
+        align-items: stretch;
+        justify-content: space-between;
+
+        * {
+          flex: 1 0;
+        }
+      }
+    }
+
+    &.mobile {
+      .filter-row {
+        flex-direction: column;
+        gap: var(--ca-input-row-gap);
+      }
+    }
+  }
+`;
+
+export const itemsListItemButtonsStyle = css`
+  .buttons {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: var(--ca-table-buttons-gap);
+
+    &.desktop {
+      justify-content: flex-end;
+      font-size: var(--sl-font-size-large);
+
+      &.buttons-3 {
+        width: 132px;
+      }
+
+      &.buttons-4 {
+        width: 180px;
+      }
+    }
+
+    &.mobile {
+      flex-wrap: wrap;
+      justify-content: flex-start;
     }
   }
 `;

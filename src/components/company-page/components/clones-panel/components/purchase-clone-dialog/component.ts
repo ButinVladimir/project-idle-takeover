@@ -7,7 +7,7 @@ import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.com
 import SlInput from '@shoelace-style/shoelace/dist/components/input/input.component.js';
 import clamp from 'lodash/clamp';
 import { provide } from '@lit/context';
-import { BaseComponent } from '@shared/index';
+import { BaseComponent, compareOptions, ISelectOption } from '@shared/index';
 import { COMMON_TEXTS, CLONE_TEMPLATE_TEXTS } from '@texts/index';
 import { type IClone } from '@state/clones-state';
 import { PurchaseCloneDialogCloseEvent } from './events';
@@ -68,12 +68,6 @@ export class PurchaseCloneDialog extends BaseComponent {
     super.disconnectedCallback();
 
     this._clone?.removeAllEventListeners();
-  }
-
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
   }
 
   updated(_changedProperties: Map<string, any>) {
@@ -147,7 +141,7 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
               >
                 <span class="input-label" slot="label"> ${msg('Clone template')} </span>
 
-                ${this._controller.listAvailableCloneTemplates().map(this.renderCloneTemplateOption)}
+                ${this.renderCloneTemplateOptions()}
               </sl-select>
 
               <sl-select
@@ -201,8 +195,14 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
     }
   };
 
-  private renderCloneTemplateOption = (cloneTemplate: string) => {
-    return html`<sl-option value=${cloneTemplate}> ${CLONE_TEMPLATE_TEXTS[cloneTemplate].title()} </sl-option>`;
+  private renderCloneTemplateOptions = () => {
+    const options: ISelectOption[] = this._controller.listAvailableCloneTemplates().map((cloneTemplate) => ({
+      name: CLONE_TEMPLATE_TEXTS[cloneTemplate].title(),
+      value: cloneTemplate,
+    }));
+    options.sort(compareOptions);
+
+    return options.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
 
   private renderTierOptions = () => {
@@ -220,7 +220,7 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
     return result;
   };
 
-  private updateContext() {
+  protected updateContext() {
     this._clone?.removeAllEventListeners();
 
     if (this._cloneTemplateName !== undefined) {

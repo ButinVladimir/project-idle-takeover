@@ -1,7 +1,7 @@
 import { html } from 'lit';
 import { localized, msg } from '@lit/localize';
 import { customElement } from 'lit/decorators.js';
-import { BaseComponent, Milestone, HINT_ICON } from '@shared/index';
+import { BaseComponent, Milestone, HINT_ICON, ISelectOption, compareOptions } from '@shared/index';
 import { MILESTONE_TEXTS } from '@texts/index';
 import { OverviewReachedMilestonesController } from './controller';
 import { unlockedContentStyles } from '../../styles';
@@ -32,12 +32,18 @@ export class OverviewReachedMilestones extends BaseComponent {
   private renderList = () => {
     const items = this._controller.listReachedMilestones();
 
-    return items.map(this.renderListItem);
+    const itemsOptions: ISelectOption<Milestone>[] = items.map((item) => ({
+      name: MILESTONE_TEXTS[item].title(),
+      value: item,
+    }));
+    itemsOptions.sort(compareOptions);
+
+    return itemsOptions.map(this.renderListItem);
   };
 
-  private renderListItem = (milestones: Milestone) => {
-    const title = MILESTONE_TEXTS[milestones].title();
-    const hint = MILESTONE_TEXTS[milestones].hint();
+  private renderListItem = (option: ISelectOption<Milestone>) => {
+    const title = option.name;
+    const hint = MILESTONE_TEXTS[option.value].hint();
 
     return html`
       <span>

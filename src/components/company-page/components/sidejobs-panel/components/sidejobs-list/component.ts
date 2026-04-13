@@ -1,12 +1,16 @@
 import { html } from 'lit';
 import { localized, msg } from '@lit/localize';
-import { customElement } from 'lit/decorators.js';
+import { provide } from '@lit/context';
+import { customElement, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { BaseComponent, DELETE_VALUES, ENTITY_ACTIVE_VALUES, SidejobAlert } from '@shared/index';
-import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
+import { ActivityStatusFilterValue, BaseComponent, filterByState, StateFilterValue } from '@shared/index';
 import { ISidejobActivity } from '@state/activity-state';
 import { SidejobsListController } from './controller';
 import styles from './styles';
+import { sidejobsFilterStateContext, sidejobsListContext } from './contexts';
+import { type ISidejobsFilterState } from './interfaces';
+import { ToggleSidejobsFilterEvent } from './components/list-buttons/events';
+import { SidejobsFilterStateChangedEvent } from './components/filter/events';
 
 @localized()
 @customElement('ca-sidejobs-list')
@@ -14,6 +18,22 @@ export class SidejobsList extends BaseComponent {
   static styles = styles;
 
   protected hasMobileRender = true;
+
+  @state()
+  private _filterEnabled = false;
+
+  @state()
+  @provide({ context: sidejobsFilterStateContext })
+  private _sidejobsFilterState: ISidejobsFilterState = {
+    cloneIds: [],
+    districtIndexes: [],
+    sidejobNames: [],
+    enabled: StateFilterValue.all,
+    state: ActivityStatusFilterValue.all,
+  };
+
+  @provide({ context: sidejobsListContext })
+  private _sidejobsList: ISidejobActivity[] = [];
 
   private _controller: SidejobsListController;
 
@@ -24,45 +44,22 @@ export class SidejobsList extends BaseComponent {
   }
 
   protected renderDesktop() {
-    const activitiesEnabled = this.checkSomeActivitiesEnabled();
-    const toggleActivitiesIcon = activitiesEnabled
-      ? ENTITY_ACTIVE_VALUES.icon.active
-      : ENTITY_ACTIVE_VALUES.icon.stopped;
-    const toggleActivitiesLabel = activitiesEnabled ? msg('Disable all sidejobs') : msg('Enable all sidejobs');
-
-    const cancelAllSidejobs = msg('Cancel all sidejobs');
-
     return html`
       <div class="items-list">
+        <ca-sidejobs-list-filter
+          ?filter-enabled=${this._filterEnabled}
+          @sidejobs-filter-state-changed=${this.handleChangeFilterState}
+        ></ca-sidejobs-list-filter>
+
         <div class="header desktop">
           <div class="header-column">${msg('Sidejob')}</div>
           <div class="header-column">${msg('District')}</div>
           <div class="header-column">${msg('Assigned clone')}</div>
           <div class="header-column">${msg('Status')}</div>
-          <div class="buttons">
-            <sl-tooltip>
-              <span slot="content"> ${toggleActivitiesLabel} </span>
-
-              <sl-icon-button
-                name=${toggleActivitiesIcon}
-                label=${toggleActivitiesLabel}
-                @click=${this.handleToggleAllActivities}
-              >
-              </sl-icon-button>
-            </sl-tooltip>
-
-            <sl-tooltip>
-              <span slot="content"> ${cancelAllSidejobs} </span>
-
-              <sl-icon-button
-                id="delete-btn"
-                name=${DELETE_VALUES.icon}
-                label=${cancelAllSidejobs}
-                @click=${this.handleOpenCancelAllSidejobsDialog}
-              >
-              </sl-icon-button>
-            </sl-tooltip>
-          </div>
+          <ca-sidejobs-list-buttons
+            ?filter-enabled=${this._filterEnabled}
+            @toggle-sidejobs-filter=${this.handleToggleFilter}
+          ></ca-sidejobs-list-buttons>
         </div>
 
         ${this.renderSidejobsList()}
@@ -71,34 +68,18 @@ export class SidejobsList extends BaseComponent {
   }
 
   protected renderMobile() {
-    const activitiesEnabled = this.checkSomeActivitiesEnabled();
-    const toggleActivitiesIcon = activitiesEnabled
-      ? ENTITY_ACTIVE_VALUES.icon.active
-      : ENTITY_ACTIVE_VALUES.icon.stopped;
-    const toggleActivitiesLabel = activitiesEnabled ? msg('Disable all sidejobs') : msg('Enable all sidejobs');
-    const toggleActivitiesVariant = activitiesEnabled
-      ? ENTITY_ACTIVE_VALUES.buttonVariant.active
-      : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
-
     return html`
       <div class="items-list">
+        <ca-sidejobs-list-filter
+          ?filter-enabled=${this._filterEnabled}
+          @sidejobs-filter-state-changed=${this.handleChangeFilterState}
+        ></ca-sidejobs-list-filter>
+
         <div class="header mobile">
-          <div class="buttons">
-            <sl-button variant=${toggleActivitiesVariant} size="medium" @click=${this.handleToggleAllActivities}>
-              <sl-icon slot="prefix" name=${toggleActivitiesIcon}></sl-icon>
-
-              ${toggleActivitiesLabel}
-            </sl-button>
-
-            <sl-button
-              variant=${DELETE_VALUES.buttonVariant}
-              size="medium"
-              @click=${this.handleOpenCancelAllSidejobsDialog}
-            >
-              <sl-icon slot="prefix" name=${DELETE_VALUES.icon}> </sl-icon>
-              ${msg('Cancel all sidejobs')}
-            </sl-button>
-          </div>
+          <ca-sidejobs-list-buttons
+            ?filter-enabled=${this._filterEnabled}
+            @toggle-sidejobs-filter=${this.handleToggleFilter}
+          ></ca-sidejobs-list-buttons>
         </div>
 
         ${this.renderSidejobsList()}
@@ -107,44 +88,89 @@ export class SidejobsList extends BaseComponent {
   }
 
   private renderSidejobsList = () => {
-    const activities = this._controller.listActivities();
-
-    return activities.length > 0
+    return this._sidejobsList.length > 0
       ? html` <div class="list">
-          ${repeat(activities, (sidejobActivity) => sidejobActivity.id, this.renderSidejob)}
+          ${repeat(this._sidejobsList, (sidejobActivity) => sidejobActivity.id, this.renderSidejob)}
         </div>`
       : this.renderEmptyListNotification();
   };
 
   private renderEmptyListNotification = () => {
-    return html` <div class="notification">${msg("You don't have any assigned sidejobs")}</div> `;
+    return html` <div class="notification">${msg('Sidejobs are not found')}</div> `;
   };
 
   private renderSidejob = (activity: ISidejobActivity) => {
     return html`<ca-sidejobs-list-item class="list-item" activity-id=${activity.id}></ca-sidejobs-list-item>`;
   };
 
-  private handleOpenCancelAllSidejobsDialog = () => {
-    this.dispatchEvent(
-      new ConfirmationAlertOpenEvent(
-        SidejobAlert.cancelAllSidejobs,
-        msg('Are you sure want to cancel all sidejobs? Their assigned clones will stop performing them.'),
-        this.handleCancelAllSidejobs,
-      ),
-    );
-  };
+  protected updateContext(): void {
+    let sidejobs = this._controller.listActivities();
 
-  private handleCancelAllSidejobs = () => {
-    this._controller.cancelAllActivities();
-  };
+    if (this._filterEnabled) {
+      sidejobs = sidejobs.filter(this.filterSidejob);
+    }
 
-  private checkSomeActivitiesEnabled(): boolean {
-    return this._controller.listActivities().some((activity) => activity.enabled);
+    this._sidejobsList = sidejobs;
   }
 
-  private handleToggleAllActivities = () => {
-    const contractAssignmentsActive = this.checkSomeActivitiesEnabled();
+  private filterSidejob = (sidejobActivity: ISidejobActivity): boolean => {
+    if (!this._filterEnabled) {
+      return true;
+    }
 
-    this._controller.toggleAllActivities(!contractAssignmentsActive);
+    if (
+      this._sidejobsFilterState.cloneIds.length > 0 &&
+      !this._sidejobsFilterState.cloneIds.includes(sidejobActivity.sidejob.assignedClone.id)
+    ) {
+      return false;
+    }
+
+    if (
+      this._sidejobsFilterState.districtIndexes.length > 0 &&
+      !this._sidejobsFilterState.districtIndexes.includes(sidejobActivity.sidejob.district.index)
+    ) {
+      return false;
+    }
+
+    if (
+      this._sidejobsFilterState.sidejobNames.length > 0 &&
+      !this._sidejobsFilterState.sidejobNames.includes(sidejobActivity.sidejob.sidejobName)
+    ) {
+      return false;
+    }
+
+    if (!this.filterByStatus(sidejobActivity)) {
+      return false;
+    }
+
+    if (!filterByState(sidejobActivity.enabled, this._sidejobsFilterState.enabled)) {
+      return false;
+    }
+
+    return true;
+  };
+
+  private filterByStatus(sidejobActivity: ISidejobActivity): boolean {
+    if (this._sidejobsFilterState.state === ActivityStatusFilterValue.all) {
+      return true;
+    }
+
+    if (this._sidejobsFilterState.state === ActivityStatusFilterValue.active && sidejobActivity.active) {
+      return true;
+    }
+
+    if (this._sidejobsFilterState.state === ActivityStatusFilterValue.inactive && !sidejobActivity.active) {
+      return true;
+    }
+
+    return false;
+  }
+
+  private handleToggleFilter = (event: ToggleSidejobsFilterEvent) => {
+    this._filterEnabled = event.filterEnabled;
+  };
+
+  private handleChangeFilterState = (event: SidejobsFilterStateChangedEvent) => {
+    this._sidejobsFilterState = event.state;
   };
 }

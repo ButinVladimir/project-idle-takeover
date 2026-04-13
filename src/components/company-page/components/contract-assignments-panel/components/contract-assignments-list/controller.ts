@@ -1,39 +1,18 @@
-import { BaseController, Hotkey } from '@shared/index';
+import { BaseController } from '@shared/index';
 import { IContractAssignment } from '@state/automation-state';
+import { IPrimaryActivity } from '@state/activity-state';
 
 export class ContractAssignmentsListController extends BaseController {
-  checkCanStartAll(): boolean {
-    return this.automationState.contracts
-      .listContractAssignments()
-      .some(
-        (contractAssignment) =>
-          contractAssignment.enabled &&
-          this.automationState.contracts.starter.checkContractAssignment(contractAssignment),
-      );
-  }
-
-  getStartHotkey(): string | undefined {
-    return this.settingsState.hotkeys.getKeyByHotkey(Hotkey.addContractAssignments);
-  }
-
-  startAllContractAssignments(): boolean {
-    return this.automationState.contracts.starter.startAllAssignments();
+  getContractActivity(contractAssignment: IContractAssignment): IPrimaryActivity | undefined {
+    return this.activityState.primaryActivityQueue.getActivityByAssignmentId(contractAssignment.id);
   }
 
   listContractAssignments(): IContractAssignment[] {
     return this.automationState.contracts.listContractAssignments();
   }
 
-  removeAllContractAssignments(): void {
-    this.automationState.contracts.removeAllContractAssignments();
-  }
-
   moveContractAssignment(id: string, position: number) {
     this.automationState.contracts.moveContractAssignment(id, position);
     this.host.requestUpdate();
-  }
-
-  toggleAllContractAssignments(enabled: boolean) {
-    this.automationState.contracts.toggleAllContractAssignments(enabled);
   }
 }

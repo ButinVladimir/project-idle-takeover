@@ -5,13 +5,15 @@ const styles = css`
     width: 100%;
     align-self: stretch;
     display: block;
+    border-top: var(--ca-border);
   }
 
   .header-row {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    padding-bottom: var(--ca-section-gap);
+    padding: var(--ca-section-padding) 0;
+    gap: var(--ca-section-buttons-gap);
   }
 
   .notification {

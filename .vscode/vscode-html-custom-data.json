@@ -165,8 +165,19 @@
     },
     {
       "name": "ca-clones-list",
-      "description": "Properties:\n\n  * `styles` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderClone` - \n\n  * `handleToggleAutoupgrade` - \n\n  * `handleMoveClone` - \n\n  * `handleOpenDeleteAllClonesDialog` - \n\n  * `handleDeleteAllClones` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` - \n\n  * `_filterEnabled` {`boolean`} - \n\n  * `_clonesFilterState` {`IClonesFilterState`} - \n\n  * `_clonesList` {`IClone[]`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderClone` - \n\n  * `handleToggleFilter` - \n\n  * `handleChangeFilterState` - \n\n  * `filterClone` - \n\n  * `handleMoveClone` - \n\n  * `_controller` - ",
       "attributes": []
+    },
+    {
+      "name": "ca-clones-list-filter",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_filterState` {`IClonesFilterState | undefined`} - \n\n  * `_clonesInputRef` - \n\n  * `_cloneTemplatesInputRef` - \n\n  * `_tiersInputRef` - \n\n  * `_maxTierInputRef` - \n\n  * `_maxLevelInputRef` - \n\n  * `_autoupgradeInputRef` - \n\n  * `renderCloneOptions` - \n\n  * `renderCloneTemplateOptions` - \n\n  * `renderTierOptions` - \n\n  * `renderLevelFilterOptions` - \n\n  * `renderAutoupgradeFilterOptions` - \n\n  * `handleReset` - \n\n  * `handleClonesChange` - \n\n  * `handleCloneTemplatesChange` - \n\n  * `handleTiersChange` - \n\n  * `handleMaxTierChange` - \n\n  * `handleMaxLevelChange` - \n\n  * `handleAutoupgradeChange` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
+        }
+      ]
     },
     {
       "name": "ca-clones-list-item-buttons",
@@ -191,22 +202,38 @@
     },
     {
       "name": "ca-clones-list-item",
-      "description": "Attributes:\n\n  * `clone-id` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `cloneId` {`string`} - \n\n  * `_menuVisible` {`boolean`} - \n\n  * `_detailsVisible` {`boolean`} - \n\n  * `_clone` - \n\n  * `handleToggleAutoUpgrade` - \n\n  * `handleDragStart` - \n\n  * `handleToggleMenu` - \n\n  * `handleHideMenu` - \n\n  * `handleOpenDeleteCloneDialog` - \n\n  * `handleDeleteClone` - \n\n  * `handleOpenRenameCloneDialog` - \n\n  * `handleToggleDetails` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `clone-id` {`string`} - \n\n  * `drag-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `cloneId` {`string`} - \n\n  * `dragEnabled` {`boolean`} - \n\n  * `_menuVisible` {`boolean`} - \n\n  * `_detailsVisible` {`boolean`} - \n\n  * `_clone` - \n\n  * `handleToggleAutoUpgrade` - \n\n  * `handleDragStart` - \n\n  * `handleToggleMenu` - \n\n  * `handleHideMenu` - \n\n  * `handleOpenDeleteCloneDialog` - \n\n  * `handleDeleteClone` - \n\n  * `handleOpenRenameCloneDialog` - \n\n  * `handleToggleDetails` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "clone-id",
           "description": "`clone-id` {`string`} - \n\nProperty: cloneId"
+        },
+        {
+          "name": "drag-enabled",
+          "description": "`drag-enabled` {`boolean`} - \n\nProperty: dragEnabled",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-clones-list-buttons",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_clonesList` {`IClone[] | undefined`} - \n\n  * `handleToggleAutoupgrade` - \n\n  * `handleOpenDeleteDisplayedClonesDialog` - \n\n  * `handleDeleteDisplayedClones` - \n\n  * `handleToggleFilter` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
         }
       ]
     },
     {
       "name": "ca-clones-list-upgrade-buttons",
-      "description": "Properties:\n\n  * `styles` - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_upgradeLevelMaxButton` - \n\n  * `handleUpgradeMaxAllLevels` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_upgradeLevelMaxButton` - \n\n  * `_clonesList` {`IClone[] | undefined`} - \n\n  * `handleUpgradeMaxDisplayedLevels` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
       "name": "ca-purchase-clone-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_nameInputRef` - \n\n  * `_cloneTemplateInputRef` - \n\n  * `_tierInputRef` - \n\n  * `_levelInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_name` {`string`} - \n\n  * `_cloneTemplateName` {`string | undefined`} - \n\n  * `_tier` {`number`} - \n\n  * `_level` {`number`} - \n\n  * `_clone` - \n\n  * `_buttonsRef` - \n\n  * `handlePartialUpdate` - \n\n  * `renderCloneTemplateOption` - \n\n  * `renderTierOptions` - \n\n  * `handleClose` - \n\n  * `handleNameChange` - \n\n  * `handleCloneTemplateChange` - \n\n  * `handleTierChange` - \n\n  * `handleLevelChange` - \n\n  * `handleSubmit` - \n\n  * `handleGenerateName` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_nameInputRef` - \n\n  * `_cloneTemplateInputRef` - \n\n  * `_tierInputRef` - \n\n  * `_levelInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_name` {`string`} - \n\n  * `_cloneTemplateName` {`string | undefined`} - \n\n  * `_tier` {`number`} - \n\n  * `_level` {`number`} - \n\n  * `_clone` - \n\n  * `_buttonsRef` - \n\n  * `handlePartialUpdate` - \n\n  * `renderCloneTemplateOptions` - \n\n  * `renderTierOptions` - \n\n  * `handleClose` - \n\n  * `handleNameChange` - \n\n  * `handleCloneTemplateChange` - \n\n  * `handleTierChange` - \n\n  * `handleLevelChange` - \n\n  * `handleSubmit` - \n\n  * `handleGenerateName` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "open",
@@ -254,7 +281,7 @@
     },
     {
       "name": "ca-assign-clones-contract-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_clonesIdInputRef` - \n\n  * `_districtIndexInputRef` - \n\n  * `_contractNameInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_cloneIds` {`string[]`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `_contractName` {`string | undefined`} - \n\n  * `_contract` - \n\n  * `_existingContract` - \n\n  * `renderCloneOption` - \n\n  * `renderDistrictOption` - \n\n  * `renderContractName` - \n\n  * `handleClose` - \n\n  * `handleCloneIdsChange` - \n\n  * `handleContractNameChange` - \n\n  * `handleDistrictIndexChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleAssignClones` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_clonesIdInputRef` - \n\n  * `_districtIndexInputRef` - \n\n  * `_contractNameInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_cloneIds` {`string[]`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `_contractName` {`string | undefined`} - \n\n  * `_contract` - \n\n  * `_existingContract` - \n\n  * `renderCloneOptions` - \n\n  * `renderDistrictOptions` - \n\n  * `renderContractNameOptions` - \n\n  * `handleClose` - \n\n  * `handleCloneIdsChange` - \n\n  * `handleContractNameChange` - \n\n  * `handleDistrictIndexChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleAssignClones` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "open",
@@ -296,8 +323,19 @@
     },
     {
       "name": "ca-contract-assignments-list",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderContractAssignmentsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderContractAssignment` - \n\n  * `handleOpenRemoveAllContractAssignmentsDialog` - \n\n  * `handleStartAllContractAssignments` - \n\n  * `handleRemoveAllContractAssignments` - \n\n  * `handleMoveContractAssignment` - \n\n  * `handleToggleAllContractAssignments` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_filterEnabled` {`boolean`} - \n\n  * `_contractsFilterState` {`IContractsFilterState`} - \n\n  * `_contractsList` {`IContractAssignment[]`} - \n\n  * `renderContractAssignmentsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderContractAssignment` - \n\n  * `handleMoveContractAssignment` - \n\n  * `filterContractAssignment` - \n\n  * `handleToggleFilter` - \n\n  * `handleChangeFilterState` - \n\n  * `_controller` - ",
       "attributes": []
+    },
+    {
+      "name": "ca-contact-assigments-list-filter",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_filterState` {`IContractsFilterState | undefined`} - \n\n  * `_cloneIdsInputRef` - \n\n  * `_districtIndexesInputRef` - \n\n  * `_contractNamesInputRef` - \n\n  * `_statusInputRef` - \n\n  * `_enabledInputRef` - \n\n  * `renderCloneIdsOptions` - \n\n  * `renderDistrictIndexesOptions` - \n\n  * `renderSidejobNamesOptions` - \n\n  * `renderStatusFilterOptions` - \n\n  * `renderEnabledFilterOptions` - \n\n  * `handleReset` - \n\n  * `handleCloneIdsChange` - \n\n  * `handleDistrictIndexesChange` - \n\n  * `handleContractNamesChange` - \n\n  * `handleStatusChange` - \n\n  * `handleEnabledChange` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
+        }
+      ]
     },
     {
       "name": "ca-contracts-assignments-list-item-description",
@@ -311,11 +349,27 @@
     },
     {
       "name": "ca-contract-assignments-list-item",
-      "description": "Attributes:\n\n  * `assignment-id` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `assignmentId` {`string`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_contractAssignment` - \n\n  * `handleToggleDescription` - \n\n  * `handleOpenRemoveContractAssignmentDialog` - \n\n  * `handleRemoveContractAssignment` - \n\n  * `handleDragStart` - \n\n  * `handleToggleContractAssignment` - \n\n  * `handleStartContractAssignment` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `assignment-id` {`string`} - \n\n  * `drag-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `assignmentId` {`string`} - \n\n  * `dragEnabled` {`boolean`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_contractAssignment` - \n\n  * `handleToggleDescription` - \n\n  * `handleOpenRemoveContractAssignmentDialog` - \n\n  * `handleRemoveContractAssignment` - \n\n  * `handleDragStart` - \n\n  * `handleToggleContractAssignment` - \n\n  * `handleStartContractAssignment` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "assignment-id",
           "description": "`assignment-id` {`string`} - \n\nProperty: assignmentId"
+        },
+        {
+          "name": "drag-enabled",
+          "description": "`drag-enabled` {`boolean`} - \n\nProperty: dragEnabled",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-contract-assignments-list-buttons",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_contractsList` {`IContractAssignment[] | undefined`} - \n\n  * `handleStartDisplayedContractAssignments` - \n\n  * `handleOpenRemoveDisplayedContractAssignmentsDialog` - \n\n  * `handleRemoveDisplayedContractAssignments` - \n\n  * `handleToggleDisplayedContractAssignments` - \n\n  * `handleToggleFilter` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
         }
       ]
     },
@@ -326,7 +380,7 @@
     },
     {
       "name": "ca-primary-activity-queue-list",
-      "description": "Properties:\n\n  * `styles` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderPrimaryActivity` - \n\n  * `handleOpenCancelAllPrimaryActivitiesDialog` - \n\n  * `handleCancelAllPrimaryActivities` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` - \n\n  * `_filterEnabled` {`boolean`} - \n\n  * `_primaryActivityFilterState` {`IPrimaryActivityFilterState`} - \n\n  * `_primaryActivityList` {`IPrimaryActivity[]`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderPrimaryActivity` - \n\n  * `handleToggleFilter` - \n\n  * `handleChangeFilterState` - \n\n  * `filterPrimaryActivity` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
@@ -336,6 +390,28 @@
         {
           "name": "details-visible",
           "description": "`details-visible` {`boolean`} - \n\nProperty: detailsVisible",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-primary-activity-list-filter",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_filterState` {`IPrimaryActivityFilterState | undefined`} - \n\n  * `_cloneIdsInputRef` - \n\n  * `_districtIndexesInputRef` - \n\n  * `_statusInputRef` - \n\n  * `renderCloneIdsOptions` - \n\n  * `renderDistrictIndexesOptions` - \n\n  * `renderStatusFilterOptions` - \n\n  * `handleReset` - \n\n  * `handleCloneIdsChange` - \n\n  * `handleDistrictIndexesChange` - \n\n  * `handleStatusChange` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-primary-activity-list-buttons",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_primaryActivityList` {`IPrimaryActivity[] | undefined`} - \n\n  * `handleOpenCancelAllPrimaryActivitiesDialog` - \n\n  * `handleCancelDisplayedPrimaryActivities` - \n\n  * `handleToggleFilter` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
           "valueSet": "v"
         }
       ]
@@ -373,7 +449,7 @@
     },
     {
       "name": "ca-assign-clone-sidejob-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneIdInputRef` - \n\n  * `_districtIndexInputRef` - \n\n  * `_sidejobNameInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_cloneId` {`string | undefined`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `_sidejobName` {`string | undefined`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_buttonsRef` - \n\n  * `renderCloneOption` - \n\n  * `renderDistrictOption` - \n\n  * `renderSidejobName` - \n\n  * `handleClose` - \n\n  * `handleCloneIdChange` - \n\n  * `handleSidejobNameChange` - \n\n  * `handleDistrictIndexChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleAssignClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneIdInputRef` - \n\n  * `_districtIndexInputRef` - \n\n  * `_sidejobNameInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_cloneId` {`string | undefined`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `_sidejobName` {`string | undefined`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_buttonsRef` - \n\n  * `renderCloneOptions` - \n\n  * `renderDistrictOptions` - \n\n  * `renderSidejobNameOptions` - \n\n  * `handleClose` - \n\n  * `handleCloneIdChange` - \n\n  * `handleSidejobNameChange` - \n\n  * `handleDistrictIndexChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleAssignClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "open",
@@ -415,8 +491,19 @@
     },
     {
       "name": "ca-sidejobs-list",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderSidejobsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderSidejob` - \n\n  * `handleOpenCancelAllSidejobsDialog` - \n\n  * `handleCancelAllSidejobs` - \n\n  * `handleToggleAllActivities` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_filterEnabled` {`boolean`} - \n\n  * `_sidejobsFilterState` {`ISidejobsFilterState`} - \n\n  * `_sidejobsList` {`ISidejobActivity[]`} - \n\n  * `renderSidejobsList` - \n\n  * `renderEmptyListNotification` - \n\n  * `renderSidejob` - \n\n  * `filterSidejob` - \n\n  * `handleToggleFilter` - \n\n  * `handleChangeFilterState` - \n\n  * `_controller` - ",
       "attributes": []
+    },
+    {
+      "name": "ca-sidejobs-list-filter",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_filterState` {`ISidejobsFilterState | undefined`} - \n\n  * `_cloneIdsInputRef` - \n\n  * `_districtIndexesInputRef` - \n\n  * `_sidejobNamesInputRef` - \n\n  * `_statusInputRef` - \n\n  * `_enabledInputRef` - \n\n  * `renderCloneIdsOptions` - \n\n  * `renderDistrictIndexesOptions` - \n\n  * `renderSidejobNamesOptions` - \n\n  * `renderStatusFilterOptions` - \n\n  * `renderEnabledFilterOptions` - \n\n  * `handleReset` - \n\n  * `handleCloneIdsChange` - \n\n  * `handleDistrictIndexesChange` - \n\n  * `handleSidejobNamesChange` - \n\n  * `handleStatusChange` - \n\n  * `handleEnabledChange` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
+        }
+      ]
     },
     {
       "name": "ca-sidejobs-list-item-description",
@@ -435,6 +522,17 @@
         {
           "name": "activity-id",
           "description": "`activity-id` {`string`} - \n\nProperty: activityId"
+        }
+      ]
+    },
+    {
+      "name": "ca-sidejobs-list-buttons",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_sidejobsList` {`ISidejobActivity[] | undefined`} - \n\n  * `handleOpenCancelDisplayedSidejobsDialog` - \n\n  * `handleCancelDisplayedSidejobs` - \n\n  * `handleToggleDisplayedActivities` - \n\n  * `handleToggleFilter` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
         }
       ]
     },
@@ -616,8 +714,19 @@
     },
     {
       "name": "ca-processes-list",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderProcess` - \n\n  * `handleToggleAllProcesses` - \n\n  * `handleOpenDeleteAllProcessesDialog` - \n\n  * `handleDeleteAllProcesses` - \n\n  * `handleMoveProcess` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_filterEnabled` {`boolean`} - \n\n  * `_processesFilterState` {`IProcessesFilterState`} - \n\n  * `_processesList` {`IProcess[]`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderProcess` - \n\n  * `handleToggleFilter` - \n\n  * `handleChangeFilterState` - \n\n  * `filterProcess` - \n\n  * `handleMoveProcess` - \n\n  * `_controller` - ",
       "attributes": []
+    },
+    {
+      "name": "ca-processes-list-filter",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_filterState` {`IProcessesFilterState | undefined`} - \n\n  * `_programsInputRef` - \n\n  * `_coresInputRef` - \n\n  * `_stateInputRef` - \n\n  * `renderProgramNameOptions` - \n\n  * `renderCoresOptions` - \n\n  * `renderStateFilterOptions` - \n\n  * `handleReset` - \n\n  * `handleProgramsChange` - \n\n  * `handleCoresChange` - \n\n  * `handleStateChange` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
+        }
+      ]
     },
     {
       "name": "ca-processes-list-item-description",
@@ -631,17 +740,33 @@
     },
     {
       "name": "ca-processes-list-item",
-      "description": "Attributes:\n\n  * `program-name` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `programName` - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `_process` - \n\n  * `handleToggleDescription` - \n\n  * `handleToggleProcess` - \n\n  * `handleOpenDeleteProcessDialog` - \n\n  * `handleDeleteProcess` - \n\n  * `handleDragStart` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `program-name` - \n\n  * `drag-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `programName` - \n\n  * `dragEnabled` {`boolean`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `_process` - \n\n  * `handleToggleDescription` - \n\n  * `handleToggleProcess` - \n\n  * `handleOpenDeleteProcessDialog` - \n\n  * `handleDeleteProcess` - \n\n  * `handleDragStart` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "program-name",
           "description": "`program-name` - \n\nProperty: programName"
+        },
+        {
+          "name": "drag-enabled",
+          "description": "`drag-enabled` {`boolean`} - \n\nProperty: dragEnabled",
+          "valueSet": "v"
+        }
+      ]
+    },
+    {
+      "name": "ca-processes-list-buttons",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_processesList` {`IProcess[] | undefined`} - \n\n  * `handleToggleProcesses` - \n\n  * `handleOpenDeleteDisplayedProcessesDialog` - \n\n  * `handleDeleteDisplayedProcesses` - \n\n  * `handleToggleFilter` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
         }
       ]
     },
     {
       "name": "ca-start-process-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_programInputRef` - \n\n  * `_threadsInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_programName` - \n\n  * `_threads` {`number`} - \n\n  * `_ownedProgram` - \n\n  * `_existingProcess` - \n\n  * `handleClose` - \n\n  * `handleProgramChange` - \n\n  * `handleThreadsChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleStartProcess` - \n\n  * `formatProgramSelectItem` - \n\n  * `calculateMaxThreads` - \n\n  * `validate` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_programInputRef` - \n\n  * `_threadsInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_programName` - \n\n  * `_threads` {`number`} - \n\n  * `_ownedProgram` - \n\n  * `_existingProcess` - \n\n  * `handleClose` - \n\n  * `handleProgramChange` - \n\n  * `handleThreadsChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleStartProcess` - \n\n  * `renderProgramNameOptions` - \n\n  * `formatProgramSelectItem` - \n\n  * `calculateMaxThreads` - \n\n  * `validate` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "open",
@@ -686,8 +811,19 @@
     },
     {
       "name": "ca-owned-programs-list",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderProgram` - \n\n  * `handleMoveProgram` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_filterEnabled` {`boolean`} - \n\n  * `_programsFilterState` {`IProgramsFilterState`} - \n\n  * `_programsList` {`IProgram[]`} - \n\n  * `renderEmptyListNotification` - \n\n  * `renderProgram` - \n\n  * `handleMoveProgram` - \n\n  * `handleToggleFilter` - \n\n  * `handleChangeFilterState` - \n\n  * `filterProgram` - \n\n  * `_controller` - ",
       "attributes": []
+    },
+    {
+      "name": "ca-owned-programs-list-filter",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_filterState` {`IProgramsFilterState | undefined`} - \n\n  * `_programsInputRef` - \n\n  * `_tiersInputRef` - \n\n  * `_maxTierInputRef` - \n\n  * `_maxLevelInputRef` - \n\n  * `_autoupgradeInputRef` - \n\n  * `renderProgramNameOptions` - \n\n  * `renderTierOptions` - \n\n  * `renderLevelFilterOptions` - \n\n  * `renderAutoupgradeFilterOptions` - \n\n  * `handleReset` - \n\n  * `handleProgramsChange` - \n\n  * `handleTiersChange` - \n\n  * `handleMaxTierChange` - \n\n  * `handleMaxLevelChange` - \n\n  * `handleAutoupgradeChange` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
+        }
+      ]
     },
     {
       "name": "ca-owned-programs-list-item-buttons",
@@ -701,22 +837,33 @@
     },
     {
       "name": "ca-owned-programs-list-item",
-      "description": "Attributes:\n\n  * `program-name` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `programName` - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `_program` - \n\n  * `handleToggleDescription` - \n\n  * `handleDragStart` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `program-name` - \n\n  * `drag-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `programName` - \n\n  * `dragEnabled` {`boolean`} - \n\n  * `_descriptionVisible` {`boolean`} - \n\n  * `_program` - \n\n  * `handleToggleDescription` - \n\n  * `handleDragStart` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "program-name",
           "description": "`program-name` - \n\nProperty: programName"
+        },
+        {
+          "name": "drag-enabled",
+          "description": "`drag-enabled` {`boolean`} - \n\nProperty: dragEnabled",
+          "valueSet": "v"
         }
       ]
     },
     {
       "name": "ca-owned-programs-list-buttons",
-      "description": "Properties:\n\n  * `styles` - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_upgradeMaxButton` - \n\n  * `handleToggleAutoupgrade` - \n\n  * `handleUpgradeMaxAllPrograms` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
-      "attributes": []
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_upgradeMaxButton` - \n\n  * `_programsList` {`IProgram[] | undefined`} - \n\n  * `handleToggleAutoupgrade` - \n\n  * `handleUpgradeMaxPrograms` - \n\n  * `handleToggleFilter` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "filter-enabled",
+          "description": "`filter-enabled` {`boolean`} - \n\nProperty: filterEnabled\n\nDefault: false",
+          "valueSet": "v"
+        }
+      ]
     },
     {
       "name": "ca-purchase-program-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_programInputRef` - \n\n  * `_tierInputRef` - \n\n  * `_levelInputRef` - \n\n  * `_buttonsRef` - \n\n  * `open` {`boolean`} - \n\n  * `_programName` - \n\n  * `_tier` {`number`} - \n\n  * `_level` {`number`} - \n\n  * `_program` - \n\n  * `_existingProgram` - \n\n  * `renderProgramOption` - \n\n  * `renderTierOptions` - \n\n  * `handleClose` - \n\n  * `handleProgramChange` - \n\n  * `handleTierChange` - \n\n  * `handleLevelChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handlePurchaseProgram` - \n\n  * `validate` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_programInputRef` - \n\n  * `_tierInputRef` - \n\n  * `_levelInputRef` - \n\n  * `_buttonsRef` - \n\n  * `open` {`boolean`} - \n\n  * `_programName` - \n\n  * `_tier` {`number`} - \n\n  * `_level` {`number`} - \n\n  * `_program` - \n\n  * `_existingProgram` - \n\n  * `renderProgramNameOptions` - \n\n  * `renderTierOptions` - \n\n  * `handleClose` - \n\n  * `handleProgramChange` - \n\n  * `handleTierChange` - \n\n  * `handleLevelChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handlePurchaseProgram` - \n\n  * `validate` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "open",
@@ -964,11 +1111,16 @@
     },
     {
       "name": "ca-sortable-list",
-      "description": "Attributes:\n\n  * `gap` {`number`} - \n\nProperties:\n\n  * `styles` - \n\n  * `gap` {`number`} - \n\n  * `_listRef` - \n\n  * `_draggedElement` {`HTMLElement | undefined`} - \n\n  * `_listBoundingRect` {`DOMRect | undefined`} - \n\n  * `_elementBoundingRect` {`DOMRect | undefined`} - \n\n  * `handleChildrenUpdate` - \n\n  * `handleDragStart` - \n\n  * `handleDragOver` - \n\n  * `handleDragEnd` - ",
+      "description": "Attributes:\n\n  * `gap` {`number`} - \n\n  * `drag-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` - \n\n  * `gap` {`number`} - \n\n  * `dragEnabled` {`boolean`} - \n\n  * `_listRef` - \n\n  * `_draggedElement` {`HTMLElement | undefined`} - \n\n  * `_listBoundingRect` {`DOMRect | undefined`} - \n\n  * `_elementBoundingRect` {`DOMRect | undefined`} - \n\n  * `handleChildrenUpdate` - \n\n  * `handleDragStart` - \n\n  * `handleDragOver` - \n\n  * `handleDragEnd` - ",
       "attributes": [
         {
           "name": "gap",
           "description": "`gap` {`number`} - \n\nProperty: gap\n\nDefault: 0"
+        },
+        {
+          "name": "drag-enabled",
+          "description": "`drag-enabled` {`boolean`} - \n\nProperty: dragEnabled\n\nDefault: true",
+          "valueSet": "v"
         }
       ]
     },

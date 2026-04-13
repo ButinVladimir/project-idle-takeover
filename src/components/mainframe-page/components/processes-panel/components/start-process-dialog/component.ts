@@ -9,7 +9,7 @@ import SlInput from '@shoelace-style/shoelace/dist/components/input/input.compon
 import clamp from 'lodash/clamp';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { type ProgramName, type IProgram, type IProcess } from '@state/mainframe-state';
-import { BaseComponent, ProgramAlert } from '@shared/index';
+import { BaseComponent, compareOptions, ISelectOption, ProgramAlert } from '@shared/index';
 import { PROGRAM_TEXTS } from '@texts/index';
 import { StartProcessDialogCloseEvent } from './events';
 import { StartProcessDialogController } from './controller';
@@ -51,12 +51,6 @@ export class StartProcessDialog extends BaseComponent {
     super();
 
     this._controller = new StartProcessDialogController(this);
-  }
-
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
   }
 
   updated(_changedProperties: Map<string, any>) {
@@ -111,7 +105,7 @@ Threads allow to run multiple instances of same program at same time, but additi
               >
                 <span class="input-label" slot="label"> ${msg('Program')} </span>
 
-                ${this._controller.listPrograms().map(this.formatProgramSelectItem)}
+                ${this.renderProgramNameOptions()}
               </sl-select>
 
               <sl-input
@@ -151,7 +145,7 @@ Threads allow to run multiple instances of same program at same time, but additi
     `;
   }
 
-  private updateContext() {
+  protected updateContext() {
     if (this._programName) {
       this._ownedProgram = this._controller.getOwnedProgram(this._programName);
       this._existingProcess = this._controller.getProcessByName(this._programName);
@@ -252,15 +246,24 @@ Threads allow to run multiple instances of same program at same time, but additi
     }
   };
 
-  private formatProgramSelectItem = (program: IProgram) => {
+  private renderProgramNameOptions = () => {
+    const programs = this._controller.listPrograms();
+    const programOptions: ISelectOption[] = programs.map(this.formatProgramSelectItem);
+    programOptions.sort(compareOptions);
+
+    return programOptions.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
+  };
+
+  private formatProgramSelectItem = (program: IProgram): ISelectOption => {
     const formatter = this._controller.formatter;
     const programTitle = PROGRAM_TEXTS[program.name].title();
     const formattedLevel = formatter.formatLevel(program.level);
     const formattedTier = formatter.formatTier(program.tier);
 
-    return html`<sl-option value=${program.name}>
-      ${msg(str`${programTitle}, tier ${formattedTier}, level ${formattedLevel}`)}
-    </sl-option>`;
+    return {
+      value: program.name,
+      name: msg(str`${programTitle}, tier ${formattedTier}, level ${formattedLevel}`),
+    };
   };
 
   private calculateMaxThreads = (): number => {

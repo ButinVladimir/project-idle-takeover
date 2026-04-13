@@ -4,7 +4,7 @@ import { SidejobValidationResult } from '@state/activity-state/states/sidejob-ac
 import { ContractValidationResult } from '@state/activity-state/states/contract-activity-validator/types';
 import { MainframeHardwareValidationResult } from '@state/mainframe-state/states/mainframe-hardware-state/types';
 import { ProcessValidationResult } from '@state/mainframe-state/states/mainframe-processes-state/types';
-import { CloneValidationResult } from '@/state/clones-state/states/owned-clones-state/types';
+import { CloneValidationResult } from '@state/clones-state/states/owned-clones-state/types';
 import { COMMON_TEXTS } from './common';
 
 export const SIDEJOB_VALIDATION_TEXTS: Record<SidejobValidationResult, () => string> = {

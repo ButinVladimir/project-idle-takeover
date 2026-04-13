@@ -98,25 +98,11 @@ export class OwnedClonesState implements IOwnedClonesState {
     return bought;
   }
 
-  toggleAllClonesAutoupgrade(active: boolean): void {
-    for (const clone of this._clonesList) {
-      clone.autoUpgradeEnabled = active;
-    }
-  }
-
   deleteClone(id: string): void {
     const clone: IClone | undefined = this.getCloneById(id);
-    const index = this._clonesList.findIndex((clone) => clone.id === id);
-
-    if (index >= 0) {
-      removeElementsFromArray(this._clonesList, index, 1);
-    }
 
     if (clone) {
-      clone.removeAllEventListeners();
-
-      this._clonesMap.delete(id);
-      this.deleteCloneRelatedObjects(clone);
+      this.handleDeleteClone(clone);
 
       this._messageLogState.postMessage(ClonesEvent.cloneDeleted, msg(str`Clone "${clone.name}" has been deleted`));
     }
@@ -125,12 +111,16 @@ export class OwnedClonesState implements IOwnedClonesState {
     this._activityState.requestReassignment();
   }
 
-  deleteAllClones(): void {
-    this.clearState();
-    this._activityState.sidejobsActivity.cancelAllActivities();
-    this._automationState.contracts.removeAllContractAssignments();
+  deleteClones(ids: string[]): void {
+    for (const id of ids) {
+      const clone: IClone | undefined = this.getCloneById(id);
 
-    this._messageLogState.postMessage(ClonesEvent.allClonesDeleted, msg('All clones have been deleted'));
+      if (clone) {
+        this.handleDeleteClone(clone);
+      }
+    }
+
+    this._messageLogState.postMessage(ClonesEvent.displayedClonesDeleted, msg('Displayed clones have been deleted'));
 
     this._globalState.synchronization.recalculate();
     this._activityState.requestReassignment();
@@ -242,5 +232,18 @@ export class OwnedClonesState implements IOwnedClonesState {
     }
 
     this._automationState.contracts.removeCloneFromAssignments(clone.id);
+  }
+
+  private handleDeleteClone(clone: IClone) {
+    const index = this._clonesList.findIndex((clone) => clone.id === clone.id);
+
+    if (index >= 0) {
+      removeElementsFromArray(this._clonesList, index, 1);
+    }
+
+    clone.removeAllEventListeners();
+
+    this._clonesMap.delete(clone.id);
+    this.deleteCloneRelatedObjects(clone);
   }
 }

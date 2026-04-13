@@ -10,14 +10,6 @@ const styles = [
 
     .items-list .header.desktop {
       grid-template-columns: 2fr 1fr 1fr 1fr auto;
-
-      .tooltip-content p {
-        margin: 0;
-      }
-
-      #delete-btn::part(base):hover {
-        color: var(--ca-danger-color);
-      }
     }
   `,
 ];

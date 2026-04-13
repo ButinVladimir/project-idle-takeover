@@ -156,42 +156,48 @@ export class MainframeProcessesState implements IMainframeProcessesState {
 
   deleteProcess(programName: ProgramName): void {
     const process: IProcess | undefined = this.getProcessByName(programName);
-    const index = this._processesList.findIndex((process) => process.program.name === programName);
 
-    if (index >= 0) {
-      removeElementsFromArray(this._processesList, index, 1);
+    if (!process) {
+      return;
     }
 
-    if (process) {
-      this.handleProcessCleanup(process);
+    this.handleDeleteProcess(process);
 
-      this._processesMap.delete(programName);
+    const programTitle = PROGRAM_TEXTS[programName].title();
 
-      const programTitle = PROGRAM_TEXTS[programName].title();
+    if (process.program.isAutoscalable) {
+      this._messageLogState.postMessage(
+        ProgramsEvent.processStarted,
+        msg(str`Process for program "${programTitle}" has been deleted`),
+      );
+    } else {
+      const formattedThreads = this._formatter.formatNumberDecimal(process.threads);
 
-      if (process.program.isAutoscalable) {
-        this._messageLogState.postMessage(
-          ProgramsEvent.processStarted,
-          msg(str`Process for program "${programTitle}" has been deleted`),
-        );
-      } else {
-        const formattedThreads = this._formatter.formatNumberDecimal(process.threads);
-
-        this._messageLogState.postMessage(
-          ProgramsEvent.processStarted,
-          msg(str`Process for program "${programTitle}" with ${formattedThreads} threads has been deleted`),
-        );
-      }
+      this._messageLogState.postMessage(
+        ProgramsEvent.processStarted,
+        msg(str`Process for program "${programTitle}" with ${formattedThreads} threads has been deleted`),
+      );
     }
 
     this.requestUpdateRunningProcesses();
     this.recalculateRam();
   }
 
-  deleteAllProcesses() {
-    this.clearState();
+  deleteProcesses(programNames: ProgramName[]) {
+    for (const programName of programNames) {
+      const process = this.getProcessByName(programName);
 
-    this._messageLogState.postMessage(ProgramsEvent.allProcessesDeleted, msg('All process have been deleted'));
+      if (!process) {
+        continue;
+      }
+
+      this.handleDeleteProcess(process);
+    }
+
+    this._messageLogState.postMessage(
+      ProgramsEvent.displayedProcessesDeleted,
+      msg('Displayed process have been deleted'),
+    );
 
     this.requestUpdateRunningProcesses();
     this.recalculateRam();
@@ -371,6 +377,20 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     this._processesList.length = 0;
     this._processesMap.clear();
   }
+
+  private handleDeleteProcess = (process: IProcess) => {
+    const index = this._processesList.findIndex((listProcess) => listProcess.program.name === process.program.name);
+
+    if (index >= 0) {
+      removeElementsFromArray(this._processesList, index, 1);
+    }
+
+    if (process) {
+      this.handleProcessCleanup(process);
+
+      this._processesMap.delete(process.program.name);
+    }
+  };
 
   private handleProcessCleanup(process: IProcess) {
     process.removeAllEventListeners();

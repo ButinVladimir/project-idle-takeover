@@ -15,7 +15,7 @@ export class MainframeProgramsPanel extends BaseComponent {
   protected renderDesktop() {
     return html`
       <p class="hint">
-        ${msg(`Program autoupgrade priority can be changed by dragging it by the title.
+        ${msg(`Program autoupgrade priority can be changed by dragging it by the title if filter is disabled.
 Programs on top have higher priority.
 Autoupgrade for programs won't change their tier but will attempt to increase level.
 Program level cannot be above development level.`)}

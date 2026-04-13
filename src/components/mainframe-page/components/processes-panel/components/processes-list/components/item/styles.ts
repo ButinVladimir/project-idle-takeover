@@ -1,9 +1,10 @@
 import { css } from 'lit';
-import { dragIconStyle, itemsListItemStyle } from '@shared/index';
+import { dragIconStyle, itemsListItemButtonsStyle, itemsListItemStyle } from '@shared/index';
 
 const styles = [
   dragIconStyle,
   itemsListItemStyle,
+  itemsListItemButtonsStyle,
   css`
     :host {
       display: block;

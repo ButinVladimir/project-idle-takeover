@@ -29,15 +29,19 @@ export class MainframeProgramsUpgrader implements IMainframeProgramsUpgrader {
 
   private _availableActions = 0;
 
-  upgradeMaxAllPrograms(): void {
+  upgradeMaxPrograms(programNames: ProgramName[]): void {
     if (!this.checkUpgradeAvailable()) {
       return;
     }
 
+    const programs = programNames
+      .map((programName) => this._mainframeState.programs.getOwnedProgramByName(programName))
+      .filter((program) => program) as IProgram[];
+
     this._availableMoney = this._globalState.money.money;
     this._availableActions = Number.MAX_SAFE_INTEGER;
 
-    this.performUpgradeAll();
+    this.performUpgradePrograms(programs);
   }
 
   upgradeMaxProgram(programName: ProgramName): void {
@@ -62,10 +66,12 @@ export class MainframeProgramsUpgrader implements IMainframeProgramsUpgrader {
       return;
     }
 
+    const programs = this._mainframeState.programs.listOwnedPrograms();
+
     this._availableMoney = (this._globalState.money.money * this._automationState.mainframePrograms.moneyShare) / 100;
     this._availableActions = actionCount;
 
-    this.performUpgradeAll();
+    this.performUpgradePrograms(programs);
   }
 
   calculateLevelFromMoney(name: ProgramName, tier: number, money: number): number {
@@ -80,8 +86,8 @@ export class MainframeProgramsUpgrader implements IMainframeProgramsUpgrader {
     return this._unlockState.milestones.isMilestoneReached(Milestone.unlockedMainframePrograms);
   }
 
-  private performUpgradeAll() {
-    for (const existingProgram of this._mainframeState.programs.listOwnedPrograms()) {
+  private performUpgradePrograms(programs: IProgram[]) {
+    for (const existingProgram of programs) {
       if (this._availableActions <= 0) {
         break;
       }

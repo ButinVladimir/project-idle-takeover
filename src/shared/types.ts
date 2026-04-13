@@ -47,14 +47,14 @@ export enum ProgramsEvent {
   programPurchased = 'programPurchased',
   processStarted = 'processStarted',
   processDeleted = 'processDeleted',
-  allProcessesDeleted = 'allProcessesDeleted',
+  displayedProcessesDeleted = 'displayedProcessesDeleted',
 }
 
 export enum ClonesEvent {
   clonePurchased = 'clonePurchased',
   cloneLevelUpgraded = 'cloneLevelUpgraded',
   cloneDeleted = 'cloneDeleted',
-  allClonesDeleted = 'allClonesDeleted',
+  displayedClonesDeleted = 'displayedClonesDeleted',
   cloneLevelReached = 'cloneLevelReached',
   cloneRenamed = 'cloneRenamed',
 }
@@ -62,20 +62,20 @@ export enum ClonesEvent {
 export enum SidejobsEvent {
   sidejobAssigned = 'sidejobAssigned',
   sidejobCancelled = 'sidejobCancelled',
-  allSidejobsCancelled = 'allSidejobsCancelled',
+  displayedSidejobsCancelled = 'displayedSidejobsCancelled',
 }
 
 export enum ContractsEvent {
   contractAssigned = 'contractAssigned',
   contractAssignmentRemoved = 'contractAssignmentRemoved',
-  allContractAssignmentsRemoved = 'allContractAssignmentsRemoved',
+  displayedContractAssignmentsRemoved = 'displayedContractAssignmentsRemoved',
 }
 
 export enum PrimaryActivitiesEvent {
   primaryActivityAdded = 'primaryActivityAdded',
   primaryActivityFinished = 'primaryActivityFinished',
   primaryActivityCancelled = 'primaryActivityCancelled',
-  allPrimaryActivitiesCancelled = 'allPrimaryActivitiesCancelled',
+  displayedPrimaryActivitiesCancelled = 'displayedPrimaryActivitiesCancelled',
 }
 
 export enum CityEvent {
@@ -116,28 +116,28 @@ export enum ProgramAlert {
   purchaseProgramOverwrite = 'purchaseProgramOverwrite',
   processDelete = 'processDelete',
   processReplace = 'processReplace',
-  deleteAllProcesses = 'deleteAllProcesses',
+  deleteDisplayedProcesses = 'deleteDisplayedProcesses',
 }
 
 export enum CloneAlert {
   cloneDelete = 'cloneDelete',
-  deleteAllClones = 'deleteAllClones',
+  deleteDisplayedClones = 'deleteDisplayedClones',
 }
 
 export enum SidejobAlert {
   sidejobCancel = 'sidejobCancel',
-  cancelAllSidejobs = 'cancelAllSidejobs',
+  cancelDisplayedSidejobs = 'cancelDisplayedSidejobs',
   replaceSidejob = 'replaceSidejob',
 }
 
 export enum ContractAlert {
   contractAssignmentRemove = 'contractAssignmentCancel',
-  removeAllContractAssignments = 'cancelAllContractAssignments',
+  removeDisplayedContractAssignments = 'cancelDisplayedContractAssignments',
   replaceContractAssignment = 'replaceContractAssignment',
 }
 
 export enum PrimaryActivityAlert {
-  cancelAllPrimaryActivities = 'cancelAllPrimaryActivities',
+  cancelDisplayedPrimaryActivities = 'cancelDisplayedPrimaryActivities',
   cancelPrimaryActivity = 'cancelPrimaryActivity',
 }
 
@@ -290,4 +290,22 @@ export enum ActivityUIActivityStatus {
   valid = 'valid',
   notAvailable = 'notAvailable',
   invalid = 'invalid',
+}
+
+export enum LevelFilterValue {
+  all = 'all',
+  maxed = 'maxed',
+  belowMax = 'belowMax',
+}
+
+export enum StateFilterValue {
+  all = 'all',
+  enabled = 'enabled',
+  disabled = 'disabled',
+}
+
+export enum ActivityStatusFilterValue {
+  all = 'all',
+  active = 'active',
+  inactive = 'inactive',
 }

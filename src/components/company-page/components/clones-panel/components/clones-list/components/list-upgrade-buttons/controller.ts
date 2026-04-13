@@ -1,31 +1,27 @@
-import { IClone } from '@state/clones-state';
+import { CloneValidationResult, IClone } from '@state/clones-state';
 import { BaseController, Hotkey } from '@shared/index';
 
 export class ClonesListUpgradeButtonsController extends BaseController {
-  checkCanUpgradeMaxAllLevels(): boolean {
-    return this.clonesState.ownedClones.listClones().some(this.checkCanUpgradeMaxLevel);
-  }
-
-  upgradeMaxAllLevels() {
-    this.clonesState.ownedClones.levelUpgrader.upgradeMaxAllClones();
+  upgradeMaxDisplayedLevels(ids: string[]) {
+    this.clonesState.ownedClones.levelUpgrader.upgradeMaxClones(ids);
   }
 
   getUpgradeLevelHotkey(): string | undefined {
     return this.settingsState.hotkeys.getKeyByHotkey(Hotkey.upgradeClonesLevel);
   }
 
-  private checkCanUpgradeMaxLevel = (clone: IClone) => {
+  checkCanUpgradeMaxLevel = (clone: IClone) => {
     if (!clone.autoUpgradeEnabled) {
       return false;
     }
 
-    if (!this.unlockState.items.cloneTemplates.isItemAvailable(clone.templateName, clone.tier, clone.level + 1)) {
-      return false;
-    }
-
     return (
-      this.globalState.money.money >=
-      this.clonesState.ownedClones.validator.calculateCloneCost(clone.templateName, clone.tier, clone.level + 1)
+      this.clonesState.ownedClones.validator.validateClone({
+        name: clone.name,
+        templateName: clone.templateName,
+        tier: clone.tier,
+        level: clone.level + 1,
+      }) === CloneValidationResult.valid
     );
   };
 }

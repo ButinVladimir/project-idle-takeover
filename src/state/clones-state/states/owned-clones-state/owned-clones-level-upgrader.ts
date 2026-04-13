@@ -29,15 +29,17 @@ export class OwnedClonesLevelUpgrader implements IOwnedClonesLevelUpgrader {
 
   private _availableActions = 0;
 
-  upgradeMaxAllClones(): void {
+  upgradeMaxClones(ids: string[]): void {
     if (!this.checkUpgradeAvailable()) {
       return;
     }
 
+    const clones = ids.map((id) => this._clonesState.ownedClones.getCloneById(id)).filter((clone) => clone) as IClone[];
+
     this._availableMoney = this._globalState.money.money;
     this._availableActions = Number.MAX_SAFE_INTEGER;
 
-    this.performUpgradeAll();
+    this.performUpgradeClones(clones);
   }
 
   upgradeMaxClone(id: string): void {
@@ -62,10 +64,12 @@ export class OwnedClonesLevelUpgrader implements IOwnedClonesLevelUpgrader {
       return;
     }
 
+    const clones = this._clonesState.ownedClones.listClones();
+
     this._availableMoney = (this._globalState.money.money * this._automationState.cloneLevel.moneyShare) / 100;
     this._availableActions = actionCount;
 
-    this.performUpgradeAll();
+    this.performUpgradeClones(clones);
   }
 
   calculateCloneLevelFromMoney(templateName: string, tier: number, money: number): number {
@@ -79,8 +83,8 @@ export class OwnedClonesLevelUpgrader implements IOwnedClonesLevelUpgrader {
     return this._unlockState.milestones.isMilestoneReached(Milestone.unlockedCompanyManagement);
   }
 
-  private performUpgradeAll() {
-    for (const clone of this._clonesState.ownedClones.listClones()) {
+  private performUpgradeClones(clones: IClone[]) {
+    for (const clone of clones) {
       if (this._availableActions <= 0) {
         break;
       }
