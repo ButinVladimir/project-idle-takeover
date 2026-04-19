@@ -199,8 +199,38 @@ export class OwnedClonesState implements IOwnedClonesState {
   }
 
   private handlePurhaseClone = (args: IPurchaseCloneArgs) => () => {
+    if (args.id) {
+      this.handleReplaceClone(args);
+    } else {
+      this.handlePurchaseNewClone(args);
+    }
+  };
+
+  private handleReplaceClone(args: IPurchaseCloneArgs) {
+    const existingClone = this._clonesState.ownedClones.getCloneById(args.id!);
+
+    if (!existingClone) {
+      throw new Error(`Clone with ${args.id} not found`);
+    }
+
+    existingClone.replaceTemplate(args.templateName, args.tier, args.level);
+
+    this._activityState.requestReassignment();
+    this._globalState.synchronization.recalculate();
+
+    const formattedTier = this._formatter.formatTier(args.tier);
+    const formattedLevel = this._formatter.formatLevel(args.level);
+    this._messageLogState.postMessage(
+      ClonesEvent.cloneReplaced,
+      msg(
+        str`Clone "${existingClone.name}" has been replaced with template "${CLONE_TEMPLATE_TEXTS[args.templateName].title()}", tier ${formattedTier} and level ${formattedLevel}`,
+      ),
+    );
+  }
+
+  private handlePurchaseNewClone(args: IPurchaseCloneArgs) {
     const clone = this._clonesState.cloneFactory.makeClone({
-      id: uuid(),
+      id: args.id ?? uuid(),
       name: args.name,
       templateName: args.templateName,
       tier: args.tier,
@@ -222,7 +252,7 @@ export class OwnedClonesState implements IOwnedClonesState {
         str`Clone "${clone.name}" with template "${CLONE_TEMPLATE_TEXTS[clone.templateName].title()}", tier ${formattedTier} and level ${formattedLevel} has been purchased`,
       ),
     );
-  };
+  }
 
   private deleteCloneRelatedObjects(clone: IClone) {
     const sidejob = this._activityState.sidejobsActivity.getActivityByCloneId(clone.id);

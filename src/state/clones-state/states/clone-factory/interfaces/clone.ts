@@ -12,7 +12,8 @@ export interface IClone {
   level: number;
   autoUpgradeEnabled: boolean;
   experienceMultiplier: number;
-  upgradeLevel(level: number): void;
+  replaceTemplate(templateName: string, tier: number, level: number): void;
+  setLevel(level: number): void;
   increaseExperience(delta: number, share: boolean): void;
   getLevelRequirements(level: number): number;
   getTotalAttributeValue(attribute: Attribute): number;

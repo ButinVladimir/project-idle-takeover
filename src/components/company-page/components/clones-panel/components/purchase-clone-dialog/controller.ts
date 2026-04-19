@@ -26,9 +26,9 @@ export class PurchaseCloneDialogController extends BaseController {
     return this.clonesState.ownedClones.validator.validateClone(clone) === CloneValidationResult.valid;
   }
 
-  getClone(name: string, cloneTemplateName: string, tier: number, level: number): IClone {
+  getClone(id: string, name: string, cloneTemplateName: string, tier: number, level: number): IClone {
     return this.clonesState.cloneFactory.makeClone({
-      id: 'temporary',
+      id,
       name,
       templateName: cloneTemplateName,
       tier,

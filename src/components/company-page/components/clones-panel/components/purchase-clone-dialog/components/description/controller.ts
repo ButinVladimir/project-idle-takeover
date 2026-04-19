@@ -1,8 +1,9 @@
+import { IPurchaseCloneArgs } from '@state/clones-state';
 import { BaseController } from '@shared/index';
 
 export class PurchaseCloneDialogDescriptionTextController extends BaseController {
-  get availableSynchronization(): number {
-    return this.globalState.synchronization.availableValue;
+  getCloneAvailableSynchronization(cloneArgs: IPurchaseCloneArgs): number {
+    return this.clonesState.ownedClones.validator.calculateCloneAvailableSynchronization(cloneArgs);
   }
 
   getCloneSynchronization(cloneTemplateName: string, tier: number): number {

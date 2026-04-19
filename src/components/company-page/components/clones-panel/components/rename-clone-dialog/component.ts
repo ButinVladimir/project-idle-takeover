@@ -9,7 +9,7 @@ import { type IClone } from '@state/clones-state';
 import { COMMON_TEXTS } from '@texts/index';
 import { RenameCloneDialogController } from './controller';
 import { CloseCloneListItemDialogEvent } from '../../events/close-clone-list-item-dialog';
-import { modalCloneContext } from '../../contexts';
+import { modalSelectedCloneContext } from '../../contexts';
 import styles from './styles';
 
 @localized()
@@ -28,8 +28,8 @@ export class RenameCloneDialog extends BaseComponent {
   @state()
   private _newName = '';
 
-  @consume({ context: modalCloneContext, subscribe: true })
-  private _clone?: IClone;
+  @consume({ context: modalSelectedCloneContext, subscribe: true })
+  private _selectedClone?: IClone;
 
   private _newNameInputRef = createRef<SlInput>();
 
@@ -42,13 +42,13 @@ export class RenameCloneDialog extends BaseComponent {
   updated(_changedProperties: Map<string, any>) {
     super.updated(_changedProperties);
 
-    if (_changedProperties.has('open') && this._clone) {
-      this._newName = this._clone.name ?? '';
+    if (_changedProperties.has('open') && this._selectedClone) {
+      this._newName = this._selectedClone.name ?? '';
     }
   }
 
   renderDesktop() {
-    if (!this._clone) {
+    if (!this._selectedClone) {
       return nothing;
     }
 
@@ -57,7 +57,7 @@ export class RenameCloneDialog extends BaseComponent {
     return html`
       <form id="rename-clone-dialog" @submit=${this.handleSubmit}>
         <sl-dialog ?open=${this.open} @sl-request-close=${this.handleClose}>
-          <h4 slot="label" class="title">${msg(str`Rename clone "${this._clone.name}"`)}</h4>
+          <h4 slot="label" class="title">${msg(str`Rename clone "${this._selectedClone.name}"`)}</h4>
 
           <div class="body">
             <p class="hint">${msg(str`Enter new name for clone.`)}</p>
@@ -130,7 +130,7 @@ export class RenameCloneDialog extends BaseComponent {
       return;
     }
 
-    this._controller.renameCloneById(this._clone!.id, this._newName);
+    this._controller.renameCloneById(this._selectedClone!.id, this._newName);
     this.dispatchEvent(new CloseCloneListItemDialogEvent());
   };
 }

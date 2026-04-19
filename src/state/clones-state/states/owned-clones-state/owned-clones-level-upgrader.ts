@@ -5,6 +5,7 @@ import { Milestone, PurchaseType, reverseTierPower } from '@shared/index';
 import { type IGlobalState } from '@state/global-state';
 import { type IAutomationState } from '@state/automation-state';
 import { type IUnlockState } from '@state/unlock-state';
+import { type IActivityState } from '@state/activity-state';
 import { IOwnedClonesLevelUpgrader } from './interfaces';
 import { type IClonesState } from '../../interfaces';
 import { IClone, typedCloneTemplates } from '../clone-factory';
@@ -13,6 +14,9 @@ const { lazyInject } = decorators;
 
 @injectable()
 export class OwnedClonesLevelUpgrader implements IOwnedClonesLevelUpgrader {
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
+
   @lazyInject(TYPES.AutomationState)
   private _automationState!: IAutomationState;
 
@@ -118,7 +122,8 @@ export class OwnedClonesLevelUpgrader implements IOwnedClonesLevelUpgrader {
     const cost = this._clonesState.ownedClones.validator.calculateCloneCost(clone.templateName, clone.tier, newLevel);
 
     return this._globalState.money.purchase(cost, PurchaseType.clones, () => {
-      clone.upgradeLevel(newLevel);
+      clone.setLevel(newLevel);
+      this._activityState.requestReassignment();
     });
   }
 }

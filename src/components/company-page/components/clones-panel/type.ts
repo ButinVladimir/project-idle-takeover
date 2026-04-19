@@ -1,1 +1,1 @@
-export type CloneListItemDialog = 'rename-clone';
+export type CloneListItemDialog = 'purchase-clone' | 'rename-clone';

@@ -8,11 +8,15 @@ import { IPurchaseCloneArgs } from './interfaces';
 import { CloneValidationResult } from './types';
 import { IOwnedClonesValidator } from './interfaces';
 import { typedCloneTemplates } from '../clone-factory';
+import { type IClonesState } from '../../interfaces/clones-state';
 
 const { lazyInject } = decorators;
 
 @injectable()
 export class OwnedClonesValidator implements IOwnedClonesValidator {
+  @lazyInject(TYPES.ClonesState)
+  private _clonesState!: IClonesState;
+
   @lazyInject(TYPES.UnlockState)
   private _unlockState!: IUnlockState;
 
@@ -35,8 +39,9 @@ export class OwnedClonesValidator implements IOwnedClonesValidator {
     }
 
     const synchronization = this.calculateCloneSynchronization(cloneArgs.templateName, cloneArgs.tier);
+    const availableSynchronization = this.calculateCloneAvailableSynchronization(cloneArgs);
 
-    if (synchronization > this._globalState.synchronization.availableValue) {
+    if (synchronization > availableSynchronization) {
       return CloneValidationResult.notEnoughSynchronization;
     }
 
@@ -58,5 +63,21 @@ export class OwnedClonesValidator implements IOwnedClonesValidator {
     return Math.ceil(
       template.synchronization.multiplier * calculateTierMultiplier(tier, template.synchronization.baseTier),
     );
+  }
+
+  calculateCloneAvailableSynchronization(cloneArgs: IPurchaseCloneArgs): number {
+    let availableSynchronization = this._globalState.synchronization.availableValue;
+
+    if (cloneArgs.id) {
+      const existingClone = this._clonesState.ownedClones.getCloneById(cloneArgs.id);
+
+      if (!existingClone) {
+        throw new Error(`Clone with id ${cloneArgs.id} not found`);
+      }
+
+      availableSynchronization += this.calculateCloneSynchronization(existingClone.templateName, existingClone.tier);
+    }
+
+    return availableSynchronization;
   }
 }

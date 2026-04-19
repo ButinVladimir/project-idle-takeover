@@ -119,6 +119,7 @@ export class ClonesListItem extends BaseComponent {
 
             <sl-menu>
               <sl-menu-item @click=${this.handleOpenRenameCloneDialog}>${msg('Rename clone')}</sl-menu-item>
+              <sl-menu-item @click=${this.handleOpenReplaceCloneDialog}>${msg('Replace clone')}</sl-menu-item>
               <sl-divider></sl-divider>
               <sl-menu-item @click=${this.handleOpenDeleteCloneDialog}>${msg('Delete clone')}</sl-menu-item>
             </sl-menu>
@@ -206,6 +207,16 @@ export class ClonesListItem extends BaseComponent {
     this._menuVisible = false;
 
     this.dispatchEvent(new OpenCloneListItemDialogEvent('rename-clone', this._clone));
+  };
+
+  private handleOpenReplaceCloneDialog = () => {
+    if (!this._clone) {
+      return;
+    }
+
+    this._menuVisible = false;
+
+    this.dispatchEvent(new OpenCloneListItemDialogEvent('purchase-clone', this._clone));
   };
 
   private handleToggleDetails = () => {
