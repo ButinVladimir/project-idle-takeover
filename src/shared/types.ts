@@ -122,6 +122,7 @@ export enum ProgramAlert {
 
 export enum CloneAlert {
   cloneDelete = 'cloneDelete',
+  cloneReplace = 'cloneReplace',
   deleteDisplayedClones = 'deleteDisplayedClones',
 }
 

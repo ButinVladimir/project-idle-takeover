@@ -3,11 +3,12 @@ import { localized, msg, str } from '@lit/localize';
 import { customElement, property, state } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { classMap } from 'lit/directives/class-map.js';
+import clamp from 'lodash/clamp';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.component.js';
 import SlInput from '@shoelace-style/shoelace/dist/components/input/input.component.js';
-import clamp from 'lodash/clamp';
+import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { consume, provide } from '@lit/context';
-import { BaseComponent, compareOptions, ISelectOption } from '@shared/index';
+import { BaseComponent, CloneAlert, compareOptions, ISelectOption } from '@shared/index';
 import { COMMON_TEXTS, CLONE_TEMPLATE_TEXTS } from '@texts/index';
 import { type IClone } from '@state/clones-state';
 import { PurchaseCloneDialogController } from './controller';
@@ -298,16 +299,18 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
       return;
     }
 
-    const isBought = this._controller.purchaseClone({
-      id: this._selectedClone?.id ?? undefined,
-      name: this._selectedClone?.name ?? this._name,
-      templateName: this._cloneTemplateName!,
-      tier: this._tier,
-      level: this._level,
-    });
-
-    if (isBought) {
-      this.dispatchEvent(new CloseCloneListItemDialogEvent());
+    if (this._selectedClone) {
+      this.dispatchEvent(
+        new ConfirmationAlertOpenEvent(
+          CloneAlert.cloneReplace,
+          msg(
+            str`Are you sure want to replace clone "${this._selectedClone.name}"? It will keep assigned sidejobs and primary activities but will lose augmentations, items and enhancements.`,
+          ),
+          this.handlePurchaseClone,
+        ),
+      );
+    } else {
+      this.handlePurchaseClone();
     }
   };
 
@@ -333,5 +336,19 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
     this._cloneTemplateName = this._selectedClone.templateName;
     this._tier = this._selectedClone.tier;
     this._level = this._selectedClone.level;
+  };
+
+  private handlePurchaseClone = () => {
+    const isBought = this._controller.purchaseClone({
+      id: this._selectedClone?.id ?? undefined,
+      name: this._selectedClone?.name ?? this._name,
+      templateName: this._cloneTemplateName!,
+      tier: this._tier,
+      level: this._level,
+    });
+
+    if (isBought) {
+      this.dispatchEvent(new CloseCloneListItemDialogEvent());
+    }
   };
 }

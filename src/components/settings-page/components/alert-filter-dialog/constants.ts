@@ -34,6 +34,7 @@ export const GAME_ALERT_NAMES: Record<GameAlert, () => string> = {
   [ProgramAlert.deleteDisplayedProcesses]: () => msg('Delete displayed process'),
   [CloneAlert.cloneDelete]: () => msg('Delete a clone'),
   [CloneAlert.deleteDisplayedClones]: () => msg('Delete displayed clones'),
+  [CloneAlert.cloneReplace]: () => msg('Replace a clone'),
   [SidejobAlert.sidejobCancel]: () => msg('Cancel an assigned sidejob'),
   [SidejobAlert.cancelDisplayedSidejobs]: () => msg('Cancel displayed sidejobs'),
   [SidejobAlert.replaceSidejob]: () => msg('Replace an assigned sidejob'),
