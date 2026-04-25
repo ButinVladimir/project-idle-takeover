@@ -11,6 +11,7 @@ import {
   compareOptions,
   ACTIVITY_STATUS_FILTER_VALUES,
   ActivityStatusFilterValue,
+  MULTIPLE_SELECT_SEPARATOR,
 } from '@shared/index';
 import { COMMON_TEXTS } from '@texts/common';
 import { IDistrictState } from '@state/city-state';
@@ -79,7 +80,7 @@ export class PrimaryActivityListFilter extends BaseComponent {
           hoist
           multiple
           clearable
-          value=${this._filterState.districtIndexes.join(' ')}
+          value=${this._filterState.districtIndexes.join(MULTIPLE_SELECT_SEPARATOR)}
           @sl-change=${this.handleDistrictIndexesChange}
         >
           <span class="input-label" slot="label"> ${msg('Districts')} </span>
@@ -93,7 +94,7 @@ export class PrimaryActivityListFilter extends BaseComponent {
           hoist
           multiple
           clearable
-          value=${this._filterState.cloneIds.join(' ')}
+          value=${this._filterState.cloneIds.join(MULTIPLE_SELECT_SEPARATOR)}
           @sl-change=${this.handleCloneIdsChange}
         >
           <span class="input-label" slot="label"> ${msg('Clones')} </span>

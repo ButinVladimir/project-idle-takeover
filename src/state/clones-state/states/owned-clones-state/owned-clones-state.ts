@@ -93,9 +93,9 @@ export class OwnedClonesState implements IOwnedClonesState {
     }
     const cost = this._validator.calculateCloneCost(cloneArgs.templateName, cloneArgs.tier, cloneArgs.level);
 
-    const bought = this._globalState.money.purchase(cost, PurchaseType.clones, this.handlePurhaseClone(cloneArgs));
+    const purchased = this._globalState.money.purchase(cost, PurchaseType.clones, this.handlePurhaseClone(cloneArgs));
 
-    return bought;
+    return purchased;
   }
 
   deleteClone(id: string): void {

@@ -21,8 +21,8 @@ Autoupgrade for programs won't change their tier but will attempt to increase le
 Program level cannot be above development level.`)}
       </p>
 
-      <sl-button variant="primary" size="medium" @click=${this.handlePurchaseProgramDialogOpen}>
-        ${msg('Purchase program')}
+      <sl-button variant="primary" size="medium" @click=${this.handlePurchaseProgramsDialogOpen}>
+        ${msg('Purchase programs')}
       </sl-button>
 
       <ca-owned-programs-list></ca-owned-programs-list>
@@ -35,7 +35,7 @@ Program level cannot be above development level.`)}
     `;
   }
 
-  private handlePurchaseProgramDialogOpen = () => {
+  private handlePurchaseProgramsDialogOpen = () => {
     this._isPurchaseProgramDialogOpen = true;
   };
 

@@ -16,7 +16,7 @@ import {
   type IMainframeProgramsValidator,
 } from './interfaces';
 import { ProgramName, IMakeProgramParameters, IProgram } from '../progam-factory';
-import { ProgramValidationResult } from './types';
+import { ProgramsBatchValidationResult } from './types';
 
 const { lazyInject } = decorators;
 
@@ -64,20 +64,25 @@ export class MainframeProgramsState implements IMainframeProgramsState {
     return this._validator;
   }
 
-  purchaseProgram(name: ProgramName, tier: number, level: number): boolean {
-    if (this._validator.validateProgram(name, tier, level) !== ProgramValidationResult.valid) {
+  purchaseProgramsBatch(names: ProgramName[], tier: number, level: number): boolean {
+    if (this._validator.validateProgramsBatch(names, tier, level) !== ProgramsBatchValidationResult.valid) {
       return false;
     }
 
-    const cost = this._validator.calculateProgramCost(name, tier, level);
+    let purchasedAll = true;
+    for (const name of names) {
+      const cost = this._validator.calculateProgramCost(name, tier, level);
 
-    const bought = this._globalState.money.purchase(
-      cost,
-      PurchaseType.mainframePrograms,
-      this.handlePurchaseProgram(name, tier, level),
-    );
+      const purchased = this._globalState.money.purchase(
+        cost,
+        PurchaseType.mainframePrograms,
+        this.handlePurchaseProgram(name, tier, level),
+      );
 
-    return bought;
+      purchasedAll &&= purchased;
+    }
+
+    return purchasedAll;
   }
 
   listOwnedPrograms(): IProgram[] {

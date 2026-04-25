@@ -1,5 +1,8 @@
 import { msg } from '@lit/localize';
-import { ProgramValidationResult } from '@state/mainframe-state/states/mainframe-programs-state/types';
+import {
+  ProgramsBatchValidationResult,
+  ProgramValidationResult,
+} from '@state/mainframe-state/states/mainframe-programs-state/types';
 import { SidejobValidationResult } from '@state/activity-state/states/sidejob-activity-validator/types';
 import { ContractValidationResult } from '@state/activity-state/states/contract-activity-validator/types';
 import { MainframeHardwareValidationResult } from '@state/mainframe-state/states/mainframe-hardware-state/types';
@@ -27,10 +30,15 @@ export const CONTRACT_VALIDATION_TEXTS: Record<ContractValidationResult, () => s
 };
 
 export const PROGRAM_VALIDATION_TEXTS: Record<ProgramValidationResult, () => string> = {
-  [ProgramValidationResult.programsLocked]: () => msg('Programs are locked'),
   [ProgramValidationResult.programNotAvailable]: () => msg('Program is not available'),
-  [ProgramValidationResult.notEnoughMoney]: COMMON_TEXTS.notEnoughMoney,
   [ProgramValidationResult.valid]: () => msg('Program is valid'),
+};
+
+export const PROGRAMS_BATCH_VALIDATION_TEXTS: Record<ProgramsBatchValidationResult, () => string> = {
+  [ProgramsBatchValidationResult.programsLocked]: () => msg('Programs are locked'),
+  [ProgramsBatchValidationResult.programsNotAvailable]: () => msg('Some programs are not available'),
+  [ProgramsBatchValidationResult.notEnoughMoney]: COMMON_TEXTS.notEnoughMoney,
+  [ProgramsBatchValidationResult.valid]: () => msg('Programs are valid'),
 };
 
 export const MAINFRAME_HARDWARE_VALIDATION_TEXTS: Record<MainframeHardwareValidationResult, () => string> = {

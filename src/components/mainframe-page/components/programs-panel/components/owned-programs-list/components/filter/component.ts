@@ -12,6 +12,7 @@ import {
   STATE_FILTER_VALUES,
   compareOptions,
   ISelectOption,
+  MULTIPLE_SELECT_SEPARATOR,
 } from '@shared/index';
 import { STATE_FILTER_TEXTS, COMMON_TEXTS, LEVEL_FILTER_TEXTS } from '@texts/common';
 import { PROGRAM_TEXTS } from '@texts/index';
@@ -82,7 +83,7 @@ export class OwnedProgramsListFilter extends BaseComponent {
           hoist
           multiple
           clearable
-          value=${this._filterState.programs.join(' ')}
+          value=${this._filterState.programs.join(MULTIPLE_SELECT_SEPARATOR)}
           @sl-change=${this.handleProgramsChange}
         >
           <span class="input-label" slot="label"> ${msg('Programs')} </span>
@@ -96,7 +97,7 @@ export class OwnedProgramsListFilter extends BaseComponent {
           hoist
           multiple
           clearable
-          value=${this._filterState.tiers.join(' ')}
+          value=${this._filterState.tiers.join(MULTIPLE_SELECT_SEPARATOR)}
           @sl-change=${this.handleTiersChange}
         >
           <span class="input-label" slot="label"> ${msg('Tiers')} </span>

@@ -149,3 +149,5 @@ export const ACTIVITY_UI_STATUSES = Object.values(ActivityUIActivityStatus);
 export const LEVEL_FILTER_VALUES = Object.values(LevelFilterValue);
 export const STATE_FILTER_VALUES = Object.values(StateFilterValue);
 export const ACTIVITY_STATUS_FILTER_VALUES = Object.values(ActivityStatusFilterValue);
+
+export const MULTIPLE_SELECT_SEPARATOR = ' ';

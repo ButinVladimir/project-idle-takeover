@@ -5,7 +5,7 @@ import { createRef, ref } from 'lit/directives/ref.js';
 import { provide } from '@lit/context';
 import { classMap } from 'lit/directives/class-map.js';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.component.js';
-import { BaseComponent, compareOptions, ContractAlert, ISelectOption } from '@shared/index';
+import { BaseComponent, compareOptions, ContractAlert, ISelectOption, MULTIPLE_SELECT_SEPARATOR } from '@shared/index';
 import { DISTRICT_NAMES, CONTRACT_TEXTS } from '@texts/index';
 import { type IContract, ContractValidationResult } from '@state/activity-state';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events/confirmation-alert-open';
@@ -122,7 +122,7 @@ Only one team of clones can be assigned per district and contract.`)}
               <sl-select
                 ${ref(this._clonesIdInputRef)}
                 name="cloneId"
-                value=${this._cloneIds.join(' ')}
+                value=${this._cloneIds.join(MULTIPLE_SELECT_SEPARATOR)}
                 multiple
                 clearable
                 hoist

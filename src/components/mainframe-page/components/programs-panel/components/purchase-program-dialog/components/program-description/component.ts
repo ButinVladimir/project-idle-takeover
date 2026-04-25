@@ -19,7 +19,7 @@ import { existingProgramContext, temporaryProgramContext } from '../../contexts'
 import styles from './styles';
 
 @localized()
-@customElement('ca-purchase-program-dialog-description')
+@customElement('ca-purchase-program-dialog-program-description')
 export class PurchaseProgramDialogDescription extends BaseComponent {
   static styles = styles;
 

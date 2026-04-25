@@ -7,7 +7,7 @@ import { IMainframeProgramsValidator } from './mainframe-programs-validator';
 export interface IMainframeProgramsState extends ISerializeable<IMainframeProgramsSerializedState> {
   upgrader: IMainframeProgramsUpgrader;
   validator: IMainframeProgramsValidator;
-  purchaseProgram(name: ProgramName, tier: number, level: number): boolean;
+  purchaseProgramsBatch(names: ProgramName[], tier: number, level: number): boolean;
   listOwnedPrograms(): IProgram[];
   getOwnedProgramByName(name: ProgramName): IProgram | undefined;
   toggleProgramsAutoUpgrade(active: boolean): void;

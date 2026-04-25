@@ -339,7 +339,7 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
   };
 
   private handlePurchaseClone = () => {
-    const isBought = this._controller.purchaseClone({
+    const isPurchased = this._controller.purchaseClone({
       id: this._selectedClone?.id ?? undefined,
       name: this._selectedClone?.name ?? this._name,
       templateName: this._cloneTemplateName!,
@@ -347,7 +347,7 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
       level: this._level,
     });
 
-    if (isBought) {
+    if (isPurchased) {
       this.dispatchEvent(new CloseCloneListItemDialogEvent());
     }
   };

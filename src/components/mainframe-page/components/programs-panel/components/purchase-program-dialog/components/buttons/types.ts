@@ -1,4 +1,4 @@
-import { ProgramValidationResult } from '@state/mainframe-state';
+import { ProgramsBatchValidationResult } from '@state/mainframe-state';
 
 export enum PurchaseProgramDialogFormWarning {
   notSelected = 'notSelected',
@@ -6,4 +6,4 @@ export enum PurchaseProgramDialogFormWarning {
   alreadyPurchased = 'alreadyPurchased',
 }
 
-export type PurchaseProgramDialogWarning = PurchaseProgramDialogFormWarning | ProgramValidationResult;
+export type PurchaseProgramDialogWarning = PurchaseProgramDialogFormWarning | ProgramsBatchValidationResult;

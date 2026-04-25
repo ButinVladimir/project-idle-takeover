@@ -13,6 +13,7 @@ import {
   compareOptions,
   ACTIVITY_STATUS_FILTER_VALUES,
   ActivityStatusFilterValue,
+  MULTIPLE_SELECT_SEPARATOR,
 } from '@shared/index';
 import { STATE_FILTER_TEXTS, COMMON_TEXTS } from '@texts/common';
 import { CONTRACT_TEXTS } from '@texts/index';
@@ -84,7 +85,7 @@ export class ContractAssignmentsListFilter extends BaseComponent {
           hoist
           multiple
           clearable
-          value=${this._filterState.contractNames.join(' ')}
+          value=${this._filterState.contractNames.join(MULTIPLE_SELECT_SEPARATOR)}
           @sl-change=${this.handleContractNamesChange}
         >
           <span class="input-label" slot="label"> ${msg('Contracts')} </span>
@@ -98,7 +99,7 @@ export class ContractAssignmentsListFilter extends BaseComponent {
           hoist
           multiple
           clearable
-          value=${this._filterState.districtIndexes.join(' ')}
+          value=${this._filterState.districtIndexes.join(MULTIPLE_SELECT_SEPARATOR)}
           @sl-change=${this.handleDistrictIndexesChange}
         >
           <span class="input-label" slot="label"> ${msg('Districts')} </span>
@@ -112,7 +113,7 @@ export class ContractAssignmentsListFilter extends BaseComponent {
           hoist
           multiple
           clearable
-          value=${this._filterState.cloneIds.join(' ')}
+          value=${this._filterState.cloneIds.join(MULTIPLE_SELECT_SEPARATOR)}
           @sl-change=${this.handleCloneIdsChange}
         >
           <span class="input-label" slot="label"> ${msg('Clones')} </span>
