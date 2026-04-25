@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property, queryAll } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { msg, localized } from '@lit/localize';
@@ -8,10 +8,11 @@ import { BaseComponent } from '@shared/index';
 import { CLONE_VALIDATION_TEXTS, COMMON_TEXTS } from '@texts/index';
 import { CloneValidationResult, type IClone } from '@state/clones-state';
 import { PurchaseCloneDialogButtonsController } from './controller';
-import { CancelEvent, PurchaseCloneEvent } from './events';
+import { CancelEvent, PurchaseCloneEvent, RestoreValuesEvent } from './events';
 import { temporaryCloneContext } from '../../contexts';
 import { PurchaseCloneDialogFormWarning, PurchaseCloneDialogWarning } from './types';
 import styles from './styles';
+import { modalSelectedCloneContext } from '../../../../contexts';
 
 @localized()
 @customElement('ca-purchase-clone-dialog-buttons')
@@ -21,6 +22,9 @@ export class PurchaseCloneDialogButtons extends BaseComponent {
   hasPartialUpdate = true;
 
   private _controller: PurchaseCloneDialogButtonsController;
+
+  @consume({ context: modalSelectedCloneContext, subscribe: true })
+  private _selectedClone?: IClone;
 
   @consume({ context: temporaryCloneContext, subscribe: true })
   private _clone?: IClone;
@@ -50,6 +54,14 @@ export class PurchaseCloneDialogButtons extends BaseComponent {
 
       <div class="buttons">
         <sl-button size="medium" variant="default" @click=${this.handleCancel}> ${COMMON_TEXTS.close()} </sl-button>
+
+        ${this._selectedClone
+          ? html`
+              <sl-button size="medium" variant="default" @click=${this.handleRestoreValues}>
+                ${COMMON_TEXTS.restoreValues()}
+              </sl-button>
+            `
+          : nothing}
 
         <sl-button
           ${ref(this._purchaseButtonRef)}
@@ -152,5 +164,9 @@ export class PurchaseCloneDialogButtons extends BaseComponent {
 
   private handlePurchaseClone = () => {
     this.dispatchEvent(new PurchaseCloneEvent());
+  };
+
+  private handleRestoreValues = () => {
+    this.dispatchEvent(new RestoreValuesEvent());
   };
 }

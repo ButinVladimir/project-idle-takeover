@@ -7,7 +7,7 @@ import { BaseComponent } from '@shared/index';
 import { type IClone } from '@state/clones-state';
 import { type CloneListItemDialog } from './type';
 import { OpenCloneListItemDialogEvent } from './events';
-import { modalCloneContext } from './contexts';
+import { modalSelectedCloneContext } from './contexts';
 import styles from './styles';
 
 @localized()
@@ -18,16 +18,13 @@ export class CompanyClonesPanel extends BaseComponent {
   protected hasMobileRender = true;
 
   @state()
-  private _isPurchaseCloneDialogOpen = false;
-
-  @state()
   private _cloneListItemDialogOpen = false;
 
   @state()
   private _cloneListItemDialog?: CloneListItemDialog;
 
-  @provide({ context: modalCloneContext })
-  private _modalClone?: IClone;
+  @provide({ context: modalSelectedCloneContext })
+  private _modalSelectedClone?: IClone;
 
   renderMobile() {
     return html`<div class="host-content mobile">${this.renderContent()}</div>`;
@@ -55,12 +52,7 @@ Clone level cannot be above development level.`)}
 
       <ca-clones-list @open-clone-list-item-dialog=${this.handleCloneListItemDialogOpen}></ca-clones-list>
 
-      <ca-purchase-clone-dialog
-        ?open=${this._isPurchaseCloneDialogOpen}
-        @purchase-clone-dialog-close=${this.handlePurchaseCloneDialogClose}
-      ></ca-purchase-clone-dialog>
-
-      ${this._modalClone &&
+      ${this._cloneListItemDialog &&
       choose(this._cloneListItemDialog, [
         [
           'rename-clone',
@@ -71,25 +63,34 @@ Clone level cannot be above development level.`)}
             ></ca-rename-clone-dialog>
           `,
         ],
+        [
+          'purchase-clone',
+          () => html`
+            <ca-purchase-clone-dialog
+              ?open=${this._cloneListItemDialogOpen}
+              @close-clone-list-item-dialog=${this.handleCloneListItemDialogClose}
+            ></ca-purchase-clone-dialog>
+          `,
+        ],
       ])}
     `;
   };
 
   private handlePurchaseCloneDialogOpen = () => {
-    this._isPurchaseCloneDialogOpen = true;
-  };
-
-  private handlePurchaseCloneDialogClose = () => {
-    this._isPurchaseCloneDialogOpen = false;
+    this._cloneListItemDialogOpen = true;
+    this._modalSelectedClone = undefined;
+    this._cloneListItemDialog = 'purchase-clone';
   };
 
   private handleCloneListItemDialogOpen = (event: OpenCloneListItemDialogEvent) => {
     this._cloneListItemDialogOpen = true;
-    this._modalClone = event.clone;
+    this._modalSelectedClone = event.clone;
     this._cloneListItemDialog = event.dialog;
   };
 
   private handleCloneListItemDialogClose = () => {
     this._cloneListItemDialogOpen = false;
+    this._modalSelectedClone = undefined;
+    this._cloneListItemDialog = undefined;
   };
 }

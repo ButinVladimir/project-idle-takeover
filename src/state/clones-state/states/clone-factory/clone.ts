@@ -12,7 +12,6 @@ import {
   reverseGeometricProgressionSum,
   type IFormatter,
 } from '@shared/index';
-import { type IActivityState } from '@state/activity-state';
 import { type IGlobalState } from '@state/global-state';
 import { type IMessageLogState } from '@state/message-log-state';
 import { decorators } from '@state/container';
@@ -23,9 +22,6 @@ import { typedCloneTemplates } from './constants';
 const { lazyInject } = decorators;
 
 export class Clone implements IClone {
-  @lazyInject(TYPES.ActivityState)
-  private _activityState!: IActivityState;
-
   @lazyInject(TYPES.GlobalState)
   private _globalState!: IGlobalState;
 
@@ -73,6 +69,7 @@ export class Clone implements IClone {
 
     this._stateUiConnector.registerEventEmitter(this, [
       '_name',
+      '_templateName',
       '_level',
       '_tier',
       '_autoUpgradeEnabled',
@@ -144,10 +141,18 @@ export class Clone implements IClone {
     }
   }
 
-  upgradeLevel(level: number) {
+  replaceTemplate(templateName: string, tier: number, level: number) {
+    this._templateName = templateName;
+    this._tier = tier;
+    this._level = level;
+
+    this._experience = this.getLevelRequirements(this._level - 1);
+    this.recalculateParameters();
+  }
+
+  setLevel(level: number) {
     this._level = level;
     this._experience = this.getLevelRequirements(level - 1);
-    this._activityState.requestReassignment();
 
     const formattedLevel = this._formatter.formatLevel(level);
     this._messageLogState.postMessage(

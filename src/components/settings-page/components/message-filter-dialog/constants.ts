@@ -39,6 +39,7 @@ export const MESSAGE_EVENT_NAMES: Record<MessageEvent, () => string> = {
   [ClonesEvent.displayedClonesDeleted]: () => msg('Displayed clones deleted'),
   [ClonesEvent.cloneLevelReached]: () => msg('Clone reached next level'),
   [ClonesEvent.cloneRenamed]: () => msg('Clone renamed'),
+  [ClonesEvent.cloneReplaced]: () => msg('Clone template replaced'),
   [SidejobsEvent.sidejobAssigned]: () => msg('Sidejob assigned'),
   [SidejobsEvent.sidejobCancelled]: () => msg('Sidejob cancelled'),
   [SidejobsEvent.displayedSidejobsCancelled]: () => msg('Displayed sidejobs cancelled'),
