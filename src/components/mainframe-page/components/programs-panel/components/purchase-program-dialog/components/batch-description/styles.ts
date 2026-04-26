@@ -9,6 +9,7 @@ const styles = [
       flex-direction: column;
       margin-top: var(--ca-modal-section-gap);
       margin-bottom: 0;
+      gap: var(--ca-modal-paragraph-gap);
     }
 
     p {

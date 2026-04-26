@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { localized } from '@lit/localize';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
@@ -7,6 +7,7 @@ import { COMMON_TEXTS } from '@texts/index';
 import { ProgramName } from '@state/mainframe-state';
 import { PurchaseProgramDialogBatchDescriptionController } from './controller';
 import styles from './styles';
+import { repeat } from 'lit/directives/repeat.js';
 
 @localized()
 @customElement('ca-purchase-program-dialog-batch-description')
@@ -44,10 +45,27 @@ export class PurchaseProgramDialogButtons extends BaseComponent {
   }
 
   protected renderDesktop() {
+    if (!this.programNames) {
+      return nothing;
+    }
+
+    const programNames = this.programNames.split(MULTIPLE_SELECT_SEPARATOR) as ProgramName[];
+
     return html`
       <p class="text">
         ${COMMON_TEXTS.parameterRow(COMMON_TEXTS.totalCost(), html`<span ${ref(this._costElRef)}></span>`)}
       </p>
+
+      ${repeat(
+        programNames,
+        (programName) => programName,
+        (programName) =>
+          html`<ca-purchase-program-dialog-batch-item
+            program-name=${programName}
+            tier=${this.tier}
+            level=${this.level}
+          ></ca-purchase-program-dialog-batch-item>`,
+      )}
     `;
   }
 

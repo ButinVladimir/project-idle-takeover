@@ -1,4 +1,4 @@
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { localized, msg, str } from '@lit/localize';
 import { customElement, property, state } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
@@ -53,12 +53,6 @@ export class PurchaseProgramDialog extends BaseComponent {
 
     this._controller = new PurchaseProgramDialogController(this);
   }
-
-  // disconnectedCallback() {
-  //   super.disconnectedCallback();
-
-  //   this._program?.removeAllEventListeners();
-  // }
 
   updated(_changedProperties: Map<string, any>) {
     super.updated(_changedProperties);
@@ -139,14 +133,12 @@ If you already have program with same name, old one will be replaced with new on
               </sl-input>
             </div>
 
-            ${this._programNames.length > 0
-              ? html`<ca-purchase-program-dialog-batch-description
-                  program-names=${this._programNames.join(MULTIPLE_SELECT_SEPARATOR)}
-                  tier=${this._tier}
-                  level=${this._level}
-                >
-                </ca-purchase-program-dialog-batch-description>`
-              : nothing}
+            <ca-purchase-program-dialog-batch-description
+              program-names=${this._programNames.join(MULTIPLE_SELECT_SEPARATOR)}
+              tier=${this._tier}
+              level=${this._level}
+            >
+            </ca-purchase-program-dialog-batch-description>
           </div>
 
           <ca-purchase-program-dialog-buttons
@@ -163,22 +155,6 @@ If you already have program with same name, old one will be replaced with new on
       </form>
     `;
   }
-
-  // protected updateContext() {
-  //   this._program?.removeAllEventListeners();
-
-  //   if (this._programNames) {
-  //     this._program = this._controller.makeProgram({
-  //       name: this._programNames,
-  //       level: this._level,
-  //       tier: this._tier,
-  //     });
-  //     this._existingProgram = this._controller.getOwnedProgram(this._programNames);
-  //   } else {
-  //     this._program = undefined;
-  //     this._existingProgram = undefined;
-  //   }
-  // }
 
   private renderProgramNameOptions = () => {
     const programs = this._controller.listAvailablePrograms();

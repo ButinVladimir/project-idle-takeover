@@ -6,7 +6,6 @@ import { consume } from '@lit/context';
 import { type IProgram } from '@state/mainframe-state';
 import {
   BaseComponent,
-  getHighlightValueClass,
   diffFormatterParameters,
   getHighlightDifferenceClassMap,
   getHighlightDifferenceClass,
@@ -15,7 +14,7 @@ import { COMMON_TEXTS, PROGRAM_DESCRIPTION_TEXTS, PROGRAM_TEXTS } from '@texts/i
 import { rendererMap } from './description-effect-renderers';
 import { IDescriptionEffectRenderer, IDescriptionParameters } from './interfaces';
 import { ProgramDiffTextController } from './controller';
-import { existingProgramContext, temporaryProgramContext } from '../../contexts';
+import { existingProgramContext, temporaryProgramContext } from '../batch-item/contexts';
 import styles from './styles';
 
 @localized()
@@ -179,13 +178,10 @@ export class PurchaseProgramDialogDescription extends BaseComponent {
     }
 
     const cost = this._controller.getProgramCost(this._program!.name, this._program!.tier, this._program!.level);
-    const money = this._controller.money;
 
     const formattedCost = this._controller.formatter.formatNumberFloat(cost);
-    const className = getHighlightValueClass(money >= cost);
 
     this._costElRef.value.textContent = formattedCost;
-    this._costElRef.value.className = className;
   }
 
   private updateRenderer(): void {

@@ -1,19 +1,9 @@
 import { BaseController } from '@shared/index';
 import { IProgram, ProgramName, ProgramsBatchValidationResult } from '@state/mainframe-state';
-import { IProgramParameters } from './types';
 
 export class PurchaseProgramDialogController extends BaseController {
   get developmentLevel(): number {
     return this.globalState.development.level;
-  }
-
-  makeProgram(parameters: IProgramParameters): IProgram {
-    return this.mainframeState.programFactory.makeProgram({
-      name: parameters.name,
-      level: parameters.level,
-      tier: parameters.tier,
-      autoUpgradeEnabled: true,
-    });
   }
 
   getOwnedProgram(name: ProgramName): IProgram | undefined {

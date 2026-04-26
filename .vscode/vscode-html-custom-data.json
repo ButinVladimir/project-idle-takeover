@@ -891,6 +891,24 @@
       ]
     },
     {
+      "name": "ca-purchase-program-dialog-batch-item",
+      "description": "Attributes:\n\n  * `program-name` - \n\n  * `tier` {`number`} - \n\n  * `level` {`number`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `programName` - \n\n  * `tier` {`number`} - \n\n  * `level` {`number`} - \n\n  * `_program` - \n\n  * `_existingProgram` - \n\n  * `renderWarning` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "program-name",
+          "description": "`program-name` - \n\nProperty: programName"
+        },
+        {
+          "name": "tier",
+          "description": "`tier` {`number`} - \n\nProperty: tier"
+        },
+        {
+          "name": "level",
+          "description": "`level` {`number`} - \n\nProperty: level"
+        }
+      ]
+    },
+    {
       "name": "ca-purchase-program-dialog-buttons",
       "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\n  * `program-names` {`string`} - \n\n  * `tier` {`number`} - \n\n  * `level` {`number`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `disabled` {`boolean`} - \n\n  * `programNames` {`string`} - \n\n  * `tier` {`number`} - \n\n  * `level` {`number`} - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_availableTimeRef` - \n\n  * `handlePartialUpdate` - \n\n  * `renderWarnings` - \n\n  * `handleCancel` - \n\n  * `handlePurchase` - \n\n  * `_controller` - ",
       "attributes": [

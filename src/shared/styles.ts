@@ -132,6 +132,21 @@ export const detailsStyle = css`
   }
 `;
 
+export const batchDetailsStyle = css`
+  h5.title {
+    margin-bottom: 0;
+  }
+
+  article {
+    display: block;
+  }
+
+  p.warning {
+    margin-top: var(--sl-spacing-3x-small);
+    margin-bottom: 0;
+  }
+`;
+
 export const hintIconStyle = css`
   sl-icon[name='question-circle'] {
     position: relative;

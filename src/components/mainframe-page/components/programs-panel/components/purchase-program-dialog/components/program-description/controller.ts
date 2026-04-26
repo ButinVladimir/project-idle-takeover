@@ -2,10 +2,6 @@ import { BaseController } from '@shared/index';
 import { ProgramName } from '@state/mainframe-state';
 
 export class ProgramDiffTextController extends BaseController {
-  get money(): number {
-    return this.globalState.money.money;
-  }
-
   get ram(): number {
     return this.mainframeState.hardware.ram.totalLevel;
   }
