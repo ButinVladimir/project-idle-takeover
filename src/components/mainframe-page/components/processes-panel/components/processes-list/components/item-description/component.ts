@@ -68,13 +68,16 @@ export class ProcessDescriptionText extends BaseComponent {
   }
 
   private renderAutoscalableRequirements = () => {
+    const programRam = this._process!.program.ram;
+    const formattedRam = this._controller.formatter.formatNumberDecimal(programRam);
+
     return html`
       <p>${PROGRAM_DESCRIPTION_TEXTS.requirementsAutoscalable()}</p>
 
       <p>
         ${COMMON_TEXTS.parameterRow(
           PROGRAM_DESCRIPTION_TEXTS.ram(),
-          PROGRAM_DESCRIPTION_TEXTS.allAvailable(this._process!.program.ram),
+          PROGRAM_DESCRIPTION_TEXTS.allAvailable(formattedRam),
         )}
       </p>
 

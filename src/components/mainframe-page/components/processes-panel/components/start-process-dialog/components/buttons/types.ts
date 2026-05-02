@@ -1,10 +1,8 @@
-import { ProcessValidationResult } from '@state/mainframe-state';
+import { ProcessesBatchValidationResult } from '@state/mainframe-state';
 
 export enum StartProcessDialogFormWarning {
   notSelected = 'notSelected',
-  alreadyRunningSame = 'alreadyRunningSame',
-  alreadyRunningSameAutoscalable = 'alreadyRunningSameAutoscalable',
-  alreadyRunningAutoscalable = 'alreadyRunningAutoscalable',
+  alreadyRunning = 'alreadyRunningSame',
 }
 
-export type StartProcessDialogWarning = StartProcessDialogFormWarning | ProcessValidationResult;
+export type StartProcessDialogWarning = StartProcessDialogFormWarning | ProcessesBatchValidationResult;

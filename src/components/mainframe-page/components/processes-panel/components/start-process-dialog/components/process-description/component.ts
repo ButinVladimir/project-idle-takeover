@@ -9,18 +9,17 @@ import {
   diffFormatterParameters,
   getHighlightDifferenceClass,
   getHighlightDifferenceClassMap,
-  getHighlightValueClassMap,
 } from '@shared/index';
 import { COMMON_TEXTS, PROGRAM_DESCRIPTION_TEXTS, PROGRAM_TEXTS } from '@texts/index';
 import { rendererMap } from './description-effect-renderers';
 import { IDescriptionEffectRenderer, IDescriptionParameters } from './interfaces';
 import { ProcessDiffTextController } from './controller';
-import { existingProcessContext, programContext } from '../../contexts';
+import { existingProcessContext, programContext } from '../batch-item/contexts';
 import styles from './styles';
 
 @localized()
-@customElement('ca-start-process-dialog-description')
-export class StartProcessDialogDescription extends BaseComponent {
+@customElement('ca-start-process-dialog-process-description')
+export class StartProcessDialogProcessDescription extends BaseComponent {
   static styles = styles;
 
   hasPartialUpdate = true;
@@ -87,15 +86,18 @@ export class StartProcessDialogDescription extends BaseComponent {
   }
 
   private renderAutoscalableRequirements = () => {
-    const availableRam = this._controller.getAvailableRamForProgram(this._program!.name);
     const programRam = this._program!.ram;
-    const ramClass = getHighlightValueClassMap(availableRam >= programRam);
-    const ramEl = html`<span class=${ramClass}>${PROGRAM_DESCRIPTION_TEXTS.allAvailable(programRam)}</span>`;
+    const formattedProgramRam = this._controller.formatter.formatNumberDecimal(programRam);
 
     return html`
       <p>${PROGRAM_DESCRIPTION_TEXTS.requirementsAutoscalable()}</p>
 
-      <p>${COMMON_TEXTS.parameterRow(PROGRAM_DESCRIPTION_TEXTS.ram(), ramEl)}</p>
+      <p>
+        ${COMMON_TEXTS.parameterRow(
+          PROGRAM_DESCRIPTION_TEXTS.ram(),
+          PROGRAM_DESCRIPTION_TEXTS.allAvailable(formattedProgramRam),
+        )}
+      </p>
 
       <p>${COMMON_TEXTS.parameterRow(PROGRAM_DESCRIPTION_TEXTS.cores(), PROGRAM_DESCRIPTION_TEXTS.allAvailable(1))}</p>
 
@@ -118,12 +120,9 @@ export class StartProcessDialogDescription extends BaseComponent {
     >`;
 
     const ramDiff = programRam - this._program!.ram * currentThreads;
-    const availableRam = this._controller.getAvailableRamForProgram(this._program!.name);
 
     const formattedRam = formatter.formatNumberDecimal(programRam);
-    const formattedAvailableRam = formatter.formatNumberDecimal(availableRam);
-    const ramClass = getHighlightValueClassMap(availableRam >= programRam);
-    const ramEl = html`<span class=${ramClass}>${formattedRam} / ${formattedAvailableRam}</span>`;
+    const ramEl = html`<span>${formattedRam}</span>`;
 
     const ramDiffClass = getHighlightDifferenceClassMap(-ramDiff);
     const ramDiffEl = html`<span class=${ramDiffClass}

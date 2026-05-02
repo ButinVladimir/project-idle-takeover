@@ -12,10 +12,6 @@ export class ProcessDiffTextController extends BaseController {
     return this.mainframeState.hardware.cores.totalLevel;
   }
 
-  getAvailableRamForProgram(programName: ProgramName): number {
-    return this.mainframeState.processes.validator.calculateAvailableRamForProgram(programName);
-  }
-
   getProgram(name: ProgramName): IProgram | undefined {
     this._program = this.mainframeState.programs.getOwnedProgramByName(name)!;
 

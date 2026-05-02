@@ -766,7 +766,7 @@
     },
     {
       "name": "ca-start-process-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_programInputRef` - \n\n  * `_threadsInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_programName` - \n\n  * `_threads` {`number`} - \n\n  * `_ownedProgram` - \n\n  * `_existingProcess` - \n\n  * `handleClose` - \n\n  * `handleProgramChange` - \n\n  * `handleThreadsChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleStartProcess` - \n\n  * `renderProgramNameOptions` - \n\n  * `formatProgramSelectItem` - \n\n  * `calculateMaxThreads` - \n\n  * `validate` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_programInputRef` - \n\n  * `_threadsInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_programNames` {`ProgramName[]`} - \n\n  * `_threads` {`number`} - \n\n  * `handleClose` - \n\n  * `handleProgramChange` - \n\n  * `handleThreadsChange` - \n\n  * `handleSubmit` - \n\n  * `handleStartProcess` - \n\n  * `renderProgramNameOptions` - \n\n  * `formatProgramSelectItem` - \n\n  * `calculateMaxThreads` - \n\n  * `validate` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "open",
@@ -776,9 +776,41 @@
       ]
     },
     {
-      "name": "ca-start-process-dialog-buttons",
-      "description": "Attributes:\n\n  * `threads` {`number`} - \n\n  * `max-threads` {`number`} - \n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `threads` {`number`} - \n\n  * `maxThreads` {`number`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_program` - \n\n  * `_existingProcess` - \n\n  * `handleCancel` - \n\n  * `handleRestoreValues` - \n\n  * `handleStart` - \n\n  * `_controller` - ",
+      "name": "ca-start-process-dialog-batch-description",
+      "description": "Attributes:\n\n  * `program-names` {`string`} - \n\n  * `threads` {`number`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `programNames` {`string`} - \n\n  * `threads` {`number`} - \n\n  * `_controller` - ",
       "attributes": [
+        {
+          "name": "program-names",
+          "description": "`program-names` {`string`} - \n\nProperty: programNames"
+        },
+        {
+          "name": "threads",
+          "description": "`threads` {`number`} - \n\nProperty: threads"
+        }
+      ]
+    },
+    {
+      "name": "ca-start-process-dialog-batch-item",
+      "description": "Attributes:\n\n  * `program-name` - \n\n  * `threads` {`number`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `programName` - \n\n  * `threads` {`number`} - \n\n  * `_ownedProgram` - \n\n  * `_existingProcess` - \n\n  * `renderWarning` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "program-name",
+          "description": "`program-name` - \n\nProperty: programName"
+        },
+        {
+          "name": "threads",
+          "description": "`threads` {`number`} - \n\nProperty: threads"
+        }
+      ]
+    },
+    {
+      "name": "ca-start-process-dialog-buttons",
+      "description": "Attributes:\n\n  * `program-names` {`string`} - \n\n  * `threads` {`number`} - \n\n  * `max-threads` {`number`} - \n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `programNames` {`string`} - \n\n  * `threads` {`number`} - \n\n  * `maxThreads` {`number`} - \n\n  * `disabled` {`boolean`} - \n\n  * `handleCancel` - \n\n  * `handleStart` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "program-names",
+          "description": "`program-names` {`string`} - \n\nProperty: programNames"
+        },
         {
           "name": "threads",
           "description": "`threads` {`number`} - \n\nProperty: threads"
@@ -795,7 +827,7 @@
       ]
     },
     {
-      "name": "ca-start-process-dialog-description",
+      "name": "ca-start-process-dialog-process-description",
       "description": "Attributes:\n\n  * `threads` {`number`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `threads` {`number`} - \n\n  * `_renderer` {`IDescriptionEffectRenderer | undefined`} - \n\n  * `_valueEls` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_diffEls` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_minCompletionTimeValueEl` - \n\n  * `_maxCompletionTimeValueEl` - \n\n  * `_minCompletionTimeDiffEl` - \n\n  * `_maxCompletionTimeDiffEl` - \n\n  * `_program` - \n\n  * `_existingProcess` - \n\n  * `renderAutoscalableRequirements` - \n\n  * `renderNormalRequirements` - \n\n  * `renderEffects` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": [
         {

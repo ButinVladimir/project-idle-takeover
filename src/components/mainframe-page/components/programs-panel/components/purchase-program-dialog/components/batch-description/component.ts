@@ -11,7 +11,7 @@ import { repeat } from 'lit/directives/repeat.js';
 
 @localized()
 @customElement('ca-purchase-program-dialog-batch-description')
-export class PurchaseProgramDialogButtons extends BaseComponent {
+export class PurchaseProgramDialogBatchDescription extends BaseComponent {
   static styles = styles;
 
   hasPartialUpdate = true;

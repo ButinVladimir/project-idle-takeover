@@ -83,7 +83,9 @@ export class PurchaseProgramDialogButtons extends BaseComponent {
 
   private renderWarnings = () => {
     return html`
-      <p class="warning" data-warning=${PurchaseProgramDialogFormWarning.notSelected}>${msg('Select program')}</p>
+      <p class="warning" data-warning=${PurchaseProgramDialogFormWarning.notSelected}>
+        ${msg('Programs are not selected')}
+      </p>
       <p class="warning" data-warning=${ProgramsBatchValidationResult.programsLocked}>
         ${PROGRAMS_BATCH_VALIDATION_TEXTS.programsLocked()}
       </p>

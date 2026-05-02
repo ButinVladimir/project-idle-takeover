@@ -1,13 +1,13 @@
 import { BaseController } from '@shared/index';
-import { IProgram, ProgramName, IProcess, ProcessValidationResult } from '@state/mainframe-state';
+import { IProgram, ProgramName, IProcess, ProcessesBatchValidationResult } from '@state/mainframe-state';
 
 export class StartProcessDialogController extends BaseController {
-  getAvailableRamForProgram(programName?: ProgramName): number {
-    if (programName) {
-      return this.mainframeState.processes.validator.calculateAvailableRamForProgram(programName);
-    }
-
+  get availableRam(): number {
     return this.mainframeState.processes.availableRam;
+  }
+
+  getAvailableRamForProgramsBatch(programNames: ProgramName[]): number {
+    return this.mainframeState.processes.validator.calculateAvailableRamForPrograms(programNames);
   }
 
   listPrograms(): IProgram[] {
@@ -18,19 +18,22 @@ export class StartProcessDialogController extends BaseController {
     return this.mainframeState.programs.getOwnedProgramByName(name)!;
   }
 
+  getProcess(name: ProgramName): IProcess | undefined {
+    return this.mainframeState.processes.getProcessByName(name);
+  }
+
   getRunningScalableProgram(): IProcess | undefined {
     return this.mainframeState.processes.runningScalableProcess;
   }
 
-  getProcessByName(name: ProgramName): IProcess | undefined {
-    return this.mainframeState.processes.getProcessByName(name);
+  startProcesses(names: ProgramName[], threads: number): boolean {
+    return this.mainframeState.processes.addProcessesBatch(names, threads);
   }
 
-  startProcess(name: ProgramName, threads: number): boolean {
-    return this.mainframeState.processes.addProcess(name, threads);
-  }
-
-  validateProcess(name: ProgramName, threads: number): boolean {
-    return this.mainframeState.processes.validator.validateProcess(name, threads) === ProcessValidationResult.valid;
+  validateProcesses(names: ProgramName[], threads: number): boolean {
+    return (
+      this.mainframeState.processes.validator.validateProcessesBatch(names, threads) ===
+      ProcessesBatchValidationResult.valid
+    );
   }
 }
