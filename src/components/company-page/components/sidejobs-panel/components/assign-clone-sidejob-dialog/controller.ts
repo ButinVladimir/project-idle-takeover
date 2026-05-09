@@ -1,4 +1,4 @@
-import { ISerializedSidejob, ISidejob, SidejobValidationResult } from '@state/activity-state';
+import { ISidejob, SidejobsBatchValidationResult } from '@state/activity-state';
 import { IClone } from '@state/clones-state';
 import { BaseController } from '@shared/index';
 import { IDistrictState } from '@state/city-state';
@@ -16,23 +16,37 @@ export class AssignCloneSidejobDialogController extends BaseController {
     return this.cityState.listAvailableDistricts();
   }
 
-  makeSidejob(args: ISerializedSidejob): ISidejob {
-    return this.activityState.sidejobsFactory.makeSidejob(args);
-  }
-
-  getExistingSidejobByClone(cloneId?: string): ISidejob | undefined {
-    if (!cloneId) {
-      return undefined;
-    }
-
+  getExistingSidejobByClone(cloneId: string): ISidejob | undefined {
     return this.activityState.sidejobsActivity.getActivityByCloneId(cloneId)?.sidejob;
   }
 
-  assignClone(args: ISerializedSidejob) {
-    this.activityState.sidejobsActivity.assignSidejob(args);
+  assignSidejobsBatch(sidejobName: string, districtIndex: number, cloneIds: string[]) {
+    const district = this.cityState.getDistrictState(districtIndex);
+    const clones = cloneIds.map((cloneId) => {
+      const clone = this.clonesState.ownedClones.getCloneById(cloneId);
+
+      if (!clone) {
+        throw new Error(`Clone with id ${cloneId} not found`);
+      }
+
+      return clone;
+    });
+
+    this.activityState.sidejobsActivity.assignSidejobs(sidejobName, district, clones);
   }
 
-  validateSidejob(sidejob: ISidejob): boolean {
-    return this.activityState.sidejobActivityValidator.validateSidejob(sidejob) === SidejobValidationResult.valid;
+  validateSidejobsBatch(sidejobName: string, districtIndex: number, cloneIds: string[]): boolean {
+    const district = this.cityState.getDistrictState(districtIndex);
+    const clones = cloneIds.map((cloneId) => {
+      const clone = this.clonesState.ownedClones.getCloneById(cloneId);
+
+      if (!clone) {
+        throw new Error(`Clone with id ${cloneId} not found`);
+      }
+
+      return clone;
+    });
+
+    return this.activityState.sidejobActivityValidator.validateSidejobsBatch(sidejobName, district, clones) === SidejobsBatchValidationResult.valid;
   }
 }

@@ -1,5 +1,5 @@
 import { BaseController } from '@shared/index';
-import { ISidejob, SidejobValidationResult } from '@state/activity-state';
+import { SidejobsBatchValidationResult } from '@state/activity-state';
 
 export class AssignCloneSidejobDialogButtonsController extends BaseController {
   getTotalConnectivity(districtIndex: number): number {
@@ -14,7 +14,23 @@ export class AssignCloneSidejobDialogButtonsController extends BaseController {
     return this.growthState.connectivity.getTotalGrowthByDistrict(districtIndex);
   }
 
-  validateSidejob(sidejob: ISidejob): SidejobValidationResult {
-    return this.activityState.sidejobActivityValidator.validateSidejob(sidejob);
+  getExistingSidejobByClone(cloneId: string): ISidejob | undefined {
+    return this.activityState.sidejobsActivity.getActivityByCloneId(cloneId)?.sidejob;
+  }
+
+  validateSidejobsBatch(sidejobName: string, districtIndex: number, cloneIds: string[]): SidejobsBatchValidationResult {
+    const district = this.cityState.getDistrictState(districtIndex);
+    const clones = cloneIds.map((cloneId) => {
+  const clone = this.clonesState.ownedClones.getCloneById(cloneId);
+
+      if (!clone) {
+        throw new Error(`Clone with id ${cloneId} not found`);
+      }
+
+      return clone;
+    });
+
+
+    return this.activityState.sidejobActivityValidator.validateSidejobsBatch(sidejobName, district, clones);
   }
 }
