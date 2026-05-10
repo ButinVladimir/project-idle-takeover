@@ -130,17 +130,13 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
     const validationResult = this._controller.validate(this._parameter!.type, this.increase);
 
     if (validationResult === MainframeHardwareValidationResult.notEnoughMoney) {
-      const cost = this._controller.calculateIncreaseCost(this._parameter!.type, this.increase);
       const moneyGrowth = this._controller.moneyGrowth;
-      const moneyDiff = cost - this._controller.money;
 
-      if (moneyDiff > 0) {
-        if (moneyGrowth <= 0) {
-          return MainframeHardwareValidationResult.notEnoughMoney;
-        }
-
-        return MainframeHardwarePanelArticleWarning.willBeAvailableIn;
+      if (moneyGrowth <= 0) {
+        return MainframeHardwareValidationResult.notEnoughMoney;
       }
+
+      return MainframeHardwarePanelArticleWarning.willBeAvailableIn;
     }
 
     return validationResult;
@@ -155,7 +151,7 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
     const moneyGrowth = this._controller.moneyGrowth;
     const moneyDiff = cost - this._controller.money;
 
-    if (moneyDiff < 0 || moneyGrowth < 0) {
+    if (moneyDiff <= 0 || moneyGrowth <= 0) {
       this._availableTimeRef.value.textContent = '';
     } else {
       const formattedTime = this._controller.formatter.formatTimeLong(moneyDiff / moneyGrowth);

@@ -47,6 +47,9 @@ export class AssignCloneSidejobDialogController extends BaseController {
       return clone;
     });
 
-    return this.activityState.sidejobActivityValidator.validateSidejobsBatch(sidejobName, district, clones) === SidejobsBatchValidationResult.valid;
+    return (
+      this.activityState.sidejobActivityValidator.validateSidejobsBatch(sidejobName, district, clones) ===
+      SidejobsBatchValidationResult.valid
+    );
   }
 }

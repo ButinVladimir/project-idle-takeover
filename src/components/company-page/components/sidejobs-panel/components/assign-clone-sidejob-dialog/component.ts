@@ -3,6 +3,7 @@ import { localized, msg, str } from '@lit/localize';
 import { customElement, property, state } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.component.js';
 import { BaseComponent, compareOptions, ISelectOption, MULTIPLE_SELECT_SEPARATOR, SidejobAlert } from '@shared/index';
 import { SIDEJOB_TEXTS, DISTRICT_NAMES } from '@texts/index';
@@ -12,7 +13,6 @@ import { AssignCloneSidejobDialogCloseEvent } from './events';
 import { AssignCloneSidejobDialogController } from './controller';
 import styles from './styles';
 import { AssignCloneSidejobDialogButtons } from './components/buttons/component';
-import { ifDefined } from 'lit/directives/if-defined.js';
 
 @localized()
 @customElement('ca-assign-clone-sidejob-dialog')
@@ -44,12 +44,6 @@ export class AssignCloneSidejobDialog extends BaseComponent {
 
   @state()
   private _cloneIds: string[] = [];
-
-  // @provide({ context: temporarySidejobContext })
-  // private _sidejob?: ISidejob;
-
-  // @provide({ context: existingSidejobContext })
-  // private _existingSidejob?: ISidejob;
 
   private _buttonsRef = createRef<AssignCloneSidejobDialogButtons>();
 
@@ -87,12 +81,12 @@ export class AssignCloneSidejobDialog extends BaseComponent {
     return html`
       <form id="assign-clone-sidejob-dialog" @submit=${this.handleSubmit}>
         <sl-dialog ?open=${this.open} @sl-request-close=${this.handleClose}>
-          <h4 slot="label" class="title">${msg('Assign clone to sidejob')}</h4>
+          <h4 slot="label" class="title">${msg('Assign clones to sidejob')}</h4>
 
           <div class="body">
             <p class="hint">
-              ${msg(`Select sidejob name, district and clone to assign clone.
-Clone can be assigned only to one sidejob.`)}
+              ${msg(`Select sidejob name, district and clones to assign clones.
+Each clone can be assigned only to one sidejob at same time.`)}
             </p>
 
             <div class=${inputsContainerClasses}>
@@ -129,11 +123,17 @@ Clone can be assigned only to one sidejob.`)}
                 hoist
                 @sl-change=${this.handleCloneIdsChange}
               >
-                <span class="input-label" slot="label"> ${msg('Clone')} </span>
+                <span class="input-label" slot="label"> ${msg('Clones')} </span>
 
                 ${this.renderCloneOptions()}
               </sl-select>
             </div>
+
+            <ca-assign-clone-sidejob-dialog-batch-description
+              sidejob-name=${ifDefined(this._sidejobName)}
+              district-index=${ifDefined(this._districtIndex)}
+              clone-ids=${this._cloneIds.join(MULTIPLE_SELECT_SEPARATOR)}
+            ></ca-assign-clone-sidejob-dialog-batch-description>
           </div>
 
           <ca-assign-clone-sidejob-dialog-buttons
@@ -239,7 +239,9 @@ Clone can be assigned only to one sidejob.`)}
       return;
     }
 
-    const sidejobsWithAssignedClones = this._cloneIds.map((cloneId) => this._controller.getExistingSidejobByClone(cloneId)).filter((sidejob) => sidejob) as ISidejob[];
+    const sidejobsWithAssignedClones = this._cloneIds
+      .map((cloneId) => this._controller.getExistingSidejobByClone(cloneId))
+      .filter((sidejob) => sidejob) as ISidejob[];
 
     if (sidejobsWithAssignedClones.length > 0) {
       const cloneNames = sidejobsWithAssignedClones.map((sidejob) => `"${sidejob.assignedClone.name}"`).join(', ');
@@ -259,11 +261,7 @@ Clone can be assigned only to one sidejob.`)}
   };
 
   private handleAssignClones = () => {
-    this._controller.assignSidejobsBatch(
-      this._sidejobName!,
-      this._districtIndex!,
-      this._cloneIds,
-    );
+    this._controller.assignSidejobsBatch(this._sidejobName!, this._districtIndex!, this._cloneIds);
 
     this.dispatchEvent(new AssignCloneSidejobDialogCloseEvent());
   };

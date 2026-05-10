@@ -59,12 +59,6 @@ export class SidejobActivityValidator implements ISidejobActivityValidator {
       return SidejobValidationResult.districtLocked;
     }
 
-    const requiredConnectivity = this.getConnectivityRequirement(sidejobName);
-
-    if (requiredConnectivity > district.parameters.connectivity.totalValue) {
-      return SidejobValidationResult.notEnoughConnectivity;
-    }
-
     if (!this.checkRequirements(sidejobName, district, clone)) {
       return SidejobValidationResult.requirementsNotMet;
     }
@@ -91,7 +85,9 @@ export class SidejobActivityValidator implements ISidejobActivityValidator {
       return SidejobsBatchValidationResult.districtsLocked;
     }
 
-    if (sidejobValidationResults.includes(SidejobValidationResult.notEnoughConnectivity)) {
+    const requiredConnectivity = this.getConnectivityRequirement(sidejobName);
+
+    if (requiredConnectivity > district.parameters.connectivity.totalValue) {
       return SidejobsBatchValidationResult.notEnoughConnectivity;
     }
 

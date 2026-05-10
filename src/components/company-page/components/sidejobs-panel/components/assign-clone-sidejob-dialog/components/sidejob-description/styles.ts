@@ -10,20 +10,8 @@ const styles = [
       flex-direction: column;
     }
 
-    p.hint {
-      margin: 0;
-    }
-
-    p.text {
-      margin: 0;
-
-      &:not(:first-child) {
-        margin-top: var(--ca-modal-paragraph-gap);
-      }
-    }
-
     sl-radio-group {
-      margin: var(--ca-modal-section-gap) 0 var(--ca-modal-paragraph-gap);
+      margin: 0 0 var(--ca-modal-paragraph-gap);
     }
   `,
 ];

@@ -1,5 +1,6 @@
 import { html } from 'lit';
 import { customElement, property, queryAll } from 'lit/decorators.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { msg, localized } from '@lit/localize';
 import { BaseComponent, MULTIPLE_SELECT_SEPARATOR } from '@shared/index';
 import { COMMON_TEXTS, SIDEJOBS_BATCH_VALIDATION_TEXTS } from '@texts/index';
@@ -24,13 +25,13 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
 
   private _controller: AssignCloneSidejobDialogButtonsController;
 
-    @property({
+  @property({
     attribute: 'sidejob-name',
     type: String,
   })
-  sidejobName!: string;
+  sidejobName?: string;
 
-    @property({
+  @property({
     attribute: 'district-index',
     type: Number,
   })
@@ -42,16 +43,10 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
   })
   cloneIds!: string;
 
-  // @consume({ context: temporarySidejobContext, subscribe: true })
-  // private _sidejob?: ISidejob;
-
-  // @consume({ context: existingSidejobContext, subscribe: true })
-  // private _existingSidejob?: ISidejob;
-
   @queryAll('p[data-warning]')
   private _warningElements!: NodeListOf<HTMLParagraphElement>;
 
-  // private _availableTimeRef = createRef<HTMLSpanElement>();
+  private _availableTimeRef = createRef<HTMLSpanElement>();
 
   constructor() {
     super();
@@ -84,7 +79,7 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
       }
     });
 
-    // this.updateAvailabilityTimer();
+    this.updateAvailabilityTimer();
   };
 
   private renderWarnings = () => {
@@ -110,6 +105,9 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
       <p class="warning" data-warning=${AssignCloneSidejobDialogFormWarning.alreadyAssigned}>
         ${msg(`Some clones are already have assigned sidejobs`)}
       </p>
+      <p class="warning" data-warning=${AssignCloneSidejobDialogFormWarning.willBeAvailableIn}>
+        ${COMMON_TEXTS.willBeAvailableIn(html`<span ${ref(this._availableTimeRef)}></span>`)}
+      </p>
     `;
   };
 
@@ -121,7 +119,9 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
     const cloneIds = this.cloneIds.split(MULTIPLE_SELECT_SEPARATOR);
 
     const validationResult = this._controller.validateSidejobsBatch(this.sidejobName, this.districtIndex, cloneIds);
-    const sidejobsWithAssignedClones = cloneIds.map((cloneId) => this._controller.getExistingSidejobByClone(cloneId)).filter((sidejob) => sidejob) as ISidejob[];
+    const sidejobsWithAssignedClones = cloneIds
+      .map((cloneId) => this._controller.getExistingSidejobByClone(cloneId))
+      .filter((sidejob) => sidejob) as ISidejob[];
 
     if (validationResult === SidejobsBatchValidationResult.valid && sidejobsWithAssignedClones.length > 0) {
       return AssignCloneSidejobDialogFormWarning.alreadyAssigned;
@@ -130,27 +130,27 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
     return validationResult;
   }
 
-  // private updateAvailabilityTimer(): void {
-  //   if (!this._sidejob) {
-  //     return;
-  //   }
+  private updateAvailabilityTimer(): void {
+    if (this.sidejobName === undefined || this.districtIndex === undefined) {
+      return;
+    }
 
-  //   if (!this._availableTimeRef.value) {
-  //     return;
-  //   }
+    if (!this._availableTimeRef.value) {
+      return;
+    }
 
-  //   const currentPoints = this._controller.getTotalConnectivity(this._sidejob.district.index);
-  //   const requiredPoints = this._controller.getRequiredConnectivity(this._sidejob.sidejobName);
-  //   const connectivityGrowth = this._controller.getConnectivityGrowth(this._sidejob.district.index);
-  //   const pointsDiff = requiredPoints - currentPoints;
+    const currentPoints = this._controller.getTotalConnectivity(this.districtIndex);
+    const requiredPoints = this._controller.getRequiredConnectivity(this.sidejobName);
+    const connectivityGrowth = this._controller.getConnectivityGrowth(this.districtIndex);
+    const pointsDiff = requiredPoints - currentPoints;
 
-  //   if (pointsDiff < 0 || connectivityGrowth < 0) {
-  //     this._availableTimeRef.value.textContent = '';
-  //   } else {
-  //     const formattedTime = this._controller.formatter.formatTimeLong(pointsDiff / connectivityGrowth);
-  //     this._availableTimeRef.value.textContent = formattedTime;
-  //   }
-  // }
+    if (pointsDiff <= 0 || connectivityGrowth <= 0) {
+      this._availableTimeRef.value.textContent = '';
+    } else {
+      const formattedTime = this._controller.formatter.formatTimeLong(pointsDiff / connectivityGrowth);
+      this._availableTimeRef.value.textContent = formattedTime;
+    }
+  }
 
   private handleCancel = () => {
     this.dispatchEvent(new CancelEvent());

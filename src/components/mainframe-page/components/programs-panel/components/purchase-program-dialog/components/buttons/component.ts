@@ -114,17 +114,13 @@ export class PurchaseProgramDialogButtons extends BaseComponent {
     const validationResult = this._controller.validateProgramsBatch(programNames, this.tier, this.level);
 
     if (validationResult === ProgramsBatchValidationResult.notEnoughMoney) {
-      const totalCost = this.getTotalCost(programNames);
       const moneyGrowth = this._controller.moneyGrowth;
-      const moneyDiff = totalCost - this._controller.money;
 
-      if (moneyDiff > 0) {
-        if (moneyGrowth <= 0) {
-          return ProgramsBatchValidationResult.notEnoughMoney;
-        }
-
-        return PurchaseProgramDialogFormWarning.willBeAvailableIn;
+      if (moneyGrowth <= 0) {
+        return ProgramsBatchValidationResult.notEnoughMoney;
       }
+
+      return PurchaseProgramDialogFormWarning.willBeAvailableIn;
     }
 
     const hasOwnedPrograms = programNames.some((programName) => this._controller.getOwnedProgram(programName));
@@ -147,7 +143,7 @@ export class PurchaseProgramDialogButtons extends BaseComponent {
     const moneyGrowth = this._controller.moneyGrowth;
     const moneyDiff = totalCost - this._controller.money;
 
-    if (moneyDiff < 0 || moneyGrowth < 0) {
+    if (moneyDiff <= 0 || moneyGrowth <= 0) {
       this._availableTimeRef.value.textContent = '';
     } else {
       const formattedTime = this._controller.formatter.formatTimeLong(moneyDiff / moneyGrowth);

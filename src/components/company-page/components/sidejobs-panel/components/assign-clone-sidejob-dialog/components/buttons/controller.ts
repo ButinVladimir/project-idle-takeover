@@ -21,7 +21,7 @@ export class AssignCloneSidejobDialogButtonsController extends BaseController {
   validateSidejobsBatch(sidejobName: string, districtIndex: number, cloneIds: string[]): SidejobsBatchValidationResult {
     const district = this.cityState.getDistrictState(districtIndex);
     const clones = cloneIds.map((cloneId) => {
-  const clone = this.clonesState.ownedClones.getCloneById(cloneId);
+      const clone = this.clonesState.ownedClones.getCloneById(cloneId);
 
       if (!clone) {
         throw new Error(`Clone with id ${cloneId} not found`);
@@ -29,7 +29,6 @@ export class AssignCloneSidejobDialogButtonsController extends BaseController {
 
       return clone;
     });
-
 
     return this.activityState.sidejobActivityValidator.validateSidejobsBatch(sidejobName, district, clones);
   }

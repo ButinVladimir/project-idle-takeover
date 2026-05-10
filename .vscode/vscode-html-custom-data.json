@@ -449,7 +449,7 @@
     },
     {
       "name": "ca-assign-clone-sidejob-dialog",
-      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneIdInputRef` - \n\n  * `_districtIndexInputRef` - \n\n  * `_sidejobNameInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_cloneId` {`string | undefined`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `_sidejobName` {`string | undefined`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_buttonsRef` - \n\n  * `renderCloneOptions` - \n\n  * `renderDistrictOptions` - \n\n  * `renderSidejobNameOptions` - \n\n  * `handleClose` - \n\n  * `handleCloneIdChange` - \n\n  * `handleSidejobNameChange` - \n\n  * `handleDistrictIndexChange` - \n\n  * `handleRestoreValues` - \n\n  * `handleSubmit` - \n\n  * `handleAssignClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `open` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneIdInputRef` - \n\n  * `_districtIndexInputRef` - \n\n  * `_sidejobNameInputRef` - \n\n  * `open` {`boolean`} - \n\n  * `_sidejobName` {`string | undefined`} - \n\n  * `_districtIndex` {`number | undefined`} - \n\n  * `_cloneIds` {`string[]`} - \n\n  * `_buttonsRef` - \n\n  * `renderCloneOptions` - \n\n  * `renderDistrictOptions` - \n\n  * `renderSidejobNameOptions` - \n\n  * `handleClose` - \n\n  * `handleCloneIdsChange` - \n\n  * `handleSidejobNameChange` - \n\n  * `handleDistrictIndexChange` - \n\n  * `handleSubmit` - \n\n  * `handleAssignClones` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "open",
@@ -459,20 +459,67 @@
       ]
     },
     {
+      "name": "ca-assign-clone-sidejob-dialog-batch-description",
+      "description": "Attributes:\n\n  * `sidejob-name` {`string | undefined`} - \n\n  * `district-index` {`number | undefined`} - \n\n  * `clone-ids` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `sidejobName` {`string | undefined`} - \n\n  * `districtIndex` {`number | undefined`} - \n\n  * `cloneIds` {`string`} - \n\n  * `_connectivityValuesSpanRef` - \n\n  * `_connectivityTotalValueSpanRef` - \n\n  * `renderConnectivityString` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "sidejob-name",
+          "description": "`sidejob-name` {`string | undefined`} - \n\nProperty: sidejobName",
+          "values": []
+        },
+        {
+          "name": "district-index",
+          "description": "`district-index` {`number | undefined`} - \n\nProperty: districtIndex",
+          "values": []
+        },
+        {
+          "name": "clone-ids",
+          "description": "`clone-ids` {`string`} - \n\nProperty: cloneIds"
+        }
+      ]
+    },
+    {
+      "name": "ca-assign-clone-sidejob-dialog-batch-item",
+      "description": "Attributes:\n\n  * `sidejob-name` {`string`} - \n\n  * `district-index` {`number`} - \n\n  * `clone-id` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `sidejobName` {`string`} - \n\n  * `districtIndex` {`number`} - \n\n  * `cloneId` {`string`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `renderWarning` - \n\n  * `_controller` - ",
+      "attributes": [
+        {
+          "name": "sidejob-name",
+          "description": "`sidejob-name` {`string`} - \n\nProperty: sidejobName"
+        },
+        {
+          "name": "district-index",
+          "description": "`district-index` {`number`} - \n\nProperty: districtIndex"
+        },
+        {
+          "name": "clone-id",
+          "description": "`clone-id` {`string`} - \n\nProperty: cloneId"
+        }
+      ]
+    },
+    {
       "name": "ca-assign-clone-sidejob-dialog-buttons",
-      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `disabled` {`boolean`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_availableTimeRef` - \n\n  * `handlePartialUpdate` - \n\n  * `renderWarnings` - \n\n  * `renderAlreadySelectedWarning` - \n\n  * `handleCancel` - \n\n  * `handleRestoreValues` - \n\n  * `handleAssignClone` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `disabled` {`boolean`} - \n\n  * `sidejob-name` {`string | undefined`} - \n\n  * `district-index` {`number | undefined`} - \n\n  * `clone-ids` {`string`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `disabled` {`boolean`} - \n\n  * `sidejobName` {`string | undefined`} - \n\n  * `districtIndex` {`number | undefined`} - \n\n  * `cloneIds` {`string`} - \n\n  * `_warningElements` {`NodeListOf<HTMLParagraphElement>`} - \n\n  * `_availableTimeRef` - \n\n  * `handlePartialUpdate` - \n\n  * `renderWarnings` - \n\n  * `handleCancel` - \n\n  * `handleAssignClone` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "disabled",
           "description": "`disabled` {`boolean`} - \n\nProperty: disabled\n\nDefault: false",
           "valueSet": "v"
+        },
+        {
+          "name": "sidejob-name",
+          "description": "`sidejob-name` {`string | undefined`} - \n\nProperty: sidejobName",
+          "values": []
+        },
+        {
+          "name": "district-index",
+          "description": "`district-index` {`number | undefined`} - \n\nProperty: districtIndex",
+          "values": []
+        },
+        {
+          "name": "clone-ids",
+          "description": "`clone-ids` {`string`} - \n\nProperty: cloneIds"
         }
       ]
-    },
-    {
-      "name": "ca-assign-clone-sidejob-dialog-description",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_descriptionModelInputRef` - \n\n  * `_connectivityValuesSpanRef` - \n\n  * `_connectivityTotalValueSpanRef` - \n\n  * `_sidejob` - \n\n  * `_desciptionMode` {`AssignCloneSidejobDialogDescriptionMode`} - \n\n  * `renderConnectivityString` - \n\n  * `handleDescriptionModeChange` - \n\n  * `renderDescriptionModes` - \n\n  * `renderDescriptionMode` - \n\n  * `renderRequirements` - \n\n  * `renderRewardMultipliers` - \n\n  * `renderRewards` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
-      "attributes": []
     },
     {
       "name": "ca-assign-clone-sidejob-dialog-requirements",
@@ -487,6 +534,11 @@
     {
       "name": "ca-assign-clone-sidejob-dialog-rewards",
       "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_rewardValueElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_rewardDiffElements` {`NodeListOf<HTMLSpanElement>`} - \n\n  * `_sidejob` - \n\n  * `_existingSidejob` - \n\n  * `_rewardValues` - \n\n  * `renderParameter` - \n\n  * `handlePartialUpdate` - \n\n  * `updateParameter` - \n\n  * `updateValueElement` - \n\n  * `updateDiffElement` - \n\n  * `_controller` - ",
+      "attributes": []
+    },
+    {
+      "name": "ca-assign-clone-sidejob-dialog-sidejob-description",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_descriptionModelInputRef` - \n\n  * `_sidejob` - \n\n  * `_desciptionMode` {`AssignCloneSidejobDialogDescriptionMode`} - \n\n  * `handleDescriptionModeChange` - \n\n  * `renderDescriptionModes` - \n\n  * `renderDescriptionMode` - \n\n  * `renderRequirements` - \n\n  * `renderRewardMultipliers` - \n\n  * `renderRewards` - ",
       "attributes": []
     },
     {

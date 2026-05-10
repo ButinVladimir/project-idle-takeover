@@ -3,7 +3,10 @@ import {
   ProgramsBatchValidationResult,
   ProgramValidationResult,
 } from '@state/mainframe-state/states/mainframe-programs-state/types';
-import { SidejobsBatchValidationResult, SidejobValidationResult } from '@state/activity-state/states/sidejob-activity-validator/types';
+import {
+  SidejobsBatchValidationResult,
+  SidejobValidationResult,
+} from '@state/activity-state/states/sidejob-activity-validator/types';
 import { ContractValidationResult } from '@state/activity-state/states/contract-activity-validator/types';
 import { MainframeHardwareValidationResult } from '@state/mainframe-state/states/mainframe-hardware-state/types';
 import {
@@ -17,7 +20,6 @@ export const SIDEJOB_VALIDATION_TEXTS: Record<SidejobValidationResult, () => str
   [SidejobValidationResult.sidejobNotAvailable]: () => msg('Sidejob is not available'),
   [SidejobValidationResult.districtLocked]: () => msg('District is locked'),
   [SidejobValidationResult.requirementsNotMet]: () => msg(`Clone doesn't fit requirements`),
-  [SidejobValidationResult.notEnoughConnectivity]: () => msg('Not enough connectivity'),
   [SidejobValidationResult.valid]: () => msg('Sidejob is valid'),
 };
 
@@ -26,7 +28,8 @@ export const SIDEJOBS_BATCH_VALIDATION_TEXTS: Record<SidejobsBatchValidationResu
   [SidejobsBatchValidationResult.sidejobsNotAvailable]: () => msg('Sine sidejobs are not available'),
   [SidejobsBatchValidationResult.districtsLocked]: () => msg('Some districts are locked'),
   [SidejobsBatchValidationResult.requirementsNotMet]: () => msg(`Some clones don't fit requirements`),
-  [SidejobsBatchValidationResult.notEnoughConnectivity]: () => msg('Some districts are lacking connectivity for sidejobs'),
+  [SidejobsBatchValidationResult.notEnoughConnectivity]: () =>
+    msg('Some districts are lacking connectivity for sidejobs'),
   [SidejobsBatchValidationResult.valid]: () => msg('Sidejobs are valid'),
 };
 

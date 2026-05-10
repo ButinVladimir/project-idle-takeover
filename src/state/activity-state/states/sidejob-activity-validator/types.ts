@@ -1,7 +1,6 @@
 export enum SidejobValidationResult {
   sidejobNotAvailable = 'sidejobNotAvailable',
   districtLocked = 'districtLocked',
-  notEnoughConnectivity = 'notEnoughConnectivity',
   requirementsNotMet = 'requirementsNotMet',
   valid = 'valid',
 }

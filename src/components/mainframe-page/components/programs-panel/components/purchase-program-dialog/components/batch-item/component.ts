@@ -4,7 +4,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { provide } from '@lit/context';
 import { type ProgramName, type IProgram, ProgramValidationResult } from '@state/mainframe-state';
 import { BaseComponent } from '@shared/index';
-import { PROGRAM_TEXTS } from '@texts/index';
+import { PROGRAM_TEXTS, PROGRAM_VALIDATION_TEXTS } from '@texts/index';
 import { PurchaseProgramDialogBatchItemController } from './controller';
 import { existingProgramContext, temporaryProgramContext } from './contexts';
 import styles from './styles';
@@ -89,7 +89,7 @@ export class PurchaseProgramDialogBatchItem extends BaseComponent {
 
     switch (warning) {
       case ProgramValidationResult.programNotAvailable:
-        return msg('Program is not available');
+        return PROGRAM_VALIDATION_TEXTS[warning]();
       case PurchaseProgramDialogBatchItemFormWarning.alreadyPurchased:
         return this.makeAlreadyPurchasedWarning();
       default:
