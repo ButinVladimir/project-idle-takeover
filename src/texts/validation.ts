@@ -7,7 +7,7 @@ import {
   SidejobsBatchValidationResult,
   SidejobValidationResult,
 } from '@state/activity-state/states/sidejob-activity-validator/types';
-import { ContractValidationResult } from '@state/activity-state/states/contract-activity-validator/types';
+import { ContractsBatchValidationResult, ContractValidationResult } from '@state/activity-state/states/contract-activity-validator/types';
 import { MainframeHardwareValidationResult } from '@state/mainframe-state/states/mainframe-hardware-state/types';
 import {
   ProcessesBatchValidationResult,
@@ -41,6 +41,16 @@ export const CONTRACT_VALIDATION_TEXTS: Record<ContractValidationResult, () => s
   [ContractValidationResult.notEnoughClones]: () => msg('Not enough clones'),
   [ContractValidationResult.tooManyClones]: () => msg('Too many clones'),
   [ContractValidationResult.valid]: () => msg('Contract is valid'),
+};
+
+export const CONTRACTS_BATCH_VALIDATION_TEXTS: Record<ContractsBatchValidationResult, () => string> = {
+  [ContractsBatchValidationResult.primaryActivityLocked]: () => msg('Primary activity is locked'),
+  [ContractsBatchValidationResult.contractNotAvailable]: () => msg('Some contracts are not available'),
+  [ContractsBatchValidationResult.districtsLocked]: () => msg('Some district are locked'),
+  [ContractsBatchValidationResult.requirementsNotMet]: () => msg(`Clones don't fit requirements for some contracts`),
+  [ContractsBatchValidationResult.notEnoughClones]: () => msg('Not enough clones for some contracts'),
+  [ContractsBatchValidationResult.tooManyClones]: () => msg('Too many clones for some contracts'),
+  [ContractsBatchValidationResult.valid]: () => msg('Contracts are valid'),
 };
 
 export const PROGRAM_VALIDATION_TEXTS: Record<ProgramValidationResult, () => string> = {

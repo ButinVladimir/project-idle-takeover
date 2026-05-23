@@ -40,12 +40,6 @@ export class StartProcessDialogButtons extends BaseComponent {
 
   private _controller: StartProcessDialogButtonsController;
 
-  // @consume({ context: programContext, subscribe: true })
-  // private _program?: IProgram;
-
-  // @consume({ context: existingProcessContext, subscribe: true })
-  // private _existingProcess?: IProcess;
-
   constructor() {
     super();
 
@@ -89,6 +83,7 @@ export class StartProcessDialogButtons extends BaseComponent {
     const runningProcesses = programNames
       .map((programName) => this._controller.getProcess(programName))
       .filter((process) => process) as IProcess[];
+
     if (runningProcesses.length > 0) {
       return msg('Some programs are already have processes started');
     }

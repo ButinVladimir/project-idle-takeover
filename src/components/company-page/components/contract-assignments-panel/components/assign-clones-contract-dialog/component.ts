@@ -7,7 +7,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.component.js';
 import { BaseComponent, compareOptions, ContractAlert, ISelectOption, MULTIPLE_SELECT_SEPARATOR } from '@shared/index';
 import { DISTRICT_NAMES, CONTRACT_TEXTS } from '@texts/index';
-import { type IContract, ContractValidationResult } from '@state/activity-state';
+import { type IContract, ContractsBatchValidationResult, ContractValidationResult } from '@state/activity-state';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events/confirmation-alert-open';
 import { AssignClonesContractDialogCloseEvent } from './events';
 import { AssignClonesContractDialogController } from './controller';
@@ -39,16 +39,16 @@ export class AssignClonesContractDialog extends BaseComponent {
   private _cloneIds: string[] = [];
 
   @state()
-  private _districtIndex?: number;
+  private _districtIndexes: number[] = [];
 
   @state()
-  private _contractName?: string;
+  private _contractNames: string[] = [];
 
-  @provide({ context: temporaryContractContext })
-  private _contract?: IContract;
+  // @provide({ context: temporaryContractContext })
+  // private _contract?: IContract;
 
-  @provide({ context: contractName })
-  private _existingContract?: IContract;
+  // @provide({ context: contractName })
+  // private _existingContract?: IContract;
 
   constructor() {
     super();
@@ -61,8 +61,8 @@ export class AssignClonesContractDialog extends BaseComponent {
 
     if (_changedProperties.has('open')) {
       this._cloneIds = [];
-      this._districtIndex = undefined;
-      this._contractName = undefined;
+      this._districtIndexes = [];
+      this._contractNames = [];
     }
   }
 
@@ -98,7 +98,9 @@ Only one team of clones can be assigned per district and contract.`)}
               <sl-select
                 ${ref(this._contractNameInputRef)}
                 name="contractName"
-                value=${this._contractName ?? ''}
+                value=${this._contractNames.join(MULTIPLE_SELECT_SEPARATOR)}
+                multiple
+                clearable
                 hoist
                 @sl-change=${this.handleContractNameChange}
               >
@@ -110,7 +112,9 @@ Only one team of clones can be assigned per district and contract.`)}
               <sl-select
                 ${ref(this._districtIndexInputRef)}
                 name="districtIndex"
-                value=${this._districtIndex ?? ''}
+                value=${this._districtIndexes.join(MULTIPLE_SELECT_SEPARATOR)}
+                multiple
+                clearable
                 hoist
                 @sl-change=${this.handleDistrictIndexChange}
               >
@@ -133,15 +137,15 @@ Only one team of clones can be assigned per district and contract.`)}
                 ${this.renderCloneOptions()}
               </sl-select>
             </div>
-
-            <ca-assign-clones-contract-dialog-description></ca-assign-clones-contract-dialog-description>
           </div>
 
           <ca-assign-clones-contract-dialog-buttons
+            contract-names=${this._contractNames.join(MULTIPLE_SELECT_SEPARATOR)}
+            district-indexes=${this._districtIndexes.join(MULTIPLE_SELECT_SEPARATOR)}
+            clone-ids=${this._cloneIds.join(MULTIPLE_SELECT_SEPARATOR)}
             ?disabled=${!contractValid}
             slot="footer"
             @assign-clones=${this.handleSubmit}
-            @restore-values=${this.handleRestoreValues}
             @cancel=${this.handleClose}
           ></ca-assign-clones-contract-dialog-buttons>
         </sl-dialog>
@@ -182,24 +186,24 @@ Only one team of clones can be assigned per district and contract.`)}
     return contractNameOptions.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
 
-  protected updateContext() {
-    if (this._contractName !== undefined && this._districtIndex !== undefined) {
-      const contract = this._controller.makeContract({
-        assignedCloneIds: this._cloneIds,
-        districtIndex: this._districtIndex,
-        contractName: this._contractName,
-      });
+  // protected updateContext() {
+  //   if (this._contractName !== undefined && this._districtIndex !== undefined) {
+  //     const contract = this._controller.makeContract({
+  //       assignedCloneIds: this._cloneIds,
+  //       districtIndex: this._districtIndex,
+  //       contractName: this._contractName,
+  //     });
 
-      this._contract = contract;
-      this._existingContract = this._controller.getExistingContractByDistrictAndContract(
-        this._districtIndex,
-        this._contractName,
-      );
-    } else {
-      this._contract = undefined;
-      this._existingContract = undefined;
-    }
-  }
+  //     this._contract = contract;
+  //     this._existingContract = this._controller.getExistingContractByDistrictAndContract(
+  //       this._districtIndex,
+  //       this._contractName,
+  //     );
+  //   } else {
+  //     this._contract = undefined;
+  //     this._existingContract = undefined;
+  //   }
+  // }
 
   private handleClose = () => {
     this.dispatchEvent(new AssignClonesContractDialogCloseEvent());
@@ -219,8 +223,8 @@ Only one team of clones can be assigned per district and contract.`)}
       return;
     }
 
-    const contractName = this._contractNameInputRef.value.value as string;
-    this._contractName = contractName;
+    const contractNames = this._contractNameInputRef.value.value as string[];
+    this._contractNames = contractNames;
   };
 
   private handleDistrictIndexChange = () => {
@@ -228,16 +232,8 @@ Only one team of clones can be assigned per district and contract.`)}
       return;
     }
 
-    const districtIndex = parseInt(this._districtIndexInputRef.value.value as string);
-    this._districtIndex = districtIndex;
-  };
-
-  private handleRestoreValues = (event: Event) => {
-    event.preventDefault();
-
-    if (this._existingContract) {
-      this._cloneIds = this._existingContract.assignedClones.map((clone) => clone.id);
-    }
+    const districtIndexes = (this._districtIndexInputRef.value.value as string[]).map((districtIndex) => parseInt(districtIndex));
+    this._districtIndexes = districtIndexes;
   };
 
   private handleSubmit = (event: Event) => {
@@ -247,15 +243,21 @@ Only one team of clones can be assigned per district and contract.`)}
       return;
     }
 
-    if (this._existingContract) {
-      const contractName = CONTRACT_TEXTS[this._existingContract.contractName].title();
-      const districtName = DISTRICT_NAMES[this._existingContract.district.name]();
+    const existingContractAssignments = this._controller.getExistingContractAssignmentsByDistrictsAndContractNames(this._contractNames, this._districtIndexes);
+
+    if (existingContractAssignments.length > 0) {
+      const existringContractAssignmentsTexts = existingContractAssignments.map((assignment) => {
+        const contractName = CONTRACT_TEXTS[assignment.contract.contractName].title();
+        const districtName = DISTRICT_NAMES[assignment.contract.district.name]();
+
+        return msg(str`"${contractName}" in district "${districtName}"`);
+      });
 
       this.dispatchEvent(
         new ConfirmationAlertOpenEvent(
           ContractAlert.replaceContractAssignment,
           msg(
-            str`Are you sure want to replace contract assignment for contract "${contractName}" in district "${districtName}"? All contracts in progress won't be affected.`,
+            str`Are you sure want to replace contract assignment for contracts ${existringContractAssignmentsTexts.join(', ')}? All contracts in progress won't be affected.`,
           ),
           this.handleAssignClones,
         ),
@@ -266,20 +268,16 @@ Only one team of clones can be assigned per district and contract.`)}
   };
 
   private handleAssignClones = () => {
-    this._controller.assignClones({
-      districtIndex: this._districtIndex!,
-      contractName: this._contractName!,
-      assignedCloneIds: this._cloneIds,
-    });
+    this._controller.assignClones(this._contractNames, this._districtIndexes, this._cloneIds);
 
     this.dispatchEvent(new AssignClonesContractDialogCloseEvent());
   };
 
   private validate(): boolean {
-    if (!this._contract) {
+    if (!this._contractNames.length || !this._districtIndexes.length || !this._cloneIds.length) {
       return false;
     }
 
-    return !!(this._contract && this._controller.validateContract(this._contract) === ContractValidationResult.valid);
+    return this._controller.validateContractsBatch(this._contractNames, this._districtIndexes, this._cloneIds) === ContractsBatchValidationResult.valid;
   }
 }

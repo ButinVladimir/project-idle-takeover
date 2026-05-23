@@ -2,14 +2,14 @@ import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { msg, localized, str } from '@lit/localize';
 import { consume } from '@lit/context';
-import { BaseComponent } from '@shared/index';
+import { BaseComponent, MULTIPLE_SELECT_SEPARATOR } from '@shared/index';
 import { classMap } from 'lit/directives/class-map.js';
-import { COMMON_TEXTS, CONTRACT_TEXTS, DISTRICT_NAMES, CONTRACT_VALIDATION_TEXTS } from '@texts/index';
-import { type IContract, ContractValidationResult } from '@state/activity-state';
+import { COMMON_TEXTS, CONTRACT_TEXTS, DISTRICT_NAMES, CONTRACT_VALIDATION_TEXTS, CONTRACTS_BATCH_VALIDATION_TEXTS } from '@texts/index';
+import { type IContract, ContractsBatchValidationResult, ContractValidationResult } from '@state/activity-state';
 import { AssignClonesContractDialogButtonsController } from './controller';
 import { AssignClonesEvent, CancelEvent, RestoreValuesEvent } from './events';
 import { existingContractContext, temporaryContractContext } from '../../contexts';
-import { AssignClonesContractDialogFormWarning, AssignClonesContractDialogWarning } from './types';
+import { AssignClonesContractsDialogFormWarning, AssignClonesContractDialogWarning } from './types';
 import styles from './styles';
 
 @localized()
@@ -25,11 +25,29 @@ export class AssignClonesContractDialogButtons extends BaseComponent {
 
   private _controller: AssignClonesContractDialogButtonsController;
 
-  @consume({ context: temporaryContractContext, subscribe: true })
-  private _contract?: IContract;
+  @property({
+    attribute: "contract-names",
+    type: String
+  })
+  contractNames!: string;
 
-  @consume({ context: existingContractContext, subscribe: true })
-  private _existingContract?: IContract;
+    @property({
+    attribute: "district-indexes",
+    type: String
+  })
+  districtIndexes!: string;
+
+    @property({
+    attribute: "clone-ids",
+    type: String
+  })
+  cloneIds!: string;
+
+  // @consume({ context: temporaryContractContext, subscribe: true })
+  // private _contract?: IContract;
+
+  // @consume({ context: existingContractContext, subscribe: true })
+  // private _existingContract?: IContract;
 
   constructor() {
     super();
@@ -44,15 +62,6 @@ export class AssignClonesContractDialogButtons extends BaseComponent {
       <div class="buttons">
         <sl-button size="medium" variant="default" @click=${this.handleCancel}> ${COMMON_TEXTS.close()} </sl-button>
 
-        <sl-button
-          size="medium"
-          variant="default"
-          ?disabled=${!this._existingContract}
-          @click=${this.handleRestoreValues}
-        >
-          ${COMMON_TEXTS.restoreValues()}
-        </sl-button>
-
         <sl-button size="medium" variant="primary" ?disabled=${this.disabled} @click=${this.handleAssignClones}>
           ${msg('Assign clones')}
         </sl-button>
@@ -61,14 +70,20 @@ export class AssignClonesContractDialogButtons extends BaseComponent {
   }
 
   private selectWarning(): AssignClonesContractDialogWarning {
-    if (!this._contract) {
-      return AssignClonesContractDialogFormWarning.notSelected;
+    if (!this.contractNames || !this.districtIndexes || !this.cloneIds) {
+      return AssignClonesContractsDialogFormWarning.notSelected;
     }
 
-    const validationResult = this._controller.validateContract(this._contract);
+    const contractNames = this.contractNames.split(MULTIPLE_SELECT_SEPARATOR);
+    const districtIndexes = this.districtIndexes.split(MULTIPLE_SELECT_SEPARATOR).map((districtIndex) => parseInt(districtIndex));
+    const cloneIds = this.cloneIds.split(MULTIPLE_SELECT_SEPARATOR);
 
-    if (validationResult === ContractValidationResult.valid && this._existingContract) {
-      return AssignClonesContractDialogFormWarning.alreadyAssigned;
+    const validationResult = this._controller.validateContractsBatch(contractNames, districtIndexes, cloneIds);
+
+    const existingAssignments = this._controller.getExistingContractAssignmentsByDistrictsAndContractNames(contractNames, districtIndexes);
+
+    if (validationResult === ContractsBatchValidationResult.valid && existingAssignments.length > 0) {
+      return AssignClonesContractsDialogFormWarning.alreadyAssigned;
     }
 
     return validationResult;
@@ -79,50 +94,35 @@ export class AssignClonesContractDialogButtons extends BaseComponent {
     let warningText = '';
 
     switch (warning) {
-      case ContractValidationResult.primaryActivityLocked:
-      case ContractValidationResult.contractNotAvailable:
-      case ContractValidationResult.districtLocked:
-      case ContractValidationResult.notEnoughClones:
-      case ContractValidationResult.tooManyClones:
-      case ContractValidationResult.requirementsNotMet:
-        warningText = CONTRACT_VALIDATION_TEXTS[warning]();
+      case ContractsBatchValidationResult.primaryActivityLocked:
+      case ContractsBatchValidationResult.contractNotAvailable:
+      case ContractsBatchValidationResult.districtsLocked:
+      case ContractsBatchValidationResult.notEnoughClones:
+      case ContractsBatchValidationResult.tooManyClones:
+      case ContractsBatchValidationResult.requirementsNotMet:
+        warningText = CONTRACTS_BATCH_VALIDATION_TEXTS[warning]();
         break;
-      case AssignClonesContractDialogFormWarning.notSelected:
-        warningText = msg('Select contract name, district and clones');
+      case AssignClonesContractsDialogFormWarning.notSelected:
+        warningText = msg('Select contract names, districts and clones');
         break;
-      case AssignClonesContractDialogFormWarning.alreadyAssigned:
-        warningText = this.buildAlreadySelectedWarning();
+      case AssignClonesContractsDialogFormWarning.alreadyAssigned:
+        warningText = msg('Some contracts are already assigned');
         break;
-      case ContractValidationResult.valid:
+      case ContractsBatchValidationResult.valid:
         warningText = '';
         break;
     }
 
     const warningClasses = classMap({
       warning: true,
-      visible: warning !== ContractValidationResult.valid,
+      visible: warning !== ContractsBatchValidationResult.valid,
     });
 
     return html` <p class=${warningClasses}>${warningText}</p> `;
   };
 
-  private buildAlreadySelectedWarning = () => {
-    if (this._existingContract) {
-      const contractName = CONTRACT_TEXTS[this._existingContract.contractName].title();
-      const districtName = DISTRICT_NAMES[this._existingContract.district.name]();
-
-      return msg(str`Contract "${contractName}" in district "${districtName}" is already assigned to other team`);
-    }
-
-    return '';
-  };
-
   private handleCancel = () => {
     this.dispatchEvent(new CancelEvent());
-  };
-
-  private handleRestoreValues = () => {
-    this.dispatchEvent(new RestoreValuesEvent());
   };
 
   private handleAssignClones = () => {

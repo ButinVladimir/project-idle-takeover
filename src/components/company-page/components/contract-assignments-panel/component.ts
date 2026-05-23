@@ -29,7 +29,7 @@ Contracts won't be re-added to the primary activity queue after they're exhauste
           size="medium"
           @click=${this.handleAssignClonesContractDialogOpen}
         >
-          ${msg('Assign clones to contract')}
+          ${msg('Assign clones to contracts')}
         </sl-button>
       </div>
 

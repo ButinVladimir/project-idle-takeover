@@ -1,8 +1,8 @@
-import { ContractValidationResult } from '@state/activity-state';
+import { ContractsBatchValidationResult } from '@state/activity-state';
 
-export enum AssignClonesContractDialogFormWarning {
+export enum AssignClonesContractsDialogFormWarning {
   notSelected = 'notSelected',
   alreadyAssigned = 'alreadyAssigned',
 }
 
-export type AssignClonesContractDialogWarning = AssignClonesContractDialogFormWarning | ContractValidationResult;
+export type AssignClonesContractDialogWarning = AssignClonesContractsDialogFormWarning | ContractsBatchValidationResult;
