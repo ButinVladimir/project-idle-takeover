@@ -1,7 +1,7 @@
 import { BaseController } from '@shared/index';
 import { IProcess, IProgram, ProcessValidationResult, ProgramName } from '@state/mainframe-state';
 
-export class PurchaseProgramDialogBatchItemController extends BaseController {
+export class StartProcessDialogBatchItemController extends BaseController {
   getOwnedProgram(name: ProgramName): IProgram | undefined {
     return this.mainframeState.programs.getOwnedProgramByName(name);
   }

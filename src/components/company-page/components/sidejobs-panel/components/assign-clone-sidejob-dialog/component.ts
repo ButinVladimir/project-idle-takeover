@@ -81,7 +81,7 @@ export class AssignCloneSidejobDialog extends BaseComponent {
     return html`
       <form id="assign-clone-sidejob-dialog" @submit=${this.handleSubmit}>
         <sl-dialog ?open=${this.open} @sl-request-close=${this.handleClose}>
-          <h4 slot="label" class="title">${msg('Assign clones to sidejob')}</h4>
+          <h4 slot="label" class="title">${msg('Assign clones to sidejobs')}</h4>
 
           <div class="body">
             <p class="hint">
@@ -182,24 +182,6 @@ Each clone can be assigned only to one sidejob at same time.`)}
 
     return sidejobNameOptions.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
-
-  // protected updateContext() {
-  //   if (this._sidejobName !== undefined && this._districtIndex !== undefined && this._cloneId !== undefined) {
-  //     const sidejob = this._controller.makeSidejob({
-  //       assignedCloneId: this._cloneId,
-  //       districtIndex: this._districtIndex,
-  //       sidejobName: this._sidejobName,
-  //     });
-
-  //     this._sidejob = sidejob;
-  //   } else {
-  //     this._sidejob = undefined;
-  //   }
-
-  //   if (this._cloneId) {
-  //     this._existingSidejob = this._controller.getExistingSidejobByClone(this._cloneId);
-  //   }
-  // }
 
   private handleClose = () => {
     this.dispatchEvent(new AssignCloneSidejobDialogCloseEvent());

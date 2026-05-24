@@ -1,5 +1,5 @@
 import { BaseController } from '@shared/index';
-import { SidejobsBatchValidationResult } from '@state/activity-state';
+import { ISidejob, SidejobsBatchValidationResult } from '@state/activity-state';
 
 export class AssignCloneSidejobDialogButtonsController extends BaseController {
   getTotalConnectivity(districtIndex: number): number {

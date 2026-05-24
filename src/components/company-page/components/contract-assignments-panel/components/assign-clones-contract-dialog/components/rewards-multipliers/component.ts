@@ -15,7 +15,7 @@ import {
   Skill,
   SKILLS,
 } from '@shared/index';
-import { existingContractContext, temporaryContractContext } from '../../contexts';
+import { existingContractContext, temporaryContractContext } from '../batch-item/contexts';
 import styles from './styles';
 
 @localized()

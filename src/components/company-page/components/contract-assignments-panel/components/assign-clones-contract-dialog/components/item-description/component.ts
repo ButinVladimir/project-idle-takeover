@@ -8,18 +8,18 @@ import SlRadioGroup from '@shoelace-style/shoelace/dist/components/radio-group/r
 import { BaseComponent, getHighlightValueClass } from '@shared/index';
 import { COMMON_TEXTS, CONTRACT_TEXTS } from '@texts/index';
 import { type IContract } from '@state/activity-state';
-import { temporaryContractContext } from '../../contexts';
+import { temporaryContractContext } from '../batch-item/contexts';
 import { AssignClonesContractDialogDescriptionMode } from './types';
 import { DESCRIPTION_MODE_TEXTS, DESCRIPTION_MODES } from './constants';
-import { AssignCloneSidejobDialogDescriptionController } from './controller';
+import { AssignCloneSidejobDialogDescriptionItemController } from './controller';
 import styles from './styles';
 
 @localized()
-@customElement('ca-assign-clones-contract-dialog-description')
-export class AssignClonesContractDialogDescription extends BaseComponent {
+@customElement('ca-assign-clones-contract-dialog-item-description')
+export class AssignClonesContractDialogItemDescription extends BaseComponent {
   static styles = styles;
 
-  private _controller: AssignCloneSidejobDialogDescriptionController;
+  private _controller: AssignCloneSidejobDialogDescriptionItemController;
 
   private _descriptionModelInputRef = createRef<SlRadioGroup>();
 
@@ -33,7 +33,7 @@ export class AssignClonesContractDialogDescription extends BaseComponent {
   constructor() {
     super();
 
-    this._controller = new AssignCloneSidejobDialogDescriptionController(this);
+    this._controller = new AssignCloneSidejobDialogDescriptionItemController(this);
   }
 
   protected renderDesktop() {
@@ -85,8 +85,8 @@ export class AssignClonesContractDialogDescription extends BaseComponent {
   private renderTeamSizeString = () => {
     const formatter = this._controller.formatter;
 
-    const minClones = this._contract!.minRequiredClones;
-    const maxClones = this._contract!.maxRequiredClones;
+    const minClones = this._controller.getMinTeamSize(this._contract!.contractName);
+    const maxClones = this._controller.getMaxTeamSize(this._contract!.contractName);
     const assignedClones = this._contract!.assignedClones.length;
 
     const formattedMinClones = formatter.formatNumberDecimal(minClones);

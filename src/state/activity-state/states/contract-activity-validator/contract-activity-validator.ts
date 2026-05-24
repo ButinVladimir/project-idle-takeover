@@ -48,7 +48,11 @@ export class ContractActivityValidator implements IContractActivityValidator {
     return ContractValidationResult.valid;
   }
 
-  validateContractsBatch(contractNames: string[], districts: IDistrictState[], clones: IClone[]): ContractsBatchValidationResult {
+  validateContractsBatch(
+    contractNames: string[],
+    districts: IDistrictState[],
+    clones: IClone[],
+  ): ContractsBatchValidationResult {
     const errors = new Set<ContractValidationResult>();
 
     for (const contractName of contractNames) {
@@ -98,7 +102,7 @@ export class ContractActivityValidator implements IContractActivityValidator {
     return passedClonesCount >= requiredTeamSize;
   }
 
-   getAttributeRequirement(contractName: string, district: IDistrictState, attribute: Attribute): number {
+  getAttributeRequirement(contractName: string, district: IDistrictState, attribute: Attribute): number {
     if (!typedContracts[contractName].requirements.attributes[attribute]) {
       return 0;
     }
@@ -109,7 +113,7 @@ export class ContractActivityValidator implements IContractActivityValidator {
     );
   }
 
-   getAttributeRequiredTeamSize(contractName: string, attribute: Attribute): number {
+  getAttributeRequiredTeamSize(contractName: string, attribute: Attribute): number {
     if (!typedContracts[contractName].requirements.attributes[attribute]) {
       return 0;
     }
@@ -117,7 +121,12 @@ export class ContractActivityValidator implements IContractActivityValidator {
     return typedContracts[contractName].requirements.attributes[attribute].teamSize;
   }
 
-  getAttributeValidTeamSize(contractName: string, district: IDistrictState, clones: IClone[], attribute: Attribute): number {
+  getAttributeValidTeamSize(
+    contractName: string,
+    district: IDistrictState,
+    clones: IClone[],
+    attribute: Attribute,
+  ): number {
     const requiredValue = this.getAttributeRequirement(contractName, district, attribute);
     let sum = 0;
 
@@ -130,7 +139,7 @@ export class ContractActivityValidator implements IContractActivityValidator {
     return sum;
   }
 
-   getSkillRequirement(contractName: string, district: IDistrictState, skill: Skill): number {
+  getSkillRequirement(contractName: string, district: IDistrictState, skill: Skill): number {
     if (!typedContracts[contractName].requirements.skills[skill]) {
       return 0;
     }
@@ -141,7 +150,7 @@ export class ContractActivityValidator implements IContractActivityValidator {
     );
   }
 
-   getSkillRequiredTeamSize(contractName: string, skill: Skill): number {
+  getSkillRequiredTeamSize(contractName: string, skill: Skill): number {
     if (!typedContracts[contractName].requirements.skills[skill]) {
       return 0;
     }

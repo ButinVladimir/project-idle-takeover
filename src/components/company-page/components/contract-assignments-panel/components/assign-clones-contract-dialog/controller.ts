@@ -1,4 +1,4 @@
-import { ContractsBatchValidationResult, IContract, ISerializedContract } from '@state/activity-state';
+import { ContractsBatchValidationResult } from '@state/activity-state';
 import { IClone } from '@state/clones-state';
 import { BaseController } from '@shared/index';
 import { IDistrictState } from '@state/city-state';
@@ -17,16 +17,18 @@ export class AssignClonesContractDialogController extends BaseController {
     return this.cityState.listAvailableDistricts();
   }
 
-  makeContract(args: ISerializedContract): IContract {
-    return this.activityState.contractsFactory.makeContract(args);
-  }
-
-  getExistingContractAssignmentsByDistrictsAndContractNames(contractNames: string[], districtIndexes: number[]): IContractAssignment[] {
+  getExistingContractAssignmentsByDistrictsAndContractNames(
+    contractNames: string[],
+    districtIndexes: number[],
+  ): IContractAssignment[] {
     const foundContractAssignments = [];
 
     for (const contractName of contractNames) {
       for (const districtIndex of districtIndexes) {
-        const contractAssignment = this.automationState.contracts.getContractAssignmentByDistrictAndContract(districtIndex, contractName);
+        const contractAssignment = this.automationState.contracts.getContractAssignmentByDistrictAndContract(
+          districtIndex,
+          contractName,
+        );
 
         if (contractAssignment) {
           foundContractAssignments.push(contractAssignment);
@@ -44,7 +46,11 @@ export class AssignClonesContractDialogController extends BaseController {
     return this.automationState.contracts.addContractAssignments(contractNames, districts, clones);
   }
 
-  validateContractsBatch(contractNames: string[], districtIndexes: number[], cloneIds: string[]): ContractsBatchValidationResult {
+  validateContractsBatch(
+    contractNames: string[],
+    districtIndexes: number[],
+    cloneIds: string[],
+  ): ContractsBatchValidationResult {
     const districts = districtIndexes.map((districtIndex) => this.cityState.getDistrictState(districtIndex));
     const clones = cloneIds.map((cloneId) => this.clonesState.ownedClones.getCloneById(cloneId)!);
 

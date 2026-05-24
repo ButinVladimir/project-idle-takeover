@@ -7,7 +7,10 @@ import {
   SidejobsBatchValidationResult,
   SidejobValidationResult,
 } from '@state/activity-state/states/sidejob-activity-validator/types';
-import { ContractsBatchValidationResult, ContractValidationResult } from '@state/activity-state/states/contract-activity-validator/types';
+import {
+  ContractsBatchValidationResult,
+  ContractValidationResult,
+} from '@state/activity-state/states/contract-activity-validator/types';
 import { MainframeHardwareValidationResult } from '@state/mainframe-state/states/mainframe-hardware-state/types';
 import {
   ProcessesBatchValidationResult,

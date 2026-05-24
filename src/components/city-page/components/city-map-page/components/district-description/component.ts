@@ -1,3 +1,4 @@
+import isNil from 'lodash/isNil';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { localized, msg } from '@lit/localize';
@@ -27,7 +28,7 @@ export class CityMapDistrictDescription extends BaseComponent {
   }
 
   protected renderDesktop() {
-    if (this.district === undefined || this.district === null) {
+    if (isNil(this.district)) {
       return nothing;
     }
 

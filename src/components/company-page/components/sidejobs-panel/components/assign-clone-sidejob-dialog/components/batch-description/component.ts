@@ -1,3 +1,4 @@
+import isNil from 'lodash/isNil';
 import { html, nothing } from 'lit';
 import { localized } from '@lit/localize';
 import { customElement, property } from 'lit/decorators.js';
@@ -46,7 +47,7 @@ export class AssignCloneSidejobDialogBatchDescription extends BaseComponent {
   }
 
   protected renderDesktop() {
-    if (this.sidejobName === undefined || this.districtIndex === 0 || !this.cloneIds) {
+    if (isNil(this.sidejobName) || isNil(this.districtIndex) || !this.cloneIds) {
       return nothing;
     }
 
@@ -89,7 +90,7 @@ export class AssignCloneSidejobDialogBatchDescription extends BaseComponent {
   };
 
   handlePartialUpdate = () => {
-    if (this.sidejobName === undefined || this.districtIndex === undefined) {
+    if (isNil(this.sidejobName) || isNil(this.districtIndex)) {
       return;
     }
 

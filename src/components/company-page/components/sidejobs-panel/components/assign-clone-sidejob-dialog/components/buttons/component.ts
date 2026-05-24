@@ -1,3 +1,4 @@
+import isNil from 'lodash/isNil';
 import { html } from 'lit';
 import { customElement, property, queryAll } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
@@ -112,7 +113,7 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
   };
 
   private selectWarning(): AssignCloneSidejobDialogWarning {
-    if (this.sidejobName === undefined || this.districtIndex === undefined || !this.cloneIds) {
+    if (isNil(this.sidejobName) || isNil(this.districtIndex) || !this.cloneIds) {
       return AssignCloneSidejobDialogFormWarning.notSelected;
     }
 
@@ -131,7 +132,7 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
   }
 
   private updateAvailabilityTimer(): void {
-    if (this.sidejobName === undefined || this.districtIndex === undefined) {
+    if (isNil(this.sidejobName) || isNil(this.districtIndex)) {
       return;
     }
 

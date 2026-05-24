@@ -5,7 +5,7 @@ import { provide } from '@lit/context';
 import { type ProgramName, type IProgram, type IProcess, ProcessValidationResult } from '@state/mainframe-state';
 import { BaseComponent } from '@shared/index';
 import { PROCESS_VALIDATION_TEXTS, PROGRAM_TEXTS } from '@texts/index';
-import { PurchaseProgramDialogBatchItemController } from './controller';
+import { StartProcessDialogBatchItemController } from './controller';
 import { existingProcessContext, programContext } from './contexts';
 import styles from './styles';
 import { StartProcessDialogBatchItemFormWarning, StartProcessDialogBatchItemWarning } from './types';
@@ -27,7 +27,7 @@ export class StartProcessDialogBatchItem extends BaseComponent {
   })
   threads!: number;
 
-  private _controller: PurchaseProgramDialogBatchItemController;
+  private _controller: StartProcessDialogBatchItemController;
 
   @provide({ context: programContext })
   private _ownedProgram?: IProgram;
@@ -38,7 +38,7 @@ export class StartProcessDialogBatchItem extends BaseComponent {
   constructor() {
     super();
 
-    this._controller = new PurchaseProgramDialogBatchItemController(this);
+    this._controller = new StartProcessDialogBatchItemController(this);
   }
 
   protected renderDesktop() {
