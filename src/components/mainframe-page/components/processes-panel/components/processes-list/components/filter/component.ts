@@ -4,7 +4,14 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ref, createRef } from 'lit/directives/ref.js';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.component.js';
-import { BaseComponent, StateFilterValue, STATE_FILTER_VALUES, ISelectOption, compareOptions } from '@shared/index';
+import {
+  BaseComponent,
+  StateFilterValue,
+  STATE_FILTER_VALUES,
+  ISelectOption,
+  compareOptions,
+  MULTIPLE_SELECT_SEPARATOR,
+} from '@shared/index';
 import { STATE_FILTER_TEXTS, COMMON_TEXTS } from '@texts/common';
 import { PROGRAM_TEXTS } from '@texts/index';
 import { consume } from '@lit/context';
@@ -74,7 +81,7 @@ export class ProcessesListFilter extends BaseComponent {
           hoist
           multiple
           clearable
-          value=${this._filterState.programs.join(' ')}
+          value=${this._filterState.programs.join(MULTIPLE_SELECT_SEPARATOR)}
           @sl-change=${this.handleProgramsChange}
         >
           <span class="input-label" slot="label"> ${msg('Programs')} </span>
@@ -88,7 +95,7 @@ export class ProcessesListFilter extends BaseComponent {
           hoist
           multiple
           clearable
-          value=${this._filterState.cores.join(' ')}
+          value=${this._filterState.cores.join(MULTIPLE_SELECT_SEPARATOR)}
           @sl-change=${this.handleCoresChange}
         >
           <span class="input-label" slot="label"> ${msg('Cores')} </span>

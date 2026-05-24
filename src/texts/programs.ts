@@ -80,6 +80,7 @@ export const PROGRAM_DESCRIPTION_TEXTS = {
   requirementsAutoscalable: () => msg('Requirements for autoscalable program'),
   requirementsSingle: () => msg('Requirements for a single thread'),
   ram: () => msg('RAM'),
+  requiredRam: () => msg('Required RAM'),
   cores: () => msg('Cores'),
   upToValue: (value: any) => msg(html`Up to ${value}`),
   upToDiff: (value: any, diff: any) => msg(html`Up to ${value} (${diff})`),

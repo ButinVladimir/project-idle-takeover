@@ -15,7 +15,7 @@ import {
   Skill,
   SKILLS,
 } from '@shared/index';
-import { existingSidejobContext, temporarySidejobContext } from '../../contexts';
+import { existingSidejobContext, temporarySidejobContext } from '../batch-item/contexts';
 import styles from './styles';
 
 @localized()

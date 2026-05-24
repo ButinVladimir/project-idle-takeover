@@ -19,7 +19,7 @@ import {
   ISerializedProcess,
 } from './interfaces';
 import { Process } from './process';
-import { ProcessValidationResult } from './types';
+import { ProcessesBatchValidationResult } from './types';
 
 const { lazyInject } = decorators;
 
@@ -91,57 +91,17 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     return this._processesMap.get(programName);
   }
 
-  addProcess(programName: ProgramName, threads: number): boolean {
-    if (this._validator.validateProcess(programName, threads) !== ProcessValidationResult.valid) {
+  addProcessesBatch(programNames: ProgramName[], threads: number): boolean {
+    if (this._validator.validateProcessesBatch(programNames, threads) !== ProcessesBatchValidationResult.valid) {
       return false;
     }
 
-    const program = this._mainframeState.programs.getOwnedProgramByName(programName)!;
-    const threadCount = program.isAutoscalable ? 0 : threads;
-
-    const existingProcess = this.getProcessByName(programName);
-
-    if (program.isAutoscalable && !existingProcess) {
-      this.deleteAutoscalableProcesses();
-    }
-
-    if (existingProcess) {
-      existingProcess.update(threads);
-    } else {
-      const process = this.createProcess({
-        enabled: true,
-        threads: threadCount,
-        currentCompletionPoints: 0,
-        programName: programName,
-      });
-
-      if (program.isAutoscalable) {
-        this._processesList.unshift(process);
-      } else {
-        this._processesList.push(process);
-      }
-
-      this._processesMap.set(programName, process);
-    }
+    programNames.forEach((programName) => {
+      this.startSingleProcess(programName, threads);
+    });
 
     this.requestUpdateRunningProcesses();
     this.recalculateRam();
-
-    const programTitle = PROGRAM_TEXTS[program.name].title();
-
-    if (program.isAutoscalable) {
-      this._messageLogState.postMessage(
-        ProgramsEvent.processStarted,
-        msg(str`Process for program "${programTitle}" has been started`),
-      );
-    } else {
-      const formattedThreads = this._formatter.formatNumberDecimal(threadCount);
-
-      this._messageLogState.postMessage(
-        ProgramsEvent.processStarted,
-        msg(str`Process for program "${programTitle}" with ${formattedThreads} threads has been started`),
-      );
-    }
 
     return true;
   }
@@ -394,5 +354,51 @@ export class MainframeProcessesState implements IMainframeProcessesState {
 
   private handleProcessCleanup(process: IProcess) {
     process.removeAllEventListeners();
+  }
+
+  private startSingleProcess(programName: ProgramName, threads: number): void {
+    const program = this._mainframeState.programs.getOwnedProgramByName(programName)!;
+    const threadCount = program.isAutoscalable ? 0 : threads;
+
+    const existingProcess = this.getProcessByName(programName);
+
+    if (program.isAutoscalable && !existingProcess) {
+      this.deleteAutoscalableProcesses();
+    }
+
+    if (existingProcess) {
+      existingProcess.update(threads);
+    } else {
+      const process = this.createProcess({
+        enabled: true,
+        threads: threadCount,
+        currentCompletionPoints: 0,
+        programName: programName,
+      });
+
+      if (program.isAutoscalable) {
+        this._processesList.unshift(process);
+      } else {
+        this._processesList.push(process);
+      }
+
+      this._processesMap.set(programName, process);
+    }
+
+    const programTitle = PROGRAM_TEXTS[program.name].title();
+
+    if (program.isAutoscalable) {
+      this._messageLogState.postMessage(
+        ProgramsEvent.processStarted,
+        msg(str`Process for program "${programTitle}" has been started`),
+      );
+    } else {
+      const formattedThreads = this._formatter.formatNumberDecimal(threadCount);
+
+      this._messageLogState.postMessage(
+        ProgramsEvent.processStarted,
+        msg(str`Process for program "${programTitle}" with ${formattedThreads} threads has been started`),
+      );
+    }
   }
 }

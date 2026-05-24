@@ -6,7 +6,7 @@ import { TYPES } from '@state/types';
 import { calculateTierPower, Milestone } from '@shared/index';
 import { IMainframeProgramsValidator } from './interfaces';
 import { ProgramName, typedPrograms } from '../progam-factory';
-import { ProgramValidationResult } from './types';
+import { ProgramsBatchValidationResult, ProgramValidationResult } from './types';
 
 const { lazyInject } = decorators;
 
@@ -25,19 +25,30 @@ export class MainframeProgramsValidator implements IMainframeProgramsValidator {
   }
 
   validateProgram(name: ProgramName, tier: number, level: number): ProgramValidationResult {
-    if (!this._unlockState.milestones.isMilestoneReached(Milestone.unlockedMainframePrograms)) {
-      return ProgramValidationResult.programsLocked;
-    }
-
     if (!this._unlockState.items.programs.isItemAvailable(name, tier, level)) {
       return ProgramValidationResult.programNotAvailable;
     }
 
-    const cost = this.calculateProgramCost(name, tier, level);
-    if (cost > this._globalState.money.money) {
-      return ProgramValidationResult.notEnoughMoney;
+    return ProgramValidationResult.valid;
+  }
+
+  validateProgramsBatch(names: ProgramName[], tier: number, level: number): ProgramsBatchValidationResult {
+    if (!this._unlockState.milestones.isMilestoneReached(Milestone.unlockedMainframePrograms)) {
+      return ProgramsBatchValidationResult.programsLocked;
     }
 
-    return ProgramValidationResult.valid;
+    const programValidationResults = names.map((name) => this.validateProgram(name, tier, level));
+
+    if (programValidationResults.includes(ProgramValidationResult.programNotAvailable)) {
+      return ProgramsBatchValidationResult.programsNotAvailable;
+    }
+
+    const totalCost = names.reduce((sum, name) => sum + this.calculateProgramCost(name, tier, level), 0);
+
+    if (totalCost > this._globalState.money.money) {
+      return ProgramsBatchValidationResult.notEnoughMoney;
+    }
+
+    return ProgramsBatchValidationResult.valid;
   }
 }

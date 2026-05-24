@@ -121,17 +121,13 @@ export class PurchaseCloneDialogButtons extends BaseComponent {
     const validationResult = this._controller.validateClone(this._clone);
 
     if (validationResult === CloneValidationResult.notEnoughMoney) {
-      const cost = this._controller.getCloneCost(this._clone.templateName, this._clone.tier, this._clone.level);
       const moneyGrowth = this._controller.moneyGrowth;
-      const moneyDiff = cost - this._controller.money;
 
-      if (moneyDiff > 0) {
-        if (moneyGrowth <= 0) {
-          return CloneValidationResult.notEnoughMoney;
-        }
-
-        return PurchaseCloneDialogFormWarning.willBeAvailableIn;
+      if (moneyGrowth <= 0) {
+        return CloneValidationResult.notEnoughMoney;
       }
+
+      return PurchaseCloneDialogFormWarning.willBeAvailableIn;
     }
 
     return validationResult;
@@ -150,7 +146,7 @@ export class PurchaseCloneDialogButtons extends BaseComponent {
     const moneyGrowth = this._controller.moneyGrowth;
     const moneyDiff = cost - this._controller.money;
 
-    if (moneyDiff < 0 || moneyGrowth < 0) {
+    if (moneyDiff <= 0 || moneyGrowth <= 0) {
       this._availableTimeRef.value.textContent = '';
     } else {
       const formattedTime = this._controller.formatter.formatTimeLong(moneyDiff / moneyGrowth);

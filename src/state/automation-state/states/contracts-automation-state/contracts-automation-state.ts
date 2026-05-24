@@ -4,8 +4,10 @@ import { msg, str } from '@lit/localize';
 import { TYPES } from '@state/types';
 import { decorators } from '@state/container';
 import { type IStateUIConnector } from '@state/state-ui-connector';
-import { type IActivityState } from '@state/activity-state';
+import { ContractsBatchValidationResult, ISerializedContract, type IActivityState } from '@state/activity-state';
 import { type IMessageLogState } from '@state/message-log-state';
+import { IDistrictState } from '@state/city-state';
+import { IClone } from '@state/clones-state';
 import { ContractsEvent, moveElementInArray, removeElementsFromArray } from '@shared/index';
 import { CONTRACT_TEXTS, DISTRICT_NAMES } from '@texts/index';
 import {
@@ -13,7 +15,6 @@ import {
   IContractAssignment,
   IContractsAutomationSerializedState,
   IContractsAutomationState,
-  IMakeContractAutomationStateArgs,
   type IContractAssignmentsStarter,
 } from './interfaces';
 import { ContractAssignment } from './contract-assignment';
@@ -69,40 +70,24 @@ export class ContractsAutomationState implements IContractsAutomationState {
     return this._contractAssignmentsList[existingAutomationIndex];
   }
 
-  addContractAssignment(parameters: IMakeContractAutomationStateArgs): void {
-    const existingAutomationIndex = this.getContactAutomationIndexByDistrictAndContract(
-      parameters.contract.districtIndex,
-      parameters.contract.contractName,
-    );
+  addContractAssignments(contractNames: string[], districts: IDistrictState[], clones: IClone[]): boolean {
+    if (
+      this._activityState.contractActivityValidator.validateContractsBatch(contractNames, districts, clones) !==
+      ContractsBatchValidationResult.valid
+    ) {
+      return false;
+    }
 
-    let contractAssignment: IContractAssignment;
+    const districtIndexes = districts.map((district) => district.index);
+    const cloneIds = clones.map((clone) => clone.id);
 
-    if (existingAutomationIndex === -1) {
-      contractAssignment = this.makeContractAssignment({
-        id: uuid(),
-        contract: parameters.contract,
-        enabled: true,
-      });
-
-      this._contractAssignmentsList.push(contractAssignment);
-      this._contractAssignmentsIdMap.set(contractAssignment.id, contractAssignment);
-    } else {
-      contractAssignment = this._contractAssignmentsList[existingAutomationIndex];
-      contractAssignment.contract = this._activityState.contractsFactory.makeContract(parameters.contract);
-
-      const activity = this._activityState.primaryActivityQueue.getActivityByAssignmentId(contractAssignment.id);
-
-      if (activity) {
-        activity.abortCurrentCompletion();
+    for (const contractName of contractNames) {
+      for (const districtIndex of districtIndexes) {
+        this.addContractAssignment(contractName, districtIndex, cloneIds);
       }
     }
 
-    this._messageLogState.postMessage(
-      ContractsEvent.contractAssigned,
-      msg(
-        str`Contract assignment for contract "${CONTRACT_TEXTS[contractAssignment.contract.contractName].title()}" in district "${DISTRICT_NAMES[contractAssignment.contract.district.name]()}" has been added`,
-      ),
-    );
+    return true;
   }
 
   removeContractAssignmentById(id: string): void {
@@ -224,5 +209,44 @@ export class ContractsAutomationState implements IContractsAutomationState {
     contractAssignment.removeAllEventListeners();
 
     this._activityState.primaryActivityQueue.cancelActivitiesByAssignmentId(contractAssignment.id);
+  }
+
+  private addContractAssignment(contractName: string, districtIndex: number, cloneIds: string[]): void {
+    const existingAutomationIndex = this.getContactAutomationIndexByDistrictAndContract(districtIndex, contractName);
+
+    let contractAssignment: IContractAssignment;
+
+    const contractData: ISerializedContract = {
+      contractName,
+      districtIndex,
+      assignedCloneIds: cloneIds,
+    };
+
+    if (existingAutomationIndex === -1) {
+      contractAssignment = this.makeContractAssignment({
+        id: uuid(),
+        contract: contractData,
+        enabled: true,
+      });
+
+      this._contractAssignmentsList.push(contractAssignment);
+      this._contractAssignmentsIdMap.set(contractAssignment.id, contractAssignment);
+    } else {
+      contractAssignment = this._contractAssignmentsList[existingAutomationIndex];
+      contractAssignment.contract = this._activityState.contractsFactory.makeContract(contractData);
+
+      const activity = this._activityState.primaryActivityQueue.getActivityByAssignmentId(contractAssignment.id);
+
+      if (activity) {
+        activity.abortCurrentCompletion();
+      }
+    }
+
+    this._messageLogState.postMessage(
+      ContractsEvent.contractAssigned,
+      msg(
+        str`Contract assignment for contract "${CONTRACT_TEXTS[contractAssignment.contract.contractName].title()}" in district "${DISTRICT_NAMES[contractAssignment.contract.district.name]()}" has been added`,
+      ),
+    );
   }
 }

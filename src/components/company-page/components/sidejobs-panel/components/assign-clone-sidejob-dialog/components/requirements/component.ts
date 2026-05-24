@@ -6,7 +6,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ATTRIBUTE_TEXTS, COMMON_TEXTS, SKILL_TEXTS } from '@texts/index';
 import { type ISidejob } from '@state/activity-state';
 import { BaseComponent, Attribute, ATTRIBUTES, getHighlightValueClassMap, Skill, SKILLS } from '@shared/index';
-import { temporarySidejobContext } from '../../contexts';
+import { temporarySidejobContext } from '../batch-item/contexts';
 import styles from './styles';
 import { AssignCloneSidejobDialogRequirementsController } from './controller';
 

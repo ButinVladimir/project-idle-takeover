@@ -43,6 +43,7 @@ export const COMMON_TEXTS = {
   attributes: () => msg('Attributes'),
   skills: () => msg('Skills'),
   cost: () => msg('Cost'),
+  totalCost: () => msg('Total cost'),
   synchronization: () => msg('Synchronization'),
   experienceMultiplier: () => msg('Experience multiplier'),
   faction: () => msg('Faction'),

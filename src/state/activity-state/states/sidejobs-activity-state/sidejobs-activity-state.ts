@@ -6,6 +6,8 @@ import { type IStateUIConnector } from '@state/state-ui-connector';
 import { type IMessageLogState } from '@state/message-log-state';
 import { TYPES } from '@state/types';
 import { DISTRICT_NAMES, SIDEJOB_TEXTS } from '@texts/index';
+import { IDistrictState } from '@state/city-state';
+import { IClone } from '@state/clones-state';
 import { type IActivityState } from '../../interfaces';
 import {
   ISidejobsActivityState,
@@ -13,9 +15,8 @@ import {
   ISidejobsActivitySerializedState,
   ISerializedSidejobActivity,
 } from './interfaces';
-import { SidejobValidationResult, type ISidejobActivityValidator } from '../sidejob-activity-validator';
+import { SidejobsBatchValidationResult, type ISidejobActivityValidator } from '../sidejob-activity-validator';
 import { SidejobActivity } from './sidejob-activity';
-import { ISerializedSidejob } from '../sidejobs-factory';
 
 const { lazyInject } = decorators;
 
@@ -56,27 +57,38 @@ export class SidejobsActivityState implements ISidejobsActivityState {
     return this._activityMap.get(sidejobId);
   }
 
-  assignSidejob(sidejobParameters: ISerializedSidejob): boolean {
-    const activity = new SidejobActivity({
-      id: uuid(),
-      sidejob: sidejobParameters,
-      enabled: true,
-    });
-
-    if (this._sidejobActivityValidator.validateSidejob(activity.sidejob) !== SidejobValidationResult.valid) {
-      activity.removeAllEventListeners();
+  assignSidejobs(sidejobName: string, district: IDistrictState, clones: IClone[]): boolean {
+    if (
+      this._sidejobActivityValidator.validateSidejobsBatch(sidejobName, district, clones) !==
+      SidejobsBatchValidationResult.valid
+    ) {
       return false;
     }
 
-    this.addActivity(activity);
+    const activities: SidejobActivity[] = clones.map(
+      (clone) =>
+        new SidejobActivity({
+          id: uuid(),
+          sidejob: {
+            sidejobName: sidejobName,
+            districtIndex: district.index,
+            assignedCloneId: clone.id,
+          },
+          enabled: true,
+        }),
+    );
+
+    this.addActivities(activities);
     this._activityState.requestReassignment();
 
-    this._messageLogState.postMessage(
-      SidejobsEvent.sidejobAssigned,
-      msg(
-        str`Sidejob "${SIDEJOB_TEXTS[activity.sidejob.sidejobName].title()}" in district "${DISTRICT_NAMES[activity.sidejob.district.name]()}" has been assigned to clone "${activity.sidejob.assignedClone.name}"`,
-      ),
-    );
+    for (const activity of activities) {
+      this._messageLogState.postMessage(
+        SidejobsEvent.sidejobAssigned,
+        msg(
+          str`Sidejob "${SIDEJOB_TEXTS[activity.sidejob.sidejobName].title()}" in district "${DISTRICT_NAMES[activity.sidejob.district.name]()}" has been assigned to clone "${activity.sidejob.assignedClone.name}"`,
+        ),
+      );
+    }
 
     return true;
   }
@@ -130,11 +142,10 @@ export class SidejobsActivityState implements ISidejobsActivityState {
   async deserialize(serializedState: ISidejobsActivitySerializedState): Promise<void> {
     this.clearActivities();
 
-    serializedState.activities.forEach((serializedActivity) => {
-      const sidejob = new SidejobActivity(serializedActivity);
+    const activities = serializedState.activities.map((serializedActivity) => new SidejobActivity(serializedActivity));
 
-      this.addActivity(sidejob);
-    });
+    this.addActivities(activities);
+    this._activityState.requestReassignment();
   }
 
   serialize(): ISidejobsActivitySerializedState {
@@ -157,6 +168,10 @@ export class SidejobsActivityState implements ISidejobsActivityState {
     this._activitiesList.push(activity);
     this._activityMap.set(activity.id, activity);
     this._activityCloneIdMap.set(activity.sidejob.assignedClone.id, activity);
+  }
+
+  private addActivities(activities: ISidejobActivity[]) {
+    activities.forEach((activity) => this.addActivity(activity));
   }
 
   private clearActivities() {

@@ -1,2 +1,4 @@
 import './buttons';
-import './description';
+import './program-description';
+import './batch-description';
+import './batch-item';

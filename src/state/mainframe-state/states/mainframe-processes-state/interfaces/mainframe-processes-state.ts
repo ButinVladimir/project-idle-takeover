@@ -11,7 +11,7 @@ export interface IMainframeProcessesState extends ISerializeable<IMainframeProce
   runningScalableProcess: IProcess | undefined;
   listProcesses(): IProcess[];
   getProcessByName(programName: ProgramName): IProcess | undefined;
-  addProcess(programName: ProgramName, threads: number): boolean;
+  addProcessesBatch(programNames: ProgramName[], threads: number): boolean;
   deleteProcess(programName: ProgramName): void;
   deleteProcesses(programName: ProgramName[]): void;
   requestUpdateRunningProcesses(): void;

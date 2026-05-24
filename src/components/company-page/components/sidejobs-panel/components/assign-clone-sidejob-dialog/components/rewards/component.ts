@@ -12,7 +12,7 @@ import {
 } from '@shared/index';
 import { type ISidejob } from '@state/activity-state';
 import { COMMON_TEXTS, REWARD_PARAMETER_NAMES } from '@texts/index';
-import { existingSidejobContext, temporarySidejobContext } from '../../contexts';
+import { existingSidejobContext, temporarySidejobContext } from '../batch-item/contexts';
 import { DISPLAY_TYPES } from './constants';
 import { AssignCloneSidejobDialogRewardsController } from './controller';
 import styles from './styles';

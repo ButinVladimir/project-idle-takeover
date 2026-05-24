@@ -135,7 +135,9 @@ export class ContractActivity extends PrimaryActivity implements IContractActivi
     }
 
     const validationResult = this._activityState.contractActivityValidator.validateContract(
-      this._contractAssignment.contract,
+      this._contractAssignment.contract.contractName,
+      this._contractAssignment.contract.district,
+      this._contractAssignment.contract.assignedClones,
     );
 
     if (validationResult !== ContractValidationResult.valid) {

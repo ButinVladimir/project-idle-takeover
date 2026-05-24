@@ -1,20 +1,24 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { msg, localized, str } from '@lit/localize';
+import { msg, localized } from '@lit/localize';
 import { classMap } from 'lit/directives/class-map.js';
-import { consume } from '@lit/context';
-import { BaseComponent } from '@shared/index';
-import { ProcessValidationResult, type IProcess, type IProgram } from '@state/mainframe-state';
-import { COMMON_TEXTS, PROCESS_VALIDATION_TEXTS, PROGRAM_TEXTS } from '@texts/index';
+import { BaseComponent, MULTIPLE_SELECT_SEPARATOR } from '@shared/index';
+import { IProcess, ProcessesBatchValidationResult, ProgramName } from '@state/mainframe-state';
+import { COMMON_TEXTS, PROCESSES_BATCH_VALIDATION_TEXTS } from '@texts/index';
 import { StartProcessDialogButtonsController } from './controller';
-import { StartProcessEvent, CancelEvent, RestoreValuesEvent } from './events';
-import { existingProcessContext, programContext } from '../../contexts';
+import { StartProcessEvent, CancelEvent } from './events';
 import styles from './styles';
 
 @localized()
 @customElement('ca-start-process-dialog-buttons')
 export class StartProcessDialogButtons extends BaseComponent {
   static styles = styles;
+
+  @property({
+    attribute: 'program-names',
+    type: String,
+  })
+  programNames!: string;
 
   @property({
     attribute: 'threads',
@@ -36,12 +40,6 @@ export class StartProcessDialogButtons extends BaseComponent {
 
   private _controller: StartProcessDialogButtonsController;
 
-  @consume({ context: programContext, subscribe: true })
-  private _program?: IProgram;
-
-  @consume({ context: existingProcessContext, subscribe: true })
-  private _existingProcess?: IProcess;
-
   constructor() {
     super();
 
@@ -56,17 +54,11 @@ export class StartProcessDialogButtons extends BaseComponent {
       visible: !!warning,
     });
 
-    const canRestoreValues = this._existingProcess && !this._existingProcess.program.isAutoscalable;
-
     return html`
       <p class=${warningClasses}>${warning}</p>
 
       <div class="buttons">
         <sl-button size="medium" variant="default" @click=${this.handleCancel}> ${COMMON_TEXTS.close()} </sl-button>
-
-        <sl-button size="medium" variant="default" ?disabled=${!canRestoreValues} @click=${this.handleRestoreValues}>
-          ${COMMON_TEXTS.restoreValues()}
-        </sl-button>
 
         <sl-button size="medium" variant="primary" ?disabled=${this.disabled} @click=${this.handleStart}>
           ${msg('Start process')}
@@ -76,31 +68,24 @@ export class StartProcessDialogButtons extends BaseComponent {
   }
 
   private getWarning(): string {
-    if (!this._program) {
-      return msg('Select program');
+    if (!this.programNames) {
+      return msg('Programs are not selected');
     }
 
-    const validationResult = this._controller.validateProcess(this._program.name, this.threads);
+    const programNames = this.programNames.split(MULTIPLE_SELECT_SEPARATOR) as ProgramName[];
 
-    if (validationResult !== ProcessValidationResult.valid) {
-      return PROCESS_VALIDATION_TEXTS[validationResult]();
+    const validationResult = this._controller.validateProcessesBatch(programNames, this.threads);
+
+    if (validationResult !== ProcessesBatchValidationResult.valid) {
+      return PROCESSES_BATCH_VALIDATION_TEXTS[validationResult]();
     }
 
-    if (this._program.isAutoscalable && this._existingProcess) {
-      return msg(str`Process for same program is already running`);
-    }
+    const runningProcesses = programNames
+      .map((programName) => this._controller.getProcess(programName))
+      .filter((process) => process) as IProcess[];
 
-    if (!this._program.isAutoscalable && this._existingProcess) {
-      const formattedThreads = this._controller.formatter.formatNumberDecimal(this._existingProcess.threads);
-
-      return msg(str`Process for same program with ${formattedThreads} threads is already running`);
-    }
-
-    const runningAutoscalableProgram = this._controller.getRunningScalableProgram();
-    if (this._program.isAutoscalable && runningAutoscalableProgram) {
-      const runningAutoscalableProgramTitle = PROGRAM_TEXTS[runningAutoscalableProgram.program.name].title();
-
-      return msg(str`Autoscalable process for program "${runningAutoscalableProgramTitle}" is already running`);
+    if (runningProcesses.length > 0) {
+      return msg('Some programs are already have processes started');
     }
 
     return '';
@@ -108,10 +93,6 @@ export class StartProcessDialogButtons extends BaseComponent {
 
   private handleCancel = () => {
     this.dispatchEvent(new CancelEvent());
-  };
-
-  private handleRestoreValues = () => {
-    this.dispatchEvent(new RestoreValuesEvent());
   };
 
   private handleStart = () => {

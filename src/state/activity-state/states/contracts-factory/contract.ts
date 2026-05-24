@@ -55,52 +55,6 @@ export class Contract implements IContract {
     return typedContracts[this._templateName].requirements.baseCompletionTime;
   }
 
-  get minRequiredClones() {
-    return this.contractTemplate.requirements.teamSize.min;
-  }
-
-  get maxRequiredClones() {
-    return this.contractTemplate.requirements.teamSize.max;
-  }
-
-  getAttributeRequirement(attribute: Attribute): number {
-    if (!this.contractTemplate.requirements.attributes[attribute]) {
-      return 0;
-    }
-
-    return Math.floor(
-      this._district.template.activityRequirementModifier *
-        calculatePower(this._globalState.threat.level, this.contractTemplate.requirements.attributes[attribute]),
-    );
-  }
-
-  getAttributeRequiredTeamSize(attribute: Attribute): number {
-    if (!this.contractTemplate.requirements.attributes[attribute]) {
-      return 0;
-    }
-
-    return this.contractTemplate.requirements.attributes[attribute].teamSize;
-  }
-
-  getSkillRequirement(skill: Skill): number {
-    if (!this.contractTemplate.requirements.skills[skill]) {
-      return 0;
-    }
-
-    return Math.floor(
-      this._district.template.activityRequirementModifier *
-        calculatePower(this._globalState.threat.level, this.contractTemplate.requirements.skills[skill]),
-    );
-  }
-
-  getSkillRequiredTeamSize(skill: Skill): number {
-    if (!this.contractTemplate.requirements.skills[skill]) {
-      return 0;
-    }
-
-    return this.contractTemplate.requirements.skills[skill].teamSize;
-  }
-
   getAttributeModifier(attribute: Attribute): number {
     if (!this.contractTemplate.rewardModifiers.attributes[attribute]) {
       return 1;

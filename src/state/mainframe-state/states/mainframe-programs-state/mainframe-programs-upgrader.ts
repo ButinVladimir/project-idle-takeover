@@ -114,7 +114,7 @@ export class MainframeProgramsUpgrader implements IMainframeProgramsUpgrader {
         newLevel,
       );
 
-      if (this._mainframeState.programs.purchaseProgram(existingProgram.name, existingProgram.tier, newLevel)) {
+      if (this._mainframeState.programs.purchaseProgramsBatch([existingProgram.name], existingProgram.tier, newLevel)) {
         this._availableMoney -= cost;
         this._availableActions -= newLevel - oldLevel;
       }

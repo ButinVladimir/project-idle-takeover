@@ -3,10 +3,20 @@ import { Attribute, BaseController, Skill } from '@shared/index';
 
 export class AssignCloneSidejobDialogRequirementsController extends BaseController {
   validateAttribute(sidejob: ISidejob, attribute: Attribute): boolean {
-    return this.activityState.sidejobActivityValidator.validateAttribute(sidejob, attribute);
+    return this.activityState.sidejobActivityValidator.validateAttribute(
+      sidejob.sidejobName,
+      sidejob.district,
+      sidejob.assignedClone,
+      attribute,
+    );
   }
 
   validateSkill(sidejob: ISidejob, skill: Skill): boolean {
-    return this.activityState.sidejobActivityValidator.validateSkill(sidejob, skill);
+    return this.activityState.sidejobActivityValidator.validateSkill(
+      sidejob.sidejobName,
+      sidejob.district,
+      sidejob.assignedClone,
+      skill,
+    );
   }
 }

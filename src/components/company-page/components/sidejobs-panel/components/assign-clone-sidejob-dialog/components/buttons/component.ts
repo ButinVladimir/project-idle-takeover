@@ -1,14 +1,13 @@
-import { html, nothing } from 'lit';
+import isNil from 'lodash/isNil';
+import { html } from 'lit';
 import { customElement, property, queryAll } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { msg, localized, str } from '@lit/localize';
-import { consume } from '@lit/context';
-import { BaseComponent } from '@shared/index';
-import { COMMON_TEXTS, DISTRICT_NAMES, SIDEJOB_TEXTS, SIDEJOB_VALIDATION_TEXTS } from '@texts/index';
-import { SidejobValidationResult, type ISidejob } from '@state/activity-state';
+import { msg, localized } from '@lit/localize';
+import { BaseComponent, MULTIPLE_SELECT_SEPARATOR } from '@shared/index';
+import { COMMON_TEXTS, SIDEJOBS_BATCH_VALIDATION_TEXTS } from '@texts/index';
+import { SidejobsBatchValidationResult, type ISidejob } from '@state/activity-state';
 import { AssignCloneSidejobDialogButtonsController } from './controller';
-import { AssignCloneEvent, CancelEvent, RestoreValuesEvent } from './events';
-import { existingSidejobContext, temporarySidejobContext } from '../../contexts';
+import { AssignCloneEvent, CancelEvent } from './events';
 import { AssignCloneSidejobDialogFormWarning, AssignCloneSidejobDialogWarning } from './types';
 import styles from './styles';
 
@@ -27,11 +26,23 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
 
   private _controller: AssignCloneSidejobDialogButtonsController;
 
-  @consume({ context: temporarySidejobContext, subscribe: true })
-  private _sidejob?: ISidejob;
+  @property({
+    attribute: 'sidejob-name',
+    type: String,
+  })
+  sidejobName?: string;
 
-  @consume({ context: existingSidejobContext, subscribe: true })
-  private _existingSidejob?: ISidejob;
+  @property({
+    attribute: 'district-index',
+    type: Number,
+  })
+  districtIndex?: number;
+
+  @property({
+    attribute: 'clone-ids',
+    type: String,
+  })
+  cloneIds!: string;
 
   @queryAll('p[data-warning]')
   private _warningElements!: NodeListOf<HTMLParagraphElement>;
@@ -51,17 +62,8 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
       <div class="buttons">
         <sl-button size="medium" variant="default" @click=${this.handleCancel}> ${COMMON_TEXTS.close()} </sl-button>
 
-        <sl-button
-          size="medium"
-          variant="default"
-          ?disabled=${!this._existingSidejob}
-          @click=${this.handleRestoreValues}
-        >
-          ${COMMON_TEXTS.restoreValues()}
-        </sl-button>
-
         <sl-button size="medium" variant="primary" ?disabled=${this.disabled} @click=${this.handleAssignClone}>
-          ${msg('Assign clone')}
+          ${msg('Assign clones')}
         </sl-button>
       </div>
     `;
@@ -83,62 +85,46 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
 
   private renderWarnings = () => {
     return html`
-      <p class="warning" data-warning=${SidejobValidationResult.companyLocked}>
-        ${SIDEJOB_VALIDATION_TEXTS[SidejobValidationResult.companyLocked]()}
+      <p class="warning" data-warning=${SidejobsBatchValidationResult.companyLocked}>
+        ${SIDEJOBS_BATCH_VALIDATION_TEXTS[SidejobsBatchValidationResult.companyLocked]()}
       </p>
-      <p class="warning" data-warning=${SidejobValidationResult.sidejobNotAvailable}>
-        ${SIDEJOB_VALIDATION_TEXTS[SidejobValidationResult.sidejobNotAvailable]()}
+      <p class="warning" data-warning=${SidejobsBatchValidationResult.sidejobsNotAvailable}>
+        ${SIDEJOBS_BATCH_VALIDATION_TEXTS[SidejobsBatchValidationResult.sidejobsNotAvailable]()}
       </p>
-      <p class="warning" data-warning=${SidejobValidationResult.districtLocked}>
-        ${SIDEJOB_VALIDATION_TEXTS[SidejobValidationResult.districtLocked]()}
+      <p class="warning" data-warning=${SidejobsBatchValidationResult.districtsLocked}>
+        ${SIDEJOBS_BATCH_VALIDATION_TEXTS[SidejobsBatchValidationResult.districtsLocked]()}
       </p>
-      <p class="warning" data-warning=${SidejobValidationResult.requirementsNotMet}>
-        ${SIDEJOB_VALIDATION_TEXTS[SidejobValidationResult.requirementsNotMet]()}
+      <p class="warning" data-warning=${SidejobsBatchValidationResult.requirementsNotMet}>
+        ${SIDEJOBS_BATCH_VALIDATION_TEXTS[SidejobsBatchValidationResult.requirementsNotMet]()}
       </p>
-      <p class="warning" data-warning=${SidejobValidationResult.notEnoughConnectivity}>
-        ${SIDEJOB_VALIDATION_TEXTS[SidejobValidationResult.notEnoughConnectivity]()}
+      <p class="warning" data-warning=${SidejobsBatchValidationResult.notEnoughConnectivity}>
+        ${SIDEJOBS_BATCH_VALIDATION_TEXTS[SidejobsBatchValidationResult.notEnoughConnectivity]()}
       </p>
       <p class="warning" data-warning=${AssignCloneSidejobDialogFormWarning.notSelected}>
-        ${msg(`Select sidejob name, district and clone`)}
+        ${msg(`Select sidejob name, district and clones`)}
+      </p>
+      <p class="warning" data-warning=${AssignCloneSidejobDialogFormWarning.alreadyAssigned}>
+        ${msg(`Some clones are already have assigned sidejobs`)}
       </p>
       <p class="warning" data-warning=${AssignCloneSidejobDialogFormWarning.willBeAvailableIn}>
         ${COMMON_TEXTS.willBeAvailableIn(html`<span ${ref(this._availableTimeRef)}></span>`)}
       </p>
-      ${this.renderAlreadySelectedWarning()}
     `;
   };
 
-  private renderAlreadySelectedWarning = () => {
-    if (this._existingSidejob) {
-      const sidejobName = SIDEJOB_TEXTS[this._existingSidejob.sidejobName].title();
-      const districtName = DISTRICT_NAMES[this._existingSidejob.district.name]();
-
-      return html`
-        <p class="warning" data-warning=${AssignCloneSidejobDialogFormWarning.alreadyAssigned}>
-          ${msg(str`Clone has already assigned sidejob "${sidejobName}" in district "${districtName}"`)}
-        </p>
-      `;
-    }
-
-    return nothing;
-  };
-
   private selectWarning(): AssignCloneSidejobDialogWarning {
-    if (!this._sidejob) {
+    if (isNil(this.sidejobName) || isNil(this.districtIndex) || !this.cloneIds) {
       return AssignCloneSidejobDialogFormWarning.notSelected;
     }
 
-    const validationResult = this._controller.validateSidejob(this._sidejob);
+    const cloneIds = this.cloneIds.split(MULTIPLE_SELECT_SEPARATOR);
 
-    if (validationResult === SidejobValidationResult.notEnoughConnectivity) {
-      const connectivityGrowth = this._controller.getConnectivityGrowth(this._sidejob.district.index);
+    const validationResult = this._controller.validateSidejobsBatch(this.sidejobName, this.districtIndex, cloneIds);
+    const sidejobsWithAssignedClones = cloneIds
+      .map((cloneId) => this._controller.getExistingSidejobByClone(cloneId))
+      .filter((sidejob) => sidejob) as ISidejob[];
 
-      if (connectivityGrowth > 0) {
-        return AssignCloneSidejobDialogFormWarning.willBeAvailableIn;
-      }
-    }
-
-    if (validationResult === SidejobValidationResult.valid && this._existingSidejob) {
+    if (validationResult === SidejobsBatchValidationResult.valid && sidejobsWithAssignedClones.length > 0) {
       return AssignCloneSidejobDialogFormWarning.alreadyAssigned;
     }
 
@@ -146,7 +132,7 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
   }
 
   private updateAvailabilityTimer(): void {
-    if (!this._sidejob) {
+    if (isNil(this.sidejobName) || isNil(this.districtIndex)) {
       return;
     }
 
@@ -154,12 +140,12 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
       return;
     }
 
-    const currentPoints = this._controller.getTotalConnectivity(this._sidejob.district.index);
-    const requiredPoints = this._controller.getRequiredConnectivity(this._sidejob.sidejobName);
-    const connectivityGrowth = this._controller.getConnectivityGrowth(this._sidejob.district.index);
+    const currentPoints = this._controller.getTotalConnectivity(this.districtIndex);
+    const requiredPoints = this._controller.getRequiredConnectivity(this.sidejobName);
+    const connectivityGrowth = this._controller.getConnectivityGrowth(this.districtIndex);
     const pointsDiff = requiredPoints - currentPoints;
 
-    if (pointsDiff < 0 || connectivityGrowth < 0) {
+    if (pointsDiff <= 0 || connectivityGrowth <= 0) {
       this._availableTimeRef.value.textContent = '';
     } else {
       const formattedTime = this._controller.formatter.formatTimeLong(pointsDiff / connectivityGrowth);
@@ -169,10 +155,6 @@ export class AssignCloneSidejobDialogButtons extends BaseComponent {
 
   private handleCancel = () => {
     this.dispatchEvent(new CancelEvent());
-  };
-
-  private handleRestoreValues = () => {
-    this.dispatchEvent(new RestoreValuesEvent());
   };
 
   private handleAssignClone = () => {
