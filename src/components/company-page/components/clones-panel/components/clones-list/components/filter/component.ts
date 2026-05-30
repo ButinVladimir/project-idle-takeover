@@ -176,35 +176,29 @@ export class ClonesListFilter extends BaseComponent {
   };
 
   private renderCloneTemplateOptions = () => {
-    const cloneTemplates = new Set<string>();
-    const clones = this._controller.listClones();
+    const cloneTemplates = this._controller.listAvailableCloneTemplates();
 
-    clones.forEach((clone) => {
-      cloneTemplates.add(clone.templateName);
-    });
-
-    const cloneTemplateOptions: ISelectOption[] = [];
-    cloneTemplates.forEach((cloneTemplate) => {
-      cloneTemplateOptions.push({
-        name: CLONE_TEMPLATE_TEXTS[cloneTemplate].title(),
-        value: cloneTemplate,
-      });
-    });
+    const cloneTemplateOptions: ISelectOption[] = cloneTemplates.map((cloneTemplate) => ({
+      name: CLONE_TEMPLATE_TEXTS[cloneTemplate].title(),
+      value: cloneTemplate,
+    }));
     cloneTemplateOptions.sort(compareOptions);
 
     return cloneTemplateOptions.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
 
   private renderTierOptions = () => {
-    const tiers = new Set<number>();
-    const clones = this._controller.listClones();
+    const cloneTemplates = this._controller.listAvailableCloneTemplates();
 
-    clones.forEach((clone) => {
-      tiers.add(clone.tier);
-    });
+    const maxTier = cloneTemplates.reduce(
+      (max, cloneTemplate) => Math.max(max, this._controller.getCloneTemplateTier(cloneTemplate)),
+      0,
+    );
 
-    const tiersArray = Array.from(tiers.values());
-    tiersArray.sort();
+    const tiersArray = [];
+    for (let tier = 0; tier <= maxTier; tier++) {
+      tiersArray.push(tier);
+    }
 
     const formatter = this._controller.formatter;
 

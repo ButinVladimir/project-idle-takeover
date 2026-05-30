@@ -5,7 +5,6 @@ import { createRef, ref } from 'lit/directives/ref.js';
 import { consume } from '@lit/context';
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
 import { BaseComponent, UPGRADE_MAX_VALUES } from '@shared/index';
-import { COMMON_TEXTS } from '@texts/index';
 import { ClonesListUpgradeButtonsController } from './controller';
 import styles from './styles';
 import { clonesListContext } from '../../contexts';
@@ -32,25 +31,19 @@ export class ClonesListUpgradeButtons extends BaseComponent {
   }
 
   protected renderDesktop() {
-    const upgradeLevelHotkey = this._controller.getUpgradeLevelHotkey();
-
     return html`
       <sl-button-group>
-        <sl-tooltip>
-          <span slot="content">${COMMON_TEXTS.hotkey(upgradeLevelHotkey)}</span>
+        <sl-button
+          ${ref(this._upgradeLevelMaxButton)}
+          disabled
+          variant=${UPGRADE_MAX_VALUES.buttonVariant}
+          size="medium"
+          @click=${this.handleUpgradeMaxDisplayedLevels}
+        >
+          <sl-icon slot="prefix" name=${UPGRADE_MAX_VALUES.icon}></sl-icon>
 
-          <sl-button
-            ${ref(this._upgradeLevelMaxButton)}
-            disabled
-            variant=${UPGRADE_MAX_VALUES.buttonVariant}
-            size="medium"
-            @click=${this.handleUpgradeMaxDisplayedLevels}
-          >
-            <sl-icon slot="prefix" name=${UPGRADE_MAX_VALUES.icon}></sl-icon>
-
-            ${msg('Upgrade displayed clones levels')}
-          </sl-button>
-        </sl-tooltip>
+          ${msg('Upgrade displayed clones levels')}
+        </sl-button>
       </sl-button-group>
     `;
   }

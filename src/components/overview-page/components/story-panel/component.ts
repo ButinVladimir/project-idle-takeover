@@ -26,7 +26,7 @@ export class OverviewStoryPanel extends BaseComponent {
   private _stateFilterInputRef = createRef<SlSelect>();
 
   @state()
-  private _stateFilter: StoryGoalStateFilter = 'all';
+  private _stateFilter: StoryGoalStateFilter = StoryGoalState.passed;
 
   constructor() {
     super();

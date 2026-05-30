@@ -28,7 +28,12 @@ export class SavefilePanel extends BaseComponent {
       <input ${ref(this._importInputRef)} type="file" id="import-file" @change=${this.handleChangeImportSavefile} />
 
       <sl-tooltip>
-        <span slot="content">${COMMON_TEXTS.hotkey(this._controller.getSaveGameHotkey())}</span>
+        <span slot="content"
+          >${COMMON_TEXTS.parameterRow(
+            COMMON_TEXTS.hotkey(),
+            COMMON_TEXTS.hotkeyValue(this._controller.getSaveGameHotkey()),
+          )}</span
+        >
 
         <sl-button variant="primary" type="button" size="medium" @click=${this.handleSaveGame}>
           ${msg('Save game')}

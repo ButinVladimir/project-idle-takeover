@@ -5,10 +5,12 @@ import { msg, localized } from '@lit/localize';
 import { customElement, state } from 'lit/decorators.js';
 import { BaseComponent } from '@shared/index';
 import { type IClone } from '@state/clones-state';
+import { COMMON_TEXTS } from '@texts/index';
 import { type CloneListItemDialog } from './type';
 import { OpenCloneListItemDialogEvent } from './events';
 import { modalSelectedCloneContext } from './contexts';
 import styles from './styles';
+import { CompanyClonesPanelController } from './controller';
 
 @localized()
 @customElement('ca-company-clones-panel')
@@ -25,6 +27,14 @@ export class CompanyClonesPanel extends BaseComponent {
 
   @provide({ context: modalSelectedCloneContext })
   private _modalSelectedClone?: IClone;
+
+  private _controller: CompanyClonesPanelController;
+
+  constructor() {
+    super();
+
+    this._controller = new CompanyClonesPanelController(this);
+  }
 
   renderMobile() {
     return html`<div class="host-content mobile">${this.renderContent()}</div>`;
@@ -43,9 +53,24 @@ Clone level cannot be above development level.`)}
       </p>
 
       <div class="top-container">
-        <sl-button variant="primary" size="medium" @click=${this.handlePurchaseCloneDialogOpen}>
-          ${msg('Purchase clone')}
-        </sl-button>
+        <div class="buttons-container">
+          <sl-tooltip trigger="click">
+            <div class="hotkeys-content" slot="content">
+              <p>
+                ${COMMON_TEXTS.parameterRow(
+                  msg('Upgrade all enabled clones levels'),
+                  COMMON_TEXTS.hotkeyValue(this._controller.getUpgradeClonesLevelHotkey()),
+                )}
+              </p>
+            </div>
+
+            <sl-button variant="default" size="medium"> ${COMMON_TEXTS.showHotkeys()} </sl-button>
+          </sl-tooltip>
+
+          <sl-button variant="primary" size="medium" @click=${this.handlePurchaseCloneDialogOpen}>
+            ${msg('Purchase clone')}
+          </sl-button>
+        </div>
 
         <ca-clones-synchronization-values></ca-clones-synchronization-values>
       </div>

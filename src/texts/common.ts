@@ -25,8 +25,7 @@ export const COMMON_TEXTS = {
   showDetails: () => msg('Show details'),
   hideDetails: () => msg('Hide details'),
   upgrade: () => msg('Upgrade'),
-  upgradeFilteredEnabledItems: () => msg('Upgrade filtered enabled items'),
-  upgradeAllEnabledItems: () => msg('Upgrade all enabled items'),
+  upgradeDisplayedEnabledItems: () => msg('Upgrade displayed enabled items'),
   upgradeToLevel: (valueElement: any) => msg(html`Upgrade to level ${valueElement}`),
   upgradeIncrease: (increase: string) => msg(str`Upgrade x${increase}`),
   level: () => msg('Level'),
@@ -56,13 +55,15 @@ export const COMMON_TEXTS = {
     msg(html`${valueElement} per completion (${speedElement} per second)`),
   parameterCompletionSpeedDiff: (valueElement: any, diffElement: any, speedElement: any, speedDiffElement: any) =>
     msg(html`${valueElement} (${diffElement}) per completion (${speedElement} per second) (${speedDiffElement})`),
-  hotkey: (hotkey?: string) => msg(str`Hotkey: ${hotkey?.toLocaleUpperCase() ?? msg('Unassigned')}`),
+  hotkey: () => msg('Hotkey'),
+  hotkeyValue: (hotkey?: string) => hotkey?.toLocaleUpperCase() ?? msg('Unassigned'),
   completionTime: () => msg('Completion time'),
   enableFilter: () => msg('Enable filter'),
   disableFilter: () => msg('Disable filter'),
   resetFilter: () => msg('Reset filter'),
   maxTier: () => msg('Max tier'),
   maxLevel: () => msg('Max level'),
+  showHotkeys: () => msg('Show hotkeys'),
 };
 
 export const CATEGORY_TEXTS: Record<ItemCategory, () => string> = {

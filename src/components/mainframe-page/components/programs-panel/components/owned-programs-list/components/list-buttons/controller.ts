@@ -1,13 +1,9 @@
-import { BaseController, Hotkey } from '@shared/index';
+import { BaseController } from '@shared/index';
 import { IProgram, ProgramName, ProgramValidationResult } from '@state/mainframe-state';
 
 export class OwnedProgramsListButtonsController extends BaseController {
   upgradeMaxPrograms(programNames: ProgramName[]) {
     this.mainframeState.programs.upgrader.upgradeMaxPrograms(programNames);
-  }
-
-  getHotkey(): string | undefined {
-    return this.settingsState.hotkeys.getKeyByHotkey(Hotkey.upgradeMainframePrograms);
   }
 
   checkCanUpgradeMaxProgram = (program: IProgram) => {

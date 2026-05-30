@@ -17,8 +17,6 @@ import {
 } from '@shared/index';
 import { STATE_FILTER_TEXTS, COMMON_TEXTS } from '@texts/common';
 import { CONTRACT_TEXTS } from '@texts/index';
-import { IDistrictState } from '@state/city-state';
-import { IClone } from '@state/clones-state';
 import { ContractAssigmentsListFilterController } from './controller';
 import styles from './styles';
 import { contractsFilterStateContext } from '../../contexts';
@@ -90,7 +88,7 @@ export class ContractAssignmentsListFilter extends BaseComponent {
         >
           <span class="input-label" slot="label"> ${msg('Contracts')} </span>
 
-          ${this.renderSidejobNamesOptions()}
+          ${this.renderContractNamesOptions()}
         </sl-select>
 
         <sl-select
@@ -151,18 +149,9 @@ export class ContractAssignmentsListFilter extends BaseComponent {
   }
 
   private renderCloneIdsOptions = () => {
-    const contractAssignments = this._controller.listContractAssignments();
+    const clones = this._controller.listOwnedClones();
 
-    const clones = new Set<IClone>();
-
-    contractAssignments.forEach((contractAssignment) => {
-      contractAssignment.contract.assignedClones.forEach((clone) => {
-        clones.add(clone);
-      });
-    });
-
-    const clonesArray = Array.from(clones.values());
-    const options: ISelectOption[] = clonesArray.map((clone) => ({
+    const options: ISelectOption[] = clones.map((clone) => ({
       name: clone.name,
       value: clone.id,
     }));
@@ -172,16 +161,9 @@ export class ContractAssignmentsListFilter extends BaseComponent {
   };
 
   private renderDistrictIndexesOptions = () => {
-    const contractAssignments = this._controller.listContractAssignments();
+    const districts = this._controller.listAvailableDistricts();
 
-    const districts = new Set<IDistrictState>();
-
-    contractAssignments.forEach((contractAssignment) => {
-      districts.add(contractAssignment.contract.district);
-    });
-
-    const districtsArray = Array.from(districts.values());
-    const options: ISelectOption[] = districtsArray.map((district) => ({
+    const options: ISelectOption[] = districts.map((district) => ({
       name: district.name,
       value: district.index.toString(),
     }));
@@ -190,17 +172,10 @@ export class ContractAssignmentsListFilter extends BaseComponent {
     return options.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
 
-  private renderSidejobNamesOptions = () => {
-    const contractAssignments = this._controller.listContractAssignments();
+  private renderContractNamesOptions = () => {
+    const contractNames = this._controller.listAvailableContracts();
 
-    const contractNames = new Set<string>();
-
-    contractAssignments.forEach((contractAssignment) => {
-      contractNames.add(contractAssignment.contract.contractName);
-    });
-
-    const sidejobNamesArray = Array.from(contractNames.values());
-    const options: ISelectOption[] = sidejobNamesArray.map((contractName) => ({
+    const options: ISelectOption[] = contractNames.map((contractName) => ({
       name: CONTRACT_TEXTS[contractName].title(),
       value: contractName,
     }));

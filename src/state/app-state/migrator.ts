@@ -26,6 +26,8 @@ export class Migrator implements IMigrator {
 
   private getMigration(version: GameVersion): IMigration {
     switch (version) {
+      case GameVersion['0.3.0']:
+        return new BumpVersionMigration(GameVersion['0.3.1']);
       case GameVersion['0.2.0']:
         return new BumpVersionMigration(GameVersion['0.2.1']);
       case GameVersion['0.1.2']:

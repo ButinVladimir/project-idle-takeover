@@ -21,10 +21,20 @@ const styles = [
       div.top-container {
         display: flex;
         margin-bottom: var(--ca-section-gap);
+
+        .buttons-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: var(--ca-section-buttons-gap);
+
+          p {
+            margin: 0;
+          }
+        }
       }
 
       &.mobile div.top-container {
-        flex-direction: column;
+        flex-direction: column-reverse;
         align-items: flex-start;
         gap: var(--ca-section-buttons-gap);
       }

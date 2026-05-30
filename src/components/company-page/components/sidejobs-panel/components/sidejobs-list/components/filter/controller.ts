@@ -1,8 +1,17 @@
-import { ISidejobActivity } from '@state/activity-state';
 import { BaseController } from '@shared/index';
+import { IClone } from '@state/clones-state';
+import { IDistrictState } from '@state/city-state';
 
 export class SidejobsListFilterController extends BaseController {
-  listSidejobs(): ISidejobActivity[] {
-    return this.activityState.sidejobsActivity.listActivities();
+  listAvailableSidejobs(): string[] {
+    return this.unlockState.activities.sidejobs.listAvailableActivities();
+  }
+
+  listOwnedClones(): IClone[] {
+    return this.clonesState.ownedClones.listClones();
+  }
+
+  listAvailableDistricts(): IDistrictState[] {
+    return this.cityState.listAvailableDistricts();
   }
 }

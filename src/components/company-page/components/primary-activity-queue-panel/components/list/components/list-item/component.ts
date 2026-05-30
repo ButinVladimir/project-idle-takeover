@@ -4,7 +4,7 @@ import { localized, msg, str } from '@lit/localize';
 import { customElement, property, state } from 'lit/decorators.js';
 import { COMMON_TEXTS } from '@texts/common';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
-import { IContractActivity, type IPrimaryActivity } from '@state/activity-state';
+import { IContractActivity, PrimaryActivityState, type IPrimaryActivity } from '@state/activity-state';
 import { BaseComponent, DELETE_VALUES, PrimaryActivityAlert, TOGGLE_DETAILS_VALUES } from '@shared/index';
 import { CONTRACT_TEXTS, DISTRICT_NAMES } from '@texts/index';
 import { PrimaryActivityQueueListItemController } from './controller';
@@ -87,13 +87,17 @@ export class PrimaryActivityQueueListItem extends BaseComponent {
           ?details-visible=${this._detailsVisible}
         ></ca-primary-activity-queue-list-item-description>
 
-        <div slot="footer">
-          <sl-button variant=${toggleDetailsVariant} size="medium" @click=${this.handleToggleDetails}>
-            <sl-icon slot="prefix" name=${toggleDetailsIcon}></sl-icon>
+        ${this._activity.state === PrimaryActivityState.active
+          ? html`
+              <div slot="footer">
+                <sl-button variant=${toggleDetailsVariant} size="medium" @click=${this.handleToggleDetails}>
+                  <sl-icon slot="prefix" name=${toggleDetailsIcon}></sl-icon>
 
-            ${toggleDetailsLabel}
-          </sl-button>
-        </div>
+                  ${toggleDetailsLabel}
+                </sl-button>
+              </div>
+            `
+          : nothing}
       </sl-card>
     `;
   }

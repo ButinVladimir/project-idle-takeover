@@ -28,7 +28,7 @@ const styles = [
       }
     }
 
-    div.buttons-block {
+    ca-mainframe-hardware-panel-buttons {
       margin: 0 0 var(--ca-section-gap) 0;
     }
   `,

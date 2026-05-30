@@ -1,3 +1,4 @@
+import { localized } from '@lit/localize';
 import { html, nothing } from 'lit';
 import { customElement, property, queryAll } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
@@ -12,6 +13,7 @@ import { MainframeHardwarePanelArticleWarning, MainframeHardwareWarning } from '
 import { mainframeHardwareParameterContext } from '../../contexts';
 import styles from './styles';
 
+@localized()
 @customElement('ca-mainframe-hardware-panel-article-buttons')
 export class MainframeHardwarePanelArticleButtons extends BaseComponent {
   static styles = styles;
@@ -70,25 +72,20 @@ export class MainframeHardwarePanelArticleButtons extends BaseComponent {
     }
 
     const formattedIncrease = this._controller.formatter.formatNumberDecimal(this.increase);
-    const hotkey = this._controller.getHotkey(this._parameter.type);
     const levelEl = html`<span ${ref(this._upgradeLevelRef)}></span>`;
 
     return html`
       <div class="buttons">
-        <sl-tooltip>
-          <span slot="content">${COMMON_TEXTS.hotkey(hotkey)}</span>
-
-          <sl-button
-            ${ref(this._buyMaxButtonRef)}
-            ?disabled=${this.disabledBuyAll}
-            variant="default"
-            type="button"
-            size="medium"
-            @click=${this.handleBuyMax}
-          >
-            ${COMMON_TEXTS.upgradeToLevel(levelEl)}
-          </sl-button>
-        </sl-tooltip>
+        <sl-button
+          ${ref(this._buyMaxButtonRef)}
+          ?disabled=${this.disabledBuyAll}
+          variant="default"
+          type="button"
+          size="medium"
+          @click=${this.handleBuyMax}
+        >
+          ${COMMON_TEXTS.upgradeToLevel(levelEl)}
+        </sl-button>
 
         <sl-button
           ${ref(this._buyButtonRef)}

@@ -69,7 +69,7 @@ export class PrimaryActivityQueueListItemContractDescription extends BaseCompone
     );
 
     return html`
-      <p class="text">${COMMON_TEXTS.parameterRow(msg('Available'), formattedAvailableAmount)}</p>
+      <p class="text">${COMMON_TEXTS.parameterRow(msg('Remaining'), formattedAvailableAmount)}</p>
       <p class="text">${COMMON_TEXTS.parameterRow(COMMON_TEXTS.completionTime(), formattedCompletionTime)}</p>
     `;
   };

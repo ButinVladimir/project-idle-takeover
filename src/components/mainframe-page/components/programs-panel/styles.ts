@@ -11,6 +11,16 @@ const styles = [
       gap: var(--ca-section-gap);
     }
 
+    div.buttons {
+      display: flex;
+      gap: var(--ca-section-buttons-gap);
+      flex-wrap: wrap;
+
+      p {
+        margin: 0;
+      }
+    }
+
     p.hint {
       margin: 0;
     }

@@ -1,6 +1,5 @@
 import { msg, str } from '@lit/localize';
 import { IncomeSource } from '@shared/types';
-import { DISTRICT_NAMES } from '@texts/names';
 import { StatisticsPageTabs } from './types';
 
 export const STATISTICS_PAGE_TABS_LIST = Array.from(Object.values(StatisticsPageTabs));
@@ -21,8 +20,8 @@ export const INCOME_SOURCE_NAMES: Record<IncomeSource, () => string> = {
 export const STATISTIC_PAGE_TEXTS = {
   baseValue: () => msg('Base value'),
   byPrograms: () => msg('By programs'),
-  byDistrict: (districtName: string) => msg(str`By district "${DISTRICT_NAMES[districtName]()}"`),
-  inDistrict: (districtName: string) => msg(str`In district "${DISTRICT_NAMES[districtName]()}"`),
+  byDistrict: (districtName: string) => msg(str`By district "${districtName}"`),
+  inDistrict: (districtName: string) => msg(str`In district "${districtName}"`),
   total: () => msg('Total'),
 };
 

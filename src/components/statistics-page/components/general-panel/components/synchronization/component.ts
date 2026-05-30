@@ -4,8 +4,8 @@ import { localized } from '@lit/localize';
 import { customElement } from 'lit/decorators.js';
 import { STATISTIC_HINTS, STATISTIC_PAGE_TEXTS } from '@components/statistics-page/constants';
 import { IDistrictState } from '@state/city-state';
-import { BaseComponent, HINT_ICON } from '@shared/index';
-import { COMMON_TEXTS } from '@texts/index';
+import { BaseComponent, compareOptions, HINT_ICON, ISelectOption } from '@shared/index';
+import { COMMON_TEXTS, DISTRICT_NAMES } from '@texts/index';
 import { StatisticsSynchronizationController } from './controller';
 import { statisticsPanelContentStyle } from '../../../../styles';
 
@@ -44,7 +44,7 @@ export class StatisticsSynchronization extends BaseComponent {
           <div>${STATISTIC_PAGE_TEXTS.baseValue()}</div>
           <div>${formattedBaseValue}</div>
 
-          ${map(this._controller.listAvailableDistricts(), this.renderDistrict)}
+          ${this.renderDistricts()}
 
           <div>${STATISTIC_PAGE_TEXTS.total()}</div>
           <div>${formattedTotalValue}</div>
@@ -53,13 +53,25 @@ export class StatisticsSynchronization extends BaseComponent {
     `;
   }
 
-  private renderDistrict = (districtState: IDistrictState) => {
+  private renderDistricts = () => {
+    const availableDistricts = this._controller.listAvailableDistricts();
+    const districtOptions: ISelectOption<IDistrictState>[] = availableDistricts.map((district) => ({
+      name: DISTRICT_NAMES[district.name](),
+      value: district,
+    }));
+
+    districtOptions.sort(compareOptions);
+
+    return map(districtOptions, this.renderDistrict);
+  };
+
+  private renderDistrict = (option: ISelectOption<IDistrictState>) => {
     const formattedValue = this._controller.formatter.formatNumberDecimal(
-      this._controller.getDistrictSynchronization(districtState.index),
+      this._controller.getDistrictSynchronization(option.value.index),
     );
 
     return html`
-      <div>${STATISTIC_PAGE_TEXTS.byDistrict(districtState.name)}</div>
+      <div>${STATISTIC_PAGE_TEXTS.byDistrict(option.name)}</div>
       <div>${formattedValue}</div>
     `;
   };

@@ -14,8 +14,6 @@ import {
   MULTIPLE_SELECT_SEPARATOR,
 } from '@shared/index';
 import { COMMON_TEXTS } from '@texts/common';
-import { IDistrictState } from '@state/city-state';
-import { IClone } from '@state/clones-state';
 import { PrimaryActivityListFilterController } from './controller';
 import styles from './styles';
 import { primaryActivityFilterStateContext } from '../../contexts';
@@ -118,18 +116,9 @@ export class PrimaryActivityListFilter extends BaseComponent {
   }
 
   private renderCloneIdsOptions = () => {
-    const sidejobs = this._controller.listPrimaryActivities();
+    const clones = this._controller.listOwnedClones();
 
-    const clones = new Set<IClone>();
-
-    sidejobs.forEach((primaryActivity) => {
-      primaryActivity.assignedClones.forEach((clone) => {
-        clones.add(clone);
-      });
-    });
-
-    const clonesArray = Array.from(clones.values());
-    const options: ISelectOption[] = clonesArray.map((clone) => ({
+    const options: ISelectOption[] = clones.map((clone) => ({
       name: clone.name,
       value: clone.id,
     }));
@@ -139,16 +128,9 @@ export class PrimaryActivityListFilter extends BaseComponent {
   };
 
   private renderDistrictIndexesOptions = () => {
-    const sidejobs = this._controller.listPrimaryActivities();
+    const districts = this._controller.listAvailableDistricts();
 
-    const districts = new Set<IDistrictState>();
-
-    sidejobs.forEach((primaryActivity) => {
-      districts.add(primaryActivity.district);
-    });
-
-    const districtsArray = Array.from(districts.values());
-    const options: ISelectOption[] = districtsArray.map((district) => ({
+    const options: ISelectOption[] = districts.map((district) => ({
       name: district.name,
       value: district.index.toString(),
     }));

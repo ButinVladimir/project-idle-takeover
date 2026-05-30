@@ -147,10 +147,10 @@ export class OwnedProgramsListFilter extends BaseComponent {
   }
 
   private renderProgramNameOptions = () => {
-    const programs = this._controller.listOwnedPrograms();
-    const programOptions: ISelectOption[] = programs.map((program) => ({
-      name: PROGRAM_TEXTS[program.name].title(),
-      value: program.name,
+    const programsNames = this._controller.listAvailablePrograms();
+    const programOptions: ISelectOption[] = programsNames.map((programName) => ({
+      name: PROGRAM_TEXTS[programName].title(),
+      value: programName,
     }));
     programOptions.sort(compareOptions);
 
@@ -158,15 +158,17 @@ export class OwnedProgramsListFilter extends BaseComponent {
   };
 
   private renderTierOptions = () => {
-    const tiers = new Set<number>();
-    const programs = this._controller.listOwnedPrograms();
+    const programNames = this._controller.listAvailablePrograms();
 
-    programs.forEach((program) => {
-      tiers.add(program.tier);
-    });
+    const maxTier = programNames.reduce(
+      (max, programName) => Math.max(max, this._controller.getProgramMaxTier(programName)),
+      0,
+    );
 
-    const tiersArray = Array.from(tiers.values());
-    tiersArray.sort();
+    const tiersArray = [];
+    for (let tier = 0; tier <= maxTier; tier++) {
+      tiersArray.push(tier);
+    }
 
     const formatter = this._controller.formatter;
 

@@ -160,7 +160,7 @@
     },
     {
       "name": "ca-company-clones-panel",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_cloneListItemDialogOpen` {`boolean`} - \n\n  * `_cloneListItemDialog` {`CloneListItemDialog | undefined`} - \n\n  * `_modalSelectedClone` - \n\n  * `renderContent` - \n\n  * `handlePurchaseCloneDialogOpen` - \n\n  * `handleCloneListItemDialogOpen` - \n\n  * `handleCloneListItemDialogClose` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `_cloneListItemDialogOpen` {`boolean`} - \n\n  * `_cloneListItemDialog` {`CloneListItemDialog | undefined`} - \n\n  * `_modalSelectedClone` - \n\n  * `renderContent` - \n\n  * `handlePurchaseCloneDialogOpen` - \n\n  * `handleCloneListItemDialogOpen` - \n\n  * `handleCloneListItemDialogClose` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
@@ -276,7 +276,7 @@
     },
     {
       "name": "ca-company-contract-assignments-panel",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_assignClonesDialogOpened` {`boolean`} - \n\n  * `handleAssignClonesContractDialogOpen` - \n\n  * `handleAssignClonesContractDialogClose` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_assignClonesDialogOpened` {`boolean`} - \n\n  * `handleAssignClonesContractDialogOpen` - \n\n  * `handleAssignClonesContractDialogClose` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
@@ -376,7 +376,7 @@
     },
     {
       "name": "ca-contact-assigments-list-filter",
-      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_filterState` {`IContractsFilterState | undefined`} - \n\n  * `_cloneIdsInputRef` - \n\n  * `_districtIndexesInputRef` - \n\n  * `_contractNamesInputRef` - \n\n  * `_statusInputRef` - \n\n  * `_enabledInputRef` - \n\n  * `renderCloneIdsOptions` - \n\n  * `renderDistrictIndexesOptions` - \n\n  * `renderSidejobNamesOptions` - \n\n  * `renderStatusFilterOptions` - \n\n  * `renderEnabledFilterOptions` - \n\n  * `handleReset` - \n\n  * `handleCloneIdsChange` - \n\n  * `handleDistrictIndexesChange` - \n\n  * `handleContractNamesChange` - \n\n  * `handleStatusChange` - \n\n  * `handleEnabledChange` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `filter-enabled` {`boolean`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasMobileRender` {`boolean`} - \n\n  * `filterEnabled` {`boolean`} - \n\n  * `_filterState` {`IContractsFilterState | undefined`} - \n\n  * `_cloneIdsInputRef` - \n\n  * `_districtIndexesInputRef` - \n\n  * `_contractNamesInputRef` - \n\n  * `_statusInputRef` - \n\n  * `_enabledInputRef` - \n\n  * `renderCloneIdsOptions` - \n\n  * `renderDistrictIndexesOptions` - \n\n  * `renderContractNamesOptions` - \n\n  * `renderStatusFilterOptions` - \n\n  * `renderEnabledFilterOptions` - \n\n  * `handleReset` - \n\n  * `handleCloneIdsChange` - \n\n  * `handleDistrictIndexesChange` - \n\n  * `handleContractNamesChange` - \n\n  * `handleStatusChange` - \n\n  * `handleEnabledChange` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "filter-enabled",
@@ -804,7 +804,7 @@
     },
     {
       "name": "ca-mainframe-hardware-panel-buttons",
-      "description": "Properties:\n\n  * `style` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_buyMaxButtonRef` - \n\n  * `handleBuyMax` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`CSSResult[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_buyMaxButtonRef` - \n\n  * `handleBuyMax` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
@@ -938,7 +938,7 @@
     },
     {
       "name": "ca-mainframe-programs-panel",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_isPurchaseProgramDialogOpen` {`boolean`} - \n\n  * `handlePurchaseProgramsDialogOpen` - \n\n  * `handlePurchaseProgramDialogClose` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `_isPurchaseProgramDialogOpen` {`boolean`} - \n\n  * `handlePurchaseProgramsDialogOpen` - \n\n  * `handlePurchaseProgramDialogClose` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
@@ -1326,7 +1326,7 @@
     },
     {
       "name": "ca-statistics-connectivity",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
@@ -1341,7 +1341,7 @@
     },
     {
       "name": "ca-statistics-multipliers",
-      "description": "Attributes:\n\n  * `type` {`MultipliersType`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `type` {`MultipliersType`} - \n\n  * `_programMultiplierRef` - \n\n  * `_totalMultiplierRef` - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `type` {`MultipliersType`} - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `type` {`MultipliersType`} - \n\n  * `_programMultiplierRef` - \n\n  * `_totalMultiplierRef` - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "type",
@@ -1364,12 +1364,12 @@
     },
     {
       "name": "ca-statistics-rewards",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programMultiplierRef` - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programMultiplierRef` - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
       "name": "ca-statistics-synchronization",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderDistrict` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
@@ -1379,7 +1379,7 @@
     },
     {
       "name": "ca-statistics-connectivity-points-growth",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programGrowthRef` - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programGrowthRef` - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
@@ -1389,12 +1389,12 @@
     },
     {
       "name": "ca-statistics-experience-growth",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderClones` - \n\n  * `renderClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
       "name": "ca-statistics-influence-points-growth",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
@@ -1404,7 +1404,7 @@
     },
     {
       "name": "ca-statistics-multiplier-points-growth",
-      "description": "Attributes:\n\n  * `type` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `type` - \n\n  * `_programGrowthRef` - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `type` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `type` - \n\n  * `_programGrowthRef` - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "type",
@@ -1414,7 +1414,7 @@
     },
     {
       "name": "ca-statistics-rewards-points-growth",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programGrowthRef` - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programGrowthRef` - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
@@ -1424,7 +1424,7 @@
     },
     {
       "name": "ca-statistics-connectivity-points-income",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programPointsRef` - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programPointsRef` - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
@@ -1434,12 +1434,12 @@
     },
     {
       "name": "ca-statistics-experience-income",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_cloneValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderClones` - \n\n  * `renderClone` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
       "name": "ca-statistics-influence-points-income",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": []
     },
     {
@@ -1449,7 +1449,7 @@
     },
     {
       "name": "ca-statistics-multiplier-points-income",
-      "description": "Attributes:\n\n  * `type` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `type` - \n\n  * `_programPointsRef` - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Attributes:\n\n  * `type` - \n\nProperties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `type` - \n\n  * `_programPointsRef` - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": [
         {
           "name": "type",
@@ -1459,7 +1459,7 @@
     },
     {
       "name": "ca-statistics-rewards-points-income",
-      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programPointsRef` - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
+      "description": "Properties:\n\n  * `styles` {`any[]`} - \n\n  * `hasPartialUpdate` {`boolean`} - \n\n  * `_programPointsRef` - \n\n  * `_districtValueNodes` {`NodeListOf<HTMLDivElement>`} - \n\n  * `renderDistricts` - \n\n  * `renderDistrict` - \n\n  * `handlePartialUpdate` - \n\n  * `_controller` - ",
       "attributes": []
     }
   ],

@@ -17,8 +17,6 @@ import {
 } from '@shared/index';
 import { STATE_FILTER_TEXTS, COMMON_TEXTS } from '@texts/common';
 import { SIDEJOB_TEXTS } from '@texts/index';
-import { IDistrictState } from '@state/city-state';
-import { IClone } from '@state/clones-state';
 import { SidejobsListFilterController } from './controller';
 import styles from './styles';
 import { sidejobsFilterStateContext } from '../../contexts';
@@ -151,16 +149,9 @@ export class SidejobsListFilter extends BaseComponent {
   }
 
   private renderCloneIdsOptions = () => {
-    const sidejobs = this._controller.listSidejobs();
+    const clones = this._controller.listOwnedClones();
 
-    const clones = new Set<IClone>();
-
-    sidejobs.forEach((sidejobActivity) => {
-      clones.add(sidejobActivity.sidejob.assignedClone);
-    });
-
-    const clonesArray = Array.from(clones.values());
-    const options: ISelectOption[] = clonesArray.map((clone) => ({
+    const options: ISelectOption[] = clones.map((clone) => ({
       name: clone.name,
       value: clone.id,
     }));
@@ -170,16 +161,9 @@ export class SidejobsListFilter extends BaseComponent {
   };
 
   private renderDistrictIndexesOptions = () => {
-    const sidejobs = this._controller.listSidejobs();
+    const districts = this._controller.listAvailableDistricts();
 
-    const districts = new Set<IDistrictState>();
-
-    sidejobs.forEach((sidejobActivity) => {
-      districts.add(sidejobActivity.sidejob.district);
-    });
-
-    const districtsArray = Array.from(districts.values());
-    const options: ISelectOption[] = districtsArray.map((district) => ({
+    const options: ISelectOption[] = districts.map((district) => ({
       name: district.name,
       value: district.index.toString(),
     }));
@@ -189,16 +173,9 @@ export class SidejobsListFilter extends BaseComponent {
   };
 
   private renderSidejobNamesOptions = () => {
-    const sidejobs = this._controller.listSidejobs();
+    const sidejobNames = this._controller.listAvailableSidejobs();
 
-    const sidejobNames = new Set<string>();
-
-    sidejobs.forEach((sidejobActivity) => {
-      sidejobNames.add(sidejobActivity.sidejob.sidejobName);
-    });
-
-    const sidejobNamesArray = Array.from(sidejobNames.values());
-    const options: ISelectOption[] = sidejobNamesArray.map((sidejobName) => ({
+    const options: ISelectOption[] = sidejobNames.map((sidejobName) => ({
       name: SIDEJOB_TEXTS[sidejobName].title(),
       value: sidejobName,
     }));
