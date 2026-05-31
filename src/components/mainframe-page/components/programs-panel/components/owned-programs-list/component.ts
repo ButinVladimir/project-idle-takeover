@@ -1,13 +1,18 @@
 import { html } from 'lit';
 import { localized, msg } from '@lit/localize';
-import { customElement } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { BaseComponent } from '@shared/index';
+import { provide } from '@lit/context';
+import { StateFilterValue, BaseComponent, filterByState, filterByMaxLevel, LevelFilterValue } from '@shared/index';
 import { IProgram, ProgramName } from '@state/mainframe-state';
 import { SortableElementMovedEvent } from '@components/shared/sortable-list/events/sortable-element-moved';
 import { COMMON_TEXTS } from '@texts/index';
 import { OwnedProgramsListController } from './controller';
 import styles from './styles';
+import { ToggleProgramsFilterEvent } from './components/list-buttons/events';
+import { programsFilterStateContext, programsListContext } from './contexts';
+import { type IProgramsFilterState } from './interfaces';
+import { ProgramsFilterStateChangedEvent } from './components/filter/events';
 
 @localized()
 @customElement('ca-owned-programs-list')
@@ -18,6 +23,22 @@ export class OwnedProgramsList extends BaseComponent {
 
   private _controller: OwnedProgramsListController;
 
+  @state()
+  private _filterEnabled = false;
+
+  @state()
+  @provide({ context: programsFilterStateContext })
+  private _programsFilterState: IProgramsFilterState = {
+    programs: [],
+    tiers: [],
+    maxTier: LevelFilterValue.all,
+    maxLevel: LevelFilterValue.all,
+    autoupgrade: StateFilterValue.all,
+  };
+
+  @provide({ context: programsListContext })
+  private _programsList: IProgram[] = [];
+
   constructor() {
     super();
 
@@ -25,62 +46,137 @@ export class OwnedProgramsList extends BaseComponent {
   }
 
   protected renderDesktop() {
-    const ownedPrograms = this._controller.listOwnedPrograms();
-
     return html`
-      <div class="header desktop">
-        <div class="header-column">${msg('Program')}</div>
-        <div class="header-column">${COMMON_TEXTS.tier()}</div>
-        <div class="header-column">${COMMON_TEXTS.level()}</div>
-        <ca-owned-programs-list-buttons></ca-owned-programs-list-buttons>
-      </div>
+      <div class="items-list">
+        <ca-owned-programs-list-filter
+          ?filter-enabled=${this._filterEnabled}
+          @programs-filter-state-changed=${this.handleChangeFilterState}
+        ></ca-owned-programs-list-filter>
 
-      ${ownedPrograms.length > 0
-        ? html`
-            <ca-sortable-list @sortable-element-moved=${this.handleMoveProgram}>
-              ${repeat(ownedPrograms, (program) => program.name, this.renderProgram)}
-            </ca-sortable-list>
-          `
-        : this.renderEmptyListNotification()}
+        <div class="header desktop">
+          <div class="header-column">${msg('Program')}</div>
+          <div class="header-column">${COMMON_TEXTS.tier()}</div>
+          <div class="header-column">${COMMON_TEXTS.level()}</div>
+          <ca-owned-programs-list-buttons
+            ?filter-enabled=${this._filterEnabled}
+            @toggle-programs-filter=${this.handleToggleFilter}
+          ></ca-owned-programs-list-buttons>
+        </div>
+
+        ${this._programsList.length > 0
+          ? html`
+              <ca-sortable-list
+                class="list"
+                ?drag-enabled=${!this._filterEnabled}
+                @sortable-element-moved=${this.handleMoveProgram}
+              >
+                ${repeat(this._programsList, (program) => program.name, this.renderProgram)}
+              </ca-sortable-list>
+            `
+          : this.renderEmptyListNotification()}
+      </div>
     `;
   }
 
   protected renderMobile() {
-    const ownedPrograms = this._controller.listOwnedPrograms();
-
     return html`
-      <div class="header mobile">
-        <ca-owned-programs-list-buttons></ca-owned-programs-list-buttons>
-      </div>
+      <div class="items-list">
+        <ca-owned-programs-list-filter
+          ?filter-enabled=${this._filterEnabled}
+          @programs-filter-state-changed=${this.handleChangeFilterState}
+        ></ca-owned-programs-list-filter>
 
-      ${ownedPrograms.length > 0
-        ? html`
-            <ca-sortable-list @sortable-element-moved=${this.handleMoveProgram}>
-              ${repeat(ownedPrograms, (program) => program.name, this.renderProgram)}
-            </ca-sortable-list>
-          `
-        : this.renderEmptyListNotification()}
+        <div class="header mobile">
+          <ca-owned-programs-list-buttons
+            ?filter-enabled=${this._filterEnabled}
+            @toggle-programs-filter=${this.handleToggleFilter}
+          ></ca-owned-programs-list-buttons>
+        </div>
+
+        ${this._programsList.length > 0
+          ? html`
+              <ca-sortable-list
+                class="list"
+                ?drag-enabled=${!this._filterEnabled}
+                @sortable-element-moved=${this.handleMoveProgram}
+              >
+                ${repeat(this._programsList, (program) => program.name, this.renderProgram)}
+              </ca-sortable-list>
+            `
+          : this.renderEmptyListNotification()}
+      </div>
     `;
   }
 
   private renderEmptyListNotification = () => {
-    return html` <div class="notification">${msg("You don't have any owned programs")}</div> `;
+    return html` <div class="notification">${msg('Programs are not found')}</div> `;
   };
 
   private renderProgram = (program: IProgram) => {
     return html`
-      <ca-owned-programs-list-item program-name=${program.name} data-drag-id=${program.name}>
+      <ca-owned-programs-list-item
+        class="list-item"
+        ?drag-enabled=${!this._filterEnabled}
+        program-name=${program.name}
+        data-drag-id=${program.name}
+      >
       </ca-owned-programs-list-item>
     `;
   };
 
-  private checkSomeProgramsAutoupgradeActive(): boolean {
-    const programs = this._controller.listOwnedPrograms();
-
-    return programs.some((program) => program.autoUpgradeEnabled);
-  }
-
   private handleMoveProgram = (event: SortableElementMovedEvent) => {
     this._controller.moveProgram(event.keyName as ProgramName, event.position);
+  };
+
+  private handleToggleFilter = (event: ToggleProgramsFilterEvent) => {
+    this._filterEnabled = event.filterEnabled;
+  };
+
+  private handleChangeFilterState = (event: ProgramsFilterStateChangedEvent) => {
+    this._programsFilterState = event.state;
+  };
+
+  protected updateContext(): void {
+    let programs = this._controller.listOwnedPrograms();
+
+    if (this._filterEnabled) {
+      programs = programs.filter(this.filterProgram);
+    }
+
+    this._programsList = programs;
+  }
+
+  private filterProgram = (program: IProgram): boolean => {
+    if (!this._filterEnabled) {
+      return true;
+    }
+
+    if (this._programsFilterState.programs.length > 0 && !this._programsFilterState.programs.includes(program.name)) {
+      return false;
+    }
+
+    if (this._programsFilterState.tiers.length > 0 && !this._programsFilterState.tiers.includes(program.tier)) {
+      return false;
+    }
+
+    if (
+      !filterByMaxLevel(
+        program.tier,
+        this._controller.getProgramHighestTier(program.name),
+        this._programsFilterState.maxTier,
+      )
+    ) {
+      return false;
+    }
+
+    if (!filterByMaxLevel(program.level, this._controller.developmentLevel, this._programsFilterState.maxLevel)) {
+      return false;
+    }
+
+    if (!filterByState(program.autoUpgradeEnabled, this._programsFilterState.autoupgrade)) {
+      return false;
+    }
+
+    return true;
   };
 }

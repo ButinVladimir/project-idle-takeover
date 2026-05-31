@@ -27,16 +27,16 @@ const styles = [
       }
 
       &.desktop .header {
-        padding: var(--sl-spacing-small);
+        padding: var(--ca-table-column-gap);
       }
 
       &.mobile .header {
-        padding: var(--sl-spacing-medium) 0;
+        padding: var(--ca-table-column-gap) 0;
       }
     }
 
     .notification {
-      padding: var(--sl-spacing-3x-large);
+      padding: var(--ca-empty-notification-gap);
       text-align: center;
       border-bottom: var(--ca-border);
     }

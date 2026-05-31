@@ -1,12 +1,16 @@
 import { html } from 'lit';
 import { localized } from '@lit/localize';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { ref, createRef } from 'lit/directives/ref.js';
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
-import { BaseComponent, AUTOUPGRADE_VALUES, UPGRADE_MAX_VALUES } from '@shared/index';
+import { BaseComponent, AUTOUPGRADE_VALUES, UPGRADE_MAX_VALUES, FILTER_VALUES } from '@shared/index';
 import { COMMON_TEXTS } from '@texts/common';
+import { IProgram } from '@state/mainframe-state';
 import { OwnedProgramsListButtonsController } from './controller';
 import styles from './styles';
+import { ToggleProgramsFilterEvent } from './events';
+import { consume } from '@lit/context';
+import { programsListContext } from '../../contexts';
 
 @localized()
 @customElement('ca-owned-programs-list-buttons')
@@ -16,9 +20,18 @@ export class OwnedProgramsListButtons extends BaseComponent {
   hasPartialUpdate = true;
   protected hasMobileRender = true;
 
+  @property({
+    attribute: 'filter-enabled',
+    type: Boolean,
+  })
+  public filterEnabled = false;
+
   private _controller: OwnedProgramsListButtonsController;
 
   private _upgradeMaxButton = createRef<SlButton>();
+
+  @consume({ context: programsListContext, subscribe: true })
+  private _programsList?: IProgram[];
 
   constructor() {
     super();
@@ -27,31 +40,35 @@ export class OwnedProgramsListButtons extends BaseComponent {
   }
 
   protected renderDesktop() {
+    const filterIcon = this.filterEnabled ? FILTER_VALUES.icon.enabled : FILTER_VALUES.icon.disabled;
+    const filterLabel = this.filterEnabled ? COMMON_TEXTS.disableFilter() : COMMON_TEXTS.enableFilter();
+
     const isAutoupgradeActive = this.checkSomeProgramsAutoupgradeActive();
 
     const autoupgradeIcon = isAutoupgradeActive ? AUTOUPGRADE_VALUES.icon.enabled : AUTOUPGRADE_VALUES.icon.disabled;
     const autoupgradeLabel = isAutoupgradeActive
-      ? COMMON_TEXTS.disableAutoupgradeAll()
-      : COMMON_TEXTS.enableAutoupgradeAll();
+      ? COMMON_TEXTS.disableAutoupgradeDisplayed()
+      : COMMON_TEXTS.enableAutoupgradeDisplayed();
 
-    const upgradeAllProgramsLabel = COMMON_TEXTS.upgradeAll();
-
-    const hotkey = this._controller.getHotkey();
+    const upgradeDisplayedProgramsLabel = COMMON_TEXTS.upgradeDisplayedEnabledItems();
 
     return html`
-      <div class="buttons desktop">
+      <div class="buttons desktop buttons-3">
         <sl-tooltip>
-          <div class="tooltip-content" slot="content">
-            <p>${upgradeAllProgramsLabel}</p>
-            <p>${COMMON_TEXTS.hotkey(hotkey)}</p>
-          </div>
+          <span slot="content"> ${filterLabel} </span>
+
+          <sl-icon-button name=${filterIcon} label=${filterLabel} @click=${this.handleToggleFilter}> </sl-icon-button>
+        </sl-tooltip>
+
+        <sl-tooltip>
+          <div class="tooltip-content" slot="content">${upgradeDisplayedProgramsLabel}</div>
 
           <sl-icon-button
             ${ref(this._upgradeMaxButton)}
             disabled
             name=${UPGRADE_MAX_VALUES.icon}
-            label=${upgradeAllProgramsLabel}
-            @click=${this.handleUpgradeMaxAllPrograms}
+            label=${upgradeDisplayedProgramsLabel}
+            @click=${this.handleUpgradeMaxPrograms}
           >
           </sl-icon-button>
         </sl-tooltip>
@@ -67,37 +84,41 @@ export class OwnedProgramsListButtons extends BaseComponent {
   }
 
   protected renderMobile() {
+    const filterIcon = this.filterEnabled ? FILTER_VALUES.icon.enabled : FILTER_VALUES.icon.disabled;
+    const filterLabel = this.filterEnabled ? COMMON_TEXTS.disableFilter() : COMMON_TEXTS.enableFilter();
+    const filterVariant = this.filterEnabled
+      ? FILTER_VALUES.buttonVariant.enabled
+      : FILTER_VALUES.buttonVariant.disabled;
+
     const isAutoupgradeActive = this.checkSomeProgramsAutoupgradeActive();
 
     const autoupgradeIcon = isAutoupgradeActive ? AUTOUPGRADE_VALUES.icon.enabled : AUTOUPGRADE_VALUES.icon.disabled;
     const autoupgradeLabel = isAutoupgradeActive
-      ? COMMON_TEXTS.disableAutoupgradeAll()
-      : COMMON_TEXTS.enableAutoupgradeAll();
+      ? COMMON_TEXTS.disableAutoupgradeDisplayed()
+      : COMMON_TEXTS.enableAutoupgradeDisplayed();
     const autoupgradeVariant = isAutoupgradeActive
       ? AUTOUPGRADE_VALUES.buttonVariant.enabled
       : AUTOUPGRADE_VALUES.buttonVariant.disabled;
 
-    const upgradeAllProgramsLabel = COMMON_TEXTS.upgradeAll();
-
-    const hotkey = this._controller.getHotkey();
-
     return html`
       <div class="buttons mobile">
-        <sl-tooltip>
-          <span slot="content">${COMMON_TEXTS.hotkey(hotkey)}</span>
+        <sl-button variant=${filterVariant} size="medium" @click=${this.handleToggleFilter}>
+          <sl-icon slot="prefix" name=${filterIcon}> </sl-icon>
 
-          <sl-button
-            ${ref(this._upgradeMaxButton)}
-            disabled
-            variant=${UPGRADE_MAX_VALUES.buttonVariant}
-            size="medium"
-            @click=${this.handleUpgradeMaxAllPrograms}
-          >
-            <sl-icon slot="prefix" name=${UPGRADE_MAX_VALUES.icon}> </sl-icon>
+          ${filterLabel}
+        </sl-button>
 
-            ${upgradeAllProgramsLabel}
-          </sl-button>
-        </sl-tooltip>
+        <sl-button
+          ${ref(this._upgradeMaxButton)}
+          disabled
+          variant=${UPGRADE_MAX_VALUES.buttonVariant}
+          size="medium"
+          @click=${this.handleUpgradeMaxPrograms}
+        >
+          <sl-icon slot="prefix" name=${UPGRADE_MAX_VALUES.icon}> </sl-icon>
+
+          ${COMMON_TEXTS.upgradeDisplayedEnabledItems()}
+        </sl-button>
 
         <sl-button variant=${autoupgradeVariant} size="medium" @click=${this.handleToggleAutoupgrade}>
           <sl-icon slot="prefix" name=${autoupgradeIcon}> </sl-icon>
@@ -109,23 +130,45 @@ export class OwnedProgramsListButtons extends BaseComponent {
   }
 
   private checkSomeProgramsAutoupgradeActive(): boolean {
-    const programs = this._controller.listOwnedPrograms();
+    if (!this._programsList || this._programsList.length === 0) {
+      return false;
+    }
 
-    return programs.some((program) => program.autoUpgradeEnabled);
+    return this._programsList.some((program) => program.autoUpgradeEnabled);
   }
 
   private handleToggleAutoupgrade = () => {
-    const active = this.checkSomeProgramsAutoupgradeActive();
+    if (!this._programsList) {
+      return;
+    }
 
-    this._controller.toggleAutoUpgrade(!active);
+    const autoUpgradeEnabled = !this.checkSomeProgramsAutoupgradeActive();
+
+    this._programsList.forEach((program) => {
+      program.autoUpgradeEnabled = autoUpgradeEnabled;
+    });
   };
 
-  private handleUpgradeMaxAllPrograms = () => {
-    this._controller.upgradeMaxAllPrograms();
+  private handleUpgradeMaxPrograms = () => {
+    if (!this._programsList) {
+      return;
+    }
+
+    const programNames = this._programsList.map((program) => program.name);
+
+    this._controller.upgradeMaxPrograms(programNames);
+  };
+
+  private handleToggleFilter = () => {
+    this.dispatchEvent(new ToggleProgramsFilterEvent(!this.filterEnabled));
   };
 
   handlePartialUpdate = () => {
-    const upgradeMaxButtonDisabled = !this._controller.checkCanUpgradeMax();
+    let upgradeMaxButtonDisabled = true;
+
+    if (this._programsList && this._programsList.length > 0) {
+      upgradeMaxButtonDisabled = !this._programsList.some(this._controller.checkCanUpgradeMaxProgram);
+    }
 
     if (this._upgradeMaxButton.value) {
       this._upgradeMaxButton.value.disabled = upgradeMaxButtonDisabled;

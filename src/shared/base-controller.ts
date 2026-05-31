@@ -21,9 +21,9 @@ import { IFormatter } from './interfaces';
 
 export type PartialUpdateFunction = () => void;
 
-export class BaseController<T extends ReactiveControllerHost & HTMLElement = ReactiveControllerHost & HTMLElement>
-  implements ReactiveController
-{
+export class BaseController<
+  T extends ReactiveControllerHost & HTMLElement = ReactiveControllerHost & HTMLElement,
+> implements ReactiveController {
   private static _containerValuesCache = new Map<symbol, any>();
 
   private static getContainerValue<T>(type: symbol): T {

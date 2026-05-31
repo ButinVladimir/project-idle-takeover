@@ -4,10 +4,6 @@ import { pageTitleStyle } from '@shared/index';
 const styles = [
   pageTitleStyle,
   css`
-    h3.title {
-      margin-bottom: var(--sl-spacing-large);
-    }
-
     div.server-links {
       margin-top: 0;
       margin-bottom: var(--sl-spacing-large);

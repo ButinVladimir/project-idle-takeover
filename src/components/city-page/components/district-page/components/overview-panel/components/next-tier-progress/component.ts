@@ -44,9 +44,9 @@ export class CityDistrictOverviewPanelNextTierProgress extends BaseComponent {
     }
 
     return html`
-      <div class="title">
+      <h5 class="progress-bar-title">
         ${state === DistrictUnlockState.captured ? msg('Next district tier progress') : msg('Capture progress')}
-      </div>
+      </h5>
 
       <sl-progress-bar ${ref(this._progressBarRef)}> </sl-progress-bar>
 

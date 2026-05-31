@@ -12,12 +12,8 @@ const cityMapPageStyles = [
       position: relative;
     }
 
-    h3.title {
-      margin-bottom: var(--sl-spacing-large);
-    }
-
     p.hint {
-      margin-bottom: var(--sl-spacing-large);
+      margin-bottom: var(--ca-section-gap);
     }
 
     div.content {

@@ -38,12 +38,6 @@ export class SidejobsListItem extends BaseComponent {
     this._controller = new SidejobsListItemController(this);
   }
 
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
-  }
-
   protected renderDesktop() {
     if (!this._activity) {
       return nothing;
@@ -56,7 +50,7 @@ export class SidejobsListItem extends BaseComponent {
       ? COMMON_TEXTS.hideDescription()
       : COMMON_TEXTS.showDescription();
     const descriptionClasses = classMap({
-      'sidejob-description': true,
+      description: true,
       visible: this._descriptionVisible,
     });
 
@@ -69,9 +63,9 @@ export class SidejobsListItem extends BaseComponent {
     const cancelSidejobLabel = msg('Cancel sidejob');
 
     return html`
-      <div class="host-content desktop">
+      <div class="items-list-item desktop">
         <div class="sidejob">
-          <div class="sidejob-title">
+          <div class="title">
             ${sidejobTitle}
 
             <sl-tooltip>
@@ -97,7 +91,7 @@ export class SidejobsListItem extends BaseComponent {
 
         <div><ca-sidejobs-list-item-status></ca-sidejobs-list-item-status></div>
 
-        <div class="buttons">
+        <div class="buttons desktop buttons-3">
           <sl-tooltip>
             <span slot="content"> ${toggleLabel} </span>
 
@@ -133,7 +127,7 @@ export class SidejobsListItem extends BaseComponent {
       ? COMMON_TEXTS.hideDescription()
       : COMMON_TEXTS.showDescription();
     const descriptionClasses = classMap({
-      'sidejob-description': true,
+      description: true,
       visible: this._descriptionVisible,
     });
 
@@ -156,9 +150,9 @@ export class SidejobsListItem extends BaseComponent {
     const cancelSidejobLabel = msg('Cancel sidejob');
 
     return html`
-      <div class="host-content mobile">
+      <div class="items-list-item mobile">
         <div class="sidejob">
-          <div class="sidejob-title">
+          <div class="title">
             ${sidejobTitle}
 
             <sl-tooltip>
@@ -184,7 +178,7 @@ export class SidejobsListItem extends BaseComponent {
 
         <div>${statusFull}</div>
 
-        <div class="buttons">
+        <div class="buttons mobile">
           <sl-button variant=${toggleVariant} size="medium" @click=${this.handleToggleSidejob}>
             <sl-icon slot="prefix" name=${toggleIcon}></sl-icon>
 
@@ -201,7 +195,7 @@ export class SidejobsListItem extends BaseComponent {
     `;
   }
 
-  private updateContext() {
+  protected updateContext() {
     if (this.activityId) {
       this._activity = this._controller.getActivityById(this.activityId);
     } else {

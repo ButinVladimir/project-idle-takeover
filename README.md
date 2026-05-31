@@ -42,4 +42,6 @@ npm run prettier
 npm run lint
 ```
 
+### Translations
+
 For translactions, game uses [@lit/localize](https://github.com/Lit/Lit/tree/main/packages/localize). To update localization, first run `localize:extract`, then update xlf file under `src/xliff` directory, then run `localize:build`.

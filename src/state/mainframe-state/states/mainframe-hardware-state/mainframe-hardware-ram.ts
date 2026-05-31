@@ -9,12 +9,12 @@ import { MainframeHardwareParameterType } from './types';
 export class MainframeHardwareRam extends MainframeHardwareParameter {
   readonly type: MainframeHardwareParameterType = 'ram';
 
-  protected get baseLevel(): number {
-    return this.scenarioState.currentValues.mainframeHardware.baseRamLevel;
+  get priceExp(): IExponent {
+    return this.scenarioState.currentValues.mainframeHardware.ramPrice;
   }
 
-  protected get priceExp(): IExponent {
-    return this.scenarioState.currentValues.mainframeHardware.ramPrice;
+  protected get baseLevel(): number {
+    return this.scenarioState.currentValues.mainframeHardware.baseRamLevel;
   }
 
   protected handlePostUpgrade(): void {

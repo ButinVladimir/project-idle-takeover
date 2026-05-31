@@ -1,7 +1,8 @@
 import { ISerializeable } from '@shared/index';
+import { IDistrictState } from '@state/city-state';
+import { IClone } from '@state/clones-state';
 import { IContractsAutomationSerializedState } from './contracts-automation-serialized-state';
 import { IContractAssignment } from './contract-assignment';
-import { IMakeContractAutomationStateArgs } from './make-contract-assignment-state-args';
 import { IContractAssignmentsStarter } from './contract-assignments-starter';
 
 export interface IContractsAutomationState extends ISerializeable<IContractsAutomationSerializedState> {
@@ -12,10 +13,9 @@ export interface IContractsAutomationState extends ISerializeable<IContractsAuto
     districtIndex: number,
     contractName: string,
   ): IContractAssignment | undefined;
-  addContractAssignment(parameters: IMakeContractAutomationStateArgs): void;
+  addContractAssignments(contractNames: string[], districtIndexes: IDistrictState[], clones: IClone[]): boolean;
   removeContractAssignmentById(id: string): void;
-  removeAllContractAssignments(): void;
+  removeContractAssignmentsByIds(ids: string[]): void;
   removeCloneFromAssignments(cloneId: string): void;
   moveContractAssignment(id: string, position: number): void;
-  toggleAllContractAssignments(active: boolean): void;
 }

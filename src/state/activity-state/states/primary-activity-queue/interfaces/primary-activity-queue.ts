@@ -9,8 +9,8 @@ export interface IPrimaryActivityQueue extends ISerializeable<ISerializedPrimary
   getActivityById(id: string): IPrimaryActivity | undefined;
   getActivityByAssignmentId(assignmentId: string): IPrimaryActivity | undefined;
   cancelActivityById(id: string): void;
+  cancelActivitiesByIds(ids: string[]): void;
   cancelActivitiesByAssignmentId(assignmentId: string): void;
-  cancelAllActivities(): void;
   perform(): void;
   filterActivities(): void;
 }

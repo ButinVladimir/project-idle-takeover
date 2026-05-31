@@ -1,5 +1,5 @@
 import { BaseController } from '@shared/index';
-import { ProgramName } from '@state/mainframe-state';
+import { IProgram, ProgramName, ProgramsBatchValidationResult } from '@state/mainframe-state';
 
 export class PurchaseProgramDialogButtonsController extends BaseController {
   get money(): number {
@@ -10,7 +10,15 @@ export class PurchaseProgramDialogButtonsController extends BaseController {
     return this.growthState.money.totalGrowth;
   }
 
+  getOwnedProgram(programName: ProgramName): IProgram | undefined {
+    return this.mainframeState.programs.getOwnedProgramByName(programName);
+  }
+
   getProgramCost(programName: ProgramName, tier: number, level: number): number {
-    return this.mainframeState.programs.calculateProgramCost(programName, tier, level);
+    return this.mainframeState.programs.validator.calculateProgramCost(programName, tier, level);
+  }
+
+  validateProgramsBatch(programNames: ProgramName[], tier: number, level: number): ProgramsBatchValidationResult {
+    return this.mainframeState.programs.validator.validateProgramsBatch(programNames, tier, level);
   }
 }

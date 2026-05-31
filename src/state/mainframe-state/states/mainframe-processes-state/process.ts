@@ -50,7 +50,7 @@ export class Process implements IProcess {
     return this.program.completionPoints * this.threads;
   }
 
-  get totalRam() {
+  get usedRam() {
     return this.program.isAutoscalable
       ? this._mainframeState.processes.availableRam + this.program.ram
       : this.program.ram * this.threads;

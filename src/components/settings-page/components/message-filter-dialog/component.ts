@@ -91,18 +91,20 @@ export class MessageFilterDialog extends BaseComponent {
     return html`
       <sl-divider></sl-divider>
 
-      <sl-checkbox
-        class="group-checkbox"
-        size="medium"
-        name="event"
-        value=${group}
-        ?checked=${this._controller.checkGroupHasEnabledEvents(group)}
-        @sl-change=${this.handleToggleGroup}
-      >
-        ${MESSAGE_EVENT_GROUP_NAMES[group]()}
-      </sl-checkbox>
+      <div>
+        <sl-checkbox
+          class="group-checkbox"
+          size="medium"
+          name="event"
+          value=${group}
+          ?checked=${this._controller.checkGroupHasEnabledEvents(group)}
+          @sl-change=${this.handleToggleGroup}
+        >
+          ${MESSAGE_EVENT_GROUP_NAMES[group]()}
+        </sl-checkbox>
 
-      <div class="events-container">${repeat(MESSAGE_EVENT_GROUPS[group], this.renderEventCheckbox)}</div>
+        <div class="events-container">${repeat(MESSAGE_EVENT_GROUPS[group], this.renderEventCheckbox)}</div>
+      </div>
     `;
   };
 

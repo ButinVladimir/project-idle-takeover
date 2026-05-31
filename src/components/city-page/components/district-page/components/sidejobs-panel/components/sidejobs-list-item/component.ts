@@ -26,11 +26,11 @@ export class CityDistrictSidejobsListItem extends BaseComponent {
   private _districtIndex?: number;
 
   protected renderMobile() {
-    return html`<div class="host-content mobile">${this.renderContent()}</div>`;
+    return html`<div class="items-list-item mobile">${this.renderContent()}</div>`;
   }
 
   protected renderDesktop() {
-    return html`<div class="host-content desktop">${this.renderContent()}</div>`;
+    return html`<div class="items-list-item desktop">${this.renderContent()}</div>`;
   }
 
   private renderContent = () => {
@@ -40,16 +40,14 @@ export class CityDistrictSidejobsListItem extends BaseComponent {
 
     return html`
       <div class="sidejob">
-        <div class="description">
-          <p class="title">
-            ${SIDEJOB_TEXTS[this.sidejobName].title()}
+        <div class="title">
+          ${SIDEJOB_TEXTS[this.sidejobName].title()}
 
-            <sl-tooltip>
-              <span slot="content">${SIDEJOB_TEXTS[this.sidejobName].overview()}</span>
+          <sl-tooltip>
+            <span slot="content">${SIDEJOB_TEXTS[this.sidejobName].overview()}</span>
 
-              <sl-icon name=${HINT_ICON}></sl-icon>
-            </sl-tooltip>
-          </p>
+            <sl-icon name=${HINT_ICON}></sl-icon>
+          </sl-tooltip>
         </div>
       </div>
 

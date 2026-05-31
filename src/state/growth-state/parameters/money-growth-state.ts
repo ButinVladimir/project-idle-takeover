@@ -62,7 +62,7 @@ export class MoneyGrowthState implements IMoneyGrowthState {
     if (shareServerProcess?.enabled) {
       incomeByProgram = (shareServerProcess.program as ShareServerProgram).calculateMoneyDelta(
         shareServerProcess.usedCores,
-        shareServerProcess.totalRam,
+        shareServerProcess.usedRam,
         1,
       );
     }
@@ -91,6 +91,10 @@ export class MoneyGrowthState implements IMoneyGrowthState {
   }
 
   private updateTotalGrowth() {
-    this._totalGrowth = INCOME_SOURCES.reduce((sum, incomeSource) => sum + this.getGrowth(incomeSource), 0);
+    this._totalGrowth = 0;
+
+    for (const incomeSource of INCOME_SOURCES) {
+      this._totalGrowth += this.getGrowth(incomeSource);
+    }
   }
 }

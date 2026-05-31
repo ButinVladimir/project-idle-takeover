@@ -1,17 +1,12 @@
 import { css } from 'lit';
-import { progressBarHintStyle } from '@shared/index';
+import { progressBarHintStyle, progressBarTitleStyle } from '@shared/index';
 
 const styles = [
+  progressBarTitleStyle,
   progressBarHintStyle,
   css`
     :host {
       display: block;
-    }
-
-    div.title {
-      font-size: var(--sl-font-size-small);
-      line-height: var(--sl-line-height-dense);
-      margin-bottom: var(--sl-spacing-2x-small);
     }
 
     sl-progress-bar {

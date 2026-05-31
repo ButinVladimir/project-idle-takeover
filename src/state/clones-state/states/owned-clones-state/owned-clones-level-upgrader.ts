@@ -1,18 +1,22 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
-import { Milestone, PurchaseType } from '@shared/index';
+import { Milestone, PurchaseType, reverseTierPower } from '@shared/index';
 import { type IGlobalState } from '@state/global-state';
 import { type IAutomationState } from '@state/automation-state';
 import { type IUnlockState } from '@state/unlock-state';
+import { type IActivityState } from '@state/activity-state';
 import { IOwnedClonesLevelUpgrader } from './interfaces';
 import { type IClonesState } from '../../interfaces';
-import { IClone } from '../clone-factory';
+import { IClone, typedCloneTemplates } from '../clone-factory';
 
 const { lazyInject } = decorators;
 
 @injectable()
 export class OwnedClonesLevelUpgrader implements IOwnedClonesLevelUpgrader {
+  @lazyInject(TYPES.ActivityState)
+  private _activityState!: IActivityState;
+
   @lazyInject(TYPES.AutomationState)
   private _automationState!: IAutomationState;
 
@@ -29,15 +33,17 @@ export class OwnedClonesLevelUpgrader implements IOwnedClonesLevelUpgrader {
 
   private _availableActions = 0;
 
-  upgradeMaxAllClones(): void {
+  upgradeMaxClones(ids: string[]): void {
     if (!this.checkUpgradeAvailable()) {
       return;
     }
 
+    const clones = ids.map((id) => this._clonesState.ownedClones.getCloneById(id)).filter((clone) => clone) as IClone[];
+
     this._availableMoney = this._globalState.money.money;
     this._availableActions = Number.MAX_SAFE_INTEGER;
 
-    this.performUpgradeAll();
+    this.performUpgradeClones(clones);
   }
 
   upgradeMaxClone(id: string): void {
@@ -62,18 +68,27 @@ export class OwnedClonesLevelUpgrader implements IOwnedClonesLevelUpgrader {
       return;
     }
 
+    const clones = this._clonesState.ownedClones.listClones();
+
     this._availableMoney = (this._globalState.money.money * this._automationState.cloneLevel.moneyShare) / 100;
     this._availableActions = actionCount;
 
-    this.performUpgradeAll();
+    this.performUpgradeClones(clones);
+  }
+
+  calculateCloneLevelFromMoney(templateName: string, tier: number, money: number): number {
+    return Math.min(
+      reverseTierPower(money, tier, typedCloneTemplates[templateName].cost),
+      this._globalState.development.level,
+    );
   }
 
   private checkUpgradeAvailable() {
     return this._unlockState.milestones.isMilestoneReached(Milestone.unlockedCompanyManagement);
   }
 
-  private performUpgradeAll() {
-    for (const clone of this._clonesState.ownedClones.listClones()) {
+  private performUpgradeClones(clones: IClone[]) {
+    for (const clone of clones) {
       if (this._availableActions <= 0) {
         break;
       }
@@ -89,12 +104,12 @@ export class OwnedClonesLevelUpgrader implements IOwnedClonesLevelUpgrader {
   private performUpgradeClone(clone: IClone) {
     const oldLevel = clone.level;
     const newLevel = Math.min(
-      this._clonesState.ownedClones.calculateCloneLevelFromMoney(clone.templateName, clone.tier, this._availableMoney),
+      this.calculateCloneLevelFromMoney(clone.templateName, clone.tier, this._availableMoney),
       clone.level + this._availableActions,
     );
 
     if (newLevel > oldLevel) {
-      const cost = this._clonesState.ownedClones.calculateCloneCost(clone.templateName, clone.tier, newLevel);
+      const cost = this._clonesState.ownedClones.validator.calculateCloneCost(clone.templateName, clone.tier, newLevel);
 
       if (this.purchaseCloneUpgrade(clone, newLevel)) {
         this._availableMoney -= cost;
@@ -104,10 +119,11 @@ export class OwnedClonesLevelUpgrader implements IOwnedClonesLevelUpgrader {
   }
 
   private purchaseCloneUpgrade(clone: IClone, newLevel: number) {
-    const cost = this._clonesState.ownedClones.calculateCloneCost(clone.templateName, clone.tier, newLevel);
+    const cost = this._clonesState.ownedClones.validator.calculateCloneCost(clone.templateName, clone.tier, newLevel);
 
     return this._globalState.money.purchase(cost, PurchaseType.clones, () => {
-      clone.upgradeLevel(newLevel);
+      clone.setLevel(newLevel);
+      this._activityState.requestReassignment();
     });
   }
 }

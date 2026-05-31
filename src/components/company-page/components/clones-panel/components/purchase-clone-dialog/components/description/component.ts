@@ -14,10 +14,13 @@ import {
   Skill,
   getHighlightValueClass,
   getHighlightValueClassMap,
+  getHighlightDifferenceClassMap,
+  diffFormatterParameters,
 } from '@shared/index';
 import { PurchaseCloneDialogDescriptionTextController } from './controller';
 import { temporaryCloneContext } from '../../contexts';
 import styles from './styles';
+import { modalSelectedCloneContext } from '../../../../contexts';
 
 @localized()
 @customElement('ca-purchase-clone-dialog-description')
@@ -27,6 +30,9 @@ export class PurchaseCloneDialogDescription extends BaseComponent {
   protected hasMobileRender = true;
 
   hasPartialUpdate = true;
+
+  @consume({ context: modalSelectedCloneContext, subscribe: true })
+  private _selectedClone?: IClone;
 
   @consume({ context: temporaryCloneContext, subscribe: true })
   private _clone?: IClone;
@@ -66,7 +72,13 @@ export class PurchaseCloneDialogDescription extends BaseComponent {
     const formatter = this._controller.formatter;
 
     const synchronization = this._controller.getCloneSynchronization(this._clone!.templateName, this._clone!.tier);
-    const availableSynchronization = this._controller.availableSynchronization;
+    const availableSynchronization = this._controller.getCloneAvailableSynchronization({
+      id: this._clone!.id,
+      name: this._clone!.name,
+      templateName: this._clone!.templateName,
+      tier: this._clone!.tier,
+      level: this._clone!.level,
+    });
 
     const formattedCloneSynchronization = formatter.formatNumberDecimal(synchronization);
     const formattedAvailableSynchronization = formatter.formatNumberDecimal(availableSynchronization);
@@ -78,7 +90,23 @@ export class PurchaseCloneDialogDescription extends BaseComponent {
       >${formattedCloneSynchronization} / ${formattedAvailableSynchronization}</span
     >`;
 
-    return html`<p class="text">${COMMON_TEXTS.parameterRow(COMMON_TEXTS.synchronization(), synchronizationValue)}</p>`;
+    let diff = synchronization;
+
+    if (this._selectedClone) {
+      diff -= this._controller.getCloneSynchronization(this._selectedClone.templateName, this._selectedClone.tier);
+    }
+
+    const diffClasses = getHighlightDifferenceClassMap(-diff);
+    const formattedDiff = this._controller.formatter.formatNumberDecimal(diff, diffFormatterParameters);
+
+    const diffEl = html`<span class="${diffClasses}">${formattedDiff}</span>`;
+
+    return html`<p class="text">
+      ${COMMON_TEXTS.parameterRow(
+        COMMON_TEXTS.synchronization(),
+        COMMON_TEXTS.parameterDiff(synchronizationValue, diffEl),
+      )}
+    </p>`;
   };
 
   private renderParameters = (desktop: boolean) => {
@@ -107,9 +135,20 @@ export class PurchaseCloneDialogDescription extends BaseComponent {
     const value = this._clone!.getTotalAttributeValue(attribute);
     const formattedValue = this._controller.formatter.formatNumberDecimal(value);
 
+    let diff = value;
+
+    if (this._selectedClone) {
+      diff -= this._selectedClone.getTotalAttributeValue(attribute);
+    }
+
+    const diffClasses = getHighlightDifferenceClassMap(diff);
+    const formattedDiff = this._controller.formatter.formatNumberDecimal(diff, diffFormatterParameters);
+
+    const diffEl = html`<span class="${diffClasses}">${formattedDiff}</span>`;
+
     return html`
       <div>${ATTRIBUTE_TEXTS[attribute]()}</div>
-      <div>${formattedValue}</div>
+      <div>${COMMON_TEXTS.parameterDiff(formattedValue, diffEl)}</div>
     `;
   };
 
@@ -117,17 +156,44 @@ export class PurchaseCloneDialogDescription extends BaseComponent {
     const value = this._clone!.getTotalSkillValue(skill);
     const formattedValue = this._controller.formatter.formatNumberDecimal(value);
 
+    let diff = value;
+
+    if (this._selectedClone) {
+      diff -= this._selectedClone.getTotalSkillValue(skill);
+    }
+
+    const diffClasses = getHighlightDifferenceClassMap(diff);
+    const formattedDiff = this._controller.formatter.formatNumberDecimal(diff, diffFormatterParameters);
+
+    const diffEl = html`<span class="${diffClasses}">${formattedDiff}</span>`;
+
     return html`
       <div>${SKILL_TEXTS[skill]()}</div>
-      <div>${formattedValue}</div>
+      <div>${COMMON_TEXTS.parameterDiff(formattedValue, diffEl)}</div>
     `;
   };
 
   private renderExperienceMultiplier = () => {
     const formattedValue = this._controller.formatter.formatNumberFloat(this._clone!.experienceMultiplier);
 
+    let diff = this._clone!.experienceMultiplier;
+
+    if (this._selectedClone) {
+      diff -= this._selectedClone.experienceMultiplier;
+    }
+
+    const diffClasses = getHighlightDifferenceClassMap(diff);
+    const formattedDiff = this._controller.formatter.formatNumberFloat(diff, diffFormatterParameters);
+
+    const diffEl = html`<span class="${diffClasses}">${formattedDiff}</span>`;
+
     return html`
-      <p class="text">${COMMON_TEXTS.parameterRow(COMMON_TEXTS.experienceMultiplier(), formattedValue)}</p>
+      <p class="text">
+        ${COMMON_TEXTS.parameterRow(
+          COMMON_TEXTS.experienceMultiplier(),
+          COMMON_TEXTS.parameterDiff(formattedValue, diffEl),
+        )}
+      </p>
     `;
   };
 

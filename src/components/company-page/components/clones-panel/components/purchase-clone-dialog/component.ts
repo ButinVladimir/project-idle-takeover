@@ -1,20 +1,22 @@
 import { html } from 'lit';
-import { localized, msg } from '@lit/localize';
+import { localized, msg, str } from '@lit/localize';
 import { customElement, property, state } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { classMap } from 'lit/directives/class-map.js';
+import clamp from 'lodash/clamp';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.component.js';
 import SlInput from '@shoelace-style/shoelace/dist/components/input/input.component.js';
-import clamp from 'lodash/clamp';
-import { provide } from '@lit/context';
-import { BaseComponent } from '@shared/index';
+import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
+import { consume, provide } from '@lit/context';
+import { BaseComponent, CloneAlert, compareOptions, ISelectOption } from '@shared/index';
 import { COMMON_TEXTS, CLONE_TEMPLATE_TEXTS } from '@texts/index';
 import { type IClone } from '@state/clones-state';
-import { PurchaseCloneDialogCloseEvent } from './events';
 import { PurchaseCloneDialogController } from './controller';
 import { temporaryCloneContext } from './contexts';
 import styles from './styles';
 import { PurchaseCloneDialogButtons } from './components/buttons/component';
+import { CloseCloneListItemDialogEvent } from '../../events';
+import { modalSelectedCloneContext } from '../../contexts';
 
 @localized()
 @customElement('ca-purchase-clone-dialog')
@@ -26,6 +28,9 @@ export class PurchaseCloneDialog extends BaseComponent {
   protected hasMobileRender = true;
 
   private _controller: PurchaseCloneDialogController;
+
+  @consume({ context: modalSelectedCloneContext, subscribe: true })
+  private _selectedClone?: IClone;
 
   private _nameInputRef = createRef<SlInput>();
 
@@ -64,26 +69,22 @@ export class PurchaseCloneDialog extends BaseComponent {
     this._controller = new PurchaseCloneDialogController(this);
   }
 
-  performUpdate() {
-    if (this._cloneTemplateName !== undefined) {
-      this._clone = this._controller.getClone(this._name, this._cloneTemplateName, this._tier, this._level);
-    } else {
-      this._clone = undefined;
-    }
+  disconnectedCallback() {
+    super.disconnectedCallback();
 
-    super.performUpdate();
+    this._clone?.removeAllEventListeners();
   }
 
   updated(_changedProperties: Map<string, any>) {
     super.updated(_changedProperties);
 
     if (_changedProperties.has('open')) {
-      this._name = '';
-      this._cloneTemplateName = undefined;
-      this._tier = 0;
-      this._level = this._controller.developmentLevel;
+      this._name = this._selectedClone?.name ?? '';
+      this._cloneTemplateName = this._selectedClone?.templateName ?? undefined;
+      this._tier = this._selectedClone?.tier ?? 0;
+      this._level = this._selectedClone?.level ?? this._controller.developmentLevel;
 
-      if (this.open) {
+      if (this.open && !this._selectedClone) {
         this._name = this._controller.generateName();
       }
     }
@@ -107,21 +108,31 @@ export class PurchaseCloneDialog extends BaseComponent {
     return html`
       <form id="purchase-clone-form" @submit=${this.handleSubmit}>
         <sl-dialog ?open=${this.open} @sl-request-close=${this.handleClose}>
-          <h4 slot="label" class="title">${msg('Purchase clone')}</h4>
+          <h4 slot="label" class="title">
+            ${this._selectedClone ? msg(str`Replace clone ${this._selectedClone.name}`) : msg('Purchase clone')}
+          </h4>
 
           <div class="body">
             <p class="hint">
-              ${msg(`Select clone name, template, tier and level to purchase it.
+              ${this._selectedClone
+                ? msg(`Select clone template, tier and level to replace it.
 Tier is limited depending on design and loaned items tier.
 Clone level cannot be above development level.
-Synchronization is earned by unlocking districts, raising their tier and by gaining certain favors.`)}
+Synchronization is earned by unlocking districts, raising their tier and by gaining certain upgrades.
+Clone will lose it's upgrades after replacement but will keep assigned activities.
+Activities that are already in progress won't be affected.`)
+                : msg(`Select clone name, template, tier and level to purchase it.
+Tier is limited depending on design and loaned items tier.
+Clone level cannot be above development level.
+Synchronization is earned by unlocking districts, raising their tier and by gaining certain upgrades.`)}
             </p>
 
             <div class=${inputsContainerClasses}>
               <sl-input
                 ${ref(this._nameInputRef)}
+                ?disabled=${this._selectedClone ? true : false}
                 name="name"
-                value=${this._name}
+                value=${this._selectedClone?.name ?? this._name}
                 autocomplete="off"
                 @sl-change=${this.handleNameChange}
               >
@@ -145,7 +156,7 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
               >
                 <span class="input-label" slot="label"> ${msg('Clone template')} </span>
 
-                ${this._controller.listAvailableCloneTemplates().map(this.renderCloneTemplateOption)}
+                ${this.renderCloneTemplateOptions()}
               </sl-select>
 
               <sl-select
@@ -186,6 +197,7 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
             name=${this._name}
             @cancel=${this.handleClose}
             @purchase-clone=${this.handleSubmit}
+            @restore-values=${this.handleRestoreValues}
           >
           </ca-purchase-clone-dialog-buttons>
         </sl-dialog>
@@ -195,12 +207,18 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
 
   handlePartialUpdate = () => {
     if (this._buttonsRef.value) {
-      this._buttonsRef.value.disabled = !this.checkSubmitAvailability();
+      this._buttonsRef.value.disabled = !this.validate();
     }
   };
 
-  private renderCloneTemplateOption = (cloneTemplate: string) => {
-    return html`<sl-option value=${cloneTemplate}> ${CLONE_TEMPLATE_TEXTS[cloneTemplate].title()} </sl-option>`;
+  private renderCloneTemplateOptions = () => {
+    const options: ISelectOption[] = this._controller.listAvailableCloneTemplates().map((cloneTemplate) => ({
+      name: CLONE_TEMPLATE_TEXTS[cloneTemplate].title(),
+      value: cloneTemplate,
+    }));
+    options.sort(compareOptions);
+
+    return options.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
 
   private renderTierOptions = () => {
@@ -218,8 +236,24 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
     return result;
   };
 
+  protected updateContext() {
+    this._clone?.removeAllEventListeners();
+
+    if (this._cloneTemplateName !== undefined) {
+      this._clone = this._controller.getClone(
+        this._selectedClone?.id ?? '',
+        this._name,
+        this._cloneTemplateName,
+        this._tier,
+        this._level,
+      );
+    } else {
+      this._clone = undefined;
+    }
+  }
+
   private handleClose = () => {
-    this.dispatchEvent(new PurchaseCloneDialogCloseEvent());
+    this.dispatchEvent(new CloseCloneListItemDialogEvent());
   };
 
   private handleNameChange = () => {
@@ -261,19 +295,22 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
   private handleSubmit = (event: Event) => {
     event.preventDefault();
 
-    if (!this.checkSubmitAvailability()) {
+    if (!this.validate()) {
       return;
     }
 
-    const isBought = this._controller.purchaseClone({
-      name: this._name,
-      templateName: this._cloneTemplateName!,
-      tier: this._tier,
-      level: this._level,
-    });
-
-    if (isBought) {
-      this.dispatchEvent(new PurchaseCloneDialogCloseEvent());
+    if (this._selectedClone) {
+      this.dispatchEvent(
+        new ConfirmationAlertOpenEvent(
+          CloneAlert.cloneReplace,
+          msg(
+            str`Are you sure want to replace clone "${this._selectedClone.name}"? It will keep assigned sidejobs and primary activities but will lose augmentations, items and enhancements.`,
+          ),
+          this.handlePurchaseClone,
+        ),
+      );
+    } else {
+      this.handlePurchaseClone();
     }
   };
 
@@ -281,27 +318,37 @@ Synchronization is earned by unlocking districts, raising their tier and by gain
     this._name = this._controller.generateName();
   };
 
-  private checkSubmitAvailability(): boolean {
+  private validate(): boolean {
     if (!this._clone) {
       return false;
     }
 
-    const { money } = this._controller;
-
-    const cost = this._controller.getCloneCost(this._clone.templateName, this._clone.tier, this._clone.level);
-    const synchronization = this._controller.getCloneSynchronization(this._clone.templateName, this._clone.tier);
-    const cloneAvailable = this._controller.isCloneAvailable(
-      this._clone.templateName,
-      this._clone.tier,
-      this._clone.level,
-    );
-
-    return !!(
-      this._clone &&
-      this._clone.name &&
-      cloneAvailable &&
-      synchronization <= this._controller.availableSynchronization &&
-      cost <= money
-    );
+    return this._controller.validateClone(this._clone);
   }
+
+  private handleRestoreValues = (event: Event) => {
+    event?.preventDefault();
+
+    if (!this._selectedClone) {
+      return;
+    }
+
+    this._cloneTemplateName = this._selectedClone.templateName;
+    this._tier = this._selectedClone.tier;
+    this._level = this._selectedClone.level;
+  };
+
+  private handlePurchaseClone = () => {
+    const isPurchased = this._controller.purchaseClone({
+      id: this._selectedClone?.id ?? undefined,
+      name: this._selectedClone?.name ?? this._name,
+      templateName: this._cloneTemplateName!,
+      tier: this._tier,
+      level: this._level,
+    });
+
+    if (isPurchased) {
+      this.dispatchEvent(new CloseCloneListItemDialogEvent());
+    }
+  };
 }

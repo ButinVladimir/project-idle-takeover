@@ -8,6 +8,7 @@ import {
   IMainframeHardwareSerializedState,
   IMainframeHardwareParameter,
   type IMainframeHardwareUpgrader,
+  type IMainframeHardwareValidator,
 } from './interfaces';
 import { MainframeHardwarePerformance } from './mainframe-hardware-performance';
 import { MainframeHardwareCores } from './mainframe-hardware-cores';
@@ -23,6 +24,9 @@ export class MainframeHardwareState implements IMainframeHardwareState {
 
   @inject(TYPES.MainframeHardwareUpgrader)
   private _upgrader!: IMainframeHardwareUpgrader;
+
+  @inject(TYPES.MainframeHardwareValidator)
+  private _validator!: IMainframeHardwareValidator;
 
   @inject(TYPES.MainframeHardwarePerformance)
   private _performance!: MainframeHardwarePerformance;
@@ -57,6 +61,10 @@ export class MainframeHardwareState implements IMainframeHardwareState {
 
   get upgrader() {
     return this._upgrader;
+  }
+
+  get validator() {
+    return this._validator;
   }
 
   listParameters(): IMainframeHardwareParameter[] {

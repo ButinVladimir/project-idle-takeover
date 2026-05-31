@@ -9,12 +9,12 @@ import { MainframeHardwareParameterType } from './types';
 export class MainframeHardwarePerformance extends MainframeHardwareParameter {
   readonly type: MainframeHardwareParameterType = 'performance';
 
-  protected get baseLevel(): number {
-    return this.scenarioState.currentValues.mainframeHardware.basePerformanceLevel;
+  get priceExp(): IExponent {
+    return this.scenarioState.currentValues.mainframeHardware.performancePrice;
   }
 
-  protected get priceExp(): IExponent {
-    return this.scenarioState.currentValues.mainframeHardware.performancePrice;
+  protected get baseLevel(): number {
+    return this.scenarioState.currentValues.mainframeHardware.basePerformanceLevel;
   }
 
   protected handlePostUpgrade(): void {}

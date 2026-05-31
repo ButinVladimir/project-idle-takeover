@@ -10,12 +10,6 @@ export interface IContract {
   assignedClones: IClone[];
   contractTemplate: IContractTemplate;
   completionTime: number;
-  minRequiredClones: number;
-  maxRequiredClones: number;
-  getAttributeRequirement(attribute: Attribute): number;
-  getAttributeRequiredTeamSize(attribute: Attribute): number;
-  getSkillRequirement(skill: Skill): number;
-  getSkillRequiredTeamSize(skill: Skill): number;
   getAttributeModifier(attribute: Attribute): number;
   getSkillModifier(skill: Skill): number;
   getParameterVisibility(parameter: DistrictTypeRewardParameter): boolean;

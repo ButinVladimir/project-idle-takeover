@@ -1,7 +1,7 @@
 import { html } from 'lit';
 import { localized } from '@lit/localize';
 import { customElement, property } from 'lit/decorators.js';
-import { BaseComponent, HINT_ICON } from '@shared/index';
+import { BaseComponent, compareTieredOptions, HINT_ICON, ISelectTieredOption } from '@shared/index';
 import { CATEGORY_TEXTS, PROGRAM_TEXTS } from '@texts/index';
 import { ProgramName } from '@state/mainframe-state';
 import { OverviewUnlockedProgramsController } from './controller';
@@ -41,13 +41,20 @@ export class OverviewUnlockedPrograms extends BaseComponent {
   private renderList = () => {
     const itemNames = this.getItemsList();
 
-    return itemNames.map(this.renderListItem);
+    const itemsOptions: ISelectTieredOption<ProgramName>[] = itemNames.map((itemName) => ({
+      name: PROGRAM_TEXTS[itemName].title(),
+      value: itemName,
+      tier: this.getItemTier(itemName),
+    }));
+    itemsOptions.sort(compareTieredOptions);
+
+    return itemsOptions.map(this.renderListItem);
   };
 
-  private renderListItem = (itemName: ProgramName) => {
-    const programTitle = PROGRAM_TEXTS[itemName].title();
-    const programOverview = PROGRAM_TEXTS[itemName].overview();
-    const tier = this.getItemTier(itemName);
+  private renderListItem = (option: ISelectTieredOption<ProgramName>) => {
+    const programTitle = option.name;
+    const programOverview = PROGRAM_TEXTS[option.value].overview();
+    const tier = option.tier;
 
     return html`
       <span>

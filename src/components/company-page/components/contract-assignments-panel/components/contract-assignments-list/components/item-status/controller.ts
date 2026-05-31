@@ -1,4 +1,4 @@
-import { IPrimaryActivity } from '@/state/activity-state';
+import { IPrimaryActivity } from '@state/activity-state';
 import { BaseController } from '@shared/index';
 import { IContractAssignment } from '@state/automation-state';
 
@@ -8,7 +8,11 @@ export class ContractAssignmentsListItemStatusController extends BaseController 
   }
 
   validateContractAssignment(contractAssignment: IContractAssignment) {
-    return this.activityState.contractActivityValidator.validate(contractAssignment.contract);
+    return this.activityState.contractActivityValidator.validateContract(
+      contractAssignment.contract.contractName,
+      contractAssignment.contract.district,
+      contractAssignment.contract.assignedClones,
+    );
   }
 
   getAvailableCounters(contractAssignment: IContractAssignment): number {

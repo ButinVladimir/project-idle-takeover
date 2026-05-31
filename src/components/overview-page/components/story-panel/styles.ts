@@ -9,7 +9,7 @@ const styles = [
     }
 
     div.state-filter-container {
-      margin-bottom: var(--sl-spacing-2x-large);
+      margin-bottom: var(--ca-section-gap);
 
       &.mobile {
         width: 100%;
@@ -25,7 +25,7 @@ const styles = [
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      gap: var(--sl-spacing-large);
+      gap: var(--ca-panel-row-gap);
     }
   `,
 ];

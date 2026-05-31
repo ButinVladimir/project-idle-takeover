@@ -11,7 +11,7 @@ const styles = [
     }
 
     p.hint {
-      margin: 0 0 var(--sl-spacing-large);
+      margin: 0 0 var(--ca-section-gap);
     }
 
     ca-sortable-list {
@@ -24,12 +24,12 @@ const styles = [
         flex-direction: column;
         align-items: stretch;
         justify-content: center;
-        gap: var(--sl-spacing-large);
+        gap: var(--ca-panel-row-gap);
       }
     }
 
-    div.buttons-block {
-      margin: 0 0 var(--sl-spacing-large) 0;
+    ca-mainframe-hardware-panel-buttons {
+      margin: 0 0 var(--ca-section-gap) 0;
     }
   `,
 ];

@@ -15,7 +15,8 @@ export class CompanySidejobsPanel extends BaseComponent {
   protected renderDesktop() {
     return html`
       <p class="hint">
-        ${msg(`Sidejobs provide passive income when assigned clones are not working on primary jobs.`)}
+        ${msg(`Clones work on sidejobs to provide passive income when they're not working on primary activities.
+Only one sidejob can be assigned per clone at same time.`)}
       </p>
 
       <div class="top-container">
@@ -25,7 +26,7 @@ export class CompanySidejobsPanel extends BaseComponent {
           size="medium"
           @click=${this.handleAssignCloneSidejobDialogOpen}
         >
-          ${msg('Assign clone to sidejob')}
+          ${msg('Assign clones to sidejobs')}
         </sl-button>
       </div>
 

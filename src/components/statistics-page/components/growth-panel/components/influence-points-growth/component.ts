@@ -5,6 +5,8 @@ import { customElement, queryAll } from 'lit/decorators.js';
 import { BaseComponent } from '@shared/base-component';
 import { STATISTIC_PAGE_TEXTS } from '@components/statistics-page/constants';
 import { IDistrictState } from '@state/city-state';
+import { compareOptions, ISelectOption } from '@shared/index';
+import { DISTRICT_NAMES } from '@texts/index';
 import { StatisticsInfluencePointsGrowthController } from './controller';
 import { statisticsPanelContentStyle } from '../../../../styles';
 
@@ -31,15 +33,27 @@ export class StatisticsInfluenceGrowth extends BaseComponent {
       <sl-details>
         <h4 class="title" slot="summary">${msg('Faction influence points per second')}</h4>
 
-        <div class="parameters-table">${map(this._controller.listAvailableDistricts(), this.renderDistrict)}</div>
+        <div class="parameters-table">${this.renderDistricts()}</div>
       </sl-details>
     `;
   }
 
-  private renderDistrict = (districtState: IDistrictState) => {
+  private renderDistricts = () => {
+    const availableDistricts = this._controller.listAvailableDistricts();
+    const districtOptions: ISelectOption<IDistrictState>[] = availableDistricts.map((district) => ({
+      name: DISTRICT_NAMES[district.name](),
+      value: district,
+    }));
+
+    districtOptions.sort(compareOptions);
+
+    return map(districtOptions, this.renderDistrict);
+  };
+
+  private renderDistrict = (option: ISelectOption<IDistrictState>) => {
     return html`
-      <div>${STATISTIC_PAGE_TEXTS.inDistrict(districtState.name)}</div>
-      <div data-district=${districtState.index}></div>
+      <div>${STATISTIC_PAGE_TEXTS.inDistrict(option.name)}</div>
+      <div data-district=${option.value.index}></div>
     `;
   };
 

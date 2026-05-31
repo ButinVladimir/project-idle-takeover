@@ -3,6 +3,7 @@ import { localized, msg, str } from '@lit/localize';
 import { provide } from '@lit/context';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { repeat } from 'lit/directives/repeat.js';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import {
   BaseComponent,
@@ -11,13 +12,15 @@ import {
   ContractAlert,
   ENTITY_ACTIVE_VALUES,
   START_ACTIVITY_ICON,
+  ISelectOption,
+  compareOptions,
 } from '@shared/index';
 import { COMMON_TEXTS, CONTRACT_TEXTS, DISTRICT_NAMES } from '@texts/index';
 import { type IContractAssignment } from '@state/automation-state';
+import { IClone } from '@state/clones-state';
 import { ContractAssignmentsListItemController } from './controller';
 import { contractAssignmentActivityContext } from './contexts';
 import styles from './styles';
-import { repeat } from 'lit/directives/repeat.js';
 
 @localized()
 @customElement('ca-contract-assignments-list-item')
@@ -29,6 +32,12 @@ export class ContractAssignmentListItem extends BaseComponent {
     type: String,
   })
   assignmentId!: string;
+
+  @property({
+    attribute: 'drag-enabled',
+    type: Boolean,
+  })
+  dragEnabled!: boolean;
 
   @state()
   _descriptionVisible = false;
@@ -46,12 +55,6 @@ export class ContractAssignmentListItem extends BaseComponent {
     this._controller = new ContractAssignmentsListItemController(this);
   }
 
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
-  }
-
   protected renderDesktop() {
     if (!this._contractAssignment) {
       return nothing;
@@ -64,7 +67,7 @@ export class ContractAssignmentListItem extends BaseComponent {
       ? COMMON_TEXTS.hideDescription()
       : COMMON_TEXTS.showDescription();
     const descriptionClasses = classMap({
-      'contract-assignment-description': true,
+      description: true,
       visible: this._descriptionVisible,
     });
 
@@ -80,15 +83,19 @@ export class ContractAssignmentListItem extends BaseComponent {
       ? msg('Disable contract assignment')
       : msg('Enable contract assignment');
 
+    const cloneOptions: ISelectOption<IClone>[] = this._contractAssignment.contract.assignedClones.map((clone) => ({
+      name: clone.name,
+      value: clone,
+    }));
+    cloneOptions.sort(compareOptions);
+
     const removeContractAssignmentLabel = msg('Remove contract assignment');
 
     return html`
-      <div class="host-content desktop">
+      <div class="items-list-item desktop">
         <div class="contract-assignment">
-          <div class="contract-title" draggable="true" @dragstart=${this.handleDragStart}>
-            <sl-icon name="grip-vertical"> </sl-icon>
-
-            ${contractTitle}
+          <div class="title" draggable=${this.dragEnabled ? 'true' : 'false'} @dragstart=${this.handleDragStart}>
+            ${this.dragEnabled ? html`<sl-icon name="grip-vertical"> </sl-icon>` : nothing} ${contractTitle}
 
             <sl-tooltip>
               <span slot="content">${descriptionButtonLabel}</span>
@@ -111,15 +118,15 @@ export class ContractAssignmentListItem extends BaseComponent {
 
         <div class="clones">
           ${repeat(
-            this._contractAssignment.contract.assignedClones,
-            (clone) => clone.id,
-            (clone) => html`<p>${clone.name}</p>`,
+            cloneOptions,
+            (option) => option.value.id,
+            (option) => html`<p>${option.name}</p>`,
           )}
         </div>
 
         <div><ca-contract-assignments-list-item-status></ca-contract-assignments-list-item-status></div>
 
-        <div class="buttons">
+        <div class="buttons desktop buttons-4">
           <sl-tooltip>
             <span slot="content"> ${startLabel} </span>
 
@@ -167,7 +174,7 @@ export class ContractAssignmentListItem extends BaseComponent {
       ? COMMON_TEXTS.hideDescription()
       : COMMON_TEXTS.showDescription();
     const descriptionClasses = classMap({
-      'contract-assignment-description': true,
+      description: true,
       visible: this._descriptionVisible,
     });
 
@@ -200,12 +207,10 @@ export class ContractAssignmentListItem extends BaseComponent {
     const removeContractAssignmentLabel = msg('Remove contract assignment');
 
     return html`
-      <div class="host-content mobile">
+      <div class="items-list-item mobile">
         <div class="contract-assignment">
-          <div class="contract-title" draggable="true" @dragstart=${this.handleDragStart}>
-            <sl-icon name="grip-vertical"> </sl-icon>
-
-            ${contractTitle}
+          <div class="title" draggable=${this.dragEnabled ? 'true' : 'false'} @dragstart=${this.handleDragStart}>
+            ${this.dragEnabled ? html`<sl-icon name="grip-vertical"> </sl-icon>` : nothing} ${contractTitle}
 
             <sl-tooltip>
               <span slot="content">${descriptionButtonLabel}</span>
@@ -230,7 +235,7 @@ export class ContractAssignmentListItem extends BaseComponent {
 
         <div>${statusFull}</div>
 
-        <div class="buttons">
+        <div class="buttons mobile">
           <sl-button
             ?disabled=${!canBeStarted}
             variant=${startVariant}
@@ -262,7 +267,7 @@ export class ContractAssignmentListItem extends BaseComponent {
     `;
   }
 
-  private updateContext() {
+  protected updateContext() {
     if (this.assignmentId) {
       this._contractAssignment = this._controller.getContractAssignmentById(this.assignmentId);
     } else {

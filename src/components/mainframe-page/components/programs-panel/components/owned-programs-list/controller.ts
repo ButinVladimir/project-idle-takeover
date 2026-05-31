@@ -2,6 +2,10 @@ import { BaseController } from '@shared/index';
 import { IProgram, ProgramName } from '@state/mainframe-state';
 
 export class OwnedProgramsListController extends BaseController {
+  get developmentLevel() {
+    return this.globalState.development.level;
+  }
+
   listOwnedPrograms(): IProgram[] {
     return this.mainframeState.programs.listOwnedPrograms();
   }
@@ -11,7 +15,7 @@ export class OwnedProgramsListController extends BaseController {
     this.host.requestUpdate();
   }
 
-  upgradeMaxAllPrograms() {
-    this.mainframeState.programs.upgrader.upgradeMaxAllPrograms();
+  getProgramHighestTier(programName: ProgramName): number {
+    return this.unlockState.items.programs.getItemHighestAvailableTier(programName);
   }
 }

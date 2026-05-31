@@ -4,7 +4,7 @@ import { localized, msg, str } from '@lit/localize';
 import { customElement, property, state } from 'lit/decorators.js';
 import { COMMON_TEXTS } from '@texts/common';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
-import { IContractActivity, type IPrimaryActivity } from '@state/activity-state';
+import { IContractActivity, PrimaryActivityState, type IPrimaryActivity } from '@state/activity-state';
 import { BaseComponent, DELETE_VALUES, PrimaryActivityAlert, TOGGLE_DETAILS_VALUES } from '@shared/index';
 import { CONTRACT_TEXTS, DISTRICT_NAMES } from '@texts/index';
 import { PrimaryActivityQueueListItemController } from './controller';
@@ -36,12 +36,6 @@ export class PrimaryActivityQueueListItem extends BaseComponent {
     this._controller = new PrimaryActivityQueueListItemController(this);
   }
 
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
-  }
-
   protected renderDesktop() {
     if (!this._activity) {
       return nothing;
@@ -58,7 +52,10 @@ export class PrimaryActivityQueueListItem extends BaseComponent {
     }
 
     const districtName = DISTRICT_NAMES[this._activity.district.name]();
-    const cloneNames = this._activity.assignedClones.map((clone) => clone.name).join(', ');
+    const cloneNames = this._activity.assignedClones
+      .map((clone) => clone.name)
+      .sort((cloneA, cloneB) => cloneA.localeCompare(cloneB))
+      .join(', ');
 
     const cancelActivityLabel = msg('Cancel primary activity');
 
@@ -81,10 +78,10 @@ export class PrimaryActivityQueueListItem extends BaseComponent {
             <span slot="content">${cancelActivityLabel}</span>
 
             <sl-icon-button
-              class="menu-button"
+              class="delete-button"
               label=${cancelActivityLabel}
               name=${DELETE_VALUES.icon}
-              @click=${this.handleOpenDeleteCloneDialog}
+              @click=${this.handleCancelActivityDialog}
             ></sl-icon-button>
           </sl-tooltip>
         </div>
@@ -93,18 +90,22 @@ export class PrimaryActivityQueueListItem extends BaseComponent {
           ?details-visible=${this._detailsVisible}
         ></ca-primary-activity-queue-list-item-description>
 
-        <div slot="footer">
-          <sl-button variant=${toggleDetailsVariant} size="medium" @click=${this.handleToggleDetails}>
-            <sl-icon slot="prefix" name=${toggleDetailsIcon}></sl-icon>
+        ${this._activity.state === PrimaryActivityState.active
+          ? html`
+              <div slot="footer">
+                <sl-button variant=${toggleDetailsVariant} size="medium" @click=${this.handleToggleDetails}>
+                  <sl-icon slot="prefix" name=${toggleDetailsIcon}></sl-icon>
 
-            ${toggleDetailsLabel}
-          </sl-button>
-        </div>
+                  ${toggleDetailsLabel}
+                </sl-button>
+              </div>
+            `
+          : nothing}
       </sl-card>
     `;
   }
 
-  private updateContext() {
+  protected updateContext() {
     if (this.activityId) {
       this._activity = this._controller.getPrimaryActivityById(this.activityId);
     } else {
@@ -112,7 +113,7 @@ export class PrimaryActivityQueueListItem extends BaseComponent {
     }
   }
 
-  private handleOpenDeleteCloneDialog = () => {
+  private handleCancelActivityDialog = () => {
     if (!this._activity) {
       return;
     }

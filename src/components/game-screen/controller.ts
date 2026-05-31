@@ -43,11 +43,15 @@ export class GameScreenController extends BaseController {
   }
 
   private upgradeMainframePrograms() {
-    this.mainframeState.programs.upgrader.upgradeMaxAllPrograms();
+    const allPrograms = this.mainframeState.programs.listOwnedPrograms().map((program) => program.name);
+
+    this.mainframeState.programs.upgrader.upgradeMaxPrograms(allPrograms);
   }
 
   private upgradeClonesLevel() {
-    this.clonesState.ownedClones.levelUpgrader.upgradeMaxAllClones();
+    const allClones = this.clonesState.ownedClones.listClones();
+
+    this.clonesState.ownedClones.levelUpgrader.upgradeMaxClones(allClones.map((clone) => clone.id));
   }
 
   private getHotkeyByKey(key: string): Hotkey | undefined {
@@ -59,7 +63,9 @@ export class GameScreenController extends BaseController {
   }
 
   private startContracts() {
-    this.automationState.contracts.starter.startAllAssignments();
+    const allContracts = this.automationState.contracts.listContractAssignments();
+
+    this.automationState.contracts.starter.startAssignments(allContracts.map((contract) => contract.id));
   }
 
   private handleKeyDown = (event: KeyboardEvent) => {

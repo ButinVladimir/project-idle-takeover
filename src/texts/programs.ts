@@ -30,7 +30,7 @@ Generates computational base points and improves mainframe hardware cost divisor
     title: () => msg('Deal maker'),
     overview: () =>
       msg(`Program to assist with making deals.
-Generates rewards points and improves all rewards.`),
+Generates rewards points and improves almost all gains.`),
   },
   [MultiplierProgramName.informationCollector]: {
     title: () => msg('Information collector'),
@@ -42,19 +42,19 @@ Generates connectivity points, unlocks sidejobs and improves chances to receive 
     title: () => msg('Mainframe hardware autobuyer'),
     overview: () =>
       msg(`Program to automatically buy mainframe hardware upgrades.
-Sum of level differences after upgrade cannot be above action count.`),
+Sum of level differences per completion cannot be above action count.`),
   },
   [AutomationProgram.mainframeProgramsAutobuyer]: {
     title: () => msg('Mainframe programs autobuyer'),
     overview: () =>
       msg(`Program to automatically buy mainframe programs.
-Sum of level differences after upgrade cannot be above action count.`),
+Sum of level differences per completion cannot be above action count.`),
   },
   [AutomationProgram.cloneLevelAutoupgrader]: {
     title: () => msg('Clone level autoupgrader'),
     overview: () =>
       msg(`Program to automatically upgrade levels of clones.
-Sum of level differences after upgrade cannot be above action count.`),
+Sum of level differences per completion cannot be above action count.`),
   },
   [AutomationProgram.contractAutostarter]: {
     title: () => msg('Contract autostarter'),
@@ -80,6 +80,7 @@ export const PROGRAM_DESCRIPTION_TEXTS = {
   requirementsAutoscalable: () => msg('Requirements for autoscalable program'),
   requirementsSingle: () => msg('Requirements for a single thread'),
   ram: () => msg('RAM'),
+  requiredRam: () => msg('Required RAM'),
   cores: () => msg('Cores'),
   upToValue: (value: any) => msg(html`Up to ${value}`),
   upToDiff: (value: any, diff: any) => msg(html`Up to ${value} (${diff})`),

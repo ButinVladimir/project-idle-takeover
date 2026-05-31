@@ -1,5 +1,5 @@
-import { IProgram } from '@state/mainframe-state/states/progam-factory/interfaces/program';
-import { IFormatter } from '@shared/interfaces/formatter';
+import { IProgram } from '@state/mainframe-state';
+import { IFormatter } from '@shared/index';
 
 export interface IDescriptionParameters {
   formatter: IFormatter;

@@ -24,6 +24,12 @@ export class ProcessesListItem extends BaseComponent {
   })
   programName!: ProgramName;
 
+  @property({
+    attribute: 'drag-enabled',
+    type: Boolean,
+  })
+  dragEnabled!: boolean;
+
   @state()
   _descriptionVisible = false;
 
@@ -36,12 +42,6 @@ export class ProcessesListItem extends BaseComponent {
     super();
 
     this._controller = new ProcessesListItemController(this);
-  }
-
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
   }
 
   protected renderDesktop() {
@@ -58,7 +58,7 @@ export class ProcessesListItem extends BaseComponent {
       ? COMMON_TEXTS.hideDescription()
       : COMMON_TEXTS.showDescription();
     const descriptionClasses = classMap({
-      'program-description': true,
+      description: true,
       visible: this._descriptionVisible,
     });
 
@@ -74,12 +74,10 @@ export class ProcessesListItem extends BaseComponent {
     const deleteProcessLabel = msg('Delete process');
 
     return html`
-      <div class="host-content desktop">
+      <div class="items-list-item desktop">
         <div class="program">
-          <div class="program-title" draggable="true" @dragstart=${this.handleDragStart}>
-            <sl-icon name="grip-vertical"> </sl-icon>
-
-            ${programTitle}
+          <div class="title" draggable=${this.dragEnabled ? 'true' : 'false'} @dragstart=${this.handleDragStart}>
+            ${this.dragEnabled ? html`<sl-icon name="grip-vertical"> </sl-icon>` : nothing} ${programTitle}
 
             <sl-tooltip>
               <span slot="content">${descriptionButtonLabel}</span>
@@ -104,7 +102,7 @@ export class ProcessesListItem extends BaseComponent {
           <ca-processes-list-item-progress> </ca-processes-list-item-progress>
         </div>
 
-        <div class="buttons">
+        <div class="buttons desktop buttons-3">
           <sl-tooltip>
             <span slot="content"> ${toggleLabel} </span>
 
@@ -142,7 +140,7 @@ export class ProcessesListItem extends BaseComponent {
       ? COMMON_TEXTS.hideDescription()
       : COMMON_TEXTS.showDescription();
     const descriptionClasses = classMap({
-      'program-description': true,
+      description: true,
       visible: this._descriptionVisible,
     });
 
@@ -161,12 +159,10 @@ export class ProcessesListItem extends BaseComponent {
     const deleteProcessLabel = msg('Delete process');
 
     return html`
-      <div class="host-content mobile">
+      <div class="items-list-item mobile">
         <div class="program">
-          <div class="program-title" draggable="true" @dragstart=${this.handleDragStart}>
-            <sl-icon name="grip-vertical"> </sl-icon>
-
-            ${programTitle}
+          <div class="title" draggable=${this.dragEnabled ? 'true' : 'false'} @dragstart=${this.handleDragStart}>
+            ${this.dragEnabled ? html`<sl-icon name="grip-vertical"> </sl-icon>` : nothing} ${programTitle}
 
             <sl-tooltip>
               <span slot="content">${descriptionButtonLabel}</span>
@@ -191,7 +187,7 @@ export class ProcessesListItem extends BaseComponent {
           <ca-processes-list-item-progress> </ca-processes-list-item-progress>
         </div>
 
-        <div class="buttons">
+        <div class="buttons mobile">
           <sl-button variant=${toggleVariant} size="medium" @click=${this.handleToggleProcess}>
             <sl-icon slot="prefix" name=${toggleIcon}></sl-icon>
 
@@ -208,7 +204,7 @@ export class ProcessesListItem extends BaseComponent {
     `;
   }
 
-  private updateContext() {
+  protected updateContext() {
     if (this.programName) {
       this._process = this._controller.getProcess(this.programName);
     } else {

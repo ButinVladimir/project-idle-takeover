@@ -3,9 +3,10 @@ import { createRef, ref } from 'lit/directives/ref.js';
 import { map } from 'lit/directives/map.js';
 import { localized } from '@lit/localize';
 import { customElement, property, queryAll } from 'lit/decorators.js';
-import { BaseComponent, HINT_ICON, type PointsMultiplierType } from '@shared/index';
+import { BaseComponent, compareOptions, HINT_ICON, ISelectOption, type PointsMultiplierType } from '@shared/index';
 import { POINT_MULTIPLIER_HINTS, STATISTIC_PAGE_TEXTS } from '@components/statistics-page/constants';
 import { IDistrictState } from '@state/city-state';
+import { DISTRICT_NAMES } from '@texts/index';
 import { StatisticsMultiplierPointsGrowthController } from './controller';
 import { statisticsPanelContentStyle } from '../../../../styles';
 import { MULTIPLIER_POINT_GROWTH_TITLES } from './constants';
@@ -52,16 +53,28 @@ export class StatisticsMultiplierPointsGrowth extends BaseComponent {
           <div>${STATISTIC_PAGE_TEXTS.byPrograms()}</div>
           <div ${ref(this._programGrowthRef)}></div>
 
-          ${map(this._controller.listAvailableDistricts(), this.renderDistrict)}
+          ${this.renderDistricts()}
         </div>
       </sl-details>
     `;
   }
 
-  private renderDistrict = (districtState: IDistrictState) => {
+  private renderDistricts = () => {
+    const availableDistricts = this._controller.listAvailableDistricts();
+    const districtOptions: ISelectOption<IDistrictState>[] = availableDistricts.map((district) => ({
+      name: DISTRICT_NAMES[district.name](),
+      value: district,
+    }));
+
+    districtOptions.sort(compareOptions);
+
+    return map(districtOptions, this.renderDistrict);
+  };
+
+  private renderDistrict = (option: ISelectOption<IDistrictState>) => {
     return html`
-      <div>${STATISTIC_PAGE_TEXTS.byDistrict(districtState.name)}</div>
-      <div data-district=${districtState.index}></div>
+      <div>${STATISTIC_PAGE_TEXTS.byDistrict(option.name)}</div>
+      <div data-district=${option.value.index}></div>
     `;
   };
 

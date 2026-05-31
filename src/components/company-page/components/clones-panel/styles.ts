@@ -15,24 +15,34 @@ const styles = [
 
       p.hint {
         margin: 0;
-        margin-bottom: var(--sl-spacing-large);
+        margin-bottom: var(--ca-section-gap);
       }
 
       div.top-container {
         display: flex;
-        margin-bottom: var(--sl-spacing-large);
+        margin-bottom: var(--ca-section-gap);
+
+        .buttons-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: var(--ca-section-buttons-gap);
+
+          p {
+            margin: 0;
+          }
+        }
       }
 
       &.mobile div.top-container {
-        flex-direction: column;
+        flex-direction: column-reverse;
         align-items: flex-start;
-        gap: var(--sl-spacing-medium);
+        gap: var(--ca-section-buttons-gap);
       }
 
       &.desktop div.top-container {
         flex-direction: row;
         align-items: center;
-        gap: var(--sl-spacing-3x-large);
+        gap: var(--ca-section-text-gap);
       }
     }
   `,

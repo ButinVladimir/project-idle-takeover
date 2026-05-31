@@ -1,8 +1,9 @@
 import { css } from 'lit';
-import { hintStyle } from '@shared/index';
+import { hintStyle, itemsListStyle } from '@shared/index';
 
 const styles = [
   hintStyle,
+  itemsListStyle,
   css`
     :host {
       display: block;
@@ -11,55 +12,11 @@ const styles = [
 
     p.hint {
       margin-top: 0;
-      margin-bottom: var(--sl-spacing-large);
+      margin-bottom: var(--ca-section-gap);
     }
 
-    .header {
-      display: flex;
-      gap: var(--sl-spacing-small);
-      align-items: center;
-      border-bottom: var(--ca-border);
-      padding: var(--sl-spacing-small);
-
-      .header-column {
-        display: block;
-        font-weight: var(--sl-font-weight-bold);
-
-        &.column-contract {
-          flex: 2;
-        }
-
-        &.column-available {
-          flex: 1;
-        }
-
-        &.column-generation {
-          flex: 3;
-        }
-      }
-    }
-
-    .notification {
-      padding: var(--sl-spacing-3x-large);
-      text-align: center;
-      border-bottom: var(--ca-border);
-    }
-
-    .list {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: center;
-      border-top: var(--ca-border);
-
-      ca-city-district-contracts-list-item {
-        border-bottom: var(--ca-border);
-
-        &:nth-child(2n) {
-          background-color: var(--ca-table-row-odd-color);
-        }
-      }
+    .items-list .header.desktop {
+      grid-template-columns: 2fr 1fr 3fr;
     }
   `,
 ];

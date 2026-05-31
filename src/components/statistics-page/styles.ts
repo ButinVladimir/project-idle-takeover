@@ -8,7 +8,7 @@ export const statisticsPanelStyle = css`
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
-    gap: var(--sl-spacing-large);
+    gap: var(--ca-panel-row-gap);
   }
 `;
 
@@ -21,7 +21,7 @@ export const statisticsPanelContentStyle = [
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      gap: var(--sl-spacing-large);
+      gap: var(--ca-panel-row-gap);
     }
 
     h4.title {
@@ -31,8 +31,8 @@ export const statisticsPanelContentStyle = [
     .parameters-table {
       width: 100%;
       display: grid;
-      column-gap: var(--sl-spacing-medium);
-      row-gap: var(--sl-spacing-3x-small);
+      column-gap: var(--ca-table-column-gap);
+      row-gap: var(--ca-table-row-gap);
       grid-template-columns: 1fr auto;
       grid-auto-rows: auto;
 
@@ -49,10 +49,6 @@ const styles = [
   css`
     :host {
       display: block;
-    }
-
-    h3.title {
-      margin-bottom: var(--sl-spacing-2x-small);
     }
   `,
 ];

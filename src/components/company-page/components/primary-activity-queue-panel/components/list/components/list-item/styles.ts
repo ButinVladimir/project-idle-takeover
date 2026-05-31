@@ -16,7 +16,7 @@ const styles = [
     div.header {
       display: grid;
       grid-template-areas:
-        'name menu'
+        'name delete-button'
         'description description';
       grid-template-columns: 1fr auto;
       grid-template-rows: auto;
@@ -37,13 +37,17 @@ const styles = [
         grid-area: description;
       }
 
-      sl-icon-button.menu-button {
-        grid-area: menu;
+      sl-icon-button.delete-button {
+        grid-area: delete-button;
         align-self: center;
+
+        &::part(base):hover {
+          color: var(--ca-danger-color);
+        }
       }
 
       .description {
-        margin-top: var(--sl-spacing-small);
+        margin-top: var(--ca-table-paragraph-gap);
       }
     }
   `,

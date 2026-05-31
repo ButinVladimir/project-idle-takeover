@@ -12,7 +12,7 @@ import {
 } from '@shared/index';
 import { type IContract } from '@state/activity-state';
 import { COMMON_TEXTS, REWARD_PARAMETER_NAMES } from '@texts/index';
-import { existingContractContext, temporaryContractContext } from '../../contexts';
+import { existingContractContext, temporaryContractContext } from '../batch-item/contexts';
 import { DISPLAY_TYPES } from './constants';
 import { AssignCloneSidejobDialogRewardsController } from './controller';
 import styles from './styles';
