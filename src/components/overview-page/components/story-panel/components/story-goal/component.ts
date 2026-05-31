@@ -1,3 +1,4 @@
+import isNil from 'lodash/isNil';
 import { html, nothing } from 'lit';
 import { localized, msg, str } from '@lit/localize';
 import { customElement, property } from 'lit/decorators.js';
@@ -102,17 +103,17 @@ export class OverviewStoryGoal extends BaseComponent {
   private renderSummary = () => {
     const requirements = [];
 
-    if (this.level !== undefined) {
+    if (!isNil(this.level)) {
       const formattedLevel = this._controller.formatter.formatLevel(this.level);
 
       requirements.push(msg(str`reached development level ${formattedLevel}`));
     }
 
-    if (this.faction !== undefined) {
+    if (!isNil(this.faction)) {
       requirements.push(msg(str`joined ${FACTION_TEXTS[this.faction].title()}`));
     }
 
-    if (this.capturedDistrictsCount !== undefined) {
+    if (!isNil(this.capturedDistrictsCount)) {
       const formattedCount = this._controller.formatter.formatNumberDecimal(this.capturedDistrictsCount);
 
       requirements.push(msg(str`${formattedCount} captured districts`));

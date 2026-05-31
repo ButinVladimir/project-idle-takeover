@@ -1,4 +1,4 @@
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { localized } from '@lit/localize';
 import { customElement, property } from 'lit/decorators.js';
 import { ref, createRef } from 'lit/directives/ref.js';
@@ -50,11 +50,7 @@ export class OwnedProgramsListButtons extends BaseComponent {
       ? COMMON_TEXTS.disableAutoupgradeDisplayed()
       : COMMON_TEXTS.enableAutoupgradeDisplayed();
 
-    const upgradeDisplayedProgramsLabel = this.filterEnabled
-      ? COMMON_TEXTS.upgradeFilteredEnabledItems()
-      : COMMON_TEXTS.upgradeAllEnabledItems();
-
-    const hotkey = this._controller.getHotkey();
+    const upgradeDisplayedProgramsLabel = COMMON_TEXTS.upgradeDisplayedEnabledItems();
 
     return html`
       <div class="buttons desktop buttons-3">
@@ -65,10 +61,7 @@ export class OwnedProgramsListButtons extends BaseComponent {
         </sl-tooltip>
 
         <sl-tooltip>
-          <div class="tooltip-content" slot="content">
-            <p>${upgradeDisplayedProgramsLabel}</p>
-            ${!this.filterEnabled ? html`<p>${COMMON_TEXTS.hotkey(hotkey)}</p>` : nothing}
-          </div>
+          <div class="tooltip-content" slot="content">${upgradeDisplayedProgramsLabel}</div>
 
           <sl-icon-button
             ${ref(this._upgradeMaxButton)}
@@ -107,8 +100,6 @@ export class OwnedProgramsListButtons extends BaseComponent {
       ? AUTOUPGRADE_VALUES.buttonVariant.enabled
       : AUTOUPGRADE_VALUES.buttonVariant.disabled;
 
-    const hotkey = this._controller.getHotkey();
-
     return html`
       <div class="buttons mobile">
         <sl-button variant=${filterVariant} size="medium" @click=${this.handleToggleFilter}>
@@ -117,37 +108,17 @@ export class OwnedProgramsListButtons extends BaseComponent {
           ${filterLabel}
         </sl-button>
 
-        ${this.filterEnabled
-          ? html`
-              <sl-button
-                ${ref(this._upgradeMaxButton)}
-                disabled
-                variant=${UPGRADE_MAX_VALUES.buttonVariant}
-                size="medium"
-                @click=${this.handleUpgradeMaxPrograms}
-              >
-                <sl-icon slot="prefix" name=${UPGRADE_MAX_VALUES.icon}> </sl-icon>
+        <sl-button
+          ${ref(this._upgradeMaxButton)}
+          disabled
+          variant=${UPGRADE_MAX_VALUES.buttonVariant}
+          size="medium"
+          @click=${this.handleUpgradeMaxPrograms}
+        >
+          <sl-icon slot="prefix" name=${UPGRADE_MAX_VALUES.icon}> </sl-icon>
 
-                ${COMMON_TEXTS.upgradeFilteredEnabledItems()}
-              </sl-button>
-            `
-          : html`
-              <sl-tooltip>
-                <span slot="content">${COMMON_TEXTS.hotkey(hotkey)}</span>
-
-                <sl-button
-                  ${ref(this._upgradeMaxButton)}
-                  disabled
-                  variant=${UPGRADE_MAX_VALUES.buttonVariant}
-                  size="medium"
-                  @click=${this.handleUpgradeMaxPrograms}
-                >
-                  <sl-icon slot="prefix" name=${UPGRADE_MAX_VALUES.icon}> </sl-icon>
-
-                  ${COMMON_TEXTS.upgradeAllEnabledItems()}
-                </sl-button>
-              </sl-tooltip>
-            `}
+          ${COMMON_TEXTS.upgradeDisplayedEnabledItems()}
+        </sl-button>
 
         <sl-button variant=${autoupgradeVariant} size="medium" @click=${this.handleToggleAutoupgrade}>
           <sl-icon slot="prefix" name=${autoupgradeIcon}> </sl-icon>

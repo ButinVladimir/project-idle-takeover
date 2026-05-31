@@ -40,7 +40,7 @@ import { INames, type IConstants } from './interfaces';
 export const typedConstants = constants as IConstants;
 export const typedNames = names as INames;
 
-export const CURRENT_VERSION = GameVersion['0.3.0'];
+export const CURRENT_VERSION = GameVersion['0.3.1'];
 
 export const LANGUAGES: Language[] = Object.values(Language);
 

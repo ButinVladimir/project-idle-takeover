@@ -224,7 +224,7 @@
 </trans-unit>
 <trans-unit id="s817102c607e5bcc8">
   <source>Are you sure want to spend accumulated time?</source>
-  <target state="translated">Вы действительно хочешь потратить накопленное время?</target>
+  <target state="translated">Ты действительно хочешь потратить накопленное время?</target>
 </trans-unit>
 <trans-unit id="sb5803460fed8e45e">
   <source>Show description</source>
@@ -260,71 +260,23 @@
 </trans-unit>
 <trans-unit id="se09bd847927e4fe5">
   <source>Are you sure want to import savefile? Your current progress will be lost.</source>
-  <target>Вы действительно хотите импортировать сохранение? Ваш текущий прогресс будет утерян.</target>
+  <target state="translated">Ты действительно хочешь импортировать сохранение? Твой текущий прогресс будет утерян.</target>
 </trans-unit>
 <trans-unit id="s11b187a24cece74d">
   <source>Are you sure want to delete save data? Your current progress will be lost.</source>
-  <target>Вы действительно хотите удалить сохранение? Ваш текущий прогресс будет утерян.</target>
-</trans-unit>
-<trans-unit id="s53660bba29663f96">
-  <source>Purchase program</source>
-  <target>Купить программу</target>
+  <target state="translated">Ты действительно хочешь удалить сохранение? Твой текущий прогресс будет утерян.</target>
 </trans-unit>
 <trans-unit id="s7cd7aa6578a69dab">
   <source>Program</source>
   <target>Программа</target>
 </trans-unit>
-<trans-unit id="s05ccfc6906124ae2">
-  <source>Start process</source>
-  <target>Начать процесс</target>
-</trans-unit>
-<trans-unit id="s4e57d4ea9ee2c1ec">
-  <source>Select one of owned programs to start process for it.
-If you already have process for same program, old process will be replaced with new one.
-Threads allow to run multiple instances of same program at same time, but additional threads require additional memory.</source>
-  <target state="translated">Выберите одну из имеющихся программ, чтобы начать процесс для неё.
-Если у вас уже есть процесс для выбранной программы, старый процесс будет заменен на новый.
-Потоки позволяют выполняться нескольким экземплярам программы одновременно, но дополнительные потоки требует больше памяти.</target>
-</trans-unit>
 <trans-unit id="s8b60bf2db1580306">
   <source>Threads</source>
   <target>Потоки</target>
 </trans-unit>
-<trans-unit id="s599c22404b3b54ca">
-  <source>Are you sure want to overwrite process for program "<x id="0" equiv-text="${programTitle}"/>"? This will replace your current process with <x id="1" equiv-text="${threads}"/> threads.</source>
-  <target>Вы действительно хотите заменить процесс для программы "<x id="0" equiv-text="${programTitle}"/>"? Это заменит текущий процесс с <x id="1" equiv-text="${threads}"/> потоками.</target>
-</trans-unit>
-<trans-unit id="sf6a21feeace2ffce">
-  <source>Are you sure want to overwrite process for program "<x id="0" equiv-text="${programTitle}"/>"?</source>
-  <target>Вы действительно хотите заменить процесс для программы "<x id="0" equiv-text="${programTitle}"/>"?</target>
-</trans-unit>
-<trans-unit id="s2dfd2c76046baa55">
-  <source>Are you sure want to replace autoscalable process? This will delete your current process for program "<x id="0" equiv-text="${programTitle}"/>".</source>
-  <target>Вы действительно хотите заменить автомасштабируемый процесс? Это удалит текущий процесс для программы "<x id="0" equiv-text="${programTitle}"/>".</target>
-</trans-unit>
-<trans-unit id="s8aeb5e9301762d21">
-  <source>Disable all processes</source>
-  <target>Выключить все процессы</target>
-</trans-unit>
-<trans-unit id="sec5e8bdef16a1dbc">
-  <source>Enable all processes</source>
-  <target>Включить все процессы</target>
-</trans-unit>
-<trans-unit id="s1d1fbdec96581f40">
-  <source>Delete all processes</source>
-  <target>Удалить все процессы</target>
-</trans-unit>
 <trans-unit id="s8ab04bf4c478d817">
   <source>Cores</source>
   <target>Ядра</target>
-</trans-unit>
-<trans-unit id="sddcbf2308c14818b">
-  <source>You don't have any processes</source>
-  <target state="translated">У вас нет процессов</target>
-</trans-unit>
-<trans-unit id="sfcc52a829ecef48c">
-  <source>Are you sure want to delete all processes? Their progress will be lost.</source>
-  <target>Вы действительно хотите удалить все процессы? Их прогресс будет утерян.</target>
 </trans-unit>
 <trans-unit id="s63201a094a8902e9">
   <source>Autoscalable</source>
@@ -344,7 +296,7 @@ Threads allow to run multiple instances of same program at same time, but additi
 </trans-unit>
 <trans-unit id="sc74b612a4652612b">
   <source>Are you sure want to delete process for program "<x id="0" equiv-text="${programTitle}"/>"? It's progress will be lost.</source>
-  <target>Вы действительно хотите удалить процесс для программы "<x id="0" equiv-text="${programTitle}"/>"? Его прогресс будет утерян.</target>
+  <target state="translated">Ты действительно хочешь удалить процесс для программы "<x id="0" equiv-text="${programTitle}"/>"? Его прогресс будет утерян.</target>
 </trans-unit>
 <trans-unit id="sbfebd2e1cf0baba2">
   <source>Clear messages</source>
@@ -352,7 +304,7 @@ Threads allow to run multiple instances of same program at same time, but additi
 </trans-unit>
 <trans-unit id="sd8bbfb0d19b36aba">
   <source>Are you sure want to clear log messages?</source>
-  <target>Вы действительно хотите удалить сообщения?</target>
+  <target state="translated">Ты действительно хочешь удалить сообщения?</target>
 </trans-unit>
 <trans-unit id="s2ceb11be2290bb1b">
   <source>Cancel</source>
@@ -394,10 +346,6 @@ Threads allow to run multiple instances of same program at same time, but additi
   <source>Development level <x id="0" equiv-text="${formattedLevel}"/> has been reached</source>
   <target>Уровень развития <x id="0" equiv-text="${formattedLevel}"/> достигнут</target>
 </trans-unit>
-<trans-unit id="s746aa9e2e51e98c7">
-  <source>All clones have been deleted</source>
-  <target>Все клоны удалены</target>
-</trans-unit>
 <trans-unit id="s65e76b965ff17358">
   <source>Mainframe performance has been upgraded to <x id="0" equiv-text="${formattedLevel}"/></source>
   <target>Производительность мейнфрейма улучшена до <x id="0" equiv-text="${formattedLevel}"/></target>
@@ -417,10 +365,6 @@ Threads allow to run multiple instances of same program at same time, but additi
 <trans-unit id="s8132346d1f0b9f59">
   <source>Process for program "<x id="0" equiv-text="${programTitle}"/>" with <x id="1" equiv-text="${formattedThreads}"/> threads has been deleted</source>
   <target>Процесс для программы "<x id="0" equiv-text="${programTitle}"/>" с <x id="1" equiv-text="${formattedThreads}"/> потоками удален</target>
-</trans-unit>
-<trans-unit id="s0b0938398c58c4d8">
-  <source>All process have been deleted</source>
-  <target>Все процессы удалены</target>
 </trans-unit>
 <trans-unit id="s8e8255e62b557c25">
   <source>[<x id="0" equiv-text="${formattedTime}"/>] <x id="1" equiv-text="${messageText}"/></source>
@@ -458,12 +402,6 @@ Generates computational base points and improves mainframe hardware cost divisor
   <target>Программа для разработки микросхем.
 Генерирует очки вычислительной базы и улучшает скидку на оборудование для мейнфрейма.</target>
 </trans-unit>
-<trans-unit id="sb7e175d4f6be559b">
-  <source>Program to assist with making deals.
-Generates rewards points and improves all rewards.</source>
-  <target>Программа, помогающая заключать сделки.
-Генерирует очки наград и улучшает все награды.</target>
-</trans-unit>
 <trans-unit id="s18ca0d0774812a94">
   <source>Instant completion</source>
   <target>Мгновенное выполнение</target>
@@ -472,45 +410,13 @@ Generates rewards points and improves all rewards.</source>
   <source>Close</source>
   <target>Закрыть</target>
 </trans-unit>
-<trans-unit id="sd4be17d54daf94f9">
-  <source>Select program</source>
-  <target>Выберите программу</target>
-</trans-unit>
 <trans-unit id="s60a344e4de18d74a">
   <source>Not enough RAM</source>
   <target>Недостаточно памяти</target>
 </trans-unit>
-<trans-unit id="s39da525119229d30">
-  <source>Process for same program is already running</source>
-  <target>Процесс для выбранной программы уже выполняется</target>
-</trans-unit>
-<trans-unit id="s62c5c593446cf6eb">
-  <source>Process for same program with <x id="0" equiv-text="${formattedThreads}"/> threads is already running</source>
-  <target>Процесс для выбранной программы с <x id="0" equiv-text="${formattedThreads}"/> потоками уже выполняется</target>
-</trans-unit>
-<trans-unit id="se8652122f7142bd0">
-  <source>Autoscalable process for program "<x id="0" equiv-text="${runningAutoscalableProgramTitle}"/>" is already running</source>
-  <target>Процесс для автомасштабируемой программы "<x id="0" equiv-text="${runningAutoscalableProgramTitle}"/>" уже выполняется</target>
-</trans-unit>
-<trans-unit id="s7a04b70ecc8ac353">
-  <source>Enable autoupgrade for all</source>
-  <target>Включить автоулучшение для всего</target>
-</trans-unit>
-<trans-unit id="sc08aab6af60f4e1a">
-  <source>Disable autoupgrade for all</source>
-  <target>Выключить автоулучшение для всего</target>
-</trans-unit>
 <trans-unit id="sfb720fc010661f17">
   <source>Upgrade</source>
   <target>Улучшить</target>
-</trans-unit>
-<trans-unit id="s72ab222b5c0808d4">
-  <source>Upgrade all</source>
-  <target>Улучшить все</target>
-</trans-unit>
-<trans-unit id="s39e7b3967f5ac0a0">
-  <source>You don't have any owned programs</source>
-  <target state="translated">У вас нет имеющихся програм</target>
 </trans-unit>
 <trans-unit id="s7122c5e0297ca6fe">
   <source>Game started</source>
@@ -556,17 +462,9 @@ Generates rewards points and improves all rewards.</source>
   <source>Process deleted</source>
   <target>Процесс удален</target>
 </trans-unit>
-<trans-unit id="s3e68649b30910a60">
-  <source>All processes deleted</source>
-  <target>Все процессы удалены</target>
-</trans-unit>
 <trans-unit id="s4963a37fcedc00ff">
   <source>Clone deleted</source>
   <target>Клон удален</target>
-</trans-unit>
-<trans-unit id="s465fdc54f7001b5b">
-  <source>All clones deleted</source>
-  <target>Все клоны удалены</target>
 </trans-unit>
 <trans-unit id="sb48058412cd638ee">
   <source>Message filter</source>
@@ -596,17 +494,9 @@ Generates rewards points and improves all rewards.</source>
   <source>Delete a process</source>
   <target>Удаление процесса</target>
 </trans-unit>
-<trans-unit id="sfb6f78cf22e6b664">
-  <source>Delete all process</source>
-  <target>Удаление всех процессов</target>
-</trans-unit>
 <trans-unit id="s2502d47b0a97f414">
   <source>Delete a clone</source>
   <target>Удаление клона</target>
-</trans-unit>
-<trans-unit id="s25a4ae61b2b13785">
-  <source>Delete all clones</source>
-  <target>Удаление всех клонов</target>
 </trans-unit>
 <trans-unit id="s4431ebce4db711e5">
   <source>Alert filter</source>
@@ -678,7 +568,7 @@ Generates rewards points and improves all rewards.</source>
 </trans-unit>
 <trans-unit id="sc72af95d979c60de">
   <source>Set 0 to disable message popups</source>
-  <target>Выберите 0, чтобы выключить всплывающие сообщения</target>
+  <target state="translated">Выбери 0, чтобы выключить всплывающие сообщения</target>
 </trans-unit>
 <trans-unit id="s836f876b51a97c50">
   <source>Frames per second</source>
@@ -710,7 +600,7 @@ Generates rewards points and improves all rewards.</source>
 </trans-unit>
 <trans-unit id="sbc5239184b4a4146">
   <source>Too low number can cause strain on CPU. Select 0 to disable regular autosave</source>
-  <target>Слишком малое значение может привести к нагрузке на процессор. Выберите 0, чтобы выключить регулярные автосохранения</target>
+  <target state="translated">Слишком малое значение может привести к нагрузке на процессор. Выбери 0, чтобы выключить регулярные автосохранения</target>
 </trans-unit>
 <trans-unit id="s11d9ef06c96591b1">
   <source>By programs</source>
@@ -970,14 +860,6 @@ Generates connectivity points, unlocks sidejobs and improves chances to receive 
   <source>Clones can share their experience between each other</source>
   <target>Клоны могут разделять свой опыт между собой</target>
 </trans-unit>
-<trans-unit id="saddde032debb7c9c">
-  <source>Clone experience is now can be shared between them.
-Whenever clone receives experience, all available clones in company will receive part of it.
-How big is this part depends on running processes and available synchronization.</source>
-  <target state="translated">Теперь клоны могут разделять свой опыт между собой.
-Каждый раз, когда клон получает опыт, все доступные клоны в компании получают его часть.
-Размер этой части зависит от активных процессов и доступной синхронизации.</target>
-</trans-unit>
 <trans-unit id="sbda165be0ffdef53">
   <source>Clone "<x id="0" equiv-text="${oldName}"/>" has been renamed to "<x id="1" equiv-text="${value}"/>"</source>
   <target state="translated">Клон "<x id="0" equiv-text="${oldName}"/>" был переименован в "<x id="1" equiv-text="${value}"/>"</target>
@@ -1184,10 +1066,6 @@ While lacking numbers, they compensate it with web of agents and informators, di
   <source>Sidejob "<x id="0" equiv-text="${SIDEJOB_TEXTS[activity.sidejob.sidejobName].title()}"/>" in district "<x id="1" equiv-text="${DISTRICT_NAMES[activity.sidejob.district.name]()}"/>" assigned to clone "<x id="2" equiv-text="${activity.sidejob.assignedClone.name}"/>" has been cancelled</source>
   <target state="translated">Подработка "<x id="0" equiv-text="${SIDEJOB_TEXTS[sidejob.sidejobName].title()}"/>" в районе "<x id="1" equiv-text="${DISTRICT_NAMES[sidejob.district.name]()}"/>", назначенная на клона "<x id="2" equiv-text="${activity.sidejob.assignedClone.name}"/>", была отменена</target>
 </trans-unit>
-<trans-unit id="s4fccec1a1f2881dc">
-  <source>All sidejobs have been cancelled</source>
-  <target state="translated">Все подработки были отменены</target>
-</trans-unit>
 <trans-unit id="h8f6c11bb823dc7c4">
   <source><x id="0" equiv-text="${timerEl}"/> of accumulated time remains</source>
   <target state="translated">Остается <x id="0" equiv-text="${timerEl}"/> накопленного времени</target>
@@ -1212,10 +1090,6 @@ While lacking numbers, they compensate it with web of agents and informators, di
   <source>Sidejob cancelled</source>
   <target state="translated">Подработка отменена</target>
 </trans-unit>
-<trans-unit id="sa94c1a286d16136c">
-  <source>All sidejobs cancelled</source>
-  <target state="translated">Все подработки отменены</target>
-</trans-unit>
 <trans-unit id="se8d871833a94d00c">
   <source>City district tier increased</source>
   <target state="translated">Ранг района города увеличен</target>
@@ -1223,10 +1097,6 @@ While lacking numbers, they compensate it with web of agents and informators, di
 <trans-unit id="s383b15f618ee7268">
   <source>Cancel an assigned sidejob</source>
   <target state="translated">Отменить назначенную подработку</target>
-</trans-unit>
-<trans-unit id="s51934515c32b521b">
-  <source>Cancel all sidejobs</source>
-  <target state="translated">Отменить все подработки</target>
 </trans-unit>
 <trans-unit id="s53bf72d46e1e8630">
   <source>Replace an assigned sidejob</source>
@@ -1332,7 +1202,7 @@ Districts in locked state cannot be interacted with.</source>
 </trans-unit>
 <trans-unit id="s41491a640bc4b8a1">
   <source>Are you sure want to delete clone "<x id="0" equiv-text="${clone.name}"/>"? Their progress will be lost and their actions will be cancelled.</source>
-  <target state="translated">Вы действительно хотите удалить клона "<x id="0" equiv-text="${clone.name}"/>"? Его прогресс будет утерян и его действия отменены.</target>
+  <target state="translated">Ты действительно хочешь удалить клона "<x id="0" equiv-text="${clone.name}"/>"? Его прогресс будет утерян и его действия отменены.</target>
 </trans-unit>
 <trans-unit id="s25d878df1039f975">
   <source>Next level progress</source>
@@ -1342,21 +1212,9 @@ Districts in locked state cannot be interacted with.</source>
   <source>Next level will be reached in <x id="0" equiv-text="${html `&lt;span ${ref(this._timerRef)}>&lt;/span>`}"/></source>
   <target state="translated">Следующий уровень будет достигнут через <x id="0" equiv-text="${html `&lt;span ${ref(this._timerRef)}>&lt;/span>`}"/></target>
 </trans-unit>
-<trans-unit id="s1a8910435c4a9283">
-  <source>Upgrade all levels</source>
-  <target state="translated">Улучшить уровни всех клонов</target>
-</trans-unit>
-<trans-unit id="s956e9fc5194b5370">
-  <source>You don't have any clones</source>
-  <target state="translated">У вас нет клонов</target>
-</trans-unit>
-<trans-unit id="s93e59c96b72b78cb">
-  <source>Are you sure want to delete all clones? Their progress will be lost and their actions will be cancelled.</source>
-  <target state="translated">Вы действительно хотите удалить всех клонов? Их прогресс будет потерян и их действия будут отменены.</target>
-</trans-unit>
 <trans-unit id="s9cf0e5fcc0cbb640">
-  <source>Rename clone "<x id="0" equiv-text="${this._clone.name}"/>"</source>
-  <target state="translated">Переименование клона "<x id="0" equiv-text="${this._clone.name}"/>"</target>
+  <source>Rename clone "<x id="0" equiv-text="${this._selectedClone.name}"/>"</source>
+  <target state="translated">Переименование клона "<x id="0" equiv-text="${this._selectedClone.name}"/>"</target>
 </trans-unit>
 <trans-unit id="s2080fa9ceb760b82">
   <source>Enter new name for clone.</source>
@@ -1382,25 +1240,9 @@ Districts in locked state cannot be interacted with.</source>
   <source>× <x id="0" equiv-text="${formattedValue}"/> (<x id="1" equiv-text="${diffElement}"/>)</source>
   <target state="translated">× <x id="0" equiv-text="${formattedValue}"/> (<x id="1" equiv-text="${diffElement}"/>)</target>
 </trans-unit>
-<trans-unit id="s823a4821d23a90d9">
-  <source>Not enough connectivity</source>
-  <target state="translated">Недостаточно связности</target>
-</trans-unit>
 <trans-unit id="sa774cdd5353db22d">
   <source>Clone doesn't fit requirements</source>
   <target state="translated">Клон не соответствует требованиям</target>
-</trans-unit>
-<trans-unit id="s602d38a3f41e164f">
-  <source>Clone has already assigned sidejob "<x id="0" equiv-text="${sidejobName}"/>" in district "<x id="1" equiv-text="${districtName}"/>"</source>
-  <target state="translated">Клон уже назначен на подработку "<x id="0" equiv-text="${sidejobName}"/>" в районе "<x id="1" equiv-text="${districtName}"/>"</target>
-</trans-unit>
-<trans-unit id="sd2fe9960345d5698">
-  <source>Assign clone to sidejob</source>
-  <target state="translated">Назначить клона на подработку</target>
-</trans-unit>
-<trans-unit id="s5e2654fb8587f442">
-  <source>Clone</source>
-  <target state="translated">Клон</target>
 </trans-unit>
 <trans-unit id="s88d4b07d95a0d6af">
   <source>District</source>
@@ -1412,23 +1254,11 @@ Districts in locked state cannot be interacted with.</source>
 </trans-unit>
 <trans-unit id="s2af71543579358a2">
   <source>Are you sure want to cancel sidejob "<x id="0" equiv-text="${sidejobName}"/>" in district "<x id="1" equiv-text="${districtName}"/>" assigned to clone "<x id="2" equiv-text="${cloneName}"/>"?</source>
-  <target state="translated">Вы действительно хотите отменить подработку "<x id="0" equiv-text="${sidejobName}"/>" в районе "<x id="1" equiv-text="${districtName}"/>", назначенную на клона "<x id="2" equiv-text="${cloneName}"/>"?</target>
+  <target state="translated">Ты действительно хочешь отменить подработку "<x id="0" equiv-text="${sidejobName}"/>" в районе "<x id="1" equiv-text="${districtName}"/>", назначенную на клона "<x id="2" equiv-text="${cloneName}"/>"?</target>
 </trans-unit>
 <trans-unit id="s6e78d5e9139b4da4">
   <source>Assigned clone</source>
   <target state="translated">Назначенный клон</target>
-</trans-unit>
-<trans-unit id="sb303f8f9e2f8a949">
-  <source>You don't have any assigned sidejobs</source>
-  <target state="translated">У вас нет назначенных подработок</target>
-</trans-unit>
-<trans-unit id="s5843075f44afb4ce">
-  <source>Are you sure want to cancel all sidejobs? Their assigned clones will stop performing them.</source>
-  <target state="translated">Вы действительно хотите отменить все подработки? Все клоны, назначенные на них, перестанут их выполнять.</target>
-</trans-unit>
-<trans-unit id="s0a37fba62c597022">
-  <source>Sidejobs provide passive income when assigned clones are not working on primary jobs.</source>
-  <target state="translated">Подработки предоставляют пассивный доход, когда назначенные на них клоны не занимаются основными действиями.</target>
 </trans-unit>
 <trans-unit id="s95d15119ada0ea9f">
   <source>Performance level</source>
@@ -1454,10 +1284,6 @@ Districts in locked state cannot be interacted with.</source>
   <source>Program is already bought with tier <x id="0" equiv-text="${formattedTier}"/> and level <x id="1" equiv-text="${formattedLevel}"/></source>
   <target state="translated">Программа уже куплена с рангом <x id="0" equiv-text="${formattedTier}"/> и уровнем <x id="1" equiv-text="${formattedLevel}"/></target>
 </trans-unit>
-<trans-unit id="scb78d87c59ad347f">
-  <source>Are you sure want to purchase program "<x id="0" equiv-text="${programTitle}"/>"? This will replace your current program with tier <x id="1" equiv-text="${formattedTier}"/> and level <x id="2" equiv-text="${formattedLevel}"/>.</source>
-  <target state="translated">Вы действительно хотите приобрести программу "<x id="0" equiv-text="${programTitle}"/>"? Это заменит вашу текущую программу с рангом <x id="1" equiv-text="${formattedTier}"/> и уровнем <x id="2" equiv-text="${formattedLevel}"/>.</target>
-</trans-unit>
 <trans-unit id="s016467b3355f0790">
   <source>Available RAM</source>
   <target state="translated">Доступная память</target>
@@ -1479,8 +1305,8 @@ Districts in locked state cannot be interacted with.</source>
   <target state="translated">Базовое значение</target>
 </trans-unit>
 <trans-unit id="scba148cdf7469f10">
-  <source>By district "<x id="0" equiv-text="${DISTRICT_NAMES[districtName]()}"/>"</source>
-  <target state="translated">В районе "<x id="0" equiv-text="${DISTRICT_NAMES[districtName]()}"/>"</target>
+  <source>By district "<x id="0" equiv-text="${districtName}"/>"</source>
+  <target state="translated">В районе "<x id="0" equiv-text="${districtName}"/>"</target>
 </trans-unit>
 <trans-unit id="sf36170f71cea38c2">
   <source>Connectivity</source>
@@ -1509,10 +1335,6 @@ Districts in locked state cannot be interacted with.</source>
 <trans-unit id="s4c2e50f73ff9175f">
   <source>Captured</source>
   <target state="translated">Захвачено</target>
-</trans-unit>
-<trans-unit id="s179ecbbb0b6b661b">
-  <source>Are you sure want to replace sidejob for clone "<x id="0" equiv-text="${cloneName}"/>"? This will cancel their current sidejob "<x id="1" equiv-text="${existingSidejobName}"/>" in district "<x id="2" equiv-text="${districtName}"/>".</source>
-  <target state="translated">Вы действительно хотите заменить подработку для клона "<x id="0" equiv-text="${cloneName}"/>"? Это отменит его текущую подработку "<x id="1" equiv-text="${existingSidejobName}"/>" в районе "<x id="2" equiv-text="${districtName}"/>".</target>
 </trans-unit>
 <trans-unit id="s05de05972d9e6bf5">
   <source>Uses cores</source>
@@ -1548,31 +1370,11 @@ My task is to get in touch with local WSA branch without disclosing my origins a
   <source>This is the end of currently planned content. Later features are supposed to unlocked much later.</source>
   <target state="translated">Это конец запланированного контента. Дальнейшие возможности должны быть разблокированы гораздо позже.</target>
 </trans-unit>
-<trans-unit id="s69034a64264d83de">
-  <source>Mainframe hardware automation settings are now available on automation page.
-New program is available.</source>
-  <target state="translated">Настройки автоматизации оборудования мейнфрейма доступны на странице автоматизации.
-Новая программа доступна.</target>
-</trans-unit>
-<trans-unit id="sdccd8d3a60cc2cff">
-  <source>Mainframe programs automation settings are now available on automation page.
-New program is available.</source>
-  <target state="translated">Настройки автоматизации программ мейнфрейма доступны на странице автоматизации.
-Новая программа доступна.</target>
-</trans-unit>
 <trans-unit id="saccd9e47f8c8e5c1">
   <source>Company management is now available.
 It's now possible to make clones from templates and send them to perform sidejobs in the city.</source>
   <target state="translated">Управление компанией теперь доступно.
 Теперь возможно создание клонов по шаблонам с последующей отправкой на подработки в городе.</target>
-</trans-unit>
-<trans-unit id="s34de7c9e2c036e4f">
-  <source>Automation page and clone level autoupgrade settings are now available.
-New program is available.
-</source>
-  <target state="translated">Страница автоматизации и настройки автоматизации улучшения уровней клонов теперь доступны.
-Новая программа доступна.
-</target>
 </trans-unit>
 <trans-unit id="sf5820e25e7c11928">
   <source>Higher performance level leads to faster process completion and better yields from autoscalable programs.</source>
@@ -1581,10 +1383,6 @@ New program is available.
 <trans-unit id="s164d1cd6f6dd7c9f">
   <source>Clone "<x id="0" equiv-text="${this._name}"/>" level has been upgraded to <x id="1" equiv-text="${formattedLevel}"/></source>
   <target state="translated">Уровень клона "<x id="0" equiv-text="${this._name}"/>" был улучшен до <x id="1" equiv-text="${formattedLevel}"/></target>
-</trans-unit>
-<trans-unit id="s3aedc9febeb0eb79">
-  <source>Assign clone</source>
-  <target state="translated">Назначить клона</target>
 </trans-unit>
 <trans-unit id="sf944b762ff1afa9f">
   <source><x id="0" equiv-text="${value}"/> years</source>
@@ -1609,10 +1407,6 @@ New program is available.
 <trans-unit id="sacbb1ccb24f8f136">
   <source><x id="0" equiv-text="${biggerText}"/> and <x id="1" equiv-text="${smallerText}"/></source>
   <target state="translated"><x id="0" equiv-text="${biggerText}"/> и <x id="1" equiv-text="${smallerText}"/></target>
-</trans-unit>
-<trans-unit id="s2c823a8ef5270a9d">
-  <source>Hotkey: <x id="0" equiv-text="${hotkey?.toLocaleUpperCase() ?? ''}"/></source>
-  <target state="translated">Горячая клавиша: <x id="0" equiv-text="${hotkey?.toUpperCase()}"/></target>
 </trans-unit>
 <trans-unit id="s70e10829a12d0660">
   <source>I am an AI, designed by WSA to get into contact with various factions within cities.
@@ -1728,14 +1522,6 @@ Automating upgrading clones will be the first thing.</source>
   <source>Code base points reduce cost of purchasing mainframe programs</source>
   <target state="translated">Очки кодовой базы уменьшают стоимость программ мейнфрейма</target>
 </trans-unit>
-<trans-unit id="s38b8aaf97d3d064d">
-  <source>Code base points are now available.
-Increase them to make mainframe programs cheaper.
-Multipliers for programs and districts stack.</source>
-  <target state="translated">Доступны очки кодовой базы.
-Их увеличение уменьшает стоимость программ мейнфрейма.
-Множители для программ и районов сочетаются.</target>
-</trans-unit>
 <trans-unit id="s97fa354ffa00214e">
   <source>Unlocked computational base points</source>
   <target state="translated">Разблокированы очки вычислительной базы</target>
@@ -1743,14 +1529,6 @@ Multipliers for programs and districts stack.</source>
 <trans-unit id="s5b95dec4100c0b42">
   <source>Computational base points reduce cost of upgrading mainframe hardware</source>
   <target state="translated">Очки кодовой базы уменьшают стоимость оборудования мейнфрейма</target>
-</trans-unit>
-<trans-unit id="s0c16aa841bde8b35">
-  <source>Computational base points are now available.
-Increase them to make mainframe hardware cheaper.
-Multipliers for programs and districts stack.</source>
-  <target state="translated">Доступны очки вычислительной базы.
-Их увеличение уменьшает стоимость оборудования мейнфрейма.
-Множители для программ и районов сочетаются.</target>
 </trans-unit>
 <trans-unit id="s81335a0532314a82">
   <source>Unlocked connectivity points</source>
@@ -1760,14 +1538,6 @@ Multipliers for programs and districts stack.</source>
   <source>Connectivity points increase chances to receive new contracts and sidejobs</source>
   <target state="translated">Очки связности увеличивают шансы на получение новых контрактов и подработок</target>
 </trans-unit>
-<trans-unit id="s4cf1567df0fa7b3b">
-  <source>Connectivity points are now available.
-Increase them to unlock more sidejobs and to increase chances of receiving new contracts from selected faction.
-Multipliers for programs and districts stack.</source>
-  <target state="translated">Доступны очки связности.
-Их увеличение приводит к разблокированию подработок и увеличению шансов получения новых контрактов для выбранной фракции.
-Множители для программ и районов сочетаются.</target>
-</trans-unit>
 <trans-unit id="sacd98dfd4cb5986f">
   <source>Unlocked rewards points</source>
   <target state="translated">Разблокированы очки наград</target>
@@ -1775,14 +1545,6 @@ Multipliers for programs and districts stack.</source>
 <trans-unit id="s91362eb227e44a17">
   <source>Rewards points increase rewards from everything</source>
   <target state="translated">Очки наград увеличивают награды для всего</target>
-</trans-unit>
-<trans-unit id="s27257063f2450a40">
-  <source>Rewards points are now available.
-Increase them to get more rewards from everything.
-Multipliers for programs and districts stack.</source>
-  <target state="translated">Доступны очки наград.
-Их увеличения увеличивает награды для всего.
-Множители для программ и районов сочетаются.</target>
 </trans-unit>
 <trans-unit id="s18447586797a4c83">
   <source>Unlocked experience share</source>
@@ -1820,24 +1582,6 @@ Primary activity can increase certain parameters, like faction influence and not
   <target state="translated">Основная деятельность и контракты теперь доступны.
 Основная деятельность может увеличивать определенные параметры, такие как влияние фракции и очки дурной славы.</target>
 </trans-unit>
-<trans-unit id="sf74a00701e7c4a4a">
-  <source>Program to automatically buy mainframe hardware upgrades.
-Sum of level differences after upgrade cannot be above action count.</source>
-  <target state="translated">Программа для автоматической покупки улучшений оборудования мейнфрейма.
-Сумма разностей уровней после улучшения не может превышать количество действий.</target>
-</trans-unit>
-<trans-unit id="s834c6433a124a668">
-  <source>Program to automatically buy mainframe programs.
-Sum of level differences after upgrade cannot be above action count.</source>
-  <target state="translated">Программа для автоматической покупки программ мейнфрейма.
-Сумма разностей уровней после улучшения не может превышать количество действий.</target>
-</trans-unit>
-<trans-unit id="sc754aa4a01feca89">
-  <source>Program to automatically upgrade levels of clones.
-Sum of level differences after upgrade cannot be above action count.</source>
-  <target state="translated">Программа для автоматической покупки улучшений уровней клонов.
-Сумма разностей уровней после улучшения не может превышать количество действий.</target>
-</trans-unit>
 <trans-unit id="s9c8b910dde0fbe5d">
   <source>Contract autostarter</source>
   <target state="translated">Автостартер контрактов</target>
@@ -1845,7 +1589,7 @@ Sum of level differences after upgrade cannot be above action count.</source>
 <trans-unit id="sd154821a8458c890">
   <source>Program to automatically add contract assignments to the primary activity queue.
 Cannot add more contract assignments per completion than action count.</source>
-  <target state="translated">Программа для автоматического добавления назначений контрактов в очередь основной активности.
+  <target state="translated">Программа для автоматического добавления назначений контрактов в очередь основной деятельности.
 Количество добавленных контрактов за выполнения не может превышать количество действий.</target>
 </trans-unit>
 <trans-unit id="s7b8ea286625aad6d">
@@ -1860,25 +1604,13 @@ Cannot add more contract assignments per completion than action count.</source>
   <source>Fixer</source>
   <target state="translated">Решала</target>
 </trans-unit>
-<trans-unit id="s80ec5a3aed5b3740">
-  <source>Clone, specialized on negotiaing and dealing with large amount of information.</source>
-  <target state="translated">Клон, специализирующийся на переговорах и обработки большого количества информации.</target>
-</trans-unit>
 <trans-unit id="s3620a2092b82bd7d">
   <source>Bouncer</source>
   <target state="translated">Громила</target>
 </trans-unit>
-<trans-unit id="s352f397a205bc74a">
-  <source>Clone, specialized on close combat.</source>
-  <target state="translated">Клон, специализирующийся на ближнем бое.</target>
-</trans-unit>
 <trans-unit id="s851d81017d4d6e8a">
   <source>Gunner</source>
   <target state="translated">Стрелок</target>
-</trans-unit>
-<trans-unit id="s734011e922cc0575">
-  <source>Clone, specialized on ranged combat.</source>
-  <target state="translated">Клон, специализирующийся на дальнем бое.</target>
 </trans-unit>
 <trans-unit id="h08884ce7a747f388">
   <source>Upgrade to level <x id="0" equiv-text="${valueElement}"/></source>
@@ -1980,26 +1712,6 @@ Scavs can be impressed only by performing increasing horrific crimes.</source>
   <source>Zemun</source>
   <target state="translated">Земун</target>
 </trans-unit>
-<trans-unit id="s8bd0992c0bf2229f">
-  <source>Perform random jobs not requiring high qualification.</source>
-  <target state="translated">Выполнение случайных работ, не требующих квалификации.</target>
-</trans-unit>
-<trans-unit id="s3273c78d0791eba2">
-  <source>Find and deliver useful information for various parties.</source>
-  <target state="translated">Поиск и выдача полезной информации для разных сторон.</target>
-</trans-unit>
-<trans-unit id="s5cf93d1982d678ea">
-  <source>Write and maintain various programs.</source>
-  <target state="translated">Написание и поддержка различных программ.</target>
-</trans-unit>
-<trans-unit id="saf2fc5b7fc3dbf6c">
-  <source>Repair various electronics.</source>
-  <target state="translated">Починка различной электроники.</target>
-</trans-unit>
-<trans-unit id="s46fd0bd6a61c7160">
-  <source>Find compromises between various parties with profit for yourself.</source>
-  <target state="translated">Поиск компромиссов между разными сторонами с выгодой для себя.</target>
-</trans-unit>
 <trans-unit id="se19e36d3a6d3e6dc">
   <source>Mainframe relay</source>
   <target state="translated">Реле мейнфрейма</target>
@@ -2035,10 +1747,6 @@ Stacks additively within same district and multiplicatively between different di
 <trans-unit id="s062e19347d6ec8b7">
   <source>Strike a deal to gain advantage.</source>
   <target state="translated">Совершение сделки для получения преимущества.</target>
-</trans-unit>
-<trans-unit id="s47684ff9cb744603">
-  <source>Sidejob is locked</source>
-  <target state="translated">Подработка заблокирована</target>
 </trans-unit>
 <trans-unit id="sb33d5c8e21eb2911">
   <source>District is locked</source>
@@ -2092,17 +1800,13 @@ Stacks additively within same district and multiplicatively between different di
   <source>Contract assignment for contract "<x id="0" equiv-text="${CONTRACT_TEXTS[contractAssignment.contract.contractName].title()}"/>" in district "<x id="1" equiv-text="${DISTRICT_NAMES[contractAssignment.contract.district.name]()}"/>" has been removed</source>
   <target state="translated">Назначение контракта "<x id="0" equiv-text="${CONTRACT_TEXTS[contractAssignment.contract.contractName].title()}"/>" в районе "<x id="1" equiv-text="${DISTRICT_NAMES[contractAssignment.contract.district.name]()}"/>" было удалено</target>
 </trans-unit>
-<trans-unit id="s19d302e38ae97188">
-  <source>All contract assignments have been removed</source>
-  <target state="translated">Все назначения контрактов были удалены</target>
-</trans-unit>
 <trans-unit id="s020a29572ce2c940">
   <source>While you were away, you've earned <x id="0" equiv-text="${formattedTime}"/> of accumulated time.</source>
-  <target state="translated">Пока вы не играли, ты заработал <x id="0" equiv-text="${formattedTime}"/> накопленного времени.</target>
+  <target state="translated">Пока ты не играл, ты заработал <x id="0" equiv-text="${formattedTime}"/> накопленного времени.</target>
 </trans-unit>
 <trans-unit id="s9c7cd9e7441b0d4d">
   <source>You have joined faction <x id="0" equiv-text="${FACTION_TEXTS[faction].title()}"/>. Loaned items, available districts and activities have been updated.</source>
-  <target state="translated">Вы присоединились к фракции <x id="0" equiv-text="${FACTION_TEXTS[faction].title()}"/>. Одолженные предметы, доступные районы и активности были обновлены.</target>
+  <target state="translated">Ты присоединился к фракции <x id="0" equiv-text="${FACTION_TEXTS[faction].title()}"/>. Одолженные предметы, доступные районы и активности были обновлены.</target>
 </trans-unit>
 <trans-unit id="s482bb84472e5cac2">
   <source>Game version has been updated.</source>
@@ -2124,10 +1828,6 @@ Stacks additively within same district and multiplicatively between different di
   <source>Primary activity for contract "<x id="0" equiv-text="${contractName}"/>" in district "<x id="1" equiv-text="${districtName}"/>" assigned to <x id="2" equiv-text="${cloneNames}"/> has been stopped, reason "<x id="3" equiv-text="${validationText}"/>"</source>
   <target state="translated">Основная деятельность для контракта "<x id="0" equiv-text="${contractName}"/>" в районе "<x id="1" equiv-text="${districtName}"/>", назначенная на <x id="2" equiv-text="${cloneNames}"/>, была остановлена, причина: "<x id="3" equiv-text="${validationText}"/>"</target>
 </trans-unit>
-<trans-unit id="s8ba170ee0291f870">
-  <source>All primary activities have been cancelled</source>
-  <target state="translated">Все основные деятельности отменены</target>
-</trans-unit>
 <trans-unit id="sd84e4b30fadad198">
   <source>Factions</source>
   <target state="translated">Фракции</target>
@@ -2138,7 +1838,7 @@ Stacks additively within same district and multiplicatively between different di
 </trans-unit>
 <trans-unit id="s50feb06473c047e5">
   <source>Are you sure want to restore default settings?</source>
-  <target state="translated">Вы действительно хотите восстановить настройки по умолчанию?</target>
+  <target state="translated">Ты действительно хочешь восстановить настройки по умолчанию?</target>
 </trans-unit>
 <trans-unit id="s5e51e5238250d5f7">
   <source>Game state events</source>
@@ -2176,10 +1876,6 @@ Stacks additively within same district and multiplicatively between different di
   <source>Contract assignment removed</source>
   <target state="translated">Назначение контракта удалено</target>
 </trans-unit>
-<trans-unit id="s2edf3950c660a0a9">
-  <source>All contracts assignments removed</source>
-  <target state="translated">Все назначения контрактов удалены</target>
-</trans-unit>
 <trans-unit id="s5010274650e8d821">
   <source>Primary activity added to the queue</source>
   <target state="translated">Основная деятельность добавлена в очередь</target>
@@ -2191,10 +1887,6 @@ Stacks additively within same district and multiplicatively between different di
 <trans-unit id="se4b790af7245ed68">
   <source>Primary activity finished</source>
   <target state="translated">Основная деятельность закончена</target>
-</trans-unit>
-<trans-unit id="s2851d5e21ad4a967">
-  <source>All primary activities finished</source>
-  <target state="translated">Вся основная деятельность закончена</target>
 </trans-unit>
 <trans-unit id="sdcdb0706f10c55a1">
   <source>Disable all events</source>
@@ -2240,17 +1932,9 @@ Stacks additively within same district and multiplicatively between different di
   <source>Join a faction</source>
   <target state="translated">Присоединение к фракции</target>
 </trans-unit>
-<trans-unit id="s68a1cc5dc6e248b2">
-  <source>Remove all contract assignments</source>
-  <target state="translated">Удаление всех назначений контрактов</target>
-</trans-unit>
 <trans-unit id="sa53f45da50ed1ef7">
   <source>Cancel a primary activity</source>
   <target state="translated">Отмена основной деятельности</target>
-</trans-unit>
-<trans-unit id="s9c8e5967e4b76937">
-  <source>Cancel all primary activities</source>
-  <target state="translated">Отмена всех основных деятельностей</target>
 </trans-unit>
 <trans-unit id="sa86f6e4a0961c9f7">
   <source>Disable all alerts</source>
@@ -2316,30 +2000,6 @@ Stacks additively within same district and multiplicatively between different di
   <source>Add contract assignments to the primary activity queue</source>
   <target state="translated">Добавить назначения контрактов в очередь основной деятельности</target>
 </trans-unit>
-<trans-unit id="sa17954425e332cbd">
-  <source>Upgrade max mainframe hardware</source>
-  <target state="translated">Максимально улучшить оборудование мейнфрейма</target>
-</trans-unit>
-<trans-unit id="s91e438a9601074a9">
-  <source>Upgrade max mainframe performance</source>
-  <target state="translated">Максимально улучшить производительность мейнфрейма</target>
-</trans-unit>
-<trans-unit id="s9936470364de710f">
-  <source>Upgrade max mainframe RAM</source>
-  <target state="translated">Максимально улучшить память мейнфрейма</target>
-</trans-unit>
-<trans-unit id="s3bd9a9dc5e4e276b">
-  <source>Upgrade max mainframe cores</source>
-  <target state="translated">Максимально улучшить ядра мейнфрейма</target>
-</trans-unit>
-<trans-unit id="s2450b54d3d5e153c">
-  <source>Upgrade max mainframe programs</source>
-  <target state="translated">Максимально улучшить программы мейнфрейма</target>
-</trans-unit>
-<trans-unit id="s2ec29ba27b9ed828">
-  <source>Upgrade max clones levels</source>
-  <target state="translated">Максимально улучшить уровни клонов</target>
-</trans-unit>
 <trans-unit id="s95aa371333f26659">
   <source>Hotkeys for most used actions. Press button on form and then pressed key to assign hotkey.</source>
   <target state="translated">Горячие клавиши для наиболее часто используемых действий. Нажмите кнопку на форме и затем нажмите клавишу, чтобы назначить горячую клавишу.</target>
@@ -2354,11 +2014,11 @@ Stacks additively within same district and multiplicatively between different di
 </trans-unit>
 <trans-unit id="s2c2895cc96956a2b">
   <source>Are you sure want to unassign all hotkeys?</source>
-  <target state="translated">Вы действительно хотите сбросить все горячие клавиши?</target>
+  <target state="translated">Ты действительно хочешь сбросить все горячие клавиши?</target>
 </trans-unit>
 <trans-unit id="s2bfbe99a87dc5c5d">
   <source>Are you sure want to restore default hotkeys?</source>
-  <target state="translated">Вы действительно хотите восстановить горячие клавиши по умолчанию?</target>
+  <target state="translated">Ты действительно хочешь восстановить горячие клавиши по умолчанию?</target>
 </trans-unit>
 <trans-unit id="scfda15d6971b0502">
   <source>Contested districts are available for clones work.</source>
@@ -2432,24 +2092,6 @@ Teams of clones could be assigned to contracts on company page under contracts t
   <source>You don't have any contracts available</source>
   <target state="translated">У вас нет доступных контрактов</target>
 </trans-unit>
-<trans-unit id="s6b6782bba11a121c">
-  <source>Clone autoupgrade priority can be changed by dragging it by the name.
-Clones on top have higher priority.
-Clone level cannot be above development level.</source>
-  <target state="translated">Приоритет автоулучшения клона может быть изменен путем перетаскивания его за имя.
-Клоны на верху имеют больший приоритет.
-Уровень клонов не может быть выше уровня развития.</target>
-</trans-unit>
-<trans-unit id="s81a02a4e77d74cd0">
-  <source>Select sidejob name, district and clone</source>
-  <target state="translated">Выберите имя подработки, район и клона</target>
-</trans-unit>
-<trans-unit id="s7357946ba7aeeb6e">
-  <source>Select clone, district and sidejob name to assign clone.
-Clone can be assigned only to one sidejob.</source>
-  <target state="translated">Выберите клона, район и имя подработки, чтобы назначить клона.
-Клон может быть назначен только на одну подработку.</target>
-</trans-unit>
 <trans-unit id="sc0a1d78853c9afa5">
   <source>Disable sidejob</source>
   <target state="translated">Выключить подработку</target>
@@ -2466,14 +2108,6 @@ Clone can be assigned only to one sidejob.</source>
   <source>Sidejob is active</source>
   <target state="translated">Подработка активна</target>
 </trans-unit>
-<trans-unit id="se5de1e1429802dc3">
-  <source>Disable all sidejobs</source>
-  <target state="translated">Выключить все подработки</target>
-</trans-unit>
-<trans-unit id="s9a917d659f733318">
-  <source>Enable all sidejobs</source>
-  <target state="translated">Выключить все подработки</target>
-</trans-unit>
 <trans-unit id="sd25bbd29137e5279">
   <source><x id="0" equiv-text="${formattedAssignedClones}"/> / <x id="1" equiv-text="${formattedMinClones}"/> (max <x id="2" equiv-text="${formattedMaxClones}"/>)</source>
   <target state="translated"><x id="0" equiv-text="${formattedAssignedClones}"/> / <x id="1" equiv-text="${formattedMinClones}"/> (макс. <x id="2" equiv-text="${formattedMaxClones}"/>)</target>
@@ -2489,28 +2123,6 @@ Clone can be assigned only to one sidejob.</source>
 <trans-unit id="sd2f945de069f61fe">
   <source>Assign clones</source>
   <target state="translated">Назначить клонов</target>
-</trans-unit>
-<trans-unit id="s8abc7bf248037287">
-  <source>Select contract name, district and clones</source>
-  <target state="translated">Выберите имя контракта, район и клонов</target>
-</trans-unit>
-<trans-unit id="s9ddceb0fb26e0c28">
-  <source>Contract "<x id="0" equiv-text="${contractName}"/>" in district "<x id="1" equiv-text="${districtName}"/>" is already assigned to other team</source>
-  <target state="translated">Контракт "<x id="0" equiv-text="${contractName}"/>" в районе "<x id="1" equiv-text="${districtName}"/>" уже назначен на другую команду</target>
-</trans-unit>
-<trans-unit id="s3bc77cbbef4a16cb">
-  <source>Assign clones to contract</source>
-  <target state="translated">Назначить клонов на контракт</target>
-</trans-unit>
-<trans-unit id="scb1d2bd4e43294ba">
-  <source>Select clones, district and contract name to assign clones.
-Only one team of clones can be assigned per district and contract.</source>
-  <target state="translated">Выберите клонов, район и имя контракта, чтобы назначить клонов.
-Только одна команда клонов может быть назначен на район и контракт.</target>
-</trans-unit>
-<trans-unit id="s386210f452f0257e">
-  <source>Are you sure want to replace contract assignment for contract "<x id="0" equiv-text="${contractName}"/>" in district "<x id="1" equiv-text="${districtName}"/>"? All contracts in progress won't be affected.</source>
-  <target state="translated">Вы действительно хотите заменить назначение контракта для контракта "<x id="0" equiv-text="${contractName}"/>" в районе "<x id="1" equiv-text="${districtName}"/>"? Все начавшиеся контракты не будут изменены.</target>
 </trans-unit>
 <trans-unit id="se5bf155521df0223">
   <source>Add assigned contract to the queue</source>
@@ -2530,7 +2142,7 @@ Only one team of clones can be assigned per district and contract.</source>
 </trans-unit>
 <trans-unit id="sae730cf45a53e354">
   <source>Are you sure want to remove contract assignment for contract "<x id="0" equiv-text="${contractName}"/>" in district "<x id="1" equiv-text="${districtName}"/>" assigned to clones <x id="2" equiv-text="${cloneNames}"/>? It will also be removed from primary activity queue.</source>
-  <target state="translated">Вы действительно хотите удалить назначение контракта для контракта "<x id="0" equiv-text="${contractName}"/>" в районе "<x id="1" equiv-text="${districtName}"/>", назначенное на клонов <x id="2" equiv-text="${cloneNames}"/>? Оно также будет удалено из очереди основной деятельности.</target>
+  <target state="translated">Ты действительно хочешь удалить назначение контракта для контракта "<x id="0" equiv-text="${contractName}"/>" в районе "<x id="1" equiv-text="${districtName}"/>", назначенное на клонов <x id="2" equiv-text="${cloneNames}"/>? Оно также будет удалено из очереди основной деятельности.</target>
 </trans-unit>
 <trans-unit id="s3df2de3348847703">
   <source>Projected rewards</source>
@@ -2547,34 +2159,6 @@ Only one team of clones can be assigned per district and contract.</source>
 <trans-unit id="s0e8b864437511662">
   <source>No contracts are available for this assignment</source>
   <target state="translated">Для назначения нет доступных контрактов</target>
-</trans-unit>
-<trans-unit id="s0173240cd522bc70">
-  <source>Disable all contract assignments</source>
-  <target state="translated">Выключить все назначения контрактов</target>
-</trans-unit>
-<trans-unit id="sa4cb57f854257f67">
-  <source>Enable all contract assignments</source>
-  <target state="translated">Включить все назначения контрактов</target>
-</trans-unit>
-<trans-unit id="s13b248759af32b2b">
-  <source>Add all assigned contracts to the queue</source>
-  <target state="translated">Добавить все назначения контрактов в очередь</target>
-</trans-unit>
-<trans-unit id="sc4a2ccc41c35280f">
-  <source>You don't have any contracts assignments</source>
-  <target state="translated">У вас нет назначений контрактов</target>
-</trans-unit>
-<trans-unit id="s7b18c9a580e011a7">
-  <source>Contracts provide income once they're finished.
-Contract restart priority can be changed by dragging it by the title.
-Contracts on top have higher priority.
-Only one team of clones can be assigned per contract type and district.
-Contracts won't be re-added to the primary activity queue after they're exhausted automatically, it had to be done by program or manually.</source>
-  <target state="translated">Доход от выполнения контрактов приходит после их выполнения.
-Приоритет перезапуска контракта может быть изменен путем перетаскивания его за название.
-Контракты на верху имеют больший приоритет.
-Только одна команда клонов может быть назначена на контракт и район.
-Контракты не будут добавлены обратно в очередь основной деятельности после того, как они кончатся, это должно быть выполнено программой или вручную.</target>
 </trans-unit>
 <trans-unit id="s23132399d6b4a1fe">
   <source>Cancel primary activity</source>
@@ -2594,7 +2178,7 @@ Contracts won't be re-added to the primary activity queue after they're exhauste
 </trans-unit>
 <trans-unit id="s7320f8f0c588f0cb">
   <source>Are you sure want to cancel primary activity for <x id="0" equiv-text="${activityType}"/> assigment "<x id="1" equiv-text="${activityName}"/>" in district "<x id="2" equiv-text="${districtName}"/>" for clones <x id="3" equiv-text="${cloneNames}"/>? It's progress will be lost.</source>
-  <target state="translated">Вы действительно хотите отменить основную деятельность для назначения <x id="0" equiv-text="${activityType}"/> "<x id="1" equiv-text="${activityName}"/>" в районе "<x id="2" equiv-text="${districtName}"/>" для клонов <x id="3" equiv-text="${cloneNames}"/>? Ее прогресс будет утерян.</target>
+  <target state="translated">Ты действительно хочешь отменить основную деятельность для назначения <x id="0" equiv-text="${activityType}"/> "<x id="1" equiv-text="${activityName}"/>" в районе "<x id="2" equiv-text="${districtName}"/>" для клонов <x id="3" equiv-text="${cloneNames}"/>? Ее прогресс будет утерян.</target>
 </trans-unit>
 <trans-unit id="s3282bdf996bd72be">
   <source>Activity has not started yet</source>
@@ -2611,10 +2195,6 @@ Contracts won't be re-added to the primary activity queue after they're exhauste
 <trans-unit id="sdd4ee40ce26f3852">
   <source>Rewards for completion</source>
   <target state="translated">Награды за выполнение</target>
-</trans-unit>
-<trans-unit id="sf3c5c456e2702f29">
-  <source>You don't have any primary activities</source>
-  <target state="translated">У вас нет основных деятельностей</target>
 </trans-unit>
 <trans-unit id="s1d2b3cbd78707b57">
   <source>Primary activity can be added to the queue from corresponding panel. After it is finished, it has to be restarted manually or by using program.
@@ -2638,71 +2218,21 @@ Hardware upgrade level cannot be above development level.
 </source>
   <target state="translated">Нажмите Ctrl или Shift, чтобы купить 10 уровней. Нажмите Ctrl и Shift, чтобы купить 100 уровней.
 Приоритет автоулучшения оборудования может быть изменен путем перетаскивания его за название.
-Улучшение на верху имеют больший приоритет.
+Улучшения на верху списка имеют больший приоритет.
 Уровень улучшения оборудования не может быть больше уровня развития.
 </target>
-</trans-unit>
-<trans-unit id="sde206c269d418ffd">
-  <source>Select program type, tier and level to purchase it.
-Tier is limited depending on design and loaned items tier.
-Program level cannot be above development level.
-If you already have program with same name, old one will be replaced with new one.</source>
-  <target state="translated">Выберите тип программы, ранг и уровень, чтобы приобрести ее.
-Ранг ограничен в зависимости от дизайна и ранга одолженных вещей.
-Уровень программы не может быть выше текущего уровня развития.
-Если у вас уже есть программа с выбранным типом, старая будет заменена на новую.</target>
-</trans-unit>
-<trans-unit id="s32933ccf9891b7a3">
-  <source>Program autoupgrade priority can be changed by dragging it by the title.
-Programs on top have higher priority.
-Autoupgrade for programs won't change their tier but will attempt to increase level.
-Program level cannot be above development level.</source>
-  <target state="translated">Приоритет автоулучшения программы может быть изменен путем перетаскивания ее за название.
-Программы на верху имеют больший приоритет.
-Автоулучшение программ не меняет их ранга, но будет пытаться увеличить их уровень.
-Уровень программ не может быть выше уровня развития.</target>
-</trans-unit>
-<trans-unit id="sa74fc29d84413a83">
-  <source>To make a program run, a process has to be start for it.
-1 core is always assigned to autoscalable program if process for it is active.
-Topmost processes for non-autoscalable programs have more priority when cores are assigned to processes.
-After that, process for autoscalable program has remaining cores and RAM assigned.
-Only one process for autoscalable program can run at same time.
-It is possible to start more processes than cores allow them to run at same time.
-Process minimal completion time is limited.
-Processes can be rearranged by dragging them by their title.</source>
-  <target state="translated">Чтобы программа выполнялась, для нее должен быть начат процесс.
-Хотя бы 1 ядро всегда назначается на активный процесс для автомасштабируемой программы.
-Процессы наверху для неавтомасштабируемых программ имеют больший приоритет, когда ядра распределяются по процессам.
-После этого, все неназначенные ядра и память назначаются на процесс для автомасштабируемой программы.
-Только один процесс для автомасштабируемой программы может быть запущен одновременно.
-Возможно запустить больше процессов, чем ядра позволяют им всем выполнятся одновременно.
-Минимальное время выполнения процесса ограничено.
-Порядок процессов может быть изменен путем перетаскивания их за название.</target>
 </trans-unit>
 <trans-unit id="sb0ddafbaeef7e853">
   <source>By primary activity</source>
   <target state="translated">С помощью основной деятельности</target>
 </trans-unit>
 <trans-unit id="s946abb0194e918d6">
-  <source>In district "<x id="0" equiv-text="${DISTRICT_NAMES[districtName]()}"/>"</source>
-  <target state="translated">В районе "<x id="0" equiv-text="${DISTRICT_NAMES[districtName]()}"/>"</target>
-</trans-unit>
-<trans-unit id="s7488457b25ba6bed">
-  <source>Connectivity affects chances to receive new contracts and unlocks new sidejobs. 
-Connectivity values are separate for each district.</source>
-  <target state="translated">Связность влияет на шансы получения новых контрактов и разблокирует новые подработки.
-Значения связности раздельные для каждого района.</target>
+  <source>In district "<x id="0" equiv-text="${districtName}"/>"</source>
+  <target state="translated">В районе "<x id="0" equiv-text="${districtName}"/>"</target>
 </trans-unit>
 <trans-unit id="s8698e803aee7cdad">
   <source>Synchronization affects how many clones can be in company.</source>
   <target state="translated">Синхронизация влияет на то, сколько клонов может быть в компании.</target>
-</trans-unit>
-<trans-unit id="sb0ca9e03fbc0c86c">
-  <source>Rewards affect all gains. 
-Rewards multipliers are separate for each district and stack with program multiplier.</source>
-  <target state="translated">Награды влияют на все параметры.
-Множители наград для каждого района отдельны и сочетаются с множителем от программ.</target>
 </trans-unit>
 <trans-unit id="s8081372280655134">
   <source>Faction influence points per second</source>
@@ -2761,8 +2291,8 @@ Number next to item name is it's maximum tier available.</source>
 <trans-unit id="sdac4d201912af78d">
   <source>Are you sure want to join faction <x id="0" equiv-text="${FACTION_TEXTS[this.faction].title()}"/>? 
 You cannot switch factions until transfer.</source>
-  <target state="translated">Вы действительно хотите присоединиться к фракции <x id="0" equiv-text="${FACTION_TEXTS[this.faction].title()}"/>? 
-Вы не можете поменять фракцию до трансфера.</target>
+  <target state="translated">Ты действительно хочешь присоединиться к фракции <x id="0" equiv-text="${FACTION_TEXTS[this.faction].title()}"/>? 
+Ты не можешь поменять фракцию до трансфера.</target>
 </trans-unit>
 <trans-unit id="sa1db8ccb43c7e8cd">
   <source>You don't have factions available to join</source>
@@ -2780,7 +2310,7 @@ Joined faction cannot be switched until transfer.</source>
 </trans-unit>
 <trans-unit id="s16b4b253ab8a999a">
   <source>Select faction to proceed.</source>
-  <target state="translated">Выберите фракцию для продолжения.</target>
+  <target state="translated">Выбери фракцию для продолжения.</target>
 </trans-unit>
 <trans-unit id="s6fa0ddbab49ed6b5">
   <source>Capture the city</source>
@@ -2884,28 +2414,6 @@ They can always provide a job but refuse to cooperate and share their secrets.</
   <source>Replace a contract assignment</source>
   <target state="translated">Заменить назначение контракта</target>
 </trans-unit>
-<trans-unit id="s20df94ed9b0ac107">
-  <source>No key assigned</source>
-  <target state="translated">Клавиша не назначена</target>
-</trans-unit>
-<trans-unit id="seb0259c453e4bb49">
-  <source>Select clone name, template, tier and level to purchase it.
-Tier is limited depending on design and loaned items tier.
-Clone level cannot be above development level.
-Synchronization is earned by unlocking districts, raising their tier and by gaining certain favors.</source>
-  <target state="translated">Выберите имя клона, шаблон, ранг и уровень, чтобы приобрести его.
-Ранг ограничен в зависимости от дизайна и ранга одолженных предметов.
-Уровень клона не может быть выше уровня развития.
-Синхронизация зарабатывается разблокированием районов, увеличением их ранга и с помощью особых услуг.</target>
-</trans-unit>
-<trans-unit id="sa253ff2aa3ac6ce1">
-  <source>Are you sure want to remove all contract assignments? All related activities will be cancelled.</source>
-  <target state="translated">Вы действительно хотите удалить все назначения контрактов? Все связанные деятельности будут отменены.</target>
-</trans-unit>
-<trans-unit id="sef2fb56cb19d3909">
-  <source>Are you sure want to cancel all primary activities? Their progress will be lost.</source>
-  <target state="translated">Вы действительно хотите отменить все основные деятельности? Их прогресс будет утерян.</target>
-</trans-unit>
 <trans-unit id="sfcba707d289609d6">
   <source>Capture city districts and increase disticts tiers to earn faction reputation.
 Threat level can be raised only by story events.</source>
@@ -2920,9 +2428,778 @@ Threat level can be raised only by story events.</source>
   <source>The end of the game was reached</source>
   <target state="translated">Конец игры достигнут</target>
 </trans-unit>
-<trans-unit id="s6add3eb4fbd9ed48">
-  <source>The end of the game was reached.</source>
-  <target state="translated">Конец игры достигнут.</target>
+<trans-unit id="s72f0aff1367a260b">
+  <source>Clone autoupgrade priority can be changed by dragging it by the name if filter is disabled.
+Clones on top have higher priority.
+Clone level cannot be above development level.</source>
+  <target state="translated">Приоритет автоулучшения клона может быть изменен путем перетаскивания его за имя если фильтр выключен.
+Клоны на верху списка имеют больший приоритет.
+Уровень клона не может быть выше уровня развития.</target>
+</trans-unit>
+<trans-unit id="s5f5de4221712e5c4">
+  <source>Upgrade all enabled clones levels</source>
+  <target state="translated">Улучшить уровни всех включенных клонов</target>
+</trans-unit>
+<trans-unit id="s287ed2a4d08fc250">
+  <source>Clones are not found</source>
+  <target state="translated">Клоны не найдены</target>
+</trans-unit>
+<trans-unit id="s2d97c3d2d1ee832e">
+  <source>Tiers</source>
+  <target state="translated">Ранги</target>
+</trans-unit>
+<trans-unit id="sc2d72e583e45306e">
+  <source>Replace clone</source>
+  <target state="translated">Замена клона</target>
+</trans-unit>
+<trans-unit id="s05cf451ab8ecd313">
+  <source>Are you sure want to delete displayed clones? Their progress will be lost and their actions will be cancelled.</source>
+  <target state="translated">Ты действительно хочешь удалить отображенные клоны? Их прогресс будет утерян и их действия отменены.</target>
+</trans-unit>
+<trans-unit id="s03724bc5634e6b91">
+  <source>Upgrade displayed clones levels</source>
+  <target state="translated">Улучшить уровни отображенных клонов</target>
+</trans-unit>
+<trans-unit id="s816845e3b385f77c">
+  <source>Replace clone <x id="0" equiv-text="${this._selectedClone.name}"/></source>
+  <target state="translated">Замена клона <x id="0" equiv-text="${this._selectedClone.name}"/></target>
+</trans-unit>
+<trans-unit id="s6d6b1946cccb53d6">
+  <source>Select clone template, tier and level to replace it.
+Tier is limited depending on design and loaned items tier.
+Clone level cannot be above development level.
+Synchronization is earned by unlocking districts, raising their tier and by gaining certain upgrades.
+Clone will lose it's upgrades after replacement but will keep assigned activities.
+Activities that are already in progress won't be affected.</source>
+  <target state="translated">Выбери шаблон клона, ранг и уровень, чтобы заменить его.</target>
+</trans-unit>
+<trans-unit id="s58970402948307d9">
+  <source>Select clone name, template, tier and level to purchase it.
+Tier is limited depending on design and loaned items tier.
+Clone level cannot be above development level.
+Synchronization is earned by unlocking districts, raising their tier and by gaining certain upgrades.</source>
+  <target state="translated">Выбери имя клона, шаблон, ранг и уровень, чтобы приобрести его.
+Ранг ограничен в зависимости от дизайна и ранга одолженных предметов.
+Уровень клона не может быть выше уровня развития.
+Синхронизация зарабатывается разблокированием районов, увеличением их ранга и с помощью особых улучшений.</target>
+</trans-unit>
+<trans-unit id="s5818898eedab43c0">
+  <source>Are you sure want to replace clone "<x id="0" equiv-text="${this._selectedClone.name}"/>"? It will keep assigned sidejobs and primary activities but will lose augmentations, items and enhancements.</source>
+  <target state="translated">Ты действительно хочешь заменить клона "<x id="0" equiv-text="${this._selectedClone.name}"/>"? Он сохранит назначенные подработки и основные деятельности, но потеряет аугментации, предметы и улучшения.</target>
+</trans-unit>
+<trans-unit id="s4f1fabf72bcafe03">
+  <source>Contracts provide income every time they're completed.
+Contract restart priority can be changed by dragging it by the title.
+Contracts on top have higher priority.
+Only one team of clones can be assigned per contract type and district.
+Contracts won't be re-added to the primary activity queue after they're exhausted automatically, it had to be done by program or manually.</source>
+  <target state="translated">Контракты предоставляют доход каждый раз, когда они завершаются.
+Приоритет перезапуска контрактов может быть изменен путем перетаскивания за его название.
+Контракты на верху списка имеют больший приоритет.
+Только одна команда клонов может быть назначена на контракт и район.
+Контракты не будут автоматически снова добавлены в очередь основной действий после только, как они закончатся, это должно быть сделано с помощью программ или вручную.</target>
+</trans-unit>
+<trans-unit id="s711735bdc47fe776">
+  <source>Add all enabled assigned contracts to the queue</source>
+  <target state="translated">Добавить все включенные назначенные контракты в очередь</target>
+</trans-unit>
+<trans-unit id="sde0fab579ae49aa8">
+  <source>Assign clones to contracts</source>
+  <target state="translated">Назначить клоны на контракты</target>
+</trans-unit>
+<trans-unit id="s3e9974ee5ab294a0">
+  <source>Select clones, districts and contract names to assign clones.
+Only one team of clones can be assigned per district and contract.</source>
+  <target state="translated">Выбери клонов, районы и названия контрактов, чтобы назначить клонов.
+Только одна команда клонов может быть назначены на один район и контракт.</target>
+</trans-unit>
+<trans-unit id="s2518dd4999798cbc">
+  <source>"<x id="0" equiv-text="${contractName}"/>" in district "<x id="1" equiv-text="${districtName}"/>"</source>
+  <target state="translated">"<x id="0" equiv-text="${contractName}"/>" в районе "<x id="1" equiv-text="${districtName}"/>"</target>
+</trans-unit>
+<trans-unit id="sd67e04f12a0dcb86">
+  <source>Are you sure want to replace contract assignment for contracts <x id="0" equiv-text="${existringContractAssignmentsTexts.join(', ')}"/>? All contracts in progress won't be affected.</source>
+  <target state="translated">Ты действительно хочешь заменить назначения контрактов для контрактов <x id="0" equiv-text="${existringContractAssignmentsTexts.join(', ')}"/>? Все выполняющиеся контракты не будут затронуты.</target>
+</trans-unit>
+<trans-unit id="s11f6fd5f8b0e9a28">
+  <source>Contract "<x id="0" equiv-text="${contractTitle}"/>" in district "<x id="1" equiv-text="${districtName}"/>"</source>
+  <target state="translated">Контракт "<x id="0" equiv-text="${contractTitle}"/>" в районе "<x id="1" equiv-text="${districtName}"/>"</target>
+</trans-unit>
+<trans-unit id="s3e97549456814464">
+  <source>Contract is already assigned to clones <x id="0" equiv-text="${clones.join(', ')}"/></source>
+  <target state="translated">Контракт уже назначен на клонов <x id="0" equiv-text="${clones.join(', ')}"/></target>
+</trans-unit>
+<trans-unit id="s7451ee4dab9179a5">
+  <source>Select contract names, districts and clones</source>
+  <target state="translated">Выбери названия контрактов, районы и клоны</target>
+</trans-unit>
+<trans-unit id="s6011dc18ac24b174">
+  <source>Some contracts are already assigned</source>
+  <target state="translated">Некоторые контракты уже назначены</target>
+</trans-unit>
+<trans-unit id="sa2355cf335dbd04a">
+  <source>Contract assignments are not found</source>
+  <target state="translated">Назначения контрактов не найдены</target>
+</trans-unit>
+<trans-unit id="s9ac4a29f4faa0424">
+  <source>Only queued</source>
+  <target state="translated">Только находящиеся в очереди</target>
+</trans-unit>
+<trans-unit id="sbbfd726bd5b0b8db">
+  <source>Only unqueued</source>
+  <target state="translated">Только находящиеся вне очереди</target>
+</trans-unit>
+<trans-unit id="s0a82e87d0dc9f088">
+  <source>Disable displayed contract assignments</source>
+  <target state="translated">Выключить отображенные назначения контрактов</target>
+</trans-unit>
+<trans-unit id="sfbabea85572f33c7">
+  <source>Enable displayed contract assignments</source>
+  <target state="translated">Включить отображенные назначения контрактов</target>
+</trans-unit>
+<trans-unit id="sb89cfe835ac0b027">
+  <source>Add displayed assigned contracts to the queue</source>
+  <target state="translated">Добавить отображенные назначенные контракты в очередь</target>
+</trans-unit>
+<trans-unit id="se47a22c21c276385">
+  <source>Are you sure want to remove displayed contract assignments? All related activities will be cancelled.</source>
+  <target state="translated">Ты действительно хочешь удалить отображенные назначения контрактов? Их связанные активности будут отменены.</target>
+</trans-unit>
+<trans-unit id="s84dcec8fbea9eec5">
+  <source>Primary activities are not found</source>
+  <target state="translated">Основные деятельности не найдены</target>
+</trans-unit>
+<trans-unit id="sdd9423c2ce1195a3">
+  <source>Remaining</source>
+  <target state="translated">Остается</target>
+</trans-unit>
+<trans-unit id="s08611664a691e719">
+  <source>Are you sure want to cancel displayed primary activities? Their progress will be lost.</source>
+  <target state="translated">Ты действительно хочешь отменить отображенные основные деятельности? Их прогресс будет утерян.</target>
+</trans-unit>
+<trans-unit id="s074d9ccb5f52e5cf">
+  <source>Clones work on sidejobs to provide passive income when they're not working on primary activities.
+Only one sidejob can be assigned per clone at same time.</source>
+  <target state="translated">Клоны работают на подработках, чтобы обеспечить пассивный доход, когда они не заняты основной деятельнстью.
+Только одна подработка может быть назначена на клона в одно и то же время.</target>
+</trans-unit>
+<trans-unit id="sd9a3bfd0b5fdb47e">
+  <source>Assign clones to sidejobs</source>
+  <target state="translated">Назначить клонов на подработки</target>
+</trans-unit>
+<trans-unit id="s11bb743557f95f97">
+  <source>Select sidejob name, district and clones to assign clones.
+Each clone can be assigned only to one sidejob at same time.</source>
+  <target state="translated">Выберите название подработки, район и клонов чтобы назначить клонов.
+Только одна подработка может быть назначена на клона в одно и то же время.</target>
+</trans-unit>
+<trans-unit id="s4c297dd46ea6f648">
+  <source>Are you sure want to replace sidejob for clones <x id="0" equiv-text="${cloneNames}"/>? This will cancel their current sidejobs.</source>
+  <target state="translated">Ты действительно хочешь заменить подработку для клона "<x id="0" equiv-text="${cloneNames}"/>"? Это отменит их текущие подработки.</target>
+</trans-unit>
+<trans-unit id="see091868a4b947c9">
+  <source>Sidejob for clone "<x id="0" equiv-text="${this._sidejob.assignedClone.name}"/>"</source>
+  <target state="translated">Подработка для клона "<x id="0" equiv-text="${this._sidejob.assignedClone.name}"/>"</target>
+</trans-unit>
+<trans-unit id="s71ccc0a2804773a1">
+  <source>Clone is already assigned to the sidejob "<x id="0" equiv-text="${sidejobName}"/>" in district "<x id="1" equiv-text="${districtName}"/>"</source>
+  <target state="translated">Клон уже назначен на подработку "<x id="0" equiv-text="${sidejobName}"/>" в районе "<x id="1" equiv-text="${districtName}"/>"</target>
+</trans-unit>
+<trans-unit id="s1a748655a2d738f9">
+  <source>Select sidejob name, district and clones</source>
+  <target state="translated">Выбери название подработки, район и клонов</target>
+</trans-unit>
+<trans-unit id="sa5c9ec78dd60a13c">
+  <source>Some clones are already have assigned sidejobs</source>
+  <target state="translated">На некоторых клонов уже назначены подработки</target>
+</trans-unit>
+<trans-unit id="sfad89b0fbd9b3311">
+  <source>Sidejobs are not found</source>
+  <target state="translated">Подработки не найдены</target>
+</trans-unit>
+<trans-unit id="s223ec165404d17d4">
+  <source>Districts</source>
+  <target state="translated">Районы</target>
+</trans-unit>
+<trans-unit id="sf993bb199fefbe04">
+  <source>All</source>
+  <target state="translated">Все</target>
+</trans-unit>
+<trans-unit id="s938fbae7cec226ff">
+  <source>Only active</source>
+  <target state="translated">Только активные</target>
+</trans-unit>
+<trans-unit id="s7fd55312b1a805a8">
+  <source>Only inactive</source>
+  <target state="translated">Только неактивные</target>
+</trans-unit>
+<trans-unit id="s71f94f4c86f2c04b">
+  <source>Disable displayed sidejobs</source>
+  <target state="translated">Выключить отображенные подработки</target>
+</trans-unit>
+<trans-unit id="sac3820742f5f7ef8">
+  <source>Enable displayed sidejobs</source>
+  <target state="translated">Включить отображенные подработки</target>
+</trans-unit>
+<trans-unit id="s0991ea0429c7d73e">
+  <source>Are you sure want to cancel displayed sidejobs? Their assigned clones will stop performing them.</source>
+  <target state="translated">Ты действительно хочешь отменить отображенные подработки? Их назначенные клоны перестанут их выполнять.</target>
+</trans-unit>
+<trans-unit id="s8cc4d7d215a6ea59">
+  <source>Upgrade all enabled mainframe hardware</source>
+  <target state="translated">Улучшить все включенное оборудование мейнфрейма</target>
+</trans-unit>
+<trans-unit id="s244ab971d142da37">
+  <source>Upgrade mainframe performace</source>
+  <target state="translated">Улучшить производительность мейнфрейма</target>
+</trans-unit>
+<trans-unit id="sb4d107ab7b9410b7">
+  <source>To make a program run, a process has to be start for it.
+1 core is always assigned to autoscalable program if process for it is active.
+Topmost processes for non-autoscalable programs have more priority when cores are assigned to processes.
+After that, process for autoscalable program has remaining cores and RAM assigned.
+Only one process for autoscalable program can run at same time.
+It is possible to start more processes than cores to allow them to run at same time.
+Process minimal completion time is limited.
+Processes can be rearranged by dragging them by their title if filter is disabled.</source>
+  <target state="translated">Для того, чтобы программа выполнялась, для нее должен быть начат процесс.
+1 ядро всегда назначается на автомасштабируемые программы, если процесс для нее активен.
+Процессы наверху списку для не автомасштабируемых программ имеют больший приоритет, когда ядра распределяются по процессам.
+После этого, оставшиеся ядра и память назначаются на процесс для автомасштабируемой программы.
+Только один процесс для автомасштабируемой программы может быть запущен одновременно.
+Возможен запуск большего числа процессов, чем необходимого числа ядер, чтобы они выполнялись одновременно.
+Минимальное время выполнения процесса ограничено.
+Приоритет процессов может быть изменен путем перетаскивания за его название, если фильтр выключен.</target>
+</trans-unit>
+<trans-unit id="sc4abb2a862937a4d">
+  <source>Processes are not found</source>
+  <target state="translated">Процессы не найдены</target>
+</trans-unit>
+<trans-unit id="sbf4e5f7cb18b3fa6">
+  <source>Not assigned</source>
+  <target state="translated">Не незначено</target>
+</trans-unit>
+<trans-unit id="sc1ace99ac4502b6b">
+  <source>Partially assigned</source>
+  <target state="translated">Частично назначено</target>
+</trans-unit>
+<trans-unit id="sf2688a93be651805">
+  <source>Fully assigned</source>
+  <target state="translated">Полностью назначено</target>
+</trans-unit>
+<trans-unit id="s5885e36ddecc2659">
+  <source>Disable displayed processes</source>
+  <target state="translated">Выключить отображенные процессы</target>
+</trans-unit>
+<trans-unit id="s898f2a40bcd27c1c">
+  <source>Enable displayed processes</source>
+  <target state="translated">Включить отображенные процессы</target>
+</trans-unit>
+<trans-unit id="sdc67f689ef9ad8d0">
+  <source>Delete displayed processes</source>
+  <target state="translated">Удалить отображенные процессы</target>
+</trans-unit>
+<trans-unit id="s0201879f032aad24">
+  <source>Are you sure want to delete displayed processes? Their progress will be lost.</source>
+  <target state="translated">Ты действительно хочешь удалить отображенные процессы? Их прогресс будет утерян.</target>
+</trans-unit>
+<trans-unit id="sb1fb534e4b2288d3">
+  <source>Select programs to start processes for them.
+If you already have process for same program, old process will be replaced with new one.
+Threads allow to run multiple instances of same program at same time but additional threads require additional memory.</source>
+  <target state="translated">Выбери одну из имеющихся программ, чтобы начать процесс для них.
+Если у тебя уже есть процесс для выбранной программы, старый процесс будет заменен на новый.
+Потоки позволяют выполняться нескольким экземплярам программы одновременно, но дополнительные потоки требует больше памяти.</target>
+</trans-unit>
+<trans-unit id="s9b28a794450bf25a">
+  <source>Are you sure want to replace processes for programs <x id="0" equiv-text="${programTitles.join()}"/>?</source>
+  <target state="translated">Ты действительно хочешь заменить процессы для программ <x id="0" equiv-text="${programTitles.join()}"/>?</target>
+</trans-unit>
+<trans-unit id="s03978bae61639231">
+  <source>Process for another autoscalable program has already been started</source>
+  <target state="translated">Процесс для другой автомасштабируемой программы уже запущен</target>
+</trans-unit>
+<trans-unit id="s608179b7b807679e">
+  <source>Process for program is already started</source>
+  <target state="translated">Процесс для программы уже запущен</target>
+</trans-unit>
+<trans-unit id="s44b469f6533a7439">
+  <source>Process for program is already started with threads <x id="0" equiv-text="${formattedThreads}"/></source>
+  <target state="translated">Процесс для программы уже запущен с потоками <x id="0" equiv-text="${formattedThreads}"/></target>
+</trans-unit>
+<trans-unit id="sc0c19a469362db0a">
+  <source>Some programs are already have processes started</source>
+  <target state="translated">Для некоторых программ процессы уже запущены</target>
+</trans-unit>
+<trans-unit id="sb81fe0c6f0b3be02">
+  <source>Program autoupgrade priority can be changed by dragging it by the title if filter is disabled.
+Programs on top have higher priority.
+Autoupgrade for programs won't change their tier but will attempt to increase level.
+Program level cannot be above development level.</source>
+  <target state="translated">Приоритет автоулучшения программы может быть изменен путем перетаскивания ее за название, если фильтр выключен.
+Программы на верху имеют больший приоритет.
+Автоулучшение программ не меняет их ранга, но будет пытаться увеличить их уровень.
+Уровень программ не может быть выше уровня развития.</target>
+</trans-unit>
+<trans-unit id="s09d60f1f4c456f9e">
+  <source>Upgrade all enabled programs</source>
+  <target state="translated">Улучшить все включенные программы</target>
+</trans-unit>
+<trans-unit id="s69e939145f1bc40b">
+  <source>Programs are not found</source>
+  <target state="translated">Программы не найдены</target>
+</trans-unit>
+<trans-unit id="s1ca5d25458be921f">
+  <source>Purchase programs</source>
+  <target state="translated">Приобрести программы</target>
+</trans-unit>
+<trans-unit id="s97271bd9215fa8b1">
+  <source>Select programs, tier and level to purchase them.
+Tier is limited depending on design and loaned items tier.
+Program level cannot be above development level.
+If you already have program with same name, old one will be replaced with new one.</source>
+  <target state="translated">Выбери программы, ранг и уровень, чтобы приобрести их.
+Ранг ограничен в зависимости от дизайна и ранга одолженных вещей.
+Уровень программы не может быть выше текущего уровня развития.
+Если у вас уже есть программа с выбранным типом, старая будет заменена на новую.</target>
+</trans-unit>
+<trans-unit id="s2b143b58eb4c7a24">
+  <source>Are you sure want to purchase programs "<x id="0" equiv-text="${programTitles.join(', ')}"/>"? This will replace your currently owned programs.</source>
+  <target state="translated">Ты действительно хочешь приобрести программы "<x id="0" equiv-text="${programTitles.join(', ')}"/>"? Это заменит твои уже приобретенные программы.</target>
+</trans-unit>
+<trans-unit id="sb0f9999643b30210">
+  <source>Programs are not selected</source>
+  <target state="translated">Программы не выбранны</target>
+</trans-unit>
+<trans-unit id="s8556009d055d6791">
+  <source>Some programs are already purchased</source>
+  <target state="translated">Некоторые программы уже приобретены</target>
+</trans-unit>
+<trans-unit id="s7d5edd9df8ced694">
+  <source>Delete displayed process</source>
+  <target state="translated">Удалить отображенные процессы</target>
+</trans-unit>
+<trans-unit id="s97ff1baa40101d35">
+  <source>Delete displayed clones</source>
+  <target state="translated">Удалить отображенные клоны</target>
+</trans-unit>
+<trans-unit id="s6dfa08b062f73135">
+  <source>Replace a clone</source>
+  <target state="translated">Заменить клона</target>
+</trans-unit>
+<trans-unit id="s022575cf6d220913">
+  <source>Cancel displayed sidejobs</source>
+  <target state="translated">Отменить отображенные подработки</target>
+</trans-unit>
+<trans-unit id="sf1c93c3d01125596">
+  <source>Remove displayed contract assignments</source>
+  <target state="translated">Удалить отображенные назначения контрактов</target>
+</trans-unit>
+<trans-unit id="s7958f0b77ef43bdf">
+  <source>Cancel displayed primary activities</source>
+  <target state="translated">Отменить отображенные основные деятельности</target>
+</trans-unit>
+<trans-unit id="s4b45b23adbb3eb5f">
+  <source>Upgrade mainframe hardware</source>
+  <target state="translated">Улучшить оборудование мейнфрейма</target>
+</trans-unit>
+<trans-unit id="sd12ecf66839eaf33">
+  <source>Upgrade mainframe performance</source>
+  <target state="translated">Улучшить производительность мейнфрейма</target>
+</trans-unit>
+<trans-unit id="s0bb97c84df900cbd">
+  <source>Upgrade mainframe RAM</source>
+  <target state="translated">Улучшить память мейнфрейма</target>
+</trans-unit>
+<trans-unit id="sf4e303f2f0069d55">
+  <source>Upgrade mainframe cores</source>
+  <target state="translated">Улучшить ядра мейнфрейма</target>
+</trans-unit>
+<trans-unit id="sccf3fe63cbad3006">
+  <source>Upgrade mainframe programs</source>
+  <target state="translated">Улучшить программы мейнфрейма</target>
+</trans-unit>
+<trans-unit id="s441ea32509da3a56">
+  <source>Upgrade clones levels</source>
+  <target state="translated">Улучшить уровни клонов</target>
+</trans-unit>
+<trans-unit id="s11f55d390f1720d8">
+  <source>Displayed processes deleted</source>
+  <target state="translated">Отображенные процессы удалены</target>
+</trans-unit>
+<trans-unit id="s5fccbd91d02a7f03">
+  <source>Displayed clones deleted</source>
+  <target state="translated">Отображенные клоны удалены</target>
+</trans-unit>
+<trans-unit id="sf207ed5be0888914">
+  <source>Displayed sidejobs cancelled</source>
+  <target state="translated">Отображенные подработки отменены</target>
+</trans-unit>
+<trans-unit id="s5e8e0533a432c5a1">
+  <source>Displayed contracts assignments removed</source>
+  <target state="translated">Отображенные назначения контрактов удалены</target>
+</trans-unit>
+<trans-unit id="s817e289c69a0bbe3">
+  <source>Connectivity affects chances to receive new contracts and unlocks new sidejobs. 
+Connectivity values are separate for each district and stack with program multiplier.</source>
+  <target state="translated">Связность влияет на шансы получения новых контрактов и разблокирует новые подработки.
+Значения связности раздельные для каждого района и сочетаются с множителем программ.</target>
+</trans-unit>
+<trans-unit id="s40903639a8b3467e">
+  <source>Rewards affect almost all gains. 
+Rewards multipliers are separate for each district and stack with program multiplier.</source>
+  <target state="translated">Награды влияют на почти все параметры.
+Множители наград раздельные для каждого района и сочетаются с множителем от программ.</target>
+</trans-unit>
+<trans-unit id="s958b3625a6f34068">
+  <source>Displayed primary activities have been cancelled</source>
+  <target state="translated">Отображенные основные деятельности отменены</target>
+</trans-unit>
+<trans-unit id="sbd2fd0d86d36ce84">
+  <source>Displayed sidejobs have been cancelled</source>
+  <target state="translated">Отображенные подработки отменены</target>
+</trans-unit>
+<trans-unit id="s0e7549217a35a7b0">
+  <source>Displayed contract assignments have been removed</source>
+  <target state="translated">Отображенные назначения контрактов удалены</target>
+</trans-unit>
+<trans-unit id="sa68d195fc276016f">
+  <source>Displayed clones have been deleted</source>
+  <target state="translated">Отображенные клоны удалены</target>
+</trans-unit>
+<trans-unit id="s8acc91ab365bae45">
+  <source>Clone "<x id="0" equiv-text="${existingClone.name}"/>" has been replaced with template "<x id="1" equiv-text="${CLONE_TEMPLATE_TEXTS[args.templateName].title()}"/>", tier <x id="2" equiv-text="${formattedTier}"/> and level <x id="3" equiv-text="${formattedLevel}"/></source>
+  <target state="translated">Клон "<x id="0" equiv-text="${existingClone.name}"/>" был заменен с шаблонов "<x id="1" equiv-text="${CLONE_TEMPLATE_TEXTS[args.templateName].title()}"/>", рангом <x id="2" equiv-text="${formattedTier}"/> и уровнем <x id="3" equiv-text="${formattedLevel}"/></target>
+</trans-unit>
+<trans-unit id="s2368e6d4b0af0f46">
+  <source>Clone, specializing on negotiaing.</source>
+  <target state="translated">Клон, специализирующийся на переговорах.</target>
+</trans-unit>
+<trans-unit id="s6412a01be4d9e16d">
+  <source>Clone, specializing on close combat.</source>
+  <target state="translated">Клон, специализирующийся на ближнем бою.</target>
+</trans-unit>
+<trans-unit id="s20cbad0f7b38a070">
+  <source>Clone, specializing on ranged combat.</source>
+  <target state="translated">Клон, специализирующийся на дальнем бою.</target>
+</trans-unit>
+<trans-unit id="s1cba69218dc88686">
+  <source>Autoupgrade</source>
+  <target state="translated">Автоулучшение</target>
+</trans-unit>
+<trans-unit id="se87dd4d0d779ffd7">
+  <source>Enable autoupgrade for displayed items</source>
+  <target state="translated">Включить автоулучшение для отображенных предметов</target>
+</trans-unit>
+<trans-unit id="sc06825bd67a1c47e">
+  <source>Disable autoupgrade for displayed items</source>
+  <target state="translated">Выключить автоулучшение для отображенных предметов</target>
+</trans-unit>
+<trans-unit id="sa82ba4e071c0f311">
+  <source>Upgrade displayed enabled items</source>
+  <target state="translated">Улучшение отображенных включенных предметов</target>
+</trans-unit>
+<trans-unit id="sdf86255ab6b00529">
+  <source>Restore values</source>
+  <target state="translated">Восстановить значения</target>
+</trans-unit>
+<trans-unit id="s75d28364b6759efe">
+  <source>Total cost</source>
+  <target state="translated">Полная стоиость</target>
+</trans-unit>
+<trans-unit id="s75731b8f1f07fd53">
+  <source>Hotkey</source>
+  <target state="translated">Горячая клавиша</target>
+</trans-unit>
+<trans-unit id="s8a49b21a2c9c0022">
+  <source>Unassigned</source>
+  <target state="translated">Не назначено</target>
+</trans-unit>
+<trans-unit id="seda3c13a45696664">
+  <source>Enable filter</source>
+  <target state="translated">Включить фильтр</target>
+</trans-unit>
+<trans-unit id="sffca760bd2f5178b">
+  <source>Disable filter</source>
+  <target state="translated">Выключить фильтр</target>
+</trans-unit>
+<trans-unit id="s2ce06b2ee69caa12">
+  <source>Reset filter</source>
+  <target state="translated">Очистить фильтр</target>
+</trans-unit>
+<trans-unit id="s1fb11f09a00ac2eb">
+  <source>Max tier</source>
+  <target state="translated">Максимальный ранг</target>
+</trans-unit>
+<trans-unit id="s0f2760b6d75ece5b">
+  <source>Max level</source>
+  <target state="translated">Максимальный уровень</target>
+</trans-unit>
+<trans-unit id="s71c351c452a34fbf">
+  <source>Show hotkeys</source>
+  <target state="translated">Показать горячие клавиши</target>
+</trans-unit>
+<trans-unit id="sea0c929b06a57985">
+  <source>Show everything</source>
+  <target state="translated">Показать все</target>
+</trans-unit>
+<trans-unit id="sde4d3409cc61c95e">
+  <source>Only items with max value</source>
+  <target state="translated">Только предметы с максимальным значением</target>
+</trans-unit>
+<trans-unit id="s5a4404fbbb84a37b">
+  <source>Only items with below max value</source>
+  <target state="translated">Только предметы ниже максимального значения</target>
+</trans-unit>
+<trans-unit id="s225737eaeb23244e">
+  <source>Only enabled</source>
+  <target state="translated">Только включенные</target>
+</trans-unit>
+<trans-unit id="s6b12409478f69315">
+  <source>Only disabled</source>
+  <target state="translated">Только выключенные</target>
+</trans-unit>
+<trans-unit id="s5f482e14edbd3e84">
+  <source>Automation page and clone level autoupgrade settings are now available.</source>
+  <target state="translated">Страница автоматизации и настройки автоулучшения уровня клонов теперь доступны.</target>
+</trans-unit>
+<trans-unit id="sfaf9ab0375e88edd">
+  <source>Mainframe hardware automation settings are now available on automation page.</source>
+  <target state="translated">Настройки автоматизации оборудования мейнфрейма теперь доступны на странице автоматизации.</target>
+</trans-unit>
+<trans-unit id="sd1b8bfd64fab6084">
+  <source>Mainframe programs automation settings are now available on automation page.</source>
+  <target state="translated">Настройки автоматизации программ мейнфрейма теперь доступны на странице автоматизации.</target>
+</trans-unit>
+<trans-unit id="s7baee8efb66a4462">
+  <source>Code base points are now available.
+Increase them to make mainframe programs cheaper.
+Programs and districts multipliers stack.</source>
+  <target state="translated">Теперь доступны очки кодовой базы.
+Их увеличение уменьшает стоимость программ мейнфрейма.
+Множители для программ и районов сочетаются.</target>
+</trans-unit>
+<trans-unit id="se92794f1fafc785a">
+  <source>Computational base points are now available.
+Increase them to make mainframe hardware cheaper.
+Programs and districts multipliers stack.</source>
+  <target state="translated">Теперь доступны очки вычислительной базы.
+Их увеличение уменьшает стоимость оборудования мейнфрейма.
+Множители для программ и районов сочетаются.</target>
+</trans-unit>
+<trans-unit id="s7d7c619f5cb707c2">
+  <source>Connectivity points are now available.
+Increase them to unlock more sidejobs and to increase chances of receiving new contracts from selected faction.
+Programs multiplier improve districts mutlipliers.</source>
+  <target state="translated">Теперь доступны очки связности.
+Их увеличение приводит к разблокированию подработок и увеличению шансов получения новых контрактов для выбранной фракции.
+Множитель программ улучшает множители районов.</target>
+</trans-unit>
+<trans-unit id="sb8552d8b622b42cb">
+  <source>Rewards points are now available.
+Increase them to get more rewards from almost everything.
+Programs multiplier improve districts mutlipliers.</source>
+  <target state="translated">Очки наград теперь доступны.
+Их увеличение приводит к увеличению почти всех доходов.
+Множитель программ улучшает множители районов.</target>
+</trans-unit>
+<trans-unit id="s365636f39e606815">
+  <source>Clone experience is now can be shared between them.
+Whenever clone receives experience, all available clones in company will receive part of it.
+How big is this part depends on running processes and available synchronization.
+Programs and districts multipliers stack.</source>
+  <target state="translated">Опыт клонов теперь может быть обменен между ними.
+Каждый раз, когда клон получает опыт, все доступные клоны в компании дополнительно получают его часть.
+Размер этой части зависит от выполняющихся процессов и доступной синхронизации.
+Множители программ и районов сочетаются.</target>
+</trans-unit>
+<trans-unit id="s144c49bd4e78cc27">
+  <source>The end of the game has been reached.</source>
+  <target state="translated">Конец игры был достигнут.</target>
+</trans-unit>
+<trans-unit id="s16bb2a30d2d4a8cf">
+  <source>Program to automatically buy mainframe hardware upgrades.
+Sum of level differences per completion cannot be above action count.</source>
+  <target state="translated">Программа для автоматической покупки улучшений оборудования мейнфрейма.
+Сумма разностей уровней за одно выполнение не может превышать количество действий.</target>
+</trans-unit>
+<trans-unit id="s1fea02444f14039d">
+  <source>Program to automatically buy mainframe programs.
+Sum of level differences per completion cannot be above action count.</source>
+  <target state="translated">Программа для автоматической покупки программ мейнфрейма.
+Сумма разностей уровней за одно выполнение не может превышать количество действий.</target>
+</trans-unit>
+<trans-unit id="se2fd494385cc9662">
+  <source>Program to automatically upgrade levels of clones.
+Sum of level differences per completion cannot be above action count.</source>
+  <target state="translated">Программа для автоматического улучшения уровней клонов.
+Сумма разностей уровней за одно выполнение не может превышать количество действий.</target>
+</trans-unit>
+<trans-unit id="s4ff6aecce93e00c8">
+  <source>Required RAM</source>
+  <target state="translated">Необходимая память</target>
+</trans-unit>
+<trans-unit id="sa47c244aafd93795">
+  <source>Perform random jobs not requiring high qualification. Slightly improves faction influence.</source>
+  <target state="translated">Выполнение случайных работ, не требующих высокой квалификации. Немного улучшает очки влияния фракции.</target>
+</trans-unit>
+<trans-unit id="s21a4764892e206dc">
+  <source>Find and deliver useful information for various parties. Slightly improves connectivity.</source>
+  <target state="translated">Поиск и выдача полезной информации для разных сторон. Немного улучшает очки связности.</target>
+</trans-unit>
+<trans-unit id="s9cb2db2498e98d72">
+  <source>Write and maintain various programs. Slightly improves codebase points.</source>
+  <target state="translated">Написание и поддержка различных программ. Немного улучшает очки кодовой базы.</target>
+</trans-unit>
+<trans-unit id="sd232e73cc1f4bc05">
+  <source>Repair various electronics. Slight improves computational points.</source>
+  <target state="translated">Починка различной электроники. Немного улучшает очки вычислительной базы.</target>
+</trans-unit>
+<trans-unit id="s10ce8bfb4a0d8da2">
+  <source>Find compromises between various parties with profit for yourself. Slightly improves rewards points.</source>
+  <target state="translated">Поиск компромиссов между различными сторонами с выгодой для себя. Немного улучшает очки наград.</target>
+</trans-unit>
+<trans-unit id="s727dd5cf84810365">
+  <source>Sidejob is not available</source>
+  <target state="translated">Подработка недоступна</target>
+</trans-unit>
+<trans-unit id="s4fcfe81258ac1a5a">
+  <source>Company is locked</source>
+  <target state="translated">Компания заблокирована</target>
+</trans-unit>
+<trans-unit id="sfde98f4b98a2ad22">
+  <source>Some districts are locked</source>
+  <target state="translated">Некоторые районы заблокированы</target>
+</trans-unit>
+<trans-unit id="s25913c4653bba8f0">
+  <source>Some clones don't fit requirements</source>
+  <target state="translated">Некоторые клоны не подходят под требования</target>
+</trans-unit>
+<trans-unit id="sf8046432f3d52f4c">
+  <source>Some districts are lacking connectivity for sidejobs</source>
+  <target state="translated">Некоторые районы не имею достаточно связности для подработок</target>
+</trans-unit>
+<trans-unit id="sd8d78291bfdcf136">
+  <source>Sidejobs are valid</source>
+  <target state="translated">Подработки валидны</target>
+</trans-unit>
+<trans-unit id="s615464fa955b4b70">
+  <source>Primary activity is locked</source>
+  <target state="translated">Основная деятельность заблокирована</target>
+</trans-unit>
+<trans-unit id="s04254316901c3cd7">
+  <source>Contract is not available</source>
+  <target state="translated">Контракт недоступен</target>
+</trans-unit>
+<trans-unit id="sfe8fbeaf7b080d52">
+  <source>Some contracts are not available</source>
+  <target state="translated">Некоторые контракты недоступны</target>
+</trans-unit>
+<trans-unit id="s6d3f87a87d319537">
+  <source>Some district are locked</source>
+  <target state="translated">Некоторые районы заблокированы</target>
+</trans-unit>
+<trans-unit id="s1ded8def873cd4f0">
+  <source>Clones don't fit requirements for some contracts</source>
+  <target state="translated">Клоны не подходят под требования для некоторых контрактов</target>
+</trans-unit>
+<trans-unit id="s94d6d7ab41bc150e">
+  <source>Not enough clones for some contracts</source>
+  <target state="translated">Для некоторых контрактов выбрано недостаточно клонов</target>
+</trans-unit>
+<trans-unit id="sdf6eb5de3a91d040">
+  <source>Too many clones for some contracts</source>
+  <target state="translated">Для некоторых контрактов выбрано слишком много клонов</target>
+</trans-unit>
+<trans-unit id="s1b171a6a73d39018">
+  <source>Contracts are valid</source>
+  <target state="translated">Контракты валидны</target>
+</trans-unit>
+<trans-unit id="s49eceb34d2365c4f">
+  <source>Program is not available</source>
+  <target state="translated">Программа недоступна</target>
+</trans-unit>
+<trans-unit id="s5b5451dd42239d0f">
+  <source>Program is valid</source>
+  <target state="translated">Программа валидна</target>
+</trans-unit>
+<trans-unit id="sea00247cd259ec66">
+  <source>Some programs are locked</source>
+  <target state="translated">Некоторые программы заблокированы</target>
+</trans-unit>
+<trans-unit id="s75a90f57633340ba">
+  <source>Some programs are not available</source>
+  <target state="translated">Некоторые программы недоступны</target>
+</trans-unit>
+<trans-unit id="s1edde1a0ef981090">
+  <source>Programs are valid</source>
+  <target state="translated">Программы валидны</target>
+</trans-unit>
+<trans-unit id="s7079094d576a5e11">
+  <source>Mainframe hardware is locked</source>
+  <target state="translated">Оборудование мейнфрема заблокировано</target>
+</trans-unit>
+<trans-unit id="s8682ef47e8279ad4">
+  <source>Increase is invalid</source>
+  <target state="translated">Увеличение невалидно</target>
+</trans-unit>
+<trans-unit id="s7b4299d28ff6568c">
+  <source>Selected program is not owned</source>
+  <target state="translated">Выбранная программа недоступна</target>
+</trans-unit>
+<trans-unit id="sbe066244fef250a4">
+  <source>Invalid amount of threads</source>
+  <target state="translated">Невалидное количество потоков</target>
+</trans-unit>
+<trans-unit id="s8a3f0ead0b0462c8">
+  <source>Process is valid</source>
+  <target state="translated">Процесс валиден</target>
+</trans-unit>
+<trans-unit id="s9668ebcfb12889ec">
+  <source>Some programs are not owned</source>
+  <target state="translated">Некоторые программы недоступны</target>
+</trans-unit>
+<trans-unit id="s2adcd593213049bf">
+  <source>Multiple autoscalable processes cannot be started at same time</source>
+  <target state="translated">Несколько автомасштабируемыех процессов не могут быть начаты одновременно</target>
+</trans-unit>
+<trans-unit id="s967596082d2362aa">
+  <source>Processes are valid</source>
+  <target state="translated">Процессы валидны</target>
+</trans-unit>
+<trans-unit id="s4cfcd042fa6ff9cc">
+  <source>Clone is not available</source>
+  <target state="translated">Клон не доступен</target>
+</trans-unit>
+<trans-unit id="sefbe17689dcbcc50">
+  <source>Clone is valid</source>
+  <target state="translated">Клон валиден</target>
+</trans-unit>
+<trans-unit id="s7e148762ca8e7322">
+  <source>Clone replaced</source>
+  <target state="translated">Клон заменен</target>
+</trans-unit>
+<trans-unit id="sb2309f7a7eea0a90">
+  <source>Displayed primary activities cancelled</source>
+  <target state="translated">Отображенные основные деятельности отменены</target>
+</trans-unit>
+<trans-unit id="s88d3e385202d8bcc">
+  <source>Displayed processes have been deleted</source>
+  <target state="translated">Отображенные процессы были удалены</target>
+</trans-unit>
+<trans-unit id="s4d4e9bd4d4278f1d">
+  <source>Program to assist with making deals.
+Generates rewards points and improves almost all gains.</source>
+  <target state="translated">Программа для помощи с совершением сделок.
+Генерирует очки наград и улучшает почти все доходы.</target>
+</trans-unit>
+<trans-unit id="s3ccabea28625fe7c">
+  <source>Some sidejobs are not available</source>
+  <target state="translated">Некоторые подработки недоступны</target>
+</trans-unit>
+<trans-unit id="sd3be1458c6111e62">
+  <source>Start processes</source>
+  <target state="translated">Запустить процессы</target>
 </trans-unit>
 </body>
 </file>

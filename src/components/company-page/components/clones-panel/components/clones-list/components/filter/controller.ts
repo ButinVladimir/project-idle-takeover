@@ -5,4 +5,12 @@ export class ClonesFilterController extends BaseController {
   listClones(): IClone[] {
     return this.clonesState.ownedClones.listClones();
   }
+
+  listAvailableCloneTemplates(): string[] {
+    return this.unlockState.items.cloneTemplates.listAvailableItems();
+  }
+
+  getCloneTemplateTier(cloneTemplate: string): number {
+    return this.unlockState.items.cloneTemplates.getItemHighestAvailableTier(cloneTemplate);
+  }
 }

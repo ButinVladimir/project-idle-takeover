@@ -59,7 +59,12 @@ export class GameSpeedButtons extends BaseComponent {
       <sl-tooltip>
         <div class="tooltip-content" slot="content">
           <p>${GAME_SPEED_TEXTS[gameSpeed]()}</p>
-          <p>${COMMON_TEXTS.hotkey(this._controller.getGameSpeedHotkey(gameSpeed))}</p>
+          <p>
+            ${COMMON_TEXTS.parameterRow(
+              COMMON_TEXTS.hotkey(),
+              COMMON_TEXTS.hotkeyValue(this._controller.getGameSpeedHotkey(gameSpeed)),
+            )}
+          </p>
         </div>
 
         <sl-icon-button

@@ -3,7 +3,14 @@ import { localized, msg } from '@lit/localize';
 import { provide } from '@lit/context';
 import { customElement, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { ActivityStatusFilterValue, BaseComponent, filterByState, StateFilterValue } from '@shared/index';
+import {
+  ActivityStatusFilterValue,
+  BaseComponent,
+  compareOptions,
+  filterByState,
+  ISelectOption,
+  StateFilterValue,
+} from '@shared/index';
 import { ISidejobActivity } from '@state/activity-state';
 import { SidejobsListController } from './controller';
 import styles from './styles';
@@ -110,7 +117,13 @@ export class SidejobsList extends BaseComponent {
       sidejobs = sidejobs.filter(this.filterSidejob);
     }
 
-    this._sidejobsList = sidejobs;
+    const options: ISelectOption<ISidejobActivity>[] = sidejobs.map((sidejobActivity) => ({
+      name: sidejobActivity.sidejob.assignedClone.name,
+      value: sidejobActivity,
+    }));
+    options.sort(compareOptions);
+
+    this._sidejobsList = options.map((option) => option.value);
   }
 
   private filterSidejob = (sidejobActivity: ISidejobActivity): boolean => {

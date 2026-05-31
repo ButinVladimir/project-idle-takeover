@@ -5,24 +5,17 @@ export const MILESTONE_TEXTS: Record<Milestone, { title: () => string; hint: () 
   [Milestone.unlockedAutomation]: {
     title: () => msg('Unlocked basic automation'),
     hint: () => msg('Automation page and clone level autoupgrade are available'),
-    message: () =>
-      msg(`Automation page and clone level autoupgrade settings are now available.
-New program is available.
-`),
+    message: () => msg(`Automation page and clone level autoupgrade settings are now available.`),
   },
   [Milestone.unlockedAutomationMainframeHardware]: {
     title: () => msg('Unlocked mainframe hardware automation'),
     hint: () => msg('Mainframe hardware automation settings are available on automation page'),
-    message: () =>
-      msg(`Mainframe hardware automation settings are now available on automation page.
-New program is available.`),
+    message: () => msg(`Mainframe hardware automation settings are now available on automation page.`),
   },
   [Milestone.unlockedAutomationMainframePrograms]: {
     title: () => msg('Unlocked mainframe programs automation'),
     hint: () => msg('Mainframe programs automation settings are available on automation page'),
-    message: () =>
-      msg(`Mainframe programs automation settings are now available on automation page.
-New program is available.`),
+    message: () => msg(`Mainframe programs automation settings are now available on automation page.`),
   },
   [Milestone.unlockedMainframePrograms]: {
     title: () => msg('Unlocked mainframe programs'),
@@ -47,7 +40,7 @@ It's now possible to make clones from templates and send them to perform sidejob
     message: () =>
       msg(`Code base points are now available.
 Increase them to make mainframe programs cheaper.
-Multipliers for programs and districts stack.`),
+Programs and districts multipliers stack.`),
   },
   [Milestone.unlockedComputationalBase]: {
     title: () => msg('Unlocked computational base points'),
@@ -55,7 +48,7 @@ Multipliers for programs and districts stack.`),
     message: () =>
       msg(`Computational base points are now available.
 Increase them to make mainframe hardware cheaper.
-Multipliers for programs and districts stack.`),
+Programs and districts multipliers stack.`),
   },
   [Milestone.unlockedConnectivity]: {
     title: () => msg('Unlocked connectivity points'),
@@ -63,15 +56,15 @@ Multipliers for programs and districts stack.`),
     message: () =>
       msg(`Connectivity points are now available.
 Increase them to unlock more sidejobs and to increase chances of receiving new contracts from selected faction.
-Multipliers for programs and districts stack.`),
+Programs multiplier improve districts mutlipliers.`),
   },
   [Milestone.unlockedRewards]: {
     title: () => msg('Unlocked rewards points'),
     hint: () => msg('Rewards points increase rewards from everything'),
     message: () =>
       msg(`Rewards points are now available.
-Increase them to get more rewards from everything.
-Multipliers for programs and districts stack.`),
+Increase them to get more rewards from almost everything.
+Programs multiplier improve districts mutlipliers.`),
   },
   [Milestone.unlockedExperienceShare]: {
     title: () => msg('Unlocked experience share'),
@@ -79,7 +72,8 @@ Multipliers for programs and districts stack.`),
     message: () =>
       msg(`Clone experience is now can be shared between them.
 Whenever clone receives experience, all available clones in company will receive part of it.
-How big is this part depends on running processes and available synchronization.`),
+How big is this part depends on running processes and available synchronization.
+Programs and districts multipliers stack.`),
   },
   [Milestone.unlockedInfluence]: {
     title: () => msg('Unlocked faction influence'),
@@ -105,6 +99,6 @@ Primary activity can increase certain parameters, like faction influence and not
   [Milestone.reachedEndOfTheGame]: {
     title: () => msg('Reached the end of the game'),
     hint: () => msg('The end of the game was reached'),
-    message: () => msg(`The end of the game was reached.`),
+    message: () => msg(`The end of the game has been reached.`),
   },
 };

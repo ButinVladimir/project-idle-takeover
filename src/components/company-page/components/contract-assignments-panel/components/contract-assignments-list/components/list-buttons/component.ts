@@ -58,7 +58,6 @@ export class ContractsListButtons extends BaseComponent {
 
     const canStartContractAssignments = this.checkCanStartContractAssignments();
     const startLabel = msg('Add displayed assigned contracts to the queue');
-    const startHotkey = this._controller.getStartHotkey();
 
     return html`
       <div class="buttons desktop buttons-4">
@@ -68,43 +67,41 @@ export class ContractsListButtons extends BaseComponent {
           <sl-icon-button name=${filterIcon} label=${filterLabel} @click=${this.handleToggleFilter}> </sl-icon-button>
         </sl-tooltip>
 
-            <sl-tooltip>
-              <div class="tooltip-content" slot="content">
-                <p>${startLabel}</p>
-                <p>${COMMON_TEXTS.hotkey(startHotkey)}</p>
-              </div>
+        <sl-tooltip>
+          <div class="tooltip-content" slot="content">
+            <p>${startLabel}</p>
+          </div>
 
-              <sl-icon-button
-                ?disabled=${!canStartContractAssignments}
-                name=${START_ACTIVITY_ICON}
-                label=${startLabel}
-                @click=${this.handleStartDisplayedContractAssignments}
-              >
-              </sl-icon-button>
-            </sl-tooltip>
+          <sl-icon-button
+            ?disabled=${!canStartContractAssignments}
+            name=${START_ACTIVITY_ICON}
+            label=${startLabel}
+            @click=${this.handleStartDisplayedContractAssignments}
+          >
+          </sl-icon-button>
+        </sl-tooltip>
 
-            <sl-tooltip>
-              <span slot="content"> ${toggleContractAssignmentsLabel} </span>
+        <sl-tooltip>
+          <span slot="content"> ${toggleContractAssignmentsLabel} </span>
 
-              <sl-icon-button
-                name=${toggleContractAssignmentsIcon}
-                label=${toggleContractAssignmentsLabel}
-                @click=${this.handleToggleDisplayedContractAssignments}
-              >
-              </sl-icon-button>
-            </sl-tooltip>
+          <sl-icon-button
+            name=${toggleContractAssignmentsIcon}
+            label=${toggleContractAssignmentsLabel}
+            @click=${this.handleToggleDisplayedContractAssignments}
+          >
+          </sl-icon-button>
+        </sl-tooltip>
 
-            <sl-tooltip>
-              <span slot="content"> ${removeDisplayedContractAssignments} </span>
+        <sl-tooltip>
+          <span slot="content"> ${removeDisplayedContractAssignments} </span>
 
-              <sl-icon-button
-                id="delete-btn"
-                name=${DELETE_VALUES.icon}
-                label=${removeDisplayedContractAssignments}
-                @click=${this.handleOpenRemoveDisplayedContractAssignmentsDialog}
-              >
-              </sl-icon-button>
-            </sl-tooltip>
+          <sl-icon-button
+            id="delete-btn"
+            name=${DELETE_VALUES.icon}
+            label=${removeDisplayedContractAssignments}
+            @click=${this.handleOpenRemoveDisplayedContractAssignmentsDialog}
+          >
+          </sl-icon-button>
         </sl-tooltip>
       </div>
     `;
@@ -133,7 +130,6 @@ export class ContractsListButtons extends BaseComponent {
     const startVariant = canStartContractAssignments
       ? ENTITY_ACTIVE_VALUES.buttonVariant.active
       : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
-    const startHotkey = this._controller.getStartHotkey();
 
     return html`
       <div class="buttons mobile">
@@ -142,20 +138,17 @@ export class ContractsListButtons extends BaseComponent {
 
           ${filterLabel}
         </sl-button>
-        <sl-tooltip>
-          <span slot="content">${COMMON_TEXTS.hotkey(startHotkey)} </span>
 
-          <sl-button
-            ?disabled=${!canStartContractAssignments}
-            variant=${startVariant}
-            size="medium"
-            @click=${this.handleStartDisplayedContractAssignments}
-          >
-            <sl-icon slot="prefix" name=${START_ACTIVITY_ICON}></sl-icon>
+        <sl-button
+          ?disabled=${!canStartContractAssignments}
+          variant=${startVariant}
+          size="medium"
+          @click=${this.handleStartDisplayedContractAssignments}
+        >
+          <sl-icon slot="prefix" name=${START_ACTIVITY_ICON}></sl-icon>
 
-            ${startLabel}
-          </sl-button>
-        </sl-tooltip>
+          ${startLabel}
+        </sl-button>
 
         <sl-button
           variant=${toggleContractAssignmentsVariant}

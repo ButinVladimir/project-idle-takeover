@@ -96,7 +96,7 @@ Only one team of clones can be assigned per district and contract.`)}
                 hoist
                 @sl-change=${this.handleContractNameChange}
               >
-                <span class="input-label" slot="label"> ${msg('Contract')} </span>
+                <span class="input-label" slot="label"> ${msg('Contracts')} </span>
 
                 ${this.renderContractNameOptions()}
               </sl-select>
@@ -110,7 +110,7 @@ Only one team of clones can be assigned per district and contract.`)}
                 hoist
                 @sl-change=${this.handleDistrictIndexChange}
               >
-                <span class="input-label" slot="label"> ${msg('District')} </span>
+                <span class="input-label" slot="label"> ${msg('Districts')} </span>
 
                 ${this.renderDistrictOptions()}
               </sl-select>

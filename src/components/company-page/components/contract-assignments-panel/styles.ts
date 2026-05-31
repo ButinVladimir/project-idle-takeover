@@ -17,6 +17,13 @@ const styles = [
 
     div.top-container {
       margin-bottom: var(--ca-section-gap);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--ca-section-buttons-gap);
+
+      p {
+        margin: 0;
+      }
     }
   `,
 ];

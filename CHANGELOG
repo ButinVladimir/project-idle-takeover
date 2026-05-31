@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.3.1 (2026-05-30)
+
+- Memory leak was fixed (hopefully)
+- Following lists now have filters:
+- - Programs
+- - Processes
+- - Clones
+- - Sidejobs
+- - Contracts
+- - Primary activity
+- Clones can be now replaced without removing and buying them again
+- Text was updated
+- Some panels now have separate button for displaying hotkeys:
+- - Programs
+- - Mainframe hardware
+- - Clones
+- - Contracts
+- Batch purchase, assignment and start for:
+- - Sidejobs
+- - Contracts
+- - Programs
+- - Processess
+- Items now are sorted alphabetically in specific selects
+- Districts and clones are sorted alphabetically in statistics
+- Unlocked items, activities and milestones are sorted alphabetically
+
 ## 0.3.0 (2025-12-29)
 
 - Game was renamed to Project: Idle Takeover from Cyberiada

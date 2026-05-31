@@ -159,11 +159,14 @@ export function filterByState(value: boolean, filter: StateFilterValue): boolean
   return false;
 }
 
-export function compareOptions(optionA: ISelectOption, optionB: ISelectOption): number {
+export function compareOptions<V = string>(optionA: ISelectOption<V>, optionB: ISelectOption<V>): number {
   return optionA.name.localeCompare(optionB.name);
 }
 
-export function compareTieredOptions(optionA: ISelectTieredOption, optionB: ISelectTieredOption): number {
+export function compareTieredOptions<V = string>(
+  optionA: ISelectTieredOption<V>,
+  optionB: ISelectTieredOption<V>,
+): number {
   if (optionA.tier !== optionB.tier) {
     return optionB.tier - optionA.tier;
   }

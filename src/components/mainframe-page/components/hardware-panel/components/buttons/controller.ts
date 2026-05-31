@@ -14,7 +14,19 @@ export class MainframeHardwarePanelButtonsController extends BaseController {
     this.mainframeState.hardware.upgrader.upgradeMaxAllParameters();
   }
 
-  getHotkey(): string | undefined {
+  getUpgradeMainframeHardwareHotkey(): string | undefined {
     return this.settingsState.hotkeys.getKeyByHotkey(Hotkey.upgradeMainframeHardware);
+  }
+
+  getUpgradeMainframePerformanceHotkey(): string | undefined {
+    return this.settingsState.hotkeys.getKeyByHotkey(Hotkey.upgradeMainframePerformance);
+  }
+
+  getUpgradeMainframeRamHotkey(): string | undefined {
+    return this.settingsState.hotkeys.getKeyByHotkey(Hotkey.upgradeMainframeRam);
+  }
+
+  getUpgradeMainframeCoresHotkey(): string | undefined {
+    return this.settingsState.hotkeys.getKeyByHotkey(Hotkey.upgradeMainframeCores);
   }
 }

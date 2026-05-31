@@ -28,7 +28,7 @@ export const SIDEJOB_VALIDATION_TEXTS: Record<SidejobValidationResult, () => str
 
 export const SIDEJOBS_BATCH_VALIDATION_TEXTS: Record<SidejobsBatchValidationResult, () => string> = {
   [SidejobsBatchValidationResult.companyLocked]: () => msg('Company is locked'),
-  [SidejobsBatchValidationResult.sidejobsNotAvailable]: () => msg('Sine sidejobs are not available'),
+  [SidejobsBatchValidationResult.sidejobsNotAvailable]: () => msg('Some sidejobs are not available'),
   [SidejobsBatchValidationResult.districtsLocked]: () => msg('Some districts are locked'),
   [SidejobsBatchValidationResult.requirementsNotMet]: () => msg(`Some clones don't fit requirements`),
   [SidejobsBatchValidationResult.notEnoughConnectivity]: () =>
