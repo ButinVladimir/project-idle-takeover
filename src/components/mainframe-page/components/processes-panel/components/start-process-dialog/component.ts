@@ -76,13 +76,13 @@ export class StartProcessDialog extends BaseComponent {
     return html`
       <form id="start-process-dialog" @submit=${this.handleSubmit}>
         <sl-dialog ?open=${this.open} @sl-request-close=${this.handleClose}>
-          <h4 slot="label" class="title">${msg('Start process')}</h4>
+          <h4 slot="label" class="title">${msg('Start processes')}</h4>
 
           <div class="body">
             <p class="hint">
               ${msg(`Select programs to start processes for them.
 If you already have process for same program, old process will be replaced with new one.
-Threads allow to run multiple instances of same program at same time, but additional threads require additional memory.`)}
+Threads allow to run multiple instances of same program at same time but additional threads require additional memory.`)}
             </p>
 
             <div class=${inputsContainerClasses}>
@@ -95,7 +95,7 @@ Threads allow to run multiple instances of same program at same time, but additi
                 hoist
                 @sl-change=${this.handleProgramChange}
               >
-                <span class="input-label" slot="label"> ${msg('Program')} </span>
+                <span class="input-label" slot="label"> ${msg('Programs')} </span>
 
                 ${this.renderProgramNameOptions()}
               </sl-select>

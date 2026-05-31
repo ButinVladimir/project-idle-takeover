@@ -13,7 +13,7 @@ import {
   ActivityStatusFilterValue,
   MULTIPLE_SELECT_SEPARATOR,
 } from '@shared/index';
-import { COMMON_TEXTS } from '@texts/common';
+import { COMMON_TEXTS, DISTRICT_NAMES } from '@texts/index';
 import { PrimaryActivityListFilterController } from './controller';
 import styles from './styles';
 import { primaryActivityFilterStateContext } from '../../contexts';
@@ -131,7 +131,7 @@ export class PrimaryActivityListFilter extends BaseComponent {
     const districts = this._controller.listAvailableDistricts();
 
     const options: ISelectOption[] = districts.map((district) => ({
-      name: district.name,
+      name: DISTRICT_NAMES[district.name](),
       value: district.index.toString(),
     }));
     options.sort(compareOptions);

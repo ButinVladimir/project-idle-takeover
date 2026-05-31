@@ -12,9 +12,12 @@ import {
   ContractAlert,
   ENTITY_ACTIVE_VALUES,
   START_ACTIVITY_ICON,
+  ISelectOption,
+  compareOptions,
 } from '@shared/index';
 import { COMMON_TEXTS, CONTRACT_TEXTS, DISTRICT_NAMES } from '@texts/index';
 import { type IContractAssignment } from '@state/automation-state';
+import { IClone } from '@state/clones-state';
 import { ContractAssignmentsListItemController } from './controller';
 import { contractAssignmentActivityContext } from './contexts';
 import styles from './styles';
@@ -80,6 +83,12 @@ export class ContractAssignmentListItem extends BaseComponent {
       ? msg('Disable contract assignment')
       : msg('Enable contract assignment');
 
+    const cloneOptions: ISelectOption<IClone>[] = this._contractAssignment.contract.assignedClones.map((clone) => ({
+      name: clone.name,
+      value: clone,
+    }));
+    cloneOptions.sort(compareOptions);
+
     const removeContractAssignmentLabel = msg('Remove contract assignment');
 
     return html`
@@ -109,9 +118,9 @@ export class ContractAssignmentListItem extends BaseComponent {
 
         <div class="clones">
           ${repeat(
-            this._contractAssignment.contract.assignedClones,
-            (clone) => clone.id,
-            (clone) => html`<p>${clone.name}</p>`,
+            cloneOptions,
+            (option) => option.value.id,
+            (option) => html`<p>${option.name}</p>`,
           )}
         </div>
 

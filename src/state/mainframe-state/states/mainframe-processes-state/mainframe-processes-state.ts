@@ -156,7 +156,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
 
     this._messageLogState.postMessage(
       ProgramsEvent.displayedProcessesDeleted,
-      msg('Displayed process have been deleted'),
+      msg('Displayed processes have been deleted'),
     );
 
     this.requestUpdateRunningProcesses();

@@ -38,7 +38,7 @@ Program level cannot be above development level.`)}
           <div slot="content">
             <p>
               ${COMMON_TEXTS.parameterRow(
-                msg('Upgrade max all enabled programs'),
+                msg('Upgrade all enabled programs'),
                 COMMON_TEXTS.hotkeyValue(upgradeProgramsHotkey),
               )}
             </p>

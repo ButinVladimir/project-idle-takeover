@@ -33,9 +33,9 @@ export const POINT_MULTIPLIER_HINTS = {
 export const STATISTIC_HINTS = {
   connectivity: () =>
     msg(`Connectivity affects chances to receive new contracts and unlocks new sidejobs. 
-Connectivity values are separate for each district.`),
+Connectivity values are separate for each district and stack with program multiplier.`),
   synchronization: () => msg('Synchronization affects how many clones can be in company.'),
   rewards: () =>
-    msg(`Rewards affect all gains. 
+    msg(`Rewards affect almost all gains. 
 Rewards multipliers are separate for each district and stack with program multiplier.`),
 };

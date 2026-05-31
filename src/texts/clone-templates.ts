@@ -15,14 +15,14 @@ Can do everything but without outstanding results.`),
   },
   fixer: {
     title: () => msg('Fixer'),
-    overview: () => msg(`Clone, specialized on negotiaing and dealing with large amount of information.`),
+    overview: () => msg(`Clone, specializing on negotiaing.`),
   },
   bouncer: {
     title: () => msg('Bouncer'),
-    overview: () => msg(`Clone, specialized on close combat.`),
+    overview: () => msg(`Clone, specializing on close combat.`),
   },
   gunner: {
     title: () => msg('Gunner'),
-    overview: () => msg(`Clone, specialized on ranged combat.`),
+    overview: () => msg(`Clone, specializing on ranged combat.`),
   },
 };

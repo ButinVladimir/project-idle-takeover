@@ -61,7 +61,7 @@ export class StartProcessDialogButtons extends BaseComponent {
         <sl-button size="medium" variant="default" @click=${this.handleCancel}> ${COMMON_TEXTS.close()} </sl-button>
 
         <sl-button size="medium" variant="primary" ?disabled=${this.disabled} @click=${this.handleStart}>
-          ${msg('Start process')}
+          ${msg('Start processes')}
         </sl-button>
       </div>
     `;

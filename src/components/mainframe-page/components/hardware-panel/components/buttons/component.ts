@@ -31,25 +31,25 @@ export class MainframeHardwarePanelButtons extends BaseComponent {
         <div class="hotkeys-content" slot="content">
           <p>
             ${COMMON_TEXTS.parameterRow(
-              msg('Upgrade max all enabled mainframe hardware'),
+              msg('Upgrade all enabled mainframe hardware'),
               COMMON_TEXTS.hotkeyValue(this._controller.getUpgradeMainframeHardwareHotkey()),
             )}
           </p>
           <p>
             ${COMMON_TEXTS.parameterRow(
-              msg('Upgrade max mainframe performace'),
+              msg('Upgrade mainframe performace'),
               COMMON_TEXTS.hotkeyValue(this._controller.getUpgradeMainframePerformanceHotkey()),
             )}
           </p>
           <p>
             ${COMMON_TEXTS.parameterRow(
-              msg('Upgrade max mainframe RAM'),
+              msg('Upgrade mainframe RAM'),
               COMMON_TEXTS.hotkeyValue(this._controller.getUpgradeMainframeRamHotkey()),
             )}
           </p>
           <p>
             ${COMMON_TEXTS.parameterRow(
-              msg('Upgrade max mainframe cores'),
+              msg('Upgrade mainframe cores'),
               COMMON_TEXTS.hotkeyValue(this._controller.getUpgradeMainframeCoresHotkey()),
             )}
           </p>

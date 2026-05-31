@@ -16,7 +16,7 @@ import {
   MULTIPLE_SELECT_SEPARATOR,
 } from '@shared/index';
 import { STATE_FILTER_TEXTS, COMMON_TEXTS } from '@texts/common';
-import { SIDEJOB_TEXTS } from '@texts/index';
+import { DISTRICT_NAMES, SIDEJOB_TEXTS } from '@texts/index';
 import { SidejobsListFilterController } from './controller';
 import styles from './styles';
 import { sidejobsFilterStateContext } from '../../contexts';
@@ -164,7 +164,7 @@ export class SidejobsListFilter extends BaseComponent {
     const districts = this._controller.listAvailableDistricts();
 
     const options: ISelectOption[] = districts.map((district) => ({
-      name: district.name,
+      name: DISTRICT_NAMES[district.name](),
       value: district.index.toString(),
     }));
     options.sort(compareOptions);

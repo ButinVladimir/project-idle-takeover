@@ -187,7 +187,7 @@ export class SidejobsActivityState implements ISidejobsActivityState {
   }
 
   private handleCancelActivity(activity: ISidejobActivity) {
-    const index = this._activitiesList.findIndex((sidejob) => sidejob.id === activity.id);
+    const index = this._activitiesList.findIndex((listActivity) => listActivity.id === activity.id);
 
     if (index >= 0) {
       removeElementsFromArray(this._activitiesList, index, 1);

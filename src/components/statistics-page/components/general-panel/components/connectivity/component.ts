@@ -59,7 +59,7 @@ export class StatisticsConnectivity extends BaseComponent {
 
   private renderDistrict = (option: ISelectOption<IDistrictState>) => {
     return html`
-      <div>${STATISTIC_PAGE_TEXTS.inDistrict(option.value.name)}</div>
+      <div>${STATISTIC_PAGE_TEXTS.inDistrict(option.name)}</div>
       <div data-district=${option.value.index}></div>
     `;
   };

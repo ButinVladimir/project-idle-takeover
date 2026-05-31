@@ -39,7 +39,7 @@ export const MESSAGE_EVENT_NAMES: Record<MessageEvent, () => string> = {
   [ClonesEvent.displayedClonesDeleted]: () => msg('Displayed clones deleted'),
   [ClonesEvent.cloneLevelReached]: () => msg('Clone reached next level'),
   [ClonesEvent.cloneRenamed]: () => msg('Clone renamed'),
-  [ClonesEvent.cloneReplaced]: () => msg('Clone template replaced'),
+  [ClonesEvent.cloneReplaced]: () => msg('Clone replaced'),
   [SidejobsEvent.sidejobAssigned]: () => msg('Sidejob assigned'),
   [SidejobsEvent.sidejobCancelled]: () => msg('Sidejob cancelled'),
   [SidejobsEvent.displayedSidejobsCancelled]: () => msg('Displayed sidejobs cancelled'),
@@ -49,6 +49,6 @@ export const MESSAGE_EVENT_NAMES: Record<MessageEvent, () => string> = {
   [PrimaryActivitiesEvent.primaryActivityAdded]: () => msg('Primary activity added to the queue'),
   [PrimaryActivitiesEvent.primaryActivityCancelled]: () => msg('Primary activity cancelled'),
   [PrimaryActivitiesEvent.primaryActivityFinished]: () => msg('Primary activity finished'),
-  [PrimaryActivitiesEvent.displayedPrimaryActivitiesCancelled]: () => msg('Displayed primary activities finished'),
+  [PrimaryActivitiesEvent.displayedPrimaryActivitiesCancelled]: () => msg('Displayed primary activities cancelled'),
   [CityEvent.districtTierIncreased]: () => msg('City district tier increased'),
 };

@@ -265,7 +265,7 @@ export class OwnedClonesState implements IOwnedClonesState {
   }
 
   private handleDeleteClone(clone: IClone) {
-    const index = this._clonesList.findIndex((clone) => clone.id === clone.id);
+    const index = this._clonesList.findIndex((listClone) => listClone.id === clone.id);
 
     if (index >= 0) {
       removeElementsFromArray(this._clonesList, index, 1);

@@ -25,7 +25,7 @@ export class CompanyContractsPanel extends BaseComponent {
   protected renderDesktop() {
     return html`
       <p class="hint">
-        ${msg(`Contracts provide income once they're finished.
+        ${msg(`Contracts provide income every time they're completed.
 Contract restart priority can be changed by dragging it by the title.
 Contracts on top have higher priority.
 Only one team of clones can be assigned per contract type and district.

@@ -259,7 +259,9 @@ export class PrimaryActivityQueue implements IPrimaryActivityQueue {
   }
 
   private handleCancelActivity(activity: IPrimaryActivity) {
-    const activityIndex = this._activitiesList.findIndex((activity) => activity.activityId === activity.activityId);
+    const activityIndex = this._activitiesList.findIndex(
+      (listActivity) => activity.activityId === listActivity.activityId,
+    );
 
     if (activityIndex !== -1) {
       removeElementsFromArray(this._activitiesList, activityIndex, 1);

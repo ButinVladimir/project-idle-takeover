@@ -52,7 +52,10 @@ export class PrimaryActivityQueueListItem extends BaseComponent {
     }
 
     const districtName = DISTRICT_NAMES[this._activity.district.name]();
-    const cloneNames = this._activity.assignedClones.map((clone) => clone.name).join(', ');
+    const cloneNames = this._activity.assignedClones
+      .map((clone) => clone.name)
+      .sort((cloneA, cloneB) => cloneA.localeCompare(cloneB))
+      .join(', ');
 
     const cancelActivityLabel = msg('Cancel primary activity');
 
