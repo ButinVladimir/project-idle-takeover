@@ -7,7 +7,7 @@ export class OwnedProgramsListItemButtonsController extends BaseController {
       return 0;
     }
 
-    return this.mainframeState.programs.calculateLevelFromMoney(
+    return this.mainframeState.programs.upgrader.calculateLevelFromMoney(
       program.name,
       program.tier,
       this.globalState.money.money,
@@ -21,7 +21,7 @@ export class OwnedProgramsListItemButtonsController extends BaseController {
 
     return (
       this.globalState.money.money >=
-      this.mainframeState.programs.calculateProgramCost(program.name, program.tier, program.level + 1)
+      this.mainframeState.programs.validator.calculateProgramCost(program.name, program.tier, program.level + 1)
     );
   }
 

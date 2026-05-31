@@ -10,12 +10,8 @@ const styles = [
       align-items: stretch;
     }
 
-    h3.title {
-      margin-bottom: var(--sl-spacing-large);
-    }
-
     sl-divider {
-      --spacing: var(--sl-spacing-large);
+      --spacing: var(--ca-section-gap);
     }
   `,
 ];

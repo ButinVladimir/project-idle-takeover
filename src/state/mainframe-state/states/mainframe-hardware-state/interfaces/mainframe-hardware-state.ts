@@ -3,12 +3,14 @@ import { IMainframeHardwareSerializedState } from './mainframe-hardware-serializ
 import { IMainframeHardwareParameter } from './mainframe-hardware-parameter';
 import { MainframeHardwareParameterType } from '../types';
 import { IMainframeHardwareUpgrader } from './mainframe-hardware-upgrader';
+import { IMainframeHardwareValidator } from './mainframe-hardware-validator';
 
 export interface IMainframeHardwareState extends ISerializeable<IMainframeHardwareSerializedState> {
   performance: IMainframeHardwareParameter;
   cores: IMainframeHardwareParameter;
   ram: IMainframeHardwareParameter;
   upgrader: IMainframeHardwareUpgrader;
+  validator: IMainframeHardwareValidator;
   listParameters(): IMainframeHardwareParameter[];
   moveParameter(parameterType: MainframeHardwareParameterType, newPosition: number): void;
 }

@@ -26,8 +26,11 @@ export class ContractAssignmentsStarter implements IContractAssignmentsStarter {
       contractAssignment.contract.district.counters.contracts.getAvailableAmount(
         contractAssignment.contract.contractName,
       ) > 0 &&
-      this._activityState.contractActivityValidator.validate(contractAssignment.contract) ===
-        ContractValidationResult.valid
+      this._activityState.contractActivityValidator.validateContract(
+        contractAssignment.contract.contractName,
+        contractAssignment.contract.district,
+        contractAssignment.contract.assignedClones,
+      ) === ContractValidationResult.valid
     );
   }
 
@@ -52,14 +55,18 @@ export class ContractAssignmentsStarter implements IContractAssignmentsStarter {
     return true;
   }
 
-  startAllAssignments(): boolean {
+  startAssignments(contractAssignmentIds: string[]): boolean {
     if (!this.checkStartAvailable()) {
       return false;
     }
 
+    const contractAssignments = contractAssignmentIds
+      .map((contractAssignmentId) => this._automationState.contracts.getContractAssignmentById(contractAssignmentId))
+      .filter((contractAssignment) => contractAssignment) as IContractAssignment[];
+
     this._availableActions = Number.MAX_SAFE_INTEGER;
 
-    this.performStartAllAssignments();
+    this.performStartAssignments(contractAssignments);
 
     return true;
   }
@@ -69,9 +76,11 @@ export class ContractAssignmentsStarter implements IContractAssignmentsStarter {
       return false;
     }
 
+    const contractAssignments = this._automationState.contracts.listContractAssignments();
+
     this._availableActions = actionCount;
 
-    this.performStartAllAssignments();
+    this.performStartAssignments(contractAssignments);
 
     return true;
   }
@@ -80,8 +89,8 @@ export class ContractAssignmentsStarter implements IContractAssignmentsStarter {
     return this._unlockState.milestones.isMilestoneReached(Milestone.unlockedCompanyManagement);
   }
 
-  private performStartAllAssignments() {
-    for (const contractAssignment of this._automationState.contracts.listContractAssignments()) {
+  private performStartAssignments(contractAssignments: IContractAssignment[]) {
+    for (const contractAssignment of contractAssignments) {
       if (this._availableActions <= 0) {
         break;
       }

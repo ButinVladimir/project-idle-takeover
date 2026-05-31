@@ -23,6 +23,12 @@ export class OwnedProgramsListItem extends BaseComponent {
   })
   programName!: ProgramName;
 
+  @property({
+    attribute: 'drag-enabled',
+    type: Boolean,
+  })
+  dragEnabled!: boolean;
+
   @state()
   _descriptionVisible = false;
 
@@ -37,12 +43,6 @@ export class OwnedProgramsListItem extends BaseComponent {
     this._controller = new OwnedProgramsListItemController(this);
   }
 
-  performUpdate() {
-    this.updateContext();
-
-    super.performUpdate();
-  }
-
   protected renderDesktop() {
     if (!this._program) {
       return nothing;
@@ -55,7 +55,7 @@ export class OwnedProgramsListItem extends BaseComponent {
       ? COMMON_TEXTS.hideDescription()
       : COMMON_TEXTS.showDescription();
     const descriptionClasses = classMap({
-      'program-description': true,
+      description: true,
       visible: this._descriptionVisible,
     });
 
@@ -64,12 +64,10 @@ export class OwnedProgramsListItem extends BaseComponent {
     const formattedTier = formatter.formatTier(this._program.tier);
 
     return html`
-      <div class="host-content desktop">
+      <div class="items-list-item desktop">
         <div class="program">
-          <div class="program-title" draggable="true" @dragstart=${this.handleDragStart}>
-            <sl-icon name="grip-vertical"> </sl-icon>
-
-            ${programTitle}
+          <div class="title" draggable=${this.dragEnabled ? 'true' : 'false'} @dragstart=${this.handleDragStart}>
+            ${this.dragEnabled ? html`<sl-icon name="grip-vertical"> </sl-icon>` : nothing} ${programTitle}
 
             <sl-tooltip>
               <span slot="content">${descriptionButtonLabel}</span>
@@ -109,7 +107,7 @@ export class OwnedProgramsListItem extends BaseComponent {
       ? COMMON_TEXTS.hideDescription()
       : COMMON_TEXTS.showDescription();
     const descriptionClasses = classMap({
-      'program-description': true,
+      description: true,
       visible: this._descriptionVisible,
     });
 
@@ -118,12 +116,10 @@ export class OwnedProgramsListItem extends BaseComponent {
     const formattedTier = formatter.formatTier(this._program.tier);
 
     return html`
-      <div class="host-content mobile">
+      <div class="items-list-item mobile">
         <div class="program">
-          <div class="program-title" draggable="true" @dragstart=${this.handleDragStart}>
-            <sl-icon name="grip-vertical"> </sl-icon>
-
-            ${programTitle}
+          <div class="title" draggable=${this.dragEnabled ? 'true' : 'false'} @dragstart=${this.handleDragStart}>
+            ${this.dragEnabled ? html`<sl-icon name="grip-vertical"> </sl-icon>` : nothing} ${programTitle}
 
             <sl-tooltip>
               <span slot="content">${descriptionButtonLabel}</span>
@@ -151,7 +147,7 @@ export class OwnedProgramsListItem extends BaseComponent {
     `;
   }
 
-  private updateContext() {
+  protected updateContext() {
     if (this.programName) {
       this._program = this._controller.getProgram(this.programName);
     } else {

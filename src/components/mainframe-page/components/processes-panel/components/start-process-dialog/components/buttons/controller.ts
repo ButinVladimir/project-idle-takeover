@@ -1,12 +1,12 @@
 import { BaseController } from '@shared/index';
-import { IProcess, ProgramName } from '@state/mainframe-state';
+import { IProcess, ProcessesBatchValidationResult, ProgramName } from '@state/mainframe-state';
 
 export class StartProcessDialogButtonsController extends BaseController {
-  getAvailableRamForProgram(programName: ProgramName) {
-    return this.mainframeState.processes.getAvailableRamForProgram(programName);
+  validateProcessesBatch(programs: ProgramName[], threads: number): ProcessesBatchValidationResult {
+    return this.mainframeState.processes.validator.validateProcessesBatch(programs, threads);
   }
 
-  getRunningScalableProgram(): IProcess | undefined {
-    return this.mainframeState.processes.runningScalableProcess;
+  getProcess(programName: ProgramName): IProcess | undefined {
+    return this.mainframeState.processes.getProcessByName(programName);
   }
 }

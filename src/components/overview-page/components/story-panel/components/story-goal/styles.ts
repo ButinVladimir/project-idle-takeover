@@ -17,7 +17,7 @@ const styles = [
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      gap: var(--sl-spacing-medium);
+      gap: var(--ca-paragraph-gap);
     }
 
     article p {

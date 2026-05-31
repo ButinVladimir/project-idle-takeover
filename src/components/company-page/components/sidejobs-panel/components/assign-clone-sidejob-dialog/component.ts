@@ -2,18 +2,15 @@ import { html, PropertyValues } from 'lit';
 import { localized, msg, str } from '@lit/localize';
 import { customElement, property, state } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { provide } from '@lit/context';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.component.js';
-import { BaseComponent, SidejobAlert } from '@shared/index';
-import { IDistrictState } from '@state/city-state';
+import { BaseComponent, compareOptions, ISelectOption, MULTIPLE_SELECT_SEPARATOR, SidejobAlert } from '@shared/index';
 import { SIDEJOB_TEXTS, DISTRICT_NAMES } from '@texts/index';
-import { SidejobValidationResult, type ISidejob } from '@state/activity-state';
-import { IClone } from '@state/clones-state';
+import { type ISidejob } from '@state/activity-state';
 import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
 import { AssignCloneSidejobDialogCloseEvent } from './events';
 import { AssignCloneSidejobDialogController } from './controller';
-import { existingSidejobContext, temporarySidejobContext } from './contexts';
 import styles from './styles';
 import { AssignCloneSidejobDialogButtons } from './components/buttons/component';
 
@@ -40,19 +37,13 @@ export class AssignCloneSidejobDialog extends BaseComponent {
   open = false;
 
   @state()
-  private _cloneId?: string;
+  private _sidejobName?: string;
 
   @state()
   private _districtIndex?: number;
 
   @state()
-  private _sidejobName?: string;
-
-  @provide({ context: temporarySidejobContext })
-  private _sidejob?: ISidejob;
-
-  @provide({ context: existingSidejobContext })
-  private _existingSidejob?: ISidejob;
+  private _cloneIds: string[] = [];
 
   private _buttonsRef = createRef<AssignCloneSidejobDialogButtons>();
 
@@ -62,29 +53,11 @@ export class AssignCloneSidejobDialog extends BaseComponent {
     this._controller = new AssignCloneSidejobDialogController(this);
   }
 
-  performUpdate() {
-    if (this._sidejobName !== undefined && this._districtIndex !== undefined && this._cloneId !== undefined) {
-      const sidejob = this._controller.getSidejob({
-        assignedCloneId: this._cloneId,
-        districtIndex: this._districtIndex,
-        sidejobName: this._sidejobName,
-      });
-
-      this._sidejob = sidejob;
-    } else {
-      this._sidejob = undefined;
-    }
-
-    this._existingSidejob = this._controller.getExistingSidejobByClone(this._cloneId);
-
-    super.performUpdate();
-  }
-
   updated(_changedProperties: PropertyValues) {
     super.updated(_changedProperties);
 
     if (_changedProperties.has('open')) {
-      this._cloneId = undefined;
+      this._cloneIds = [];
       this._districtIndex = undefined;
       this._sidejobName = undefined;
     }
@@ -108,12 +81,12 @@ export class AssignCloneSidejobDialog extends BaseComponent {
     return html`
       <form id="assign-clone-sidejob-dialog" @submit=${this.handleSubmit}>
         <sl-dialog ?open=${this.open} @sl-request-close=${this.handleClose}>
-          <h4 slot="label" class="title">${msg('Assign clone to sidejob')}</h4>
+          <h4 slot="label" class="title">${msg('Assign clones to sidejobs')}</h4>
 
           <div class="body">
             <p class="hint">
-              ${msg(`Select clone, district and sidejob name to assign clone.
-Clone can be assigned only to one sidejob.`)}
+              ${msg(`Select sidejob name, district and clones to assign clones.
+Each clone can be assigned only to one sidejob at same time.`)}
             </p>
 
             <div class=${inputsContainerClasses}>
@@ -126,40 +99,49 @@ Clone can be assigned only to one sidejob.`)}
               >
                 <span class="input-label" slot="label"> ${msg('Sidejob')} </span>
 
-                ${this._controller.listAvailableSidejobs().map(this.renderSidejobName)}
+                ${this.renderSidejobNameOptions()}
               </sl-select>
 
               <sl-select
                 ${ref(this._districtIndexInputRef)}
                 name="districtIndex"
-                value=${this._districtIndex ?? ''}
+                value=${this._districtIndex !== undefined ? this._districtIndex : ''}
                 hoist
                 @sl-change=${this.handleDistrictIndexChange}
               >
                 <span class="input-label" slot="label"> ${msg('District')} </span>
 
-                ${this._controller.listAvailableDistricts().map(this.renderDistrictOption)}
+                ${this.renderDistrictOptions()}
               </sl-select>
 
               <sl-select
                 ${ref(this._cloneIdInputRef)}
                 name="cloneId"
-                value=${this._cloneId ?? ''}
+                value=${this._cloneIds.join(MULTIPLE_SELECT_SEPARATOR)}
+                multiple
+                clearable
                 hoist
-                @sl-change=${this.handleCloneIdChange}
+                @sl-change=${this.handleCloneIdsChange}
               >
-                <span class="input-label" slot="label"> ${msg('Clone')} </span>
+                <span class="input-label" slot="label"> ${msg('Clones')} </span>
 
-                ${this._controller.listClones().map(this.renderCloneOption)}
+                ${this.renderCloneOptions()}
               </sl-select>
             </div>
-          </div>
 
-          <ca-assign-clone-sidejob-dialog-description></ca-assign-clone-sidejob-dialog-description>
+            <ca-assign-clone-sidejob-dialog-batch-description
+              sidejob-name=${ifDefined(this._sidejobName)}
+              district-index=${ifDefined(this._districtIndex)}
+              clone-ids=${this._cloneIds.join(MULTIPLE_SELECT_SEPARATOR)}
+            ></ca-assign-clone-sidejob-dialog-batch-description>
+          </div>
 
           <ca-assign-clone-sidejob-dialog-buttons
             ${ref(this._buttonsRef)}
             slot="footer"
+            sidejob-name=${ifDefined(this._sidejobName)}
+            district-index=${ifDefined(this._districtIndex)}
+            clone-ids=${this._cloneIds.join(MULTIPLE_SELECT_SEPARATOR)}
             @assign-clone=${this.handleSubmit}
             @cancel=${this.handleClose}
           ></ca-assign-clone-sidejob-dialog-buttons>
@@ -168,29 +150,50 @@ Clone can be assigned only to one sidejob.`)}
     `;
   }
 
-  private renderCloneOption = (clone: IClone) => {
-    return html`<sl-option value=${clone.id}> ${clone.name} </sl-option>`;
+  private renderCloneOptions = () => {
+    const clones = this._controller.listClones();
+    const cloneOptions: ISelectOption[] = clones.map((clone) => ({
+      value: clone.id,
+      name: clone.name,
+    }));
+    cloneOptions.sort(compareOptions);
+
+    return cloneOptions.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
 
-  private renderDistrictOption = (districtState: IDistrictState) => {
-    return html`<sl-option value=${districtState.index}> ${DISTRICT_NAMES[districtState.name]()} </sl-option>`;
+  private renderDistrictOptions = () => {
+    const districts = this._controller.listAvailableDistricts();
+    const districtOptions: ISelectOption[] = districts.map((district) => ({
+      value: district.index.toString(),
+      name: DISTRICT_NAMES[district.name](),
+    }));
+    districtOptions.sort(compareOptions);
+
+    return districtOptions.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
 
-  private renderSidejobName = (sidejobName: string) => {
-    return html` <sl-option value=${sidejobName}> ${SIDEJOB_TEXTS[sidejobName].title()} </sl-option>`;
+  private renderSidejobNameOptions = () => {
+    const sidejobNames = this._controller.listAvailableSidejobs();
+    const sidejobNameOptions: ISelectOption[] = sidejobNames.map((sidejobName) => ({
+      value: sidejobName,
+      name: SIDEJOB_TEXTS[sidejobName].title(),
+    }));
+    sidejobNameOptions.sort(compareOptions);
+
+    return sidejobNameOptions.map(({ name, value }) => html`<sl-option value=${value}>${name}</sl-option>`);
   };
 
   private handleClose = () => {
     this.dispatchEvent(new AssignCloneSidejobDialogCloseEvent());
   };
 
-  private handleCloneIdChange = () => {
+  private handleCloneIdsChange = () => {
     if (!this._cloneIdInputRef.value) {
       return;
     }
 
-    const cloneId = this._cloneIdInputRef.value.value as string;
-    this._cloneId = cloneId;
+    const cloneIds = this._cloneIdInputRef.value.value as string[];
+    this._cloneIds = cloneIds;
   };
 
   private handleSidejobNameChange = () => {
@@ -218,31 +221,29 @@ Clone can be assigned only to one sidejob.`)}
       return;
     }
 
-    if (this._existingSidejob) {
-      const cloneName = this._existingSidejob.assignedClone!.name;
-      const existingSidejobName = SIDEJOB_TEXTS[this._existingSidejob.sidejobName].title();
-      const districtName = DISTRICT_NAMES[this._existingSidejob.district.name]();
+    const sidejobsWithAssignedClones = this._cloneIds
+      .map((cloneId) => this._controller.getExistingSidejobByClone(cloneId))
+      .filter((sidejob) => sidejob) as ISidejob[];
+
+    if (sidejobsWithAssignedClones.length > 0) {
+      const cloneNames = sidejobsWithAssignedClones.map((sidejob) => `"${sidejob.assignedClone.name}"`).join(', ');
 
       this.dispatchEvent(
         new ConfirmationAlertOpenEvent(
           SidejobAlert.replaceSidejob,
           msg(
-            str`Are you sure want to replace sidejob for clone "${cloneName}"? This will cancel their current sidejob "${existingSidejobName}" in district "${districtName}".`,
+            str`Are you sure want to replace sidejob for clones ${cloneNames}? This will cancel their current sidejobs.`,
           ),
-          this.handleAssignClone,
+          this.handleAssignClones,
         ),
       );
     } else {
-      this.handleAssignClone();
+      this.handleAssignClones();
     }
   };
 
-  private handleAssignClone = () => {
-    this._controller.assignClone({
-      districtIndex: this._districtIndex!,
-      sidejobName: this._sidejobName!,
-      assignedCloneId: this._cloneId!,
-    });
+  private handleAssignClones = () => {
+    this._controller.assignSidejobsBatch(this._sidejobName!, this._districtIndex!, this._cloneIds);
 
     this.dispatchEvent(new AssignCloneSidejobDialogCloseEvent());
   };
@@ -254,10 +255,10 @@ Clone can be assigned only to one sidejob.`)}
   };
 
   private validate(): boolean {
-    if (!this._sidejob) {
+    if (this._sidejobName === undefined || this._districtIndex === undefined || this._cloneIds.length === 0) {
       return false;
     }
 
-    return !!(this._sidejob && this._controller.validateSidejob(this._sidejob) === SidejobValidationResult.valid);
+    return this._controller.validateSidejobsBatch(this._sidejobName, this._districtIndex, this._cloneIds);
   }
 }

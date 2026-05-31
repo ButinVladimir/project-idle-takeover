@@ -12,10 +12,10 @@ import {
 } from '@shared/index';
 import { IClone } from '@state/clones-state';
 import { IDistrictState } from '@state/city-state';
+import { CONTRACT_TEXTS, CONTRACT_VALIDATION_TEXTS, DISTRICT_NAMES } from '@texts/index';
 import { IContractActivity, ISerializedContractActivity } from '../interfaces';
 import { PrimaryActivity } from '../primary-activity';
 import { PrimaryActivityPerformResult, PrimaryActivityState } from '../types';
-import { CONTRACT_TEXTS, CONTRACT_VALIDATION_TEXTS, DISTRICT_NAMES } from '@/texts';
 import { ContractValidationResult } from '../../contract-activity-validator';
 
 const { lazyInject } = decorators;
@@ -134,7 +134,11 @@ export class ContractActivity extends PrimaryActivity implements IContractActivi
       return false;
     }
 
-    const validationResult = this._activityState.contractActivityValidator.validate(this._contractAssignment.contract);
+    const validationResult = this._activityState.contractActivityValidator.validateContract(
+      this._contractAssignment.contract.contractName,
+      this._contractAssignment.contract.district,
+      this._contractAssignment.contract.assignedClones,
+    );
 
     if (validationResult !== ContractValidationResult.valid) {
       this.state = PrimaryActivityState.toBeRemoved;

@@ -15,7 +15,7 @@ const styles = [
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: var(--sl-spacing-3x-large);
+      padding: var(--ca-empty-notification-gap);
       font-size: var(--sl-font-size-3x-large);
     }
 
@@ -25,16 +25,16 @@ const styles = [
       grid-template-rows: auto;
       grid-template-rows: auto;
       align-items: flex-start;
-      margin-bottom: var(--sl-spacing-large);
+      margin-bottom: var(--ca-section-gap);
 
       &.mobile {
-        row-gap: var(--sl-spacing-2x-large);
+        row-gap: var(--ca-input-row-gap);
         grid-template-columns: 1fr;
       }
 
       &.desktop {
-        row-gap: var(--sl-spacing-large);
-        column-gap: var(--sl-spacing-3x-large);
+        row-gap: var(--ca-input-row-gap);
+        column-gap: var(--ca-input-column-gap);
         grid-template-columns: repeat(2, 1fr);
       }
     }

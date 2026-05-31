@@ -1,10 +1,14 @@
-import { BaseController } from '@shared/index';
+import { BaseController, Milestone } from '@shared/index';
 import { IDistrictMultipliers, IDistrictState } from '@state/city-state';
 import { MultipliersType } from '../../types';
 
 export class StatisticsMultipliersController extends BaseController {
   listAvailableDistricts(): IDistrictState[] {
     return this.cityState.listAvailableDistricts();
+  }
+
+  areDistrictsAvailable() {
+    return this.unlockState.milestones.isMilestoneReached(Milestone.unlockedCompanyManagement);
   }
 
   getDistrictMultiplier(districtIndex: number, multiplierType: MultipliersType): number {

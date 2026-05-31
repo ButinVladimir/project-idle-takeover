@@ -13,7 +13,7 @@ const styles = [
 
     p.overview {
       margin-top: 0;
-      margin-bottom: var(--sl-spacing-small);
+      margin-bottom: var(--ca-table-paragraph-gap);
     }
 
     p.text {

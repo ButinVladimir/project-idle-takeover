@@ -75,7 +75,7 @@ export class SynchronizationState implements ISynchronizationState {
     this._availableValue = this._totalValue;
 
     for (const clone of this._clonesState.ownedClones.listClones()) {
-      this._availableValue -= this._clonesState.ownedClones.calculateCloneSynchronization(
+      this._availableValue -= this._clonesState.ownedClones.validator.calculateCloneSynchronization(
         clone.templateName,
         clone.tier,
       );

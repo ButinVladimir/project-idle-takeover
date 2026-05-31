@@ -1,29 +1,13 @@
 import { css } from 'lit';
-import { dragIconStyle, hintIconStyle } from '@shared/index';
+import { dragIconStyle, hintIconStyle, itemsListItemButtonsStyle } from '@shared/index';
 
 const styles = [
   hintIconStyle,
   dragIconStyle,
+  itemsListItemButtonsStyle,
   css`
     :host {
       display: contents;
-    }
-
-    .buttons {
-      display: flex;
-      align-items: center;
-      flex-direction: row;
-      gap: var(--sl-spacing-small);
-
-      &.desktop {
-        justify-content: flex-end;
-        font-size: var(--sl-font-size-large);
-      }
-
-      &.mobile {
-        flex-wrap: wrap;
-        justify-content: flex-start;
-      }
     }
   `,
 ];

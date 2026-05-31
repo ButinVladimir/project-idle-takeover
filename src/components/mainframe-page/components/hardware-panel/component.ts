@@ -52,9 +52,7 @@ Hardware upgrade level cannot be above development level.
 `)}
       </p>
 
-      <div class="buttons-block">
-        <ca-mainframe-hardware-panel-buttons></ca-mainframe-hardware-panel-buttons>
-      </div>
+      <ca-mainframe-hardware-panel-buttons></ca-mainframe-hardware-panel-buttons>
 
       <ca-sortable-list gap=${GAP} @sortable-element-moved=${this.handleMoveElement}>
         ${repeat(this._controller.listParameters(), (parameter) => parameter.type, this.renderParameter)}

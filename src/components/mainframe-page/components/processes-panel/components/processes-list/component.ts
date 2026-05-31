@@ -1,13 +1,18 @@
 import { html } from 'lit';
 import { localized, msg } from '@lit/localize';
-import { customElement } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { ConfirmationAlertOpenEvent } from '@components/game-screen/components/confirmation-alert/events';
+import { provide } from '@lit/context';
 import { IProcess, ProgramName } from '@state/mainframe-state';
-import { BaseComponent, ProgramAlert, DELETE_VALUES, ENTITY_ACTIVE_VALUES } from '@shared/index';
+import { BaseComponent, StateFilterValue, filterByState } from '@shared/index';
 import { SortableElementMovedEvent } from '@components/shared/sortable-list/events/sortable-element-moved';
 import { ProcessesListController } from './controller';
 import styles from './styles';
+import { processesFilterStateContext, processesListContext } from './contexts';
+import { type IProcessesFilterState } from './interfaces';
+import { CoreFilterValue } from './types';
+import { ToggleProcessesFilterEvent } from './components/list-buttons/events';
+import { ProcessesFilterStateChangedEvent } from './components/filter/events';
 
 @localized()
 @customElement('ca-processes-list')
@@ -18,6 +23,20 @@ export class ProcessesList extends BaseComponent {
 
   private _controller: ProcessesListController;
 
+  @state()
+  private _filterEnabled = false;
+
+  @state()
+  @provide({ context: processesFilterStateContext })
+  private _processesFilterState: IProcessesFilterState = {
+    programs: [],
+    cores: [],
+    state: StateFilterValue.all,
+  };
+
+  @provide({ context: processesListContext })
+  private _processesList: IProcess[] = [];
+
   constructor() {
     super();
 
@@ -25,137 +44,144 @@ export class ProcessesList extends BaseComponent {
   }
 
   protected renderDesktop() {
-    const processesActive = this.checkSomeProcessesActive();
-
-    const toggleProcessesIcon = processesActive ? ENTITY_ACTIVE_VALUES.icon.active : ENTITY_ACTIVE_VALUES.icon.stopped;
-    const toggleProcessesLabel = processesActive ? msg('Disable all processes') : msg('Enable all processes');
-
-    const deleteAllProcessLabel = msg('Delete all processes');
-
-    const processes = this._controller.listProcesses();
-
     return html`
-      <div class="header desktop">
-        <div class="header-column">${msg('Program')}</div>
-        <div class="header-column">${msg('Cores')}</div>
-        <div class="header-column">${msg('Progress')}</div>
-        <div class="buttons">
-          <sl-tooltip>
-            <span slot="content"> ${toggleProcessesLabel} </span>
+      <div class="items-list">
+        <ca-processes-list-filter
+          ?filter-enabled=${this._filterEnabled}
+          @processes-filter-state-changed=${this.handleChangeFilterState}
+        ></ca-processes-list-filter>
 
-            <sl-icon-button
-              name=${toggleProcessesIcon}
-              label=${toggleProcessesLabel}
-              @click=${this.handleToggleAllProcesses}
-            >
-            </sl-icon-button>
-          </sl-tooltip>
-
-          <sl-tooltip>
-            <span slot="content"> ${deleteAllProcessLabel} </span>
-
-            <sl-icon-button
-              id="delete-btn"
-              name=${DELETE_VALUES.icon}
-              label=${deleteAllProcessLabel}
-              @click=${this.handleOpenDeleteAllProcessesDialog}
-            >
-            </sl-icon-button>
-          </sl-tooltip>
+        <div class="header desktop">
+          <div class="header-column">${msg('Program')}</div>
+          <div class="header-column">${msg('Cores')}</div>
+          <div class="header-column">${msg('Progress')}</div>
+          <ca-processes-list-buttons
+            ?filter-enabled=${this._filterEnabled}
+            @toggle-processes-filter=${this.handleToggleFilter}
+          >
+          </ca-processes-list-buttons>
         </div>
-      </div>
 
-      ${processes.length > 0
-        ? html`
-            <ca-sortable-list @sortable-element-moved=${this.handleMoveProcess}>
-              ${repeat(processes, (process) => process.program.name, this.renderProcess)}
-            </ca-sortable-list>
-          `
-        : this.renderEmptyListNotification()}
+        ${this._processesList.length > 0
+          ? html`
+              <ca-sortable-list
+                class="list"
+                ?drag-enabled=${!this._filterEnabled}
+                @sortable-element-moved=${this.handleMoveProcess}
+              >
+                ${repeat(this._processesList, (process) => process.program.name, this.renderProcess)}
+              </ca-sortable-list>
+            `
+          : this.renderEmptyListNotification()}
+      </div>
     `;
   }
 
   protected renderMobile() {
-    const processesActive = this.checkSomeProcessesActive();
-
-    const toggleProcessesIcon = processesActive ? ENTITY_ACTIVE_VALUES.icon.active : ENTITY_ACTIVE_VALUES.icon.stopped;
-    const toggleProcessesLabel = processesActive ? msg('Disable all processes') : msg('Enable all processes');
-    const toggleProcessesVariant = processesActive
-      ? ENTITY_ACTIVE_VALUES.buttonVariant.active
-      : ENTITY_ACTIVE_VALUES.buttonVariant.stopped;
-
-    const deleteAllProcessLabel = msg('Delete all processes');
-
-    const processes = this._controller.listProcesses();
-
     return html`
-      <div class="header mobile">
-        <div class="buttons">
-          <sl-button variant=${toggleProcessesVariant} size="medium" @click=${this.handleToggleAllProcesses}>
-            <sl-icon slot="prefix" name=${toggleProcessesIcon}></sl-icon>
+      <div class="items-list">
+        <ca-processes-list-filter
+          ?filter-enabled=${this._filterEnabled}
+          @processes-filter-state-changed=${this.handleChangeFilterState}
+        ></ca-processes-list-filter>
 
-            ${toggleProcessesLabel}
-          </sl-button>
-
-          <sl-button
-            variant=${DELETE_VALUES.buttonVariant}
-            size="medium"
-            @click=${this.handleOpenDeleteAllProcessesDialog}
+        <div class="header mobile">
+          <ca-processes-list-buttons
+            ?filter-enabled=${this._filterEnabled}
+            @toggle-processes-filter=${this.handleToggleFilter}
           >
-            <sl-icon slot="prefix" name=${DELETE_VALUES.icon}> </sl-icon>
-            ${deleteAllProcessLabel}
-          </sl-button>
+          </ca-processes-list-buttons>
         </div>
-      </div>
 
-      ${processes.length > 0
-        ? html`
-            <ca-sortable-list @sortable-element-moved=${this.handleMoveProcess}>
-              ${repeat(processes, (process) => process.program.name, this.renderProcess)}
-            </ca-sortable-list>
-          `
-        : this.renderEmptyListNotification()}
+        ${this._processesList.length > 0
+          ? html`
+              <ca-sortable-list
+                class="list"
+                ?drag-enabled=${!this._filterEnabled}
+                @sortable-element-moved=${this.handleMoveProcess}
+              >
+                ${repeat(this._processesList, (process) => process.program.name, this.renderProcess)}
+              </ca-sortable-list>
+            `
+          : this.renderEmptyListNotification()}
+      </div>
     `;
   }
 
   private renderEmptyListNotification = () => {
-    return html`
-      <div class="notification">
-        <td colspan="4">${msg("You don't have any processes")}</td>
-      </div>
-    `;
+    return html` <div class="notification">${msg('Processes are not found')}</div> `;
   };
 
   private renderProcess = (process: IProcess) => {
     return html`
-      <ca-processes-list-item program-name=${process.program.name} data-drag-id=${process.program.name}>
+      <ca-processes-list-item
+        class="list-item"
+        ?drag-enabled=${!this._filterEnabled}
+        program-name=${process.program.name}
+        data-drag-id=${process.program.name}
+      >
       </ca-processes-list-item>
     `;
   };
 
-  private checkSomeProcessesActive(): boolean {
-    return this._controller.listProcesses().some((process) => process.enabled);
+  private handleToggleFilter = (event: ToggleProcessesFilterEvent) => {
+    this._filterEnabled = event.filterEnabled;
+  };
+
+  private handleChangeFilterState = (event: ProcessesFilterStateChangedEvent) => {
+    this._processesFilterState = event.state;
+  };
+
+  protected updateContext(): void {
+    let processes = this._controller.listProcesses();
+
+    if (this._filterEnabled) {
+      processes = processes.filter(this.filterProcess);
+    }
+
+    this._processesList = processes;
   }
 
-  private handleToggleAllProcesses = () => {
-    const processesActive = this.checkSomeProcessesActive();
+  private filterProcess = (process: IProcess): boolean => {
+    if (!this._filterEnabled) {
+      return true;
+    }
 
-    this._controller.toggleAllProcesses(!processesActive);
+    if (
+      this._processesFilterState.programs.length > 0 &&
+      !this._processesFilterState.programs.includes(process.program.name)
+    ) {
+      return false;
+    }
+
+    if (!this.filterByCores(process)) {
+      return false;
+    }
+
+    if (!filterByState(process.enabled, this._processesFilterState.state)) {
+      return false;
+    }
+
+    return true;
   };
 
-  private handleOpenDeleteAllProcessesDialog = () => {
-    this.dispatchEvent(
-      new ConfirmationAlertOpenEvent(
-        ProgramAlert.deleteAllProcesses,
-        msg('Are you sure want to delete all processes? Their progress will be lost.'),
-        this.handleDeleteAllProcesses,
-      ),
-    );
-  };
+  private filterByCores(process: IProcess): boolean {
+    if (this._processesFilterState.cores.length === 0) {
+      return true;
+    }
 
-  private handleDeleteAllProcesses = () => {
-    this._controller.deleteAllProcesses();
-  };
+    let state: CoreFilterValue = CoreFilterValue.notAssigned;
+
+    if (process.usedCores > 0 && process.usedCores < process.maxCores) {
+      state = CoreFilterValue.partiallyAssigned;
+    }
+
+    if (process.usedCores >= process.maxCores) {
+      state = CoreFilterValue.fullyAssigned;
+    }
+
+    return this._processesFilterState.cores.includes(state);
+  }
 
   private handleMoveProcess = (event: SortableElementMovedEvent) => {
     this._controller.moveProcess(event.keyName as ProgramName, event.position);

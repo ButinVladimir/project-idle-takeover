@@ -3,7 +3,7 @@
     "target": "es2024",
     "useDefineForClassFields": false,
     "lib": ["ES2024", "DOM", "DOM.Iterable"],
-    "types": ["reflect-metadata"],
+    "types": ["reflect-metadata", "node"],
     "module": "ESNext",
     "skipLibCheck": true,
     "emitDecoratorMetadata": true,

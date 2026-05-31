@@ -7,10 +7,6 @@ const styles = [
     :host {
       display: block;
     }
-
-    h3.title {
-      margin-bottom: var(--sl-spacing-2x-small);
-    }
   `,
 ];
 

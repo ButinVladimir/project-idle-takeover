@@ -6,7 +6,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ATTRIBUTE_TEXTS, COMMON_TEXTS, SKILL_TEXTS } from '@texts/index';
 import { type IContract } from '@state/activity-state';
 import { BaseComponent, Attribute, ATTRIBUTES, getHighlightValueClassMap, Skill, SKILLS } from '@shared/index';
-import { temporaryContractContext } from '../../contexts';
+import { temporaryContractContext } from '../batch-item/contexts';
 import styles from './styles';
 import { AssignClonesContractDialogRequirementsController } from './controller';
 
@@ -63,14 +63,14 @@ export class AssignClonesContractDialogRequirements extends BaseComponent {
   }
 
   private renderRequirementAttribute = (attribute: Attribute) => {
-    const requiredValue = this._contract!.getAttributeRequirement(attribute);
+    const requiredValue = this._controller.getAttributeRequirement(this._contract!, attribute);
 
     if (requiredValue <= 0) {
       return nothing;
     }
 
     const validTeamSize = this._controller.getAttributeValidTeamSize(this._contract!, attribute);
-    const requiredTeamSize = this._contract!.getAttributeRequiredTeamSize(attribute);
+    const requiredTeamSize = this._controller.getAttributeRequiredTeamSize(this._contract!, attribute);
 
     const formatter = this._controller.formatter;
 
@@ -91,14 +91,14 @@ export class AssignClonesContractDialogRequirements extends BaseComponent {
   };
 
   private renderRequirementSkill = (skill: Skill) => {
-    const requiredValue = this._contract!.getSkillRequirement(skill);
+    const requiredValue = this._controller.getSkillRequirement(this._contract!, skill);
 
     if (requiredValue <= 0) {
       return nothing;
     }
 
     const validTeamSize = this._controller.getSkillValidTeamSize(this._contract!, skill);
-    const requiredTeamSize = this._contract!.getSkillRequiredTeamSize(skill);
+    const requiredTeamSize = this._controller.getSkillRequiredTeamSize(this._contract!, skill);
 
     const formatter = this._controller.formatter;
 

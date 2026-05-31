@@ -1,5 +1,9 @@
 import { BaseController } from '@shared/index';
-import { IMainframeHardwareParameter, MainframeHardwareParameterType } from '@state/mainframe-state';
+import {
+  IMainframeHardwareParameter,
+  MainframeHardwareParameterType,
+  MainframeHardwareValidationResult,
+} from '@state/mainframe-state';
 
 export class MainframeHardwarePanelArticleController extends BaseController {
   get money(): number {
@@ -8,6 +12,17 @@ export class MainframeHardwarePanelArticleController extends BaseController {
 
   get developmentLevel() {
     return this.globalState.development.level;
+  }
+
+  calculateIncreaseCost(parameterType: MainframeHardwareParameterType, increase: number): number {
+    return this.mainframeState.hardware.validator.calculateIncreaseCost(parameterType, increase);
+  }
+
+  validate(parameterType: MainframeHardwareParameterType, increase: number): boolean {
+    return (
+      this.mainframeState.hardware.validator.validateHardware(parameterType, increase) ===
+      MainframeHardwareValidationResult.valid
+    );
   }
 
   purchaseMaxParameter(parameterType: MainframeHardwareParameterType) {

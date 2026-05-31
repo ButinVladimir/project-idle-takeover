@@ -7,3 +7,4 @@ export * from './formulas';
 export * from './tier-formatter';
 export * from './constants';
 export * from './names';
+export * from './select-options';

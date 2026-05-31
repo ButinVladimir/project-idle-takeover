@@ -1,3 +1,4 @@
+import { CloneValidationResult, IClone } from '@state/clones-state';
 import { BaseController } from '@shared/index';
 
 export class PurchaseCloneDialogButtonsController extends BaseController {
@@ -9,15 +10,11 @@ export class PurchaseCloneDialogButtonsController extends BaseController {
     return this.growthState.money.totalGrowth;
   }
 
-  get availableSynchronization(): number {
-    return this.globalState.synchronization.availableValue;
-  }
-
   getCloneCost(cloneTemplateName: string, tier: number, level: number): number {
-    return this.clonesState.ownedClones.calculateCloneCost(cloneTemplateName, tier, level);
+    return this.clonesState.ownedClones.validator.calculateCloneCost(cloneTemplateName, tier, level);
   }
 
-  getCloneSynchronization(cloneTemplateName: string, tier: number): number {
-    return this.clonesState.ownedClones.calculateCloneSynchronization(cloneTemplateName, tier);
+  validateClone(clone: IClone): CloneValidationResult {
+    return this.clonesState.ownedClones.validator.validateClone(clone);
   }
 }

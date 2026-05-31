@@ -1,73 +1,34 @@
 import { BaseController } from '@shared/index';
-import { IProgram, ProgramName } from '@state/mainframe-state';
+import { IProgram, ProgramName, ProgramsBatchValidationResult } from '@state/mainframe-state';
 
 export class PurchaseProgramDialogController extends BaseController {
-  private _selectedProgram?: IProgram;
-
-  hostDisconnected() {
-    super.hostDisconnected();
-
-    this.deleteSelectedProgram();
-  }
-
   get developmentLevel(): number {
     return this.globalState.development.level;
-  }
-
-  get money(): number {
-    return this.globalState.money.money;
-  }
-
-  get moneyGrowth(): number {
-    return this.growthState.money.totalGrowth;
-  }
-
-  getSelectedProgram(name: ProgramName, tier: number, level: number): IProgram {
-    if (
-      this._selectedProgram?.name !== name ||
-      this._selectedProgram.level !== level ||
-      this._selectedProgram.tier !== tier
-    ) {
-      this.deleteSelectedProgram();
-
-      this._selectedProgram = this.mainframeState.programFactory.makeProgram({
-        name,
-        level,
-        tier,
-        autoUpgradeEnabled: true,
-      });
-    }
-
-    return this._selectedProgram;
   }
 
   getOwnedProgram(name: ProgramName): IProgram | undefined {
     return this.mainframeState.programs.getOwnedProgramByName(name);
   }
 
-  getHighestAvailableTier(programName: ProgramName): number {
-    return this.unlockState.items.programs.getItemHighestAvailableTier(programName);
+  getHighestAvailableTier(programNames: ProgramName[]): number {
+    return programNames.reduce(
+      (max, programName) => Math.max(max, this.unlockState.items.programs.getItemHighestAvailableTier(programName)),
+      0,
+    );
   }
 
   listAvailablePrograms(): ProgramName[] {
     return this.unlockState.items.programs.listAvailableItems();
   }
 
-  purchaseProgram(name: ProgramName, tier: number, level: number): boolean {
-    return this.mainframeState.programs.purchaseProgram(name, tier, level);
+  validateProgramsBatch(names: ProgramName[], tier: number, level: number): boolean {
+    return (
+      this.mainframeState.programs.validator.validateProgramsBatch(names, tier, level) ===
+      ProgramsBatchValidationResult.valid
+    );
   }
 
-  getProgramCost(programName: ProgramName, tier: number, level: number): number {
-    return this.mainframeState.programs.calculateProgramCost(programName, tier, level);
-  }
-
-  isProgramAvailable(programName: ProgramName, tier: number, level: number): boolean {
-    return this.unlockState.items.programs.isItemAvailable(programName, tier, level);
-  }
-
-  private deleteSelectedProgram() {
-    if (this._selectedProgram) {
-      this._selectedProgram.removeAllEventListeners();
-    }
+  purchaseProgramsBatch(names: ProgramName[], tier: number, level: number): boolean {
+    return this.mainframeState.programs.purchaseProgramsBatch(names, tier, level);
   }
 }

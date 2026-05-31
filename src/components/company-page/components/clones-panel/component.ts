@@ -5,10 +5,12 @@ import { msg, localized } from '@lit/localize';
 import { customElement, state } from 'lit/decorators.js';
 import { BaseComponent } from '@shared/index';
 import { type IClone } from '@state/clones-state';
+import { COMMON_TEXTS } from '@texts/index';
 import { type CloneListItemDialog } from './type';
 import { OpenCloneListItemDialogEvent } from './events';
-import { modalCloneContext } from './contexts';
+import { modalSelectedCloneContext } from './contexts';
 import styles from './styles';
+import { CompanyClonesPanelController } from './controller';
 
 @localized()
 @customElement('ca-company-clones-panel')
@@ -18,16 +20,21 @@ export class CompanyClonesPanel extends BaseComponent {
   protected hasMobileRender = true;
 
   @state()
-  private _isPurchaseCloneDialogOpen = false;
-
-  @state()
   private _cloneListItemDialogOpen = false;
 
   @state()
   private _cloneListItemDialog?: CloneListItemDialog;
 
-  @provide({ context: modalCloneContext })
-  private _modalClone?: IClone;
+  @provide({ context: modalSelectedCloneContext })
+  private _modalSelectedClone?: IClone;
+
+  private _controller: CompanyClonesPanelController;
+
+  constructor() {
+    super();
+
+    this._controller = new CompanyClonesPanelController(this);
+  }
 
   renderMobile() {
     return html`<div class="host-content mobile">${this.renderContent()}</div>`;
@@ -40,27 +47,37 @@ export class CompanyClonesPanel extends BaseComponent {
   renderContent = () => {
     return html`
       <p class="hint">
-        ${msg(`Clone autoupgrade priority can be changed by dragging it by the name.
+        ${msg(`Clone autoupgrade priority can be changed by dragging it by the name if filter is disabled.
 Clones on top have higher priority.
 Clone level cannot be above development level.`)}
       </p>
 
       <div class="top-container">
-        <sl-button variant="primary" size="medium" @click=${this.handlePurchaseCloneDialogOpen}>
-          ${msg('Purchase clone')}
-        </sl-button>
+        <div class="buttons-container">
+          <sl-tooltip trigger="click">
+            <div class="hotkeys-content" slot="content">
+              <p>
+                ${COMMON_TEXTS.parameterRow(
+                  msg('Upgrade all enabled clones levels'),
+                  COMMON_TEXTS.hotkeyValue(this._controller.getUpgradeClonesLevelHotkey()),
+                )}
+              </p>
+            </div>
+
+            <sl-button variant="default" size="medium"> ${COMMON_TEXTS.showHotkeys()} </sl-button>
+          </sl-tooltip>
+
+          <sl-button variant="primary" size="medium" @click=${this.handlePurchaseCloneDialogOpen}>
+            ${msg('Purchase clone')}
+          </sl-button>
+        </div>
 
         <ca-clones-synchronization-values></ca-clones-synchronization-values>
       </div>
 
       <ca-clones-list @open-clone-list-item-dialog=${this.handleCloneListItemDialogOpen}></ca-clones-list>
 
-      <ca-purchase-clone-dialog
-        ?open=${this._isPurchaseCloneDialogOpen}
-        @purchase-clone-dialog-close=${this.handlePurchaseCloneDialogClose}
-      ></ca-purchase-clone-dialog>
-
-      ${this._modalClone &&
+      ${this._cloneListItemDialog &&
       choose(this._cloneListItemDialog, [
         [
           'rename-clone',
@@ -71,25 +88,34 @@ Clone level cannot be above development level.`)}
             ></ca-rename-clone-dialog>
           `,
         ],
+        [
+          'purchase-clone',
+          () => html`
+            <ca-purchase-clone-dialog
+              ?open=${this._cloneListItemDialogOpen}
+              @close-clone-list-item-dialog=${this.handleCloneListItemDialogClose}
+            ></ca-purchase-clone-dialog>
+          `,
+        ],
       ])}
     `;
   };
 
   private handlePurchaseCloneDialogOpen = () => {
-    this._isPurchaseCloneDialogOpen = true;
-  };
-
-  private handlePurchaseCloneDialogClose = () => {
-    this._isPurchaseCloneDialogOpen = false;
+    this._cloneListItemDialogOpen = true;
+    this._modalSelectedClone = undefined;
+    this._cloneListItemDialog = 'purchase-clone';
   };
 
   private handleCloneListItemDialogOpen = (event: OpenCloneListItemDialogEvent) => {
     this._cloneListItemDialogOpen = true;
-    this._modalClone = event.clone;
+    this._modalSelectedClone = event.clone;
     this._cloneListItemDialog = event.dialog;
   };
 
   private handleCloneListItemDialogClose = () => {
     this._cloneListItemDialogOpen = false;
+    this._modalSelectedClone = undefined;
+    this._cloneListItemDialog = undefined;
   };
 }

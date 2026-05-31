@@ -7,7 +7,7 @@ const styles = [
     }
 
     p.rewards {
-      margin-top: var(--sl-spacing-small);
+      margin-top: var(--ca-table-paragraph-gap);
       margin-bottom: 0;
     }
 

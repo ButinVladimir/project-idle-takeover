@@ -1,11 +1,11 @@
 import { injectable } from 'inversify';
 import { decorators } from '@state/container';
 import { TYPES } from '@state/types';
-import { Milestone } from '@shared/index';
+import { Milestone, reverseTierPower } from '@shared/index';
 import { type IGlobalState } from '@state/global-state';
 import { type IAutomationState } from '@state/automation-state';
 import { type IUnlockState } from '@state/unlock-state';
-import { IProgram, ProgramName } from '../progam-factory';
+import { IProgram, ProgramName, typedPrograms } from '../progam-factory';
 import { IMainframeProgramsUpgrader } from './interfaces';
 import { type IMainframeState } from '../../interfaces';
 
@@ -29,15 +29,19 @@ export class MainframeProgramsUpgrader implements IMainframeProgramsUpgrader {
 
   private _availableActions = 0;
 
-  upgradeMaxAllPrograms(): void {
+  upgradeMaxPrograms(programNames: ProgramName[]): void {
     if (!this.checkUpgradeAvailable()) {
       return;
     }
 
+    const programs = programNames
+      .map((programName) => this._mainframeState.programs.getOwnedProgramByName(programName))
+      .filter((program) => program) as IProgram[];
+
     this._availableMoney = this._globalState.money.money;
     this._availableActions = Number.MAX_SAFE_INTEGER;
 
-    this.performUpgradeAll();
+    this.performUpgradePrograms(programs);
   }
 
   upgradeMaxProgram(programName: ProgramName): void {
@@ -62,18 +66,28 @@ export class MainframeProgramsUpgrader implements IMainframeProgramsUpgrader {
       return;
     }
 
+    const programs = this._mainframeState.programs.listOwnedPrograms();
+
     this._availableMoney = (this._globalState.money.money * this._automationState.mainframePrograms.moneyShare) / 100;
     this._availableActions = actionCount;
 
-    this.performUpgradeAll();
+    this.performUpgradePrograms(programs);
+  }
+
+  calculateLevelFromMoney(name: ProgramName, tier: number, money: number): number {
+    const programData = typedPrograms[name];
+
+    const availableMoney = money * this._globalState.multipliers.codeBase.totalMultiplier;
+
+    return Math.min(reverseTierPower(availableMoney, tier, programData.cost), this._globalState.development.level);
   }
 
   private checkUpgradeAvailable() {
     return this._unlockState.milestones.isMilestoneReached(Milestone.unlockedMainframePrograms);
   }
 
-  private performUpgradeAll() {
-    for (const existingProgram of this._mainframeState.programs.listOwnedPrograms()) {
+  private performUpgradePrograms(programs: IProgram[]) {
+    for (const existingProgram of programs) {
       if (this._availableActions <= 0) {
         break;
       }
@@ -89,22 +103,18 @@ export class MainframeProgramsUpgrader implements IMainframeProgramsUpgrader {
   private performUpgradeProgram(existingProgram: IProgram) {
     const oldLevel = existingProgram.level;
     const newLevel = Math.min(
-      this._mainframeState.programs.calculateLevelFromMoney(
-        existingProgram.name,
-        existingProgram.tier,
-        this._availableMoney,
-      ),
+      this.calculateLevelFromMoney(existingProgram.name, existingProgram.tier, this._availableMoney),
       existingProgram.level + this._availableActions,
     );
 
     if (newLevel > existingProgram.level) {
-      const cost = this._mainframeState.programs.calculateProgramCost(
+      const cost = this._mainframeState.programs.validator.calculateProgramCost(
         existingProgram.name,
         existingProgram.tier,
         newLevel,
       );
 
-      if (this._mainframeState.programs.purchaseProgram(existingProgram.name, existingProgram.tier, newLevel)) {
+      if (this._mainframeState.programs.purchaseProgramsBatch([existingProgram.name], existingProgram.tier, newLevel)) {
         this._availableMoney -= cost;
         this._availableActions -= newLevel - oldLevel;
       }

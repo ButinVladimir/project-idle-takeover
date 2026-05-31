@@ -53,6 +53,9 @@ export const TYPES = {
   MainframeHardwareCores: Symbol('MainframeHardwareCores'),
   MainframeProgramsUpgrader: Symbol('MainframeProgramsUpgrader'),
   MainframeHardwareUpgrader: Symbol('MainframeHardwareUpgrader'),
+  MainframeProgramsValidator: Symbol('MainframeProgramsValidator'),
+  MainframeHardwareValidator: Symbol('MainframeHardwareValidator'),
+  MainframeProcessesValidator: Symbol('MainframeProcessesValidator'),
   AutomationState: Symbol('AutomationState'),
   MainframeHardwareAutomationState: Symbol('MainframeHardwareAutomationState'),
   MainframeProgramsAutomationState: Symbol('MainframeProgramsAutomationState'),
@@ -72,5 +75,6 @@ export const TYPES = {
   ExperienceShareState: Symbol('ExperienceShareState'),
   ProcessCompletionSpeedState: Symbol('ProcessCompletionSpeedState'),
   OwnedClonesLevelUpgrader: Symbol('OwnedClonesLevelUpgrader'),
+  OwnedClonesValidator: Symbol('OwnedClonesValidator'),
   Formatter: Symbol('Formatter'),
 };

@@ -12,9 +12,9 @@ import { IAvailableCategoryItemsState, IAvailableCategoryItemsSerializedState, t
 const { lazyInject } = decorators;
 
 @injectable()
-export abstract class BaseAvailableCategoryItemsState<Key extends string = string>
-  implements IAvailableCategoryItemsState<Key>
-{
+export abstract class BaseAvailableCategoryItemsState<
+  Key extends string = string,
+> implements IAvailableCategoryItemsState<Key> {
   @lazyInject(TYPES.StateUIConnector)
   protected _stateUiConnector!: IStateUIConnector;
 
@@ -61,6 +61,10 @@ export abstract class BaseAvailableCategoryItemsState<Key extends string = strin
   }
 
   isItemAvailable(itemName: Key, tier: number, level: number): boolean {
+    if (Number.isNaN(tier) || Number.isNaN(level)) {
+      return false;
+    }
+
     if (!(this._loanedItems.has(itemName) || this._designsTierMap.has(itemName))) {
       return false;
     }

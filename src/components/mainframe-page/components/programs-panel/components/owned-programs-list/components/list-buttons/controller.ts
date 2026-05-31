@@ -1,39 +1,26 @@
-import { BaseController, Hotkey } from '@shared/index';
-import { IProgram } from '@state/mainframe-state';
+import { BaseController } from '@shared/index';
+import { IProgram, ProgramName, ProgramValidationResult } from '@state/mainframe-state';
 
 export class OwnedProgramsListButtonsController extends BaseController {
-  listOwnedPrograms(): IProgram[] {
-    return this.mainframeState.programs.listOwnedPrograms();
+  upgradeMaxPrograms(programNames: ProgramName[]) {
+    this.mainframeState.programs.upgrader.upgradeMaxPrograms(programNames);
   }
 
-  toggleAutoUpgrade(active: boolean) {
-    this.mainframeState.programs.toggleProgramsAutoUpgrade(active);
-  }
-
-  checkCanUpgradeMax(): boolean {
-    return this.mainframeState.programs.listOwnedPrograms().some(this.checkCanUpgradeMaxProgram);
-  }
-
-  upgradeMaxAllPrograms() {
-    this.mainframeState.programs.upgrader.upgradeMaxAllPrograms();
-  }
-
-  getHotkey(): string | undefined {
-    return this.settingsState.hotkeys.getKeyByHotkey(Hotkey.upgradeMainframePrograms);
-  }
-
-  private checkCanUpgradeMaxProgram = (program: IProgram) => {
+  checkCanUpgradeMaxProgram = (program: IProgram) => {
     if (!program.autoUpgradeEnabled) {
       return false;
     }
 
-    if (!this.unlockState.items.programs.isItemAvailable(program.name, program.tier, program.level + 1)) {
+    if (
+      this.globalState.money.money <
+      this.mainframeState.programs.validator.calculateProgramCost(program.name, program.tier, program.level + 1)
+    ) {
       return false;
     }
 
     return (
-      this.globalState.money.money >=
-      this.mainframeState.programs.calculateProgramCost(program.name, program.tier, program.level + 1)
+      this.mainframeState.programs.validator.validateProgram(program.name, program.tier, program.level + 1) ===
+      ProgramValidationResult.valid
     );
   };
 }

@@ -31,13 +31,16 @@ import {
   ActivityUIActivityStatus,
   PrimaryActivitiesEvent,
   PrimaryActivityAlert,
+  LevelFilterValue,
+  StateFilterValue,
+  ActivityStatusFilterValue,
 } from './types';
 import { INames, type IConstants } from './interfaces';
 
 export const typedConstants = constants as IConstants;
 export const typedNames = names as INames;
 
-export const CURRENT_VERSION = GameVersion['0.3.0'];
+export const CURRENT_VERSION = GameVersion['0.3.1'];
 
 export const LANGUAGES: Language[] = Object.values(Language);
 
@@ -142,3 +145,9 @@ export const DISTRICT_TYPE_REWARD_PARAMETER_UI_VALUES: Record<
 };
 
 export const ACTIVITY_UI_STATUSES = Object.values(ActivityUIActivityStatus);
+
+export const LEVEL_FILTER_VALUES = Object.values(LevelFilterValue);
+export const STATE_FILTER_VALUES = Object.values(StateFilterValue);
+export const ACTIVITY_STATUS_FILTER_VALUES = Object.values(ActivityStatusFilterValue);
+
+export const MULTIPLE_SELECT_SEPARATOR = ' ';

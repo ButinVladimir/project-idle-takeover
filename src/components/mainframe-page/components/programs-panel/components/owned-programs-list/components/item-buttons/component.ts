@@ -4,7 +4,7 @@ import { customElement } from 'lit/decorators.js';
 import { consume } from '@lit/context';
 import { ref, createRef } from 'lit/directives/ref.js';
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
-import { type IProgram } from '@state/mainframe-state/states';
+import { type IProgram } from '@state/mainframe-state';
 import { BaseComponent, AUTOUPGRADE_VALUES, UPGRADE_MAX_VALUES } from '@shared/index';
 import { COMMON_TEXTS } from '@texts/index';
 import { OwnedProgramsListItemButtonsController } from './controller';
@@ -47,7 +47,7 @@ export class OwnedProgramsListItemButtons extends BaseComponent {
     const levelEl = html`<span ${ref(this._upgradeLevelRef)}></span>`;
 
     return html`
-      <div class="buttons desktop">
+      <div class="buttons buttons-3 desktop">
         <sl-tooltip>
           <span slot="content"> ${COMMON_TEXTS.upgradeToLevel(levelEl)} </span>
 

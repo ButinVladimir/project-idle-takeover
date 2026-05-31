@@ -1,17 +1,17 @@
 import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { localized } from '@lit/localize';
+import { localized, msg } from '@lit/localize';
 import { createRef, ref } from 'lit/directives/ref.js';
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
 import { BaseComponent } from '@shared/index';
 import { COMMON_TEXTS } from '@texts/index';
 import { MainframeHardwarePanelButtonsController } from './controller';
-import styles from '../../styles';
+import styles from './styles';
 
 @localized()
 @customElement('ca-mainframe-hardware-panel-buttons')
 export class MainframeHardwarePanelButtons extends BaseComponent {
-  static style = styles;
+  static styles = styles;
 
   hasPartialUpdate = true;
 
@@ -26,21 +26,47 @@ export class MainframeHardwarePanelButtons extends BaseComponent {
   }
 
   protected renderDesktop() {
-    const hotkey = this._controller.getHotkey();
-
     return html`
-      <sl-tooltip>
-        <span slot="content">${COMMON_TEXTS.hotkey(hotkey)}</span>
-        <sl-button
-          ${ref(this._buyMaxButtonRef)}
-          variant="default"
-          type="button"
-          size="medium"
-          @click=${this.handleBuyMax}
-        >
-          ${COMMON_TEXTS.upgradeAll()}
-        </sl-button>
+      <sl-tooltip trigger="click">
+        <div class="hotkeys-content" slot="content">
+          <p>
+            ${COMMON_TEXTS.parameterRow(
+              msg('Upgrade all enabled mainframe hardware'),
+              COMMON_TEXTS.hotkeyValue(this._controller.getUpgradeMainframeHardwareHotkey()),
+            )}
+          </p>
+          <p>
+            ${COMMON_TEXTS.parameterRow(
+              msg('Upgrade mainframe performace'),
+              COMMON_TEXTS.hotkeyValue(this._controller.getUpgradeMainframePerformanceHotkey()),
+            )}
+          </p>
+          <p>
+            ${COMMON_TEXTS.parameterRow(
+              msg('Upgrade mainframe RAM'),
+              COMMON_TEXTS.hotkeyValue(this._controller.getUpgradeMainframeRamHotkey()),
+            )}
+          </p>
+          <p>
+            ${COMMON_TEXTS.parameterRow(
+              msg('Upgrade mainframe cores'),
+              COMMON_TEXTS.hotkeyValue(this._controller.getUpgradeMainframeCoresHotkey()),
+            )}
+          </p>
+        </div>
+
+        <sl-button variant="default" size="medium"> ${COMMON_TEXTS.showHotkeys()} </sl-button>
       </sl-tooltip>
+
+      <sl-button
+        ${ref(this._buyMaxButtonRef)}
+        variant="default"
+        type="button"
+        size="medium"
+        @click=${this.handleBuyMax}
+      >
+        ${COMMON_TEXTS.upgradeDisplayedEnabledItems()}
+      </sl-button>
     `;
   }
 

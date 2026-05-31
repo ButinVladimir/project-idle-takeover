@@ -12,11 +12,12 @@ const styles = [
 
     p.hint {
       margin-top: 0;
-      margin-bottom: var(--sl-spacing-large);
+      margin-bottom: var(--ca-section-gap);
     }
 
     div.top-container {
       display: grid;
+      margin-bottom: var(--ca-section-gap);
 
       &.mobile {
         align-items: flex-start;
@@ -24,30 +25,26 @@ const styles = [
           'ram'
           'cores'
           'start-process';
-        gap: var(--sl-spacing-medium);
+        gap: var(--ca-section-buttons-gap);
       }
 
       &.desktop {
         grid-template-areas: 'start-process ram cores';
         align-items: center;
-        gap: var(--sl-spacing-3x-large);
+        gap: var(--ca-section-text-gap);
       }
-    }
 
-    .start-process {
-      grid-area: start-process;
-    }
+      .start-process {
+        grid-area: start-process;
+      }
 
-    .cores {
-      grid-area: cores;
-    }
+      .cores {
+        grid-area: cores;
+      }
 
-    .ram {
-      grid-area: ram;
-    }
-
-    ca-processes-list {
-      margin-top: var(--sl-spacing-large);
+      .ram {
+        grid-area: ram;
+      }
     }
   `,
 ];

@@ -9,6 +9,7 @@ import {
   type IContractActivityValidator,
   type IPrimaryActivityQueue,
   PrimaryActivityState,
+  IPrimaryActivity,
 } from './states';
 import { IClone } from '../clones-state';
 
@@ -116,9 +117,7 @@ export class ActivityState implements IActivityState {
         continue;
       }
 
-      primaryActivity.assignedClones.forEach((clone) => {
-        this._assignedClones.add(clone);
-      });
+      this.assignClonesToActivity(primaryActivity);
     }
   }
 
@@ -128,14 +127,12 @@ export class ActivityState implements IActivityState {
         continue;
       }
 
-      if (primaryActivity.assignedClones.some((clone) => this._assignedClones.has(clone))) {
+      if (!this.checkAssignedClonesForActivity(primaryActivity)) {
         continue;
       }
 
       if (primaryActivity.start()) {
-        primaryActivity.assignedClones.forEach((clone) => {
-          this._assignedClones.add(clone);
-        });
+        this.assignClonesToActivity(primaryActivity);
       }
     }
   }
@@ -146,7 +143,11 @@ export class ActivityState implements IActivityState {
 
       if (
         sidejobActivity.enabled &&
-        this._sidejobActivityValidator.validate(sidejobActivity.sidejob) &&
+        this._sidejobActivityValidator.validateSidejob(
+          sidejobActivity.sidejob.sidejobName,
+          sidejobActivity.sidejob.district,
+          sidejobActivity.sidejob.assignedClone,
+        ) &&
         !this._assignedClones.has(assignedClone)
       ) {
         sidejobActivity.active = true;
@@ -154,6 +155,22 @@ export class ActivityState implements IActivityState {
       } else {
         sidejobActivity.active = false;
       }
+    }
+  }
+
+  private checkAssignedClonesForActivity(primaryActivity: IPrimaryActivity): boolean {
+    for (const clone of primaryActivity.assignedClones) {
+      if (this._assignedClones.has(clone)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  private assignClonesToActivity(primaryActivity: IPrimaryActivity) {
+    for (const clone of primaryActivity.assignedClones) {
+      this._assignedClones.add(clone);
     }
   }
 }

@@ -2,7 +2,7 @@ import { html, PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { localized } from '@lit/localize';
-import { BaseComponent } from '@shared/index';
+import { BaseComponent, Theme } from '@shared/index';
 import { DistrictUnlockState } from '@state/city-state';
 import { IDistrictRendererResult } from '@workers/district-renderer/interfaces';
 import { CityMapHighlightedDistrictController } from './controller';
@@ -41,6 +41,12 @@ export class CityMapDistrict extends BaseComponent {
   public selected = false;
 
   @property({
+    attribute: 'theme',
+    type: String,
+  })
+  public theme!: Theme;
+
+  @property({
     attribute: 'size',
     type: Number,
   })
@@ -77,7 +83,8 @@ export class CityMapDistrict extends BaseComponent {
       _changedProperties.has('runId') ||
       _changedProperties.has('districtNum') ||
       _changedProperties.has('districtState') ||
-      _changedProperties.has('selected')
+      _changedProperties.has('selected') ||
+      _changedProperties.has('theme')
     ) {
       this.fullRenderCanvas();
     } else if (_changedProperties.has('size')) {
@@ -97,7 +104,7 @@ export class CityMapDistrict extends BaseComponent {
         mapWidth: this._controller.mapWidth,
         mapHeight: this._controller.mapHeight,
         layout: this._controller.layout,
-        theme: this._controller.theme,
+        theme: this.theme,
         districtNum: this.districtNum,
         districtUnlockState: this.districtState,
         selected: this.selected,
@@ -124,6 +131,7 @@ export class CityMapDistrict extends BaseComponent {
     const fullHeight = (CELL_SIZE + 1) * this._controller.mapHeight + 1;
 
     createImageBitmap(this._districtBlob).then((bitmap) => {
+      context.clearRect(0, 0, this.size, this.size);
       context.drawImage(bitmap, 0, 0, fullWidth, fullHeight, 0, 0, this.size, this.size);
       bitmap.close();
     });
@@ -135,12 +143,10 @@ export class CityMapDistrict extends BaseComponent {
 
       worker.addEventListener('error', (e) => {
         console.error(e);
-        CityMapDistrict._districtRendererWorker.removeEventListener('message', this.handleWorkerResponse);
       });
 
       worker.addEventListener('messageerror', (e) => {
         console.error(e);
-        CityMapDistrict._districtRendererWorker.removeEventListener('message', this.handleWorkerResponse);
       });
 
       CityMapDistrict._districtRendererWorker = worker;
@@ -151,8 +157,6 @@ export class CityMapDistrict extends BaseComponent {
     const { blob, districtNum, selected } = e.data;
 
     if (districtNum === this.districtNum && selected === this.selected) {
-      CityMapDistrict._districtRendererWorker.removeEventListener('message', this.handleWorkerResponse);
-
       this._districtBlob = blob;
 
       this.renderCanvas();

@@ -1,0 +1,16 @@
+import { BaseController } from '@shared/index';
+import { ProgramName } from '@state/mainframe-state';
+
+export class ProgramDiffTextController extends BaseController {
+  get ram(): number {
+    return this.mainframeState.hardware.ram.totalLevel;
+  }
+
+  get cores(): number {
+    return this.mainframeState.hardware.cores.totalLevel;
+  }
+
+  getProgramCost(programName: ProgramName, tier: number, level: number): number {
+    return this.mainframeState.programs.validator.calculateProgramCost(programName, tier, level);
+  }
+}

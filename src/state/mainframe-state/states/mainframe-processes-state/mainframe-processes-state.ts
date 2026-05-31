@@ -1,4 +1,4 @@
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { msg, str } from '@lit/localize';
 import { decorators } from '@state/container';
 import type { IStateUIConnector } from '@state/state-ui-connector/interfaces/state-ui-connector';
@@ -14,15 +14,20 @@ import { ProgramName } from '../progam-factory/types';
 import {
   IMainframeProcessesSerializedState,
   IMainframeProcessesState,
+  type IMainframeProcessesValidator,
   IProcess,
   ISerializedProcess,
 } from './interfaces';
 import { Process } from './process';
+import { ProcessesBatchValidationResult } from './types';
 
 const { lazyInject } = decorators;
 
 @injectable()
 export class MainframeProcessesState implements IMainframeProcessesState {
+  @inject(TYPES.MainframeProcessesValidator)
+  private _validator!: IMainframeProcessesValidator;
+
   @lazyInject(TYPES.MainframeState)
   private _mainframeState!: IMainframeState;
 
@@ -62,6 +67,10 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     ]);
   }
 
+  get validator() {
+    return this._validator;
+  }
+
   get availableCores() {
     return this._availableCores;
   }
@@ -82,70 +91,17 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     return this._processesMap.get(programName);
   }
 
-  addProcess(programName: ProgramName, threads: number): boolean {
-    const program = this._mainframeState.programs.getOwnedProgramByName(programName);
-    if (!program) {
+  addProcessesBatch(programNames: ProgramName[], threads: number): boolean {
+    if (this._validator.validateProcessesBatch(programNames, threads) !== ProcessesBatchValidationResult.valid) {
       return false;
     }
 
-    if (!program.isAutoscalable && threads <= 0) {
-      throw new Error('Invalid amount of threads for process');
-    }
-
-    const threadCount = program.isAutoscalable ? 0 : threads;
-
-    const existingProcess = this.getProcessByName(programName);
-    const availableRam = this.getAvailableRamForProgram(programName);
-
-    if (!program.isAutoscalable && availableRam < program.ram * threads) {
-      return false;
-    }
-
-    if (program.isAutoscalable && availableRam === 0) {
-      return false;
-    }
-
-    if (program.isAutoscalable && !existingProcess) {
-      this.deleteAutoscalableProcesses();
-    }
-
-    if (existingProcess) {
-      existingProcess.update(threads);
-    } else {
-      const process = this.createProcess({
-        enabled: true,
-        threads: threadCount,
-        currentCompletionPoints: 0,
-        programName: programName,
-      });
-
-      if (program.isAutoscalable) {
-        this._processesList.unshift(process);
-      } else {
-        this._processesList.push(process);
-      }
-
-      this._processesMap.set(programName, process);
-    }
+    programNames.forEach((programName) => {
+      this.startSingleProcess(programName, threads);
+    });
 
     this.requestUpdateRunningProcesses();
     this.recalculateRam();
-
-    const programTitle = PROGRAM_TEXTS[program.name].title();
-
-    if (program.isAutoscalable) {
-      this._messageLogState.postMessage(
-        ProgramsEvent.processStarted,
-        msg(str`Process for program "${programTitle}" has been started`),
-      );
-    } else {
-      const formattedThreads = this._formatter.formatNumberDecimal(threadCount);
-
-      this._messageLogState.postMessage(
-        ProgramsEvent.processStarted,
-        msg(str`Process for program "${programTitle}" with ${formattedThreads} threads has been started`),
-      );
-    }
 
     return true;
   }
@@ -160,42 +116,48 @@ export class MainframeProcessesState implements IMainframeProcessesState {
 
   deleteProcess(programName: ProgramName): void {
     const process: IProcess | undefined = this.getProcessByName(programName);
-    const index = this._processesList.findIndex((process) => process.program.name === programName);
 
-    if (index >= 0) {
-      removeElementsFromArray(this._processesList, index, 1);
+    if (!process) {
+      return;
     }
 
-    if (process) {
-      this.handleProcessCleanup(process);
+    this.handleDeleteProcess(process);
 
-      this._processesMap.delete(programName);
+    const programTitle = PROGRAM_TEXTS[programName].title();
 
-      const programTitle = PROGRAM_TEXTS[programName].title();
+    if (process.program.isAutoscalable) {
+      this._messageLogState.postMessage(
+        ProgramsEvent.processStarted,
+        msg(str`Process for program "${programTitle}" has been deleted`),
+      );
+    } else {
+      const formattedThreads = this._formatter.formatNumberDecimal(process.threads);
 
-      if (process.program.isAutoscalable) {
-        this._messageLogState.postMessage(
-          ProgramsEvent.processStarted,
-          msg(str`Process for program "${programTitle}" has been deleted`),
-        );
-      } else {
-        const formattedThreads = this._formatter.formatNumberDecimal(process.threads);
-
-        this._messageLogState.postMessage(
-          ProgramsEvent.processStarted,
-          msg(str`Process for program "${programTitle}" with ${formattedThreads} threads has been deleted`),
-        );
-      }
+      this._messageLogState.postMessage(
+        ProgramsEvent.processStarted,
+        msg(str`Process for program "${programTitle}" with ${formattedThreads} threads has been deleted`),
+      );
     }
 
     this.requestUpdateRunningProcesses();
     this.recalculateRam();
   }
 
-  deleteAllProcesses() {
-    this.clearState();
+  deleteProcesses(programNames: ProgramName[]) {
+    for (const programName of programNames) {
+      const process = this.getProcessByName(programName);
 
-    this._messageLogState.postMessage(ProgramsEvent.allProcessesDeleted, msg('All process have been deleted'));
+      if (!process) {
+        continue;
+      }
+
+      this.handleDeleteProcess(process);
+    }
+
+    this._messageLogState.postMessage(
+      ProgramsEvent.displayedProcessesDeleted,
+      msg('Displayed processes have been deleted'),
+    );
 
     this.requestUpdateRunningProcesses();
     this.recalculateRam();
@@ -209,7 +171,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     this._availableRam = this._mainframeState.hardware.ram.totalLevel;
 
     for (const process of this._processesList) {
-      this._availableRam -= process.program.isAutoscalable ? process.program.ram : process.totalRam;
+      this._availableRam -= process.program.isAutoscalable ? process.program.ram : process.usedRam;
     }
   }
 
@@ -221,7 +183,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     if (this._runningScalableProcess?.enabled) {
       this._runningScalableProcess.program.perform(
         this._runningScalableProcess.usedCores,
-        this._runningScalableProcess.totalRam,
+        this._runningScalableProcess.usedRam,
       );
     }
 
@@ -231,7 +193,7 @@ export class MainframeProcessesState implements IMainframeProcessesState {
       process.increaseCompletion(process.calculateCompletionDelta(this._settingsState.updateInterval));
 
       if (process.currentCompletionPoints >= process.maxCompletionPoints) {
-        process.program.perform(process.threads, process.totalRam);
+        process.program.perform(process.threads, process.usedRam);
         hasFinishedProcesses = true;
       }
     }
@@ -252,29 +214,6 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     moveElementInArray(this._processesList, oldPosition, newPosition);
 
     this.requestUpdateRunningProcesses();
-  }
-
-  getAvailableRamForProgram(programName: ProgramName): number {
-    const program = this._mainframeState.programs.getOwnedProgramByName(programName);
-    if (!program) {
-      return 0;
-    }
-
-    let result = this.availableRam;
-
-    if (program.isAutoscalable && this._runningScalableProcess) {
-      result += this._runningScalableProcess.program.ram;
-    }
-
-    if (!program.isAutoscalable) {
-      const existingProcess = this.getProcessByName(programName);
-
-      if (existingProcess) {
-        result += existingProcess.totalRam;
-      }
-    }
-
-    return result;
   }
 
   async startNewState(): Promise<void> {
@@ -399,7 +338,67 @@ export class MainframeProcessesState implements IMainframeProcessesState {
     this._processesMap.clear();
   }
 
+  private handleDeleteProcess = (process: IProcess) => {
+    const index = this._processesList.findIndex((listProcess) => listProcess.program.name === process.program.name);
+
+    if (index >= 0) {
+      removeElementsFromArray(this._processesList, index, 1);
+    }
+
+    if (process) {
+      this.handleProcessCleanup(process);
+
+      this._processesMap.delete(process.program.name);
+    }
+  };
+
   private handleProcessCleanup(process: IProcess) {
     process.removeAllEventListeners();
+  }
+
+  private startSingleProcess(programName: ProgramName, threads: number): void {
+    const program = this._mainframeState.programs.getOwnedProgramByName(programName)!;
+    const threadCount = program.isAutoscalable ? 0 : threads;
+
+    const existingProcess = this.getProcessByName(programName);
+
+    if (program.isAutoscalable && !existingProcess) {
+      this.deleteAutoscalableProcesses();
+    }
+
+    if (existingProcess) {
+      existingProcess.update(threads);
+    } else {
+      const process = this.createProcess({
+        enabled: true,
+        threads: threadCount,
+        currentCompletionPoints: 0,
+        programName: programName,
+      });
+
+      if (program.isAutoscalable) {
+        this._processesList.unshift(process);
+      } else {
+        this._processesList.push(process);
+      }
+
+      this._processesMap.set(programName, process);
+    }
+
+    const programTitle = PROGRAM_TEXTS[program.name].title();
+
+    if (program.isAutoscalable) {
+      this._messageLogState.postMessage(
+        ProgramsEvent.processStarted,
+        msg(str`Process for program "${programTitle}" has been started`),
+      );
+    } else {
+      const formattedThreads = this._formatter.formatNumberDecimal(threadCount);
+
+      this._messageLogState.postMessage(
+        ProgramsEvent.processStarted,
+        msg(str`Process for program "${programTitle}" with ${formattedThreads} threads has been started`),
+      );
+    }
   }
 }

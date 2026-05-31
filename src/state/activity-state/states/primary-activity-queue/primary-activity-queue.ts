@@ -100,18 +100,10 @@ export class PrimaryActivityQueue implements IPrimaryActivityQueue {
   }
 
   cancelActivityById(id: string): void {
-    const activityIndex = this._activitiesList.findIndex((activity) => activity.activityId === id);
-
-    if (activityIndex !== -1) {
-      removeElementsFromArray(this._activitiesList, activityIndex, 1);
-    }
-
     const activity = this.getActivityById(id);
 
     if (activity) {
-      this._activityIdMap.delete(id);
-      this._activityAssignmentIdMap.delete(activity.assignmentId);
-      activity.removeAllEventListeners();
+      this.handleCancelActivity(activity);
 
       this._messageLogState.postMessage(
         PrimaryActivitiesEvent.primaryActivityCancelled,
@@ -126,19 +118,31 @@ export class PrimaryActivityQueue implements IPrimaryActivityQueue {
     const activity = this.getActivityByAssignmentId(assignmentId);
 
     if (activity) {
-      this.cancelActivityById(activity.activityId);
+      this.handleCancelActivity(activity);
+
+      this._messageLogState.postMessage(
+        PrimaryActivitiesEvent.primaryActivityCancelled,
+        activity.getActivityCancelledMessage(),
+      );
     }
 
     this._activityState.requestReassignment();
   }
 
-  cancelAllActivities(): void {
-    this.clearState();
+  cancelActivitiesByIds(ids: string[]): void {
     this._activityState.requestReassignment();
 
+    for (const id of ids) {
+      const activity = this.getActivityById(id);
+
+      if (activity) {
+        this.handleCancelActivity(activity);
+      }
+    }
+
     this._messageLogState.postMessage(
-      PrimaryActivitiesEvent.allPrimaryActivitiesCancelled,
-      msg('All primary activities have been cancelled'),
+      PrimaryActivitiesEvent.displayedPrimaryActivitiesCancelled,
+      msg('Displayed primary activities have been cancelled'),
     );
   }
 
@@ -156,9 +160,8 @@ export class PrimaryActivityQueue implements IPrimaryActivityQueue {
 
       if (performanceResult === PrimaryActivityPerformResult.reward) {
         this.rewardActivity(activity);
+        this._activityState.requestReassignment();
       }
-
-      this._activityState.requestReassignment();
     }
   }
 
@@ -253,5 +256,19 @@ export class PrimaryActivityQueue implements IPrimaryActivityQueue {
           break;
       }
     }
+  }
+
+  private handleCancelActivity(activity: IPrimaryActivity) {
+    const activityIndex = this._activitiesList.findIndex(
+      (listActivity) => activity.activityId === listActivity.activityId,
+    );
+
+    if (activityIndex !== -1) {
+      removeElementsFromArray(this._activitiesList, activityIndex, 1);
+    }
+
+    this._activityIdMap.delete(activity.activityId);
+    this._activityAssignmentIdMap.delete(activity.assignmentId);
+    activity.removeAllEventListeners();
   }
 }
